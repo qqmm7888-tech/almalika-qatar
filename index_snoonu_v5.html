@@ -1,1 +1,173 @@
+<!-- HERO NEW DESIGN -->
+<section class="heroNew">
+  <div class="heroGlow"></div>
 
+  <div class="heroContent">
+
+    <div class="heroBadge">
+      👑 الملكة للحفلات - قطر
+    </div>
+
+    <h1>
+      لحظات فرح لا تُنسى 🎉
+    </h1>
+
+    <p>
+      أفضل النطاطيات والزحلاقيات وحفلات الأطفال والخطوبة والأعراس
+      بألوان مبهجة وتجهيزات فخمة داخل جميع مناطق قطر ✨
+    </p>
+
+    <div class="heroButtons">
+      <button class="mainBtn">
+        عرض جميع النطاطيات
+      </button>
+
+      <button class="whiteBtn">
+        واتساب مباشر
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+
+body{
+  font-family:'Cairo',sans-serif;
+  background:#fff7fb;
+}
+
+/* HERO */
+
+.heroNew{
+  position:relative;
+  overflow:hidden;
+  margin:30px auto;
+  width:92%;
+  border-radius:40px;
+  padding:80px 30px;
+  text-align:center;
+
+  background:
+  linear-gradient(135deg,
+  #ffb6d9,
+  #ffc6f0,
+  #d7b8ff,
+  #fff0b3);
+
+  box-shadow:
+  0 20px 60px rgba(255,105,180,.18);
+}
+
+.heroGlow{
+  position:absolute;
+  width:500px;
+  height:500px;
+  background:rgba(255,255,255,.35);
+  border-radius:50%;
+  top:-150px;
+  left:-120px;
+  filter:blur(60px);
+}
+
+.heroContent{
+  position:relative;
+  z-index:2;
+}
+
+.heroBadge{
+  display:inline-block;
+  padding:10px 22px;
+  border-radius:999px;
+
+  background:linear-gradient(90deg,#ffd700,#fff3a0);
+
+  color:#7a1b43;
+  font-weight:900;
+  margin-bottom:25px;
+
+  box-shadow:0 6px 18px rgba(255,215,0,.3);
+}
+
+.heroNew h1{
+  font-size:58px;
+  color:#7a1239;
+  margin-bottom:20px;
+  font-weight:900;
+}
+
+.heroNew p{
+  max-width:900px;
+  margin:auto;
+  color:#6f5062;
+  font-size:22px;
+  line-height:2;
+}
+
+.heroButtons{
+  margin-top:35px;
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
+}
+
+.mainBtn{
+  border:none;
+  padding:18px 35px;
+  border-radius:18px;
+  background:linear-gradient(90deg,#00d26a,#00b95c);
+  color:white;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+
+  box-shadow:
+  0 12px 25px rgba(0,210,106,.25);
+
+  transition:.3s;
+}
+
+.mainBtn:hover{
+  transform:translateY(-5px) scale(1.03);
+}
+
+.whiteBtn{
+  border:none;
+  padding:18px 35px;
+  border-radius:18px;
+  background:white;
+  color:#7a1239;
+  font-size:18px;
+  font-weight:900;
+  cursor:pointer;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,.08);
+
+  transition:.3s;
+}
+
+.whiteBtn:hover{
+  transform:translateY(-5px);
+}
+
+@media(max-width:768px){
+
+.heroNew{
+  padding:50px 20px;
+}
+
+.heroNew h1{
+  font-size:36px;
+}
+
+.heroNew p{
+  font-size:17px;
+}
+
+}
+
+</style>
