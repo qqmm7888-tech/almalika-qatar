@@ -650,6 +650,131 @@ box-shadow:0 10px 30px rgba(255,105,180,.08);
 .service span{
 font-size:28px;
 }
+.profile{display:none;max-width:1400px;margin:20px auto;padding:0 25px}
+.box{background:white;border:2px solid #ffd6ea;border-radius:28px;padding:22px;box-shadow:0 10px 35px rgba(255,105,180,.12)}
+.formGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+label{font-weight:900;color:#8a1f4d}
+input,textarea,select{font-family:'Cairo',sans-serif}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.45);
+z-index:3000;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.modalContent{
+background:white;
+width:100%;
+max-width:850px;
+max-height:90vh;
+overflow:auto;
+border-radius:30px;
+padding:25px;
+box-shadow:0 30px 80px rgba(0,0,0,.25);
+}
+
+.cartBar{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+z-index:2500;
+background:rgba(255,255,255,.92);
+backdrop-filter:blur(14px);
+border-top:1px solid #ffd6ea;
+padding:12px;
+}
+
+.cartButton{
+display:block;
+max-width:520px;
+margin:auto;
+width:100%;
+border:none;
+border-radius:22px;
+padding:16px;
+background:#25D366;
+color:white;
+font-size:18px;
+font-weight:900;
+}
+
+.contact{
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin:20px auto;
+max-width:900px;
+}
+
+.contact a{
+padding:13px 22px;
+border-radius:18px;
+font-weight:900;
+}
+
+.wa{background:#25D366;color:white}
+.call{background:white;color:#8a1f4d}
+
+.secondary{
+background:white;
+color:#8a1f4d;
+border:2px solid #ffd6ea;
+padding:16px 30px;
+border-radius:18px;
+font-weight:900;
+font-size:18px;
+}
+
+.details,.tags,.tag{
+font-size:13px;
+}
+
+.details{
+background:#fff7fb;
+border-radius:16px;
+padding:12px;
+line-height:1.8;
+margin:10px 0;
+}
+
+.tags{
+display:flex;
+gap:6px;
+flex-wrap:wrap;
+margin:8px 0;
+}
+
+.tag{
+background:#fff0f7;
+color:#8a1f4d;
+border-radius:999px;
+padding:6px 10px;
+font-weight:900;
+}
+
+.send,.close{
+width:100%;
+border:none;
+border-radius:18px;
+padding:14px;
+font-weight:900;
+margin-top:10px;
+}
+
+.send{background:#25D366;color:white}
+.close{background:#f4f4f4;color:#333}
+
+@media(max-width:700px){
+.headerInner{flex-direction:column}
+.hero{width:calc(100% - 20px)!important}
+}
 </style>
 </head>
 <body>
