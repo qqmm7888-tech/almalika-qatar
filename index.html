@@ -1059,13 +1059,13 @@ body:after{
 .snoonuMiniCard{background:rgba(255,255,255,.92);border:1px solid rgba(216,178,93,.26);border-radius:24px;padding:16px 12px 14px;text-align:center;cursor:pointer;box-shadow:0 12px 28px rgba(185,130,153,.10);transition:.22s;display:flex;flex-direction:column;align-items:center;gap:10px;min-height:188px}
 .snoonuMiniCard:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(185,130,153,.14)}
 .snoonuMiniThumb{width:88px;height:88px;border-radius:24px;background:linear-gradient(135deg,#fff8fb,#fff2d7);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(216,178,93,.18)}
-.snoonuMiniThumb img{width:76px;height:76px;object-fit:contain;display:block}
+.snoonuMiniThumb img{width:78px;height:78px;object-fit:cover;display:block;border-radius:18px}
 .snoonuMiniTitle{font-size:18px;line-height:1.45;color:#62324b;font-weight:900;margin:0}
 .snoonuMiniLabel{padding:6px 10px;border-radius:999px;background:#fff7ea;border:1px solid rgba(216,178,93,.18);color:#a42d65;font-size:12px;font-weight:900}
 .snoonuMiniHint{font-size:12px;color:#8e7882;font-weight:700;line-height:1.45}
 @media(max-width:1180px){.snoonuMiniGrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:860px){.snoonuMiniGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:620px){.snoonuMiniGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.snoonuMiniCard{min-height:168px;padding:14px 10px 12px;border-radius:20px}.snoonuMiniThumb{width:74px;height:74px;border-radius:20px}.snoonuMiniThumb img{width:64px;height:64px}.snoonuMiniTitle{font-size:15px}.snoonuMiniLabel{font-size:11px;padding:5px 8px}}
+@media(max-width:620px){.snoonuMiniGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.snoonuMiniCard{min-height:168px;padding:14px 10px 12px;border-radius:20px}.snoonuMiniThumb{width:74px;height:74px;border-radius:20px}.snoonuMiniThumb img{width:64px;height:64px;object-fit:cover;border-radius:15px}.snoonuMiniTitle{font-size:15px}.snoonuMiniLabel{font-size:11px;padding:5px 8px}}
 
 @media(max-width:1100px){.offerTypeGrid.megaGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.offerTypeGrid.megaGrid{grid-template-columns:1fr}}
@@ -1107,6 +1107,33 @@ body:after{
   flex-direction:column;
   align-items:center;
 }
+
+
+/* ===== V23 Mobile precision fixes after device testing ===== */
+html,body{max-width:100%;overflow-x:hidden!important}
+img{max-width:100%;height:auto}.navMenu{direction:rtl!important;flex-direction:row!important;justify-content:flex-start!important}.headerInner{direction:rtl!important}
+@media(max-width:620px){
+  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}
+  body{padding-bottom:96px!important}
+  .mainHeader{top:0!important;z-index:1000!important}
+  .headerInner{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;padding:8px 10px!important;direction:rtl!important;max-width:100%!important}
+  .logoArea{justify-content:center!important;width:100%!important;min-width:0!important;gap:8px!important}.logoArea h1{font-size:22px!important;letter-spacing:0!important}.logoArea p{display:none!important}
+  .headerBtns{justify-content:center!important;flex-wrap:wrap!important;width:100%!important;gap:6px!important}.pillBtn{font-size:12px!important;padding:8px 10px!important}
+  .navMenu{width:100%!important;overflow-x:auto!important;flex-wrap:nowrap!important;justify-content:flex-start!important;direction:rtl!important;padding:4px 6px 7px!important;scrollbar-width:none!important;gap:4px!important}.navMenu::-webkit-scrollbar{display:none!important}.navMenu button{flex:0 0 auto!important;font-size:12px!important;padding:8px 10px!important;white-space:nowrap!important}
+  .searchStrip{grid-template-columns:1fr!important;gap:8px!important;padding:8px 10px 10px!important;max-width:100%!important}.searchBox{height:42px!important}.searchBox input{font-size:13px!important;padding:9px!important}
+  .container{width:100%!important;max-width:100%!important;padding:14px 10px!important}.hero{padding:18px 12px!important;border-radius:24px!important;grid-template-columns:1fr!important;text-align:center!important;min-height:auto!important;margin-bottom:12px!important}.hero h2{font-size:26px!important;line-height:1.35!important}.hero p{font-size:13px!important;line-height:1.7!important;margin:8px 0 12px!important}.heroBadge{font-size:12px!important;padding:7px 11px!important}.heroActions{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}.heroActions button,.heroActions a{width:100%!important;padding:12px!important;font-size:13px!important}.heroVisual{display:none!important}
+  .homeQuickTypes,.snoonuMiniGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;max-width:100%!important}.homeTypeCard,.snoonuMiniCard{min-height:145px!important;border-radius:18px!important;padding:12px 8px!important}.homeTypeCard .typeImgWrap,.snoonuMiniThumb{width:70px!important;height:70px!important;border-radius:18px!important}.homeTypeCard .typeImgWrap img,.snoonuMiniThumb img{width:62px!important;height:62px!important;object-fit:cover!important}.typeLabel,.snoonuMiniTitle{font-size:13px!important;line-height:1.35!important}.typeSmall,.snoonuMiniLabel{font-size:10.5px!important;padding:5px 7px!important}.snoonuMiniHint{display:none!important}
+  .products{grid-template-columns:1fr!important;gap:12px!important}.product.productRowCard{grid-template-columns:minmax(0,1fr) 112px!important;min-height:138px!important;border-radius:20px!important}.rowCardBody{padding:12px!important}.rowCardImage{min-height:138px!important;padding:7px!important}.rowCardImage img{border-radius:14px!important}.product.productRowCard h3{font-size:14px!important;line-height:1.35!important}.rowDesc{font-size:11.5px!important;line-height:1.5!important;min-height:30px!important;-webkit-line-clamp:2!important}.rowChip{font-size:10px!important;padding:5px 7px!important}.rowBottom{gap:7px!important}.rowActions{gap:5px!important;min-width:70px!important}.rowActions .addBtn,.rowActions .whatsBtn{font-size:11px!important;padding:7px 8px!important;min-width:70px!important;border-radius:11px!important}.rowPriceBox{min-width:70px!important;padding:7px 6px!important}.rowPriceBox strong{font-size:17px!important}.rowPriceBox small{font-size:10px!important}
+  .pageBanner{padding:18px 12px!important;border-radius:20px!important}.pageBanner h1{font-size:22px!important;line-height:1.35!important}.pageBanner p{font-size:12px!important;line-height:1.7!important}.sectionTitle h2{font-size:22px!important}.sectionTitle p{font-size:12px!important}.panel{padding:13px!important;border-radius:18px!important}.panel h1{font-size:22px!important}.panel p{font-size:12px!important}
+  .modal{padding:6px!important}.modalContent{max-width:96vw!important;max-height:92vh!important;border-radius:22px!important}.productModal{max-width:96vw!important}#productModal .productDetail{grid-template-columns:1fr!important}#productModal .detailImage{padding:10px!important;min-height:150px!important}#productModal .detailImage img{height:150px!important;max-height:150px!important}#productModal .detailSide{padding:14px!important}#productModal .detailSide h2{font-size:19px!important}.infoGrid,.booking,.priceChoiceGrid{grid-template-columns:1fr!important}.modalHeader{min-height:34px!important}.xBtn{width:34px!important;height:34px!important;min-width:34px!important;font-size:22px!important}
+  .cartBar{padding:8px 10px!important}.cartButton{font-size:13px!important;padding:12px!important;border-radius:18px!important;max-width:100%!important}.footer{padding:28px 12px!important}.contact{grid-template-columns:1fr!important}
+}
+@media(min-width:621px) and (max-width:900px){.snoonuMiniGrid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.products{grid-template-columns:repeat(2,minmax(0,1fr))!important}.container{max-width:100%!important}.hero{grid-template-columns:1fr!important}.heroVisual{display:none!important}}
+
+
+/* ===== V23.2 final mobile polish ===== */
+.logoCircle.logoImageBox img{max-width:100%;max-height:100%;object-fit:contain}
+@media(max-width:620px){.logoCircle.logoImageBox{width:118px!important;height:46px!important}.mainHeader{overflow:visible!important}.headerBtns .btnGold{display:none!important}}
 
 </style>
 </head>
@@ -1293,8 +1320,6 @@ body:after{
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 const firebaseConfig={
   apiKey:"AIzaSyCG12rkj5RU2pLOMLxXTw-2AS9DcO3FUFs",
@@ -1304,8 +1329,21 @@ const firebaseConfig={
   messagingSenderId:"926766818209",
   appId:"1:926766818209:web:11b7a8b68ca0a55860e1e0"
 };
-firebase.initializeApp(firebaseConfig);
-const db=firebase.firestore();
+let db=null;
+function serverTimestamp(){
+  try{return (window.firebase&&firebase.firestore)?serverTimestamp():new Date().toISOString();}
+  catch(e){return new Date().toISOString();}
+}
+function initFirebaseSafe(){
+  try{
+    if(window.firebase && firebase.initializeApp && firebase.firestore){
+      if(!firebase.apps || !firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      db=firebase.firestore();
+    }
+  }catch(e){console.warn('Firebase غير متاح حالياً، سيتم الاعتماد على التخزين المحلي وواتساب.', e); db=null;}
+}
+initFirebaseSafe();
+window.addEventListener('load', initFirebaseSafe);
 
 const products=[{"id": 1, "number": 1, "name": "الملعب الصابوني الهوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "1.jpg"}, {"id": 2, "number": 2, "name": "الملعب الصابوني ارضي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "2.jpg"}, {"id": 3, "number": 3, "name": "ملعب صابوني هوائي لكرة السلة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "14", "width": "8", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "3.jpg"}, {"id": 4, "number": 4, "name": "زحلاقية ونطاطية مغامرات سبايدرمان", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "5", "age": "من 6 سنوات الى 18 سنة", "image": "4.jpg"}, {"id": 5, "number": 5, "name": "زحلاقية ونطاطية السفينة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "5.jpg"}, {"id": 6, "number": 6, "name": "زحلاقية ونطاطية فروزن", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "6.jpg"}, {"id": 7, "number": 7, "name": "زحلاقية ونطاطية البرنسيس", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "7.jpg"}, {"id": 8, "number": 8, "name": "زحلاقية ونطاطية الخارقون 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "8.jpg"}, {"id": 9, "number": 9, "name": "زحلاقية ونطاطية مني ماوس وبطوطة", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "9.jpg"}, {"id": 10, "number": 10, "name": "زحلاقية ونطاطية منيونز", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "10.jpg"}, {"id": 11, "number": 11, "name": "الملعب الصابوني الهوائي 3", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "11.jpg"}, {"id": 12, "number": 12, "name": "الملعب الصابوني الهوائي 2", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "12.jpg"}, {"id": 13, "number": 13, "name": "الملعب الصابوني الهوائي لكرة القدم", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "10", "width": "5", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "13.jpg"}, {"id": 14, "number": 14, "name": "زحلاقية عالم ديزني العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "14.jpg"}, {"id": 15, "number": 15, "name": "زحلاقية ونطاطية جنغل زوون", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "9", "width": "6.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "15.jpg"}, {"id": 16, "number": 16, "name": "نطاطية مينونز", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "النطاطيات الجافة", "length": "4", "width": "3", "height": "3", "age": "من2 سنوات الى 5 سنة", "image": "16.jpg"}, {"id": 17, "number": 17, "name": "نطاطية المهرج", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "النطاطيات الجافة", "length": "4", "width": "4", "height": "3", "age": "من2 سنوات الى 5 سنة", "image": "17.jpg"}, {"id": 18, "number": 18, "name": "النطاطية الراقصة", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "النطاطيات الجافة", "length": "4", "width": "3", "height": "3", "age": "من2 سنوات الى 5 سنة", "image": "18.jpg"}, {"id": 19, "number": 19, "name": "ملعب ديزني الصابوني الهوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "10", "width": "5", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "19.jpg"}, {"id": 20, "number": 20, "name": "ملعب 2022 الصابوني الهوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "20.jpg"}, {"id": 21, "number": 21, "name": "زحلاقية  كاندي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "8", "width": "5.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "21.jpg"}, {"id": 22, "number": 22, "name": "زحلاقية العصر الجليدي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "4.5", "height": "9", "age": "من 6 سنوات الى 18 سنة", "image": "22.jpg"}, {"id": 23, "number": 23, "name": "زحلاقية الاميرات السبعة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "8", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "23.jpg"}, {"id": 24, "number": 24, "name": "نطاطية وزحلاقية يونيكورن", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "24.jpg"}, {"id": 25, "number": 25, "name": "نطاطية وزحلاقية الفراشات", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "4.4", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "25.jpg"}, {"id": 26, "number": 26, "name": "نطاطية وزحلاقية صوفيا", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "26.jpg"}, {"id": 27, "number": 27, "name": "نطاطية وزحلاقية قصر الاميرات", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "27.jpg"}, {"id": 28, "number": 28, "name": "زحلاقية ونطاطية ميكي وميني 1", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "28.jpg"}, {"id": 29, "number": 29, "name": "زحلاقية ونطاطية لول 1", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "29.jpg"}, {"id": 30, "number": 30, "name": "زحلاقية ونطاطية سبايدرمان 1", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "7.5", "width": "4.5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "30.jpg"}, {"id": 31, "number": 31, "name": "زحلاقية الابطال الخارقين", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "7.5", "width": "4", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "31.jpg"}, {"id": 32, "number": 32, "name": "نطاطية وزحلاقية ببجي وفورت نايت", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5.5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "32.jpg"}, {"id": 33, "number": 33, "name": "نطاطية وزحلاقية عربة اليونيكورن", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5.5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "33.jpg"}, {"id": 34, "number": 34, "name": "زحلاقية بارتي المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "34.jpg"}, {"id": 35, "number": 35, "name": "زحلاقية منيونز المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "35.jpg"}, {"id": 36, "number": 36, "name": "زحلاقية الاخطبوط المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "4.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "36.jpg"}, {"id": 37, "number": 37, "name": "زحلاقية الفلامينجو المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "37.jpg"}, {"id": 38, "number": 38, "name": "نطاطية وزحلاقية اليونيكورن المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "4.5", "height": "5", "age": "من 6 سنوات الى 18 سنة", "image": "38.jpg"}, {"id": 39, "number": 39, "name": "زحلاقية نيوكورن المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "10", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "39.jpg"}, {"id": 40, "number": 40, "name": "زحلاقية بيبي شرك المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "13", "width": "6", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "40.jpg"}, {"id": 41, "number": 41, "name": "زحلاقية سبايدر وسوبرمان المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "6", "age": "من2 سنوات الى 8 سنة", "image": "41.jpg"}, {"id": 42, "number": 42, "name": "زحلاقية جزيرة الفلامنجو المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "7", "width": "6", "height": "6", "age": "من2 سنوات الى 8 سنة", "image": "42.jpg"}, {"id": 43, "number": 43, "name": "زحلاقية فروزن المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "10", "width": "5", "height": "8", "age": "من 6 سنوات الى 18 سنة", "image": "43.jpg"}, {"id": 44, "number": 44, "name": "زحلاقية الحورية المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "44.jpg"}, {"id": 45, "number": 45, "name": "زحلاقية ونطاطية الباندا", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "45.jpg"}, {"id": 46, "number": 46, "name": "زحلاقية الأسد الملك المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "46.jpg"}, {"id": 47, "number": 47, "name": "زحلاقية القراصنة المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "47.jpg"}, {"id": 48, "number": 48, "name": "زحلاقية الديناصور المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "13", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "48.jpg"}, {"id": 49, "number": 49, "name": "زحلاقية ونطاطية كرة القدم", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "9", "width": "6.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "49.jpg"}, {"id": 50, "number": 50, "name": "زحلاقية الكاندي ( 2 ) المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "8", "width": "4", "height": "6.5", "age": "من 6 سنوات الى 18 سنة", "image": "50.jpg"}, {"id": 51, "number": 51, "name": "زحلاقية سلم الطائرة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "8", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "51.jpg"}, {"id": 52, "number": 52, "name": "زحلاقية توي ستوري", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "9", "width": "4", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "52.jpg"}, {"id": 53, "number": 53, "name": "زحلاقية اليونيكورن المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "8", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "53.jpg"}, {"id": 54, "number": 54, "name": "زحلاقية جزيرة الفلامينجو المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "7", "width": "6", "height": "6", "age": "من2 سنوات الى 8 سنة", "image": "54.jpg"}, {"id": 55, "number": 55, "name": "زحلاقية لول المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "7", "width": "6", "height": "6", "age": "من2 سنوات الى 8 سنة", "image": "55.jpg"}, {"id": 56, "number": 56, "name": "زحلاقية الديناصور المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "13", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "56.jpg"}, {"id": 57, "number": 57, "name": "زحلاقية الاخطبوط المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "57.jpg"}, {"id": 58, "number": 58, "name": "زحلاقية القراصنة المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "58.jpg"}, {"id": 59, "number": 59, "name": "زحلاقية الأسد الملك المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "59.jpg"}, {"id": 60, "number": 60, "name": "زحلاقية السيارة العجيبةالمائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "60.jpg"}, {"id": 61, "number": 61, "name": "زحلاقية الاميرات المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "61.jpg"}, {"id": 62, "number": 62, "name": "زحلاقية عالم ديزني المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "62.jpg"}, {"id": 63, "number": 63, "name": "زحلاقية الكاندي المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "8", "age": "من 6 سنوات الى 18 سنة", "image": "63.jpg"}, {"id": 64, "number": 64, "name": "زحلاقية الباندا المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "64.jpg"}, {"id": 65, "number": 65, "name": "ملعب صابوني هوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "65.jpg"}, {"id": 66, "number": 66, "name": "ملعب صابوني هوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "66.jpg"}, {"id": 67, "number": 67, "name": "ملعب صابوني هوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "10", "width": "5", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "67.jpg"}, {"id": 68, "number": 68, "name": "حوض الجزيرة 2", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "حوض سباحة", "category": "النطاطيات المائية", "length": "7", "width": "7", "height": "60 سم", "age": "من2 سنوات الى 10 سنة", "image": "68.jpg"}, {"id": 69, "number": 69, "name": "حوض الجزيرة 1", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "حوض سباحة", "category": "النطاطيات المائية", "length": "8", "width": "6", "height": "60 سم", "age": "من2 سنوات الى 10 سنة", "image": "69.jpg"}, {"id": 70, "number": 70, "name": "زحلاقية ونطاطية سبايدرمان", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "7", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "70.jpg"}, {"id": 71, "number": 71, "name": "زحلاقية ونطاطية فورت نايت 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "71.jpg"}, {"id": 72, "number": 72, "name": "زحلاقية ونطاطية الاميرات 3", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "72.jpg"}, {"id": 73, "number": 73, "name": "زحلاقية ونطاطية الاميرات 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "73.jpg"}, {"id": 74, "number": 74, "name": "زحلاقية ونطاطية لول 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "74.jpg"}, {"id": 75, "number": 75, "name": "زحلاقية ونطاطية ميكي وميني 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "75.jpg"}, {"id": 76, "number": 76, "name": "زحلاقية ونطاطية فروزن وآنا", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "7", "width": "6", "height": "5", "age": "من 6 سنوات الى 18 سنة", "image": "76.jpg"}, {"id": 77, "number": 77, "name": "زحلاقية ونطاطية الكاندي 2", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "77.jpg"}, {"id": 78, "number": 78, "name": "زحلاقية ونطاطية سبايدر ومان", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "78.jpg"}, {"id": 79, "number": 79, "name": "زحلاقية ونطاطية فروزن", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "79.jpg"}, {"id": 80, "number": 80, "name": "PJMASKS زحلاقية ونطاطية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "80.jpg"}, {"id": 81, "number": 81, "name": "زحلاقية الديناصور", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "8", "width": "5", "height": "7.5", "age": "من 6 سنوات الى 18 سنة", "image": "81.jpg"}, {"id": 82, "number": 82, "name": "زحلاقية بيبي يونيكورن", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "82.jpg"}, {"id": 83, "number": 83, "name": "حوض سباحة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "حوض سباحة", "category": "النطاطيات المائية", "length": "8", "width": "6", "height": "60 سم", "age": "من2 سنوات الى 10 سنة", "image": "83.jpg"}, {"id": 84, "number": 84, "name": "جهاز الرغوة الصابوني المدفع", "rentType": "ايجار", "priceTwoDays": 1000, "durationTwoDays": "يومين + عدد 2 كيس صابون", "priceOneDay": 500, "durationOneDay": "يوم واحد + عدد 1 كيس صابون", "type": "رغوة", "category": "الملاعب الصابونية", "length": "", "width": "", "height": "", "age": "من 2 سنوات الى 18 سنة", "image": "84.jpg"}, {"id": 85, "number": 85, "name": "جهاز الرغوة الصابوني الشلال", "rentType": "ايجار", "priceTwoDays": 1000, "durationTwoDays": "يومين + عدد 2 كيس صابون", "priceOneDay": 500, "durationOneDay": "يوم واحد + عدد 1 كيس صابون", "type": "رغوة", "category": "الملاعب الصابونية", "length": "", "width": "", "height": "", "age": "من 2 سنوات الى 18 سنة", "image": "85.jpg"}];
 
@@ -1416,6 +1454,23 @@ const iconMap={
 };
 const categories=['الكل',...Array.from(new Set(products.map(p=>p.category)))];
 
+// ===== Internet realistic images updater =====
+function internetProductQuery(p){
+  const name=(p.name||'')+' '+(p.type||'')+' '+(p.category||'');
+  if(name.includes('رغوة')||name.includes('فوم')) return 'foam party machine kids party';
+  if(name.includes('حوض')||name.includes('مسبح')) return 'inflatable pool kids water';
+  if(name.includes('صابوني')) return 'inflatable foam pool slip slide kids';
+  if(name.includes('مائية')||name.includes('مائي')) return 'inflatable water slide bounce house kids';
+  if(name.includes('زحلاقية')||name.includes('زحلاقيات')) return 'inflatable slide bounce house kids';
+  if(name.includes('جافة')) return 'dry bouncy castle kids';
+  return 'bouncy castle kids inflatable';
+}
+products.forEach(p=>{
+  const q=internetProductQuery(p).replaceAll(' ', ',');
+  p.image=`https://loremflickr.com/620/430/${q}?lock=${1000 + Number(p.number||p.id||1)}`;
+});
+
+
 function populateQatarAreas(){
   const list=document.getElementById('qatarAreasList');
   if(!list)return;
@@ -1520,7 +1575,7 @@ async function authSaveCustomer(){
   const c={phone:pendingAuth.phone,name,address,location:pendingAuth.location,coords:pendingAuth.coords||'',updatedAt:new Date().toISOString()};
   localStorage.setItem('customer',JSON.stringify(c));
   try{
-    await db.collection('customers').doc(c.phone).set({...c,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    if(db) await db.collection('customers').doc(c.phone).set({...c,updatedAt:serverTimestamp()},{merge:true});
   }catch(e){ console.error(e); }
   closeLogin(); showProfile(); renderCart();
   alert('تم حفظ بيانات الزبون بنجاح ✅');
@@ -1533,7 +1588,7 @@ async function saveCustomerLocationLink(link){
   if(!c){openLogin();return false}
   c.location=link;
   localStorage.setItem('customer',JSON.stringify(c));
-  try{ await db.collection('customers').doc(c.phone).set({location:link,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}); }catch(e){ console.error(e); }
+  try{ if(db) await db.collection('customers').doc(c.phone).set({location:link,updatedAt:serverTimestamp()},{merge:true}); }catch(e){ console.error(e); }
   return true;
 }
 function getCartLocation(){ openLogin(true); }
@@ -1588,9 +1643,9 @@ function showHome(){
       <div class="heroVisual">
         <div class="balloon b1"></div><div class="balloon b2"></div><div class="balloon b3"></div>
         <div class="showcase">
-          <div class="showcaseCard big"><img src="${heroMain.image}" onerror="this.src='${heroMain.number}.jpg';this.onerror=null"></div>
-          <div class="showcaseCard small1"><img src="${heroSide1.image}" onerror="this.src='${heroSide1.number}.jpg';this.onerror=null"></div>
-          <div class="showcaseCard small2"><img src="${heroSide2.image}" onerror="this.src='${heroSide2.number}.jpg';this.onerror=null"></div>
+          <div class="showcaseCard big"><img loading="lazy" decoding="async" src="${heroMain.image}" onerror="this.src='${heroMain.number}.jpg';this.onerror=null"></div>
+          <div class="showcaseCard small1"><img loading="lazy" decoding="async" src="${heroSide1.image}" onerror="this.src='${heroSide1.number}.jpg';this.onerror=null"></div>
+          <div class="showcaseCard small2"><img loading="lazy" decoding="async" src="${heroSide2.image}" onerror="this.src='${heroSide2.number}.jpg';this.onerror=null"></div>
           <div class="showcaseBubble one">نطاطيات + زحاليق</div>
           <div class="showcaseBubble two">حجز سريع</div>
         </div>
@@ -1631,22 +1686,61 @@ function svgThumb(icon,title,bg1='#ffdce9',bg2='#fff1c8',accent='#ff4f93'){
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 420"><defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="${bg1}"/><stop offset="1" stop-color="${bg2}"/></linearGradient><linearGradient id="g2" x1="0" x2="1"><stop stop-color="#ffffff" stop-opacity="0.95"/><stop offset="1" stop-color="#ffffff" stop-opacity="0.55"/></linearGradient></defs><rect width="640" height="420" rx="32" fill="url(#g)"/><circle cx="86" cy="80" r="54" fill="#ffffff" fill-opacity="0.55"/><circle cx="560" cy="64" r="38" fill="#ffffff" fill-opacity="0.30"/><rect x="52" y="250" width="536" height="114" rx="28" fill="url(#g2)"/><text x="320" y="166" text-anchor="middle" font-size="120">${icon}</text><text x="320" y="302" text-anchor="middle" font-size="38" font-family="Arial" font-weight="700" fill="#6a2346">${title}</text><rect x="235" y="328" width="170" height="12" rx="6" fill="${accent}" fill-opacity="0.22"/><rect x="258" y="349" width="124" height="10" rx="5" fill="${accent}" fill-opacity="0.16"/></svg>`;
   return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
 }
+function internetPhotoThumb(title){
+  const map={
+    'جميع النطاطيات والزحلاقيات':'https://loremflickr.com/520/360/inflatable,bounce,house,kids?lock=2001',
+    'النطاطيات والزحلاقيات المائية':'https://loremflickr.com/520/360/inflatable,water,slide,kids?lock=2002',
+    'نطاطيات جافة للأطفال':'https://loremflickr.com/520/360/dry,bouncy,castle,kids?lock=2003',
+    'زحاليق كبيرة وصغيرة':'https://loremflickr.com/520/360/inflatable,slide,kids,party?lock=2004',
+    'ملاعب صابونية وفوم':'https://loremflickr.com/520/360/foam,party,inflatable,pool,kids?lock=2005',
+    'أحواض ومسابح أطفال':'https://loremflickr.com/520/360/inflatable,pool,kids,water?lock=2006',
+    'أجهزة الرغوة والحفلات':'https://loremflickr.com/520/360/foam,party,machine?lock=2007',
+    'العروض والبكجات':'https://loremflickr.com/520/360/party,package,children,birthday?lock=2008',
+    'جميع العروض':'https://loremflickr.com/520/360/birthday,party,package,kids?lock=2009',
+    'عروض الحفلات والمناسبات':'https://loremflickr.com/520/360/kids,party,decorations,balloons?lock=2010',
+    'عروض النطاطيات':'https://loremflickr.com/520/360/bouncy,castle,party,kids?lock=2011',
+    'عروض الملاعب الصابونية مع الفوم':'https://loremflickr.com/520/360/foam,party,kids,inflatable?lock=2012',
+    'عروض المسابح':'https://loremflickr.com/520/360/inflatable,swimming,pool,kids?lock=2013',
+    'جميع العربات':'https://loremflickr.com/520/360/snack,cart,party?lock=2014',
+    'عربة الفشار':'https://loremflickr.com/520/360/popcorn,cart,machine?lock=2015',
+    'عربة غزل البنات':'https://loremflickr.com/520/360/cotton,candy,cart?lock=2016',
+    'عربة البطاطا الحلزونية':'https://loremflickr.com/520/360/spiral,potato,snack?lock=2017',
+    'عربة الذرة الحلوة':'https://loremflickr.com/520/360/sweet,corn,bowl?lock=2018',
+    'عربة الايسكريم':'https://loremflickr.com/520/360/soft,serve,ice,cream,cart?lock=2019',
+    'عربة البراد مع الايسكريم':'https://loremflickr.com/520/360/slush,ice,cream,cart?lock=2020',
+    'عربة اشلال الشكولاتة':'https://loremflickr.com/520/360/chocolate,fountain,party?lock=2021',
+    'عربة الوافل':'https://loremflickr.com/520/360/waffle,cart?lock=2022',
+    'عربة البانكيك':'https://loremflickr.com/520/360/pancake,stack?lock=2023',
+    'عربة السلايم':'https://loremflickr.com/520/360/kids,slime,party?lock=2024',
+    'عربة الحلويات – جيلي':'https://loremflickr.com/520/360/jelly,candy,sweets?lock=2025',
+    'اختيار شكل العربة':'https://loremflickr.com/520/360/decorated,snack,cart?lock=2026',
+    'جميع الحفلات':'https://loremflickr.com/520/360/kids,birthday,party,decorations?lock=2027',
+    'حفلات أعياد الميلاد':'https://loremflickr.com/520/360/birthday,cake,balloons,party?lock=2028',
+    'حفلات التخرج':'https://loremflickr.com/520/360/graduation,party,decorations?lock=2029',
+    'حفلات المدارس والروضات':'https://loremflickr.com/520/360/school,party,kids,balloons?lock=2030',
+    'حفلات الفنادق والشركات':'https://loremflickr.com/520/360/corporate,hotel,event,party?lock=2031',
+    'حفلات الخطوبة':'https://loremflickr.com/520/360/engagement,party,decoration?lock=2032',
+    'حفلات الزواج':'https://loremflickr.com/520/360/wedding,party,decoration?lock=2033',
+    'حفلات خاصة':'https://loremflickr.com/520/360/private,party,decorations?lock=2034'
+  };
+  return map[title]||null;
+}
 function renderMegaCards(items){
   return `<div class="offerTypeGrid megaGrid">${items.map(item=>{
     const msg=encodeURIComponent(item.message||`السلام عليكم، أريد الاستفسار عن ${item.title}`);
-    const img=item.image||svgThumb(item.icon||'🎉', item.title, item.bg1||'#ffdce9', item.bg2||'#fff1c8', item.accent||'#ff4f93');
+    const img=internetPhotoThumb(item.title) || item.image || svgThumb(item.icon||'🎉', item.title, item.bg1||'#ffdce9', item.bg2||'#fff1c8', item.accent||'#ff4f93');
     const kicker=item.kicker?`<span class="offerKicker">${item.kicker}</span>`:'';
     const actionBtn=item.action?`<button class="ghostBtn" onclick="${item.action}">${item.actionLabel||'عرض القسم'}</button>`:'';
-    return `<div class="offerTypeCard"><div class="offerTypeImage"><img src="${img}" alt="${item.title}" onerror="this.src='47.jpg';this.onerror=null"><span class="offerTypeBadge">${item.badge||item.icon||'🎀'}</span></div><div class="offerTypeBody">${kicker}<h3>${item.title}</h3><p>${item.subtitle||''}</p><strong>${item.price||'السعر حسب الاختيار'}</strong><div class="offerTypeActions">${actionBtn}<button onclick="window.open('https://wa.me/97433317720?text=${msg}','_blank')">استفسار واتساب</button></div></div></div>`;
+    return `<div class="offerTypeCard"><div class="offerTypeImage"><img loading="lazy" src="${img}" alt="${item.title}" onerror="this.src='47.jpg';this.onerror=null"><span class="offerTypeBadge">${item.badge||item.icon||'🎀'}</span></div><div class="offerTypeBody">${kicker}<h3>${item.title}</h3><p>${item.subtitle||''}</p><strong>${item.price||'السعر حسب الاختيار'}</strong><div class="offerTypeActions">${actionBtn}<button onclick="window.open('https://wa.me/97433317720?text=${msg}','_blank')">استفسار واتساب</button></div></div></div>`;
   }).join('')}</div>`;
 }
 function renderMiniCards(items){
   return `<div class="snoonuMiniGrid">${items.map(item=>{
     const msg=encodeURIComponent(item.message||`السلام عليكم، أريد الاستفسار عن ${item.title}`);
-    const img=item.image||svgThumb(item.icon||'🎉', item.title, item.bg1||'#ffdce9', item.bg2||'#fff1c8', item.accent||'#ff4f93');
+    const img=internetPhotoThumb(item.title) || item.image || svgThumb(item.icon||'🎉', item.title, item.bg1||'#ffdce9', item.bg2||'#fff1c8', item.accent||'#ff4f93');
     const clickAction=item.action || `window.open('https://wa.me/97433317720?text=${msg}','_blank')`;
     const hint=item.action ? 'اضغط لعرض القسم' : 'اضغط للاستفسار';
-    return `<div class="snoonuMiniCard" onclick="${clickAction}"><div class="snoonuMiniThumb"><img src="${img}" alt="${item.title}" onerror="this.src='47.jpg';this.onerror=null"></div><h3 class="snoonuMiniTitle">${item.title}</h3><span class="snoonuMiniLabel">${item.badge||item.kicker||item.icon||'قسم'}</span><div class="snoonuMiniHint">${hint}</div></div>`;
+    return `<div class="snoonuMiniCard" onclick="${clickAction}"><div class="snoonuMiniThumb"><img loading="lazy" src="${img}" alt="${item.title}" onerror="this.src='47.jpg';this.onerror=null"></div><h3 class="snoonuMiniTitle">${item.title}</h3><span class="snoonuMiniLabel">${item.badge||item.kicker||item.icon||'قسم'}</span><div class="snoonuMiniHint">${hint}</div></div>`;
   }).join('')}</div>`;
 }
 function showBounciesPage(){
@@ -1808,7 +1902,7 @@ function card(p){
         </div>
       </div>
     </div>
-    <div class="productImg rowCardImage" onclick="openProduct(${p.number})" title="اضغط لعرض التفاصيل"><img src="${p.image}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div>
+    <div class="productImg rowCardImage" onclick="openProduct(${p.number})" title="اضغط لعرض التفاصيل"><img loading="lazy" src="${p.image}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div>
   </div>`;
 }
 
@@ -1820,7 +1914,7 @@ function openProduct(num){
   const waterOrDry = (p.type||p.category||'').includes('مائية') || (p.category||'').includes('مائية') || (p.type||'').includes('حوض') ? 'مائية' : ((p.type||'').includes('صابوني') ? 'صابونية' : 'جافة');
   productModalContent.innerHTML=`
   <div class="productDetail">
-    <div class="detailImage"><img src="${p.image}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div>
+    <div class="detailImage"><img loading="lazy" src="${p.image}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div>
     <div class="detailSide">
       <div class="modalHeader">
         <div class="tags"><span class="tag">لعبة #${p.number}</span><span class="tag">${p.category}</span><span class="tag">${waterOrDry}</span></div>
@@ -1880,7 +1974,16 @@ function quickWhatsapp(num){
   const msg=`السلام عليكم، أريد الاستفسار عن النطاطية رقم ${p.number} - ${p.name}%0Aالسعر يوم: ${p.priceOneDay} ر.ق%0Aالسعر يومين: ${p.priceTwoDays} ر.ق`;
   window.open(`https://wa.me/${whatsappNumber}?text=${msg}`,'_blank');
 }
-function renderCurrent(){(page==='category'||page==='bouncies')?renderProducts():showHome()}
+function renderCurrent(){
+  const q=(search?.value||'').trim();
+  if(q){
+    page='category'; activeCategory='الكل'; backBtn.style.display='inline-block';
+    if([...quickCategory.options].some(o=>o.value==='الكل')) quickCategory.value='الكل';
+    renderProducts();
+    return;
+  }
+  (page==='category'||page==='bouncies')?renderProducts():showHome();
+}
 
 function addToCart(id){
   const p=products.find(x=>x.number==id);
@@ -1926,13 +2029,19 @@ async function submitOrder(){
   const order={
     customerName:c.name,phone:c.phone,address:c.address||'',location:c.location||'',paymentMethod,
     items:cart.map(i=>({number:i.number,name:i.name,type:i.type,category:i.category,price:i.selectedPrice,bookingDate:i.bookingDate,period:i.period,setupTime:i.period,durationDays:i.durationDays,length:i.length,width:i.width,height:i.height,age:i.age,image:i.image,itemNote:i.itemNote||''})),
-    total,notes,status:'جديد',createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    total,notes,status:'جديد',createdAt:serverTimestamp()
   };
   try{
+    if(!db){
+      const localOrders=JSON.parse(localStorage.getItem('orders')||'[]');
+      localOrders.unshift({...order,id:'LOCAL-'+Date.now(),createdAt:new Date().toISOString()});
+      localStorage.setItem('orders',JSON.stringify(localOrders));
+    }else{
     const ref=await db.collection('orders').add(order);
     await db.collection('customers').doc(c.phone).collection('orders').add({...order,orderId:ref.id});
-    await db.collection('customers').doc(c.phone).set({lastOrderId:ref.id,lastOrderTotal:total,lastOrderStatus:'جديد',lastPaymentMethod:paymentMethod,lastOrderAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
-  }catch(e){console.error(e);alert('تحقق من Firebase Rules. سيتم فتح واتساب الآن')}
+    if(db) await db.collection('customers').doc(c.phone).set({lastOrderId:ref.id,lastOrderTotal:total,lastOrderStatus:'جديد',lastPaymentMethod:paymentMethod,lastOrderAt:serverTimestamp()},{merge:true});
+    }
+  }catch(e){console.error(e);alert('تعذر حفظ الطلب في قاعدة البيانات، سيتم فتح واتساب الآن')}
   let msg=`السلام عليكم، طلب جديد من موقع الملكة:%0A%0Aالزبون: ${c.name}%0Aالهاتف: ${c.phone}%0Aالعنوان: ${c.address||''}%0Aالموقع: ${c.location||''}%0Aطريقة السداد: ${paymentMethod}%0A%0A`;
   cart.forEach((i,n)=>msg+=`${n+1}) #${i.number} - ${i.name}%0Aالتاريخ: ${i.bookingDate} | الفترة: ${i.period}%0Aالمدة: ${i.durationDays} يوم | السعر: ${i.selectedPrice} ر.ق%0A${i.itemNote?`ملاحظة: ${i.itemNote}%0A`:''}%0A`);
   msg+=`الإجمالي: ${total} ر.ق%0Aطريقة السداد: ${paymentMethod}%0Aملاحظات عامة: ${notes}`;
@@ -1945,9 +2054,13 @@ function closeAdmin(){adminModal.style.display='none'}
 async function renderAdmin(){
   let orders=[];
   try{
-    const snap=await db.collection('orders').orderBy('createdAt','desc').get();
-    snap.forEach(d=>orders.push({id:d.id,...d.data()}));
-  }catch(e){console.error(e)}
+    if(db){
+      const snap=await db.collection('orders').orderBy('createdAt','desc').get();
+      snap.forEach(d=>orders.push({id:d.id,...d.data()}));
+    }else{
+      orders=JSON.parse(localStorage.getItem('orders')||'[]');
+    }
+  }catch(e){console.error(e); orders=JSON.parse(localStorage.getItem('orders')||'[]');}
   const q=(adminSearch.value||'').trim();
   const f=orders.filter(o=>!q||(o.phone||'').includes(q)||(o.customerName||'').includes(q));
   statOrders.textContent=orders.length;
