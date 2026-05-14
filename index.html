@@ -1069,6 +1069,24 @@ body:after{
 /* ===== NAV RTL FIX ===== */
 .navMenu{direction:rtl !important;flex-direction:row !important;justify-content:flex-start !important}
 
+
+/* ===== حذف البلوكات القديمة المرفقة من الصفحة الرئيسية ===== */
+.serviceStrip,
+.compactHomeGuide,
+.guideNoteSide,
+.guideAside{
+  display:none !important;
+}
+.homeQuickTypes{
+  margin-inline:auto;
+  justify-content:center;
+}
+.heroText{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
 </style>
 </head>
 <body>
@@ -1558,35 +1576,6 @@ function showHome(){
       </div>
     </div>
 
-    <div class="serviceStrip">
-      <div class="service"><span>🎪</span>صور ألعاب واضحة</div>
-      <div class="service"><span>💦</span>مائي وجاف وصابوني</div>
-      <div class="service"><span>📅</span>اختيار التاريخ والوقت</div>
-      <div class="service"><span>🚚</span>توصيل وتركيب داخل قطر</div>
-    </div>
-  </section>
-
-  <section class="container compactHomeGuide">
-    <div class="guideNoteSide">
-      <div class="miniFunBox">
-        <h3>كل لعبة واضحة كأنها قدامك 🎉</h3>
-        <p>صور أوضح وخطوات أخف حتى تختار اللعبة بسرعة بدون ما تأخذ مساحة كبيرة من الصفحة الرئيسية.</p>
-      </div>
-      <div class="funSteps compactSteps">
-        <div class="step"><b>1</b><span>اختار اللعبة أو القسم</span></div>
-        <div class="step"><b>2</b><span>افتح الحجز وحدد التاريخ</span></div>
-        <div class="step"><b>3</b><span>أضف للسلة وأرسل الطلب واتساب</span></div>
-      </div>
-    </div>
-    <div class="guideAside">
-      <div class="compactGuideHeader">
-        <h2>اختار نوع المتعة ✨</h2>
-        <p>بطاقات صغيرة وسهلة للأطفال والأهل</p>
-      </div>
-      <div class="mainCats compactCats">
-        ${counts.map(([c,n])=>`<div class="cat" onclick="showCategory('${c}')"><div class="icon">${iconMap[c]||'🎪'}</div><div class="title">${c}</div><div class="count">${n} لعبة</div></div>`).join('')}
-      </div>
-    </div>
   </section>
 
   <section class="container">
