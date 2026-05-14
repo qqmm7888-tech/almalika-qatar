@@ -1055,6 +1055,24 @@ body:after{
 @media(max-width:1100px){.subPageCards{grid-template-columns:repeat(3,minmax(0,1fr))}.pageCardsGrid,.pageCardsGrid.snacksGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.navMenu{overflow:auto;justify-content:flex-start !important;flex-wrap:nowrap !important;padding-bottom:6px}.navMenu button{font-size:12px !important;flex:0 0 auto}.pageBanner{padding:22px 16px;border-radius:24px}.pageBanner h1{font-size:26px}.subPageCards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pageCardsGrid,.pageCardsGrid.snacksGrid{grid-template-columns:1fr}.contentCard{min-height:auto}.termItem{align-items:flex-start}}
 
+
+/* ===== V18: clean page sections + image cards for all pages ===== */
+.pageCardsGrid,.pageCardsGrid.snacksGrid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:18px!important;align-items:stretch!important}
+.contentCard,.contentCard.small,.pageTypeCard{min-height:auto!important;text-align:right!important;align-items:stretch!important;padding:0!important;overflow:hidden!important;border-radius:26px!important;background:rgba(255,255,255,.88)!important;border:1px solid rgba(216,178,93,.34)!important;box-shadow:0 14px 30px rgba(185,130,153,.10)!important;display:flex!important;flex-direction:column!important;gap:0!important}
+.typeCardImg{height:165px;background:linear-gradient(135deg,#fff7fb,#fff3dd);overflow:hidden;position:relative}
+.typeCardImg img{width:100%;height:100%;object-fit:cover;display:block;transition:.25s}
+.contentCard:hover .typeCardImg img{transform:scale(1.04)}
+.typeCardIcon{position:absolute;top:12px;right:12px;width:42px;height:42px;border-radius:16px;display:grid;place-items:center;background:rgba(255,255,255,.92);border:1px solid rgba(216,178,93,.35);font-size:21px;box-shadow:0 8px 18px rgba(0,0,0,.06)}
+.typeCardBody{padding:16px 16px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
+.typeCardBody h3,.contentCard h3{margin:0!important;color:#7a284e!important;font-size:18px!important;line-height:1.35!important}
+.typeCardBody p,.contentCard p{margin:0!important;color:#7d6873!important;font-weight:700!important;line-height:1.7!important;font-size:12.5px!important;flex:1!important}
+.typeCardBody strong{font-size:16px;color:#e51b60;line-height:1.5}
+.typeCardBody button,.contentCard button{border:0!important;border-radius:15px!important;padding:11px 13px!important;background:linear-gradient(135deg,#25D366,#17b85a)!important;color:#fff!important;font-weight:900!important;margin-top:8px!important;cursor:pointer!important}
+.typeCardBody button.pinkBtn{background:linear-gradient(135deg,#ff1568,#ff4c95)!important}
+.offerTypeGrid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:18px!important}.offerTypeCard{min-height:auto!important}.offerTypeImage{height:165px!important}.offerTypeBody{padding:16px!important}.offerTypeBody h3{font-size:18px!important}.offerTypeBody p{font-size:12.5px!important}.offerTypeBody strong{font-size:16px!important}
+@media(max-width:1100px){.pageCardsGrid,.pageCardsGrid.snacksGrid,.offerTypeGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:620px){.pageCardsGrid,.pageCardsGrid.snacksGrid,.offerTypeGrid{grid-template-columns:1fr!important}.typeCardImg,.offerTypeImage{height:180px!important}}
+
 </style>
 </head>
 <body>
@@ -1521,36 +1539,6 @@ function showHome(){
         </div>
       </div>
     </div>
-
-    <div class="serviceStrip">
-      <div class="service"><span>🎪</span>صور ألعاب واضحة</div>
-      <div class="service"><span>💦</span>مائي وجاف وصابوني</div>
-      <div class="service"><span>📅</span>اختيار التاريخ والوقت</div>
-      <div class="service"><span>🚚</span>توصيل وتركيب داخل قطر</div>
-    </div>
-  </section>
-
-  <section class="container compactHomeGuide">
-    <div class="guideNoteSide">
-      <div class="miniFunBox">
-        <h3>كل لعبة واضحة كأنها قدامك 🎉</h3>
-        <p>صور أوضح وخطوات أخف حتى تختار اللعبة بسرعة بدون ما تأخذ مساحة كبيرة من الصفحة الرئيسية.</p>
-      </div>
-      <div class="funSteps compactSteps">
-        <div class="step"><b>1</b><span>اختار اللعبة أو القسم</span></div>
-        <div class="step"><b>2</b><span>افتح الحجز وحدد التاريخ</span></div>
-        <div class="step"><b>3</b><span>أضف للسلة وأرسل الطلب واتساب</span></div>
-      </div>
-    </div>
-    <div class="guideAside">
-      <div class="compactGuideHeader">
-        <h2>اختار نوع المتعة ✨</h2>
-        <p>بطاقات صغيرة وسهلة للأطفال والأهل</p>
-      </div>
-      <div class="mainCats compactCats">
-        ${counts.map(([c,n])=>`<div class="cat" onclick="showCategory('${c}')"><div class="icon">${iconMap[c]||'🎪'}</div><div class="title">${c}</div><div class="count">${n} لعبة</div></div>`).join('')}
-      </div>
-    </div>
   </section>
 
   <section class="container">
@@ -1569,24 +1557,28 @@ function setActiveNav(label){
 function pageHero(title, subtitle, badge='الملكة للحفلات'){
   return `<section class="container pageTop"><div class="pageBanner"><span>${badge}</span><h1>${title}</h1><p>${subtitle}</p></div></section>`;
 }
+function makeTypeCard(item){
+  const title=item.title, desc=item.desc||'', icon=item.icon||'🎪', image=item.image||'47.jpg', action=item.action||'';
+  return `<div class="contentCard pageTypeCard"><div class="typeCardImg"><img src="${image}" alt="${title}" onerror="this.src='47.jpg';this.onerror=null"><span class="typeCardIcon">${icon}</span></div><div class="typeCardBody"><h3>${title}</h3><p>${desc}</p><button class="pinkBtn" onclick="${action}">عرض القسم</button></div></div>`;
+}
 function bouncyTypeCards(){
   const typeCards = [
-    ['الكل','🎪','كل النطاطيات والزحاليق'],
-    ['النطاطيات المائية','💦','زحاليق وألعاب مائية'],
-    ['النطاطيات الجافة','🏰','نطاطيات جافة للأطفال'],
-    ['الزحلاقيات','🛝','زحاليق كبيرة وصغيرة'],
-    ['الملاعب الصابونية','🧼','ملاعب صابونية وفوم'],
-    ['أحواض السباحة','🏊','أحواض ومسابح أطفال'],
-    ['الفوم بارتي / الرغوة','泡','أجهزة الرغوة والحفلات']
+    {title:'جميع النطاطيات والزحلاقيات', icon:'🎪', image:'47.jpg', desc:'عرض كل الألعاب المتاحة من النطاطيات والزحاليق.', action:"showCategory('الكل')"},
+    {title:'النطاطيات والزحلاقيات المائية', icon:'💦', image:'34.jpg', desc:'ألعاب وزحاليق مائية مناسبة لأجواء الصيف.', action:"showCategory('النطاطيات المائية')"},
+    {title:'نطاطيات جافة للأطفال', icon:'🏰', image:'11.jpg', desc:'نطاطيات جافة للأطفال داخل المنازل والحدائق.', action:"showCategory('النطاطيات الجافة')"},
+    {title:'زحاليق كبيرة وصغيرة', icon:'🛝', image:'4.jpg', desc:'زحاليق بأحجام مختلفة حسب عمر الأطفال والمساحة.', action:"showCategory('الزحلاقيات')"},
+    {title:'ملاعب صابونية وفوم', icon:'🧼', image:'1.jpg', desc:'ملاعب صابونية مع خيارات الفوم والرغوة للحفلات.', action:"showCategory('الملاعب الصابونية')"},
+    {title:'أحواض ومسابح أطفال', icon:'🏊', image:'83.jpg', desc:'أحواض ومسابح أطفال للعب المائي الآمن.', action:"showCategory('أحواض السباحة')"},
+    {title:'أجهزة الرغوة والحفلات', icon:'泡', image:'84.jpg', desc:'أجهزة رغوة تضيف جو حماسي ومميز للحفلة.', action:"showCategory('الفوم بارتي / الرغوة')"},
+    {title:'العروض والبكجات', icon:'🎁', image:'63.jpg', desc:'بكجات جاهزة تجمع أكثر من خدمة بسعر مناسب.', action:'showOffersPage()'}
   ];
-  return `<div class="subPageCards">${typeCards.map(([cat,icon,title])=>`<button onclick="showCategory('${cat}')"><b>${icon}</b><strong>${title}</strong><small>${cat}</small></button>`).join('')}</div>`;
+  return `<div class="pageCardsGrid">${typeCards.map(makeTypeCard).join('')}</div>`;
 }
 function showBounciesPage(){
   page='bouncies'; activeCategory='الكل'; backBtn.style.display='none'; quickCategory.value='الكل'; setActiveNav('النطاطيات');
   app.innerHTML=`
-    ${pageHero('النطاطيات والزحاليق', 'اختار نوع النطاطية المناسبة للحفلة، وبعدها شوف الألعاب والأسعار والحجز مباشرة.', '🎈 صفحة النطاطيات')}
-    <section class="container">${bouncyTypeCards()}</section>
-    <section class="container"><div class="sectionTitle"><div><h2>كل الألعاب المتاحة</h2><p>اضغط على الصورة أو زر احجزها لفتح التفاصيل والحجز.</p></div></div><div class="products">${filteredProducts().map(card).join('')}</div></section>`;
+    ${pageHero('النطاطيات والزحاليق', 'اختار نوع النطاطية أو الزحلاقية، وكل قسم مرتب بصورة واضحة وسهلة.', '🎈 صفحة النطاطيات')}
+    <section class="container">${bouncyTypeCards()}</section>`;
 }
 function showOffersPage(){
   page='offers'; backBtn.style.display='none'; setActiveNav('العروض والبكجات');
@@ -1602,15 +1594,40 @@ function showOffersPage(){
 }
 function showSnacksPage(){
   page='snacks'; backBtn.style.display='none'; setActiveNav('السناك والعربات');
-  const snacks=[['فشار','🍿'],['غزل البنات','🍭'],['بطاطا حلزوني','🥔'],['ذرة حلوة','🌽'],['آيس كريم','🍦'],['بان كيك ووافل','🧇']];
-  app.innerHTML=`${pageHero('السناك والعربات', 'أضف عربات السناك للحفلة مع النطاطيات لزيادة المتعة وتجربة الأطفال.', '🍿 سناك الملكة')}
-  <section class="container"><div class="pageCardsGrid snacksGrid">${snacks.map(s=>`<div class="contentCard small"><div class="bigIcon">${s[1]}</div><h3>${s[0]}</h3><p>متاح للحفلات والمناسبات داخل قطر حسب العدد والوقت.</p><button onclick="window.open('https://wa.me/97433317720?text=السلام عليكم، أريد الاستفسار عن عربة ${encodeURIComponent(s[0])}','_blank')">اطلبها</button></div>`).join('')}</div></section>`;
+  const snacks=[
+    {title:'جميع العربات',icon:'🍿',image:'47.jpg',desc:'كل عربات السناك والحلويات المتاحة للحفلات.',message:'جميع العربات'},
+    {title:'عربة الفشار',icon:'🍿',image:'47.jpg',desc:'فشار طازج للحفلات والمناسبات.',message:'عربة الفشار'},
+    {title:'عربة غزل البنات',icon:'🍭',image:'53.jpg',desc:'غزل بنات للأطفال بألوان جميلة.',message:'عربة غزل البنات'},
+    {title:'عربة البطاطا الحلزونية',icon:'🥔',image:'48.jpg',desc:'بطاطا حلزونية مقرمشة ومحبوبة للأطفال.',message:'عربة البطاطا الحلزونية'},
+    {title:'عربة الذرة الحلوة',icon:'🌽',image:'63.jpg',desc:'ذرة حلوة بنكهات متعددة حسب الطلب.',message:'عربة الذرة الحلوة'},
+    {title:'عربة الايسكريم',icon:'🍦',image:'34.jpg',desc:'آيسكريم مناسب للحفلات الصيفية.',message:'عربة الايسكريم'},
+    {title:'عربة البراد مع الايسكريم',icon:'🥤',image:'56.jpg',desc:'براد منعش مع آيسكريم للأطفال.',message:'عربة البراد مع الايسكريم'},
+    {title:'عربة شلال الشكولاتة',icon:'🍫',image:'61.jpg',desc:'شلال شوكولاتة فاخر للمناسبات.',message:'عربة شلال الشكولاتة'},
+    {title:'عربة الوافل',icon:'🧇',image:'57.jpg',desc:'وافل طازج بإضافات حلوة.',message:'عربة الوافل'},
+    {title:'عربة البانكيك',icon:'🥞',image:'58.jpg',desc:'بانكيك للأطفال والحفلات.',message:'عربة البانكيك'},
+    {title:'عربة السلايم',icon:'🎨',image:'59.jpg',desc:'فعالية سلايم ممتعة ومنظمة للأطفال.',message:'عربة السلايم'},
+    {title:'عربة الحلويات – جيلي',icon:'🍬',image:'60.jpg',desc:'حلويات وجيلي بتقديم جميل للحفلات.',message:'عربة الحلويات جيلي'},
+    {title:'اختيار شكل العربة',icon:'🛒',image:'62.jpg',desc:'اختيار شكل العربة المناسب للثيم والمناسبة.',message:'اختيار شكل العربة'},
+    {title:'العروض والبكجات',icon:'🎁',image:'63.jpg',desc:'بكجات تجمع العربات مع النطاطيات والحفلات.',message:'عروض وبكجات السناك والعربات'}
+  ];
+  app.innerHTML=`${pageHero('السناك والعربات', 'كل العربات مرتبة بصورة واضحة، ويمكن الاستفسار عن أي عربة مباشرة عبر واتساب.', '🍿 سناك الملكة')}
+  <section class="container"><div class="pageCardsGrid snacksGrid">${snacks.map(s=>`<div class="contentCard pageTypeCard"><div class="typeCardImg"><img src="${s.image}" alt="${s.title}" onerror="this.src='47.jpg';this.onerror=null"><span class="typeCardIcon">${s.icon}</span></div><div class="typeCardBody"><h3>${s.title}</h3><p>${s.desc}</p><button onclick="window.open('https://wa.me/97433317720?text=السلام عليكم، أريد الاستفسار عن ${encodeURIComponent(s.message)}','_blank')">استفسار واتساب</button></div></div>`).join('')}</div></section>`;
 }
 function showEventsPage(){
   page='events'; backBtn.style.display='none'; setActiveNav('تجهيز الحفلات');
-  const items=[['ديكور بالونات','ستاندات وبالونات وثيم حسب المناسبة','🎈'],['بنر مطبوع','بنر عيد ميلاد أو تخرج بمقاسات مختلفة','🖼️'],['دانس فلور ومسرح','مسرح أرضي وإضاءة حسب الطلب','✨'],['تجهيز تخرج','باكجات تخرج فخمة باللون المناسب','🎓']];
-  app.innerHTML=`${pageHero('تجهيز الحفلات', 'خدمات إضافية تجعل الحفلة كاملة: بالونات، بنرات، ستاندات، مسرح وإضاءات.', '🎀 تجهيز الملكة')}
-  <section class="container"><div class="pageCardsGrid">${items.map(i=>`<div class="contentCard"><div class="bigIcon">${i[2]}</div><h3>${i[0]}</h3><p>${i[1]}</p><button onclick="window.open('https://wa.me/97433317720?text=السلام عليكم، أريد الاستفسار عن ${encodeURIComponent(i[0])}','_blank')">استفسار</button></div>`).join('')}</div></section>`;
+  const items=[
+    {title:'جميع الحفلات',icon:'🎉',image:'47.jpg',desc:'تجهيز شامل لكل أنواع الحفلات والمناسبات.',msg:'جميع الحفلات'},
+    {title:'حفلات أعياد الميلاد',icon:'🎂',image:'53.jpg',desc:'ثيمات وبالونات وبنرات لأعياد الميلاد.',msg:'حفلات أعياد الميلاد'},
+    {title:'حفلات التخرج',icon:'🎓',image:'63.jpg',desc:'تجهيزات تخرج فخمة مع بنر وستاندات.',msg:'حفلات التخرج'},
+    {title:'حفلات المدارس والروضات',icon:'🏫',image:'34.jpg',desc:'فعاليات مدرسية آمنة وممتعة للأطفال.',msg:'حفلات المدارس والروضات'},
+    {title:'حفلات الفنادق والشركات',icon:'🏨',image:'48.jpg',desc:'تجهيز احترافي للفعاليات الرسمية والشركات.',msg:'حفلات الفنادق والشركات'},
+    {title:'حفلات الخطوبة',icon:'💍',image:'61.jpg',desc:'تنسيق خطوبة بلمسة جميلة وفخمة.',msg:'حفلات الخطوبة'},
+    {title:'حفلات الزواج',icon:'👰',image:'62.jpg',desc:'إضافات وخدمات مناسبة لحفلات الزواج.',msg:'حفلات الزواج'},
+    {title:'حفلات خاصة',icon:'✨',image:'57.jpg',desc:'تجهيز حسب الطلب للمناسبات الخاصة.',msg:'حفلات خاصة'},
+    {title:'العروض والبكجات',icon:'🎁',image:'84.jpg',desc:'بكجات جاهزة للحفلات والمناسبات.',msg:'العروض والبكجات للحفلات'}
+  ];
+  app.innerHTML=`${pageHero('تجهيز الحفلات والمناسبات', 'اختر نوع المناسبة وشاهد الخدمات المناسبة لها بشكل مرتب وواضح.', '🎀 تجهيز الملكة')}
+  <section class="container"><div class="pageCardsGrid">${items.map(i=>`<div class="contentCard pageTypeCard"><div class="typeCardImg"><img src="${i.image}" alt="${i.title}" onerror="this.src='47.jpg';this.onerror=null"><span class="typeCardIcon">${i.icon}</span></div><div class="typeCardBody"><h3>${i.title}</h3><p>${i.desc}</p><button onclick="window.open('https://wa.me/97433317720?text=السلام عليكم، أريد الاستفسار عن ${encodeURIComponent(i.msg)}','_blank')">استفسار واتساب</button></div></div>`).join('')}</div></section>`;
 }
 function showTermsPage(){
   page='terms'; backBtn.style.display='none'; setActiveNav('شروط الحجز');
