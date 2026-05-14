@@ -440,6 +440,120 @@ body:before{
   }
 }
 
+
+/* تحسين نافذة تسجيل الزبون وقائمة مناطق قطر */
+.customerModal{
+  max-width:720px !important;
+}
+.formHint{
+  margin:0 0 18px;
+  color:#7b6572;
+  font-weight:800;
+  line-height:1.8;
+  background:#fff7fb;
+  border:1px solid #ffe0ef;
+  border-radius:18px;
+  padding:10px 14px;
+}
+.required{color:#ff2f92;font-weight:900}
+.customerModal input{
+  font-size:16px !important;
+  height:54px;
+}
+.customerModal label{
+  display:block;
+  margin-top:8px;
+}
+
+
+/* ===== تعديل نهائي: حذف زر الإغلاق المكرر + ضغط نافذة تسجيل الزبون ===== */
+#productModal .modalCloseFloat{
+  display:none !important;
+}
+#productModal .modalHeader{
+  padding-left:0 !important;
+  padding-right:0 !important;
+  position:relative !important;
+  min-height:40px !important;
+}
+#productModal .xBtn{
+  display:grid !important;
+  place-items:center !important;
+  width:36px !important;
+  height:36px !important;
+  min-width:36px !important;
+  border-radius:50% !important;
+  font-size:24px !important;
+  line-height:1 !important;
+  background:linear-gradient(135deg,#ff167f,#ff75ba) !important;
+  color:#fff !important;
+  box-shadow:0 8px 20px rgba(255,22,127,.24) !important;
+  border:0 !important;
+  margin-inline-start:auto !important;
+  flex:0 0 auto !important;
+}
+
+.customerModal{
+  max-width:610px !important;
+  padding:18px 20px 18px !important;
+  border-radius:26px !important;
+}
+.customerModal h2{
+  font-size:23px !important;
+  line-height:1.35 !important;
+  margin:0 0 10px !important;
+  text-align:center !important;
+}
+.formHint{
+  font-size:13px !important;
+  line-height:1.55 !important;
+  padding:8px 11px !important;
+  margin:0 0 12px !important;
+  border-radius:14px !important;
+}
+.customerModal label{
+  font-size:14px !important;
+  line-height:1.3 !important;
+  margin:8px 0 4px !important;
+}
+.customerModal input{
+  height:44px !important;
+  min-height:44px !important;
+  padding:9px 12px !important;
+  margin:4px 0 8px !important;
+  border-radius:15px !important;
+  font-size:14px !important;
+}
+.customerModal .send,
+.customerModal .close{
+  min-height:44px !important;
+  padding:10px 14px !important;
+  border-radius:16px !important;
+  font-size:15px !important;
+  margin-top:8px !important;
+}
+#loginModal.modal{
+  padding:12px !important;
+}
+
+@media(max-width:620px){
+  .customerModal{
+    max-width:94vw !important;
+    padding:16px 14px !important;
+    border-radius:22px !important;
+  }
+  .customerModal h2{
+    font-size:21px !important;
+  }
+  #productModal .xBtn{
+    display:grid !important;
+    width:34px !important;
+    height:34px !important;
+    min-width:34px !important;
+    font-size:22px !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -487,7 +601,7 @@ body:before{
     <div class="formGrid">
       <div><label>الاسم</label><input id="pName"></div>
       <div><label>الهاتف</label><input id="pPhone" readonly></div>
-      <div><label>العنوان / المنطقة</label><input id="pAddress"></div>
+      <div><label>العنوان / المنطقة</label><input id="pAddress" list="qatarAreasList" autocomplete="off"></div>
     </div>
     <label>موقع البيت / Google Maps</label>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
@@ -522,11 +636,16 @@ body:before{
 </div>
 
 <div class="modal" id="loginModal">
-  <div class="modalContent">
+  <div class="modalContent customerModal">
     <h2>تسجيل بيانات الزبون</h2>
-    <label>رقم الهاتف</label><input id="loginPhone" type="tel" placeholder="55323328">
-    <label>اسم الزبون</label><input id="loginName" placeholder="اسم الزبون">
-    <label>العنوان / المنطقة</label><input id="loginAddress" placeholder="مثال: لوسيل / الوكرة">
+    <p class="formHint">يرجى إدخال بيانات جديدة لكل طلب: رقم الهاتف، الاسم، والمنطقة / رقم المنطقة.</p>
+    <label>رقم الهاتف <span class="required">*</span></label>
+    <input id="loginPhone" type="tel" inputmode="numeric" autocomplete="off" placeholder="مثال: 55323328">
+    <label>اسم الزبون <span class="required">*</span></label>
+    <input id="loginName" autocomplete="off" placeholder="اسم الزبون">
+    <label>العنوان / المنطقة <span class="required">*</span></label>
+    <input id="loginAddress" list="qatarAreasList" autocomplete="off" placeholder="اكتب اسم المنطقة أو رقمها: مثال 69 لوسيل">
+    <datalist id="qatarAreasList"></datalist>
     <button class="send" onclick="loginCustomer()">استمرار وحفظ</button>
     <button class="close" onclick="closeLogin()">إغلاق</button>
   </div>
@@ -577,6 +696,99 @@ const db=firebase.firestore();
 const products=[{"id": 1, "number": 1, "name": "الملعب الصابوني الهوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "1.jpg"}, {"id": 2, "number": 2, "name": "الملعب الصابوني ارضي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "2.jpg"}, {"id": 3, "number": 3, "name": "ملعب صابوني هوائي لكرة السلة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "14", "width": "8", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "3.jpg"}, {"id": 4, "number": 4, "name": "زحلاقية ونطاطية مغامرات سبايدرمان", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "5", "age": "من 6 سنوات الى 18 سنة", "image": "4.jpg"}, {"id": 5, "number": 5, "name": "زحلاقية ونطاطية السفينة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "5.jpg"}, {"id": 6, "number": 6, "name": "زحلاقية ونطاطية فروزن", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "6.jpg"}, {"id": 7, "number": 7, "name": "زحلاقية ونطاطية البرنسيس", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "7.jpg"}, {"id": 8, "number": 8, "name": "زحلاقية ونطاطية الخارقون 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "8.jpg"}, {"id": 9, "number": 9, "name": "زحلاقية ونطاطية مني ماوس وبطوطة", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "9.jpg"}, {"id": 10, "number": 10, "name": "زحلاقية ونطاطية منيونز", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "10.jpg"}, {"id": 11, "number": 11, "name": "الملعب الصابوني الهوائي 3", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "11.jpg"}, {"id": 12, "number": 12, "name": "الملعب الصابوني الهوائي 2", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "12.jpg"}, {"id": 13, "number": 13, "name": "الملعب الصابوني الهوائي لكرة القدم", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "10", "width": "5", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "13.jpg"}, {"id": 14, "number": 14, "name": "زحلاقية عالم ديزني العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "14.jpg"}, {"id": 15, "number": 15, "name": "زحلاقية ونطاطية جنغل زوون", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "9", "width": "6.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "15.jpg"}, {"id": 16, "number": 16, "name": "نطاطية مينونز", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "النطاطيات الجافة", "length": "4", "width": "3", "height": "3", "age": "من2 سنوات الى 5 سنة", "image": "16.jpg"}, {"id": 17, "number": 17, "name": "نطاطية المهرج", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "النطاطيات الجافة", "length": "4", "width": "4", "height": "3", "age": "من2 سنوات الى 5 سنة", "image": "17.jpg"}, {"id": 18, "number": 18, "name": "النطاطية الراقصة", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "النطاطيات الجافة", "length": "4", "width": "3", "height": "3", "age": "من2 سنوات الى 5 سنة", "image": "18.jpg"}, {"id": 19, "number": 19, "name": "ملعب ديزني الصابوني الهوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "10", "width": "5", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "19.jpg"}, {"id": 20, "number": 20, "name": "ملعب 2022 الصابوني الهوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "20.jpg"}, {"id": 21, "number": 21, "name": "زحلاقية  كاندي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "8", "width": "5.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "21.jpg"}, {"id": 22, "number": 22, "name": "زحلاقية العصر الجليدي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "4.5", "height": "9", "age": "من 6 سنوات الى 18 سنة", "image": "22.jpg"}, {"id": 23, "number": 23, "name": "زحلاقية الاميرات السبعة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "8", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "23.jpg"}, {"id": 24, "number": 24, "name": "نطاطية وزحلاقية يونيكورن", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "24.jpg"}, {"id": 25, "number": 25, "name": "نطاطية وزحلاقية الفراشات", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "4.4", "height": "4", "age": "من2 سنوات الى 8 سنة", "image": "25.jpg"}, {"id": 26, "number": 26, "name": "نطاطية وزحلاقية صوفيا", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "26.jpg"}, {"id": 27, "number": 27, "name": "نطاطية وزحلاقية قصر الاميرات", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "27.jpg"}, {"id": 28, "number": 28, "name": "زحلاقية ونطاطية ميكي وميني 1", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "28.jpg"}, {"id": 29, "number": 29, "name": "زحلاقية ونطاطية لول 1", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "5", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "29.jpg"}, {"id": 30, "number": 30, "name": "زحلاقية ونطاطية سبايدرمان 1", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "7.5", "width": "4.5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "30.jpg"}, {"id": 31, "number": 31, "name": "زحلاقية الابطال الخارقين", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "7.5", "width": "4", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "31.jpg"}, {"id": 32, "number": 32, "name": "نطاطية وزحلاقية ببجي وفورت نايت", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5.5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "32.jpg"}, {"id": 33, "number": 33, "name": "نطاطية وزحلاقية عربة اليونيكورن", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5.5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "33.jpg"}, {"id": 34, "number": 34, "name": "زحلاقية بارتي المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "34.jpg"}, {"id": 35, "number": 35, "name": "زحلاقية منيونز المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "35.jpg"}, {"id": 36, "number": 36, "name": "زحلاقية الاخطبوط المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "4.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "36.jpg"}, {"id": 37, "number": 37, "name": "زحلاقية الفلامينجو المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "37.jpg"}, {"id": 38, "number": 38, "name": "نطاطية وزحلاقية اليونيكورن المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "4.5", "height": "5", "age": "من 6 سنوات الى 18 سنة", "image": "38.jpg"}, {"id": 39, "number": 39, "name": "زحلاقية نيوكورن المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "10", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "39.jpg"}, {"id": 40, "number": 40, "name": "زحلاقية بيبي شرك المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "13", "width": "6", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "40.jpg"}, {"id": 41, "number": 41, "name": "زحلاقية سبايدر وسوبرمان المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "6", "age": "من2 سنوات الى 8 سنة", "image": "41.jpg"}, {"id": 42, "number": 42, "name": "زحلاقية جزيرة الفلامنجو المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "7", "width": "6", "height": "6", "age": "من2 سنوات الى 8 سنة", "image": "42.jpg"}, {"id": 43, "number": 43, "name": "زحلاقية فروزن المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "10", "width": "5", "height": "8", "age": "من 6 سنوات الى 18 سنة", "image": "43.jpg"}, {"id": 44, "number": 44, "name": "زحلاقية الحورية المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "9", "width": "5", "height": "6", "age": "من 6 سنوات الى 18 سنة", "image": "44.jpg"}, {"id": 45, "number": 45, "name": "زحلاقية ونطاطية الباندا", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "45.jpg"}, {"id": 46, "number": 46, "name": "زحلاقية الأسد الملك المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "46.jpg"}, {"id": 47, "number": 47, "name": "زحلاقية القراصنة المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "47.jpg"}, {"id": 48, "number": 48, "name": "زحلاقية الديناصور المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "13", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "48.jpg"}, {"id": 49, "number": 49, "name": "زحلاقية ونطاطية كرة القدم", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "9", "width": "6.5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "49.jpg"}, {"id": 50, "number": 50, "name": "زحلاقية الكاندي ( 2 ) المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "8", "width": "4", "height": "6.5", "age": "من 6 سنوات الى 18 سنة", "image": "50.jpg"}, {"id": 51, "number": 51, "name": "زحلاقية سلم الطائرة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "8", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "51.jpg"}, {"id": 52, "number": 52, "name": "زحلاقية توي ستوري", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "9", "width": "4", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "52.jpg"}, {"id": 53, "number": 53, "name": "زحلاقية اليونيكورن المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "8", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "53.jpg"}, {"id": 54, "number": 54, "name": "زحلاقية جزيرة الفلامينجو المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "7", "width": "6", "height": "6", "age": "من2 سنوات الى 8 سنة", "image": "54.jpg"}, {"id": 55, "number": 55, "name": "زحلاقية لول المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "7", "width": "6", "height": "6", "age": "من2 سنوات الى 8 سنة", "image": "55.jpg"}, {"id": 56, "number": 56, "name": "زحلاقية الديناصور المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "13", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "56.jpg"}, {"id": 57, "number": 57, "name": "زحلاقية الاخطبوط المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "57.jpg"}, {"id": 58, "number": 58, "name": "زحلاقية القراصنة المائية", "rentType": "ايجار", "priceTwoDays": 800, "durationTwoDays": "يومين", "priceOneDay": 700, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "58.jpg"}, {"id": 59, "number": 59, "name": "زحلاقية الأسد الملك المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "59.jpg"}, {"id": 60, "number": 60, "name": "زحلاقية السيارة العجيبةالمائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "60.jpg"}, {"id": 61, "number": 61, "name": "زحلاقية الاميرات المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "61.jpg"}, {"id": 62, "number": 62, "name": "زحلاقية عالم ديزني المائية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "62.jpg"}, {"id": 63, "number": 63, "name": "زحلاقية الكاندي المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "6", "height": "8", "age": "من 6 سنوات الى 18 سنة", "image": "63.jpg"}, {"id": 64, "number": 64, "name": "زحلاقية الباندا المائية العملاقة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "مائية", "category": "النطاطيات المائية", "length": "12", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "64.jpg"}, {"id": 65, "number": 65, "name": "ملعب صابوني هوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "65.jpg"}, {"id": 66, "number": 66, "name": "ملعب صابوني هوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "12", "width": "6", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "66.jpg"}, {"id": 67, "number": 67, "name": "ملعب صابوني هوائي", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "صابوني هوائي", "category": "الملاعب الصابونية", "length": "10", "width": "5", "height": "2.5", "age": "من 6 سنوات الى 18 سنة", "image": "67.jpg"}, {"id": 68, "number": 68, "name": "حوض الجزيرة 2", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "حوض سباحة", "category": "النطاطيات المائية", "length": "7", "width": "7", "height": "60 سم", "age": "من2 سنوات الى 10 سنة", "image": "68.jpg"}, {"id": 69, "number": 69, "name": "حوض الجزيرة 1", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "حوض سباحة", "category": "النطاطيات المائية", "length": "8", "width": "6", "height": "60 سم", "age": "من2 سنوات الى 10 سنة", "image": "69.jpg"}, {"id": 70, "number": 70, "name": "زحلاقية ونطاطية سبايدرمان", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "7", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "70.jpg"}, {"id": 71, "number": 71, "name": "زحلاقية ونطاطية فورت نايت 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "71.jpg"}, {"id": 72, "number": 72, "name": "زحلاقية ونطاطية الاميرات 3", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "72.jpg"}, {"id": 73, "number": 73, "name": "زحلاقية ونطاطية الاميرات 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "73.jpg"}, {"id": 74, "number": 74, "name": "زحلاقية ونطاطية لول 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "74.jpg"}, {"id": 75, "number": 75, "name": "زحلاقية ونطاطية ميكي وميني 2", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "75.jpg"}, {"id": 76, "number": 76, "name": "زحلاقية ونطاطية فروزن وآنا", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "7", "width": "6", "height": "5", "age": "من 6 سنوات الى 18 سنة", "image": "76.jpg"}, {"id": 77, "number": 77, "name": "زحلاقية ونطاطية الكاندي 2", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "77.jpg"}, {"id": 78, "number": 78, "name": "زحلاقية ونطاطية سبايدر ومان", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "78.jpg"}, {"id": 79, "number": 79, "name": "زحلاقية ونطاطية فروزن", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "79.jpg"}, {"id": 80, "number": 80, "name": "PJMASKS زحلاقية ونطاطية", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "10", "width": "5", "height": "7", "age": "من 6 سنوات الى 18 سنة", "image": "80.jpg"}, {"id": 81, "number": 81, "name": "زحلاقية الديناصور", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "8", "width": "5", "height": "7.5", "age": "من 6 سنوات الى 18 سنة", "image": "81.jpg"}, {"id": 82, "number": 82, "name": "زحلاقية بيبي يونيكورن", "rentType": "ايجار", "priceTwoDays": 500, "durationTwoDays": "يومين", "priceOneDay": 400, "durationOneDay": "يوم واحد", "type": "جافة", "category": "الزحلاقيات", "length": "6", "width": "5", "height": "5", "age": "من2 سنوات الى 8 سنة", "image": "82.jpg"}, {"id": 83, "number": 83, "name": "حوض سباحة", "rentType": "ايجار", "priceTwoDays": 700, "durationTwoDays": "يومين", "priceOneDay": 600, "durationOneDay": "يوم واحد", "type": "حوض سباحة", "category": "النطاطيات المائية", "length": "8", "width": "6", "height": "60 سم", "age": "من2 سنوات الى 10 سنة", "image": "83.jpg"}, {"id": 84, "number": 84, "name": "جهاز الرغوة الصابوني المدفع", "rentType": "ايجار", "priceTwoDays": 1000, "durationTwoDays": "يومين + عدد 2 كيس صابون", "priceOneDay": 500, "durationOneDay": "يوم واحد + عدد 1 كيس صابون", "type": "رغوة", "category": "الملاعب الصابونية", "length": "", "width": "", "height": "", "age": "من 2 سنوات الى 18 سنة", "image": "84.jpg"}, {"id": 85, "number": 85, "name": "جهاز الرغوة الصابوني الشلال", "rentType": "ايجار", "priceTwoDays": 1000, "durationTwoDays": "يومين + عدد 2 كيس صابون", "priceOneDay": 500, "durationOneDay": "يوم واحد + عدد 1 كيس صابون", "type": "رغوة", "category": "الملاعب الصابونية", "length": "", "width": "", "height": "", "age": "من 2 سنوات الى 18 سنة", "image": "85.jpg"}];
 
 const whatsappNumber='97433317720';
+
+const QATAR_AREAS = [
+  "01 - Al Jasrah / الجسرة - Doha",
+  "02 - Al Bidda / البدع - Doha",
+  "03 - Fereej Mohamed Bin Jasim, Mushayrib / فريج محمد بن جاسم، مشيرب - Doha",
+  "04 - Mushayrib / مشيرب - Doha",
+  "05 - Al Najada, Barahat Al Jufairi, Fereej Al Asmakh / النجادة، براحة الجفيري، فريج الأصمخ - Doha",
+  "06 - Old Al Ghanim / الغانم القديم - Doha",
+  "07 - Al Souq / السوق - Doha",
+  "10 - Wadi Al Sail / وادي السيل - Doha",
+  "11 - Rumeilah / الرميلة - Doha",
+  "12 - Al Bidda / البدع - Doha",
+  "13 - Mushayrib / مشيرب - Doha",
+  "14 - Fereej Abdel Aziz / فريج عبدالعزيز - Doha",
+  "15 - Doha Al Jadeeda / الدوحة الجديدة - Doha",
+  "16 - Old Al Ghanim / الغانم القديم - Doha",
+  "17 - Al Rufaa, Old Al Hitmi / الرفاع، الهتمي القديم - Doha",
+  "18 - As Salatah, Al Mirqab / السلطة، المرقاب - Doha",
+  "19 - Doha Port / ميناء الدوحة - Doha",
+  "20 - Wadi Al Sail / وادي السيل - Doha",
+  "21 - Rumeilah / الرميلة - Doha",
+  "22 - Fereej Bin Mahmoud / فريج بن محمود - Doha",
+  "23 - Fereej Bin Mahmoud / فريج بن محمود - Doha",
+  "24 - Rawdat Al Khail / روضة الخيل - Doha",
+  "25 - Fereej Bin Durham, Al Mansoura / فريج بن درهم، المنصورة - Doha",
+  "26 - Najma / نجمة - Doha",
+  "27 - Umm Ghuwailina / أم غويلينة - Doha",
+  "28 - Al Khulaifat, Ras Abu Aboud / الخليفات، راس أبو عبود - Doha",
+  "30 - Duhail / الدحيل - Doha",
+  "31 - Umm Lekhba / أم لخبا - Doha",
+  "32 - Madinat Khalifa North, Dahl Al Hamam / مدينة خليفة الشمالية، دحل الحمام - Doha",
+  "33 - Al Markhiya / المرخية - Doha",
+  "34 - Madinat Khalifa South / مدينة خليفة الجنوبية - Doha",
+  "35 - Fereej Kulaib / فريج كليب - Doha",
+  "36 - Al Messila / المسيلة - Doha",
+  "37 - Fereej Bin Omran, New Al Hitmi, Hamad Medical City / فريج بن عمران، الهتمي الجديد، مدينة حمد الطبية - Doha",
+  "38 - Al Sadd / السد - Doha",
+  "39 - Al Sadd, New Al Mirqab, Fereej Al Nasr / السد، المرقاب الجديد، فريج النصر - Doha",
+  "40 - New Salatah / السلطة الجديدة - Doha",
+  "41 - Nuaija / نعيجة - Doha",
+  "42 - Al Hilal / الهلال - Doha",
+  "43 - Nuaija / نعيجة - Doha",
+  "44 - Nuaija / نعيجة - Doha",
+  "45 - Old Airport / المطار القديم - Doha",
+  "46 - Al Thumama / الثمامة - Doha",
+  "47 - Al Thumama / الثمامة - Doha",
+  "48 - Doha International Airport / مطار الدوحة الدولي - Doha",
+  "49 - Ras Abu Fontas / رأس أبو فنطاس - Doha",
+  "50 - Al Thumama / الثمامة - Doha",
+  "57 - Industrial Area / المنطقة الصناعية - Doha",
+  "58 - Wholesale Market / السوق المركزي - Doha",
+  "61 - Al Dafna, Al Qassar / الدفنة، القصار - Doha",
+  "63 - Onaiza / عنيزة - Doha",
+  "64 - Lejbailat / لجبيلات - Doha",
+  "65 - Onaiza / عنيزة - Doha",
+  "66 - Onaiza, Leqtaifiya, Al Qassar / عنيزة، لقطيفية، القصار - Doha",
+  "67 - Hazm Al Markhiya / حزم المرخية - Doha",
+  "68 - Jelaiah, Al Tarfa, Jeryan Nejaima / جليعة، الطرفة، جريان نجيمة - Doha",
+  "51 - Al Gharrafa, Gharrafat Al Rayyan, Izghawa, Bani Hajer / الغرافة، ازغوى، بني هاجر - Al Rayyan",
+  "52 - Al Luqta, Lebday, Old Al Rayyan, Al Shagub / اللقطة، لبدع، الريان القديم، الشقب - Al Rayyan",
+  "53 - New Al Rayyan, Al Wajbah, Muaither / الريان الجديد، الوجبة، معيذر - Al Rayyan",
+  "54 - Fereej Al Amir, Luaib, Muraikh, Baaya, Mehairja / فريج الأمير، لوعيب، مريخ، بعيا، معيذر - Al Rayyan",
+  "55 - Al Waab, Al Aziziya, Fereej Al Soudan, Bu Sidra, Al Sailiya / الوعب، العزيزية، فريج السودان، بو سدرة، السيلية - Al Rayyan",
+  "56 - Al Mamoura, Abu Hamour, Mesaimeer, Ain Khaled, Umm Al Seneem / المعمورة، أبو هامور، مسيمير، عين خالد، أم السنيم - Al Rayyan",
+  "81 - Mebaireek / مبيريك - Al Rayyan",
+  "83 - Al Karaana / الكرعانة - Al Rayyan",
+  "96 - Abu Samra / أبو سمرة - Al Rayyan",
+  "97 - Sawda Natheel / سودانثيل - Al Rayyan",
+  "69 - Lusail, Jabal Thuaileb, Al Kharayej, Al Egla, Wadi Al Banat / لوسيل، جبل ثعيلب، الخرايج، العقلة، وادي البنات - Al Daayen",
+  "70 - Leabaib, Al Ebb, Al Kheesa, Rawdat Al Hamama, Umm Qarn, Al Daayen / لعبيب، العب، الخيسة، روضة الحمامة، أم قرن، الظعاين - Al Daayen",
+  "71 - Umm Salal, Al Kharaitiyat, Umm Salal Ali, Umm Salal Mohammed, Umm Al Amad / أم صلال، الخريطيات، أم صلال علي، أم صلال محمد، أم العمد - Umm Salal",
+  "74 - Simaisma, Al Khor City / سميسمة، مدينة الخور - Al Khor",
+  "75 - Al Thakhira, Ras Laffan, Umm Birka / الذخيرة، راس لفان، أم بركة - Al Khor",
+  "76 - Al Ghuwariyah / الغويرية - Al Khor",
+  "77 - Ain Sinan, Madinat Al Kaaban, Fuwayrit / عين سنان، مدينة الكعبان، فويرط - Al Shamal",
+  "78 - Abu Dhalouf, Zubarah / أبو ظلوف، الزبارة - Al Shamal",
+  "79 - Madinat ash Shamal, Ar Ru'ays / مدينة الشمال، الرويس - Al Shamal",
+  "72 - Al Utouriya / العطورية - Al Shahaniya",
+  "73 - Al Jemailiya / الجميلية - Al Shahaniya",
+  "80 - Al Shahaniya City / مدينة الشحانية - Al Shahaniya",
+  "82 - Rawdat Rashed / روضة راشد - Al Shahaniya",
+  "84 - Umm Bab / أم باب - Al Shahaniya",
+  "85 - Al Nasraniya / النصرانية - Al Shahaniya",
+  "86 - Dukhan / دخان - Al Shahaniya",
+  "90 - Al Wakrah / الوكرة - Al Wakrah",
+  "91 - Al Thumama, Al Wukair, Al Mashaf / الثمامة، الوكير، المشاف - Al Wakrah",
+  "92 - Mesaieed / مسيعيد - Al Wakrah",
+  "93 - Mesaieed Industrial Area / منطقة مسيعيد الصناعية - Al Wakrah",
+  "94 - Shagra / شقرة - Al Wakrah",
+  "95 - Al Kharrara / الخرارة - Al Wakrah",
+  "98 - Khor Al Adaid / خور العديد - Al Wakrah"
+];
+
 let page='home';
 let activeCategory='الكل';
 let cart=[];
@@ -589,6 +801,13 @@ const iconMap={
   'الكل':'👑'
 };
 const categories=['الكل',...Array.from(new Set(products.map(p=>p.category)))];
+
+function populateQatarAreas(){
+  const list=document.getElementById('qatarAreasList');
+  if(!list)return;
+  list.innerHTML=QATAR_AREAS.map(a=>`<option value="${a}"></option>`).join('');
+}
+
 
 function setupCategorySelect(){
   quickCategory.innerHTML=categories.map(c=>`<option value="${c}">${c}</option>`).join('');
@@ -603,12 +822,21 @@ function showProfile(){
   loginBtn.style.display='none';
   pName.value=c.name||''; pPhone.value=c.phone||''; pAddress.value=c.address||''; pLocation.value=c.location||'';
 }
-function openLogin(){loginModal.style.display='flex'}
+function clearLoginForm(){
+  loginPhone.value='';
+  loginName.value='';
+  loginAddress.value='';
+}
+function openLogin(){
+  clearLoginForm();
+  loginModal.style.display='flex';
+  setTimeout(()=>loginPhone.focus(),80);
+}
 function closeLogin(){loginModal.style.display='none'}
 
 async function loginCustomer(){
   const phone=loginPhone.value.trim(), name=loginName.value.trim(), address=loginAddress.value.trim();
-  if(!phone||!name){alert('أدخل رقم الهاتف والاسم');return}
+  if(!phone||!name||!address){alert('يرجى إدخال رقم الهاتف والاسم والمنطقة / العنوان');return}
   const c={phone,name,address,location:'',updatedAt:new Date().toISOString()};
   localStorage.setItem('customer',JSON.stringify(c));
   try{
@@ -793,7 +1021,6 @@ function openProduct(num){
   const waterOrDry = (p.type||p.category||'').includes('مائية') || (p.category||'').includes('مائية') || (p.type||'').includes('حوض') ? 'مائية' : ((p.type||'').includes('صابوني') ? 'صابونية' : 'جافة');
   productModalContent.innerHTML=`
   <div class="productDetail">
-    <button class="modalCloseFloat" onclick="closeProduct()" aria-label="إغلاق">×</button>
     <div class="detailImage"><img src="${p.image}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div>
     <div class="detailSide">
       <div class="modalHeader">
@@ -941,6 +1168,7 @@ loginModal.addEventListener('click', function(e){ if(e.target===loginModal) clos
 adminModal.addEventListener('click', function(e){ if(e.target===adminModal) closeAdmin(); });
 document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeProduct(); closeCart(); closeLogin(); closeAdmin(); } });
 
+populateQatarAreas();
 setupCategorySelect();
 showHome();
 showProfile();
