@@ -1017,6 +1017,28 @@ body:after{
   .rowCardImage{min-height:138px!important;padding:7px!important}
 }
 
+
+/* ===== pages menu and content pages ===== */
+.navMenu{gap:6px !important}
+.navMenu button{font-size:13px !important;padding:9px 12px !important;white-space:nowrap !important}
+.pageTop{padding-bottom:8px !important}
+.pageBanner{border-radius:30px;padding:28px 30px;text-align:center;background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(255,235,246,.76),rgba(255,247,221,.82));border:1px solid rgba(216,178,93,.34);box-shadow:0 14px 35px rgba(185,130,153,.10)}
+.pageBanner span{display:inline-flex;padding:8px 15px;border-radius:999px;background:linear-gradient(135deg,#fff8e1,#f5d66e);color:#7a284e;font-weight:900;font-size:12px;margin-bottom:10px}
+.pageBanner h1{margin:0 0 8px;font-size:34px;color:#7a284e;line-height:1.25}
+.pageBanner p{margin:0 auto;max-width:760px;color:#7d6873;font-weight:800;line-height:1.8;font-size:15px}
+.subPageCards{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px}
+.subPageCards button{min-height:118px;border:1px solid rgba(216,178,93,.35);border-radius:22px;background:rgba(255,255,255,.82);box-shadow:0 10px 24px rgba(185,130,153,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#7a284e;transition:.2s}
+.subPageCards button:hover{transform:translateY(-4px);background:linear-gradient(135deg,#fffafd,#fff2d1)}
+.subPageCards b{font-size:28px}.subPageCards strong{font-size:13px}.subPageCards small{font-size:10px;color:#8b7b84;font-weight:800}
+.pageCardsGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.pageCardsGrid.snacksGrid{grid-template-columns:repeat(6,minmax(0,1fr))}
+.contentCard{border-radius:26px;padding:22px;background:rgba(255,255,255,.84);border:1px solid rgba(216,178,93,.34);box-shadow:0 14px 30px rgba(185,130,153,.10);min-height:220px;display:flex;flex-direction:column;gap:10px}
+.contentCard.small{min-height:190px;text-align:center;align-items:center}
+.contentCard .bigIcon{font-size:36px}.contentCard h3{margin:0;color:#7a284e;font-size:20px}.contentCard p{margin:0;color:#7d6873;font-weight:700;line-height:1.7;font-size:13px;flex:1}.contentCard strong{font-size:18px;color:#e51b60}.contentCard button{border:0;border-radius:16px;padding:11px 14px;background:linear-gradient(135deg,#ff1568,#ff4c95);color:#fff;font-weight:900}
+.termsBox{max-width:980px;margin:auto;display:grid;gap:12px}.termItem{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.85);border:1px solid rgba(216,178,93,.34);border-radius:20px;padding:14px 16px;color:#7a284e;font-weight:900;box-shadow:0 10px 24px rgba(185,130,153,.08)}.termItem b{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#f7c42f,#f0b81a);display:grid;place-items:center;flex:0 0 34px}.termItem span{line-height:1.7}
+@media(max-width:1100px){.subPageCards{grid-template-columns:repeat(3,minmax(0,1fr))}.pageCardsGrid,.pageCardsGrid.snacksGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.navMenu{overflow:auto;justify-content:flex-start !important;flex-wrap:nowrap !important;padding-bottom:6px}.navMenu button{font-size:12px !important;flex:0 0 auto}.pageBanner{padding:22px 16px;border-radius:24px}.pageBanner h1{font-size:26px}.subPageCards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pageCardsGrid,.pageCardsGrid.snacksGrid{grid-template-columns:1fr}.contentCard{min-height:auto}.termItem{align-items:flex-start}}
+
 </style>
 </head>
 <body>
@@ -1034,9 +1056,11 @@ body:after{
 
     <nav class="navMenu">
       <button class="active" onclick="showHome()">الرئيسية</button>
-      <button onclick="showCategory('الكل')">النطاطيات والزحلاقيات</button>
-      <button onclick="showCategory('النطاطيات المائية')">الألعاب المائية</button>
-      <button onclick="showCategory('الملاعب الصابونية')">الملاعب الصابونية</button>
+      <button onclick="showBounciesPage()">النطاطيات</button>
+      <button onclick="showOffersPage()">العروض والبكجات</button>
+      <button onclick="showSnacksPage()">السناك والعربات</button>
+      <button onclick="showEventsPage()">تجهيز الحفلات</button>
+      <button onclick="showTermsPage()">شروط الحجز</button>
       <button onclick="scrollToContact()">تواصل معنا</button>
     </nav>
 
@@ -1450,7 +1474,7 @@ function selectedPaymentMethod(){
 }
 
 function showHome(){
-  page='home'; activeCategory='الكل'; backBtn.style.display='none'; quickCategory.value='الكل';
+  page='home'; setActiveNav('الرئيسية'); activeCategory='الكل'; backBtn.style.display='none'; quickCategory.value='الكل';
   const counts=categories.filter(c=>c!='الكل').map(c=>[c,products.filter(p=>p.category==c).length]);
   const heroMain=products.find(p=>p.number==47)||products[0];
   const heroSide1=products.find(p=>p.number==34)||products[1];
@@ -1522,15 +1546,76 @@ function showHome(){
   </section>`;
 }
 
+
+function setActiveNav(label){
+  document.querySelectorAll('.navMenu button').forEach(b=>b.classList.toggle('active', b.textContent.trim()===label));
+}
+function pageHero(title, subtitle, badge='الملكة للحفلات'){
+  return `<section class="container pageTop"><div class="pageBanner"><span>${badge}</span><h1>${title}</h1><p>${subtitle}</p></div></section>`;
+}
+function bouncyTypeCards(){
+  const typeCards = [
+    ['الكل','🎪','كل النطاطيات والزحاليق'],
+    ['النطاطيات المائية','💦','زحاليق وألعاب مائية'],
+    ['النطاطيات الجافة','🏰','نطاطيات جافة للأطفال'],
+    ['الزحلاقيات','🛝','زحاليق كبيرة وصغيرة'],
+    ['الملاعب الصابونية','🧼','ملاعب صابونية وفوم'],
+    ['أحواض السباحة','🏊','أحواض ومسابح أطفال'],
+    ['الفوم بارتي / الرغوة','泡','أجهزة الرغوة والحفلات']
+  ];
+  return `<div class="subPageCards">${typeCards.map(([cat,icon,title])=>`<button onclick="showCategory('${cat}')"><b>${icon}</b><strong>${title}</strong><small>${cat}</small></button>`).join('')}</div>`;
+}
+function showBounciesPage(){
+  page='bouncies'; activeCategory='الكل'; backBtn.style.display='none'; quickCategory.value='الكل'; setActiveNav('النطاطيات');
+  app.innerHTML=`
+    ${pageHero('النطاطيات والزحاليق', 'اختار نوع النطاطية المناسبة للحفلة، وبعدها شوف الألعاب والأسعار والحجز مباشرة.', '🎈 صفحة النطاطيات')}
+    <section class="container">${bouncyTypeCards()}</section>
+    <section class="container"><div class="sectionTitle"><div><h2>كل الألعاب المتاحة</h2><p>اضغط على الصورة أو زر احجزها لفتح التفاصيل والحجز.</p></div></div><div class="products">${filteredProducts().map(card).join('')}</div></section>`;
+}
+function showOffersPage(){
+  page='offers'; backBtn.style.display='none'; setActiveNav('العروض والبكجات');
+  const offers=[
+    ['عرض الملكة المائي','نطاطية مائية + مسبح + وقت تركيب مناسب للحفلات الصيفية','ابتداءً من 1200 ر.ق','💦'],
+    ['باكج حفلة أطفال','نطاطية + طاولات وكراسي + ديكور بسيط حسب الطلب','ابتداءً من 1800 ر.ق','🎉'],
+    ['باكج VIP للحفلات','نطاطية كبيرة + سنكات + تنسيق حفلة + خدمة حجز واتساب','ابتداءً من 3000 ر.ق','👑']
+  ];
+  app.innerHTML=`${pageHero('العروض والبكجات', 'بكجات جاهزة تساعد الزبون يختار بسرعة، ويمكن تعديل كل عرض حسب عدد الأطفال والمساحة.', '🎁 عروض الملكة')}
+  <section class="container"><div class="pageCardsGrid">${offers.map(o=>`<div class="contentCard"><div class="bigIcon">${o[3]}</div><h3>${o[0]}</h3><p>${o[1]}</p><strong>${o[2]}</strong><button onclick="window.open('https://wa.me/97433317720?text=السلام عليكم، أريد الاستفسار عن ${encodeURIComponent(o[0])}','_blank')">استفسار واتساب</button></div>`).join('')}</div></section>`;
+}
+function showSnacksPage(){
+  page='snacks'; backBtn.style.display='none'; setActiveNav('السناك والعربات');
+  const snacks=[['فشار','🍿'],['غزل البنات','🍭'],['بطاطا حلزوني','🥔'],['ذرة حلوة','🌽'],['آيس كريم','🍦'],['بان كيك ووافل','🧇']];
+  app.innerHTML=`${pageHero('السناك والعربات', 'أضف عربات السناك للحفلة مع النطاطيات لزيادة المتعة وتجربة الأطفال.', '🍿 سناك الملكة')}
+  <section class="container"><div class="pageCardsGrid snacksGrid">${snacks.map(s=>`<div class="contentCard small"><div class="bigIcon">${s[1]}</div><h3>${s[0]}</h3><p>متاح للحفلات والمناسبات داخل قطر حسب العدد والوقت.</p><button onclick="window.open('https://wa.me/97433317720?text=السلام عليكم، أريد الاستفسار عن عربة ${encodeURIComponent(s[0])}','_blank')">اطلبها</button></div>`).join('')}</div></section>`;
+}
+function showEventsPage(){
+  page='events'; backBtn.style.display='none'; setActiveNav('تجهيز الحفلات');
+  const items=[['ديكور بالونات','ستاندات وبالونات وثيم حسب المناسبة','🎈'],['بنر مطبوع','بنر عيد ميلاد أو تخرج بمقاسات مختلفة','🖼️'],['دانس فلور ومسرح','مسرح أرضي وإضاءة حسب الطلب','✨'],['تجهيز تخرج','باكجات تخرج فخمة باللون المناسب','🎓']];
+  app.innerHTML=`${pageHero('تجهيز الحفلات', 'خدمات إضافية تجعل الحفلة كاملة: بالونات، بنرات، ستاندات، مسرح وإضاءات.', '🎀 تجهيز الملكة')}
+  <section class="container"><div class="pageCardsGrid">${items.map(i=>`<div class="contentCard"><div class="bigIcon">${i[2]}</div><h3>${i[0]}</h3><p>${i[1]}</p><button onclick="window.open('https://wa.me/97433317720?text=السلام عليكم، أريد الاستفسار عن ${encodeURIComponent(i[0])}','_blank')">استفسار</button></div>`).join('')}</div></section>`;
+}
+function showTermsPage(){
+  page='terms'; backBtn.style.display='none'; setActiveNav('شروط الحجز');
+  const terms=['توقيت العمل من الساعة 9 صباحاً إلى 5 عصراً.','يجب توفر مساحة مناسبة وآمنة قبل التركيب.','يجب توفر مصدر كهرباء قريب وآمن لتشغيل المنفاخ.','الحجز يعتبر مبدئياً إلى حين تأكيد الطلب وطريقة السداد.','يجب وجود إشراف من شخص بالغ أثناء لعب الأطفال.','في حال وجود رياح قوية أو ظروف غير آمنة يتم التنسيق مع الزبون.'];
+  app.innerHTML=`${pageHero('شروط الحجز والسلامة', 'هذه التعليمات تساعدنا نوصل ونركب بسرعة وبشكل آمن للأطفال.', '🛡️ السلامة أولاً')}
+  <section class="container"><div class="termsBox">${terms.map((t,i)=>`<div class="termItem"><b>${i+1}</b><span>${t}</span></div>`).join('')}</div></section>`;
+}
 function showCategory(cat){
-  page='category'; activeCategory=cat; quickCategory.value=cat; backBtn.style.display='inline-block';
+  page='category'; activeCategory=cat; if([...quickCategory.options].some(o=>o.value===cat)) quickCategory.value=cat; backBtn.style.display='inline-block'; setActiveNav('النطاطيات');
   renderProducts();
 }
 function goBack(){showHome()}
 
 function filteredProducts(){
   const q=search.value.trim().toLowerCase();
-  let arr=products.filter(p=>activeCategory==='الكل'||p.category===activeCategory);
+  let arr=products.filter(p=>{
+    if(activeCategory==='الكل') return true;
+    if(activeCategory==='النطاطيات الجافة') return p.category==='النطاطيات الجافة' || (p.type||'').includes('جافة');
+    if(activeCategory==='الزحلاقيات') return p.category==='الزحلاقيات' || (p.name||'').includes('زحلاقية');
+    if(activeCategory==='أحواض السباحة') return (p.type||'').includes('حوض') || (p.name||'').includes('حوض');
+    if(activeCategory==='الفوم بارتي / الرغوة') return (p.type||'').includes('رغوة') || (p.name||'').includes('رغوة') || (p.name||'').includes('فوم');
+    return p.category===activeCategory;
+  });
   if(q){
     arr=arr.filter(p=>
       String(p.number).includes(q)||
@@ -1675,7 +1760,7 @@ function quickWhatsapp(num){
   const msg=`السلام عليكم، أريد الاستفسار عن النطاطية رقم ${p.number} - ${p.name}%0Aالسعر يوم: ${p.priceOneDay} ر.ق%0Aالسعر يومين: ${p.priceTwoDays} ر.ق`;
   window.open(`https://wa.me/${whatsappNumber}?text=${msg}`,'_blank');
 }
-function renderCurrent(){page==='home'?showHome():renderProducts()}
+function renderCurrent(){(page==='category'||page==='bouncies')?renderProducts():showHome()}
 
 function addToCart(id){
   const p=products.find(x=>x.number==id);
