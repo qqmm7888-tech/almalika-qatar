@@ -24,6 +24,72 @@ body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;bac
 @media(max-width:1100px){.headerInner{grid-template-columns:1fr auto}.navMenu{grid-column:1/-1;order:3}.hero{grid-template-columns:1fr;text-align:center;padding:34px 20px}.heroActions{justify-content:center}.heroVisual{min-height:320px}.mainCats{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,1fr)}.serviceStrip{grid-template-columns:repeat(2,1fr)}.funBlocks{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.productDetail{grid-template-columns:1fr}.detailImage{min-height:320px}}
 @media(max-width:620px){body{padding-bottom:86px}.headerInner{padding:10px;gap:10px}.logoArea{min-width:0}.logoCircle{width:48px;height:48px;font-size:25px}.logoArea h1{font-size:20px}.logoArea p{display:none}.headerBtns{gap:5px}.pillBtn{padding:9px 10px;font-size:12px}.navMenu{justify-content:center;gap:4px}.navMenu button{padding:8px 9px;font-size:12px}.searchStrip{grid-template-columns:1fr;padding:0 10px 10px}.container{padding:16px 10px}.hero{border-radius:30px;padding:28px 15px;min-height:auto}.hero h2{font-size:33px}.hero p{font-size:16px}.showcase{height:280px}.mainCats,.products,.serviceStrip{grid-template-columns:1fr}.sectionTitle{display:block}.sectionTitle h2{font-size:28px}.panel{display:block}.panel h1{font-size:28px}.modal{padding:8px}.detailSide{padding:18px}.productImg{height:220px}.booking,.infoGrid{grid-template-columns:1fr}}
 
+
+
+/* =====================================================
+   ALMALIKA KIDS FUN PARK V2 - FULL INTERFACE UPGRADE
+   تحسين كامل للواجهة + ضبط الخلفيات + زر إغلاق + ضغط خارج النافذة
+===================================================== */
+:root{
+  --pink:#ff3d9a;--hot:#ff167f;--blue:#18bdf5;--sky:#e9f9ff;--yellow:#ffd13d;--purple:#7657ff;--green:#20c866;--orange:#ff9d16;--dark:#2a1630;--soft:#fff7fd;--shadow:0 18px 45px rgba(255,61,154,.14);
+}
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+body{
+  background:
+    radial-gradient(circle at 14% 7%,rgba(255,61,154,.16),transparent 18%),
+    radial-gradient(circle at 88% 8%,rgba(24,189,245,.16),transparent 19%),
+    linear-gradient(180deg,#fff9fe 0%,#ffffff 42%,#f3fbff 100%) !important;
+}
+body:before{
+  background-image:
+    radial-gradient(rgba(255,61,154,.22) 2px,transparent 2px),
+    radial-gradient(rgba(24,189,245,.20) 2px,transparent 2px),
+    radial-gradient(rgba(255,209,61,.26) 2px,transparent 2px) !important;
+  background-size:70px 70px,92px 92px,120px 120px !important;
+  opacity:.42 !important;
+}
+.sparkleLayer:before,.sparkleLayer:after{font-size:30px !important;opacity:.18 !important}.sparkleLayer:before{top:140px!important}.sparkleLayer:after{top:480px!important}
+.container{max-width:1180px !important;padding:22px 16px !important}.mainHeader{background:rgba(255,255,255,.92)!important;border-bottom:1px solid rgba(255,214,236,.95)!important}.headerInner{max-width:1180px!important}.searchStrip{max-width:1180px!important}
+.logoArea{min-width:220px}.logoCircle{border-radius:20px!important;background:linear-gradient(135deg,#ff3d9a 0%,#ffcf3d 50%,#18bdf5 100%)!important;box-shadow:0 14px 32px rgba(255,61,154,.20)!important}.logoArea h1{color:#ff167f!important}.logoArea p{color:#7051df!important}.navMenu button.active,.navMenu button:hover{background:linear-gradient(135deg,#fff0f8,#e9f9ff)!important;color:#ff167f!important}.btnCart{background:linear-gradient(135deg,#ff167f,#ff6cb6)!important}.btnGold{background:linear-gradient(135deg,#ffd13d,#fff1a6)!important}.btnWhats{background:linear-gradient(135deg,#20c866,#13a851)!important}
+.searchBox{box-shadow:0 12px 30px rgba(255,61,154,.08)!important;border:1px solid #ffd2ea!important}.searchStrip select{border:1px solid #d6f3ff!important}
+
+/* HERO جديد متناسق مع حجم الشاشة */
+.hero{
+  min-height:420px!important;
+  padding:32px!important;
+  border-radius:38px!important;
+  grid-template-columns:1fr .92fr!important;
+  gap:24px!important;
+  background:
+    radial-gradient(circle at 18% 17%,rgba(255,255,255,.92),transparent 22%),
+    radial-gradient(circle at 82% 20%,rgba(24,189,245,.25),transparent 22%),
+    radial-gradient(circle at 80% 85%,rgba(255,209,61,.32),transparent 24%),
+    linear-gradient(135deg,#ffe3f3 0%,#ecfbff 43%,#fff4be 71%,#f0eaff 100%)!important;
+  box-shadow:0 22px 56px rgba(255,61,154,.14)!important;
+  border:1px solid #fff!important;
+}
+.hero:before{inset:13px!important;border:2px dashed rgba(255,255,255,.78)!important;border-radius:28px!important}.hero:after{width:190px!important;height:190px!important;left:-70px!important;bottom:-75px!important;background:rgba(255,61,154,.10)!important}.heroBadge{background:linear-gradient(135deg,#ff167f,#ff77ba)!important;font-size:15px}.hero h2{font-size:46px!important;line-height:1.16!important;color:#ff167f!important}.hero p{font-size:18px!important;max-width:650px!important;color:#6c445b!important}.heroActions button,.heroActions a{border-radius:18px!important;padding:14px 22px!important}.primary{background:linear-gradient(135deg,#ff167f,#ff74b9)!important}.secondary{border:1px solid #ffd2ea!important}.whatsapp{background:linear-gradient(135deg,#20c866,#13a851)!important}
+.heroVisual{min-height:315px!important}.showcase{height:315px!important;max-width:500px;margin:auto}.showcaseCard{border-width:5px!important;border-radius:26px!important;box-shadow:0 18px 40px rgba(42,22,48,.13)!important}.showcaseCard img{object-fit:contain!important;padding:8px;background:linear-gradient(135deg,#ffffff,#effbff)!important}.showcaseCard.big{width:68%!important;height:73%!important;right:10%!important;top:5%!important}.showcaseCard.small1{width:38%!important;height:38%!important;left:4%!important;top:8%!important}.showcaseCard.small2{width:42%!important;height:38%!important;left:8%!important;bottom:4%!important}.showcaseBubble{font-size:13px!important;padding:8px 13px!important}.balloon{opacity:.75!important}
+
+/* شرائط وكروت الصفحة */
+.serviceStrip{grid-template-columns:repeat(4,1fr)!important;gap:12px!important}.service{border-radius:22px!important;padding:14px!important;border:1px solid #ffe0ef!important;box-shadow:0 12px 28px rgba(255,61,154,.08)!important}.sectionTitle{margin-top:24px!important}.sectionTitle h2{font-size:32px!important;color:#ff167f!important}.mainCats{gap:14px!important}.cat{min-height:160px!important;border-radius:28px!important;border:1px solid #fff!important;padding:22px 16px!important}.cat .icon{font-size:50px!important}.cat .title{font-size:18px!important;color:#ff167f!important}.cat:hover{transform:translateY(-5px) scale(1.01)!important}
+.funBlocks{grid-template-columns:1fr 1fr!important}.funBox,.funSteps{border-radius:30px!important;min-height:190px!important}.funBox .giant{font-size:82px!important;opacity:.13!important}
+.panel{border-radius:30px!important;padding:20px!important;background:linear-gradient(135deg,#fff0f8,#ecfbff,#fff6cc)!important}.panel h1{font-size:30px!important;color:#ff167f!important}.filters{grid-template-columns:1fr 160px 160px!important}
+
+/* طريقة عرض المنتجات أفضل ومتناسقة */
+.products{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:18px!important}.product{border-radius:30px!important;border:1px solid #ffd6ec!important;box-shadow:0 16px 38px rgba(255,61,154,.11)!important;background:#fff!important}.product:hover{transform:translateY(-6px)!important;box-shadow:0 24px 52px rgba(255,61,154,.18)!important}.badgeTop{top:10px!important;right:10px!important;border:2px solid #fff!important;background:linear-gradient(135deg,#ff167f,#ff75ba)!important}.productImg{height:215px!important;padding:12px!important;background:linear-gradient(135deg,#fff,#f0fbff,#fff9d9)!important}.productImg img{width:100%!important;height:100%!important;object-fit:contain!important;filter:drop-shadow(0 10px 14px rgba(0,0,0,.10))}.productBody{padding:15px!important}.product h3{font-size:16px!important;min-height:46px!important;line-height:1.45!important}.details{font-size:12px!important;border-radius:16px!important;padding:9px!important}.price{font-size:18px!important;color:#ff167f!important}.productActions button{border-radius:14px!important;padding:11px 8px!important}.viewBtn{background:linear-gradient(135deg,#e9f9ff,#ffffff)!important;color:#007ca9!important;border:1px solid #c9efff!important}.addBtn{background:linear-gradient(135deg,#ff167f,#ff75ba)!important}
+
+/* نافذة تفاصيل المنتج */
+.modal{padding:16px!important;background:rgba(42,22,48,.48)!important;backdrop-filter:blur(8px)!important}.modalContent{border-radius:30px!important;max-height:90vh!important;box-shadow:0 30px 90px rgba(0,0,0,.22)!important;position:relative}.productModal{max-width:980px!important}.productDetail{position:relative!important;grid-template-columns:.92fr 1.08fr!important}.detailImage{min-height:470px!important;padding:20px!important;background:linear-gradient(135deg,#fff,#eefdff,#eafaff,#fff5c8)!important}.detailImage img{max-height:410px!important;width:100%!important;object-fit:contain!important}.detailSide{padding:24px!important}.modalHeader{padding-left:54px!important}.xBtn,.modalCloseFloat{display:grid!important;place-items:center!important;width:44px!important;height:44px!important;border-radius:50%!important;border:0!important;background:linear-gradient(135deg,#ff167f,#ff75ba)!important;color:white!important;font-size:30px!important;line-height:1!important;box-shadow:0 10px 24px rgba(255,22,127,.28)!important;cursor:pointer!important;z-index:15!important}.modalCloseFloat{position:absolute!important;top:14px!important;left:14px!important}.detailSide h2{font-size:27px!important;color:#ff167f!important}.bigPrice{font-size:21px!important;color:#ff167f!important}.infoGrid{grid-template-columns:1fr 1fr!important}.infoBox{border-radius:16px!important;background:linear-gradient(135deg,#fff8fc,#f2fbff)!important}.booking{grid-template-columns:1fr 1fr!important}.cartItem,.orderItem{border-radius:18px!important}.total{background:linear-gradient(135deg,#ff167f,#7657ff)!important}.send{background:linear-gradient(135deg,#20c866,#13a851)!important}.close{border-radius:17px!important}
+.footer{background:linear-gradient(135deg,#ff167f,#7657ff,#18bdf5)!important}
+
+@media(max-width:1050px){
+  .hero{grid-template-columns:1fr!important;text-align:center!important;min-height:auto!important;padding:28px 18px!important}.heroActions{justify-content:center!important}.hero h2{font-size:39px!important}.heroVisual{min-height:300px!important}.showcase{height:290px!important}.products{grid-template-columns:repeat(2,minmax(0,1fr))!important}.mainCats{grid-template-columns:repeat(2,1fr)!important}.serviceStrip{grid-template-columns:repeat(2,1fr)!important}.funBlocks{grid-template-columns:1fr!important}.filters{grid-template-columns:1fr!important}.productDetail{grid-template-columns:1fr!important}.detailImage{min-height:300px!important}.detailImage img{max-height:280px!important}.modalHeader{padding-left:46px!important}
+}
+@media(max-width:620px){
+  .container{padding:14px 10px!important}.headerInner{grid-template-columns:1fr auto!important}.logoArea{min-width:0!important}.hero{border-radius:26px!important;padding:24px 13px!important}.hero h2{font-size:30px!important}.hero p{font-size:15px!important}.heroActions button,.heroActions a{width:100%;padding:13px!important}.showcase{height:245px!important}.showcaseCard.big{width:74%!important;right:5%!important}.showcaseCard.small1{width:39%!important;left:2%!important}.showcaseCard.small2{width:42%!important;left:4%!important}.showcaseBubble{display:none!important}.products,.mainCats,.serviceStrip{grid-template-columns:1fr!important}.productImg{height:205px!important}.sectionTitle h2{font-size:25px!important}.panel h1{font-size:24px!important}.modal{padding:7px!important}.modalContent{border-radius:24px!important}.detailSide{padding:17px!important}.detailSide h2{font-size:22px!important}.infoGrid,.booking{grid-template-columns:1fr!important}.modalCloseFloat{top:10px!important;left:10px!important;width:40px!important;height:40px!important;font-size:27px!important}.cartButton{font-size:15px!important;padding:13px!important}
+}
+
 </style>
 </head>
 <body>
@@ -229,8 +295,8 @@ function showHome(){
     <div class="hero">
       <div class="heroText">
         <span class="heroBadge">🎈 شركة الملكة للحفلات - قطر</span>
-        <h2>عالم نطاطيات ملوّن يخلي حفلة طفلك ترند 🎪</h2>
-        <p>واجهة جديدة ممتعة للأطفال: صور كبيرة للنطاطيات، ألوان زاهية، أقسام واضحة، وحجز سريع بالتاريخ والوقت عبر واتساب.</p>
+        <h2>مدينة ألعاب صغيرة داخل بيتك 🎈</h2>
+        <p>اختار النطاطية أو الزحلاقية بصورة واضحة، شوف المقاس والسعر، وحدد الموعد… والطلب يوصلنا واتساب مباشرة.</p>
         <div class="heroActions">
           <button class="primary" onclick="showCategory('الكل')">شوف كل الألعاب ✨</button>
           <button class="secondary" onclick="showCategory('النطاطيات المائية')">الألعاب المائية 💦</button>
@@ -272,8 +338,8 @@ function showHome(){
   <section class="container">
     <div class="funBlocks">
       <div class="funBox">
-        <h3>تصميم مخصص للحفلات 🎉</h3>
-        <p>طريقة العرض الجديدة تبرز الصور الكبيرة للنطاطيات وتخلي الزبون يشوف اللعبة بسرعة ويطلبها بدون تعقيد.</p>
+        <h3>كل لعبة واضحة كأنها قدامك 🎉</h3>
+        <p>خلفيات أخف، صور مضبوطة، وكروت مرتبة تخلي الطفل والأهل يختارون اللعبة بسرعة بدون زحمة.</p>
         <div class="giant">🏰</div>
       </div>
       <div class="funSteps">
@@ -370,6 +436,7 @@ function openProduct(num){
   const similar=products.filter(x=>x.category===p.category&&x.number!==p.number).slice(0,4);
   productModalContent.innerHTML=`
   <div class="productDetail">
+    <button class="modalCloseFloat" onclick="closeProduct()" aria-label="إغلاق">×</button>
     <div class="detailImage"><img src="${p.image}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div>
     <div class="detailSide">
       <div class="modalHeader">
