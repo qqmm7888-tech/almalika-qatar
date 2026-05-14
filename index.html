@@ -1056,18 +1056,18 @@ body:after{
 @media(max-width:620px){.navMenu{overflow:auto;justify-content:flex-start !important;flex-wrap:nowrap !important;padding-bottom:6px}.navMenu button{font-size:12px !important;flex:0 0 auto}.pageBanner{padding:22px 16px;border-radius:24px}.pageBanner h1{font-size:26px}.subPageCards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.pageCardsGrid,.pageCardsGrid.snacksGrid{grid-template-columns:1fr}.contentCard{min-height:auto}.termItem{align-items:flex-start}}
 
 
-/* ===== NAV RTL FIX: القائمة تبدأ من اليمين ===== */
-.navMenu{
-  direction:rtl !important;
-  flex-direction:row !important;
-  justify-content:flex-start !important;
-}
-@media(max-width:620px){
-  .navMenu{
-    direction:rtl !important;
-    justify-content:flex-start !important;
-  }
-}
+/* ===== Home Snoonu-like quick icons under شوف كل الألعاب ===== */
+.homeQuickTypes{margin-top:18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;max-width:980px}
+.homeTypeCard{background:rgba(255,255,255,.93);border:1px solid rgba(216,178,93,.28);border-radius:24px;padding:14px 12px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;cursor:pointer;box-shadow:0 10px 24px rgba(185,130,153,.08);transition:.22s;text-align:center}
+.homeTypeCard:hover{transform:translateY(-5px);box-shadow:0 18px 34px rgba(185,130,153,.13)}
+.homeTypeCard .typeImgWrap{width:86px;height:86px;border-radius:22px;background:linear-gradient(135deg,#fff7fb,#fff5dc);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(216,178,93,.14)}
+.homeTypeCard .typeImgWrap img{width:74px;height:74px;object-fit:contain;display:block}
+.homeTypeCard .typeLabel{font-weight:900;color:#563245;font-size:16px;line-height:1.45}
+.homeTypeCard .typeSmall{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff6ea;border:1px solid rgba(216,178,93,.22);color:#9a2a60;font-size:12px;font-weight:900}
+@media(max-width:980px){.homeQuickTypes{grid-template-columns:repeat(2,minmax(0,1fr));max-width:100%}}
+@media(max-width:560px){.homeQuickTypes{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.homeTypeCard{padding:12px 8px 14px;border-radius:18px}.homeTypeCard .typeImgWrap{width:74px;height:74px;border-radius:18px}.homeTypeCard .typeImgWrap img{width:62px;height:62px}.homeTypeCard .typeLabel{font-size:14px}.homeTypeCard .typeSmall{font-size:11px;padding:5px 8px}}
+/* ===== NAV RTL FIX ===== */
+.navMenu{direction:rtl !important;flex-direction:row !important;justify-content:flex-start !important}
 
 </style>
 </head>
@@ -1522,6 +1522,28 @@ function showHome(){
           <button class="primary" onclick="showCategory('الكل')">شوف كل الألعاب ✨</button>
           <button class="secondary" onclick="showCategory('النطاطيات المائية')">الألعاب المائية 💦</button>
           <a class="whatsapp" href="https://wa.me/97433317720" target="_blank">احجز واتساب</a>
+        </div>
+        <div class="homeQuickTypes" aria-label="الأقسام الرئيسية">
+          <div class="homeTypeCard" onclick="showBounciesPage()">
+            <div class="typeImgWrap"><img alt="النطاطيات" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><defs><linearGradient id='g' x1='0' x2='1'><stop stop-color='%23ffd2ec'/><stop offset='1' stop-color='%23fff0c7'/></linearGradient></defs><rect width='120' height='120' rx='28' fill='url(%23g)'/><rect x='18' y='63' width='84' height='28' rx='10' fill='%23ffcf39'/><rect x='26' y='46' width='68' height='25' rx='7' fill='%23ff4f93'/><polygon points='26,46 40,22 55,46' fill='%239c6bff'/><polygon points='54,46 68,18 82,46' fill='%23ff6a5f'/><circle cx='40' cy='33' r='4' fill='white'/><circle cx='68' cy='29' r='4' fill='white'/><rect x='48' y='58' width='14' height='20' rx='4' fill='%23fff'/></svg>"></div>
+            <div class="typeLabel">النطاطيات</div>
+            <div class="typeSmall">مائية • جافة • صابونية</div>
+          </div>
+          <div class="homeTypeCard" onclick="showOffersPage()">
+            <div class="typeImgWrap"><img alt="العروض والبكجات" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><defs><linearGradient id='g2' x1='0' x2='1'><stop stop-color='%23fff1c5'/><stop offset='1' stop-color='%23ffddeb'/></linearGradient></defs><rect width='120' height='120' rx='28' fill='url(%23g2)'/><rect x='24' y='38' width='72' height='54' rx='10' fill='%23ff4f93'/><rect x='54' y='38' width='12' height='54' fill='%23fff'/><rect x='24' y='55' width='72' height='12' fill='%23fff'/><path d='M45 39c-9 0-13-12-3-16 8-3 13 5 18 12-5 2-9 4-15 4z' fill='%23ffcf39'/><path d='M75 39c9 0 13-12 3-16-8-3-13 5-18 12 5 2 9 4 15 4z' fill='%239c6bff'/></svg>"></div>
+            <div class="typeLabel">العروض والبكجات</div>
+            <div class="typeSmall">بكجات قوية ومميزة</div>
+          </div>
+          <div class="homeTypeCard" onclick="showSnacksPage()">
+            <div class="typeImgWrap"><img alt="السناك والعربات" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><defs><linearGradient id='g3' x1='0' x2='1'><stop stop-color='%23ffdceb'/><stop offset='1' stop-color='%23fff2c3'/></linearGradient></defs><rect width='120' height='120' rx='28' fill='url(%23g3)'/><rect x='22' y='48' width='58' height='28' rx='8' fill='%23ff4f93'/><rect x='28' y='39' width='46' height='12' rx='4' fill='%23fff'/><circle cx='36' cy='85' r='9' fill='%23563445'/><circle cx='74' cy='85' r='9' fill='%23563445'/><rect x='80' y='45' width='14' height='38' rx='7' fill='%23ffcf39'/><circle cx='94' cy='53' r='7' fill='%23ffcf39'/><path d='M31 38c4-8 12-10 16 0M47 38c4-8 12-10 16 0' stroke='%23ffcf39' stroke-width='4' fill='none' stroke-linecap='round'/></svg>"></div>
+            <div class="typeLabel">السناك والعربات</div>
+            <div class="typeSmall">فشار • غزل • وافل وأكثر</div>
+          </div>
+          <div class="homeTypeCard" onclick="showEventsPage()">
+            <div class="typeImgWrap"><img alt="تجهيز الحفلات" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'><defs><linearGradient id='g4' x1='0' x2='1'><stop stop-color='%23fff0c7'/><stop offset='1' stop-color='%23ffd6ea'/></linearGradient></defs><rect width='120' height='120' rx='28' fill='url(%23g4)'/><rect x='24' y='66' width='72' height='18' rx='8' fill='%239c6bff'/><rect x='34' y='47' width='52' height='22' rx='6' fill='%23ff4f93'/><path d='M32 45c8-18 22-18 30 0M58 45c8-18 22-18 30 0' stroke='%23ffcf39' stroke-width='6' fill='none' stroke-linecap='round'/><circle cx='38' cy='35' r='6' fill='%23ffcf39'/><circle cx='82' cy='35' r='6' fill='%23ffcf39'/><circle cx='60' cy='28' r='6' fill='%23ffcf39'/></svg>"></div>
+            <div class="typeLabel">تجهيز الحفلات</div>
+            <div class="typeSmall">بالونات • بنرات • مناسبات</div>
+          </div>
         </div>
       </div>
       <div class="heroVisual">
