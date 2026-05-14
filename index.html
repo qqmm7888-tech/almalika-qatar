@@ -554,6 +554,92 @@ body:before{
   }
 }
 
+
+
+/* ===== تحديث السلة: موقع الزبون + طريقة السداد ===== */
+.cartLocationBox,
+.paymentBox{
+  background:linear-gradient(135deg,#fff8fc,#f1fbff) !important;
+  border:1.5px solid #ffd6ec !important;
+  border-radius:18px !important;
+  padding:12px !important;
+  margin:10px 0 !important;
+}
+.cartLocationBox .miniTitle,
+.paymentBox .miniTitle{
+  font-size:15px;
+  font-weight:900;
+  color:var(--maroon);
+  margin-bottom:6px;
+}
+.cartLocationBox p,
+.paymentBox p{
+  margin:4px 0 9px;
+  font-size:12px;
+  line-height:1.7;
+  color:#7b6572;
+  font-weight:700;
+}
+.locationActions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.locationBtn,
+.mapBtn{
+  border:0;
+  border-radius:14px;
+  padding:11px 10px;
+  font-weight:900;
+  font-size:13px;
+  color:#fff;
+}
+.locationBtn{background:#4285F4}
+.mapBtn{background:#34A853}
+.locationMissing{
+  display:inline-block;
+  margin-top:8px;
+  color:#b91c1c;
+  background:#fff1f2;
+  border:1px dashed #fecdd3;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:900;
+}
+.paymentChoices{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+.payChoice{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  background:white;
+  border:1.5px solid #ffe0ef;
+  border-radius:14px;
+  padding:10px;
+  font-size:13px;
+  font-weight:900;
+  color:#5b2438;
+  cursor:pointer;
+}
+.payChoice input{width:auto !important;margin:0 !important;accent-color:#ff4fa3}
+.paymentNote{
+  background:#fff7d1;
+  border:1px dashed #ffd84d;
+  border-radius:14px;
+  padding:9px 10px;
+  font-size:12px;
+  font-weight:800;
+  color:#7a4b00;
+  margin-top:8px;
+}
+@media(max-width:620px){
+  .locationActions,.paymentChoices{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -655,8 +741,28 @@ body:before{
   <div class="modalContent">
     <h2>🛒 سلة الحجز</h2>
     <div id="cartCustomerInfo"></div>
+    <div class="cartLocationBox">
+      <div class="miniTitle">📍 موقع الزبون الحالي</div>
+      <p>يرجى من الزبون الضغط على الزر أدناه لإرسال موقع البيت بدقة حتى يتمكن فريق التركيب من الوصول بسهولة.</p>
+      <div class="locationActions">
+        <button class="locationBtn" onclick="getCartLocation()">📍 إضافة موقعي الحالي</button>
+        <button class="mapBtn" onclick="openSavedCartLocation()">🗺️ فتح الموقع المسجل</button>
+      </div>
+      <div id="cartLocationStatus"></div>
+    </div>
     <div id="cartItems"></div>
     <div class="total">الإجمالي: <span id="modalTotal">0</span> ر.ق</div>
+    <div class="paymentBox">
+      <div class="miniTitle">💳 طريقة السداد</div>
+      <p>اختر طريقة الدفع المناسبة. لا يتم طلب بيانات البطاقة داخل الموقع؛ سيتم إرسال رابط دفع آمن أو تعليمات الدفع بعد تأكيد الطلب.</p>
+      <div class="paymentChoices">
+        <label class="payChoice"><input type="radio" name="paymentMethod" value="بطاقة ائتمانية / رابط دفع"> بطاقة ائتمانية / رابط دفع</label>
+        <label class="payChoice"><input type="radio" name="paymentMethod" value="فوراً"> فوراً</label>
+        <label class="payChoice"><input type="radio" name="paymentMethod" value="تحويل بنكي"> تحويل بنكي</label>
+        <label class="payChoice"><input type="radio" name="paymentMethod" value="نقداً عند التركيب"> نقداً عند التركيب</label>
+      </div>
+      <div class="paymentNote">تنبيه: الحجز يعتبر مبدئياً إلى حين تأكيد طريقة السداد من الإدارة.</div>
+    </div>
     <label>ملاحظات عامة</label>
     <textarea id="notes" placeholder="مثال: التركيب العصر، المكان حديقة، عدد الأطفال..."></textarea>
     <button class="send" onclick="submitOrder()">إرسال الطلب وحفظه في قاعدة البيانات</button>
@@ -859,6 +965,38 @@ function getLocation(){
   },()=>alert('يرجى السماح بالوصول للموقع'));
 }
 function openLocation(){pLocation.value?window.open(pLocation.value,'_blank'):alert('حدد الموقع أولاً')}
+
+async function saveCustomerLocationLink(link){
+  let c=currentCustomer();
+  if(!c){openLogin();return false}
+  c.location=link;
+  localStorage.setItem('customer',JSON.stringify(c));
+  if(typeof pLocation!=='undefined') pLocation.value=link;
+  try{
+    await db.collection('customers').doc(c.phone).set({location:link,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+  }catch(e){console.error(e)}
+  return true;
+}
+
+function getCartLocation(){
+  if(!navigator.geolocation){alert('المتصفح لا يدعم تحديد الموقع');return}
+  navigator.geolocation.getCurrentPosition(async pos=>{
+    const link=`https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
+    await saveCustomerLocationLink(link);
+    renderCart();
+    alert('تم إضافة موقع الزبون الحالي ✅');
+  },()=>alert('يرجى السماح للموقع باستخدام تحديد الموقع GPS'));
+}
+
+function openSavedCartLocation(){
+  const c=currentCustomer();
+  if(c && c.location) window.open(c.location,'_blank');
+  else alert('لم يتم إضافة موقع الزبون بعد');
+}
+
+function selectedPaymentMethod(){
+  return document.querySelector('input[name="paymentMethod"]:checked')?.value || '';
+}
 
 function showHome(){
   page='home'; activeCategory='الكل'; backBtn.style.display='none'; quickCategory.value='الكل';
@@ -1105,6 +1243,12 @@ function closeCart(){cartModal.style.display='none'}
 function renderCart(){
   const c=currentCustomer();
   cartCustomerInfo.innerHTML=`<div class="cartItem"><b>بيانات الزبون</b><br>👤 ${c.name}<br>📞 ${c.phone}<br>📍 ${c.address||''}<br>🗺️ ${c.location?`<a href="${c.location}" target="_blank">فتح الموقع</a>`:'لا يوجد موقع'}</div>`;
+  const locationStatus=document.getElementById('cartLocationStatus');
+  if(locationStatus){
+    locationStatus.innerHTML=c.location
+      ? `<span class="locationMissing" style="color:#047857;background:#ecfdf5;border-color:#a7f3d0">✅ تم تسجيل الموقع</span>`
+      : `<span class="locationMissing">⚠️ مطلوب إضافة موقع الزبون قبل إرسال الطلب</span>`;
+  }
   cartItems.innerHTML=cart.length?cart.map((i,idx)=>`<div class="cartItem">
     <div class="row"><b>#${i.number} - ${i.name}</b><button class="remove" onclick="removeItem(${idx})">حذف</button></div>
     📅 التاريخ: ${i.bookingDate} | 🕒 الفترة: ${i.period}<br>
@@ -1119,21 +1263,24 @@ function removeItem(i){cart.splice(i,1);renderCart()}
 async function submitOrder(){
   const c=currentCustomer();
   if(!cart.length){alert('السلة فارغة');return}
+  if(!c.location){alert('يرجى إضافة موقع الزبون الحالي قبل إرسال الطلب');return}
+  const paymentMethod=selectedPaymentMethod();
+  if(!paymentMethod){alert('يرجى اختيار طريقة السداد');return}
   const total=cart.reduce((a,b)=>a+(Number(b.selectedPrice)||0),0);
   const notes=document.getElementById('notes').value||'';
   const order={
-    customerName:c.name,phone:c.phone,address:c.address||'',location:c.location||'',
+    customerName:c.name,phone:c.phone,address:c.address||'',location:c.location||'',paymentMethod,
     items:cart.map(i=>({number:i.number,name:i.name,type:i.type,category:i.category,price:i.selectedPrice,bookingDate:i.bookingDate,period:i.period,setupTime:i.period,durationDays:i.durationDays,length:i.length,width:i.width,height:i.height,age:i.age,image:i.image,itemNote:i.itemNote||''})),
     total,notes,status:'جديد',createdAt:firebase.firestore.FieldValue.serverTimestamp()
   };
   try{
     const ref=await db.collection('orders').add(order);
     await db.collection('customers').doc(c.phone).collection('orders').add({...order,orderId:ref.id});
-    await db.collection('customers').doc(c.phone).set({lastOrderId:ref.id,lastOrderTotal:total,lastOrderStatus:'جديد',lastOrderAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    await db.collection('customers').doc(c.phone).set({lastOrderId:ref.id,lastOrderTotal:total,lastOrderStatus:'جديد',lastPaymentMethod:paymentMethod,lastOrderAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
   }catch(e){console.error(e);alert('تحقق من Firebase Rules. سيتم فتح واتساب الآن')}
-  let msg=`السلام عليكم، طلب جديد من موقع الملكة:%0A%0Aالزبون: ${c.name}%0Aالهاتف: ${c.phone}%0Aالعنوان: ${c.address||''}%0Aالموقع: ${c.location||''}%0A%0A`;
+  let msg=`السلام عليكم، طلب جديد من موقع الملكة:%0A%0Aالزبون: ${c.name}%0Aالهاتف: ${c.phone}%0Aالعنوان: ${c.address||''}%0Aالموقع: ${c.location||''}%0Aطريقة السداد: ${paymentMethod}%0A%0A`;
   cart.forEach((i,n)=>msg+=`${n+1}) #${i.number} - ${i.name}%0Aالتاريخ: ${i.bookingDate} | الفترة: ${i.period}%0Aالمدة: ${i.durationDays} يوم | السعر: ${i.selectedPrice} ر.ق%0A${i.itemNote?`ملاحظة: ${i.itemNote}%0A`:''}%0A`);
-  msg+=`الإجمالي: ${total} ر.ق%0Aملاحظات عامة: ${notes}`;
+  msg+=`الإجمالي: ${total} ر.ق%0Aطريقة السداد: ${paymentMethod}%0Aملاحظات عامة: ${notes}`;
   window.open(`https://wa.me/${whatsappNumber}?text=${msg}`,'_blank');
   cart=[];updateCart();closeCart();alert('تم حفظ الطلب وفتح واتساب ✅');
 }
@@ -1157,7 +1304,7 @@ async function renderAdmin(){
     📍 ${o.address||''}<br>
     🗺️ ${o.location||''}<br>
     <b>الطلبات:</b><br>${(o.items||[]).map(i=>`- #${i.number} ${i.name} | ${i.bookingDate} ${i.period||i.setupTime||''} | ${i.price} ر.ق`).join('<br>')}<br>
-    <b>الإجمالي: ${o.total||0} ر.ق</b><br>📝 ${o.notes||''}
+    <b>الإجمالي: ${o.total||0} ر.ق</b><br>💳 طريقة السداد: ${o.paymentMethod||'غير محدد'}<br>📝 ${o.notes||''}
   </div>`).join(''):'<div class="empty">لا توجد طلبات</div>';
 }
 
