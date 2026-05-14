@@ -90,6 +90,103 @@ body:before{
   .container{padding:14px 10px!important}.headerInner{grid-template-columns:1fr auto!important}.logoArea{min-width:0!important}.hero{border-radius:26px!important;padding:24px 13px!important}.hero h2{font-size:30px!important}.hero p{font-size:15px!important}.heroActions button,.heroActions a{width:100%;padding:13px!important}.showcase{height:245px!important}.showcaseCard.big{width:74%!important;right:5%!important}.showcaseCard.small1{width:39%!important;left:2%!important}.showcaseCard.small2{width:42%!important;left:4%!important}.showcaseBubble{display:none!important}.products,.mainCats,.serviceStrip{grid-template-columns:1fr!important}.productImg{height:205px!important}.sectionTitle h2{font-size:25px!important}.panel h1{font-size:24px!important}.modal{padding:7px!important}.modalContent{border-radius:24px!important}.detailSide{padding:17px!important}.detailSide h2{font-size:22px!important}.infoGrid,.booking{grid-template-columns:1fr!important}.modalCloseFloat{top:10px!important;left:10px!important;width:40px!important;height:40px!important;font-size:27px!important}.cartButton{font-size:15px!important;padding:13px!important}
 }
 
+
+
+/* ===== Product brief + booking detail update ===== */
+.productImg{cursor:pointer!important}
+.productBody .details.compactDetails{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+  margin:10px 0!important;
+}
+.briefPill{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  border-radius:15px;
+  font-weight:900;
+  font-size:13px;
+  border:1px solid #ffe0ef;
+  background:linear-gradient(135deg,#fff8fc,#eefaff);
+  color:#6b2b52;
+  text-align:center;
+}
+.briefPill.pricePill{
+  color:#ff167f;
+  background:linear-gradient(135deg,#fff0f8,#fff7cc);
+}
+.productActions.threeActions{
+  grid-template-columns:1fr 1fr 1fr!important;
+}
+.whatsBtn{
+  border:0!important;
+  border-radius:16px!important;
+  padding:12px 8px!important;
+  font-weight:900!important;
+  background:linear-gradient(135deg,#25D366,#15b957)!important;
+  color:white!important;
+  box-shadow:0 12px 24px rgba(37,211,102,.24)!important;
+}
+.detailIntro{
+  background:linear-gradient(135deg,#fff7cc,#eefaff,#fff0f8);
+  border:1px solid #ffe0ef;
+  border-radius:18px;
+  padding:13px 14px;
+  color:#5c4352;
+  font-weight:800;
+  line-height:1.9;
+  margin:12px 0;
+}
+.priceChoiceGrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin:12px 0;
+}
+.priceChoice{
+  position:relative;
+  display:block;
+  border:2px solid #ffe0ef;
+  border-radius:18px;
+  padding:12px;
+  background:white;
+  cursor:pointer;
+  transition:.2s;
+}
+.priceChoice input{display:none}
+.priceChoice span{display:block;font-weight:900;color:#6b2b52}
+.priceChoice b{display:block;font-size:22px;color:#ff167f;margin-top:3px}
+.priceChoice:has(input:checked){
+  border-color:#ff4fa3;
+  background:linear-gradient(135deg,#fff0f8,#fff7cc);
+  box-shadow:0 12px 24px rgba(255,79,163,.14);
+}
+.workNotice{
+  background:#fff8e1;
+  border:1px dashed #ffb703;
+  color:#765000;
+  border-radius:16px;
+  padding:10px 12px;
+  font-weight:900;
+  line-height:1.8;
+  margin:10px 0 12px;
+}
+.booking.bookingSimple{
+  grid-template-columns:1fr 1fr!important;
+}
+.booking.bookingSimple input,.booking.bookingSimple select{
+  min-height:46px;
+}
+@media(max-width:620px){
+  .productActions.threeActions{grid-template-columns:1fr!important}
+  .priceChoiceGrid,.booking.bookingSimple{grid-template-columns:1fr!important}
+}
+
 </style>
 </head>
 <body>
@@ -414,60 +511,81 @@ function renderProducts(){
 }
 
 function card(p){
+  const waterOrDry = (p.type||p.category||'').includes('مائية') || (p.category||'').includes('مائية') || (p.type||'').includes('حوض') ? 'مائية 💦' : ((p.type||'').includes('صابوني') ? 'صابونية 🧼' : 'جافة 🏰');
   return `<div class="product">
-    <div class="badgeTop">لعبة #${p.number}</div>
-    <div class="productImg"><img src="${p.image}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div>
+    <div class="badgeTop">#${p.number}</div>
+    <div class="productImg" onclick="openProduct(${p.number})" title="اضغط لعرض التفاصيل"><img src="${p.image}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div>
     <div class="productBody">
       <h3>${p.name}</h3>
-      <div class="tags"><span class="tag">${p.category}</span><span class="tag">${p.type||'نوع غير محدد'}</span></div>
-      <div class="details">📏 المقاس: ${p.length||'-'} × ${p.width||'-'} × ${p.height||'-'}<br>👶 العمر: ${p.age||'-'}</div>
-      <div class="price">${p.priceOneDay} ر.ق / يوم</div>
-      <div class="productActions">
-        <button class="viewBtn" onclick="openProduct(${p.number})">شوف اللعبة</button>
+      <div class="details compactDetails">
+        <div class="briefPill">${waterOrDry}</div>
+        <div class="briefPill pricePill">يوم: ${p.priceOneDay} ر.ق</div>
+        <div class="briefPill pricePill">يومين: ${p.priceTwoDays} ر.ق</div>
+        <div class="briefPill">حجز سريع</div>
+      </div>
+      <div class="productActions threeActions">
+        <button class="viewBtn" onclick="openProduct(${p.number})">التفاصيل</button>
         <button class="addBtn" onclick="openProduct(${p.number})">احجزها</button>
+        <button class="whatsBtn" onclick="event.stopPropagation();quickWhatsapp(${p.number})">واتساب</button>
       </div>
     </div>
   </div>`;
 }
 
+
 function openProduct(num){
   const p=products.find(x=>x.number==num);
   if(!p)return;
   const similar=products.filter(x=>x.category===p.category&&x.number!==p.number).slice(0,4);
+  const waterOrDry = (p.type||p.category||'').includes('مائية') || (p.category||'').includes('مائية') || (p.type||'').includes('حوض') ? 'مائية' : ((p.type||'').includes('صابوني') ? 'صابونية' : 'جافة');
   productModalContent.innerHTML=`
   <div class="productDetail">
     <button class="modalCloseFloat" onclick="closeProduct()" aria-label="إغلاق">×</button>
     <div class="detailImage"><img src="${p.image}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div>
     <div class="detailSide">
       <div class="modalHeader">
-        <div class="tags"><span class="tag">لعبة #${p.number}</span><span class="tag">${p.category}</span><span class="tag">${p.type||''}</span></div>
+        <div class="tags"><span class="tag">لعبة #${p.number}</span><span class="tag">${p.category}</span><span class="tag">${waterOrDry}</span></div>
         <button class="xBtn" onclick="closeProduct()">×</button>
       </div>
       <h2>${p.name}</h2>
-      <div class="bigPrice">${p.priceOneDay} ر.ق يوم واحد — ${p.priceTwoDays} ر.ق يومين</div>
+      <div class="detailIntro">
+        هذه النطاطية مناسبة لإضافة أجواء لعب آمنة وممتعة للأطفال داخل الحفلات والمناسبات، ويتم تركيبها على أرضية مناسبة مع تثبيت جيد قبل التشغيل.<br>
+        نذكّر دائماً بوجود إشراف من شخص بالغ أثناء اللعب، والالتزام بالعمر المناسب وعدم زيادة عدد الأطفال داخل اللعبة للحفاظ على السلامة.
+      </div>
 
       <div class="infoGrid">
-        <div class="infoBox">📏 المقاس<br><b>${p.length||'-'} × ${p.width||'-'} × ${p.height||'-'}</b></div>
+        <div class="infoBox">📏 حجم النطاطية<br><b>${p.length||'-'} × ${p.width||'-'} × ${p.height||'-'}</b></div>
+        <div class="infoBox">🎈 النوع<br><b>${waterOrDry}</b></div>
         <div class="infoBox">👶 العمر المناسب<br><b>${p.age||'-'}</b></div>
-        <div class="infoBox">🎈 النوع<br><b>${p.type||'-'}</b></div>
-        <div class="infoBox">⏱️ مدة الإيجار<br><b>${p.durationOneDay||'-'} / ${p.durationTwoDays||'-'}</b></div>
+        <div class="infoBox">🛠️ التشغيل<br><b>تركيب وتشغيل من فريق الملكة</b></div>
       </div>
 
-      <h3>حدد موعد التركيب</h3>
-      <div class="booking">
+      <h3>اختيار مدة الحجز والسعر</h3>
+      <div class="priceChoiceGrid">
+        <label class="priceChoice">
+          <input type="radio" name="days_${p.number}" value="1" checked>
+          <span>يوم واحد</span><b>${p.priceOneDay} ر.ق</b>
+        </label>
+        <label class="priceChoice">
+          <input type="radio" name="days_${p.number}" value="2">
+          <span>يومين</span><b>${p.priceTwoDays} ر.ق</b>
+        </label>
+      </div>
+
+      <h3>بيانات الحجز</h3>
+      <div class="booking bookingSimple">
         <input type="date" id="date_${p.number}">
-        <input type="time" id="time_${p.number}">
-        <select id="days_${p.number}">
-          <option value="1">يوم واحد - ${p.priceOneDay} ر.ق</option>
-          <option value="2">يومين - ${p.priceTwoDays} ر.ق</option>
-        </select>
         <select id="period_${p.number}">
-          <option>صباحاً</option><option>العصر</option><option>المساء</option>
+          <option value="">اختار الوقت</option>
+          <option value="الصباح">الصباح</option>
+          <option value="الظهر">الظهر</option>
+          <option value="العصر">العصر</option>
         </select>
       </div>
+      <div class="workNotice">⏰ تذكير: توقيت العمل لدينا من الساعة 9 صباحاً إلى الساعة 5 عصراً.</div>
       <textarea id="note_${p.number}" placeholder="ملاحظات: مكان التركيب، بوابة الدخول، الكهرباء، عدد الأطفال..."></textarea>
-      <button class="send" style="background:linear-gradient(135deg,#ff2d88,#ff85c4)" onclick="addToCart(${p.number})">أضف اللعبة للسلة 🎈</button>
-      <button class="close" onclick="window.open('https://wa.me/97433317720','_blank')">استفسار واتساب مباشر</button>
+      <button class="send" style="background:linear-gradient(135deg,#ff2d88,#ff85c4)" onclick="addToCart(${p.number})">احجز الآن وأضف للسلة 🎈</button>
+      <button class="close" onclick="quickWhatsapp(${p.number})">استفسار واتساب مباشر</button>
 
       ${similar.length?`<h3>ألعاب من نفس القسم</h3><div class="subCats">${similar.map(s=>`<button class="chip" onclick="closeProduct();openProduct(${s.number})">#${s.number} ${s.name}</button>`).join('')}</div>`:''}
     </div>
@@ -475,21 +593,29 @@ function openProduct(num){
   productModal.style.display='flex';
 }
 
+
 function closeProduct(){productModal.style.display='none'}
+function quickWhatsapp(num){
+  const p=products.find(x=>x.number==num);
+  if(!p)return;
+  const msg=`السلام عليكم، أريد الاستفسار عن النطاطية رقم ${p.number} - ${p.name}%0Aالسعر يوم: ${p.priceOneDay} ر.ق%0Aالسعر يومين: ${p.priceTwoDays} ر.ق`;
+  window.open(`https://wa.me/${whatsappNumber}?text=${msg}`,'_blank');
+}
 function renderCurrent(){page==='home'?showHome():renderProducts()}
 
 function addToCart(id){
   const p=products.find(x=>x.number==id);
   const date=document.getElementById('date_'+id)?.value;
-  const time=document.getElementById('time_'+id)?.value;
-  const days=document.getElementById('days_'+id)?.value || '1';
   const period=document.getElementById('period_'+id)?.value || '';
+  const checkedDays=document.querySelector(`input[name="days_${id}"]:checked`);
+  const days=checkedDays?.value || '1';
   const itemNote=document.getElementById('note_'+id)?.value || '';
-  if(!date||!time){alert('حدد تاريخ ووقت التركيب أولاً');return}
+  if(!date||!period){alert('حدد تاريخ الحجز والوقت: الصباح أو الظهر أو العصر');return}
   const price=days==='2'?p.priceTwoDays:p.priceOneDay;
-  cart.push({...p,bookingDate:date,setupTime:time,period,durationDays:days,selectedPrice:price,itemNote});
-  updateCart(); closeProduct(); alert('تمت الإضافة للسلة ✅');
+  cart.push({...p,bookingDate:date,setupTime:period,period,durationDays:days,selectedPrice:price,itemNote});
+  updateCart(); closeProduct(); alert('تمت إضافة البند للسلة مع احتساب الإجمالي ✅');
 }
+
 function updateCart(){
   const total=cart.reduce((a,b)=>a+(Number(b.selectedPrice)||0),0);
   cartCount.textContent=cart.length; topCount.textContent=cart.length; cartTotal.textContent=total; modalTotal.textContent=total;
@@ -501,12 +627,13 @@ function renderCart(){
   cartCustomerInfo.innerHTML=`<div class="cartItem"><b>بيانات الزبون</b><br>👤 ${c.name}<br>📞 ${c.phone}<br>📍 ${c.address||''}<br>🗺️ ${c.location?`<a href="${c.location}" target="_blank">فتح الموقع</a>`:'لا يوجد موقع'}</div>`;
   cartItems.innerHTML=cart.length?cart.map((i,idx)=>`<div class="cartItem">
     <div class="row"><b>#${i.number} - ${i.name}</b><button class="remove" onclick="removeItem(${idx})">حذف</button></div>
-    📅 ${i.bookingDate} | 🕒 ${i.setupTime} | ${i.period}<br>
+    📅 التاريخ: ${i.bookingDate} | 🕒 الفترة: ${i.period}<br>
     المدة: ${i.durationDays} يوم | السعر: ${i.selectedPrice} ر.ق<br>
     ${i.itemNote?`📝 ${i.itemNote}`:''}
   </div>`).join(''):'<div class="empty">السلة فارغة</div>';
   updateCart();
 }
+
 function removeItem(i){cart.splice(i,1);renderCart()}
 
 async function submitOrder(){
@@ -516,7 +643,7 @@ async function submitOrder(){
   const notes=document.getElementById('notes').value||'';
   const order={
     customerName:c.name,phone:c.phone,address:c.address||'',location:c.location||'',
-    items:cart.map(i=>({number:i.number,name:i.name,type:i.type,category:i.category,price:i.selectedPrice,bookingDate:i.bookingDate,setupTime:i.setupTime,period:i.period,durationDays:i.durationDays,length:i.length,width:i.width,height:i.height,age:i.age,image:i.image,itemNote:i.itemNote||''})),
+    items:cart.map(i=>({number:i.number,name:i.name,type:i.type,category:i.category,price:i.selectedPrice,bookingDate:i.bookingDate,period:i.period,setupTime:i.period,durationDays:i.durationDays,length:i.length,width:i.width,height:i.height,age:i.age,image:i.image,itemNote:i.itemNote||''})),
     total,notes,status:'جديد',createdAt:firebase.firestore.FieldValue.serverTimestamp()
   };
   try{
@@ -525,7 +652,7 @@ async function submitOrder(){
     await db.collection('customers').doc(c.phone).set({lastOrderId:ref.id,lastOrderTotal:total,lastOrderStatus:'جديد',lastOrderAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
   }catch(e){console.error(e);alert('تحقق من Firebase Rules. سيتم فتح واتساب الآن')}
   let msg=`السلام عليكم، طلب جديد من موقع الملكة:%0A%0Aالزبون: ${c.name}%0Aالهاتف: ${c.phone}%0Aالعنوان: ${c.address||''}%0Aالموقع: ${c.location||''}%0A%0A`;
-  cart.forEach((i,n)=>msg+=`${n+1}) #${i.number} - ${i.name}%0Aالتاريخ: ${i.bookingDate} | الوقت: ${i.setupTime} | ${i.period}%0Aالمدة: ${i.durationDays} يوم | السعر: ${i.selectedPrice} ر.ق%0A${i.itemNote?`ملاحظة: ${i.itemNote}%0A`:''}%0A`);
+  cart.forEach((i,n)=>msg+=`${n+1}) #${i.number} - ${i.name}%0Aالتاريخ: ${i.bookingDate} | الفترة: ${i.period}%0Aالمدة: ${i.durationDays} يوم | السعر: ${i.selectedPrice} ر.ق%0A${i.itemNote?`ملاحظة: ${i.itemNote}%0A`:''}%0A`);
   msg+=`الإجمالي: ${total} ر.ق%0Aملاحظات عامة: ${notes}`;
   window.open(`https://wa.me/${whatsappNumber}?text=${msg}`,'_blank');
   cart=[];updateCart();closeCart();alert('تم حفظ الطلب وفتح واتساب ✅');
@@ -549,10 +676,17 @@ async function renderAdmin(){
     👤 ${o.customerName||''} | 📞 ${o.phone||''}<br>
     📍 ${o.address||''}<br>
     🗺️ ${o.location||''}<br>
-    <b>الطلبات:</b><br>${(o.items||[]).map(i=>`- #${i.number} ${i.name} | ${i.bookingDate} ${i.setupTime} | ${i.price} ر.ق`).join('<br>')}<br>
+    <b>الطلبات:</b><br>${(o.items||[]).map(i=>`- #${i.number} ${i.name} | ${i.bookingDate} ${i.period||i.setupTime||''} | ${i.price} ر.ق`).join('<br>')}<br>
     <b>الإجمالي: ${o.total||0} ر.ق</b><br>📝 ${o.notes||''}
   </div>`).join(''):'<div class="empty">لا توجد طلبات</div>';
 }
+
+
+productModal.addEventListener('click', function(e){ if(e.target===productModal) closeProduct(); });
+cartModal.addEventListener('click', function(e){ if(e.target===cartModal) closeCart(); });
+loginModal.addEventListener('click', function(e){ if(e.target===loginModal) closeLogin(); });
+adminModal.addEventListener('click', function(e){ if(e.target===adminModal) closeAdmin(); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeProduct(); closeCart(); closeLogin(); closeAdmin(); } });
 
 setupCategorySelect();
 showHome();
