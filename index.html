@@ -640,6 +640,46 @@ body:before{
   .locationActions,.paymentChoices{grid-template-columns:1fr}
 }
 
+
+/* ===== Queen auth flow like app checkout ===== */
+.profile{display:none !important}
+.queenAuthModal{max-width:560px !important;padding:26px 26px 24px !important;border-radius:34px !important;position:relative;overflow:hidden !important;background:linear-gradient(180deg,#fff 0%,#fffafd 100%) !important}
+.queenAuthModal:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top left,rgba(35,201,255,.12),transparent 28%),radial-gradient(circle at top right,rgba(255,79,163,.10),transparent 26%);pointer-events:none}
+.authCloseBtn{position:absolute;top:16px;left:16px;width:42px;height:42px;border:0;border-radius:50%;background:#f4f0f4;color:#8b7d85;font-size:29px;line-height:1;cursor:pointer;z-index:2}
+.authStep{display:none;position:relative;z-index:1}.authStep.active{display:block}
+.queenAuthLogo{width:76px;height:76px;margin:10px auto 6px;border-radius:22px;background:linear-gradient(135deg,#7a1734,#ff4fa3);display:grid;place-items:center;color:#fff;font-size:35px;box-shadow:0 14px 26px rgba(122,23,52,.24)}
+.queenAuthLogo.small{width:66px;height:66px;font-size:30px}
+.queenAuthBrand{text-align:center;font-weight:900;color:#7a1734;margin-bottom:6px;font-size:22px}
+.queenAuthModal h2{text-align:center;margin:6px 0 4px;font-size:24px;color:#151019;font-weight:900}
+.authSubtitle{text-align:center;color:#74646f;line-height:1.6;font-size:14px;margin:0 0 16px}
+.phoneInputWrap{display:flex;align-items:center;border:1.8px solid #eee5ea;border-radius:18px;background:#f8f7f8;overflow:hidden;margin:16px 0}
+.countryCode{padding:0 16px;font-weight:900;color:#111;white-space:nowrap;border-left:1px solid #e6dde2}
+.phoneInputWrap input,.otpInput,.readonlyField,#authNameInput,#authAreaInput{width:100%;border:1.8px solid #eee5ea;background:#f8f7f8;border-radius:18px;padding:15px 16px;font-size:16px;outline:0}
+.phoneInputWrap input{border:0;border-radius:0;background:transparent}
+.otpInput{text-align:center;font-size:28px;letter-spacing:10px;background:#faf8fa}
+.authPrimary{background:linear-gradient(135deg,#e60019,#ff2342) !important;color:#fff !important;border-radius:22px !important;padding:15px !important;font-size:16px !important;font-weight:900 !important}
+.authSecondary{background:#f5f3f6 !important;color:#5d4153 !important;border:1px solid #e6dbe2 !important;border-radius:18px !important}
+.authTerms{margin:14px 0 0;text-align:center;font-size:12px;color:#7c6d77;line-height:1.6}
+.authActionsRow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.authActionsRow.twoCols{grid-template-columns:1fr 1fr}
+.otpNote{font-size:12px;text-align:center;color:#9a7e8c;margin-top:-4px;margin-bottom:10px}
+.authStep label{display:block;margin:8px 0 6px;font-size:14px;font-weight:900;color:#5b233b}
+.readonlyField{background:#f2f1f3 !important;color:#4d4650 !important}
+.authLocationCard,.locationConfirmCard{background:linear-gradient(135deg,#fff8fc,#f4fbff);border:1px solid #ffd9ea;border-radius:22px;padding:14px;margin-top:12px}
+.authLocationTitle,.locationConfirmTitle{font-weight:900;color:#5b233b;margin-bottom:6px}
+.authLocationStatus{font-size:13px;color:#7a6673;background:#fff;border:1px dashed #f0b5cf;padding:10px 12px;border-radius:14px}
+.authLocationBtn{background:linear-gradient(135deg,#25D366,#18b956) !important}
+.authOpenMapBtn{background:#fff !important;color:#1b63c3 !important;border:1px solid #d9e9ff !important}
+.locationConfirmArea{font-size:22px;font-weight:900;line-height:1.4;color:#111;margin:8px 0}
+.locationConfirmCoords{font-size:14px;color:#666}
+.locationMiniMap{margin-top:12px;background:#fff;border-radius:18px;padding:18px;text-align:center;border:1px solid #edf1f7;color:#666;display:flex;flex-direction:column;gap:7px;align-items:center}
+.locationMiniMap a{color:#1b63c3;font-weight:800}
+.miniPin{font-size:32px}
+.compactCartModal{max-width:760px !important}
+.cartHeadRow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.cartHeadRow h2{margin:0}
+.miniEditBtn{border:1px solid #e9dce4;background:#fff;border-radius:999px;padding:10px 14px;font-weight:900;color:#7a1734}
+.cartHintOnly{background:linear-gradient(135deg,#fff8fc,#f6fbff);border:1px dashed #ffbfd8;border-radius:18px;padding:13px 15px;margin:8px 0 14px;color:#7a6673;font-weight:800;font-size:13px}
+@media(max-width:620px){.queenAuthModal{max-width:94vw !important;padding:20px 18px 18px !important;border-radius:28px !important}.queenAuthModal h2{font-size:22px}.authActionsRow,.authActionsRow.twoCols{grid-template-columns:1fr}.locationConfirmArea{font-size:18px}.authCloseBtn{top:12px;left:12px;width:38px;height:38px;font-size:26px}.otpInput{font-size:24px;letter-spacing:7px}}
+
 </style>
 </head>
 <body>
@@ -681,23 +721,7 @@ body:before{
   </div>
 </header>
 
-<section class="profile" id="profileCard">
-  <div class="box">
-    <h2 style="margin:0 0 12px;color:var(--maroon)">بيانات الزبون</h2>
-    <div class="formGrid">
-      <div><label>الاسم</label><input id="pName"></div>
-      <div><label>الهاتف</label><input id="pPhone" readonly></div>
-      <div><label>العنوان / المنطقة</label><input id="pAddress" list="qatarAreasList" autocomplete="off"></div>
-    </div>
-    <label>موقع البيت / Google Maps</label>
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="send" style="background:#4285F4;flex:1;min-width:170px" onclick="getLocation()">📍 تحديد الموقع</button>
-      <button class="send" style="background:#34A853;flex:1;min-width:170px" onclick="openLocation()">🗺️ فتح الموقع</button>
-    </div>
-    <input id="pLocation" placeholder="رابط Google Maps">
-    <button class="send" onclick="saveProfile()">حفظ بيانات الزبون</button>
-  </div>
-</section>
+<section class="profile" id="profileCard" style="display:none !important"></section>
 
 <main id="app"></main>
 
@@ -722,46 +746,100 @@ body:before{
 </div>
 
 <div class="modal" id="loginModal">
-  <div class="modalContent customerModal">
-    <h2>تسجيل بيانات الزبون</h2>
-    <p class="formHint">يرجى إدخال بيانات جديدة لكل طلب: رقم الهاتف، الاسم، والمنطقة / رقم المنطقة.</p>
-    <label>رقم الهاتف <span class="required">*</span></label>
-    <input id="loginPhone" type="tel" inputmode="numeric" autocomplete="off" placeholder="مثال: 55323328">
-    <label>اسم الزبون <span class="required">*</span></label>
-    <input id="loginName" autocomplete="off" placeholder="اسم الزبون">
-    <label>العنوان / المنطقة <span class="required">*</span></label>
-    <input id="loginAddress" list="qatarAreasList" autocomplete="off" placeholder="اكتب اسم المنطقة أو رقمها: مثال 69 لوسيل">
-    <datalist id="qatarAreasList"></datalist>
-    <button class="send" onclick="loginCustomer()">استمرار وحفظ</button>
-    <button class="close" onclick="closeLogin()">إغلاق</button>
+  <div class="modalContent authModal queenAuthModal">
+    <button class="authCloseBtn" onclick="closeLogin()">×</button>
+
+    <div id="authStepPhone" class="authStep active">
+      <div class="queenAuthLogo">👑</div>
+      <div class="queenAuthBrand">الملكة</div>
+      <h2>سجّل الدخول أو أنشئ حساباً</h2>
+      <p class="authSubtitle">لإتمام الحجز وإرسال الطلب بشكل صحيح</p>
+      <div class="phoneInputWrap">
+        <span class="countryCode">+974</span>
+        <input id="authPhoneInput" type="tel" inputmode="numeric" autocomplete="off" placeholder="رقم الجوال" maxlength="8">
+      </div>
+      <button class="send authPrimary" onclick="authContinuePhone()">استمرار</button>
+      <p class="authTerms">بالضغط على زر الاستمرار فإنك توافق على المتابعة واستكمال بيانات الحجز.</p>
+    </div>
+
+    <div id="authStepOtp" class="authStep">
+      <div class="queenAuthLogo small">👑</div>
+      <h2>أدخل كود التحقق</h2>
+      <p class="authSubtitle">أدخل الكود المكوّن من 6 أرقام المرسل إلى <b id="authPhonePreview">+974</b></p>
+      <input id="authOtpInput" class="otpInput" type="tel" inputmode="numeric" maxlength="6" placeholder="••••••">
+      <div class="otpNote">للتجربة داخل الموقع: أدخل أي 6 أرقام ثم اضغط استمرار.</div>
+      <div class="authActionsRow">
+        <button class="close authSecondary" onclick="authBackToPhone()">رجوع</button>
+        <button class="send authPrimary" onclick="authContinueOtp()">استمرار</button>
+      </div>
+    </div>
+
+    <div id="authStepDetails" class="authStep">
+      <div class="queenAuthLogo small">👑</div>
+      <h2>أكمل بيانات الزبون</h2>
+      <p class="authSubtitle">أدخل الاسم والمنطقة ثم حدّد موقع البيت الحالي</p>
+      <label>رقم الهاتف</label>
+      <input id="authPhoneReadonly" class="readonlyField" readonly>
+      <label>اسم الزبون</label>
+      <input id="authNameInput" autocomplete="off" placeholder="اسم الزبون">
+      <label>العنوان / المنطقة</label>
+      <input id="authAreaInput" list="qatarAreasList" autocomplete="off" placeholder="مثال: 90 - Al Wakrah / الوكرة">
+      <datalist id="qatarAreasList"></datalist>
+      <div class="authLocationCard">
+        <div class="authLocationTitle">موقع البيت / Google Maps</div>
+        <div id="authLocationStatus" class="authLocationStatus">لم يتم تحديد الموقع بعد</div>
+        <div class="authActionsRow twoCols">
+          <button class="send authLocationBtn" onclick="authDetectLocation()">📍 تحديد الموقع</button>
+          <button class="close authOpenMapBtn" onclick="authOpenLocation()">🗺️ فتح الموقع</button>
+        </div>
+      </div>
+      <div class="authActionsRow">
+        <button class="close authSecondary" onclick="authSetStep('otp')">رجوع</button>
+        <button class="send authPrimary" onclick="authSaveCustomer()">حفظ والمتابعة</button>
+      </div>
+    </div>
+
+    <div id="authStepLocation" class="authStep">
+      <div class="queenAuthLogo small">👑</div>
+      <h2>تأكيد موقع البيت</h2>
+      <p class="authSubtitle">هل تريد اعتماد هذا الموقع للطلب؟</p>
+      <div class="locationConfirmCard">
+        <div class="locationConfirmTitle">إرسال الطلب لهذا العنوان؟</div>
+        <div id="confirmAreaLabel" class="locationConfirmArea">-</div>
+        <div id="confirmCoordLabel" class="locationConfirmCoords">-</div>
+        <div class="locationMiniMap">
+          <div class="miniPin">📍</div>
+          <div>تم تحديد الموقع الحالي بنجاح</div>
+          <a href="#" id="confirmMapLink" target="_blank">فتح الموقع في Google Maps</a>
+        </div>
+      </div>
+      <div class="authActionsRow twoCols">
+        <button class="send authPrimary" onclick="authAcceptLocation()">نعم</button>
+        <button class="close authSecondary" onclick="authRejectLocation()">لا</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="modal" id="cartModal">
-  <div class="modalContent">
-    <h2>🛒 سلة الحجز</h2>
-    <div id="cartCustomerInfo"></div>
-    <div class="cartLocationBox">
-      <div class="miniTitle">📍 موقع الزبون الحالي</div>
-      <p>يرجى من الزبون الضغط على الزر أدناه لإرسال موقع البيت بدقة حتى يتمكن فريق التركيب من الوصول بسهولة.</p>
-      <div class="locationActions">
-        <button class="locationBtn" onclick="getCartLocation()">📍 إضافة موقعي الحالي</button>
-        <button class="mapBtn" onclick="openSavedCartLocation()">🗺️ فتح الموقع المسجل</button>
-      </div>
-      <div id="cartLocationStatus"></div>
+  <div class="modalContent compactCartModal">
+    <div class="cartHeadRow">
+      <h2>🛒 سلة الحجز</h2>
+      <button class="miniEditBtn" onclick="openLogin(true)">تعديل البيانات</button>
     </div>
+    <div id="cartCustomerInfo"></div>
     <div id="cartItems"></div>
     <div class="total">الإجمالي: <span id="modalTotal">0</span> ر.ق</div>
     <div class="paymentBox">
       <div class="miniTitle">💳 طريقة السداد</div>
-      <p>اختر طريقة الدفع المناسبة. لا يتم طلب بيانات البطاقة داخل الموقع؛ سيتم إرسال رابط دفع آمن أو تعليمات الدفع بعد تأكيد الطلب.</p>
+      <p>اختر طريقة السداد المناسبة، وسيتم تأكيدها من الإدارة بعد إرسال الطلب.</p>
       <div class="paymentChoices">
         <label class="payChoice"><input type="radio" name="paymentMethod" value="بطاقة ائتمانية / رابط دفع"> بطاقة ائتمانية / رابط دفع</label>
         <label class="payChoice"><input type="radio" name="paymentMethod" value="فوراً"> فوراً</label>
         <label class="payChoice"><input type="radio" name="paymentMethod" value="تحويل بنكي"> تحويل بنكي</label>
         <label class="payChoice"><input type="radio" name="paymentMethod" value="نقداً عند التركيب"> نقداً عند التركيب</label>
       </div>
-      <div class="paymentNote">تنبيه: الحجز يعتبر مبدئياً إلى حين تأكيد طريقة السداد من الإدارة.</div>
+      <div class="paymentNote">موقع الزبون يتم حفظه تلقائياً من شاشة التسجيل ولا يظهر هنا.</div>
     </div>
     <label>ملاحظات عامة</label>
     <textarea id="notes" placeholder="مثال: التركيب العصر، المكان حديقة، عدد الأطفال..."></textarea>
@@ -920,80 +998,116 @@ function setupCategorySelect(){
 }
 function scrollToContact(){document.getElementById('contact').scrollIntoView({behavior:'smooth'});}
 function currentCustomer(){try{return JSON.parse(localStorage.getItem('customer')||'null')}catch(e){return null}}
+let pendingAuth={phone:'',name:'',address:'',location:'',coords:'',locationConfirmed:false};
 
 function showProfile(){
+  profileCard.style.display='none';
   const c=currentCustomer();
-  if(!c){profileCard.style.display='none';loginBtn.style.display='inline-block';return}
-  profileCard.style.display='block';
-  loginBtn.style.display='none';
-  pName.value=c.name||''; pPhone.value=c.phone||''; pAddress.value=c.address||''; pLocation.value=c.location||'';
+  loginBtn.style.display='inline-block';
+  loginBtn.textContent = c ? 'بيانات الزبون' : 'تسجيل الدخول';
 }
 function clearLoginForm(){
-  loginPhone.value='';
-  loginName.value='';
-  loginAddress.value='';
+  pendingAuth={phone:'',name:'',address:'',location:'',coords:'',locationConfirmed:false};
+  if(typeof authPhoneInput!=='undefined') authPhoneInput.value='';
+  if(typeof authOtpInput!=='undefined') authOtpInput.value='';
+  if(typeof authNameInput!=='undefined') authNameInput.value='';
+  if(typeof authAreaInput!=='undefined') authAreaInput.value='';
+  if(typeof authPhoneReadonly!=='undefined') authPhoneReadonly.value='';
+  if(typeof authLocationStatus!=='undefined') authLocationStatus.textContent='لم يتم تحديد الموقع بعد';
 }
-function openLogin(){
+function authSetStep(step){
+  ['phone','otp','details','location'].forEach(s=>{
+    const el=document.getElementById('authStep'+s.charAt(0).toUpperCase()+s.slice(1));
+    if(el) el.classList.toggle('active', s===step);
+  });
+}
+function openLogin(prefill=false){
+  const c=currentCustomer();
   clearLoginForm();
+  if(prefill && c){
+    pendingAuth={...pendingAuth, phone:c.phone||'', name:c.name||'', address:c.address||'', location:c.location||'', coords:c.coords||'', locationConfirmed:!!c.location};
+    authPhoneInput.value=(c.phone||'').replace(/^\+?974/,'').trim();
+    authNameInput.value=c.name||'';
+    authAreaInput.value=c.address||'';
+    authPhoneReadonly.value=c.phone||'';
+    if(c.location){ authLocationStatus.innerHTML='✅ تم حفظ الموقع الحالي'; }
+  }
   loginModal.style.display='flex';
-  setTimeout(()=>loginPhone.focus(),80);
+  authSetStep('phone');
+  setTimeout(()=>authPhoneInput.focus(),80);
 }
-function closeLogin(){loginModal.style.display='none'}
-
-async function loginCustomer(){
-  const phone=loginPhone.value.trim(), name=loginName.value.trim(), address=loginAddress.value.trim();
-  if(!phone||!name||!address){alert('يرجى إدخال رقم الهاتف والاسم والمنطقة / العنوان');return}
-  const c={phone,name,address,location:'',updatedAt:new Date().toISOString()};
+function closeLogin(){ loginModal.style.display='none'; authSetStep('phone'); }
+function authBackToPhone(){ authSetStep('phone'); setTimeout(()=>authPhoneInput.focus(),80); }
+function authContinuePhone(){
+  const phone=(authPhoneInput.value||'').replace(/\D/g,'');
+  if(phone.length!==8){ alert('يرجى إدخال رقم جوال قطري صحيح من 8 أرقام'); return; }
+  pendingAuth.phone=phone;
+  authPhonePreview.textContent='+974 '+phone;
+  authPhoneReadonly.value=phone;
+  authSetStep('otp');
+  setTimeout(()=>authOtpInput.focus(),80);
+}
+function authContinueOtp(){
+  const code=(authOtpInput.value||'').replace(/\D/g,'');
+  if(code.length!==6){ alert('يرجى إدخال كود تحقق من 6 أرقام'); return; }
+  authPhoneReadonly.value=pendingAuth.phone;
+  authSetStep('details');
+  setTimeout(()=>authNameInput.focus(),80);
+}
+function authDetectLocation(){
+  if(!navigator.geolocation){ alert('المتصفح لا يدعم تحديد الموقع'); return; }
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat=pos.coords.latitude, lng=pos.coords.longitude;
+    const link=`https://maps.google.com/?q=${lat},${lng}`;
+    pendingAuth.location=link;
+    pendingAuth.coords=`${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+    pendingAuth.address=authAreaInput.value.trim();
+    document.getElementById('confirmAreaLabel').textContent = pendingAuth.address || 'المنطقة غير محددة';
+    document.getElementById('confirmCoordLabel').textContent = pendingAuth.coords;
+    document.getElementById('confirmMapLink').href = link;
+    authSetStep('location');
+  },()=>alert('يرجى السماح للموقع باستخدام GPS لتحديد الموقع الحالي'));
+}
+function authAcceptLocation(){
+  pendingAuth.locationConfirmed=true;
+  authLocationStatus.innerHTML='✅ تم تحديد الموقع الحالي بنجاح';
+  authSetStep('details');
+}
+function authRejectLocation(){
+  pendingAuth.location=''; pendingAuth.coords=''; pendingAuth.locationConfirmed=false;
+  authLocationStatus.textContent='لم يتم اعتماد الموقع، يرجى إعادة التحديد';
+  authSetStep('details');
+}
+function authOpenLocation(){
+  if(pendingAuth.location) window.open(pendingAuth.location,'_blank');
+  else alert('يرجى تحديد الموقع أولاً');
+}
+async function authSaveCustomer(){
+  const name=authNameInput.value.trim();
+  const address=authAreaInput.value.trim();
+  if(!pendingAuth.phone || !name || !address){ alert('يرجى إدخال رقم الهاتف والاسم والعنوان / المنطقة'); return; }
+  if(!pendingAuth.locationConfirmed || !pendingAuth.location){ alert('يرجى تحديد الموقع الحالي واعتماده أولاً'); return; }
+  const c={phone:pendingAuth.phone,name,address,location:pendingAuth.location,coords:pendingAuth.coords||'',updatedAt:new Date().toISOString()};
   localStorage.setItem('customer',JSON.stringify(c));
   try{
-    await db.collection('customers').doc(phone).set({...c,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
-  }catch(e){console.error(e);alert('تم حفظه محلياً، تحقق من Firebase Rules')}
-  closeLogin();showProfile();alert('تم حفظ بيانات الزبون ✅');
+    await db.collection('customers').doc(c.phone).set({...c,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+  }catch(e){ console.error(e); }
+  closeLogin(); showProfile(); renderCart();
+  alert('تم حفظ بيانات الزبون بنجاح ✅');
 }
-async function saveProfile(){
-  let c=currentCustomer(); if(!c)return;
-  c.name=pName.value; c.address=pAddress.value; c.location=pLocation.value;
-  localStorage.setItem('customer',JSON.stringify(c));
-  try{await db.collection('customers').doc(c.phone).set({...c,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true})}catch(e){console.error(e)}
-  alert('تم حفظ البيانات ✅');
-}
-function getLocation(){
-  if(!navigator.geolocation){alert('المتصفح لا يدعم الموقع');return}
-  navigator.geolocation.getCurrentPosition(pos=>{
-    pLocation.value=`https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
-    saveProfile();
-  },()=>alert('يرجى السماح بالوصول للموقع'));
-}
-function openLocation(){pLocation.value?window.open(pLocation.value,'_blank'):alert('حدد الموقع أولاً')}
-
+function saveProfile(){ openLogin(true); }
+function getLocation(){ authDetectLocation(); }
+function openLocation(){ authOpenLocation(); }
 async function saveCustomerLocationLink(link){
   let c=currentCustomer();
   if(!c){openLogin();return false}
   c.location=link;
   localStorage.setItem('customer',JSON.stringify(c));
-  if(typeof pLocation!=='undefined') pLocation.value=link;
-  try{
-    await db.collection('customers').doc(c.phone).set({location:link,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
-  }catch(e){console.error(e)}
+  try{ await db.collection('customers').doc(c.phone).set({location:link,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}); }catch(e){ console.error(e); }
   return true;
 }
-
-function getCartLocation(){
-  if(!navigator.geolocation){alert('المتصفح لا يدعم تحديد الموقع');return}
-  navigator.geolocation.getCurrentPosition(async pos=>{
-    const link=`https://maps.google.com/?q=${pos.coords.latitude},${pos.coords.longitude}`;
-    await saveCustomerLocationLink(link);
-    renderCart();
-    alert('تم إضافة موقع الزبون الحالي ✅');
-  },()=>alert('يرجى السماح للموقع باستخدام تحديد الموقع GPS'));
-}
-
-function openSavedCartLocation(){
-  const c=currentCustomer();
-  if(c && c.location) window.open(c.location,'_blank');
-  else alert('لم يتم إضافة موقع الزبون بعد');
-}
-
+function getCartLocation(){ openLogin(true); }
+function openSavedCartLocation(){ openLogin(true); }
 function selectedPaymentMethod(){
   return document.querySelector('input[name="paymentMethod"]:checked')?.value || '';
 }
@@ -1242,13 +1356,7 @@ function openCart(){if(!currentCustomer()){openLogin();return}renderCart();cartM
 function closeCart(){cartModal.style.display='none'}
 function renderCart(){
   const c=currentCustomer();
-  cartCustomerInfo.innerHTML=`<div class="cartItem"><b>بيانات الزبون</b><br>👤 ${c.name}<br>📞 ${c.phone}<br>📍 ${c.address||''}<br>🗺️ ${c.location?`<a href="${c.location}" target="_blank">فتح الموقع</a>`:'لا يوجد موقع'}</div>`;
-  const locationStatus=document.getElementById('cartLocationStatus');
-  if(locationStatus){
-    locationStatus.innerHTML=c.location
-      ? `<span class="locationMissing" style="color:#047857;background:#ecfdf5;border-color:#a7f3d0">✅ تم تسجيل الموقع</span>`
-      : `<span class="locationMissing">⚠️ مطلوب إضافة موقع الزبون قبل إرسال الطلب</span>`;
-  }
+  cartCustomerInfo.innerHTML=`<div class="cartHintOnly">سيتم استخدام بيانات الزبون والموقع المحفوظة لهذا الطلب بدون إظهارها هنا.</div>`;
   cartItems.innerHTML=cart.length?cart.map((i,idx)=>`<div class="cartItem">
     <div class="row"><b>#${i.number} - ${i.name}</b><button class="remove" onclick="removeItem(${idx})">حذف</button></div>
     📅 التاريخ: ${i.bookingDate} | 🕒 الفترة: ${i.period}<br>
@@ -1314,6 +1422,10 @@ cartModal.addEventListener('click', function(e){ if(e.target===cartModal) closeC
 loginModal.addEventListener('click', function(e){ if(e.target===loginModal) closeLogin(); });
 adminModal.addEventListener('click', function(e){ if(e.target===adminModal) closeAdmin(); });
 document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeProduct(); closeCart(); closeLogin(); closeAdmin(); } });
+loginModal.addEventListener('click',e=>{ if(e.target===loginModal) closeLogin(); });
+cartModal.addEventListener('click',e=>{ if(e.target===cartModal) closeCart(); });
+productModal.addEventListener('click',e=>{ if(e.target===productModal) closeProduct(); });
+adminModal.addEventListener('click',e=>{ if(e.target===adminModal) closeAdmin(); });
 
 populateQatarAreas();
 setupCategorySelect();
