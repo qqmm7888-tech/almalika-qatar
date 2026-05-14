@@ -1054,6 +1054,19 @@ body:after{
 .offerTypeGrid.megaGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .offerTypeBody .offerKicker{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;padding:6px 10px;border-radius:999px;background:#fff6ea;border:1px solid rgba(216,178,93,.24);color:#9a2a60;font-size:12px;font-weight:900}
 .offerTypeActions .ghostBtn{background:linear-gradient(135deg,#ff1568,#ff4c95)}
+
+.snoonuMiniGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+.snoonuMiniCard{background:rgba(255,255,255,.92);border:1px solid rgba(216,178,93,.26);border-radius:24px;padding:16px 12px 14px;text-align:center;cursor:pointer;box-shadow:0 12px 28px rgba(185,130,153,.10);transition:.22s;display:flex;flex-direction:column;align-items:center;gap:10px;min-height:188px}
+.snoonuMiniCard:hover{transform:translateY(-4px);box-shadow:0 18px 34px rgba(185,130,153,.14)}
+.snoonuMiniThumb{width:88px;height:88px;border-radius:24px;background:linear-gradient(135deg,#fff8fb,#fff2d7);display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(216,178,93,.18)}
+.snoonuMiniThumb img{width:76px;height:76px;object-fit:contain;display:block}
+.snoonuMiniTitle{font-size:18px;line-height:1.45;color:#62324b;font-weight:900;margin:0}
+.snoonuMiniLabel{padding:6px 10px;border-radius:999px;background:#fff7ea;border:1px solid rgba(216,178,93,.18);color:#a42d65;font-size:12px;font-weight:900}
+.snoonuMiniHint{font-size:12px;color:#8e7882;font-weight:700;line-height:1.45}
+@media(max-width:1180px){.snoonuMiniGrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:860px){.snoonuMiniGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){.snoonuMiniGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.snoonuMiniCard{min-height:168px;padding:14px 10px 12px;border-radius:20px}.snoonuMiniThumb{width:74px;height:74px;border-radius:20px}.snoonuMiniThumb img{width:64px;height:64px}.snoonuMiniTitle{font-size:15px}.snoonuMiniLabel{font-size:11px;padding:5px 8px}}
+
 @media(max-width:1100px){.offerTypeGrid.megaGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.offerTypeGrid.megaGrid{grid-template-columns:1fr}}
 
@@ -1627,6 +1640,15 @@ function renderMegaCards(items){
     return `<div class="offerTypeCard"><div class="offerTypeImage"><img src="${img}" alt="${item.title}" onerror="this.src='47.jpg';this.onerror=null"><span class="offerTypeBadge">${item.badge||item.icon||'🎀'}</span></div><div class="offerTypeBody">${kicker}<h3>${item.title}</h3><p>${item.subtitle||''}</p><strong>${item.price||'السعر حسب الاختيار'}</strong><div class="offerTypeActions">${actionBtn}<button onclick="window.open('https://wa.me/97433317720?text=${msg}','_blank')">استفسار واتساب</button></div></div></div>`;
   }).join('')}</div>`;
 }
+function renderMiniCards(items){
+  return `<div class="snoonuMiniGrid">${items.map(item=>{
+    const msg=encodeURIComponent(item.message||`السلام عليكم، أريد الاستفسار عن ${item.title}`);
+    const img=item.image||svgThumb(item.icon||'🎉', item.title, item.bg1||'#ffdce9', item.bg2||'#fff1c8', item.accent||'#ff4f93');
+    const clickAction=item.action || `window.open('https://wa.me/97433317720?text=${msg}','_blank')`;
+    const hint=item.action ? 'اضغط لعرض القسم' : 'اضغط للاستفسار';
+    return `<div class="snoonuMiniCard" onclick="${clickAction}"><div class="snoonuMiniThumb"><img src="${img}" alt="${item.title}" onerror="this.src='47.jpg';this.onerror=null"></div><h3 class="snoonuMiniTitle">${item.title}</h3><span class="snoonuMiniLabel">${item.badge||item.kicker||item.icon||'قسم'}</span><div class="snoonuMiniHint">${hint}</div></div>`;
+  }).join('')}</div>`;
+}
 function showBounciesPage(){
   page='bouncies'; activeCategory='الكل'; backBtn.style.display='none'; quickCategory.value='الكل'; setActiveNav('النطاطيات');
   const items=[
@@ -1639,8 +1661,8 @@ function showBounciesPage(){
     {title:'أجهزة الرغوة والحفلات', subtitle:'أجهزة رغوة ومدافع وشلالات صابونية لفعاليات ممتعة وفريدة.', price:'السعر حسب الجهاز', badge:'泡', image:'84.jpg', kicker:'أجهزة الرغوة', action:"showCategory('الفوم بارتي / الرغوة')", actionLabel:'عرض أجهزة الرغوة', message:'السلام عليكم، أريد الاستفسار عن أجهزة الرغوة والحفلات'},
     {title:'العروض والبكجات', subtitle:'بكجات تجمع النطاطيات والزحاليق مع خدمات إضافية حسب المناسبة.', price:'بكجات حسب الميزانية', badge:'🎁', image:'53.jpg', kicker:'عروض مرتبطة', action:"showOffersPage()", actionLabel:'عرض العروض', message:'السلام عليكم، أريد الاستفسار عن عروض وبكجات النطاطيات'}
   ];
-  app.innerHTML=`${pageHero('النطاطيات والزحلاقيات', 'اختر القسم المناسب أولاً، ثم افتح التفاصيل أو انتقل مباشرة إلى الألعاب المتاحة.', '🎈 صفحة النطاطيات')}
-  <section class="container">${renderMegaCards(items)}</section>
+  app.innerHTML=`${pageHero('النطاطيات والزحلاقيات', 'اختر القسم من أيقونات صغيرة مرتبة مثل سنونو، ثم افتح القسم المناسب بسهولة.', '🎈 صفحة النطاطيات')}
+  <section class="container">${renderMiniCards(items)}</section>
   <section class="container"><div class="sectionTitle"><div><h2>كل الألعاب المتاحة</h2><p>اضغط على الصورة أو زر احجزها لفتح التفاصيل والحجز مباشرة.</p></div></div><div class="products">${filteredProducts().map(card).join('')}</div></section>`;
 }
 function showOffersPage(){
@@ -1652,8 +1674,8 @@ function showOffersPage(){
     {title:'عروض الملاعب الصابونية مع الفوم', subtitle:'ملاعب صابونية مع أجهزة الرغوة لإضافة فعالية قوية وممتعة للحفلات.', price:'السعر حسب الاختيار وعدد الأطفال', badge:'🧼', image:'84.jpg', kicker:'صابوني + فوم', message:'السلام عليكم، أريد الاستفسار عن عروض الملاعب الصابونية مع الفوم'},
     {title:'عروض المسابح', subtitle:'عروض أحواض ومسابح أطفال مناسبة للأجواء الصيفية واللعب المائي.', price:'السعر حسب الاختيار وعدد الأطفال', badge:'🏊', image:'83.jpg', kicker:'عروض المسابح', message:'السلام عليكم، أريد الاستفسار عن عروض المسابح'}
   ];
-  app.innerHTML=`${pageHero('العروض والبكجات', 'عروض مرتبة مع صورة لكل نوع حتى تختار بسهولة وتستفسر مباشرة عبر واتساب.', '🎁 عروض الملكة')}
-  <section class="container">${renderMegaCards(items)}</section>`;
+  app.innerHTML=`${pageHero('العروض والبكجات', 'اختر نوع العرض من أيقونات صغيرة مرتبة وسهلة مثل سنونو.', '🎁 عروض الملكة')}
+  <section class="container">${renderMiniCards(items)}</section>`;
 }
 function showSnacksPage(){
   page='snacks'; backBtn.style.display='none'; setActiveNav('السناك والعربات');
@@ -1673,8 +1695,8 @@ function showSnacksPage(){
     {title:'اختيار شكل العربة', subtitle:'يمكن اختيار شكل العربة المناسب للثيم أو ألوان الحفلة.', price:'حسب التصميم المطلوب', badge:'🛒', icon:'🛒', message:'السلام عليكم، أريد الاستفسار عن اختيار شكل العربة', bg1:'#f1e7ff', bg2:'#fff0cf'},
     {title:'العروض والبكجات', subtitle:'بكجات تجمع أكثر من عربة سناك معًا بأسعار مناسبة للمناسبات.', price:'بكجات حسب الاختيار', badge:'🎁', icon:'🎁', action:"showOffersPage()", actionLabel:'عرض العروض', message:'السلام عليكم، أريد الاستفسار عن عروض وبكجات السناك والعربات'}
   ];
-  app.innerHTML=`${pageHero('السناك والعربات', 'اختر نوع العربة المناسبة، وكل نوع عليه صورة توضيحية واستفسار مباشر.', '🍿 سناك الملكة')}
-  <section class="container">${renderMegaCards(items)}</section>`;
+  app.innerHTML=`${pageHero('السناك والعربات', 'اختر نوع العربة من أيقونات صغيرة وواضحة ثم اضغط للاستفسار.', '🍿 سناك الملكة')}
+  <section class="container">${renderMiniCards(items)}</section>`;
 }
 function showEventsPage(){
   page='events'; backBtn.style.display='none'; setActiveNav('تجهيز الحفلات');
@@ -1689,8 +1711,8 @@ function showEventsPage(){
     {title:'حفلات خاصة', subtitle:'أي مناسبة خاصة يمكن تجهيزها بما يناسب ذوقكم وميزانيتكم.', price:'حسب المناسبة', badge:'✨', icon:'✨', message:'السلام عليكم، أريد الاستفسار عن حفلات خاصة', bg1:'#fff2c8', bg2:'#ffe3f0'},
     {title:'العروض والبكجات', subtitle:'بكجات تجمع تجهيز الحفلة مع الألعاب أو السناك أو كليهما.', price:'بكجات حسب الاختيار', badge:'🎁', icon:'🎁', action:"showOffersPage()", actionLabel:'عرض العروض', message:'السلام عليكم، أريد الاستفسار عن عروض وبكجات تجهيز الحفلات'}
   ];
-  app.innerHTML=`${pageHero('تجهيز الحفلات والمناسبات', 'كل نوع من الحفلات له بطاقة مستقلة بصورة وتفاصيل مبسطة لتسهيل الاختيار.', '🎀 تجهيز الملكة')}
-  <section class="container">${renderMegaCards(items)}</section>`;
+  app.innerHTML=`${pageHero('تجهيز الحفلات والمناسبات', 'كل نوع من الحفلات ظاهر على شكل أيقونة صغيرة مرتبة لتسهيل الاختيار.', '🎀 تجهيز الملكة')}
+  <section class="container">${renderMiniCards(items)}</section>`;
 }
 function showTermsPage(){
   page='terms'; backBtn.style.display='none'; setActiveNav('شروط الحجز');
