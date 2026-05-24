@@ -16,7 +16,7 @@
 .heroBox{background:#fff;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:250px 1fr;gap:14px;padding:15px 0}
 .side{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 8px 24px #0001}.side h3{margin:0;padding:14px;background:#fafafa}.side button{width:100%;padding:13px 14px;background:#fff;border-top:1px solid var(--line);font-weight:900;text-align:right}
 .banner{min-height:285px;border-radius:18px;overflow:hidden;background:#ffeefa;position:relative;box-shadow:0 8px 24px #0001}
-.banner:before{content:"";position:absolute;inset:0;background:url('home_banner.jpg') center/cover no-repeat}.banner:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#fff6 0,#fff9 45%,#fff6)}
+.banner:before{content:"";position:absolute;inset:0;background:url('home_banner.jpg') center/cover no-repeat, linear-gradient(135deg,#ffeefa,#fff7dc)}.banner:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#fff6 0,#fff9 45%,#fff6)}
 .bannerText{position:relative;z-index:2;text-align:center;padding:52px 20px}.bannerText h1{font-size:72px;line-height:1;margin:0;color:#9c5b15;text-shadow:0 2px 0 #fff}.bannerText h2{margin:12px 0 0;color:var(--q);font-size:34px}.bannerText p{font-weight:900;color:#8a5b16;font-size:20px}
 .btn{border-radius:999px;padding:12px 21px;font-weight:900}.primary{background:var(--q);color:#fff}.dark{background:#111;color:#fff}.light{background:#fff;border:1px solid var(--line);color:var(--q)}
 .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px auto}.cat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;display:flex;gap:12px;align-items:center;box-shadow:0 8px 24px #0001}.ico{width:54px;height:54px;border-radius:15px;background:#fff1f7;display:grid;place-items:center;font-size:28px}.cat b{display:block;color:var(--q);font-size:18px}.cat small{color:var(--muted);font-weight:800}
@@ -44,13 +44,56 @@ for(let i=1;i<=85;i++){let cat=i<=25?"النطاطيات الجافة":i<=60?"ا
 [[201,"عرض نطاطية + سناك",999,"34.jpg"],[202,"عرض حفلة 20 طفل",1999,"101.jpg"],[203,"عرض ملعب صابوني وفوم",700,"68.jpg"],[204,"عرض عربات السناك",1480,"126.jpg"]].forEach(x=>items.push({n:x[0],t:x[1],s:"offers",cat:"العروض والبكجات",img:x[3],price:x[2],dur:"عرض",d:"باقة جاهزة للحجز بسعر خاص."}));
 nav.innerHTML='<button class="back" id="back" onclick="backGo()">رجوع</button>'+navs.map(x=>`<button id="n_${x[0]}" onclick="go('${x[0]}')">${x[1]}</button>`).join("");
 window.onpopstate=()=>render(location.hash.replace("#","")||"home"); if(!location.hash) history.replaceState({},"","#home"); render(location.hash.replace("#","")||"home"); q.onkeydown=e=>{if(e.key==="Enter")searchNow()};
-function go(p){history.pushState({},"","#"+p);render(p)} function backGo(){history.length>1?history.back():go("home")}
+function go(p){history.pushState({},"","/"+p);render(p)} function backGo(){history.length>1?history.back():go("home")}
 function active(p){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));let x=document.getElementById("n_"+p);if(x)x.classList.add("active");back.style.display=p==="home"?"none":"inline-block"}
 function render(p){active(p); if(p==="home")home(); else if(p==="terms")app.innerHTML='<section class="wrap"><div class="title"><h1>شروط الحجز</h1><p>الحجز بعد تأكيد التاريخ والموقع. توفير كهرباء ومساحة مناسبة. مدة السناك حسب الباقة. الأسعار حسب المنطقة والطلب.</p></div></section>'; else if(p==="contact")app.innerHTML='<section class="wrap"><div class="title"><h1>تواصل معنا</h1><p>33317720 - 33317721 - 33317716 - 33317705<br>@almalika_qtr</p><button class="btn primary" onclick="wa()">فتح واتساب</button></div></section>'; else catalog(p)}
 function home(){let list=[34,47,48,53,68,86,95,101,120,126].map(find).filter(Boolean);app.innerHTML=`<section class="heroBox"><div class="wrap hero"><aside class="side"><h3>فئات الملكة</h3><button onclick="go('bouncies')">النطاطيات والزحاليق 🏰</button><button onclick="go('snacks')">السناك والعربات 🍿</button><button onclick="go('events')">تجهيز الحفلات 🎀</button><button onclick="go('offers')">العروض والبكجات 🎁</button></aside><div class="banner"><div class="bannerText"><h1>الملكة</h1><h2>لتأجير النطاطيات والسناك وتجهيز الحفلات</h2><p>نصنع الفرح ونرتب أجمل المناسبات للأطفال والعائلات</p><button class="btn primary" onclick="go('bouncies')">شوف الألعاب</button> <button class="btn dark" onclick="go('snacks')">السناك</button> <button class="btn light" onclick="wa()">احجز واتساب</button></div></div></div></section><section class="wrap"><div class="cats">${cat("🏰","النطاطيات","مائية وجافة","bouncies")}${cat("🍿","السناك","عربات وماكينات","snacks")}${cat("🎀","الحفلات","ديكور وبالونات","events")}${cat("🎁","العروض","بكجات جاهزة","offers")}</div><div class="promos"><div class="promo"><b>عروض نهاية الأسبوع</b><span>باقات جاهزة للحجز</span></div><div class="promo"><b>سناك للحفلات</b><span>فشار وذرة وآيسكريم</span></div><div class="promo"><b>تجهيز VIP</b><span>ديكور وستاندات</span></div><div class="promo"><b>ألعاب مائية</b><span>للحدائق والمنازل</span></div></div><div class="sec"><div><h2>اختيارات لك ✨</h2><p>مختارات من كل أقسام الملكة</p></div><button class="btn light" onclick="go('bouncies')">عرض الكتالوج</button></div><div class="grid">${list.map(card).join("")}</div></section>`}
 function cat(i,t,s,p){return `<div class="cat" onclick="go('${p}')"><div class="ico">${i}</div><div><b>${t}</b><small>${s}</small></div></div>`}
 function catalog(p){let names={bouncies:"النطاطيات والزحاليق",snacks:"السناك والعربات",events:"تجهيز الحفلات",offers:"العروض والبكجات"};let list=items.filter(x=>x.s===p);app.innerHTML=`<section class="wrap"><div class="title"><h1>${names[p]}</h1><p>اختار المنتج واضغط احجزها أو واتساب</p></div><div class="filters"><button class="active">الكل</button><button>ترتيب حسب الرقم</button><button>الأحدث</button></div><div class="grid">${list.map(card).join("")}</div></section>`}
-function card(x){return `<div class="card"><span class="num">#${x.n}</span><div class="pic"><img src="${x.img}" onerror="this.style.display='none';this.parentElement.innerHTML='👑'"></div><div class="body"><h3>${x.t}</h3><p>${x.d}</p><span class="tag">${x.cat}</span><span class="tag">${x.dur}</span><div class="price"><small>يبدأ من</small> ${x.price} ر.ق</div><div class="cardBtns"><button class="book" onclick="book('${x.n}')">احجزها</button><button class="wa" onclick="waItem('${x.n}')">واتساب</button></div></div></div>`}
+const REPO_RAW = "https://raw.githubusercontent.com/qqmm7888-tech/almalika-qatar/main/";
+
+function imageCandidates(base){
+  const special = {
+    "107":["107(1).jpg","107(1).png","107.jpg","107.png"],
+    "112":["112(1).jpg","112(1).png","112.jpg","112.png"],
+    "117":["117-118-119.jpg","117-118-119.png","117.jpg","117.png"],
+    "118":["117-118-119.jpg","117-118-119.png","118.jpg","118.png"],
+    "119":["117-118-119.jpg","117-118-119.png","119.jpg","119.png"]
+  };
+  const names = special[base] || [
+    base + ".jpg",
+    base + ".png",
+    base + ".jpeg",
+    base + ".webp",
+    base + ".JPG",
+    base + ".PNG"
+  ];
+
+  // local first, then GitHub raw as backup if Vercel did not publish the image yet
+  return [
+    ...names,
+    ...names.map(n => REPO_RAW + encodeURIComponent(n).replaceAll("%2F","/"))
+  ];
+}
+
+function imgTag(x){
+  const base = String(x.n);
+  const tries = imageCandidates(base);
+  return `<img src="${tries[0]}" data-base="${base}" data-tries='${JSON.stringify(tries)}' data-try="0" alt="${x.t}" onerror="fixImg(this)">`;
+}
+
+function fixImg(img){
+  const tries = JSON.parse(img.dataset.tries || "[]");
+  let i = Number(img.dataset.try || 0) + 1;
+  if(i < tries.length){
+    img.dataset.try = i;
+    img.src = tries[i];
+  }else{
+    img.style.display = "none";
+    img.parentElement.innerHTML = '<div style="font-size:44px">👑</div><div style="font-weight:900;color:#6f1738;margin-top:8px">الصورة غير مرفوعة أو اسمها مختلف</div>';
+  }
+}
+function card(x){return `<div class="card"><span class="num">#${x.n}</span><div class="pic">${imgTag(x)}</div><div class="body"><h3>${x.t}</h3><p>${x.d}</p><span class="tag">${x.cat}</span><span class="tag">${x.dur}</span><div class="price"><small>يبدأ من</small> ${x.price} ر.ق</div><div class="cardBtns"><button class="book" onclick="book('${x.n}')">احجزها</button><button class="wa" onclick="waItem('${x.n}')">واتساب</button></div></div></div>`}
 function searchNow(){let term=q.value.trim().toLowerCase();if(!term)return;let list=items.filter(x=>(x.n+" "+x.t+" "+x.cat).toLowerCase().includes(term));active("");back.style.display="inline-block";history.pushState({},"","#search");app.innerHTML=`<section class="wrap"><div class="title"><h1>نتائج البحث</h1><p>${list.length} نتيجة</p></div><div class="grid">${list.map(card).join("")}</div></section>`}
 function book(n){picked=find(n);mt.textContent="طلب حجز: "+picked.t;type.innerHTML=picked.s==="snacks"?"<option>عربة مع تشغيل</option><option>ماكينة فقط</option>":picked.s==="events"?"<option>تجهيز حفلة</option>":"<option>نطاطية / زحليقة</option>";dur.innerHTML=picked.s==="snacks"?"<option>3 ساعات</option><option>4 ساعات</option>":"<option>يوم واحد</option><option>حسب الاتفاق</option>";modal.classList.add("show")}
 function hide(){modal.classList.remove("show")}function send(){let m=`السلام عليكم، أريد حجز ${picked.t}%0Aالاسم: ${name.value}%0Aالجوال: ${phone.value}%0Aالتاريخ: ${date.value}%0Aالوقت: ${time.value}%0Aالنوع: ${type.value}%0Aالمدة: ${dur.value}%0Aالموقع: ${loc.value}%0Aملاحظات: ${notes.value}`;window.open("https://wa.me/97433317720?text="+m,"_blank")}function wa(){window.open("https://wa.me/97433317720?text=السلام عليكم، أريد الحجز من شركة الملكة","_blank")}function waItem(n){let x=find(n);window.open("https://wa.me/97433317720?text="+encodeURIComponent("السلام عليكم، أريد الاستفسار عن "+x.t+" رقم "+x.n),"_blank")}function openCart(){alert("السلة جاهزة للتطوير — حالياً استخدم زر احجزها أو واتساب")}function find(n){return items.find(x=>String(x.n)===String(n))}
