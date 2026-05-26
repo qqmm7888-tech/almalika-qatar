@@ -22,7 +22,7 @@
 .cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px auto}.cat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;display:flex;gap:12px;align-items:center;box-shadow:0 8px 24px #0001}.ico{width:54px;height:54px;border-radius:15px;background:#fff1f7;display:grid;place-items:center;font-size:28px}.cat b{display:block;color:var(--q);font-size:18px}.cat small{color:var(--muted);font-weight:800}
 .promos{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}.promo{height:110px;border-radius:16px;padding:16px;color:#fff;font-weight:900;box-shadow:0 8px 24px #0001}.promo:nth-child(1){background:linear-gradient(135deg,#ff2f86,#7b2cff)}.promo:nth-child(2){background:linear-gradient(135deg,#009dff,#18c964)}.promo:nth-child(3){background:linear-gradient(135deg,#ff9f1c,#ff2f86)}.promo:nth-child(4){background:linear-gradient(135deg,#6f1738,#d8a629)}.promo b{font-size:21px;display:block}
 .sec{display:flex;justify-content:space-between;align-items:end;margin:28px 0 14px}.sec h2{margin:0;color:var(--q);font-size:34px}.sec p{margin:5px 0 0;color:var(--muted);font-weight:800}
-.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 7px 20px #0001;position:relative}.num{position:absolute;top:10px;left:10px;background:var(--p);color:#fff;border-radius:99px;padding:5px 9px;font-size:12px;font-weight:900}.pic{height:185px;background:#fafafa;border-bottom:1px solid var(--line);display:grid;place-items:center;overflow:hidden}.pic img{width:100%;height:100%;object-fit:contain;display:block;padding:8px}.body{padding:12px}.body h3{margin:0;font-size:17px;line-height:1.35;min-height:46px}.body p{font-size:12px;color:var(--muted);font-weight:700;line-height:1.5;min-height:34px}.tag{display:inline-block;background:#fff6e6;border:1px solid #ead7aa;color:#805514;border-radius:99px;padding:5px 8px;font-size:11px;font-weight:900;margin:2px}.price{font-size:20px;font-weight:900}.price small{font-size:11px;color:#9b6b1f}.cardBtns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.cardBtns button{border-radius:10px;padding:10px;font-weight:900}.book{background:var(--p);color:#fff}.wa{background:var(--g);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 7px 20px #0001;position:relative}.num{position:absolute;top:10px;left:10px;background:var(--p);color:#fff;border-radius:99px;padding:5px 9px;font-size:12px;font-weight:900}.pic{height:185px;background:#fafafa;border-bottom:1px solid var(--line);display:grid;place-items:center;overflow:hidden}.pic img{width:100%;height:100%;object-fit:contain}.body{padding:12px}.body h3{margin:0;font-size:17px;line-height:1.35;min-height:46px}.body p{font-size:12px;color:var(--muted);font-weight:700;line-height:1.5;min-height:34px}.tag{display:inline-block;background:#fff6e6;border:1px solid #ead7aa;color:#805514;border-radius:99px;padding:5px 8px;font-size:11px;font-weight:900;margin:2px}.price{font-size:20px;font-weight:900}.price small{font-size:11px;color:#9b6b1f}.cardBtns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.cardBtns button{border-radius:10px;padding:10px;font-weight:900}.book{background:var(--p);color:#fff}.wa{background:var(--g);color:#fff}
 .title{background:#fff;border:1px solid var(--line);border-radius:18px;margin:18px 0;padding:18px}.title h1{margin:0;color:var(--q);font-size:36px}.filters{display:flex;gap:8px;overflow:auto;margin:12px 0 18px}.filters button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:10px 15px;font-weight:900}.filters .active{background:var(--q);color:#fff}
 .float{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:#111;color:#fff;border-radius:99px;padding:14px 34px;font-weight:900;min-width:330px;text-align:center;z-index:80}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:100;place-items:center;padding:15px}.modal.show{display:grid}.box{width:min(680px,100%);background:#fff;border-radius:18px;overflow:hidden}.mh{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:16px}.mh h3{margin:0;color:var(--q);font-size:25px}.mh button{width:38px;height:38px;border-radius:50%;font-size:22px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-weight:900;color:var(--q)}.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:10px;padding:12px;outline:0}.field textarea{min-height:85px}
 .foot{margin-top:35px;background:#fff;border-top:1px solid var(--line);padding:28px;text-align:center;font-weight:900;color:var(--q)}
@@ -44,44 +44,37 @@ for(let i=1;i<=85;i++){let cat=i<=25?"النطاطيات الجافة":i<=60?"ا
 [[201,"عرض نطاطية + سناك",999,"34.jpg"],[202,"عرض حفلة 20 طفل",1999,"101.jpg"],[203,"عرض ملعب صابوني وفوم",700,"68.jpg"],[204,"عرض عربات السناك",1480,"126.jpg"]].forEach(x=>items.push({n:x[0],t:x[1],s:"offers",cat:"العروض والبكجات",img:x[3],price:x[2],dur:"عرض",d:"باقة جاهزة للحجز بسعر خاص."}));
 nav.innerHTML='<button class="back" id="back" onclick="backGo()">رجوع</button>'+navs.map(x=>`<button id="n_${x[0]}" onclick="go('${x[0]}')">${x[1]}</button>`).join("");
 window.onpopstate=()=>render(location.hash.replace("#","")||"home"); if(!location.hash) history.replaceState({},"","#home"); render(location.hash.replace("#","")||"home"); q.onkeydown=e=>{if(e.key==="Enter")searchNow()};
-function go(p){history.pushState({},"","/"+p);render(p)} function backGo(){history.length>1?history.back():go("home")}
+function go(p){history.pushState({},"","#"+p);render(p)} function backGo(){history.length>1?history.back():go("home")}
 function active(p){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));let x=document.getElementById("n_"+p);if(x)x.classList.add("active");back.style.display=p==="home"?"none":"inline-block"}
 function render(p){active(p); if(p==="home")home(); else if(p==="terms")app.innerHTML='<section class="wrap"><div class="title"><h1>شروط الحجز</h1><p>الحجز بعد تأكيد التاريخ والموقع. توفير كهرباء ومساحة مناسبة. مدة السناك حسب الباقة. الأسعار حسب المنطقة والطلب.</p></div></section>'; else if(p==="contact")app.innerHTML='<section class="wrap"><div class="title"><h1>تواصل معنا</h1><p>33317720 - 33317721 - 33317716 - 33317705<br>@almalika_qtr</p><button class="btn primary" onclick="wa()">فتح واتساب</button></div></section>'; else catalog(p)}
 function home(){let list=[34,47,48,53,68,86,95,101,120,126].map(find).filter(Boolean);app.innerHTML=`<section class="heroBox"><div class="wrap hero"><aside class="side"><h3>فئات الملكة</h3><button onclick="go('bouncies')">النطاطيات والزحاليق 🏰</button><button onclick="go('snacks')">السناك والعربات 🍿</button><button onclick="go('events')">تجهيز الحفلات 🎀</button><button onclick="go('offers')">العروض والبكجات 🎁</button></aside><div class="banner"><div class="bannerText"><h1>الملكة</h1><h2>لتأجير النطاطيات والسناك وتجهيز الحفلات</h2><p>نصنع الفرح ونرتب أجمل المناسبات للأطفال والعائلات</p><button class="btn primary" onclick="go('bouncies')">شوف الألعاب</button> <button class="btn dark" onclick="go('snacks')">السناك</button> <button class="btn light" onclick="wa()">احجز واتساب</button></div></div></div></section><section class="wrap"><div class="cats">${cat("🏰","النطاطيات","مائية وجافة","bouncies")}${cat("🍿","السناك","عربات وماكينات","snacks")}${cat("🎀","الحفلات","ديكور وبالونات","events")}${cat("🎁","العروض","بكجات جاهزة","offers")}</div><div class="promos"><div class="promo"><b>عروض نهاية الأسبوع</b><span>باقات جاهزة للحجز</span></div><div class="promo"><b>سناك للحفلات</b><span>فشار وذرة وآيسكريم</span></div><div class="promo"><b>تجهيز VIP</b><span>ديكور وستاندات</span></div><div class="promo"><b>ألعاب مائية</b><span>للحدائق والمنازل</span></div></div><div class="sec"><div><h2>اختيارات لك ✨</h2><p>مختارات من كل أقسام الملكة</p></div><button class="btn light" onclick="go('bouncies')">عرض الكتالوج</button></div><div class="grid">${list.map(card).join("")}</div></section>`}
 function cat(i,t,s,p){return `<div class="cat" onclick="go('${p}')"><div class="ico">${i}</div><div><b>${t}</b><small>${s}</small></div></div>`}
 function catalog(p){let names={bouncies:"النطاطيات والزحاليق",snacks:"السناك والعربات",events:"تجهيز الحفلات",offers:"العروض والبكجات"};let list=items.filter(x=>x.s===p);app.innerHTML=`<section class="wrap"><div class="title"><h1>${names[p]}</h1><p>اختار المنتج واضغط احجزها أو واتساب</p></div><div class="filters"><button class="active">الكل</button><button>ترتيب حسب الرقم</button><button>الأحدث</button></div><div class="grid">${list.map(card).join("")}</div></section>`}
-
-
-const REPO_RAW = "https://raw.githubusercontent.com/qqmm7888-tech/almalika-qatar/main/";
-const IMG_VERSION = "1779777575";
-const SPECIAL_IMAGE_NAMES = {
-  "107": "107(1).jpg",
-  "112": "112(1).jpg",
-  "117": "117-118-119.jpg",
-  "118": "117-118-119.jpg",
-  "119": "117-118-119.jpg"
-};
-
-function imageUrl(n){
-  const base = String(n);
-  const file = SPECIAL_IMAGE_NAMES[base] || (base + ".jpg");
-  return REPO_RAW + encodeURIComponent(file).replaceAll("%2F","/") + "?v=" + IMG_VERSION;
-}
-
 function imgTag(x){
-  return `<img src="${imageUrl(x.n)}" alt="${x.t || x.title || ''}" loading="lazy" onerror="imageFallback(this)">`;
+  return `<img src="${x.img}" data-base="${String(x.n)}" data-try="0" alt="${x.t}" onerror="fixImg(this)">`;
 }
-
-function imageFallback(img){
-  img.onerror = null;
-  const alt = img.getAttribute("alt") || "الصورة";
-  img.parentElement.innerHTML =
-    `<div style="display:grid;place-items:center;height:100%;width:100%;padding:18px;text-align:center;background:#fff7fb;color:#6f1738;font-weight:900">
-      <div style="font-size:42px;line-height:1">👑</div>
-      <div style="margin-top:8px;font-size:13px">لم يتم العثور على صورة<br>${alt}</div>
-    </div>`;
+function fixImg(img){
+  const base = img.dataset.base;
+  const special = {
+    "107":"107(1).jpg",
+    "112":"112(1).jpg",
+    "117":"117-118-119.jpg",
+    "118":"117-118-119.jpg",
+    "119":"117-118-119.jpg"
+  };
+  const tries = [];
+  if(special[base]) tries.push(special[base]);
+  tries.push(base + ".jpg", base + ".jpeg", base + ".png", base + ".webp");
+  let i = Number(img.dataset.try || 0);
+  while(i < tries.length && img.src.endsWith("/" + tries[i])) i++;
+  if(i < tries.length){
+    img.dataset.try = i + 1;
+    img.src = tries[i];
+  }else{
+    img.style.display = "none";
+    img.parentElement.innerHTML = '<div style="font-size:44px">👑</div><div style="font-weight:900;color:#6f1738;margin-top:8px">الصورة غير مرفوعة</div>';
+  }
 }
-
 function card(x){return `<div class="card"><span class="num">#${x.n}</span><div class="pic">${imgTag(x)}</div><div class="body"><h3>${x.t}</h3><p>${x.d}</p><span class="tag">${x.cat}</span><span class="tag">${x.dur}</span><div class="price"><small>يبدأ من</small> ${x.price} ر.ق</div><div class="cardBtns"><button class="book" onclick="book('${x.n}')">احجزها</button><button class="wa" onclick="waItem('${x.n}')">واتساب</button></div></div></div>`}
 function searchNow(){let term=q.value.trim().toLowerCase();if(!term)return;let list=items.filter(x=>(x.n+" "+x.t+" "+x.cat).toLowerCase().includes(term));active("");back.style.display="inline-block";history.pushState({},"","#search");app.innerHTML=`<section class="wrap"><div class="title"><h1>نتائج البحث</h1><p>${list.length} نتيجة</p></div><div class="grid">${list.map(card).join("")}</div></section>`}
 function book(n){picked=find(n);mt.textContent="طلب حجز: "+picked.t;type.innerHTML=picked.s==="snacks"?"<option>عربة مع تشغيل</option><option>ماكينة فقط</option>":picked.s==="events"?"<option>تجهيز حفلة</option>":"<option>نطاطية / زحليقة</option>";dur.innerHTML=picked.s==="snacks"?"<option>3 ساعات</option><option>4 ساعات</option>":"<option>يوم واحد</option><option>حسب الاتفاق</option>";modal.classList.add("show")}
