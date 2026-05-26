@@ -3,8 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<!-- v49 image folder FIRST: الحفلات والسناك والعربات/ -->
-<!-- v53 emergency rollback stable with folder/root image fallback -->
 <title>الملكة | كتالوج VIP</title>
 <meta name="description" content="شركة الملكة للحفلات وتأجير النطاطيات والسناك داخل قطر">
 <style>
@@ -97,39 +95,9 @@ const meta={
 let activePage='home', activeCat='الكل', cart=[], pay='رابط دفع';
 const nav=document.getElementById('nav'), app=document.getElementById('app');
 nav.innerHTML='<button class="btn back" id="backBtn" onclick="goBack()">رجوع</button>'+navData.map(n=>`<button class="btn" id="nav_${n[0]}" onclick="go('${n[0]}')">${n[1]}</button>`).join('');
-const IMAGE_FOLDER='الحفلات والسناك والعربات/';
-function cleanImageName(p){
-  let im=String(p.image||`${p.number||p.id}.jpg`).trim();
-  if(im.startsWith('data:') || im.startsWith('http')) return im;
-  im=im.split('?')[0].split('/').pop();
-  if(!/\.(jpg|jpeg|png|webp)$/i.test(im)) im=`${p.number||p.id}.jpg`;
-  return im;
-}
-function imageUrl(file){return IMAGE_FOLDER + encodeURIComponent(file).replace(/%20/g,' ') + '?v=' + CACHE;}
-function imgSrc(p){let im=cleanImageName(p); if(im.startsWith('data:')||im.startsWith('http')) return im; return imageUrl(im)}
-function imgTag(p,extra=''){
-  let im=cleanImageName(p);
-  if(im.startsWith('data:')||im.startsWith('http')) return `<img ${extra} src="${im}" alt="${esc(p.name)}">`;
-  return `<img ${extra} src="${imageUrl(im)}" data-n="${p.number||p.id}" data-file="${im}" alt="${esc(p.name)}" onerror="fallbackImg(this)">`;
-}
-function fallbackImg(el){
-  let n=el.dataset.n, file=(el.dataset.file||`${n}.jpg`).split('?')[0].split('/').pop();
-  let base=file.replace(/\.(jpg|jpeg|png|webp)$/i,'');
-  let i=+(el.dataset.i||0)+1;
-  let arr=[
-    IMAGE_FOLDER+base+'.jpg?v='+CACHE,
-    IMAGE_FOLDER+base+'.jpeg?v='+CACHE,
-    IMAGE_FOLDER+base+'.png?v='+CACHE,
-    IMAGE_FOLDER+base+'.webp?v='+CACHE,
-    IMAGE_FOLDER+n+'.jpg?v='+CACHE,
-    IMAGE_FOLDER+n+'.png?v='+CACHE,
-    './'+IMAGE_FOLDER+base+'.jpg?v='+CACHE,
-    './'+IMAGE_FOLDER+base+'.png?v='+CACHE
-  ];
-  if(i<arr.length){el.dataset.i=i;el.src=arr[i];return}
-  el.onerror=null;el.parentElement.innerHTML='<div style="font-size:40px">👑</div><b style="color:#6A1B2E">الصورة غير متوفرة</b>'
-}
-
+function imgSrc(p){let im=p.image||`${p.number||p.id}.jpg`; if(im.startsWith('data:')) return im; return im.includes('/')?im:`${im}?v=${CACHE}`}
+function imgTag(p,extra=''){let im=p.image||`${p.number||p.id}.jpg`; if(im.startsWith('data:')) return `<img ${extra} src="${im}" alt="${esc(p.name)}">`; let f=im.includes('/')?im:(p.number||p.id)+'.jpg'; return `<img ${extra} src="${f}?v=${CACHE}" data-n="${p.number||p.id}" alt="${esc(p.name)}" onerror="fallbackImg(this)">`}
+function fallbackImg(el){let n=el.dataset.n; let i=+(el.dataset.i||0)+1; let arr=[`${n}.jpg?v=${CACHE}`,`${n}.png?v=${CACHE}`,`./${n}.jpg?v=${CACHE}`,`/images/${n}.jpg?v=${CACHE}`,RAW+`${n}.jpg?v=${CACHE}`]; if(i<arr.length){el.dataset.i=i;el.src=arr[i];return} el.onerror=null;el.parentElement.innerHTML='<div style="font-size:40px">👑</div><b style="color:#6A1B2E">الصورة غير متوفرة</b>'}
 function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function getSection(p){if(p.category==='السناك والعربات')return 'snacks'; if(p.category==='تجهيز الحفلات والمناسبات')return 'events'; if(p.category==='بنود أخرى')return 'other'; return 'bouncies'}
 function price(p){return Number(p.priceOneDay||p.priceTwoDays||0)}
@@ -170,21 +138,67 @@ function contact(){app.innerHTML=`<section class="wrap"><div class="pageTitle"><
 </script>
 <footer class="footer">الملكة للحفلات وتأجير النطاطيات والسناك داخل قطر — VIP Booking Catalog</footer>
 
-<script id="emergency-img-fallback-v53">
-const IMG_CACHE_FIX='1779783434';
+<script id="image-folder-path-fix">
+/*
+  مسار الصور المعتمد:
+  يجب رفع فولدر الصور داخل GitHub بنفس الاسم:
+  الحفلات والسناك والعربات
+  ويكون داخل الفولدر الصور مثل: 86.jpg, 87.jpg, 101.jpg...
+*/
+window.ALMALIKA_IMAGE_FOLDER = "الحفلات والسناك والعربات/";
+window.almalikaImagePath = function(fileName){
+  const folder = window.ALMALIKA_IMAGE_FOLDER || "";
+  return folder + String(fileName).replace(/^\/+/, "");
+};
+</script>
+
+
+<script id="runtime-image-folder-rewrite">
 (function(){
-  function fix(img){
-    if(img.dataset.fixedV53)return; img.dataset.fixedV53='1';
-    const original=(img.getAttribute('src')||'').split('?')[0];
-    const file=original.split('/').pop();
-    const base=file.replace(/\.(jpg|jpeg|png|webp)$/i,'');
-    const folder='الحفلات والسناك والعربات/';
-    const n=img.dataset.n||base;
-    const tries=[folder+base+'.jpg',folder+base+'.png',base+'.jpg',base+'.png',n+'.jpg',n+'.png'];
-    img.onerror=function(){let i=+(this.dataset.try||0); if(i<tries.length){this.dataset.try=i+1;this.src=tries[i]+'?v='+IMG_CACHE_FIX;}};
+  const folder = window.ALMALIKA_IMAGE_FOLDER || "الحفلات والسناك والعربات/";
+  function shouldRewrite(src){
+    if(!src) return false;
+    if(src.startsWith("http") || src.startsWith("data:") || src.startsWith("blob:")) return false;
+    if(src.includes(folder)) return false;
+    return /(^|\/)(\d+|\d+\(\d+\)|\d+-\d+-\d+)\.(jpg|jpeg|png|webp)$/i.test(src);
   }
-  function run(){document.querySelectorAll('img').forEach(fix)}
-  document.addEventListener('DOMContentLoaded',run); setInterval(run,1000);
+  function rewriteImages(){
+    document.querySelectorAll("img").forEach(img=>{
+      const raw = img.getAttribute("src") || "";
+      if(shouldRewrite(raw)){
+        const file = raw.split("/").pop();
+        img.setAttribute("src", folder + file);
+      }
+      // Keep fallback also inside the same folder for common numeric images.
+      img.onerror = function(){
+        const raw2 = this.getAttribute("src") || "";
+        const file = raw2.split("/").pop();
+        const base = file.replace(/\.(jpg|jpeg|png|webp)(\?.*)?$/i,"");
+        const tries = [
+          folder + base + ".jpg",
+          folder + base + ".png",
+          folder + base + ".jpeg",
+          folder + base + ".webp",
+          base + ".jpg",
+          base + ".png"
+        ];
+        let i = Number(this.dataset.retryIndex || 0);
+        while(i < tries.length && raw2 === tries[i]) i++;
+        if(i < tries.length){
+          this.dataset.retryIndex = i + 1;
+          this.src = tries[i];
+        }else{
+          this.onerror = null;
+        }
+      };
+    });
+  }
+  document.addEventListener("DOMContentLoaded", rewriteImages);
+  const observer = new MutationObserver(rewriteImages);
+  observer.observe(document.documentElement, {subtree:true, childList:true});
+  setInterval(rewriteImages, 800);
 })();
-</script></body>
+</script>
+
+</body>
 </html>
