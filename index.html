@@ -1,359 +1,935 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>الملكة | كتالوج وحجز الحفلات</title>
-<meta name="description" content="الملكة لتأجير النطاطيات والسناك وتجهيز الحفلات داخل قطر"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>الملكة | تطبيق حجز الحفلات في قطر</title>
+<meta name="description" content="الملكة لتأجير النطاطيات والزحاليق والسناك وتجهيز الحفلات في قطر">
 <style>
 :root{
-  --burgundy:#6A1B2E;--burgundy2:#8d2d4b;--pink:#ff2f86;--gold:#D4AF37;--gold2:#ffe8a3;
-  --green:#16c46b;--red:#e60023;--ink:#161616;--muted:#6f6f6f;--line:#ece7e9;
-  --bg:#fff6fb;--card:#fff;--soft:#fff0f7;--shadow:0 16px 40px rgba(106,27,46,.10);
-  --radius:22px;
+  --qatar:#6f1738;
+  --qatar2:#9e3159;
+  --rose:#ff3b8f;
+  --rose2:#ff77b8;
+  --gold:#d8a629;
+  --gold2:#fff1b8;
+  --mint:#00c879;
+  --blue:#1da7ff;
+  --violet:#7b52ff;
+  --ink:#22141d;
+  --muted:#806877;
+  --paper:#fff;
+  --cream:#fff8ee;
+  --soft:#fff1f7;
+  --line:#f0d6e3;
+  --shadow:0 24px 70px rgba(111,23,56,.13);
+  --shadow2:0 12px 32px rgba(111,23,56,.12);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:linear-gradient(135deg,#fff6fb,#fffdf8 45%,#fff0f7);font-family:Tahoma,Arial,sans-serif;color:var(--ink);padding-bottom:92px}
+body{
+  margin:0;
+  font-family:"Tajawal","Cairo","Segoe UI",Arial,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 8% 5%,rgba(255,119,184,.20),transparent 26%),
+    radial-gradient(circle at 96% 10%,rgba(29,167,255,.14),transparent 26%),
+    linear-gradient(135deg,#fffafc 0%,#fff0f7 45%,#fef8e8 100%);
+  padding-bottom:98px;
+}
 button,input,select,textarea{font-family:inherit}
-button{border:0;cursor:pointer}
-a{color:inherit;text-decoration:none}
-.container{width:min(100% - 28px,1480px);margin:auto}
-.topbar{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
-.head{display:grid;grid-template-columns:210px 1fr auto;gap:14px;align-items:center;padding:12px 0}
-.brand{display:flex;align-items:center;gap:10px;font-weight:950;color:var(--burgundy);font-size:30px;white-space:nowrap}
-.brand .crown{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,#fff2b0,#fff);display:grid;place-items:center;box-shadow:var(--shadow)}
-.searchbar{height:48px;border:1px solid var(--line);background:#f7f7f8;border-radius:999px;display:flex;align-items:center;padding:0 14px;gap:10px}
-.searchbar input{border:0;outline:0;background:transparent;width:100%;font-weight:800;font-size:15px}
-.headActions{display:flex;gap:8px;align-items:center}
-.pill{border-radius:999px;padding:12px 17px;background:#f2f2f3;font-weight:900;white-space:nowrap}
-.pill.primary{background:var(--burgundy);color:#fff}
-.pill.cart{background:var(--red);color:#fff;min-width:66px}
-.nav{display:flex;gap:9px;overflow:auto;padding:0 0 12px;scrollbar-width:thin}
-.nav .pill{background:#fff;border:1px solid var(--line);padding:10px 15px}
-.nav .active{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
-.nav .back{background:#111;color:#fff;border-color:#111;display:none}
-.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff4fb,#fff8dc);border-bottom:1px solid var(--line)}
-.heroGrid{display:grid;grid-template-columns:280px 1fr;gap:18px;padding:20px 0 24px}
-.sideMenu{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
-.sideMenu h3{margin:0;padding:16px;background:#fff8fb;color:var(--burgundy)}
-.sideMenu button{display:flex;align-items:center;justify-content:space-between;width:100%;background:#fff;border-top:1px solid var(--line);padding:15px 17px;font-weight:900;text-align:right}
-.heroBanner{position:relative;border-radius:28px;overflow:hidden;min-height:360px;box-shadow:var(--shadow);background:#fff}
-.heroBanner::before{content:"";position:absolute;inset:0;background:url('home_banner.jpg?v=1779779571') center/cover no-repeat,linear-gradient(135deg,#ffe4f4,#fff2c8)}
-.heroBanner::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.50),rgba(255,255,255,.92) 47%,rgba(255,255,255,.45))}
-.heroText{position:relative;z-index:2;text-align:center;padding:60px 24px}
-.heroText .badge{display:inline-flex;gap:7px;align-items:center;background:#fff;border:1px solid #f0d4dc;border-radius:999px;padding:9px 15px;color:var(--burgundy);font-weight:900;box-shadow:var(--shadow)}
-.heroText h1{font-size:82px;line-height:1;margin:18px 0 8px;color:#a56418;text-shadow:0 2px 0 #fff,0 12px 28px rgba(165,100,24,.20)}
-.heroText h2{font-size:34px;margin:0;color:var(--burgundy);font-weight:950}
-.heroText p{font-size:20px;color:#8b5d18;font-weight:900}
-.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
-.cta button{padding:14px 24px;border-radius:999px;font-weight:950;box-shadow:var(--shadow)}
-.cta .main{background:linear-gradient(135deg,var(--burgundy),var(--pink));color:#fff}
-.cta .dark{background:#111;color:#fff}
-.cta .ghost{background:#fff;color:var(--burgundy);border:1px solid var(--line)}
-.catTiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}
-.catTile{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px;display:flex;gap:14px;align-items:center;cursor:pointer;transition:.18s}
-.catTile:hover{transform:translateY(-3px)}
-.catIcon{width:62px;height:62px;border-radius:20px;background:linear-gradient(135deg,#fff1f8,#fff9dd);display:grid;place-items:center;font-size:31px}
-.catTile b{display:block;color:var(--burgundy);font-size:18px}
-.catTile small{display:block;color:var(--muted);font-weight:800;margin-top:4px}
-.quickRow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
-.deal{min-height:118px;border-radius:24px;padding:20px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.deal b{font-size:22px;display:block}.deal span{font-weight:900;opacity:.95}
-.deal:nth-child(1){background:linear-gradient(135deg,#ff2f86,#8b2cff)}.deal:nth-child(2){background:linear-gradient(135deg,#00a6ff,#16c46b)}.deal:nth-child(3){background:linear-gradient(135deg,#ff9f1c,#ff2f86)}.deal:nth-child(4){background:linear-gradient(135deg,#6A1B2E,#D4AF37)}
-.sectionHead{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:32px 0 16px}
-.sectionHead h2{margin:0;color:var(--burgundy);font-size:36px}
-.sectionHead p{margin:6px 0 0;color:var(--muted);font-weight:800}
-.sectionHead .smallBtn{background:#fff;border:1px solid var(--line);border-radius:999px;padding:11px 17px;font-weight:950;color:var(--burgundy)}
-.pageTitle{background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:22px;margin:24px 0 16px}
-.pageTitle h1{margin:0;color:var(--burgundy);font-size:40px}.pageTitle p{font-weight:800;color:var(--muted)}
-.tools{display:grid;grid-template-columns:1fr 170px 150px 120px;gap:10px;margin:0 0 18px}
-.tools input,.tools select{height:46px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:0 16px;font-weight:800;outline:0}
-.tools button{border-radius:999px;font-weight:950;background:var(--burgundy);color:#fff}
-.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column;min-height:390px}
-.num{position:absolute;top:12px;left:12px;background:var(--pink);color:#fff;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:950;z-index:3}
-.pic{height:200px;background:linear-gradient(135deg,#fff,#fff5f9);border-bottom:1px solid var(--line);display:grid;place-items:center;overflow:hidden}
-.pic img{width:100%;height:100%;object-fit:contain;padding:10px;display:block}
-.missing{display:grid;place-items:center;text-align:center;color:var(--burgundy);font-weight:950;gap:7px}
-.body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
-.body h3{font-size:18px;line-height:1.35;margin:0;min-height:48px}
-.body p{font-size:12px;line-height:1.55;color:var(--muted);font-weight:800;margin:0;min-height:38px}
-.tags{display:flex;gap:5px;flex-wrap:wrap}
-.tag{background:#fff8e7;border:1px solid #ead7aa;color:#7d5515;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:950}
-.price{margin-top:auto;font-size:23px;font-weight:950}.price small{font-size:11px;color:#9b6b1f;margin-left:3px}
-.cardBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.cardBtns button{border-radius:13px;padding:11px;font-weight:950;color:#fff}.book{background:var(--pink)}.wa{background:var(--green)}
-.bannerStrip{margin:26px 0;border-radius:28px;background:linear-gradient(90deg,var(--burgundy),var(--burgundy2),var(--gold));color:#fff;padding:24px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.bannerStrip b{font-size:26px}.bannerStrip span{font-weight:900}
-.checkout{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
-.panel{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px}
-.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}
-.field label{font-weight:950;color:var(--burgundy)}.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:14px;padding:13px;outline:0;font-weight:800}.field textarea{min-height:90px}
-.payMethods{display:grid;gap:10px;margin-top:12px}.payMethods button{text-align:right;border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px;font-weight:950}.payMethods .active{border-color:var(--burgundy);background:#fff3f7;color:var(--burgundy)}
-.cartBar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:14px 34px;font-weight:950;min-width:340px;text-align:center;z-index:1001;box-shadow:0 16px 34px #0004}
-.drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:2000;align-items:stretch;justify-content:flex-start}
-.drawer.show{display:flex}.drawerBox{width:min(520px,100%);background:#fff;height:100%;padding:18px;overflow:auto;box-shadow:var(--shadow)}
-.drawerHead{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}.drawerHead h2{margin:0;color:var(--burgundy)}.x{width:40px;height:40px;border-radius:50%;background:#f2f2f2;font-size:24px}
-.cartItem{display:grid;grid-template-columns:82px 1fr auto;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center}.cartItem img{width:82px;height:72px;object-fit:contain;background:#fafafa;border-radius:14px}
-.qty{display:flex;gap:6px;align-items:center}.qty button{width:30px;height:30px;border-radius:50%;font-weight:950}
-.empty{background:#fff;border:1px dashed #e2ccd3;border-radius:20px;padding:30px;text-align:center;color:var(--muted);font-weight:900}
-.foot{background:#fff;border-top:1px solid var(--line);margin-top:44px;padding:34px;text-align:center;color:var(--burgundy);font-weight:950}
-@media(max-width:1200px){.grid{grid-template-columns:repeat(4,1fr)}.heroGrid{grid-template-columns:1fr}.sideMenu{display:none}}
-@media(max-width:900px){.head{grid-template-columns:1fr auto;padding:10px 0}.searchbar{grid-column:1/-1;order:3}.headActions .pill:not(.cart){display:none}.grid{grid-template-columns:repeat(2,1fr)}.catTiles,.quickRow{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:1fr 1fr}.checkout{grid-template-columns:1fr}.heroText h1{font-size:54px}.heroText h2{font-size:24px}}
-@media(max-width:560px){.grid,.catTiles,.quickRow,.tools{grid-template-columns:1fr}.heroText{padding:42px 14px}.heroBanner{min-height:320px}.formGrid{grid-template-columns:1fr}.cartBar{width:calc(100% - 24px);min-width:0}.pic{height:220px}}
+button{cursor:pointer}
+img{display:block}
+a{text-decoration:none;color:inherit}
+.container{width:min(100% - 28px,1560px);margin:auto}
+.appbar{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(240,214,227,.8);
+  box-shadow:0 10px 30px rgba(111,23,56,.06);
+}
+.appbar-inner{
+  width:min(100% - 28px,1560px);
+  margin:auto;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:14px;
+  align-items:center;
+  padding:10px 0;
+}
+.brand{
+  display:flex;align-items:center;gap:11px;
+  min-width:200px;
+  cursor:pointer;
+}
+.brand-logo{
+  width:50px;height:50px;border-radius:20px;
+  display:grid;place-items:center;
+  background:linear-gradient(145deg,#fff,var(--gold2),#fff);
+  border:1px solid rgba(216,166,41,.42);
+  box-shadow:0 16px 35px rgba(216,166,41,.18);
+  font-size:25px;
+}
+.brand b{
+  display:block;
+  font-size:24px;
+  color:var(--qatar);
+  line-height:1;
+}
+.brand span{
+  display:block;
+  margin-top:4px;
+  font-size:11px;
+  color:#9b6d22;
+  font-weight:1000;
+}
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.nav button,.top-action{
+  border:0;
+  border-radius:999px;
+  background:#f5f4f6;
+  color:#2b2228;
+  font-weight:1000;
+  padding:10px 15px;
+  transition:.18s;
+}
+.nav button:hover,.top-action:hover{transform:translateY(-1px);background:#fff1f7}
+.nav button.active{
+  color:#fff;
+  background:linear-gradient(135deg,var(--qatar),var(--rose));
+  box-shadow:0 14px 28px rgba(255,59,143,.18);
+}
+.top-actions{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.cart-mini{background:#e60023!important;color:#fff!important;min-width:56px}
+.search-dock{
+  width:min(100% - 28px,1050px);
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:88px 1fr 150px;
+  gap:9px;
+  padding:0 0 11px;
+}
+.back-btn{
+  display:none;
+  border:0;border-radius:999px;
+  background:#111;
+  color:#fff4c6;
+  font-weight:1000;
+}
+.global-search{
+  height:42px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  display:flex;align-items:center;gap:10px;
+  padding:0 14px;
+  box-shadow:0 12px 26px rgba(111,23,56,.06);
+}
+.global-search input{
+  border:0;outline:0;background:transparent;width:100%;
+  color:var(--qatar);font-weight:950;
+}
+.search-icon{font-size:19px}
+.search-dock select{
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+  color:var(--qatar);
+  font-weight:1000;
+  padding:0 12px;
+}
+.hero{
+  position:relative;
+  isolation:isolate;
+  min-height:clamp(520px,44vw,760px);
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 28%,rgba(255,255,255,.86),rgba(255,255,255,.52) 35%,transparent 62%),
+    linear-gradient(135deg,#fff7fb 0%,#ffeaf5 43%,#fff5dc 100%);
+}
+.hero::before{
+  content:"";
+  position:absolute;inset:0;z-index:-2;
+  background:
+    url("1.jpg") left 0 bottom 8%/27% auto no-repeat,
+    url("34.jpg") left 28% bottom 0/25% auto no-repeat,
+    url("120.jpg") right 30% top 9%/13% auto no-repeat,
+    url("121.jpg") right 20% top 9%/13% auto no-repeat,
+    url("124.jpg") right 10% top 9%/13% auto no-repeat,
+    url("126.jpg") right 30% bottom 13%/13% auto no-repeat,
+    url("128.jpg") right 20% bottom 10%/13% auto no-repeat,
+    url("122.jpg") right 8% bottom 10%/13% auto no-repeat;
+  opacity:.95;
+}
+.hero::after{
+  content:"";
+  position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(circle at 0 100%,rgba(255,255,255,.85) 0 10%,transparent 11%),
+    radial-gradient(circle at 100% 96%,rgba(255,191,217,.72) 0 13%,transparent 14%),
+    linear-gradient(115deg,transparent 0 44%,rgba(216,166,41,.16) 45%,rgba(255,255,255,.45) 49%,rgba(216,166,41,.14) 53%,transparent 54%);
+  background-size:auto,auto,380px 380px;
+}
+.hero-grid{
+  width:min(100% - 28px,1560px);
+  margin:auto;
+  min-height:inherit;
+  display:grid;
+  grid-template-columns:minmax(330px,480px) 1fr minmax(300px,430px);
+  gap:28px;
+  align-items:center;
+}
+.booking-card{
+  background:rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:34px;
+  padding:22px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(10px);
+}
+.booking-card .label{
+  display:inline-flex;gap:7px;align-items:center;
+  border-radius:999px;
+  padding:8px 12px;
+  background:#fff8dd;
+  color:#8f5d12;
+  font-weight:1000;
+  margin-bottom:12px;
+}
+.booking-card h3{
+  margin:0 0 8px;
+  color:var(--qatar);
+  font-size:28px;
+  line-height:1.2;
+}
+.booking-card p{margin:0 0 15px;color:var(--muted);font-weight:900;line-height:1.7}
+.wizard{
+  display:grid;
+  gap:10px;
+}
+.wizard select,.wizard input{
+  height:48px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+  padding:0 14px;
+  font-weight:900;
+  color:var(--qatar);
+  outline:0;
+}
+.hero-center{
+  text-align:center;
+  padding:35px 10px;
+}
+.badge{
+  display:inline-flex;gap:8px;align-items:center;
+  border-radius:999px;
+  padding:9px 15px;
+  background:rgba(255,255,255,.76);
+  border:1px solid rgba(216,166,41,.45);
+  color:#9a641d;
+  font-weight:1000;
+  box-shadow:0 15px 32px rgba(216,166,41,.14);
+}
+.hero h1{
+  margin:14px 0 0;
+  font-size:clamp(90px,8.8vw,170px);
+  line-height:.85;
+  color:#a16017;
+  font-weight:1000;
+  letter-spacing:-2px;
+  text-shadow:0 3px 0 #fff,0 8px 0 rgba(255,238,178,.72),0 24px 50px rgba(111,23,56,.18);
+}
+.hero h2{
+  margin:20px auto 0;
+  max-width:850px;
+  color:var(--qatar);
+  font-size:clamp(30px,2.8vw,52px);
+  line-height:1.26;
+  font-weight:1000;
+  text-shadow:0 2px 0 rgba(255,255,255,.9);
+}
+.hero .sub{
+  margin:11px auto 0;
+  color:#8c5b1c;
+  font-weight:1000;
+  font-size:clamp(17px,1.45vw,26px);
+  line-height:1.6;
+}
+.hero-actions{
+  display:flex;justify-content:center;gap:11px;flex-wrap:wrap;margin-top:23px;
+}
+.btn{
+  border:0;border-radius:999px;padding:13px 23px;font-weight:1000;transition:.18s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:linear-gradient(135deg,var(--qatar),var(--rose));color:#fff;box-shadow:0 14px 30px rgba(255,59,143,.22)}
+.btn-dark{background:#111;color:#fff3b2}
+.btn-light{background:#fff;color:var(--qatar);border:1px solid var(--line)}
+.btn-mint{background:var(--mint);color:#fff}
+.stat-card{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.stat{
+  background:rgba(255,255,255,.82);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:26px;
+  padding:16px;
+  min-height:120px;
+  box-shadow:var(--shadow2);
+  backdrop-filter:blur(10px);
+}
+.stat i{font-style:normal;font-size:34px}
+.stat b{display:block;margin-top:8px;font-size:27px;color:var(--qatar)}
+.stat span{display:block;margin-top:5px;color:var(--muted);font-weight:900;font-size:13px}
+.quick-cats{
+  margin-top:-42px;
+  position:relative;
+  z-index:5;
+}
+.cat-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+.cat{
+  background:rgba(255,255,255,.93);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:30px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  min-height:154px;
+  transition:.18s;
+  overflow:hidden;
+  position:relative;
+}
+.cat:hover{transform:translateY(-5px)}
+.cat::before{
+  content:"";
+  position:absolute;inset:auto -28px -40px auto;
+  width:130px;height:130px;border-radius:50%;
+  background:linear-gradient(135deg,rgba(255,59,143,.18),rgba(29,167,255,.14),rgba(216,166,41,.20));
+}
+.cat .emoji{font-size:42px}
+.cat h3{margin:10px 0 6px;color:var(--qatar);font-size:23px}
+.cat p{margin:0;color:#7b6270;font-weight:900;line-height:1.55}
+.home-tabs{
+  display:flex;
+  justify-content:center;
+  margin:30px 0 14px;
+}
+.tabs{
+  display:flex;gap:8px;
+  background:rgba(255,255,255,.85);
+  padding:7px;border:1px solid var(--line);
+  border-radius:999px;
+  box-shadow:var(--shadow2);
+}
+.tabs button{
+  min-width:170px;
+  border:0;border-radius:999px;
+  padding:13px 26px;
+  color:var(--qatar);
+  background:transparent;
+  font-weight:1000;
+}
+.tabs button.active{background:#111;color:#fff4b5}
+.section-head{
+  display:flex;align-items:end;justify-content:space-between;gap:15px;
+  margin:30px 0 18px;
+}
+.section-head h2{margin:0;color:var(--qatar);font-size:clamp(30px,3.4vw,54px);line-height:1.2}
+.section-head p{margin:7px 0 0;color:#806877;font-weight:900}
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-bottom:42px;
+}
+.product{
+  background:rgba(255,255,255,.92);
+  border:1px solid var(--line);
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 17px 38px rgba(111,23,56,.10);
+  position:relative;
+}
+.num{
+  position:absolute;left:12px;top:12px;z-index:3;
+  color:#fff;background:linear-gradient(135deg,var(--qatar),var(--rose));
+  padding:6px 10px;border-radius:999px;font-size:12px;font-weight:1000;
+}
+.pic{
+  height:220px;
+  display:grid;place-items:center;
+  overflow:hidden;
+  background:linear-gradient(135deg,#fff8e8,#fff1f7,#eaf8ff);
+}
+.pic img{width:100%;height:100%;object-fit:contain;transition:.25s}
+.product:hover img{transform:scale(1.04)}
+.product-body{padding:15px}
+.product h3{margin:0;color:#2c1623;font-size:21px;line-height:1.25}
+.desc{margin-top:7px;color:#735b68;font-weight:850;line-height:1.6;font-size:13px;min-height:42px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:11px 0}
+.tag{
+  border:1px solid #efdcb7;background:#fff6e6;color:#835813;
+  border-radius:999px;padding:5px 9px;font-size:12px;font-weight:1000;
+}
+.price-line{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:10px}
+.price{
+  min-width:76px;text-align:center;border-radius:16px;padding:8px 10px;
+  background:#fff3d4;border:1px solid #ead18d;color:#111;font-weight:1000;
+}
+.price small{display:block;color:#9b6b1f;font-size:10px}
+.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:11px}
+.card-actions .book{background:var(--rose);color:#fff}
+.card-actions .wa{background:var(--mint);color:#fff}
+.page-title{
+  margin:24px auto;
+  text-align:center;
+  border:1px solid rgba(255,255,255,.95);
+  border-radius:36px;
+  padding:32px 22px;
+  background:rgba(255,255,255,.78);
+  box-shadow:var(--shadow);
+}
+.page-title h1{margin:0;color:var(--qatar);font-size:clamp(36px,4vw,64px)}
+.page-title p{margin:10px 0 0;color:#806877;font-weight:900}
+.filters{
+  display:flex;gap:9px;overflow:auto;
+  padding:4px 2px 13px;
+  scrollbar-width:thin;
+}
+.chip{
+  white-space:nowrap;border:1px solid var(--line);
+  background:rgba(255,255,255,.9);
+  border-radius:999px;
+  padding:10px 16px;
+  color:var(--qatar);
+  font-weight:1000;
+}
+.chip.active{background:#fff1ce;border-color:#e9cc80}
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-bottom:42px;
+}
+.info{
+  background:rgba(255,255,255,.86);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:20px;
+  box-shadow:var(--shadow2);
+}
+.info h3{margin:0 0 10px;color:var(--qatar);font-size:24px}
+.info ul{margin:0;padding:0 24px 0 0;line-height:2;font-weight:850;color:#66515e}
+.footer{
+  margin-top:45px;
+  padding:40px 18px;
+  text-align:center;
+  color:#fff;
+  background:linear-gradient(135deg,var(--qatar),var(--rose),var(--gold));
+  font-weight:1000;
+}
+.footer-actions{margin-top:14px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.float-cart{
+  position:fixed;left:50%;bottom:16px;transform:translateX(-50%);
+  z-index:1200;
+  min-width:340px;
+  background:#050505;color:#fff;
+  border-radius:999px;
+  padding:15px 24px;
+  text-align:center;
+  font-weight:1000;
+  box-shadow:0 18px 42px rgba(0,0,0,.26);
+}
+.modal{
+  position:fixed;inset:0;display:none;place-items:center;
+  z-index:2300;background:rgba(21,19,26,.62);
+  padding:16px;
+}
+.modal.show{display:grid}
+.modal-card{
+  background:#fff;width:min(720px,100%);max-height:92vh;overflow:auto;
+  border-radius:34px;
+  box-shadow:0 34px 95px rgba(0,0,0,.28);
+}
+.modal-head{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 20px;
+  border-bottom:1px solid var(--line);
+}
+.modal-head h3{margin:0;color:var(--qatar);font-size:27px}
+.close{
+  border:0;width:38px;height:38px;border-radius:50%;
+  background:#f3eef1;font-size:22px;
+}
+.form{
+  padding:20px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-weight:1000;color:#6e405a}
+.field input,.field select,.field textarea{
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:12px 13px;
+  outline:0;
+  font-weight:850;
+}
+.field textarea{min-height:95px;resize:vertical}
+.form-actions{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap}
+.toast{
+  position:fixed;right:16px;top:94px;z-index:3200;
+  background:#111;color:#fff;border-radius:16px;
+  padding:12px 16px;font-weight:1000;display:none;
+}
+.toast.show{display:block}
+.mobile-nav{display:none}
+@media(max-width:1280px){
+  .hero-grid{grid-template-columns:1fr;gap:16px;padding:26px 0}
+  .booking-card,.stat-card{display:none}
+  .hero-center{width:min(980px,100%);margin:auto}
+  .products{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:980px){
+  .appbar-inner{grid-template-columns:1fr auto}
+  .nav{grid-column:1/-1;justify-content:flex-start;overflow:auto;flex-wrap:nowrap;padding-bottom:2px}
+  .nav button{white-space:nowrap}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:700px){
+  body{padding-bottom:92px}
+  .brand span,.top-actions .desktop-only{display:none}
+  .search-dock{grid-template-columns:1fr;width:calc(100% - 20px)}
+  .back-btn{height:42px}
+  .hero{min-height:420px}
+  .hero::before{
+    background:
+      url("1.jpg") left -12% bottom 18%/44% auto no-repeat,
+      url("34.jpg") left 24% bottom 7%/37% auto no-repeat,
+      url("120.jpg") right 22% top 9%/22% auto no-repeat,
+      url("126.jpg") right 18% bottom 9%/24% auto no-repeat;
+  }
+  .hero h1{font-size:62px}
+  .hero h2{font-size:22px;line-height:1.45}
+  .hero .sub{font-size:14px}
+  .hero-actions .btn{width:100%}
+  .cat-grid,.products,.info-grid{grid-template-columns:1fr}
+  .section-head{display:block;text-align:center}
+  .pic{height:235px}
+  .form{grid-template-columns:1fr}
+  .float-cart{width:calc(100% - 32px);min-width:auto}
+  .mobile-nav{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    position:fixed;bottom:0;left:0;right:0;z-index:1300;
+    background:#fff;border-top:1px solid var(--line);
+    padding:6px 6px 7px;
+    box-shadow:0 -10px 28px rgba(111,23,56,.08);
+  }
+  .mobile-nav button{border:0;background:transparent;color:var(--qatar);font-weight:1000;font-size:12px}
+  .mobile-nav b{display:block;font-size:20px}
+  .float-cart{bottom:64px}
+}
 </style>
 </head>
 <body>
-<header class="topbar">
-  <div class="container head">
-    <div class="brand" onclick="go('home')"><span class="crown">👑</span><span>الملكة</span></div>
-    <div class="searchbar"><span>🔍</span><input id="globalSearch" placeholder="ابحث باسم المنتج، رقمه، القسم، السعر..." onkeydown="if(event.key==='Enter') runSearch()"/></div>
-    <div class="headActions">
-      <button class="pill cart" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
-      <button class="pill" onclick="waGeneral()">واتساب</button>
-      <button class="pill" onclick="go('customers')">بيانات الزبون</button>
+<header class="appbar">
+  <div class="appbar-inner">
+    <div class="brand" onclick="goPage('home')">
+      <div class="brand-logo">👑</div>
+      <div><b>الملكة</b><span>تطبيق الحفلات المصغر</span></div>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="top-actions">
+      <button class="top-action cart-mini" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
+      <button class="top-action" onclick="openWhats()">واتساب</button>
+      <button class="top-action desktop-only" onclick="toast('لوحة الإدارة جاهزة للتطوير لاحقاً')">الإدارة</button>
     </div>
   </div>
-  <div class="container nav" id="nav"></div>
+  <div class="search-dock">
+    <button id="backBtn" class="back-btn" onclick="goBack()">رجوع</button>
+    <div class="global-search"><span class="search-icon" onclick="runSearch()">🔎</span><input id="searchInput" placeholder="ابحث برقم اللعبة أو الاسم أو القسم..."></div>
+    <select id="sectionJump" onchange="jumpTo(this.value)">
+      <option value="home">الكل</option>
+      <option value="bouncies">النطاطيات</option>
+      <option value="offers">العروض</option>
+      <option value="snacks">السناك والعربات</option>
+      <option value="events">تجهيز الحفلات</option>
+    </select>
+  </div>
 </header>
 
 <main id="app"></main>
 
-<div class="cartBar" onclick="openCart()">🛒 سلتي | <span id="cartTotal">0</span> ر.ق</div>
+<footer class="footer">
+  <div>الملكة للحفلات وتأجير النطاطيات — خدمة داخل قطر</div>
+  <div class="footer-actions">
+    <button class="btn btn-light" onclick="location.href='tel:33317720'">اتصال 33317720</button>
+    <button class="btn btn-light" onclick="location.href='tel:33317721'">اتصال 33317721</button>
+    <button class="btn btn-dark" onclick="openWhats('33317720')">واتساب 33317720</button>
+    <button class="btn btn-dark" onclick="openWhats('33317705')">واتساب 33317705</button>
+  </div>
+  <div style="margin-top:14px">Instagram: @almalika_qtr</div>
+</footer>
 
-<div class="drawer" id="cartDrawer">
-  <div class="drawerBox">
-    <div class="drawerHead"><h2>السلة والحجز</h2><button class="x" onclick="closeCart()">×</button></div>
-    <div id="cartItems"></div>
-    <div class="panel" style="margin-top:14px">
-      <h3 style="color:var(--burgundy);margin-top:0">بيانات الحجز</h3>
-      <div class="formGrid">
-        <div class="field"><label>اسم العميل</label><input id="cName"/></div>
-        <div class="field"><label>الجوال</label><input id="cPhone"/></div>
-        <div class="field"><label>تاريخ الحجز</label><input id="cDate" type="date"/></div>
-        <div class="field"><label>وقت التركيب/التشغيل</label><select id="cTime"><option>الصباح</option><option>العصر</option><option>المساء</option></select></div>
-        <div class="field full"><label>الموقع / رابط خرائط</label><input id="cLocation"/></div>
-        <div class="field full"><label>ملاحظات</label><textarea id="cNotes" placeholder="مثلاً: داخل البيت، حديقة، كهرباء متوفرة، عدد الأطفال..."></textarea></div>
+<div class="mobile-nav">
+  <button onclick="goPage('home')"><b>🏠</b>الرئيسية</button>
+  <button onclick="goPage('bouncies')"><b>🏰</b>ألعاب</button>
+  <button onclick="goPage('snacks')"><b>🍿</b>سناك</button>
+  <button onclick="openCart()"><b>🛒</b>السلة</button>
+</div>
+
+<div class="float-cart" onclick="openCart()">🛒 سلتي | <span id="cartTotal">0</span> ر.ق</div>
+
+<div class="modal" id="bookingModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="bookingTitle">طلب حجز</h3>
+      <button class="close" onclick="closeModal('bookingModal')">×</button>
+    </div>
+    <div class="form">
+      <div class="field"><label>اسم العميل</label><input id="clientName" placeholder="الاسم"></div>
+      <div class="field"><label>رقم الجوال</label><input id="clientPhone" placeholder="33317720"></div>
+      <div class="field"><label>تاريخ الحجز</label><input id="bookingDate" type="date"></div>
+      <div class="field"><label>وقت التركيب</label><select id="bookingTime"><option>الصباح</option><option>العصر</option><option>المساء</option><option>حسب الاتفاق</option></select></div>
+      <div class="field"><label>نوع الطلب</label><select id="bookingType"></select></div>
+      <div class="field"><label>المدة</label><select id="bookingDuration"></select></div>
+      <div class="field full"><label>الموقع / رابط Google Maps</label><input id="clientLocation" placeholder="ضع رابط الموقع أو المنطقة"></div>
+      <div class="field full"><label>ملاحظات</label><textarea id="clientNotes" placeholder="عدد الأطفال، نوع المناسبة، المساحة، أي طلب خاص..."></textarea></div>
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="sendBooking()">إرسال واتساب</button>
+        <button class="btn btn-light" onclick="addCurrentToCart()">إضافة للسلة</button>
       </div>
-      <h3 style="color:var(--burgundy)">طريقة الدفع</h3>
-      <div class="payMethods">
-        <button class="active" onclick="pay='رابط دفع';markPay(this)">💳 أرسل لي رابط دفع</button>
-        <button onclick="pay='تحويل بنكي';markPay(this)">🏦 تحويل بنكي</button>
-        <button onclick="pay='كاش عند التركيب';markPay(this)">💵 كاش عند التركيب</button>
-        <button onclick="pay='واتساب للتأكيد';markPay(this)">✅ تأكيد عبر واتساب</button>
-      </div>
-      <button class="pill primary" style="width:100%;margin-top:16px" onclick="sendBooking()">إرسال الطلب عبر واتساب</button>
     </div>
   </div>
 </div>
 
-<script>
-const IMG_VERSION="1779779571";
-const REPO_RAW="https://raw.githubusercontent.com/qqmm7888-tech/almalika-qatar/main/";
-let route='home', cart=[], pay='رابط دفع';
+<div class="modal" id="cartModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>السلة</h3>
+      <button class="close" onclick="closeModal('cartModal')">×</button>
+    </div>
+    <div id="cartBody" style="padding:20px"></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
 
-const NAV=[
- ['home','الرئيسية'],['bouncies','النطاطيات'],['offers','العروض والبكجات'],['snacks','السناك والعربات'],['events','تجهيز الحفلات'],['checkout','الدفع والحجز'],['terms','شروط الحجز'],['contact','تواصل معنا']
+<script>
+const navItems=[
+  ["home","الرئيسية"],["bouncies","النطاطيات"],["offers","العروض والبكجات"],
+  ["snacks","السناك والعربات"],["events","تجهيز الحفلات"],["terms","شروط الحجز"],["contact","تواصل معنا"]
+];
+const bouncyNames=[
+"قصر أميرات","زحليقة مائية مزدوجة","ملعب صابوني كبير","زحليقة بارتي المائية","نطاطية أطفال ملونة",
+"زحليقة القرصان المائية","حديقة المرح","زحليقة ديناصور","نطاطية سبايدر مان","قوس قزح",
+"مسبح أطفال","زحليقة فروزن","ملعب فوم وصابون","قلعة وردية","جزيرة المرح","نطاطية بحرية",
+"ملعب صابوني مع فوم","بيت الأطفال","زحليقة كبيرة","مغامرات الأطفال","زحليقة عالية","حفلات المدارس",
+"زحليقة كرتونية","حديقة الحيوانات","مينيونز","يونيكورن","كابتن","زحليقة أمواج","نطاطية حفلة",
+"زحليقة نخلة","مسبح صابوني","مائية صغيرة","متعددة الألعاب","بارتي المائية","مينيونز المائية",
+"الأخطبوط المائية","فلامنجو المائية","يونيكورن المائية","قلعة ملكية","سبايدر وسوبرمان",
+"جزيرة المرح","أطفال صغيرة","حيوانات","مغامرات","ملونة","القراصنة","سبلاش","النمر",
+"حفلة وردية","كلاسيك","نخيل","يونيكورن","وردية","أميرات","زرقاء","صغيرة","قوس قزح","سفينة",
+"عالية للأطفال","كبيرة جداً","ملعب","الكاندي العملاقة","بحرية كبيرة","حديقة","جافة","مستطيلة",
+"صابوني نخيل","فوم","سيارات","فوت نايت","بيت أحلام","قصر بنات","هابي بيرثدي","كرتون","بيت ثلجي",
+"حمراء","مائية عريضة","زرقاء مزدوجة","ألعاب","متعددة","دائرية","مسبح عائلي","جهاز الرغوة",
+"حوض ومسبح أطفال"
 ];
 
-const CATEGORY_META={
- bouncies:{title:'النطاطيات والزحاليق',sub:'نطاطيات جافة ومائية وملاعب صابونية للحفلات والحدائق',icon:'🏰'},
- snacks:{title:'السناك والعربات',sub:'فشار، غزل البنات، ذرة، بطاطا حلزونية، آيسكريم، براد وأكثر',icon:'🍿'},
- events:{title:'تجهيز الحفلات',sub:'ديكورات، بالونات، ستاندات، إضاءات، أجهزة فوم وفقاعات',icon:'🎀'},
- offers:{title:'العروض والبكجات',sub:'باقات جاهزة تختصر عليك الاختيار والسعر',icon:'🎁'}
-};
-
-const products=[]; const add=o=>products.push(o);
-
-// نطاطيات 1-85
+const products=[];
 for(let i=1;i<=85;i++){
- let cat=i<=25?'النطاطيات الجافة':i<=60?'النطاطيات المائية':i<=75?'الزحاليق':'الملاعب الصابونية';
- let names=['زحليقة القراصنة المائية','زحليقة الديناصور المائية','نطاطية قلعة الأطفال','نطاطية أميرات','ملعب صابوني','زحليقة مائية كبيرة','نطاطية سبايدرمان','زحليقة بارتي المائية'];
- add({id:i,type:'bouncies',title:names[i%names.length]+' #'+i,cat,price:i<=25?500:(i<=60?600:700),duration:'يوم كامل',age:'من 6 إلى 18 سنة',desc:'نطاطية مناسبة للأطفال مع تركيب آمن وإشراف حسب الطلب.'});
+  const category=i<=20?"النطاطيات الجافة":i<=60?"النطاطيات المائية":i<=70?"الملاعب الصابونية":i<=83?"الزحاليق":"أحواض ومسابح وأجهزة رغوة";
+  products.push({
+    number:i,
+    title:(category.includes("مائية")||category.includes("زحاليق")?"زحليقة ":"نطاطية ")+(bouncyNames[i-1]||i),
+    section:"النطاطيات",
+    category,
+    image:`${i}.jpg`,
+    price:i<=20?500:600,
+    duration:"يوم كامل",
+    desc:"لعبة ممتعة للحفلات مع تركيب آمن وتجهيز مرتب من فريق الملكة.",
+    tags:[category,"ألعاب أطفال"]
+  });
 }
-
-// السناك والعربات
 [
- [86,'ماكينة الفشار',400],[87,'ماكينة الفشار + العربة',500],[88,'ماكينة غزل البنات',400],[89,'ماكينة غزل البنات + العربة',500],
- [90,'ماكينة البطاطس الحلزونية',550],[91,'ماكينة البطاطس الحلزونية + عربة',650],[92,'ماكينة الذرة الحلوة + طاولة',500],
- [93,'ماكينة البراد + طاولة',500],[95,'ماكينة العصير البارد + عربة',600],[96,'نافورة الشوكولاتة',800],[97,'ماكينة الآيسكريم',700],
- [99,'عربة الوافل',650],[100,'عربة البانكيك',650],[120,'عربة الفشار VIP',600],[121,'عربة غزل البنات VIP',600],
- [122,'عربة الذرة الحلوة VIP',600],[123,'عربة البطاطا الحلزونية VIP',600],[124,'عربة الآيسكريم VIP',700],[125,'عربة السلاش VIP',600],
- [126,'عربة البراد مع الآيسكريم',800],[127,'عربة البانكيك VIP',650],[128,'عربة نافورة الشوكولاتة VIP',800]
-].forEach(x=>add({id:x[0],type:'snacks',title:x[1],cat:'السناك والعربات',price:x[2],duration:'3 ساعات',age:'حسب الباقة',desc:'خدمة سناك للحفلات مع تجهيز مرتب وتشغيل حسب الباقة وعدد الأطفال.'}));
-
-// تجهيز الحفلات
+[86,"ماكينة الفشار",400],[87,"ماكينة الفشار + العربة",500],[88,"ماكينة غزل البنات",400],
+[89,"ماكينة غزل البنات + العربة",500],[90,"ماكينة البطاطس الحلزونية",550],
+[91,"ماكينة البطاطس الحلزونية + عربة",650],[92,"ماكينة الذرة الحلوة + طاولة",500],
+[93,"ماكينة البراد + طاولة",500],[95,"ماكينة العصير البارد + عربة",600],[96,"نافورة الشوكولاتة",800],
+[97,"ماكينة الآيسكريم",700],[99,"عربة الوافل",650],[100,"عربة البانكيك",650],
+[120,"عربة الفشار VIP",600],[121,"عربة غزل البنات VIP",600],[122,"عربة الذرة الحلوة VIP",600],
+[123,"عربة البطاطا الحلزونية VIP",600],[124,"عربة الآيسكريم VIP",700],[125,"عربة السلاش VIP",600],
+[126,"عربة البراد مع الآيسكريم",800],[127,"عربة البانكيك VIP",650],[128,"عربة نافورة الشوكولاتة VIP",800]
+].forEach(s=>products.push({
+  number:s[0],title:s[1],section:"السناك والعربات",category:"السناك والعربات",image:`${s[0]}.jpg`,
+  price:s[2],duration:"3 ساعات",desc:"خدمة سناك للحفلات مع تجهيز مرتب وتشغيل حسب الباقة وعدد الأطفال.",tags:["سناك","عربات"]
+}));
 [
- [101,'حفلات أعياد الميلاد',900],[102,'حفلات التخرج',1200],[103,'حفلات وردية',1000],[104,'حفلات أطفال ملونة',1000],[105,'ديكور عيد ميلاد',950],
- [106,'ديكور حفلة',950],[107,'ستاند حفلات',750],[108,'حفلات الخطوبة',1400],[109,'ديكور بالونات',650],[110,'حفلات المدارس والروضات',1500],
- [111,'ستاندات بالونات',450],[112,'إضاءات ليزر',350],[113,'جهاز فقاعات',300],[114,'جهاز فوم',500],[117,'أرضية LED',1200]
-].forEach(x=>add({id:x[0],type:'events',title:x[1],cat:'تجهيز الحفلات',price:x[2],duration:'حسب التجهيز',age:'كل المناسبات',desc:'تنسيق وتجهيز مناسبات بلمسات راقية حسب المساحة والميزانية.'}));
-
-// عروض
+[101,"حفلات أعياد الميلاد",900],[102,"حفلات التخرج",1200],[103,"حفلات بنات وردية",1000],
+[104,"حفلات أطفال ملونة",1000],[105,"خلفية دائرية وردية",900],[106,"خلفية عيد ميلاد ناعمة",900],
+[107,"خلفية سماوية",900],[108,"خلفية خطوبة",1400],[109,"خلفية بيبي شاور",1200],
+[110,"ديكور مدارس وروضات",1500],[111,"ستاندات بالونات",450],[112,"إضاءات ليزر",350],
+[113,"جهاز فقاعات",300],[114,"جهاز فوم",500],[117,"أرضية LED",1200]
+].forEach(e=>products.push({
+  number:e[0],title:e[1],section:"تجهيز الحفلات",category:"تجهيز الحفلات",image:`${e[0]}.jpg`,
+  price:e[2],duration:"حسب التجهيز",desc:"تنسيق وتجهيز مناسبات بلمسات راقية حسب الطلب.",tags:["حفلات","ديكور"]
+}));
 [
- [201,'باقة نطاطية + سناك',999,34],[202,'باقة عيد ميلاد 20 طفل',1999,101],[203,'ملعب صابوني + فوم',700,68],[204,'باقة عربات السناك',1480,126],
- [205,'باقة تخرج VIP',2500,102],[206,'باقة خطوبة بسيطة',2900,108]
-].forEach(x=>add({id:x[0],imgId:x[3],type:'offers',title:x[1],cat:'العروض والبكجات',price:x[2],duration:'عرض خاص',age:'حسب الباقة',desc:'باقة جاهزة للحجز تجمع أكثر من خدمة بسعر أوضح وأسهل.'}));
+{number:"O1",title:"عرض نطاطية + سناك",image:"34.jpg",price:999},
+{number:"O2",title:"عرض حفلة 20 طفل",image:"101.jpg",price:1999},
+{number:"O3",title:"عرض ملعب صابوني وفوم",image:"68.jpg",price:700},
+{number:"O4",title:"عرض السناك والعربات",image:"126.jpg",price:1480}
+].forEach(o=>products.push({...o,section:"العروض",category:"العروض والبكجات",duration:"عرض",desc:"عرض خاص من الملكة للحجوزات والمناسبات.",tags:["عرض","VIP"]}));
 
-function imgFile(p){
- const n=String(p.imgId||p.id);
- const special={'107':'107(1).jpg','112':'112(1).jpg','117':'117-118-119.jpg','118':'117-118-119.jpg','119':'117-118-119.jpg'};
- return special[n] || n+'.jpg';
-}
-function imgCandidates(p){
- const file=imgFile(p), enc=encodeURIComponent(file).replaceAll('%2F','/');
- return ['/'+enc+'?v='+IMG_VERSION, enc+'?v='+IMG_VERSION, './'+enc+'?v='+IMG_VERSION, '/images/'+enc+'?v='+IMG_VERSION, 'images/'+enc+'?v='+IMG_VERSION, REPO_RAW+enc+'?v='+IMG_VERSION];
-}
-function imgTag(p){
- const tries=imgCandidates(p);
- return `<img src="${tries[0]}" data-tries='${JSON.stringify(tries)}' data-i="0" alt="${p.title}" onerror="nextImg(this)" loading="lazy">`;
-}
-function nextImg(img){
- const tries=JSON.parse(img.dataset.tries||'[]'); let i=Number(img.dataset.i||0)+1;
- if(i<tries.length){img.dataset.i=i; img.src=tries[i]; return;}
- img.onerror=null; img.parentElement.innerHTML=`<div class="missing"><div style="font-size:44px">👑</div><div>الصورة غير موجودة<br><small>${img.alt}</small></div></div>`;
-}
+let currentPage="home", currentFilter="الكل", currentTab="suggested", currentProduct=null, cart=[];
 
-function initNav(){
- nav.innerHTML='<button class="pill back" id="backBtn" onclick="goBack()">رجوع</button>'+NAV.map(n=>`<button class="pill" id="nav_${n[0]}" onclick="go('${n[0]}')">${n[1]}</button>`).join('');
+function init(){
+  document.getElementById("nav").innerHTML=navItems.map(([id,name])=>`<button id="nav-${id}" onclick="goPage('${id}')">${name}</button>`).join("");
+  document.getElementById("searchInput").addEventListener("keydown",e=>{if(e.key==="Enter")runSearch()});
+  if(!location.hash) history.replaceState({page:"home",filter:"الكل"},"","#home/الكل");
+  renderFromHash();
+  window.addEventListener("popstate",renderFromHash);
 }
-function normalizeRoute(){
- const path=location.pathname.replace(/^\//,'').trim();
- const hash=location.hash.replace('#','').trim();
- return path || hash || 'home';
+function parseHash(){
+  const raw=(location.hash||"#home/الكل").replace(/^#/,"");
+  const [page,filter]=raw.split("/");
+  return {page:page||"home",filter:decodeURIComponent(filter||"الكل")};
 }
-window.addEventListener('popstate',()=>render(normalizeRoute()));
-window.addEventListener('hashchange',()=>render(normalizeRoute()));
-initNav(); render(normalizeRoute());
-
-function go(r){ history.pushState({},'', '/'+r); render(r); window.scrollTo({top:0,behavior:'smooth'}); }
-function goBack(){ if(history.length>1) history.back(); else go('home'); }
-function setActive(r){ route=r; document.querySelectorAll('.nav .pill').forEach(b=>b.classList.remove('active')); const x=document.getElementById('nav_'+r); if(x)x.classList.add('active'); document.getElementById('backBtn').style.display=r==='home'?'none':'inline-block'; }
-
-function render(r){
- if(!['home','bouncies','snacks','events','offers','checkout','terms','contact','customers','search'].includes(r)) r='home';
- setActive(r);
- if(r==='home') return home();
- if(r==='checkout') return checkoutPage();
- if(r==='terms') return terms();
- if(r==='contact') return contact();
- if(r==='customers') return customers();
- if(['bouncies','snacks','events','offers'].includes(r)) return catalog(r);
+function goPage(page,filter="الكل"){
+  history.pushState({page,filter},"",`#${page}/${encodeURIComponent(filter)}`);
+  renderPage(page,filter);
 }
-
-function home(){
- const picks=[34,47,48,53,68,86,95,101,120,126,128].map(id=>products.find(p=>p.id===id)).filter(Boolean);
- app.innerHTML=`
- <section class="hero">
-  <div class="container heroGrid">
-   <aside class="sideMenu">
-    <h3>أقسام الملكة</h3>
-    <button onclick="go('bouncies')">🏰 النطاطيات والزحاليق <span>›</span></button>
-    <button onclick="go('snacks')">🍿 السناك والعربات <span>›</span></button>
-    <button onclick="go('events')">🎀 تجهيز الحفلات <span>›</span></button>
-    <button onclick="go('offers')">🎁 العروض والبكجات <span>›</span></button>
-   </aside>
-   <div class="heroBanner">
-    <div class="heroText">
-     <div class="badge">📍 شركة الملكة للحفلات - قطر</div>
-     <h1>الملكة</h1>
-     <h2>لتأجير النطاطيات والسناك وتجهيز الحفلات</h2>
-     <p>كتالوج مرتب مثل التطبيقات — اختار، أضف للسلة، واحجز عبر واتساب أو اطلب رابط دفع</p>
-     <div class="cta">
-      <button class="main" onclick="go('bouncies')">شوف الألعاب</button>
-      <button class="dark" onclick="go('snacks')">السناك والعربات</button>
-      <button class="ghost" onclick="openCart()">الدفع والحجز</button>
-     </div>
+function goBack(){
+  if(history.length>1) history.back(); else goPage("home");
+}
+function renderFromHash(){
+  const r=parseHash();
+  renderPage(r.page,r.filter);
+}
+function setActive(page){
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  const btn=document.getElementById("nav-"+page);
+  if(btn) btn.classList.add("active");
+  document.getElementById("backBtn").style.display=page==="home"?"none":"block";
+  document.getElementById("sectionJump").value=["home","search"].includes(page)?"home":page;
+}
+function jumpTo(v){goPage(v)}
+function renderPage(page,filter="الكل"){
+  currentPage=page; currentFilter=filter; setActive(page);
+  if(page==="home") return renderHome();
+  if(page==="bouncies") return renderCatalog("النطاطيات","النطاطيات والزحاليق",["الكل","النطاطيات المائية","النطاطيات الجافة","الزحاليق","الملاعب الصابونية","أحواض ومسابح وأجهزة رغوة"],filter);
+  if(page==="snacks") return renderCatalog("السناك والعربات","السناك والعربات",["الكل","السناك والعربات"],filter);
+  if(page==="events") return renderCatalog("تجهيز الحفلات","تجهيز الحفلات والمناسبات",["الكل","تجهيز الحفلات"],filter);
+  if(page==="offers") return renderCatalog("العروض","العروض والبكجات",["الكل","العروض والبكجات"],filter);
+  if(page==="terms") return renderTerms();
+  if(page==="contact") return renderContact();
+  renderHome();
+}
+function renderHome(){
+  document.getElementById("app").innerHTML=`
+  <section class="hero">
+    <div class="hero-grid">
+      <aside class="booking-card">
+        <div class="label">⚡ حجز سريع</div>
+        <h3>اختار الخدمة وخلي الباقي علينا</h3>
+        <p>نطاطيات، سناك، وتجهيز حفلات داخل قطر بطريقة مرتبة وسهلة.</p>
+        <div class="wizard">
+          <select id="wizardType"><option value="bouncies">نطاطية أو زحليقة</option><option value="snacks">عربة سناك</option><option value="events">تجهيز حفلة</option><option value="offers">عرض أو باقة</option></select>
+          <input id="wizardDate" type="date">
+          <input id="wizardArea" placeholder="المنطقة / المدينة">
+          <button class="btn btn-primary" onclick="wizardGo()">ابدأ الحجز</button>
+        </div>
+      </aside>
+      <div class="hero-center">
+        <div class="badge">👑 تجربة حجز VIP لشركة الملكة</div>
+        <h1>الملكة</h1>
+        <h2>لتأجير النطاطيات والسناك وتجهيز الحفلات</h2>
+        <p class="sub">نصنع الفرح ونرتب أجمل المناسبات للأطفال والعائلات</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="goPage('bouncies')">شوف الألعاب</button>
+          <button class="btn btn-dark" onclick="goPage('snacks')">السناك والعربات</button>
+          <button class="btn btn-light" onclick="openWhats()">احجز واتساب</button>
+        </div>
+      </div>
+      <aside class="stat-card">
+        <div class="stat"><i>🏰</i><b>85+</b><span>نطاطية وزحليقة</span></div>
+        <div class="stat"><i>🍿</i><b>20+</b><span>عربة وماكينة سناك</span></div>
+        <div class="stat"><i>🎀</i><b>VIP</b><span>ديكور وتجهيز حفلات</span></div>
+        <div class="stat"><i>📍</i><b>قطر</b><span>توصيل وتركيب</span></div>
+      </aside>
     </div>
-   </div>
-  </div>
- </section>
- <section class="container">
-  <div class="catTiles">
-   ${tile('🏰','النطاطيات','جافة، مائية، ملاعب صابونية','bouncies')}
-   ${tile('🍿','السناك والعربات','فشار، غزل، ذرة، براد','snacks')}
-   ${tile('🎀','تجهيز الحفلات','ديكور، بالونات، ستاندات','events')}
-   ${tile('🎁','العروض','بكجات جاهزة للحجز','offers')}
-  </div>
-  <div class="quickRow">
-   <div class="deal"><b>حجز سريع</b><span>أضف للسلة وأرسل الطلب</span></div>
-   <div class="deal"><b>رابط دفع</b><span>اطلب رابط دفع قبل الموعد</span></div>
-   <div class="deal"><b>اختيارات لك</b><span>مختارات من كل الأقسام</span></div>
-   <div class="deal"><b>الرائج</b><span>الأكثر طلباً للحفلات</span></div>
-  </div>
-  <div class="sectionHead"><div><h2>اختيارات لك ✨</h2><p>مختارات VIP من كل أقسام الملكة</p></div><button class="smallBtn" onclick="go('offers')">عرض العروض</button></div>
-  <div class="grid">${picks.map(card).join('')}</div>
-  <div class="bannerStrip"><div><b>تحتاج ترتيب حفلة كاملة؟</b><br><span>نطاطية + سناك + ديكور + طاولات وكراسي حسب الطلب</span></div><button class="pill" onclick="go('checkout')">ابدأ الحجز</button></div>
- </section>`;
+  </section>
+  <section class="container quick-cats">
+    <div class="cat-grid">
+      ${catCard("🏰","النطاطيات","مائية • جافة • صابونية","bouncies")}
+      ${catCard("🎁","العروض والبكجات","باقات جاهزة للحفلات","offers")}
+      ${catCard("🍿","السناك والعربات","فشار • ذرة • آيسكريم","snacks")}
+      ${catCard("🎀","تجهيز الحفلات","بالونات • بنرات • مناسبات","events")}
+    </div>
+    <div class="home-tabs">
+      <div class="tabs">
+        <button class="${currentTab==="suggested"?"active":""}" onclick="switchTab('suggested')">اختيارات لك ✨</button>
+        <button class="${currentTab==="trending"?"active":""}" onclick="switchTab('trending')">الرائج 🔥</button>
+      </div>
+    </div>
+    <div id="homeList"></div>
+  </section>`;
+  renderHomeList();
 }
-
-function tile(i,t,s,r){return `<div class="catTile" onclick="go('${r}')"><div class="catIcon">${i}</div><div><b>${t}</b><small>${s}</small></div></div>`}
-function catalog(type){
- const meta=CATEGORY_META[type], list=products.filter(p=>p.type===type).sort((a,b)=>a.id-b.id);
- app.innerHTML=`<section class="container">
-  <div class="pageTitle"><h1>${meta.icon} ${meta.title}</h1><p>${meta.sub}</p></div>
-  <div class="tools">
-   <input id="pageSearch" placeholder="بحث داخل هذا القسم" oninput="filterPage('${type}')">
-   <select id="sortSel" onchange="filterPage('${type}')"><option value="id">ترتيب حسب الرقم</option><option value="priceAsc">السعر من الأقل</option><option value="priceDesc">السعر من الأعلى</option></select>
-   <select id="catSel" onchange="filterPage('${type}')"><option value="">كل التصنيفات</option>${[...new Set(list.map(p=>p.cat))].map(c=>`<option>${c}</option>`).join('')}</select>
-   <button onclick="filterPage('${type}')">بحث</button>
-  </div>
-  <div class="grid" id="pageGrid">${list.map(card).join('')}</div>
- </section>`;
+function catCard(icon,title,desc,page){
+  return `<div class="cat" onclick="goPage('${page}')"><div class="emoji">${icon}</div><h3>${title}</h3><p>${desc}</p></div>`;
 }
-function filterPage(type){
- let list=products.filter(p=>p.type===type);
- const q=(pageSearch.value||'').trim().toLowerCase(), c=catSel.value, s=sortSel.value;
- if(q) list=list.filter(p=>(p.id+' '+p.title+' '+p.cat+' '+p.price).toLowerCase().includes(q));
- if(c) list=list.filter(p=>p.cat===c);
- if(s==='priceAsc') list.sort((a,b)=>a.price-b.price); else if(s==='priceDesc') list.sort((a,b)=>b.price-a.price); else list.sort((a,b)=>a.id-b.id);
- pageGrid.innerHTML=list.map(card).join('');
+function switchTab(tab){currentTab=tab;renderHome();}
+function renderHomeList(){
+  const nums=currentTab==="trending" ? [34,35,47,68,86,95,101,120,121,126,127,128] : [1,34,47,8,68,86,95,100,101,103,120,126];
+  const list=nums.map(findByNumber).filter(Boolean);
+  document.getElementById("homeList").innerHTML=`
+    <div class="section-head">
+      <div><h2>${currentTab==="trending"?"🔥 الرائج حالياً":"✨ اختيارات لك"}</h2><p>مختارات ذكية من كل أقسام الملكة</p></div>
+      <button class="btn btn-light" onclick="goPage('bouncies')">عرض الكتالوج كامل</button>
+    </div>
+    <div class="products">${list.map(card).join("")}</div>`;
+}
+function renderCatalog(section,title,filters,filter="الكل"){
+  const q=document.getElementById("searchInput").value.trim().toLowerCase();
+  let list=products.filter(p=>section==="العروض"?p.section==="العروض":p.section===section);
+  if(filter && filter!=="الكل") list=list.filter(p=>p.category===filter || p.section===filter);
+  if(q) list=products.filter(p=>`${p.number} ${p.title} ${p.section} ${p.category} ${p.tags.join(" ")}`.toLowerCase().includes(q));
+  document.getElementById("app").innerHTML=`
+    <section class="container">
+      <div class="page-title"><h1>${q?"نتائج البحث":title}</h1><p>${q?`بحث: ${q} — النتائج: ${list.length}`:"اختار القسم أو ابحث بالاسم أو الرقم"}</p></div>
+      <div class="filters">${filters.map(f=>`<button class="chip ${f===filter?"active":""}" onclick="goPage('${currentPage}','${f}')">${f}</button>`).join("")}</div>
+      <div class="products">${list.map(card).join("") || "<div class='info'>لا توجد نتائج مطابقة.</div>"}</div>
+    </section>`;
 }
 function card(p){
- return `<div class="card">
-  <span class="num">#${p.id}</span>
-  <div class="pic">${imgTag(p)}</div>
-  <div class="body">
-   <h3>${p.title}</h3>
-   <p>${p.desc}</p>
-   <div class="tags"><span class="tag">${p.cat}</span><span class="tag">${p.duration}</span><span class="tag">${p.age}</span></div>
-   <div class="price"><small>يبدأ من</small> ${p.price} ر.ق</div>
-   <div class="cardBtns"><button class="book" onclick="addCart(${p.id})">أضف للسلة</button><button class="wa" onclick="waItem(${p.id})">واتساب</button></div>
-  </div>
- </div>`;
+  return `<article class="product">
+    <span class="num">#${p.number}</span>
+    <div class="pic"><img src="${p.image}" alt="${escapeHtml(p.title)}" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=&quot;font-size:62px&quot;>👑</div>'"></div>
+    <div class="product-body">
+      <h3>${p.title}</h3>
+      <div class="desc">${p.desc}</div>
+      <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+      <div class="price-line"><div class="price"><small>يبدأ من</small>${p.price} ر.ق</div><span class="tag">${p.duration}</span></div>
+      <div class="card-actions"><button class="btn book" onclick="openBooking('${p.number}')">احجزها</button><button class="btn wa" onclick="whatsProduct('${p.number}')">واتساب</button></div>
+    </div>
+  </article>`;
+}
+function renderTerms(){
+  document.getElementById("app").innerHTML=`<section class="container"><div class="page-title"><h1>شروط الحجز</h1><p>تنظيم واضح للحجز والتركيب والسلامة</p></div><div class="info-grid">
+    <div class="info"><h3>الحجز والدفع</h3><ul><li>تأكيد الحجز بعد إرسال البيانات والموقع.</li><li>العربون حسب نوع الخدمة والموعد.</li><li>الأسعار تختلف حسب المنطقة واليوم والعدد.</li></ul></div>
+    <div class="info"><h3>التركيب والسلامة</h3><ul><li>توفير مساحة مناسبة ومصدر كهرباء آمن.</li><li>وجود شخص مسؤول وقت التركيب والاستلام.</li><li>الاستخدام حسب العمر المناسب لكل لعبة.</li></ul></div>
+    <div class="info"><h3>السناك والعربات</h3><ul><li>مدة التشغيل حسب الباقة.</li><li>تحديد عدد الأطفال والنكهات قبل الحجز.</li><li>التجهيز يشمل التشغيل حسب الاتفاق.</li></ul></div>
+    <div class="info"><h3>الإلغاء والتعديل</h3><ul><li>أي تعديل يكون قبل الموعد بوقت كافٍ.</li><li>الأولوية للحجوزات المؤكدة.</li><li>التأخير بسبب الموقع أو الكهرباء يحسب ضمن وقت الحجز.</li></ul></div>
+  </div></section>`;
+}
+function renderContact(){
+  document.getElementById("app").innerHTML=`<section class="container"><div class="page-title"><h1>تواصل معنا</h1><p>نخدم جميع مناطق قطر</p></div><div class="info-grid">
+    <div class="info"><h3>أرقام التواصل</h3><ul><li>33317720</li><li>33317721</li><li>33317716</li><li>33317705</li></ul></div>
+    <div class="info"><h3>واتساب مباشر</h3><p style="font-weight:900;line-height:2">للحجز السريع أرسل اسم الخدمة والتاريخ والمنطقة وعدد الأطفال.</p><button class="btn btn-primary" onclick="openWhats()">فتح واتساب</button></div>
+    <div class="info"><h3>إنستغرام</h3><p style="font-weight:1000">@almalika_qtr</p></div>
+    <div class="info"><h3>خدماتنا</h3><p style="font-weight:900;line-height:2">نطاطيات، زحاليق مائية، ملاعب صابونية، عربات سناك، تجهيز حفلات، بنرات وبالونات.</p></div>
+  </div></section>`;
+}
+function wizardGo(){
+  const type=document.getElementById("wizardType").value;
+  goPage(type);
 }
 function runSearch(){
- const q=globalSearch.value.trim().toLowerCase(); if(!q) return;
- const list=products.filter(p=>(p.id+' '+p.title+' '+p.cat+' '+p.price+' '+p.type).toLowerCase().includes(q));
- history.pushState({},'','/search'); setActive('search');
- app.innerHTML=`<section class="container"><div class="pageTitle"><h1>نتائج البحث</h1><p>${list.length} نتيجة عن: ${globalSearch.value}</p></div><div class="grid">${list.map(card).join('')}</div></section>`;
+  const q=document.getElementById("searchInput").value.trim();
+  if(q){
+    history.pushState({page:"search",filter:q},"",`#search/${encodeURIComponent(q)}`);
+    currentPage="search";
+    setActive("home");
+    renderSearch(q);
+  }else renderPage(currentPage,currentFilter);
 }
-
-function addCart(id){const p=products.find(x=>x.id===id); const row=cart.find(x=>x.id===id); if(row) row.qty++; else cart.push({...p,qty:1}); updateCart(); openCart();}
-function removeCart(id){cart=cart.filter(x=>x.id!==id); updateCart(); renderCart();}
-function changeQty(id,d){const r=cart.find(x=>x.id===id); if(!r)return; r.qty+=d; if(r.qty<=0) removeCart(id); updateCart(); renderCart();}
-function total(){return cart.reduce((s,x)=>s+x.price*x.qty,0)}
-function updateCart(){cartCount.textContent=cart.reduce((s,x)=>s+x.qty,0); cartTotal.textContent=total();}
-function openCart(){cartDrawer.classList.add('show');renderCart();}
-function closeCart(){cartDrawer.classList.remove('show')}
-function renderCart(){
- cartItems.innerHTML=cart.length?cart.map(x=>`<div class="cartItem"><img src="${imgCandidates(x)[0]}" onerror="this.style.display='none'"><div><b>${x.title}</b><br><small>${x.price} ر.ق × ${x.qty}</small><div class="qty"><button onclick="changeQty(${x.id},-1)">-</button><b>${x.qty}</b><button onclick="changeQty(${x.id},1)">+</button></div></div><button class="x" onclick="removeCart(${x.id})">×</button></div>`).join(''):`<div class="empty">السلة فاضية<br>اختر منتج واضغط أضف للسلة</div>`;
+function renderSearch(q){
+  const query=q.toLowerCase();
+  const list=products.filter(p=>`${p.number} ${p.title} ${p.section} ${p.category} ${p.tags.join(" ")}`.toLowerCase().includes(query));
+  document.getElementById("app").innerHTML=`<section class="container"><div class="page-title"><h1>نتائج البحث</h1><p>بحث: ${escapeHtml(q)} — النتائج: ${list.length}</p></div><div class="products">${list.map(card).join("") || "<div class='info'>لا توجد نتائج مطابقة.</div>"}</div></section>`;
+  document.getElementById("backBtn").style.display="block";
 }
-function markPay(btn){document.querySelectorAll('.payMethods button').forEach(b=>b.classList.remove('active')); btn.classList.add('active')}
+function openBooking(num){
+  currentProduct=findByNumber(num);
+  document.getElementById("bookingTitle").textContent=`طلب حجز: ${currentProduct.title}`;
+  setupForm(currentProduct.section);
+  document.getElementById("bookingModal").classList.add("show");
+}
+function setupForm(section){
+  const type=document.getElementById("bookingType"), dur=document.getElementById("bookingDuration");
+  if(section==="النطاطيات"){
+    type.innerHTML="<option>حجز نطاطية / زحليقة</option><option>نطاطية مائية</option><option>نطاطية جافة</option><option>ملعب صابوني</option>";
+    dur.innerHTML="<option>يوم واحد</option><option>يومين</option><option>أكثر من يوم</option>";
+  }else if(section==="السناك والعربات"){
+    type.innerHTML="<option>عربة مع تشغيل</option><option>ماكينة فقط</option><option>باقة سناك</option>";
+    dur.innerHTML="<option>3 ساعات</option><option>4 ساعات</option><option>حسب الاتفاق</option>";
+  }else if(section==="تجهيز الحفلات"){
+    type.innerHTML="<option>تجهيز حفلة</option><option>عيد ميلاد</option><option>تخرج</option><option>خطوبة / زواج</option><option>مدارس وروضات</option>";
+    dur.innerHTML="<option>حسب التجهيز</option><option>حفلة منزلية</option><option>فعالية خارجية</option>";
+  }else{
+    type.innerHTML="<option>حجز عرض / باقة</option>";
+    dur.innerHTML="<option>حسب العرض</option>";
+  }
+}
+function closeModal(id){document.getElementById(id).classList.remove("show")}
 function sendBooking(){
- const lines=cart.length?cart.map(x=>`- ${x.title} رقم #${x.id} | الكمية ${x.qty} | ${x.price*x.qty} ر.ق`).join('%0A'):'لم يتم اختيار منتجات';
- const msg=`السلام عليكم، أريد حجز من موقع الملكة%0A%0Aالطلبات:%0A${lines}%0A%0Aالإجمالي: ${total()} ر.ق%0Aطريقة الدفع: ${pay}%0A%0Aالاسم: ${cName.value}%0Aالجوال: ${cPhone.value}%0Aالتاريخ: ${cDate.value}%0Aالوقت: ${cTime.value}%0Aالموقع: ${cLocation.value}%0Aملاحظات: ${cNotes.value}`;
- window.open('https://wa.me/97433317720?text='+msg,'_blank');
+  const p=currentProduct;
+  const msg=`السلام عليكم، أريد حجز: ${p?p.title:"خدمة من الملكة"}%0Aالاسم: ${v("clientName")}%0Aالجوال: ${v("clientPhone")}%0Aالتاريخ: ${v("bookingDate")}%0Aالوقت: ${v("bookingTime")}%0Aنوع الطلب: ${v("bookingType")}%0Aالمدة: ${v("bookingDuration")}%0Aالموقع: ${v("clientLocation")}%0Aملاحظات: ${v("clientNotes")}`;
+  window.open(`https://wa.me/97433317720?text=${msg}`,"_blank");
 }
-function waItem(id){const p=products.find(x=>x.id===id); window.open('https://wa.me/97433317720?text='+encodeURIComponent('السلام عليكم، أريد الاستفسار عن '+p.title+' رقم #'+p.id),'_blank')}
-function waGeneral(){window.open('https://wa.me/97433317720?text=السلام عليكم، أريد الحجز من شركة الملكة','_blank')}
-function checkoutPage(){app.innerHTML=`<section class="container"><div class="pageTitle"><h1>الدفع والحجز</h1><p>أضف المنتجات للسلة ثم أرسل الطلب أو اطلب رابط دفع</p></div><div class="checkout"><div class="panel"><h2>خطوات الحجز</h2><p>1) اختر المنتجات. 2) أضف للسلة. 3) عبئ بيانات التاريخ والموقع. 4) أرسل الطلب عبر واتساب أو اطلب رابط دفع.</p><button class="pill primary" onclick="openCart()">فتح السلة</button></div><div class="panel"><h2>طرق الدفع</h2><div class="payMethods"><button class="active">💳 رابط دفع</button><button>🏦 تحويل بنكي</button><button>💵 كاش عند التركيب</button></div></div></div></section>`}
-function terms(){app.innerHTML=`<section class="container"><div class="pageTitle"><h1>شروط الحجز</h1><p>يتم تأكيد الحجز بعد الاتفاق على التاريخ والموقع ودفع العربون عند الحاجة. يجب توفير مساحة مناسبة ومصدر كهرباء. الأسعار قابلة للتعديل حسب المنطقة، العدد، والمدة.</p></div></section>`}
-function contact(){app.innerHTML=`<section class="container"><div class="pageTitle"><h1>تواصل معنا</h1><p>33317720 - 33317721 - 33317716 - 33317705<br>Instagram: @almalika_qtr</p><button class="pill primary" onclick="waGeneral()">فتح واتساب</button></div></section>`}
-function customers(){app.innerHTML=`<section class="container"><div class="pageTitle"><h1>بيانات الزبون</h1><p>هذه صفحة مبدئية لحفظ بيانات العميل داخل الطلب. الربط الحقيقي بقاعدة بيانات يكون لاحقاً.</p></div><div class="panel"><div class="formGrid"><div class="field"><label>الاسم</label><input></div><div class="field"><label>الجوال</label><input></div><div class="field full"><label>العنوان</label><input></div><div class="field full"><button class="pill primary" onclick="alert('في النسخة النهائية يتم الحفظ بقاعدة بيانات')">حفظ مؤقت</button></div></div></div></section>`}
+function addCurrentToCart(){
+  if(!currentProduct) return;
+  cart.push(currentProduct);
+  updateCart();
+  closeModal("bookingModal");
+  toast("تمت الإضافة للسلة");
+}
+function whatsProduct(num){
+  const p=findByNumber(num);
+  window.open(`https://wa.me/97433317720?text=${encodeURIComponent("السلام عليكم، أريد الاستفسار عن "+p.title+" رقم "+p.number)}`,"_blank");
+}
+function openWhats(phone="33317720"){
+  window.open(`https://wa.me/974${phone}?text=${encodeURIComponent("السلام عليكم، أريد الحجز من شركة الملكة")}`,"_blank");
+}
+function openCart(){
+  const body=document.getElementById("cartBody");
+  if(!cart.length) body.innerHTML="<p style='font-weight:1000'>السلة فارغة حالياً.</p>";
+  else body.innerHTML=cart.map((p,i)=>`<div class="info" style="margin-bottom:10px"><b>${p.title}</b><br>${p.price} ر.ق <button class="btn btn-light" onclick="removeCart(${i})">حذف</button></div>`).join("")+`<button class="btn btn-primary" onclick="sendCart()">إرسال السلة واتساب</button>`;
+  document.getElementById("cartModal").classList.add("show");
+}
+function removeCart(i){cart.splice(i,1);updateCart();openCart()}
+function sendCart(){
+  const msg=cart.map(p=>`- ${p.title} رقم ${p.number} (${p.price} ر.ق)`).join("%0A");
+  window.open(`https://wa.me/97433317720?text=السلام عليكم، أريد حجز التالي:%0A${msg}`,"_blank");
+}
+function updateCart(){
+  document.getElementById("cartTotal").textContent=cart.reduce((s,p)=>s+(+p.price||0),0);
+  document.getElementById("cartCount").textContent=cart.length;
+}
+function findByNumber(n){return products.find(p=>String(p.number)===String(n))}
+function v(id){return encodeURIComponent(document.getElementById(id).value||"")}
+function toast(txt){
+  const t=document.getElementById("toast");
+  t.textContent=txt;t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),2500);
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+init();
 </script>
-<footer class="foot">الملكة للحفلات وتأجير النطاطيات داخل قطر — للحجز والاستفسار عبر واتساب أو الاتصال المباشر</footer>
 </body>
 </html>
