@@ -1,57 +1,359 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>الملكة - تطبيق الحجز</title>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>الملكة | كتالوج وحجز الحفلات</title>
+<meta name="description" content="الملكة لتأجير النطاطيات والسناك وتجهيز الحفلات داخل قطر"/>
 <style>
-:root{--q:#6f1738;--q2:#8f2450;--p:#ff2f86;--g:#18c964;--bg:#f6f6f6;--line:#e8e8e8;--muted:#777}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Tahoma,Arial,sans-serif;color:#171717;padding-bottom:82px}button,input,select{font-family:inherit}button{border:0;cursor:pointer}.wrap{width:min(100% - 24px,1500px);margin:auto}
-.top{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:100}.head{height:68px;display:grid;grid-template-columns:180px 1fr auto;gap:14px;align-items:center}.logo{display:flex;align-items:center;gap:8px;font-size:31px;font-weight:900;color:var(--q)}.logo span{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#fff4c7}
-.search{height:44px;background:#f4f4f4;border:1px solid var(--line);border-radius:11px;display:flex;align-items:center;gap:9px;padding:0 13px}.search input{width:100%;border:0;outline:0;background:transparent;font-weight:800}.actions{display:flex;gap:8px}.actions button,.nav button{border-radius:999px;background:#f2f2f2;padding:10px 15px;font-weight:900;white-space:nowrap}.actions .cart{background:#e60023;color:#fff}
-.nav{display:flex;gap:9px;overflow:auto;padding:0 0 10px}.nav button{background:#fff;border:1px solid var(--line)}.nav .active{background:var(--q);color:#fff}.back{display:none;background:#111!important;color:#fff!important}
-.heroBox{background:#fff;border-bottom:1px solid var(--line)}.hero{display:grid;grid-template-columns:250px 1fr;gap:14px;padding:15px 0}.side{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 8px 24px #0001}.side h3{margin:0;padding:14px;background:#fafafa}.side button{width:100%;padding:13px;background:#fff;border-top:1px solid var(--line);font-weight:900;text-align:right}
-.banner{min-height:285px;border-radius:18px;overflow:hidden;position:relative;background:#ffeefa;box-shadow:0 8px 24px #0001}.banner:before{content:"";position:absolute;inset:0;background:url('home_banner.jpg?v=1779778153') center/cover no-repeat,linear-gradient(135deg,#ffeefa,#fff7dc)}.banner:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#fff5,#fff9 45%,#fff5)}.bannerText{position:relative;z-index:2;text-align:center;padding:52px 20px}.bannerText h1{font-size:72px;line-height:1;margin:0;color:#9c5b15;text-shadow:0 2px 0 #fff}.bannerText h2{margin:12px 0 0;color:var(--q);font-size:34px}.bannerText p{font-weight:900;color:#8a5b16;font-size:20px}.btn{border-radius:999px;padding:12px 21px;font-weight:900}.primary{background:var(--q);color:#fff}.dark{background:#111;color:#fff}.light{background:#fff;border:1px solid var(--line);color:var(--q)}
-.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px auto}.cat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;display:flex;gap:12px;align-items:center;box-shadow:0 8px 24px #0001;cursor:pointer}.ico{width:54px;height:54px;border-radius:15px;background:#fff1f7;display:grid;place-items:center;font-size:28px}.cat b{display:block;color:var(--q);font-size:18px}.cat small{color:var(--muted);font-weight:800}
-.title{background:#fff;border:1px solid var(--line);border-radius:18px;margin:18px 0;padding:18px}.title h1{margin:0;color:var(--q);font-size:36px}.title p{font-weight:800;color:var(--muted)}.filters{display:flex;gap:8px;overflow:auto;margin:12px 0 18px}.filters button{background:#fff;border:1px solid var(--line);border-radius:99px;padding:10px 15px;font-weight:900}.filters .active{background:var(--q);color:#fff}
-.sec{display:flex;justify-content:space-between;align-items:end;margin:28px 0 14px}.sec h2{margin:0;color:var(--q);font-size:34px}.sec p{margin:5px 0 0;color:var(--muted);font-weight:800}.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 7px 20px #0001;position:relative}.num{position:absolute;top:10px;left:10px;background:var(--p);color:#fff;border-radius:99px;padding:5px 9px;font-size:12px;font-weight:900;z-index:2}.pic{height:185px;background:#fafafa;border-bottom:1px solid var(--line);display:grid;place-items:center;overflow:hidden}.pic img{width:100%;height:100%;object-fit:contain;display:block;padding:8px}.body{padding:12px}.body h3{margin:0;font-size:17px;line-height:1.35;min-height:46px}.body p{font-size:12px;color:var(--muted);font-weight:700;line-height:1.5;min-height:34px}.tag{display:inline-block;background:#fff6e6;border:1px solid #ead7aa;color:#805514;border-radius:99px;padding:5px 8px;font-size:11px;font-weight:900;margin:2px}.price{font-size:20px;font-weight:900}.price small{font-size:11px;color:#9b6b1f}.cardBtns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.cardBtns button{border-radius:10px;padding:10px;font-weight:900}.book{background:var(--p);color:#fff}.wa{background:var(--g);color:#fff}
-.float{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:#111;color:#fff;border-radius:99px;padding:14px 34px;font-weight:900;min-width:330px;text-align:center;z-index:80}.modal{display:none;position:fixed;inset:0;background:#0008;z-index:200;place-items:center;padding:15px}.modal.show{display:grid}.box{width:min(680px,100%);background:#fff;border-radius:18px;overflow:hidden}.mh{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding:16px}.mh h3{margin:0;color:var(--q);font-size:25px}.mh button{width:38px;height:38px;border-radius:50%;font-size:22px}.form{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-weight:900;color:var(--q)}.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:10px;padding:12px;outline:0}.field textarea{min-height:85px}.foot{margin-top:35px;background:#fff;border-top:1px solid var(--line);padding:28px;text-align:center;font-weight:900;color:var(--q)}
-@media(max-width:1200px){.grid{grid-template-columns:repeat(4,1fr)}.hero{grid-template-columns:1fr}.side{display:none}}@media(max-width:850px){.head{height:auto;grid-template-columns:1fr auto;padding:10px 0}.search{grid-column:1/-1}.actions button:not(.cart){display:none}.grid{grid-template-columns:repeat(2,1fr)}.cats{grid-template-columns:repeat(2,1fr)}.bannerText h1{font-size:52px}.bannerText h2{font-size:24px}}@media(max-width:520px){.grid,.cats{grid-template-columns:1fr}.form{grid-template-columns:1fr}.float{width:calc(100% - 24px);min-width:0}.pic{height:220px}}
+:root{
+  --burgundy:#6A1B2E;--burgundy2:#8d2d4b;--pink:#ff2f86;--gold:#D4AF37;--gold2:#ffe8a3;
+  --green:#16c46b;--red:#e60023;--ink:#161616;--muted:#6f6f6f;--line:#ece7e9;
+  --bg:#fff6fb;--card:#fff;--soft:#fff0f7;--shadow:0 16px 40px rgba(106,27,46,.10);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(135deg,#fff6fb,#fffdf8 45%,#fff0f7);font-family:Tahoma,Arial,sans-serif;color:var(--ink);padding-bottom:92px}
+button,input,select,textarea{font-family:inherit}
+button{border:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+.container{width:min(100% - 28px,1480px);margin:auto}
+.topbar{position:sticky;top:0;z-index:1000;background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.head{display:grid;grid-template-columns:210px 1fr auto;gap:14px;align-items:center;padding:12px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:950;color:var(--burgundy);font-size:30px;white-space:nowrap}
+.brand .crown{width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,#fff2b0,#fff);display:grid;place-items:center;box-shadow:var(--shadow)}
+.searchbar{height:48px;border:1px solid var(--line);background:#f7f7f8;border-radius:999px;display:flex;align-items:center;padding:0 14px;gap:10px}
+.searchbar input{border:0;outline:0;background:transparent;width:100%;font-weight:800;font-size:15px}
+.headActions{display:flex;gap:8px;align-items:center}
+.pill{border-radius:999px;padding:12px 17px;background:#f2f2f3;font-weight:900;white-space:nowrap}
+.pill.primary{background:var(--burgundy);color:#fff}
+.pill.cart{background:var(--red);color:#fff;min-width:66px}
+.nav{display:flex;gap:9px;overflow:auto;padding:0 0 12px;scrollbar-width:thin}
+.nav .pill{background:#fff;border:1px solid var(--line);padding:10px 15px}
+.nav .active{background:var(--burgundy);color:#fff;border-color:var(--burgundy)}
+.nav .back{background:#111;color:#fff;border-color:#111;display:none}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#fff4fb,#fff8dc);border-bottom:1px solid var(--line)}
+.heroGrid{display:grid;grid-template-columns:280px 1fr;gap:18px;padding:20px 0 24px}
+.sideMenu{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
+.sideMenu h3{margin:0;padding:16px;background:#fff8fb;color:var(--burgundy)}
+.sideMenu button{display:flex;align-items:center;justify-content:space-between;width:100%;background:#fff;border-top:1px solid var(--line);padding:15px 17px;font-weight:900;text-align:right}
+.heroBanner{position:relative;border-radius:28px;overflow:hidden;min-height:360px;box-shadow:var(--shadow);background:#fff}
+.heroBanner::before{content:"";position:absolute;inset:0;background:url('home_banner.jpg?v=1779779571') center/cover no-repeat,linear-gradient(135deg,#ffe4f4,#fff2c8)}
+.heroBanner::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.50),rgba(255,255,255,.92) 47%,rgba(255,255,255,.45))}
+.heroText{position:relative;z-index:2;text-align:center;padding:60px 24px}
+.heroText .badge{display:inline-flex;gap:7px;align-items:center;background:#fff;border:1px solid #f0d4dc;border-radius:999px;padding:9px 15px;color:var(--burgundy);font-weight:900;box-shadow:var(--shadow)}
+.heroText h1{font-size:82px;line-height:1;margin:18px 0 8px;color:#a56418;text-shadow:0 2px 0 #fff,0 12px 28px rgba(165,100,24,.20)}
+.heroText h2{font-size:34px;margin:0;color:var(--burgundy);font-weight:950}
+.heroText p{font-size:20px;color:#8b5d18;font-weight:900}
+.cta{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.cta button{padding:14px 24px;border-radius:999px;font-weight:950;box-shadow:var(--shadow)}
+.cta .main{background:linear-gradient(135deg,var(--burgundy),var(--pink));color:#fff}
+.cta .dark{background:#111;color:#fff}
+.cta .ghost{background:#fff;color:var(--burgundy);border:1px solid var(--line)}
+.catTiles{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}
+.catTile{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px;display:flex;gap:14px;align-items:center;cursor:pointer;transition:.18s}
+.catTile:hover{transform:translateY(-3px)}
+.catIcon{width:62px;height:62px;border-radius:20px;background:linear-gradient(135deg,#fff1f8,#fff9dd);display:grid;place-items:center;font-size:31px}
+.catTile b{display:block;color:var(--burgundy);font-size:18px}
+.catTile small{display:block;color:var(--muted);font-weight:800;margin-top:4px}
+.quickRow{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+.deal{min-height:118px;border-radius:24px;padding:20px;color:#fff;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.deal b{font-size:22px;display:block}.deal span{font-weight:900;opacity:.95}
+.deal:nth-child(1){background:linear-gradient(135deg,#ff2f86,#8b2cff)}.deal:nth-child(2){background:linear-gradient(135deg,#00a6ff,#16c46b)}.deal:nth-child(3){background:linear-gradient(135deg,#ff9f1c,#ff2f86)}.deal:nth-child(4){background:linear-gradient(135deg,#6A1B2E,#D4AF37)}
+.sectionHead{display:flex;justify-content:space-between;align-items:end;gap:14px;margin:32px 0 16px}
+.sectionHead h2{margin:0;color:var(--burgundy);font-size:36px}
+.sectionHead p{margin:6px 0 0;color:var(--muted);font-weight:800}
+.sectionHead .smallBtn{background:#fff;border:1px solid var(--line);border-radius:999px;padding:11px 17px;font-weight:950;color:var(--burgundy)}
+.pageTitle{background:#fff;border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:22px;margin:24px 0 16px}
+.pageTitle h1{margin:0;color:var(--burgundy);font-size:40px}.pageTitle p{font-weight:800;color:var(--muted)}
+.tools{display:grid;grid-template-columns:1fr 170px 150px 120px;gap:10px;margin:0 0 18px}
+.tools input,.tools select{height:46px;border:1px solid var(--line);border-radius:999px;background:#fff;padding:0 16px;font-weight:800;outline:0}
+.tools button{border-radius:999px;font-weight:950;background:var(--burgundy);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.card{background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column;min-height:390px}
+.num{position:absolute;top:12px;left:12px;background:var(--pink);color:#fff;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:950;z-index:3}
+.pic{height:200px;background:linear-gradient(135deg,#fff,#fff5f9);border-bottom:1px solid var(--line);display:grid;place-items:center;overflow:hidden}
+.pic img{width:100%;height:100%;object-fit:contain;padding:10px;display:block}
+.missing{display:grid;place-items:center;text-align:center;color:var(--burgundy);font-weight:950;gap:7px}
+.body{padding:14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.body h3{font-size:18px;line-height:1.35;margin:0;min-height:48px}
+.body p{font-size:12px;line-height:1.55;color:var(--muted);font-weight:800;margin:0;min-height:38px}
+.tags{display:flex;gap:5px;flex-wrap:wrap}
+.tag{background:#fff8e7;border:1px solid #ead7aa;color:#7d5515;border-radius:999px;padding:5px 9px;font-size:11px;font-weight:950}
+.price{margin-top:auto;font-size:23px;font-weight:950}.price small{font-size:11px;color:#9b6b1f;margin-left:3px}
+.cardBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cardBtns button{border-radius:13px;padding:11px;font-weight:950;color:#fff}.book{background:var(--pink)}.wa{background:var(--green)}
+.bannerStrip{margin:26px 0;border-radius:28px;background:linear-gradient(90deg,var(--burgundy),var(--burgundy2),var(--gold));color:#fff;padding:24px;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.bannerStrip b{font-size:26px}.bannerStrip span{font-weight:900}
+.checkout{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:var(--shadow);padding:18px}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:7px}.field.full{grid-column:1/-1}
+.field label{font-weight:950;color:var(--burgundy)}.field input,.field select,.field textarea{border:1px solid var(--line);border-radius:14px;padding:13px;outline:0;font-weight:800}.field textarea{min-height:90px}
+.payMethods{display:grid;gap:10px;margin-top:12px}.payMethods button{text-align:right;border:1px solid var(--line);background:#fff;border-radius:16px;padding:14px;font-weight:950}.payMethods .active{border-color:var(--burgundy);background:#fff3f7;color:var(--burgundy)}
+.cartBar{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:#111;color:#fff;border-radius:999px;padding:14px 34px;font-weight:950;min-width:340px;text-align:center;z-index:1001;box-shadow:0 16px 34px #0004}
+.drawer{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:2000;align-items:stretch;justify-content:flex-start}
+.drawer.show{display:flex}.drawerBox{width:min(520px,100%);background:#fff;height:100%;padding:18px;overflow:auto;box-shadow:var(--shadow)}
+.drawerHead{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:12px}.drawerHead h2{margin:0;color:var(--burgundy)}.x{width:40px;height:40px;border-radius:50%;background:#f2f2f2;font-size:24px}
+.cartItem{display:grid;grid-template-columns:82px 1fr auto;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center}.cartItem img{width:82px;height:72px;object-fit:contain;background:#fafafa;border-radius:14px}
+.qty{display:flex;gap:6px;align-items:center}.qty button{width:30px;height:30px;border-radius:50%;font-weight:950}
+.empty{background:#fff;border:1px dashed #e2ccd3;border-radius:20px;padding:30px;text-align:center;color:var(--muted);font-weight:900}
+.foot{background:#fff;border-top:1px solid var(--line);margin-top:44px;padding:34px;text-align:center;color:var(--burgundy);font-weight:950}
+@media(max-width:1200px){.grid{grid-template-columns:repeat(4,1fr)}.heroGrid{grid-template-columns:1fr}.sideMenu{display:none}}
+@media(max-width:900px){.head{grid-template-columns:1fr auto;padding:10px 0}.searchbar{grid-column:1/-1;order:3}.headActions .pill:not(.cart){display:none}.grid{grid-template-columns:repeat(2,1fr)}.catTiles,.quickRow{grid-template-columns:repeat(2,1fr)}.tools{grid-template-columns:1fr 1fr}.checkout{grid-template-columns:1fr}.heroText h1{font-size:54px}.heroText h2{font-size:24px}}
+@media(max-width:560px){.grid,.catTiles,.quickRow,.tools{grid-template-columns:1fr}.heroText{padding:42px 14px}.heroBanner{min-height:320px}.formGrid{grid-template-columns:1fr}.cartBar{width:calc(100% - 24px);min-width:0}.pic{height:220px}}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap head"><div class="logo" onclick="go('home')"><span>👑</span>الملكة</div><div class="search"><b onclick="searchNow()">🔍</b><input id="q" placeholder="ابحث برقم اللعبة أو الاسم أو القسم"></div><div class="actions"><button class="cart" onclick="openCart()">🛒 <span id="cartN">0</span></button><button onclick="wa()">واتساب</button><button>بيانات الزبون</button></div></div><div class="wrap nav" id="nav"></div></header>
-<main id="app"></main><div class="float" onclick="openCart()">🛒 سلتي | <span id="total">0</span> ر.ق</div>
-<div id="modal" class="modal"><div class="box"><div class="mh"><h3 id="mt">طلب حجز</h3><button onclick="hide()">×</button></div><div class="form"><div class="field"><label>اسم العميل</label><input id="name"></div><div class="field"><label>رقم الجوال</label><input id="phone"></div><div class="field"><label>التاريخ</label><input id="date" type="date"></div><div class="field"><label>الوقت</label><select id="time"><option>الصباح</option><option>العصر</option><option>المساء</option></select></div><div class="field"><label>نوع الحجز</label><select id="type"></select></div><div class="field"><label>المدة</label><select id="dur"></select></div><div class="field full"><label>الموقع</label><input id="loc"></div><div class="field full"><label>ملاحظات</label><textarea id="notes"></textarea></div><div class="field full"><button class="btn primary" onclick="send()">إرسال واتساب</button></div></div></div></div>
+<header class="topbar">
+  <div class="container head">
+    <div class="brand" onclick="go('home')"><span class="crown">👑</span><span>الملكة</span></div>
+    <div class="searchbar"><span>🔍</span><input id="globalSearch" placeholder="ابحث باسم المنتج، رقمه، القسم، السعر..." onkeydown="if(event.key==='Enter') runSearch()"/></div>
+    <div class="headActions">
+      <button class="pill cart" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
+      <button class="pill" onclick="waGeneral()">واتساب</button>
+      <button class="pill" onclick="go('customers')">بيانات الزبون</button>
+    </div>
+  </div>
+  <div class="container nav" id="nav"></div>
+</header>
+
+<main id="app"></main>
+
+<div class="cartBar" onclick="openCart()">🛒 سلتي | <span id="cartTotal">0</span> ر.ق</div>
+
+<div class="drawer" id="cartDrawer">
+  <div class="drawerBox">
+    <div class="drawerHead"><h2>السلة والحجز</h2><button class="x" onclick="closeCart()">×</button></div>
+    <div id="cartItems"></div>
+    <div class="panel" style="margin-top:14px">
+      <h3 style="color:var(--burgundy);margin-top:0">بيانات الحجز</h3>
+      <div class="formGrid">
+        <div class="field"><label>اسم العميل</label><input id="cName"/></div>
+        <div class="field"><label>الجوال</label><input id="cPhone"/></div>
+        <div class="field"><label>تاريخ الحجز</label><input id="cDate" type="date"/></div>
+        <div class="field"><label>وقت التركيب/التشغيل</label><select id="cTime"><option>الصباح</option><option>العصر</option><option>المساء</option></select></div>
+        <div class="field full"><label>الموقع / رابط خرائط</label><input id="cLocation"/></div>
+        <div class="field full"><label>ملاحظات</label><textarea id="cNotes" placeholder="مثلاً: داخل البيت، حديقة، كهرباء متوفرة، عدد الأطفال..."></textarea></div>
+      </div>
+      <h3 style="color:var(--burgundy)">طريقة الدفع</h3>
+      <div class="payMethods">
+        <button class="active" onclick="pay='رابط دفع';markPay(this)">💳 أرسل لي رابط دفع</button>
+        <button onclick="pay='تحويل بنكي';markPay(this)">🏦 تحويل بنكي</button>
+        <button onclick="pay='كاش عند التركيب';markPay(this)">💵 كاش عند التركيب</button>
+        <button onclick="pay='واتساب للتأكيد';markPay(this)">✅ تأكيد عبر واتساب</button>
+      </div>
+      <button class="pill primary" style="width:100%;margin-top:16px" onclick="sendBooking()">إرسال الطلب عبر واتساب</button>
+    </div>
+  </div>
+</div>
+
 <script>
-const REPO_RAW="https://raw.githubusercontent.com/qqmm7888-tech/almalika-qatar/main/", IMG_VERSION="1779778153";
-const navs=[["home","الرئيسية"],["bouncies","النطاطيات"],["offers","العروض والبكجات"],["snacks","السناك والعربات"],["events","تجهيز الحفلات"],["terms","شروط الحجز"],["contact","تواصل معنا"]];
-const items=[]; let picked=null;
-function add(o){items.push(o)}
-for(let i=1;i<=85;i++){let cat=i<=25?"النطاطيات الجافة":i<=60?"النطاطيات المائية":i<=75?"الزحاليق":"الملاعب الصابونية";add({n:i,t:(cat.includes("مائية")||cat.includes("زحاليق")?"زحليقة ":"نطاطية ")+i,s:"bouncies",cat:cat,price:i<=25?500:600,dur:"يوم كامل",d:"خدمة تركيب وتجهيز آمن لحفلات الأطفال والمناسبات."})}
-[[86,"ماكينة الفشار",400],[87,"ماكينة الفشار + العربة",500],[88,"ماكينة غزل البنات",400],[89,"ماكينة غزل البنات + العربة",500],[90,"ماكينة البطاطس الحلزونية",550],[91,"ماكينة البطاطس الحلزونية + عربة",650],[92,"ماكينة الذرة الحلوة + طاولة",500],[93,"ماكينة البراد + طاولة",500],[95,"ماكينة العصير البارد + عربة",600],[96,"نافورة الشوكولاتة",800],[97,"ماكينة الآيسكريم",700],[99,"عربة الوافل",650],[100,"عربة البانكيك",650],[120,"عربة الفشار VIP",600],[121,"عربة غزل البنات VIP",600],[122,"عربة الذرة الحلوة VIP",600],[123,"عربة البطاطا الحلزونية VIP",600],[124,"عربة الآيسكريم VIP",700],[125,"عربة السلاش VIP",600],[126,"عربة البراد مع الآيسكريم",800],[127,"عربة البانكيك VIP",650],[128,"عربة نافورة الشوكولاتة VIP",800]].forEach(x=>add({n:x[0],t:x[1],s:"snacks",cat:"السناك والعربات",price:x[2],dur:"3 ساعات",d:"خدمة سناك للحفلات مع تشغيل وتجهيز مرتب."}));
-[[101,"حفلات أعياد الميلاد",900],[102,"حفلات التخرج",1200],[103,"حفلات وردية",1000],[104,"حفلات أطفال ملونة",1000],[105,"ديكور عيد ميلاد",950],[106,"ديكور حفلة",950],[107,"ستاند حفلات",750],[108,"حفلات الخطوبة",1400],[109,"ديكور بالونات",650],[110,"حفلات المدارس والروضات",1500],[111,"ستاندات بالونات",450],[112,"إضاءات ليزر",350],[113,"جهاز فقاعات",300],[114,"جهاز فوم",500],[117,"أرضية LED",1200]].forEach(x=>add({n:x[0],t:x[1],s:"events",cat:"تجهيز الحفلات",price:x[2],dur:"حسب التجهيز",d:"تنسيق وتجهيز مناسبات بلمسات راقية."}));
-[[201,"عرض نطاطية + سناك",999,34],[202,"عرض حفلة 20 طفل",1999,101],[203,"عرض ملعب صابوني وفوم",700,68],[204,"عرض عربات السناك",1480,126]].forEach(x=>add({n:x[0],imgn:x[3],t:x[1],s:"offers",cat:"العروض والبكجات",price:x[2],dur:"عرض",d:"باقة جاهزة للحجز بسعر خاص."}));
-nav.innerHTML='<button class="back" id="backBtn" onclick="backGo()">رجوع</button>'+navs.map(x=>`<button id="n_${x[0]}" onclick="go('${x[0]}')">${x[1]}</button>`).join("");
-function routeFromLocation(){let h=location.hash.replace("#",""); if(h) return h; let p=location.pathname.replace(/^\//,"").trim(); return p||"home"}
-window.addEventListener("popstate",()=>render(routeFromLocation())); window.addEventListener("hashchange",()=>render(routeFromLocation()));
-render(routeFromLocation());
-q.addEventListener("keydown",e=>{if(e.key==="Enter")searchNow()});
-function go(p){history.pushState({}, "", "/"+p); render(p)}
-function backGo(){if(history.length>1) history.back(); else go("home")}
-function active(p){document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));let n=document.getElementById("n_"+p);if(n)n.classList.add("active");backBtn.style.display=p==="home"?"none":"inline-block"}
-function render(p){active(p); if(p==="home")home(); else if(p==="terms")terms(); else if(p==="contact")contact(); else if(["bouncies","snacks","events","offers"].includes(p)) catalog(p); else home()}
-function fileName(x){let n=String(x.imgn||x.n); const sp={"107":"107(1).jpg","112":"112(1).jpg","117":"117-118-119.jpg","118":"117-118-119.jpg","119":"117-118-119.jpg"}; return sp[n]||n+".jpg"}
-function imageUrl(x){return REPO_RAW+encodeURIComponent(fileName(x))+"?v="+IMG_VERSION}
-function imgTag(x){return `<img src="${imageUrl(x)}" alt="${x.t}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<div style=&quot;font-size:42px&quot;>👑</div><b style=&quot;color:#6f1738&quot;>الصورة غير موجودة</b>'">`}
-function home(){let list=[34,47,48,53,68,86,95,101,120,126].map(find).filter(Boolean);app.innerHTML=`<section class="heroBox"><div class="wrap hero"><aside class="side"><h3>فئات الملكة</h3><button onclick="go('bouncies')">النطاطيات والزحاليق 🏰</button><button onclick="go('snacks')">السناك والعربات 🍿</button><button onclick="go('events')">تجهيز الحفلات 🎀</button><button onclick="go('offers')">العروض والبكجات 🎁</button></aside><div class="banner"><div class="bannerText"><h1>الملكة</h1><h2>لتأجير النطاطيات والسناك وتجهيز الحفلات</h2><p>نصنع الفرح ونرتب أجمل المناسبات للأطفال والعائلات</p><button class="btn primary" onclick="go('bouncies')">شوف الألعاب</button> <button class="btn dark" onclick="go('snacks')">السناك</button> <button class="btn light" onclick="wa()">احجز واتساب</button></div></div></div></section><section class="wrap"><div class="cats">${cat("🏰","النطاطيات","مائية وجافة","bouncies")}${cat("🍿","السناك","عربات وماكينات","snacks")}${cat("🎀","الحفلات","ديكور وبالونات","events")}${cat("🎁","العروض","بكجات جاهزة","offers")}</div><div class="sec"><div><h2>اختيارات لك ✨</h2><p>مختارات من كل أقسام الملكة</p></div><button class="btn light" onclick="go('bouncies')">عرض الكتالوج</button></div><div class="grid">${list.map(card).join("")}</div></section>`}
-function cat(i,t,s,p){return `<div class="cat" onclick="go('${p}')"><div class="ico">${i}</div><div><b>${t}</b><small>${s}</small></div></div>`}
-function catalog(p){let names={bouncies:"النطاطيات والزحاليق",snacks:"السناك والعربات",events:"تجهيز الحفلات",offers:"العروض والبكجات"};let list=items.filter(x=>x.s===p);app.innerHTML=`<section class="wrap"><div class="title"><h1>${names[p]}</h1><p>اختار المنتج واضغط احجزها أو واتساب</p></div><div class="filters"><button class="active">الكل</button><button onclick="sortByNum()">ترتيب حسب الرقم</button><button>الأحدث</button></div><div class="grid" id="grid">${list.map(card).join("")}</div></section>`}
-function card(x){return `<div class="card"><span class="num">#${x.n}</span><div class="pic">${imgTag(x)}</div><div class="body"><h3>${x.t}</h3><p>${x.d}</p><span class="tag">${x.cat}</span><span class="tag">${x.dur}</span><div class="price"><small>يبدأ من</small> ${x.price} ر.ق</div><div class="cardBtns"><button class="book" onclick="book('${x.n}')">احجزها</button><button class="wa" onclick="waItem('${x.n}')">واتساب</button></div></div></div>`}
-function terms(){app.innerHTML='<section class="wrap"><div class="title"><h1>شروط الحجز</h1><p>الحجز بعد تأكيد التاريخ والموقع. توفير كهرباء ومساحة مناسبة. مدة السناك حسب الباقة. الأسعار حسب المنطقة والطلب.</p></div></section>'}
-function contact(){app.innerHTML='<section class="wrap"><div class="title"><h1>تواصل معنا</h1><p>33317720 - 33317721 - 33317716 - 33317705<br>@almalika_qtr</p><button class="btn primary" onclick="wa()">فتح واتساب</button></div></section>'}
-function searchNow(){let term=q.value.trim().toLowerCase(); if(!term)return; let list=items.filter(x=>(x.n+" "+x.t+" "+x.cat).toLowerCase().includes(term));active("");backBtn.style.display="inline-block";history.pushState({}, "", "/search");app.innerHTML=`<section class="wrap"><div class="title"><h1>نتائج البحث</h1><p>${list.length} نتيجة</p></div><div class="grid">${list.map(card).join("")}</div></section>`}
-function book(n){picked=find(n);mt.textContent="طلب حجز: "+picked.t;type.innerHTML=picked.s==="snacks"?"<option>عربة مع تشغيل</option><option>ماكينة فقط</option>":picked.s==="events"?"<option>تجهيز حفلة</option>":"<option>نطاطية / زحليقة</option>";dur.innerHTML=picked.s==="snacks"?"<option>3 ساعات</option><option>4 ساعات</option>":"<option>يوم واحد</option><option>حسب الاتفاق</option>";modal.classList.add("show")}
-function hide(){modal.classList.remove("show")}function send(){let m=`السلام عليكم، أريد حجز ${picked.t}%0Aالاسم: ${name.value}%0Aالجوال: ${phone.value}%0Aالتاريخ: ${date.value}%0Aالوقت: ${time.value}%0Aالنوع: ${type.value}%0Aالمدة: ${dur.value}%0Aالموقع: ${loc.value}%0Aملاحظات: ${notes.value}`;window.open("https://wa.me/97433317720?text="+m,"_blank")}function wa(){window.open("https://wa.me/97433317720?text=السلام عليكم، أريد الحجز من شركة الملكة","_blank")}function waItem(n){let x=find(n);window.open("https://wa.me/97433317720?text="+encodeURIComponent("السلام عليكم، أريد الاستفسار عن "+x.t+" رقم "+x.n),"_blank")}function openCart(){alert("السلة جاهزة للتطوير — حالياً استخدم زر احجزها أو واتساب")}function find(n){return items.find(x=>String(x.n)===String(n))}function sortByNum(){let list=items.filter(x=>x.s===routeFromLocation()).sort((a,b)=>a.n-b.n);grid.innerHTML=list.map(card).join("")}
-</script><footer class="foot">الملكة للحفلات وتأجير النطاطيات داخل قطر - Instagram: @almalika_qtr</footer>
-</body></html>
+const IMG_VERSION="1779779571";
+const REPO_RAW="https://raw.githubusercontent.com/qqmm7888-tech/almalika-qatar/main/";
+let route='home', cart=[], pay='رابط دفع';
+
+const NAV=[
+ ['home','الرئيسية'],['bouncies','النطاطيات'],['offers','العروض والبكجات'],['snacks','السناك والعربات'],['events','تجهيز الحفلات'],['checkout','الدفع والحجز'],['terms','شروط الحجز'],['contact','تواصل معنا']
+];
+
+const CATEGORY_META={
+ bouncies:{title:'النطاطيات والزحاليق',sub:'نطاطيات جافة ومائية وملاعب صابونية للحفلات والحدائق',icon:'🏰'},
+ snacks:{title:'السناك والعربات',sub:'فشار، غزل البنات، ذرة، بطاطا حلزونية، آيسكريم، براد وأكثر',icon:'🍿'},
+ events:{title:'تجهيز الحفلات',sub:'ديكورات، بالونات، ستاندات، إضاءات، أجهزة فوم وفقاعات',icon:'🎀'},
+ offers:{title:'العروض والبكجات',sub:'باقات جاهزة تختصر عليك الاختيار والسعر',icon:'🎁'}
+};
+
+const products=[]; const add=o=>products.push(o);
+
+// نطاطيات 1-85
+for(let i=1;i<=85;i++){
+ let cat=i<=25?'النطاطيات الجافة':i<=60?'النطاطيات المائية':i<=75?'الزحاليق':'الملاعب الصابونية';
+ let names=['زحليقة القراصنة المائية','زحليقة الديناصور المائية','نطاطية قلعة الأطفال','نطاطية أميرات','ملعب صابوني','زحليقة مائية كبيرة','نطاطية سبايدرمان','زحليقة بارتي المائية'];
+ add({id:i,type:'bouncies',title:names[i%names.length]+' #'+i,cat,price:i<=25?500:(i<=60?600:700),duration:'يوم كامل',age:'من 6 إلى 18 سنة',desc:'نطاطية مناسبة للأطفال مع تركيب آمن وإشراف حسب الطلب.'});
+}
+
+// السناك والعربات
+[
+ [86,'ماكينة الفشار',400],[87,'ماكينة الفشار + العربة',500],[88,'ماكينة غزل البنات',400],[89,'ماكينة غزل البنات + العربة',500],
+ [90,'ماكينة البطاطس الحلزونية',550],[91,'ماكينة البطاطس الحلزونية + عربة',650],[92,'ماكينة الذرة الحلوة + طاولة',500],
+ [93,'ماكينة البراد + طاولة',500],[95,'ماكينة العصير البارد + عربة',600],[96,'نافورة الشوكولاتة',800],[97,'ماكينة الآيسكريم',700],
+ [99,'عربة الوافل',650],[100,'عربة البانكيك',650],[120,'عربة الفشار VIP',600],[121,'عربة غزل البنات VIP',600],
+ [122,'عربة الذرة الحلوة VIP',600],[123,'عربة البطاطا الحلزونية VIP',600],[124,'عربة الآيسكريم VIP',700],[125,'عربة السلاش VIP',600],
+ [126,'عربة البراد مع الآيسكريم',800],[127,'عربة البانكيك VIP',650],[128,'عربة نافورة الشوكولاتة VIP',800]
+].forEach(x=>add({id:x[0],type:'snacks',title:x[1],cat:'السناك والعربات',price:x[2],duration:'3 ساعات',age:'حسب الباقة',desc:'خدمة سناك للحفلات مع تجهيز مرتب وتشغيل حسب الباقة وعدد الأطفال.'}));
+
+// تجهيز الحفلات
+[
+ [101,'حفلات أعياد الميلاد',900],[102,'حفلات التخرج',1200],[103,'حفلات وردية',1000],[104,'حفلات أطفال ملونة',1000],[105,'ديكور عيد ميلاد',950],
+ [106,'ديكور حفلة',950],[107,'ستاند حفلات',750],[108,'حفلات الخطوبة',1400],[109,'ديكور بالونات',650],[110,'حفلات المدارس والروضات',1500],
+ [111,'ستاندات بالونات',450],[112,'إضاءات ليزر',350],[113,'جهاز فقاعات',300],[114,'جهاز فوم',500],[117,'أرضية LED',1200]
+].forEach(x=>add({id:x[0],type:'events',title:x[1],cat:'تجهيز الحفلات',price:x[2],duration:'حسب التجهيز',age:'كل المناسبات',desc:'تنسيق وتجهيز مناسبات بلمسات راقية حسب المساحة والميزانية.'}));
+
+// عروض
+[
+ [201,'باقة نطاطية + سناك',999,34],[202,'باقة عيد ميلاد 20 طفل',1999,101],[203,'ملعب صابوني + فوم',700,68],[204,'باقة عربات السناك',1480,126],
+ [205,'باقة تخرج VIP',2500,102],[206,'باقة خطوبة بسيطة',2900,108]
+].forEach(x=>add({id:x[0],imgId:x[3],type:'offers',title:x[1],cat:'العروض والبكجات',price:x[2],duration:'عرض خاص',age:'حسب الباقة',desc:'باقة جاهزة للحجز تجمع أكثر من خدمة بسعر أوضح وأسهل.'}));
+
+function imgFile(p){
+ const n=String(p.imgId||p.id);
+ const special={'107':'107(1).jpg','112':'112(1).jpg','117':'117-118-119.jpg','118':'117-118-119.jpg','119':'117-118-119.jpg'};
+ return special[n] || n+'.jpg';
+}
+function imgCandidates(p){
+ const file=imgFile(p), enc=encodeURIComponent(file).replaceAll('%2F','/');
+ return ['/'+enc+'?v='+IMG_VERSION, enc+'?v='+IMG_VERSION, './'+enc+'?v='+IMG_VERSION, '/images/'+enc+'?v='+IMG_VERSION, 'images/'+enc+'?v='+IMG_VERSION, REPO_RAW+enc+'?v='+IMG_VERSION];
+}
+function imgTag(p){
+ const tries=imgCandidates(p);
+ return `<img src="${tries[0]}" data-tries='${JSON.stringify(tries)}' data-i="0" alt="${p.title}" onerror="nextImg(this)" loading="lazy">`;
+}
+function nextImg(img){
+ const tries=JSON.parse(img.dataset.tries||'[]'); let i=Number(img.dataset.i||0)+1;
+ if(i<tries.length){img.dataset.i=i; img.src=tries[i]; return;}
+ img.onerror=null; img.parentElement.innerHTML=`<div class="missing"><div style="font-size:44px">👑</div><div>الصورة غير موجودة<br><small>${img.alt}</small></div></div>`;
+}
+
+function initNav(){
+ nav.innerHTML='<button class="pill back" id="backBtn" onclick="goBack()">رجوع</button>'+NAV.map(n=>`<button class="pill" id="nav_${n[0]}" onclick="go('${n[0]}')">${n[1]}</button>`).join('');
+}
+function normalizeRoute(){
+ const path=location.pathname.replace(/^\//,'').trim();
+ const hash=location.hash.replace('#','').trim();
+ return path || hash || 'home';
+}
+window.addEventListener('popstate',()=>render(normalizeRoute()));
+window.addEventListener('hashchange',()=>render(normalizeRoute()));
+initNav(); render(normalizeRoute());
+
+function go(r){ history.pushState({},'', '/'+r); render(r); window.scrollTo({top:0,behavior:'smooth'}); }
+function goBack(){ if(history.length>1) history.back(); else go('home'); }
+function setActive(r){ route=r; document.querySelectorAll('.nav .pill').forEach(b=>b.classList.remove('active')); const x=document.getElementById('nav_'+r); if(x)x.classList.add('active'); document.getElementById('backBtn').style.display=r==='home'?'none':'inline-block'; }
+
+function render(r){
+ if(!['home','bouncies','snacks','events','offers','checkout','terms','contact','customers','search'].includes(r)) r='home';
+ setActive(r);
+ if(r==='home') return home();
+ if(r==='checkout') return checkoutPage();
+ if(r==='terms') return terms();
+ if(r==='contact') return contact();
+ if(r==='customers') return customers();
+ if(['bouncies','snacks','events','offers'].includes(r)) return catalog(r);
+}
+
+function home(){
+ const picks=[34,47,48,53,68,86,95,101,120,126,128].map(id=>products.find(p=>p.id===id)).filter(Boolean);
+ app.innerHTML=`
+ <section class="hero">
+  <div class="container heroGrid">
+   <aside class="sideMenu">
+    <h3>أقسام الملكة</h3>
+    <button onclick="go('bouncies')">🏰 النطاطيات والزحاليق <span>›</span></button>
+    <button onclick="go('snacks')">🍿 السناك والعربات <span>›</span></button>
+    <button onclick="go('events')">🎀 تجهيز الحفلات <span>›</span></button>
+    <button onclick="go('offers')">🎁 العروض والبكجات <span>›</span></button>
+   </aside>
+   <div class="heroBanner">
+    <div class="heroText">
+     <div class="badge">📍 شركة الملكة للحفلات - قطر</div>
+     <h1>الملكة</h1>
+     <h2>لتأجير النطاطيات والسناك وتجهيز الحفلات</h2>
+     <p>كتالوج مرتب مثل التطبيقات — اختار، أضف للسلة، واحجز عبر واتساب أو اطلب رابط دفع</p>
+     <div class="cta">
+      <button class="main" onclick="go('bouncies')">شوف الألعاب</button>
+      <button class="dark" onclick="go('snacks')">السناك والعربات</button>
+      <button class="ghost" onclick="openCart()">الدفع والحجز</button>
+     </div>
+    </div>
+   </div>
+  </div>
+ </section>
+ <section class="container">
+  <div class="catTiles">
+   ${tile('🏰','النطاطيات','جافة، مائية، ملاعب صابونية','bouncies')}
+   ${tile('🍿','السناك والعربات','فشار، غزل، ذرة، براد','snacks')}
+   ${tile('🎀','تجهيز الحفلات','ديكور، بالونات، ستاندات','events')}
+   ${tile('🎁','العروض','بكجات جاهزة للحجز','offers')}
+  </div>
+  <div class="quickRow">
+   <div class="deal"><b>حجز سريع</b><span>أضف للسلة وأرسل الطلب</span></div>
+   <div class="deal"><b>رابط دفع</b><span>اطلب رابط دفع قبل الموعد</span></div>
+   <div class="deal"><b>اختيارات لك</b><span>مختارات من كل الأقسام</span></div>
+   <div class="deal"><b>الرائج</b><span>الأكثر طلباً للحفلات</span></div>
+  </div>
+  <div class="sectionHead"><div><h2>اختيارات لك ✨</h2><p>مختارات VIP من كل أقسام الملكة</p></div><button class="smallBtn" onclick="go('offers')">عرض العروض</button></div>
+  <div class="grid">${picks.map(card).join('')}</div>
+  <div class="bannerStrip"><div><b>تحتاج ترتيب حفلة كاملة؟</b><br><span>نطاطية + سناك + ديكور + طاولات وكراسي حسب الطلب</span></div><button class="pill" onclick="go('checkout')">ابدأ الحجز</button></div>
+ </section>`;
+}
+
+function tile(i,t,s,r){return `<div class="catTile" onclick="go('${r}')"><div class="catIcon">${i}</div><div><b>${t}</b><small>${s}</small></div></div>`}
+function catalog(type){
+ const meta=CATEGORY_META[type], list=products.filter(p=>p.type===type).sort((a,b)=>a.id-b.id);
+ app.innerHTML=`<section class="container">
+  <div class="pageTitle"><h1>${meta.icon} ${meta.title}</h1><p>${meta.sub}</p></div>
+  <div class="tools">
+   <input id="pageSearch" placeholder="بحث داخل هذا القسم" oninput="filterPage('${type}')">
+   <select id="sortSel" onchange="filterPage('${type}')"><option value="id">ترتيب حسب الرقم</option><option value="priceAsc">السعر من الأقل</option><option value="priceDesc">السعر من الأعلى</option></select>
+   <select id="catSel" onchange="filterPage('${type}')"><option value="">كل التصنيفات</option>${[...new Set(list.map(p=>p.cat))].map(c=>`<option>${c}</option>`).join('')}</select>
+   <button onclick="filterPage('${type}')">بحث</button>
+  </div>
+  <div class="grid" id="pageGrid">${list.map(card).join('')}</div>
+ </section>`;
+}
+function filterPage(type){
+ let list=products.filter(p=>p.type===type);
+ const q=(pageSearch.value||'').trim().toLowerCase(), c=catSel.value, s=sortSel.value;
+ if(q) list=list.filter(p=>(p.id+' '+p.title+' '+p.cat+' '+p.price).toLowerCase().includes(q));
+ if(c) list=list.filter(p=>p.cat===c);
+ if(s==='priceAsc') list.sort((a,b)=>a.price-b.price); else if(s==='priceDesc') list.sort((a,b)=>b.price-a.price); else list.sort((a,b)=>a.id-b.id);
+ pageGrid.innerHTML=list.map(card).join('');
+}
+function card(p){
+ return `<div class="card">
+  <span class="num">#${p.id}</span>
+  <div class="pic">${imgTag(p)}</div>
+  <div class="body">
+   <h3>${p.title}</h3>
+   <p>${p.desc}</p>
+   <div class="tags"><span class="tag">${p.cat}</span><span class="tag">${p.duration}</span><span class="tag">${p.age}</span></div>
+   <div class="price"><small>يبدأ من</small> ${p.price} ر.ق</div>
+   <div class="cardBtns"><button class="book" onclick="addCart(${p.id})">أضف للسلة</button><button class="wa" onclick="waItem(${p.id})">واتساب</button></div>
+  </div>
+ </div>`;
+}
+function runSearch(){
+ const q=globalSearch.value.trim().toLowerCase(); if(!q) return;
+ const list=products.filter(p=>(p.id+' '+p.title+' '+p.cat+' '+p.price+' '+p.type).toLowerCase().includes(q));
+ history.pushState({},'','/search'); setActive('search');
+ app.innerHTML=`<section class="container"><div class="pageTitle"><h1>نتائج البحث</h1><p>${list.length} نتيجة عن: ${globalSearch.value}</p></div><div class="grid">${list.map(card).join('')}</div></section>`;
+}
+
+function addCart(id){const p=products.find(x=>x.id===id); const row=cart.find(x=>x.id===id); if(row) row.qty++; else cart.push({...p,qty:1}); updateCart(); openCart();}
+function removeCart(id){cart=cart.filter(x=>x.id!==id); updateCart(); renderCart();}
+function changeQty(id,d){const r=cart.find(x=>x.id===id); if(!r)return; r.qty+=d; if(r.qty<=0) removeCart(id); updateCart(); renderCart();}
+function total(){return cart.reduce((s,x)=>s+x.price*x.qty,0)}
+function updateCart(){cartCount.textContent=cart.reduce((s,x)=>s+x.qty,0); cartTotal.textContent=total();}
+function openCart(){cartDrawer.classList.add('show');renderCart();}
+function closeCart(){cartDrawer.classList.remove('show')}
+function renderCart(){
+ cartItems.innerHTML=cart.length?cart.map(x=>`<div class="cartItem"><img src="${imgCandidates(x)[0]}" onerror="this.style.display='none'"><div><b>${x.title}</b><br><small>${x.price} ر.ق × ${x.qty}</small><div class="qty"><button onclick="changeQty(${x.id},-1)">-</button><b>${x.qty}</b><button onclick="changeQty(${x.id},1)">+</button></div></div><button class="x" onclick="removeCart(${x.id})">×</button></div>`).join(''):`<div class="empty">السلة فاضية<br>اختر منتج واضغط أضف للسلة</div>`;
+}
+function markPay(btn){document.querySelectorAll('.payMethods button').forEach(b=>b.classList.remove('active')); btn.classList.add('active')}
+function sendBooking(){
+ const lines=cart.length?cart.map(x=>`- ${x.title} رقم #${x.id} | الكمية ${x.qty} | ${x.price*x.qty} ر.ق`).join('%0A'):'لم يتم اختيار منتجات';
+ const msg=`السلام عليكم، أريد حجز من موقع الملكة%0A%0Aالطلبات:%0A${lines}%0A%0Aالإجمالي: ${total()} ر.ق%0Aطريقة الدفع: ${pay}%0A%0Aالاسم: ${cName.value}%0Aالجوال: ${cPhone.value}%0Aالتاريخ: ${cDate.value}%0Aالوقت: ${cTime.value}%0Aالموقع: ${cLocation.value}%0Aملاحظات: ${cNotes.value}`;
+ window.open('https://wa.me/97433317720?text='+msg,'_blank');
+}
+function waItem(id){const p=products.find(x=>x.id===id); window.open('https://wa.me/97433317720?text='+encodeURIComponent('السلام عليكم، أريد الاستفسار عن '+p.title+' رقم #'+p.id),'_blank')}
+function waGeneral(){window.open('https://wa.me/97433317720?text=السلام عليكم، أريد الحجز من شركة الملكة','_blank')}
+function checkoutPage(){app.innerHTML=`<section class="container"><div class="pageTitle"><h1>الدفع والحجز</h1><p>أضف المنتجات للسلة ثم أرسل الطلب أو اطلب رابط دفع</p></div><div class="checkout"><div class="panel"><h2>خطوات الحجز</h2><p>1) اختر المنتجات. 2) أضف للسلة. 3) عبئ بيانات التاريخ والموقع. 4) أرسل الطلب عبر واتساب أو اطلب رابط دفع.</p><button class="pill primary" onclick="openCart()">فتح السلة</button></div><div class="panel"><h2>طرق الدفع</h2><div class="payMethods"><button class="active">💳 رابط دفع</button><button>🏦 تحويل بنكي</button><button>💵 كاش عند التركيب</button></div></div></div></section>`}
+function terms(){app.innerHTML=`<section class="container"><div class="pageTitle"><h1>شروط الحجز</h1><p>يتم تأكيد الحجز بعد الاتفاق على التاريخ والموقع ودفع العربون عند الحاجة. يجب توفير مساحة مناسبة ومصدر كهرباء. الأسعار قابلة للتعديل حسب المنطقة، العدد، والمدة.</p></div></section>`}
+function contact(){app.innerHTML=`<section class="container"><div class="pageTitle"><h1>تواصل معنا</h1><p>33317720 - 33317721 - 33317716 - 33317705<br>Instagram: @almalika_qtr</p><button class="pill primary" onclick="waGeneral()">فتح واتساب</button></div></section>`}
+function customers(){app.innerHTML=`<section class="container"><div class="pageTitle"><h1>بيانات الزبون</h1><p>هذه صفحة مبدئية لحفظ بيانات العميل داخل الطلب. الربط الحقيقي بقاعدة بيانات يكون لاحقاً.</p></div><div class="panel"><div class="formGrid"><div class="field"><label>الاسم</label><input></div><div class="field"><label>الجوال</label><input></div><div class="field full"><label>العنوان</label><input></div><div class="field full"><button class="pill primary" onclick="alert('في النسخة النهائية يتم الحفظ بقاعدة بيانات')">حفظ مؤقت</button></div></div></div></section>`}
+</script>
+<footer class="foot">الملكة للحفلات وتأجير النطاطيات داخل قطر — للحجز والاستفسار عبر واتساب أو الاتصال المباشر</footer>
+</body>
+</html>
