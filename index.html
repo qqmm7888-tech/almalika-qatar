@@ -137,5 +137,68 @@ function terms(){app.innerHTML=`<section class="wrap"><div class="pageTitle"><h1
 function contact(){app.innerHTML=`<section class="wrap"><div class="pageTitle"><h1>تواصل معنا</h1><p>33317720 - 33317721 - 33317716 - 33317705<br>Instagram: @almalika_qtr</p><button class="btn wa" onclick="waGeneral()">فتح واتساب</button></div></section>`}
 </script>
 <footer class="footer">الملكة للحفلات وتأجير النطاطيات والسناك داخل قطر — VIP Booking Catalog</footer>
+
+<script id="image-folder-path-fix">
+/*
+  مسار الصور المعتمد:
+  يجب رفع فولدر الصور داخل GitHub بنفس الاسم:
+  الحفلات والسناك والعربات
+  ويكون داخل الفولدر الصور مثل: 86.jpg, 87.jpg, 101.jpg...
+*/
+window.ALMALIKA_IMAGE_FOLDER = "الحفلات والسناك والعربات/";
+window.almalikaImagePath = function(fileName){
+  const folder = window.ALMALIKA_IMAGE_FOLDER || "";
+  return folder + String(fileName).replace(/^\/+/, "");
+};
+</script>
+
+
+<script id="runtime-image-folder-rewrite">
+(function(){
+  const folder = window.ALMALIKA_IMAGE_FOLDER || "الحفلات والسناك والعربات/";
+  function shouldRewrite(src){
+    if(!src) return false;
+    if(src.startsWith("http") || src.startsWith("data:") || src.startsWith("blob:")) return false;
+    if(src.includes(folder)) return false;
+    return /(^|\/)(\d+|\d+\(\d+\)|\d+-\d+-\d+)\.(jpg|jpeg|png|webp)$/i.test(src);
+  }
+  function rewriteImages(){
+    document.querySelectorAll("img").forEach(img=>{
+      const raw = img.getAttribute("src") || "";
+      if(shouldRewrite(raw)){
+        const file = raw.split("/").pop();
+        img.setAttribute("src", folder + file);
+      }
+      // Keep fallback also inside the same folder for common numeric images.
+      img.onerror = function(){
+        const raw2 = this.getAttribute("src") || "";
+        const file = raw2.split("/").pop();
+        const base = file.replace(/\.(jpg|jpeg|png|webp)(\?.*)?$/i,"");
+        const tries = [
+          folder + base + ".jpg",
+          folder + base + ".png",
+          folder + base + ".jpeg",
+          folder + base + ".webp",
+          base + ".jpg",
+          base + ".png"
+        ];
+        let i = Number(this.dataset.retryIndex || 0);
+        while(i < tries.length && raw2 === tries[i]) i++;
+        if(i < tries.length){
+          this.dataset.retryIndex = i + 1;
+          this.src = tries[i];
+        }else{
+          this.onerror = null;
+        }
+      };
+    });
+  }
+  document.addEventListener("DOMContentLoaded", rewriteImages);
+  const observer = new MutationObserver(rewriteImages);
+  observer.observe(document.documentElement, {subtree:true, childList:true});
+  setInterval(rewriteImages, 800);
+})();
+</script>
+
 </body>
 </html>
