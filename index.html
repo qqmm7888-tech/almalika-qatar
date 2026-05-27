@@ -1352,6 +1352,65 @@ body:before{
   .policyGrid{grid-template-columns:1fr !important;}
 }
 
+
+
+/* ===== V26 quick shop modal like fast shopping ===== */
+.actions.quickActions{grid-template-columns:1fr !important;gap:7px !important}
+.actions .quickShop{background:linear-gradient(135deg,#111,#2a2327)!important;color:#fff!important}
+.quickShopModal{
+  width:min(520px,92vw)!important;
+  max-width:520px!important;
+  display:block!important;
+  background:#fff!important;
+  border-radius:0!important;
+  padding:0!important;
+  position:relative!important;
+  overflow:visible!important;
+  box-shadow:0 28px 80px rgba(0,0,0,.24)!important;
+}
+.quickClose{
+  position:absolute!important;
+  top:-18px!important;
+  right:-18px!important;
+  width:44px!important;
+  height:44px!important;
+  border-radius:0!important;
+  background:#222!important;
+  color:#fff!important;
+  font-size:30px!important;
+  z-index:5!important;
+}
+.quickShopPic{
+  width:100%!important;
+  min-height:230px!important;
+  display:grid!important;
+  place-items:center!important;
+  padding:24px 24px 8px!important;
+  background:linear-gradient(180deg,#fff,#fafafa)!important;
+}
+.quickShopPic img{
+  max-height:220px!important;
+  width:100%!important;
+  object-fit:contain!important;
+  filter:drop-shadow(0 14px 18px rgba(0,0,0,.10))!important;
+}
+.quickShopInfo{padding:18px 34px 34px!important;text-align:center!important;direction:rtl!important}
+.quickShopTop{display:flex!important;justify-content:center!important;gap:8px!important;margin-bottom:8px!important}
+.quickShopInfo h2{font-size:22px!important;line-height:1.35!important;margin:8px 0!important;color:#1d1419!important}
+.quickPrice{font-size:26px!important;font-weight:900!important;color:var(--maroon)!important;margin:8px 0!important}
+.quickLabel{font-size:13px!important;font-weight:800!important;color:#777!important;margin-bottom:14px!important}
+.quickOptions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;margin:12px 0!important}
+.quickOpt{border:1px solid #e5d8df!important;border-radius:12px!important;padding:10px!important;cursor:pointer!important;background:#fff!important;display:flex!important;flex-direction:column!important;gap:4px!important;text-align:center!important}
+.quickOpt input{display:none!important}
+.quickOpt:has(input:checked){background:#222!important;color:#fff!important;border-color:#222!important}
+.quickOpt span{font-size:13px!important;font-weight:900!important}.quickOpt b{font-size:15px!important}.quickOpt small{font-size:10px!important;color:inherit!important;opacity:.8!important}
+.quickShopControls{display:inline-flex!important;align-items:center!important;justify-content:center!important;border:1px solid #222!important;border-radius:999px!important;overflow:hidden!important;margin:12px auto 14px!important;direction:ltr!important}
+.quickShopControls button{width:44px!important;height:38px!important;background:#fff!important;color:#111!important;font-size:22px!important;font-weight:900!important}
+.quickShopControls b{min-width:46px!important;font-size:16px!important}
+.quickAdd,.quickNow{width:100%!important;min-height:48px!important;border-radius:999px!important;font-weight:900!important;margin-top:10px!important;font-size:15px!important}
+.quickAdd{background:#53c7d8!important;color:#fff!important}.quickNow{background:#1e1e1e!important;color:#fff!important}
+@media(max-width:560px){.quickShopInfo{padding:16px 18px 24px!important}.quickOptions{grid-template-columns:1fr!important}.quickClose{right:8px!important;top:8px!important;border-radius:50%!important}}
+
 </style>
 </head>
 <body>
@@ -1433,14 +1492,15 @@ function shortType(p){
 }
 function shortAge(p){return p.age||p.durationOneDay||p.durationTwoDays||'حسب الطلب'}
 
-function card(p){const inCart=cart.some(x=>Number(x.number)===Number(p.number));return `<div class="product"><div class="num">#${p.number}</div><div class="body"><h3>${esc(p.name)}</h3><p class="desc">${esc(desc(p))}</p><div class="tags"><span class="tag">${tagIcon(p)} ${esc(shortType(p))}</span><span class="tag">⏱ ${esc(duration(p))}</span><span class="tag">👶 ${esc(shortAge(p))}</span></div><div class="bottom"><div class="price"><small>يبدأ من</small><strong>${price(p)} ر.ق</strong></div><div class="actions"><button class="details" onclick="openProduct(${p.number})">احجزها</button><button class="wa" onclick="quickWa(${p.number})">واتساب</button></div></div></div><div class="pic" onclick="openProduct(${p.number})"><img src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div></div>`}
+function card(p){const inCart=cart.some(x=>Number(x.number)===Number(p.number));return `<div class="product"><div class="num">#${p.number}</div><div class="body"><h3>${esc(p.name)}</h3><p class="desc">${esc(desc(p))}</p><div class="tags"><span class="tag">${tagIcon(p)} ${esc(shortType(p))}</span><span class="tag">⏱ ${esc(duration(p))}</span><span class="tag">👶 ${esc(shortAge(p))}</span></div><div class="bottom"><div class="price"><small>يبدأ من</small><strong>${price(p)} ر.ق</strong></div><div class="actions quickActions"><button class="details" onclick="openProduct(${p.number})">تفاصيل</button><button class="quickShop" onclick="quickShop(${p.number})">التسوق السريع</button><button class="wa" onclick="quickWa(${p.number})">واتساب</button></div></div></div><div class="pic" onclick="openProduct(${p.number})"><img src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div></div>`}
+function itemPrice(x){return Number(x.selectedPrice||price(x)||0)}
 function saveCart(){localStorage.setItem('almalikaCart',JSON.stringify(cart)); updateCartUI();}
-function updateCartUI(){const count=cart.reduce((a,x)=>a+(x.qty||1),0); const total=cart.reduce((a,x)=>a+price(x)*(x.qty||1),0); const c=document.getElementById('cartCount'), ct=document.getElementById('cartCountTop'), tm=document.getElementById('cartTotalMini'); if(c)c.textContent=count; if(ct)ct.textContent=count; if(tm)tm.textContent=total;}
+function updateCartUI(){const count=cart.reduce((a,x)=>a+(x.qty||1),0); const total=cart.reduce((a,x)=>a+itemPrice(x)*(x.qty||1),0); const c=document.getElementById('cartCount'), ct=document.getElementById('cartCountTop'), tm=document.getElementById('cartTotalMini'); if(c)c.textContent=count; if(ct)ct.textContent=count; if(tm)tm.textContent=total;}
 function addToCart(n){const p=products.find(x=>Number(x.number)===Number(n)); if(!p)return; const old=cart.find(x=>Number(x.number)===Number(n)); if(old){old.qty=(old.qty||1)+1}else{cart.push({...p,qty:1})} saveCart(); render();}
 function changeQty(n,delta){const item=cart.find(x=>Number(x.number)===Number(n)); if(!item)return; item.qty=(item.qty||1)+delta; if(item.qty<=0)cart=cart.filter(x=>Number(x.number)!==Number(n)); saveCart(); openCart();}
 function removeFromCart(n){cart=cart.filter(x=>Number(x.number)!==Number(n)); saveCart(); openCart();}
 function clearCart(){cart=[]; saveCart(); openCart();}
-function cartTotal(){return cart.reduce((a,x)=>a+price(x)*(x.qty||1),0)}
+function cartTotal(){return cart.reduce((a,x)=>a+itemPrice(x)*(x.qty||1),0)}
 function kindOf(p){const n=Number(p.number), c=p.category||''; if(c.includes('السناك'))return 'snack'; if(c.includes('تجهيز'))return 'event'; if(c.includes('بنود'))return 'other'; return 'bouncy'}
 function firstPrice(p){return Number(p.priceOneDay||p.priceTwoDays||0)}
 function optList(p){const k=kindOf(p), one=Number(p.priceOneDay||0), two=Number(p.priceTwoDays||one||0); if(k==='bouncy')return[{id:'1',label:p.durationOneDay||'يوم واحد',price:one,note:'تركيب وتشغيل'},{id:'2',label:p.durationTwoDays||'يومين',price:two,note:'أفضل للحفلات الطويلة'}]; if(k==='snack'){let mid=two>one?Math.round((one+two)/2/10)*10:one; let small=snackPackage20Price(p); return[{id:'20',label:'20 شخص',price:small,note:'موظفة • 3 ساعات'},{id:'30',label:'30 شخص',price:one,note:p.durationOneDay||'موظفة • 3 ساعات'},{id:'40',label:'40 شخص',price:mid,note:'موظفة • 3 ساعات'},{id:'50',label:'50 شخص',price:two,note:p.durationTwoDays||'موظفة • 3 ساعات'}]} if(k==='event'){return[{id:'event',label:(p.details||'حسب الباقة').includes('سناك')?'شامل سناك حسب الباقة':'بدون سناك / تجهيز فقط',price:one,note:p.details||'حسب تفاصيل الحفلة'}]} return[{id:'fixed',label:p.durationOneDay||'يوم واحد',price:one,note:p.details||'حسب المناسبة'}]}
@@ -1488,7 +1548,15 @@ ${list}
 طريقة السداد: ${payment}
 ملاحظات عامة: ${note}`}
 function sendCartWa(){if(!cart.length){alert('السلة فارغة');return} window.open('https://wa.me/97433317720?text='+encodeURIComponent(cartMessage()),'_blank')}
-function openCart(){modal.innerHTML=`<div class="modalBox cartModal"><div class="modalInfo"><div class="modalHead"><h2>🛒 سلة الحجز</h2><button class="close" onclick="closeModal()">×</button></div>${cart.length?`<div class="cartList">${cart.map(p=>`<div class="cartItem"><img src="${esc(p.image)}" onerror="this.src='${p.number}.jpg';this.onerror=null"><div><h3>#${p.number} - ${esc(p.name)}</h3><p>${esc(p.category)} — ${Number(p.selectedPrice||price(p))} ر.ق × ${p.qty||1}</p><div class="bookingSummary">${(p.bookingSummary||[]).map(x=>esc(x)).join('<br>')}${p.itemNote?'<br>📝 '+esc(p.itemNote):''}</div></div><div class="qtyBox"><button onclick="changeQty(${p.number},1)">+</button><b>${p.qty||1}</b><button onclick="changeQty(${p.number},-1)">−</button><button class="removeBtn" onclick="removeFromCart(${p.number})">×</button></div></div>`).join('')}</div><div class="cartTotal">الإجمالي التقريبي: ${cartTotal()} ر.ق</div><div class="cartForm"><input id="custName" placeholder="اسم العميل"><input id="custPhone" placeholder="رقم الجوال"><input id="custArea" placeholder="المنطقة / رابط الموقع"><input id="custDate" placeholder="تاريخ عام للطلب"><div class="payChoices"><label><input type="radio" name="payMethod" value="كاش" checked> كاش</label><label><input type="radio" name="payMethod" value="تحويل / بطاقة"> تحويل / بطاقة</label></div><textarea id="custNote" class="full" placeholder="ملاحظات عامة للطلب"></textarea></div><div class="modalActions three"><button onclick="sendCartWa()" style="background:var(--green);color:#fff">إرسال السلة واتساب</button><button onclick="clearCart()">تفريغ السلة</button><button onclick="closeModal()">متابعة التسوق</button></div>`:'<div class="empty">السلة فارغة — اضغط “احجزها” من أي منتج لإدخال بيانات الحجز.</div><div class="modalActions"><button onclick="closeModal()">متابعة التسوق</button><button onclick="generalWa()" style="background:var(--green);color:#fff">استفسار واتساب</button></div>'}</div></div>`; modal.classList.add('show')}
+
+function quickSelectedOpt(p){const v=document.querySelector(`input[name="quick_opt_${p.number}"]:checked`)?.value; return optList(p).find(o=>String(o.id)===String(v))||optList(p)[0]}
+function quickQty(n){return Math.max(1,parseInt(document.getElementById('quickQty_'+n)?.textContent||'1',10))}
+function setQuickQty(n,delta){const el=document.getElementById('quickQty_'+n); if(!el)return; const v=Math.max(1,parseInt(el.textContent||'1',10)+delta); el.textContent=v; updateQuickTotal(n)}
+function updateQuickTotal(n){const p=products.find(x=>Number(x.number)===Number(n)); if(!p)return; const opt=quickSelectedOpt(p), qty=quickQty(n), total=Number(opt.price||0)*qty; const el=document.getElementById('quickTotal_'+n); if(el)el.textContent=total+' ر.ق'}
+function addQuickToCart(n,closeAfter=false){const p=products.find(x=>Number(x.number)===Number(n)); if(!p)return; const opt=quickSelectedOpt(p), qty=quickQty(n); const key=`${n}_${opt.id}`; const old=cart.find(x=>x.cartKey===key); if(old){old.qty=(old.qty||1)+qty}else{cart.push({...p,cartKey:key,qty,selectedPrice:Number(opt.price||0),selectionLabel:opt.label,bookingSummary:[`📦 الخيار: ${opt.label}`,`💵 السعر: ${Number(opt.price||0)} ر.ق`]})} saveCart(); if(closeAfter){closeModal()} else {quickShop(n)} }
+function quickOrderWa(n){const p=products.find(x=>Number(x.number)===Number(n)); if(!p)return; const opt=quickSelectedOpt(p), qty=quickQty(n); const msg=`السلام عليكم، أريد طلب سريع:\n#${p.number} - ${p.name}\nالقسم: ${p.category}\nالخيار: ${opt.label}\nالكمية: ${qty}\nالإجمالي التقريبي: ${Number(opt.price||0)*qty} ر.ق`; window.open('https://wa.me/97433317720?text='+encodeURIComponent(msg),'_blank')}
+function quickShop(n){const p=products.find(x=>Number(x.number)===Number(n)); if(!p)return; modal.innerHTML=`<div class="modalBox quickShopModal"><button class="quickClose" onclick="closeModal()">×</button><div class="quickShopPic"><img src="${esc(p.image)}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div><div class="quickShopInfo"><div class="quickShopTop"><span class="tag">#${p.number}</span><span class="tag">${esc(shortType(p))}</span></div><h2>${esc(p.name)}</h2><div class="quickPrice" id="quickTotal_${p.number}">${Number(optList(p)[0].price||0)} ر.ق</div><div class="quickLabel">اختيار سريع بدون تعبئة بيانات الحجز</div><div class="quickOptions">${optList(p).map((o,i)=>`<label class="quickOpt"><input type="radio" name="quick_opt_${p.number}" value="${esc(o.id)}" ${i===0?'checked':''} onchange="updateQuickTotal(${p.number})"><span>${esc(o.label)}</span><b>${Number(o.price||0)} ر.ق</b>${o.note?`<small>${esc(o.note)}</small>`:''}</label>`).join('')}</div><div class="quickShopControls"><button onclick="setQuickQty(${p.number},-1)">−</button><b id="quickQty_${p.number}">1</b><button onclick="setQuickQty(${p.number},1)">+</button></div><button class="quickAdd" onclick="addQuickToCart(${p.number})">أضف إلى السلة</button><button class="quickNow" onclick="quickOrderWa(${p.number})">اطلب الآن واتساب</button></div></div>`; modal.classList.add('show')}
+function openCart(){modal.innerHTML=`<div class="modalBox cartModal"><div class="modalInfo"><div class="modalHead"><h2>🛒 سلة الحجز</h2><button class="close" onclick="closeModal()">×</button></div>${cart.length?`<div class="cartList">${cart.map(p=>`<div class="cartItem"><img src="${esc(p.image)}" onerror="this.src='${p.number}.jpg';this.onerror=null"><div><h3>#${p.number} - ${esc(p.name)}</h3><p>${esc(p.category)} — ${Number(p.selectedPrice||price(p))} ر.ق × ${p.qty||1}${p.selectionLabel?' — '+esc(p.selectionLabel):''}</p><div class="bookingSummary">${(p.bookingSummary||[]).map(x=>esc(x)).join('<br>')}${p.itemNote?'<br>📝 '+esc(p.itemNote):''}</div></div><div class="qtyBox"><button onclick="changeQty(${p.number},1)">+</button><b>${p.qty||1}</b><button onclick="changeQty(${p.number},-1)">−</button><button class="removeBtn" onclick="removeFromCart(${p.number})">×</button></div></div>`).join('')}</div><div class="cartTotal">الإجمالي التقريبي: ${cartTotal()} ر.ق</div><div class="cartForm"><input id="custName" placeholder="اسم العميل"><input id="custPhone" placeholder="رقم الجوال"><input id="custArea" placeholder="المنطقة / رابط الموقع"><input id="custDate" placeholder="تاريخ عام للطلب"><div class="payChoices"><label><input type="radio" name="payMethod" value="كاش" checked> كاش</label><label><input type="radio" name="payMethod" value="تحويل / بطاقة"> تحويل / بطاقة</label></div><textarea id="custNote" class="full" placeholder="ملاحظات عامة للطلب"></textarea></div><div class="modalActions three"><button onclick="sendCartWa()" style="background:var(--green);color:#fff">إرسال السلة واتساب</button><button onclick="clearCart()">تفريغ السلة</button><button onclick="closeModal()">متابعة التسوق</button></div>`:'<div class="empty">السلة فارغة — اضغط “احجزها” من أي منتج لإدخال بيانات الحجز.</div><div class="modalActions"><button onclick="closeModal()">متابعة التسوق</button><button onclick="generalWa()" style="background:var(--green);color:#fff">استفسار واتساب</button></div>'}</div></div>`; modal.classList.add('show')}
 function productMsg(p){let opts=optList(p).map(o=>`- ${o.label}: ${o.price} ر.ق`).join('\n'); return `السلام عليكم، أريد الاستفسار عن:
 #${p.number} - ${p.name}
 القسم: ${p.category}
