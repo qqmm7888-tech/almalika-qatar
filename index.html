@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>الملكة للحفلات | كتالوج الحجز السريع</title>
-<!-- v5: full top navigation visible + wrapped section chips + booking cart -->
+<!-- v7: robust routing + detailed booking forms + no empty sections -->
 <meta name="description" content="كتالوج الملكة للحفلات وتأجير النطاطيات والسناك داخل قطر - حجز سريع عبر واتساب">
 <style>
 :root{
@@ -124,7 +124,8 @@ function price(p){return Number(p.priceOneDay||p.priceTwoDays||0)}
 function duration(p){return p.durationOneDay||p.durationTwoDays||'حسب الحجز'}
 function sectionOf(p){let c=p.category||''; if(c==='السناك والعربات')return 'snacks'; if(c==='تجهيز الحفلات والمناسبات')return 'events'; if(c==='بنود أخرى')return 'other'; return 'bouncies'}
 function allLabel(sec){return 'الجميع'}
-function isAllSub(sub){return String(sub||'')==='الجميع' || String(sub||'').startsWith('جميع')}
+function normalizeArabic(s){return decodeURIComponent(String(s||'')).replace(/\+/g,' ').trim()}
+function isAllSub(sub){const x=normalizeArabic(sub); return !x || x==='الجميع' || x==='الكل' || x.includes('جميع') || x.includes('الكل')}
 function matchesInternal(p,sub){const name=(p.name||''), c=(p.category||''), t=(p.type||''), d=(p.details||''); if(isAllSub(sub))return true;
  if(sub.includes('مائية'))return c.includes('مائية')||t.includes('مائية')||name.includes('مائية'); if(sub.includes('جافة'))return c.includes('الجافة')||t.includes('جافة'); if(sub.includes('زحاليق'))return c.includes('زحلاقيات')||name.includes('زحلاقية')||name.includes('زحلاقية'); if(sub.includes('صابونية')||sub.includes('فوم'))return c.includes('صابونية')||t.includes('صابوني')||name.includes('رغوة')||name.includes('فوم'); if(sub.includes('أحواض')||sub.includes('مسابح'))return t.includes('حوض')||name.includes('حوض')||name.includes('مسبح'); if(sub.includes('رغوة'))return t.includes('رغوة')||name.includes('رغوة');
  if(sub.includes('فشار'))return name.includes('فشار'); if(sub.includes('غزل'))return name.includes('غزل'); if(sub.includes('بطاط'))return name.includes('بطاط'); if(sub.includes('ذرة'))return name.includes('ذرة'); if(sub.includes('العصير والبراد'))return name.includes('عصير')||name.includes('براد'); if(sub.includes('السلاش'))return name.includes('سلاش'); if(sub.includes('ايسكريم')||sub.includes('الايسكريم'))return name.includes('ايس كريم')||name.includes('ايسكريم'); if(sub.includes('براد مع الايسكريم'))return name.includes('سلاش البراد')||name.includes('براد')||name.includes('ايس كريم')||name.includes('ايسكريم'); if(sub.includes('شوكولات'))return name.includes('شوك')||name.includes('شوكولات'); if(sub.includes('وافل'))return name.includes('وافل'); if(sub.includes('بانكيك'))return name.includes('بانكيك'); if(sub.includes('برجر'))return name.includes('برجر')||name.includes('نقتس')||name.includes('شيبس'); if(sub.includes('بدون عربة'))return name.includes('ماكينة')&&!name.includes('العربة')&&!name.includes('عربة');
@@ -136,8 +137,21 @@ function renderNav(){nav.innerHTML=sections.map(s=>`<button class="${current===s
 function setInternal(v){internal=v; render(); setHash();}
 function showHome(){current='home';internal=allLabel('bouncies');renderNav(); catSelect.innerHTML='<option>الأقسام</option>'; renderHome(); setHash();}
 function showSection(sec){current=sec; internal=allLabel(sec); renderNav(); fillInternal(); render(); setHash();}
-function fillInternal(){const list=internalSections[current]||['الجميع']; if(!list.includes(internal))internal=list[0]; catSelect.innerHTML=list.map(x=>`<option ${x===internal?'selected':''}>${x}</option>`).join('')}
-function relevantProducts(){let arr=products.filter(p=>current==='home'||current==='offers'?true:sectionOf(p)===current); if(current==='offers'){arr=products.filter(p=>['bouncies','snacks','events'].includes(sectionOf(p))).slice(0,36)} arr=arr.filter(p=>matchesInternal(p,internal)); const term=q.value.trim().toLowerCase(); if(term)arr=arr.filter(p=>`${p.number} ${p.name} ${p.category} ${p.type} ${p.age} ${p.details||''}`.toLowerCase().includes(term)); const sort=sortSelect.value; arr.sort((a,b)=>sort==='priceAsc'?price(a)-price(b):sort==='priceDesc'?price(b)-price(a):Number(a.number)-Number(b.number)); return arr}
+function fillInternal(){const list=internalSections[current]||['الجميع']; if(!list.includes(internal) || isAllSub(internal)) internal=list[0]||'الجميع'; catSelect.innerHTML=list.map(x=>`<option value="${esc(x)}" ${x===internal?'selected':''}>${x}</option>`).join('')}
+function relevantProducts(){
+  let base=products.filter(p=>current==='home'||current==='offers'?true:sectionOf(p)===current);
+  if(current==='offers')base=products.filter(p=>['bouncies','snacks','events'].includes(sectionOf(p))).slice(0,36);
+  let arr=base.filter(p=>matchesInternal(p,internal));
+  // حماية من الروابط القديمة مثل: #snacks/جميع العربات أو #events/كل الحفلات
+  if(!arr.length && isAllSub(internal)) arr=base.slice();
+  // حماية إضافية: لو رابط قديم أو فلتر غير معروف لا نخلي الصفحة فاضية
+  if(!arr.length && current!=='home') arr=base.slice();
+  const term=(q?.value||'').trim().toLowerCase();
+  if(term)arr=arr.filter(p=>`${p.number} ${p.name} ${p.category} ${p.type} ${p.age} ${p.details||''}`.toLowerCase().includes(term));
+  const sort=sortSelect?.value||'number';
+  arr.sort((a,b)=>sort==='priceAsc'?price(a)-price(b):sort==='priceDesc'?price(b)-price(a):Number(a.number)-Number(b.number));
+  return arr
+}
 function renderHome(){const counts={bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,snacks:products.filter(p=>sectionOf(p)==='snacks').length,events:products.filter(p=>sectionOf(p)==='events').length,other:products.filter(p=>sectionOf(p)==='other').length}; app.innerHTML=`<section class="hero"><span class="kicker">👑 كتالوج الحجز السريع</span><h1>اختار المنتج من الصور والأقسام… وارسله واتساب مباشرة</h1><p>هذه نسخة كتالوج مبنية على قاعدة بيانات المنتجات، مع المحافظة على الأقسام وطريقة العرض السريعة: بحث، فلترة، تفاصيل، وحجز واتساب.</p><div class="heroActions"><button class="btn red" onclick="showSection('bouncies')">النطاطيات والزحلاقيات</button><button class="btn" onclick="showSection('snacks')">السناك والعربات</button><button class="btn" onclick="showSection('events')">تجهيز الحفلات</button><button class="btn green" onclick="generalWa()">حجز واتساب</button></div></section><section class="wrap section"><div class="title"><div><h2>الأقسام الرئيسية</h2><p>نفس التقسيم الأساسي للكتالوج مع عرض مرتب حسب كل قسم.</p></div><div class="stats"><span class="stat">الإجمالي: ${products.length}</span></div></div><div class="mainCats">${sections.filter(s=>s[0]!=='home').map(s=>`<button class="cat" onclick="showSection('${s[0]}')"><div class="icon">${s[2]}</div><h3>${s[1]}</h3><p>${s[0]==='bouncies'?counts.bouncies:s[0]==='snacks'?counts.snacks:s[0]==='events'?counts.events:s[0]==='other'?counts.other:'مختارات'} بند</p></button>`).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات سريعة</h2><p>نماذج من المنتجات للمعاينة.</p></div></div><div class="products">${products.slice(0,8).map(card).join('')}</div></section>`}
 function render(){if(current==='home'){renderHome();return} renderNav(); fillInternal(); const arr=relevantProducts(); const name=(sections.find(s=>s[0]===current)||[])[1]||'الكتالوج'; app.innerHTML=`<section class="wrap section"><div class="panel"><div><h1>${icon(current)} ${name}</h1><p>عدد البنود المعروضة: ${arr.length} — اضغط على الصورة أو التفاصيل لفتح بيانات المنتج.</p></div><button class="btn green" onclick="generalWa()">واتساب عام</button></div><div class="chips">${(internalSections[current]||['الجميع']).map(x=>`<button class="chip ${x===internal?'active':''}" onclick="setInternal('${esc(x)}')">${x}</button>`).join('')}</div><div class="products">${arr.length?arr.map(card).join(''):'<div class="empty">لا توجد منتجات مطابقة للبحث أو الفلتر الحالي</div>'}</div></section>`}
 function card(p){const inCart=cart.some(x=>Number(x.number)===Number(p.number));return `<div class="product"><div class="num">#${p.number}</div><div class="body"><h3>${esc(p.name)}</h3><p class="desc">${esc(desc(p))}</p><div class="tags"><span class="tag">${esc(p.category)}</span><span class="tag">${esc(p.type||'حسب الطلب')}</span><span class="tag">${esc(duration(p))}</span></div><div class="bottom"><div class="actions"><button class="details" onclick="openProduct(${p.number})">التفاصيل</button><button class="addCart" onclick="openProduct(${p.number})">${inCart?'مضاف ✓':'احجزها'}</button><button class="wa" onclick="quickWa(${p.number})">واتساب</button></div><div class="price"><small>يبدأ من</small><strong>${price(p)} ر.ق</strong></div></div></div><div class="pic" onclick="openProduct(${p.number})"><img src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div></div>`}
@@ -189,8 +203,28 @@ function quickWa(n){const p=products.find(x=>Number(x.number)===Number(n)); if(!
 function generalWa(){window.open('https://wa.me/97433317720?text='+encodeURIComponent('السلام عليكم، أريد الاستفسار عن كتالوج شركة الملكة للحفلات.'),'_blank')}
 function openProduct(n){const p=products.find(x=>Number(x.number)===Number(n)); if(!p)return; modal.innerHTML=`<div class="modalBox detailed"><div class="modalPic"><img src="${esc(p.image)}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div><div class="modalInfo"><div class="modalHead"><h2>${esc(p.name)}</h2><button class="close" onclick="closeModal()">×</button></div><div class="tags" style="margin-top:10px"><span class="tag">#${p.number}</span><span class="tag">${esc(p.category)}</span><span class="tag">${kindOf(p)==='snack'?'السناك والعربات':kindOf(p)==='event'?'تجهيز الحفلات':kindOf(p)==='other'?'بنود إضافية':'النطاطيات'}</span></div><div class="detailIntro">${esc(detailIntro(p))}</div>${infoHtml(p)}${priceHtml(p)}${formHtml(p)}<div class="modalActions three"><a href="https://wa.me/97433317720?text=${encodeURIComponent(productMsg(p))}" target="_blank">استفسار واتساب</a><button onclick="addToCart(${p.number})">احجز الآن وأضف للسلة</button><button onclick="closeModal()">إغلاق</button></div></div></div>`; modal.classList.add('show')}
 function closeModal(){modal.classList.remove('show')}modal.addEventListener('click',e=>{if(e.target===modal)closeModal()})
-function setHash(){history.replaceState(null,'',`#${current}/${encodeURIComponent(internal)}`)}
-function initFromHash(){const h=(location.hash||'').replace('#',''); const [sec,sub]=h.split('/'); current=sections.some(s=>s[0]===sec)?sec:'home'; internal=decodeURIComponent(sub||allLabel(current)); renderNav(); if(current==='home')showHome(); else{fillInternal(); render();}}
+function setHash(){history.replaceState(null,'',`#${current}/${encodeURIComponent(internal||allLabel(current))}`)}
+function normalizeSectionToken(x){
+  x=normalizeArabic(x).toLowerCase();
+  if(!x) return '';
+  if(['home','الرئيسية'].includes(x)) return 'home';
+  if(['bouncies','bouncy'].includes(x) || x.includes('نطاط') || x.includes('زحلاق') || x.includes('ملاعب') || x.includes('صابونية')) return 'bouncies';
+  if(['snacks','snack'].includes(x) || x.includes('سناك') || x.includes('عربات') || x.includes('العربات')) return 'snacks';
+  if(['events','event'].includes(x) || x.includes('تجهيز') || x.includes('حفلات') || x.includes('المناسبات')) return 'events';
+  if(['offers','offer'].includes(x) || x.includes('عروض') || x.includes('بكجات')) return 'offers';
+  if(['other'].includes(x) || x.includes('أخرى') || x.includes('اخرى') || x.includes('بنود')) return 'other';
+  return '';
+}
+function initFromHash(){
+  const h=(location.hash||'').replace('#','');
+  const parts=h.split('/').map(normalizeArabic).filter(Boolean);
+  const sec=normalizeSectionToken(parts[0]);
+  current=sections.some(s=>s[0]===sec)?sec:'home';
+  internal=normalizeArabic(parts.slice(1).join(' ')) || allLabel(current);
+  renderNav();
+  if(current==='home') renderHome(); else {fillInternal(); render();}
+}
+window.addEventListener('hashchange', initFromHash);
 initFromHash();
 updateCartUI();
 </script>
