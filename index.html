@@ -175,12 +175,9 @@ function addToCart(n){const p=products.find(x=>Number(x.number)===Number(n)); if
 function cartTotal(){return cart.reduce((a,x)=>a+(Number(x.selectedPrice||price(x)))*(x.qty||1),0)}
 function cartMessage(){const name=document.getElementById('custName')?.value||''; const phone=document.getElementById('custPhone')?.value||''; const area=document.getElementById('custArea')?.value||''; const date=document.getElementById('custDate')?.value||''; const payment=document.querySelector('input[name="payMethod"]:checked')?.value||''; const note=document.getElementById('custNote')?.value||''; const list=cart.map((p,i)=>`${i+1}) #${p.number} - ${p.name}
 القسم: ${p.category}
-${(p.bookingSummary||[]).join('
-')}
+${(p.bookingSummary||[]).join('\n')}
 الكمية: ${p.qty||1}
-السعر: ${Number(p.selectedPrice||price(p))} ر.ق`).join('
-
-'); return `السلام عليكم، أريد تأكيد حجز من كتالوج الملكة:
+السعر: ${Number(p.selectedPrice||price(p))} ر.ق`).join('\n\n'); return `السلام عليكم، أريد تأكيد حجز من كتالوج الملكة:
 
 ${list}
 
