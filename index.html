@@ -889,6 +889,196 @@ body:before{
   .cartBar,.cartButton{min-width:0 !important;width:calc(100vw - 18px) !important;max-width:none !important}
 }
 
+
+
+/* ===== V18 CART MODAL FIX: no blank space, correct box sizes ===== */
+.modalBox.cartModal{
+  width:min(760px,94vw) !important;
+  max-width:760px !important;
+  display:block !important;
+  grid-template-columns:none !important;
+  height:auto !important;
+  max-height:90vh !important;
+  overflow:hidden !important;
+  margin:auto !important;
+  border-radius:28px !important;
+  background:#fff !important;
+}
+.cartModal .modalInfo{
+  width:100% !important;
+  max-width:none !important;
+  max-height:90vh !important;
+  overflow-y:auto !important;
+  padding:22px !important;
+}
+.cartModal .modalHead{
+  position:sticky !important;
+  top:0 !important;
+  z-index:10 !important;
+  background:linear-gradient(180deg,#fff 80%,rgba(255,255,255,.88)) !important;
+  padding-bottom:12px !important;
+  margin-bottom:8px !important;
+}
+.cartModal .modalHead h2{
+  font-size:28px !important;
+  margin:0 !important;
+}
+.cartModal .cartList{
+  display:grid !important;
+  grid-template-columns:1fr !important;
+  gap:12px !important;
+  margin:12px 0 !important;
+}
+.cartModal .cartItem{
+  display:grid !important;
+  grid-template-columns:84px minmax(0,1fr) 116px !important;
+  gap:12px !important;
+  align-items:center !important;
+  width:100% !important;
+  background:linear-gradient(135deg,#fff,#fffafb) !important;
+  border:1px solid #eadce4 !important;
+  border-radius:20px !important;
+  padding:12px !important;
+}
+.cartModal .cartItem img{
+  width:84px !important;
+  height:84px !important;
+  object-fit:contain !important;
+  border-radius:16px !important;
+  background:linear-gradient(135deg,#fff,#fff8e7) !important;
+  border:1px solid #f0e2e8 !important;
+}
+.cartModal .cartItem h3{
+  font-size:18px !important;
+  line-height:1.35 !important;
+  margin:0 0 4px !important;
+  color:var(--maroon) !important;
+}
+.cartModal .cartItem p{
+  font-size:12px !important;
+  line-height:1.55 !important;
+  margin:0 0 4px !important;
+  color:#766871 !important;
+}
+.cartModal .bookingSummary{
+  font-size:12px !important;
+  line-height:1.65 !important;
+  color:#4f4249 !important;
+  background:#faf7f9 !important;
+  border:1px solid #f0e2e8 !important;
+  border-radius:14px !important;
+  padding:8px 10px !important;
+  max-height:96px !important;
+  overflow:auto !important;
+}
+.cartModal .qtyBox{
+  display:grid !important;
+  grid-template-columns:34px 34px 34px !important;
+  gap:6px !important;
+  justify-content:end !important;
+  align-items:center !important;
+}
+.cartModal .qtyBox b{
+  grid-column:1/-1 !important;
+  text-align:center !important;
+  font-size:14px !important;
+  color:#20151b !important;
+}
+.cartModal .qtyBox button,
+.cartModal .removeBtn{
+  width:34px !important;
+  height:34px !important;
+  border-radius:50% !important;
+  font-size:14px !important;
+  background:#111 !important;
+  color:#fff !important;
+}
+.cartModal .removeBtn{background:#d11b43 !important}
+.cartModal .cartTotal{
+  margin:12px 0 !important;
+  padding:14px !important;
+  border-radius:18px !important;
+  font-size:16px !important;
+}
+.cartModal .cartForm{
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:10px !important;
+  margin-top:12px !important;
+}
+.cartModal .cartForm input,
+.cartModal .cartForm textarea,
+.cartModal .cartForm select{
+  min-height:48px !important;
+  padding:11px 13px !important;
+  border-radius:14px !important;
+  font-size:13px !important;
+}
+.cartModal .payChoices{
+  grid-column:1/-1 !important;
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:10px !important;
+}
+.cartModal .payChoices label{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px !important;
+  min-height:46px !important;
+  background:#faf7f9 !important;
+  border:1px solid #eadce4 !important;
+  border-radius:14px !important;
+  font-weight:900 !important;
+}
+.cartModal .cartForm textarea.full,
+.cartModal .cartForm textarea{
+  grid-column:1/-1 !important;
+  min-height:84px !important;
+}
+.cartModal .modalActions.three{
+  display:grid !important;
+  grid-template-columns:1.2fr 1fr 1fr !important;
+  gap:10px !important;
+  position:static !important;
+  margin-top:14px !important;
+  background:transparent !important;
+}
+.cartModal .modalActions.three button{
+  min-height:48px !important;
+  border-radius:15px !important;
+  font-size:14px !important;
+  padding:10px !important;
+}
+@media(max-width:700px){
+  .modalBox.cartModal{width:min(96vw,560px) !important;max-height:92vh !important}
+  .cartModal .modalInfo{padding:16px !important;max-height:92vh !important}
+  .cartModal .cartItem{
+    grid-template-columns:72px minmax(0,1fr) !important;
+    align-items:start !important;
+  }
+  .cartModal .cartItem img{width:72px !important;height:72px !important}
+  .cartModal .qtyBox{
+    grid-column:1/-1 !important;
+    grid-template-columns:34px 34px 34px 34px !important;
+    justify-content:center !important;
+  }
+  .cartModal .qtyBox b{grid-column:auto !important;display:grid;place-items:center}
+  .cartModal .cartForm,.cartModal .payChoices,.cartModal .modalActions.three{grid-template-columns:1fr !important}
+}
+
+
+
+/* ===== V19 snack package update: 20 persons ===== */
+.priceChoiceGrid{
+  grid-template-columns:repeat(2,minmax(0,240px)) !important;
+  justify-content:end !important;
+  gap:10px !important;
+}
+.priceChoice{min-height:86px !important;padding:11px 13px !important;}
+.priceChoice span{font-size:14px !important}.priceChoice b{font-size:17px !important}.priceChoice small{font-size:11px !important}
+@media(max-width:680px){.priceChoiceGrid{grid-template-columns:1fr !important;justify-content:stretch !important}}
+
 </style>
 </head>
 <body>
@@ -916,7 +1106,8 @@ const app=document.getElementById('app'), q=document.getElementById('q'), nav=do
 let current='home', internal='الجميع';
 let cart=JSON.parse(localStorage.getItem('almalikaCart')||'[]');
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function price(p){return Number(p.priceOneDay||p.priceTwoDays||0)}
+function snackPackage20Price(p){const one=Number(p.priceOneDay||p.priceTwoDays||0), two=Number(p.priceTwoDays||one||0); const step=two>one?(two-one)/2:0; return Math.max(0, Math.round((one-step)/10)*10)}
+function price(p){return (p.category||'')==='السناك والعربات'?snackPackage20Price(p):Number(p.priceOneDay||p.priceTwoDays||0)}
 function duration(p){return p.durationOneDay||p.durationTwoDays||'حسب الحجز'}
 function sectionOf(p){let c=p.category||''; if(c==='السناك والعربات')return 'snacks'; if(c==='تجهيز الحفلات والمناسبات')return 'events'; if(c==='بنود أخرى')return 'other'; return 'bouncies'}
 function allLabel(sec){return 'الجميع'}
@@ -979,12 +1170,12 @@ function clearCart(){cart=[]; saveCart(); openCart();}
 function cartTotal(){return cart.reduce((a,x)=>a+price(x)*(x.qty||1),0)}
 function kindOf(p){const n=Number(p.number), c=p.category||''; if(c.includes('السناك'))return 'snack'; if(c.includes('تجهيز'))return 'event'; if(c.includes('بنود'))return 'other'; return 'bouncy'}
 function firstPrice(p){return Number(p.priceOneDay||p.priceTwoDays||0)}
-function optList(p){const k=kindOf(p), one=Number(p.priceOneDay||0), two=Number(p.priceTwoDays||one||0); if(k==='bouncy')return[{id:'1',label:p.durationOneDay||'يوم واحد',price:one,note:'تركيب وتشغيل'},{id:'2',label:p.durationTwoDays||'يومين',price:two,note:'أفضل للحفلات الطويلة'}]; if(k==='snack'){let mid=two>one?Math.round((one+two)/2/10)*10:one; return[{id:'30',label:'30 شخص',price:one,note:p.durationOneDay||'موظفة • 3 ساعات'},{id:'40',label:'40 شخص',price:mid,note:'موظفة • 3 ساعات'},{id:'50',label:'50 شخص',price:two,note:p.durationTwoDays||'موظفة • 3 ساعات'}]} if(k==='event'){return[{id:'event',label:(p.details||'حسب الباقة').includes('سناك')?'شامل سناك حسب الباقة':'بدون سناك / تجهيز فقط',price:one,note:p.details||'حسب تفاصيل الحفلة'}]} return[{id:'fixed',label:p.durationOneDay||'يوم واحد',price:one,note:p.details||'حسب المناسبة'}]}
+function optList(p){const k=kindOf(p), one=Number(p.priceOneDay||0), two=Number(p.priceTwoDays||one||0); if(k==='bouncy')return[{id:'1',label:p.durationOneDay||'يوم واحد',price:one,note:'تركيب وتشغيل'},{id:'2',label:p.durationTwoDays||'يومين',price:two,note:'أفضل للحفلات الطويلة'}]; if(k==='snack'){let mid=two>one?Math.round((one+two)/2/10)*10:one; let small=snackPackage20Price(p); return[{id:'20',label:'20 شخص',price:small,note:'موظفة • 3 ساعات'},{id:'30',label:'30 شخص',price:one,note:p.durationOneDay||'موظفة • 3 ساعات'},{id:'40',label:'40 شخص',price:mid,note:'موظفة • 3 ساعات'},{id:'50',label:'50 شخص',price:two,note:p.durationTwoDays||'موظفة • 3 ساعات'}]} if(k==='event'){return[{id:'event',label:(p.details||'حسب الباقة').includes('سناك')?'شامل سناك حسب الباقة':'بدون سناك / تجهيز فقط',price:one,note:p.details||'حسب تفاصيل الحفلة'}]} return[{id:'fixed',label:p.durationOneDay||'يوم واحد',price:one,note:p.details||'حسب المناسبة'}]}
 function selectedOpt(p){const v=document.querySelector(`input[name="opt_${p.number}"]:checked`)?.value; return optList(p).find(o=>o.id==v)||optList(p)[0]}
-function detailIntro(p){const k=kindOf(p); if(k==='snack')return 'خدمة سناك للحفلات والمناسبات مع باقات حسب عدد الأطفال ومدة خدمة 3 ساعات تقريباً.'; if(k==='event')return 'ديكور وتجهيز حفلة من قسم تجهيز الحفلات مع خيارات حسب الشمول والتفاصيل المطلوبة.'; if(k==='other')return 'بند إضافي للحفلات والمناسبات، يتم تنسيقه حسب نوع الفعالية ومكان التنفيذ.'; return 'نطاطية آمنة وممتعة للأطفال مع تركيب وتشغيل من فريق الملكة.'}
-function infoHtml(p){const k=kindOf(p); if(k==='snack')return `<div class="infoGrid"><div class="info">🍿 الخدمة<br><b>${esc(p.name)}</b></div><div class="info">⏱️ مدة الخدمة<br><b>${esc(p.durationOneDay||'3 ساعات')}</b></div><div class="info">👧 الباقات<br><b>30 / 40 / 50 شخص</b></div><div class="info">📍 القسم<br><b>السناك والعربات</b></div></div>`; if(k==='event')return `<div class="infoGrid"><div class="info">🎀 الخدمة<br><b>${esc(p.name)}</b></div><div class="info">📏 القياس / العدد<br><b>${esc(p.length||'حسب الطلب')}</b></div><div class="info">📋 التفاصيل<br><b>${esc(p.details||'حسب الباقة')}</b></div><div class="info">📍 القسم<br><b>تجهيز الحفلات والمناسبات</b></div></div>`; if(k==='other')return `<div class="infoGrid"><div class="info">✨ البند<br><b>${esc(p.name)}</b></div><div class="info">⏱️ المدة<br><b>${esc(p.durationOneDay||'حسب الحجز')}</b></div><div class="info">🎈 المناسبة<br><b>${esc(p.age||'حسب المناسبة')}</b></div><div class="info">📍 القسم<br><b>بنود أخرى</b></div></div>`; return `<div class="infoGrid"><div class="info">📏 القياس<br><b>${esc((p.length||'-')+' × '+(p.width||'-')+' × '+(p.height||'-'))}</b></div><div class="info">🎈 القسم<br><b>${esc(p.category)}</b></div><div class="info">👶 العمر<br><b>${esc(p.age||'-')}</b></div><div class="info">🛠️ التشغيل<br><b>تركيب وتشغيل</b></div></div>`}
+function detailIntro(p){const k=kindOf(p); if(k==='snack')return 'خدمة سناك للحفلات والمناسبات مع باقات 20 / 30 / 40 / 50 شخص ومدة خدمة 3 ساعات تقريباً.'; if(k==='event')return 'ديكور وتجهيز حفلة من قسم تجهيز الحفلات مع خيارات حسب الشمول والتفاصيل المطلوبة.'; if(k==='other')return 'بند إضافي للحفلات والمناسبات، يتم تنسيقه حسب نوع الفعالية ومكان التنفيذ.'; return 'نطاطية آمنة وممتعة للأطفال مع تركيب وتشغيل من فريق الملكة.'}
+function infoHtml(p){const k=kindOf(p); if(k==='snack')return `<div class="infoGrid"><div class="info">🍿 الخدمة<br><b>${esc(p.name)}</b></div><div class="info">⏱️ مدة الخدمة<br><b>${esc(p.durationOneDay||'3 ساعات')}</b></div><div class="info">👧 الباقات<br><b>20 / 30 / 40 / 50 شخص</b></div><div class="info">📍 القسم<br><b>السناك والعربات</b></div></div>`; if(k==='event')return `<div class="infoGrid"><div class="info">🎀 الخدمة<br><b>${esc(p.name)}</b></div><div class="info">📏 القياس / العدد<br><b>${esc(p.length||'حسب الطلب')}</b></div><div class="info">📋 التفاصيل<br><b>${esc(p.details||'حسب الباقة')}</b></div><div class="info">📍 القسم<br><b>تجهيز الحفلات والمناسبات</b></div></div>`; if(k==='other')return `<div class="infoGrid"><div class="info">✨ البند<br><b>${esc(p.name)}</b></div><div class="info">⏱️ المدة<br><b>${esc(p.durationOneDay||'حسب الحجز')}</b></div><div class="info">🎈 المناسبة<br><b>${esc(p.age||'حسب المناسبة')}</b></div><div class="info">📍 القسم<br><b>بنود أخرى</b></div></div>`; return `<div class="infoGrid"><div class="info">📏 القياس<br><b>${esc((p.length||'-')+' × '+(p.width||'-')+' × '+(p.height||'-'))}</b></div><div class="info">🎈 القسم<br><b>${esc(p.category)}</b></div><div class="info">👶 العمر<br><b>${esc(p.age||'-')}</b></div><div class="info">🛠️ التشغيل<br><b>تركيب وتشغيل</b></div></div>`}
 function priceHtml(p){return `<h3>${kindOf(p)==='bouncy'?'اختيار مدة الحجز والسعر':'اختيار الباقة والسعر'}</h3><div class="priceChoiceGrid">${optList(p).map((o,i)=>`<label class="priceChoice"><input type="radio" name="opt_${p.number}" value="${esc(o.id)}" ${i===0?'checked':''}><span>${esc(o.label)}</span><b>${Number(o.price||0)} ر.ق</b>${o.note?`<small>${esc(o.note)}</small>`:''}</label>`).join('')}</div>`}
-function formHtml(p){const k=kindOf(p), n=p.number; if(k==='snack')return `<h3>بيانات حجز العربة</h3><div class="bookingSimple"><input type="date" id="date_${n}"><select id="period_${n}"><option value="">اختار وقت الخدمة</option><option>10:00 صباحاً</option><option>1:00 ظهراً</option><option>4:00 عصراً</option><option>مسائي</option></select><select id="occasion_${n}"><option value="">نوع المناسبة</option><option>عيد ميلاد</option><option>تخرج</option><option>فعالية منزلية</option><option>مدرسة / روضة</option><option>أخرى</option></select><select id="place_${n}"><option value="">مكان التقديم</option><option>منزل</option><option>حديقة</option><option>قاعة</option><option>مدرسة / روضة</option><option>أخرى</option></select><input id="kids_${n}" placeholder="عدد الأطفال الفعلي"><input id="flavor_${n}" placeholder="النكهة / الملاحظات الخاصة"></div><div class="workNotice">🍿 السعر حسب الباقة المختارة وعدد الأطفال ومدة الخدمة.</div><textarea id="note_${n}" placeholder="ملاحظات: مكان العربة، الكهرباء، عدد الأطفال الفعلي..."></textarea>`; if(k==='event')return `<h3>بيانات حجز تجهيز الحفلة</h3><div class="bookingSimple"><input type="date" id="date_${n}"><select id="period_${n}"><option value="">اختار وقت التركيب</option><option>صباحي</option><option>عصري</option><option>مسائي</option></select><select id="occasion_${n}"><option value="">نوع المناسبة</option><option>عيد ميلاد</option><option>تخرج</option><option>استقبال مولود</option><option>فعالية مدرسية</option><option>خطوبة / مناسبة خاصة</option><option>أخرى</option></select><select id="place_${n}"><option value="">مكان التنفيذ</option><option>منزل</option><option>قاعة</option><option>مدرسة / روضة</option><option>خارجي</option></select><input id="child_${n}" placeholder="اسم الطفل / النص المطلوب على البنر"><input id="theme_${n}" placeholder="الثيم أو الشخصية المطلوبة"><input id="colors_${n}" placeholder="ألوان الديكور"><input id="setup_${n}" placeholder="مكان التركيب داخل الموقع"></div><div class="workNotice">🎀 اكتب الاسم والثيم والألوان المطلوبة بوضوح.</div><textarea id="note_${n}" placeholder="ملاحظات: تفاصيل البنر، المقاس، عدد الطاولات، مكان التركيب..."></textarea>`; if(k==='other')return `<h3>بيانات حجز البند الإضافي</h3><div class="bookingSimple"><input type="date" id="date_${n}"><select id="period_${n}"><option value="">اختار الوقت</option><option>صباحي</option><option>عصري</option><option>مسائي</option></select><select id="occasion_${n}"><option value="">نوع المناسبة</option><option>عيد ميلاد</option><option>تخرج</option><option>مدرسة / روضة</option><option>أخرى</option></select><select id="place_${n}"><option value="">مكان الاستخدام</option><option>منزل</option><option>قاعة</option><option>خارجي</option></select>${Number(n)===116?`<input id="character_${n}" placeholder="اسم الشخصية المطلوبة">`:''}<input type="number" min="1" value="1" id="qty_${n}" placeholder="الكمية"></div><div class="workNotice">✨ بعض البنود تحتاج تنسيق مسبق حسب الفعالية.</div><textarea id="note_${n}" placeholder="ملاحظات إضافية..."></textarea>`; return `<h3>بيانات الحجز</h3><div class="bookingSimple"><input type="date" id="date_${n}"><select id="period_${n}"><option value="">اختار وقت التركيب</option><option>الصباح</option><option>الظهر</option><option>العصر</option><option>مسائي</option></select><select id="place_${n}"><option value="">مكان التركيب</option><option>منزل</option><option>حديقة</option><option>قاعة</option><option>مدرسة / روضة</option></select><input id="kids_${n}" placeholder="عدد الأطفال المتوقع"></div><div class="workNotice">⏰ يفضّل تحديد وقت التركيب صباحاً أو عصراً حسب توفر الفريق.</div><textarea id="note_${n}" placeholder="ملاحظات: مكان التركيب، الكهرباء، بوابة الدخول، عدد الأطفال..."></textarea>`}
+function formHtml(p){const k=kindOf(p), n=p.number; if(k==='snack')return `<h3>بيانات حجز العربة</h3><div class="bookingSimple"><input type="date" id="date_${n}"><select id="period_${n}"><option value="">اختار وقت الخدمة</option><option>10:00 صباحاً</option><option>1:00 ظهراً</option><option>4:00 عصراً</option><option>مسائي</option></select><select id="occasion_${n}"><option value="">نوع المناسبة</option><option>عيد ميلاد</option><option>تخرج</option><option>فعالية منزلية</option><option>مدرسة / روضة</option><option>أخرى</option></select><select id="place_${n}"><option value="">مكان التقديم</option><option>منزل</option><option>حديقة</option><option>قاعة</option><option>مدرسة / روضة</option><option>أخرى</option></select><input id="kids_${n}" placeholder="عدد الأطفال الفعلي"><input id="flavor_${n}" placeholder="النكهة / الملاحظات الخاصة"></div><div class="workNotice">🍿 السعر حسب الباقة المختارة: 20 / 30 / 40 / 50 شخص ومدة الخدمة 3 ساعات.</div><textarea id="note_${n}" placeholder="ملاحظات: مكان العربة، الكهرباء، عدد الأطفال الفعلي..."></textarea>`; if(k==='event')return `<h3>بيانات حجز تجهيز الحفلة</h3><div class="bookingSimple"><input type="date" id="date_${n}"><select id="period_${n}"><option value="">اختار وقت التركيب</option><option>صباحي</option><option>عصري</option><option>مسائي</option></select><select id="occasion_${n}"><option value="">نوع المناسبة</option><option>عيد ميلاد</option><option>تخرج</option><option>استقبال مولود</option><option>فعالية مدرسية</option><option>خطوبة / مناسبة خاصة</option><option>أخرى</option></select><select id="place_${n}"><option value="">مكان التنفيذ</option><option>منزل</option><option>قاعة</option><option>مدرسة / روضة</option><option>خارجي</option></select><input id="child_${n}" placeholder="اسم الطفل / النص المطلوب على البنر"><input id="theme_${n}" placeholder="الثيم أو الشخصية المطلوبة"><input id="colors_${n}" placeholder="ألوان الديكور"><input id="setup_${n}" placeholder="مكان التركيب داخل الموقع"></div><div class="workNotice">🎀 اكتب الاسم والثيم والألوان المطلوبة بوضوح.</div><textarea id="note_${n}" placeholder="ملاحظات: تفاصيل البنر، المقاس، عدد الطاولات، مكان التركيب..."></textarea>`; if(k==='other')return `<h3>بيانات حجز البند الإضافي</h3><div class="bookingSimple"><input type="date" id="date_${n}"><select id="period_${n}"><option value="">اختار الوقت</option><option>صباحي</option><option>عصري</option><option>مسائي</option></select><select id="occasion_${n}"><option value="">نوع المناسبة</option><option>عيد ميلاد</option><option>تخرج</option><option>مدرسة / روضة</option><option>أخرى</option></select><select id="place_${n}"><option value="">مكان الاستخدام</option><option>منزل</option><option>قاعة</option><option>خارجي</option></select>${Number(n)===116?`<input id="character_${n}" placeholder="اسم الشخصية المطلوبة">`:''}<input type="number" min="1" value="1" id="qty_${n}" placeholder="الكمية"></div><div class="workNotice">✨ بعض البنود تحتاج تنسيق مسبق حسب الفعالية.</div><textarea id="note_${n}" placeholder="ملاحظات إضافية..."></textarea>`; return `<h3>بيانات الحجز</h3><div class="bookingSimple"><input type="date" id="date_${n}"><select id="period_${n}"><option value="">اختار وقت التركيب</option><option>الصباح</option><option>الظهر</option><option>العصر</option><option>مسائي</option></select><select id="place_${n}"><option value="">مكان التركيب</option><option>منزل</option><option>حديقة</option><option>قاعة</option><option>مدرسة / روضة</option></select><input id="kids_${n}" placeholder="عدد الأطفال المتوقع"></div><div class="workNotice">⏰ يفضّل تحديد وقت التركيب صباحاً أو عصراً حسب توفر الفريق.</div><textarea id="note_${n}" placeholder="ملاحظات: مكان التركيب، الكهرباء، بوابة الدخول، عدد الأطفال..."></textarea>`}
 function collectBooking(p){const n=p.number,k=kindOf(p), date=document.getElementById('date_'+n)?.value||'', period=document.getElementById('period_'+n)?.value||'', place=document.getElementById('place_'+n)?.value||'', note=document.getElementById('note_'+n)?.value||'', opt=selectedOpt(p); if(!date||!period){alert('يرجى تحديد التاريخ والوقت قبل الإضافة للسلة');return null} let extra=[]; ['occasion','kids','flavor','child','theme','colors','setup','character','qty'].forEach(id=>{const v=document.getElementById(id+'_'+n)?.value; if(v)extra.push(`${id==='occasion'?'المناسبة':id==='kids'?'عدد الأطفال':id==='flavor'?'النكهة':id==='child'?'الاسم/النص':id==='theme'?'الثيم':id==='colors'?'الألوان':id==='setup'?'مكان التركيب':id==='character'?'الشخصية':'الكمية'}: ${v}`)}); const qty=Math.max(1,parseInt(document.getElementById('qty_'+n)?.value||'1',10)); const total=Number(opt.price||0)*(k==='other' && document.getElementById('qty_'+n)?qty:1); return {bookingKind:k,bookingDate:date,period,place,selectionLabel:opt.label,selectedPrice:total,itemNote:note,bookingSummary:[`📅 التاريخ: ${date}`,`🕒 الوقت: ${period}`,place?`📍 المكان: ${place}`:'',`📦 الخيار: ${opt.label}`,`💵 السعر: ${total} ر.ق`,...extra].filter(Boolean)}}
 function addToCart(n){const p=products.find(x=>Number(x.number)===Number(n)); if(!p)return; const b=collectBooking(p); if(!b)return; const old=cart.find(x=>Number(x.number)===Number(n)&&x.bookingDate===b.bookingDate&&x.period===b.period&&x.selectionLabel===b.selectionLabel); if(old){old.qty=(old.qty||1)+1}else{cart.push({...p,...b,qty:1})} saveCart(); closeModal(); render(); alert('تمت إضافة البند للسلة ✅')}
 function cartTotal(){return cart.reduce((a,x)=>a+(Number(x.selectedPrice||price(x)))*(x.qty||1),0)}
@@ -1006,7 +1197,7 @@ ${list}
 طريقة السداد: ${payment}
 ملاحظات عامة: ${note}`}
 function sendCartWa(){if(!cart.length){alert('السلة فارغة');return} window.open('https://wa.me/97433317720?text='+encodeURIComponent(cartMessage()),'_blank')}
-function openCart(){modal.innerHTML=`<div class="modalBox" style="grid-template-columns:1fr"><div class="modalInfo"><div class="modalHead"><h2>🛒 سلة الحجز</h2><button class="close" onclick="closeModal()">×</button></div>${cart.length?`<div class="cartList">${cart.map(p=>`<div class="cartItem"><img src="${esc(p.image)}" onerror="this.src='${p.number}.jpg';this.onerror=null"><div><h3>#${p.number} - ${esc(p.name)}</h3><p>${esc(p.category)} — ${Number(p.selectedPrice||price(p))} ر.ق × ${p.qty||1}</p><div class="bookingSummary">${(p.bookingSummary||[]).map(x=>esc(x)).join('<br>')}${p.itemNote?'<br>📝 '+esc(p.itemNote):''}</div></div><div class="qtyBox"><button onclick="changeQty(${p.number},1)">+</button><b>${p.qty||1}</b><button onclick="changeQty(${p.number},-1)">−</button><button class="removeBtn" onclick="removeFromCart(${p.number})">×</button></div></div>`).join('')}</div><div class="cartTotal">الإجمالي التقريبي: ${cartTotal()} ر.ق</div><div class="cartForm"><input id="custName" placeholder="اسم العميل"><input id="custPhone" placeholder="رقم الجوال"><input id="custArea" placeholder="المنطقة / رابط الموقع"><input id="custDate" placeholder="تاريخ عام للطلب"><div class="payChoices"><label><input type="radio" name="payMethod" value="كاش" checked> كاش</label><label><input type="radio" name="payMethod" value="تحويل / بطاقة"> تحويل / بطاقة</label></div><textarea id="custNote" class="full" placeholder="ملاحظات عامة للطلب"></textarea></div><div class="modalActions three"><button onclick="sendCartWa()" style="background:var(--green);color:#fff">إرسال السلة واتساب</button><button onclick="clearCart()">تفريغ السلة</button><button onclick="closeModal()">متابعة التسوق</button></div>`:'<div class="empty">السلة فارغة — اضغط “احجزها” من أي منتج لإدخال بيانات الحجز.</div><div class="modalActions"><button onclick="closeModal()">متابعة التسوق</button><button onclick="generalWa()" style="background:var(--green);color:#fff">استفسار واتساب</button></div>'}</div></div>`; modal.classList.add('show')}
+function openCart(){modal.innerHTML=`<div class="modalBox cartModal"><div class="modalInfo"><div class="modalHead"><h2>🛒 سلة الحجز</h2><button class="close" onclick="closeModal()">×</button></div>${cart.length?`<div class="cartList">${cart.map(p=>`<div class="cartItem"><img src="${esc(p.image)}" onerror="this.src='${p.number}.jpg';this.onerror=null"><div><h3>#${p.number} - ${esc(p.name)}</h3><p>${esc(p.category)} — ${Number(p.selectedPrice||price(p))} ر.ق × ${p.qty||1}</p><div class="bookingSummary">${(p.bookingSummary||[]).map(x=>esc(x)).join('<br>')}${p.itemNote?'<br>📝 '+esc(p.itemNote):''}</div></div><div class="qtyBox"><button onclick="changeQty(${p.number},1)">+</button><b>${p.qty||1}</b><button onclick="changeQty(${p.number},-1)">−</button><button class="removeBtn" onclick="removeFromCart(${p.number})">×</button></div></div>`).join('')}</div><div class="cartTotal">الإجمالي التقريبي: ${cartTotal()} ر.ق</div><div class="cartForm"><input id="custName" placeholder="اسم العميل"><input id="custPhone" placeholder="رقم الجوال"><input id="custArea" placeholder="المنطقة / رابط الموقع"><input id="custDate" placeholder="تاريخ عام للطلب"><div class="payChoices"><label><input type="radio" name="payMethod" value="كاش" checked> كاش</label><label><input type="radio" name="payMethod" value="تحويل / بطاقة"> تحويل / بطاقة</label></div><textarea id="custNote" class="full" placeholder="ملاحظات عامة للطلب"></textarea></div><div class="modalActions three"><button onclick="sendCartWa()" style="background:var(--green);color:#fff">إرسال السلة واتساب</button><button onclick="clearCart()">تفريغ السلة</button><button onclick="closeModal()">متابعة التسوق</button></div>`:'<div class="empty">السلة فارغة — اضغط “احجزها” من أي منتج لإدخال بيانات الحجز.</div><div class="modalActions"><button onclick="closeModal()">متابعة التسوق</button><button onclick="generalWa()" style="background:var(--green);color:#fff">استفسار واتساب</button></div>'}</div></div>`; modal.classList.add('show')}
 function productMsg(p){let opts=optList(p).map(o=>`- ${o.label}: ${o.price} ر.ق`).join('\n'); return `السلام عليكم، أريد الاستفسار عن:
 #${p.number} - ${p.name}
 القسم: ${p.category}
