@@ -2148,24 +2148,20 @@ function hasCustomerLocation(d){return !!d.map || (!!d.zone && !!d.street && !!d
 function validateCustomerData(show=true){const d=getCustomerData(); const missing=[]; if(!d.name)missing.push('اسم العميل'); if(!d.phone)missing.push('رقم الجوال'); if(!d.date)missing.push('تاريخ الطلب'); if(!hasCustomerLocation(d))missing.push('الموقع: رابط خرائط أو رقم المنطقة + الشارع + المنزل'); if(missing.length){if(show)alert('يرجى تعبئة البيانات التالية قبل الإرسال للشركة:\n- '+missing.join('\n- ')); return false} return true}
 function updateCartSendState(){const btn=document.getElementById('sendCartBtn'); if(!btn)return; const ok=validateCustomerData(false); btn.classList.toggle('sendDisabled',!ok); btn.title=ok?'':'أكمل بيانات العميل والموقع قبل الإرسال للشركة'}
 function useMyLocation(){if(!navigator.geolocation){alert('المتصفح لا يدعم تحديد الموقع، استخدم رابط الخرائط أو أرقام المنطقة/الشارع/المنزل.');return} navigator.geolocation.getCurrentPosition(pos=>{const lat=pos.coords.latitude.toFixed(6), lng=pos.coords.longitude.toFixed(6); const el=document.getElementById('custMap'); if(el){el.value=`https://maps.google.com/?q=${lat},${lng}`; updateCartSendState(); showToast('✅ تم إضافة رابط الموقع')}},()=>alert('لم يتم السماح بتحديد الموقع. يمكنك إدخال رابط الخرائط أو رقم المنطقة والشارع والمنزل.'),{enableHighAccuracy:true,timeout:10000})}
-function cartMessage(){const d=getCustomerData(); const locationLine=d.map?`رابط الموقع: ${d.map}`:`رقم المنطقة: ${d.zone}\nرقم الشارع: ${d.street}\nرقم المنزل: ${d.house}`; const list=cart.map((p,i)=>`${i+1}) #${p.number} - ${p.name}
-القسم: ${p.category}
-${(p.bookingSummary||[]).join('\n')}
-الكمية: ${p.qty||1}
-السعر: ${Number(p.selectedPrice||price(p))} ر.ق${productImageUrl(p)?`
-صورة المنتج: ${productImageUrl(p)}`:''}`).join('\n\n'); return `السلام عليكم، أريد تأكيد حجز من كتالوج الملكة:
+function cartMessage(){const d=getCustomerData(); const locationLine=d.map?`الموقع: ${d.map}`:`الموقع: منطقة ${d.zone}، شارع ${d.street}، منزل ${d.house}`; const list=cart.map((p,i)=>{const option=p.selectionLabel?` | ${p.selectionLabel}`:''; const qty=p.qty||1; const unit=Number(p.selectedPrice||price(p)); return `${i+1}) #${p.number} - ${p.name}${option} | الكمية ${qty} | ${unit} ر.ق`}).join('
+'); return `السلام عليكم، طلب حجز جديد من كتالوج الملكة 👑
 
 ${list}
 
-الإجمالي التقريبي: ${cartTotal()} ر.ق
+الإجمالي: ${cartTotal()} ر.ق
 
 بيانات العميل:
 الاسم: ${d.name}
 الجوال: ${d.phone}
-تاريخ عام للطلب: ${d.date}
+التاريخ: ${d.date}
 ${locationLine}
-طريقة السداد: ${d.payment}
-ملاحظات عامة: ${d.note}`}
+الدفع: ${d.payment}${d.note?`
+ملاحظات: ${d.note}`:''}`}
 function sendCartWa(){if(!cart.length){alert('السلة فارغة');return} if(!validateCustomerData(true))return; window.open('https://wa.me/97433317720?text='+encodeURIComponent(cartMessage()),'_blank')}
 
 function quickSelectedOpt(p){const v=document.querySelector(`input[name="quick_opt_${p.number}"]:checked`)?.value; return optList(p).find(o=>String(o.id)===String(v))||optList(p)[0]}
