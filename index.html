@@ -3,145 +3,160 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>إصلاح كتالوج الملكة v150</title>
+<title>إصلاح كتالوج الملكة v150 - نسخة مصححة</title>
 <style>
-  body{font-family:Tahoma,Arial,sans-serif;background:#f7f4f6;color:#23171d;margin:0;padding:24px;line-height:1.8}
-  .box{max-width:780px;margin:auto;background:#fff;border:1px solid #eadce4;border-radius:22px;padding:24px;box-shadow:0 16px 40px rgba(90,28,44,.08)}
-  h1{margin:0 0 10px;color:#8b1733}
-  .note{background:#fff7df;border:1px dashed #d4af37;border-radius:16px;padding:12px;margin:14px 0;font-weight:bold}
+  *{box-sizing:border-box}
+  body{font-family:Tahoma,Arial,sans-serif;background:#f8f2f5;color:#23171d;margin:0;padding:24px;line-height:1.8}
+  .box{max-width:780px;margin:40px auto;background:#fff;border:1px solid #eadce4;border-radius:22px;padding:24px;box-shadow:0 16px 40px rgba(90,28,44,.08)}
+  h1{margin:0 0 10px;color:#98183a;text-align:center}
+  .note{background:#fff8e7;border:1px dashed #d4af37;border-radius:16px;padding:14px;margin:16px 0;font-weight:bold;text-align:center}
   input,button{font-family:inherit}
-  input[type=file]{width:100%;background:#fafafa;border:1px solid #ddd;border-radius:14px;padding:14px;margin:12px 0}
-  button{background:#8b1733;color:#fff;border:0;border-radius:999px;padding:13px 22px;font-weight:900;cursor:pointer}
+  input[type=file]{width:100%;background:#fafafa;border:1px solid #ddd;border-radius:14px;padding:14px;margin:12px 0;direction:ltr}
+  button{display:block;margin:14px auto 0;background:#98183a;color:#fff;border:0;border-radius:999px;padding:13px 24px;font-weight:900;cursor:pointer}
   button:disabled{opacity:.45;cursor:not-allowed}
-  pre{background:#111;color:#fff;border-radius:14px;padding:14px;white-space:pre-wrap;direction:ltr;text-align:left;max-height:260px;overflow:auto}
-  .ok{color:#16803a;font-weight:bold}.bad{color:#b31333;font-weight:bold}
+  pre{background:#111;color:#fff;border-radius:14px;padding:14px;white-space:pre-wrap;direction:rtl;text-align:right;max-height:260px;overflow:auto}
+  .small{font-size:13px;color:#665;text-align:center}
 </style>
 </head>
 <body>
 <div class="box">
   <h1>إصلاح كتالوج الملكة v150</h1>
   <div class="note">
-    اختر ملف الكتالوج الحالي، خصوصاً <b>almalika_catalog_v149_fix_details_buttons.html</b>،
-    وسيتم تنزيل نسخة جديدة v150 بعد حذف كود تعطيل زر التفاصيل فقط.
+    اختر ملف الكتالوج الحالي v149، وسيتم تنزيل نسخة جديدة بعد حذف كود تعطيل زر التفاصيل فقط.
   </div>
   <input id="file" type="file" accept=".html,.htm,text/html">
   <button id="btn" disabled>إصلاح وتنزيل نسخة v150</button>
+  <p class="small">لا يتم رفع الملف لأي مكان. الإصلاح يتم داخل المتصفح فقط.</p>
   <h3>نتيجة الإصلاح</h3>
   <pre id="log">اختر الملف أولاً...</pre>
 </div>
 
 <script>
-const fileInput = document.getElementById('file');
-const btn = document.getElementById('btn');
-const log = document.getElementById('log');
-let selectedFile = null;
+(function(){
+  const fileInput = document.getElementById('file');
+  const btn = document.getElementById('btn');
+  const log = document.getElementById('log');
+  let selectedFile = null;
 
-fileInput.addEventListener('change', () => {
-  selectedFile = fileInput.files && fileInput.files[0];
-  btn.disabled = !selectedFile;
-  log.textContent = selectedFile ? ('جاهز لإصلاح: ' + selectedFile.name) : 'اختر الملف أولاً...';
-});
+  fileInput.addEventListener('change', function(){
+    selectedFile = fileInput.files && fileInput.files[0];
+    btn.disabled = !selectedFile;
+    log.textContent = selectedFile ? ('جاهز لإصلاح: ' + selectedFile.name) : 'اختر الملف أولاً...';
+  });
 
-function countMatches(text, re){
-  const m = text.match(re);
-  return m ? m.length : 0;
-}
-
-function removeBalancedIIFE(text, marker){
-  let idx = text.indexOf(marker);
-  if(idx < 0) return {text, removed:0};
-
-  let start = text.lastIndexOf("(function", idx);
-  if(start < 0) start = text.lastIndexOf("<script", idx);
-  if(start < 0) start = idx;
-
-  let endCandidates = [
-    text.indexOf("})();", idx),
-    text.indexOf("</script>", idx)
-  ].filter(x => x >= 0);
-
-  if(!endCandidates.length) return {text, removed:0};
-
-  let end = Math.min(...endCandidates);
-  if(text.slice(end, end+5) === "})();") end += 5;
-
-  return {text: text.slice(0,start) + "\n\n/* v150: removed broken details-button interception block */\n\n" + text.slice(end), removed:1};
-}
-
-function repairCatalog(src){
-  let out = src;
-  let removed = 0;
-  const before = out;
-
-  // 1) حذف بلوك v149 الذي يمسك زر تفاصيل ويوقف الحدث الأصلي
-  let r = removeBalancedIIFE(out, "إصلاح زر تفاصيل: أولوية");
-  out = r.text; removed += r.removed;
-
-  // 2) حذف بلوك v139 القديم إذا موجود لأنه كان يمنع الضغط الأصلي
-  r = removeBalancedIIFE(out, "إصلاح زر التفاصيل حتى لو onclick القديم تعطل");
-  out = r.text; removed += r.removed;
-
-  // 3) حذف أي مستمع click capture مخصوص بتفاصيل بقي داخل الملف
-  const dangerousClickBlocks = [
-    /document\.addEventListener\(\s*['"]click['"]\s*,\s*function\s*\(e\)\s*\{[\s\S]{0,2500}?txt\s*===\s*['"]تفاصيل['"][\s\S]{0,2500}?\}\s*,\s*true\s*\)\s*;?/g,
-    /document\.addEventListener\(\s*['"]click['"]\s*,\s*\(e\)\s*=>\s*\{[\s\S]{0,2500}?تفاصيل[\s\S]{0,2500}?\}\s*,\s*true\s*\)\s*;?/g
-  ];
-  for(const re of dangerousClickBlocks){
-    const c = countMatches(out, re);
-    if(c){ out = out.replace(re, "\n/* v150: removed dangerous details click capture listener */\n"); removed += c; }
+  function countMatches(text, re){
+    const m = text.match(re);
+    return m ? m.length : 0;
   }
 
-  // 4) حذف تغليف openProduct الخاص بـ v149/v139 إذا بقي منفصل
-  const wrappers = [
-    /if\s*\(\s*typeof\s+window\.openProduct\s*===\s*['"]function['"][\s\S]{0,200}?v149Fixed[\s\S]{0,1500}?window\.openProduct\.v149Fixed\s*=\s*true\s*;\s*\}\s*/g,
-    /const\s+oldOpen\s*=\s*window\.openProduct\s*;[\s\S]{0,1800}?window\.openProduct\.v139\s*=\s*true\s*;\s*\}\s*/g
-  ];
-  for(const re of wrappers){
-    const c = countMatches(out, re);
-    if(c){ out = out.replace(re, "\n/* v150: removed openProduct wrapper that could break details */\n"); removed += c; }
+  function removeScriptContaining(text, marker){
+    const idx = text.indexOf(marker);
+    if(idx < 0) return {text:text, removed:0};
+
+    let start = text.lastIndexOf('<script', idx);
+    let end = text.indexOf('</' + 'script>', idx);
+
+    if(start >= 0 && end >= 0){
+      end += 9;
+      return {
+        text: text.slice(0,start) + '\n<!-- v150: removed broken details interception script -->\n' + text.slice(end),
+        removed: 1
+      };
+    }
+
+    start = text.lastIndexOf('(function', idx);
+    end = text.indexOf('})();', idx);
+    if(start >= 0 && end >= 0){
+      end += 5;
+      return {
+        text: text.slice(0,start) + '\n/* v150: removed broken details interception function */\n' + text.slice(end),
+        removed: 1
+      };
+    }
+
+    return {text:text, removed:0};
   }
 
-  // 5) إضافة علامة نسخة فقط، بدون التدخل بالأزرار
-  if(!out.includes("almalika-v150-details-safe")){
-    out = out.replace("</body>", `
-<script id="almalika-v150-details-safe">
-/*
-  v150:
-  - لا يوجد document click capture لزر تفاصيل.
-  - لا يوجد preventDefault/stopImmediatePropagation على زر تفاصيل.
-  - زر التفاصيل يرجع يعتمد على onclick الأصلي: openProduct(productNumber).
-*/
-console.log("Almalika v150: details buttons restored to original onclick behavior.");
-</script>
-</body>`);
+  function repairCatalog(src){
+    let out = src;
+    let removed = 0;
+
+    [
+      'إصلاح زر تفاصيل: أولوية',
+      'إصلاح زر التفاصيل حتى لو onclick القديم تعطل',
+      'txt===\'تفاصيل\'',
+      'txt==="تفاصيل"',
+      'stopImmediatePropagation',
+      'v149Fixed',
+      'v139'
+    ].forEach(function(marker){
+      const r = removeScriptContaining(out, marker);
+      out = r.text;
+      removed += r.removed;
+    });
+
+    const dangerous = [
+      /document\.addEventListener\(\s*['"]click['"]\s*,\s*function\s*\(e\)\s*\{[\s\S]{0,4000}?تفاصيل[\s\S]{0,4000}?\}\s*,\s*true\s*\)\s*;?/g,
+      /document\.addEventListener\(\s*['"]click['"]\s*,\s*\(e\)\s*=>\s*\{[\s\S]{0,4000}?تفاصيل[\s\S]{0,4000}?\}\s*,\s*true\s*\)\s*;?/g,
+      /window\.openProduct\s*=\s*function\s*\([^)]*\)\s*\{[\s\S]{0,4000}?v149Fixed[\s\S]{0,4000}?\};?/g,
+      /window\.openProduct\s*=\s*function\s*\([^)]*\)\s*\{[\s\S]{0,4000}?v139[\s\S]{0,4000}?\};?/g
+    ];
+
+    dangerous.forEach(function(re){
+      const c = countMatches(out, re);
+      if(c){
+        out = out.replace(re, '\n/* v150: removed dangerous details override */\n');
+        removed += c;
+      }
+    });
+
+    if(!out.includes('almalika-v150-details-safe')){
+      const safeNote =
+        '<script id="almalika-v150-details-safe">\n' +
+        'console.log("Almalika v150: details buttons restored to original onclick behavior.");\n' +
+        '</' + 'script>\n';
+
+      if(out.includes('</body>')){
+        out = out.replace('</body>', safeNote + '</body>');
+      }else{
+        out += '\n' + safeNote;
+      }
+    }
+
+    return {out:out, removed:removed};
   }
 
-  return {out, removed, changed: out !== before};
-}
+  btn.addEventListener('click', async function(){
+    if(!selectedFile) return;
 
-btn.addEventListener('click', async () => {
-  if(!selectedFile) return;
-  const src = await selectedFile.text();
-  const result = repairCatalog(src);
+    try{
+      const src = await selectedFile.text();
+      const result = repairCatalog(src);
 
-  const originalName = selectedFile.name.replace(/\.(html?|txt)$/i, '');
-  const newName = originalName.replace(/v\d+/i, 'v150') + '_details_fixed.html';
-  const blob = new Blob([result.out], {type:'text/html;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = newName;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+      const originalName = selectedFile.name.replace(/\.(html?|txt)$/i, '');
+      const newName = originalName.replace(/v\d+/i, 'v150') + '_details_fixed.html';
 
-  log.innerHTML =
-    'الملف الأصلي: ' + selectedFile.name + '\\n' +
-    'الملف الجديد: ' + newName + '\\n' +
-    'عدد البلوكات/الأجزاء المحذوفة: ' + result.removed + '\\n' +
-    (result.changed ? 'تم الإصلاح ✅' : 'لم يتم العثور على كود التعطيل المحدد ⚠️');
-});
+      const blob = new Blob([result.out], {type:'text/html;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = newName;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+
+      log.textContent =
+        'تم الإصلاح ✅\n' +
+        'الملف الأصلي: ' + selectedFile.name + '\n' +
+        'الملف الجديد: ' + newName + '\n' +
+        'عدد أكواد التعطيل المحذوفة: ' + result.removed + '\n\n' +
+        'افتح الملف الجديد وجرب زر التفاصيل.';
+    }catch(err){
+      log.textContent = 'صار خطأ أثناء الإصلاح: ' + err.message;
+    }
+  });
+})();
 </script>
 </body>
 </html>
