@@ -10972,5 +10972,149 @@ textarea.requiredCustomerField:focus{
 })();
 </script>
 
+
+<style id="almalika-v276-hide-empty-snack-images">
+.product.noCardImage{grid-template-columns:minmax(0,1fr)!important}
+.product.noCardImage .pic{display:none!important}
+.product.noCardImage .body{grid-column:1/-1!important}
+#modal .modalBox.noModalImage{grid-template-columns:1fr!important}
+#modal .modalPic.noModalImage{display:none!important}
+.quickShopPic.noQuickImage{display:none!important}
+</style>
+<script id="almalika-v276-hide-empty-snack-images">
+(function(){
+  function getNumFromText(v){return String(v||'').replace(/[^0-9]/g,'')}
+  function getProductByNumber(n){
+    try{return (window.products||products||[]).find(x=>Number(x.number)===Number(n))||null}catch(e){return null}
+  }
+  function isSnackProduct(p){
+    if(!p) return false;
+    try{ return (typeof kindOf==='function' ? kindOf(p)==='snack' : String(p.category||'').includes('السناك')); }catch(e){ return String(p.category||'').includes('السناك'); }
+  }
+  function cardNumber(card){
+    return getNumFromText(card?.querySelector('.num')?.textContent || card?.getAttribute('data-number') || '');
+  }
+  function hideCardIfEmpty(card){
+    try{
+      if(!card) return;
+      const n = cardNumber(card);
+      const p = getProductByNumber(n);
+      if(!isSnackProduct(p)) return;
+      const pic = card.querySelector('.pic');
+      const img = pic && pic.querySelector('img');
+      const missing = !pic || pic.classList.contains('imgMissing') || !img || !img.getAttribute('src') || /^(?:\s*|undefined|null)$/i.test(img.getAttribute('src'));
+      if(missing){
+        card.classList.add('noCardImage');
+        if(pic) pic.removeAttribute('onclick');
+      }else{
+        card.classList.remove('noCardImage');
+      }
+    }catch(e){}
+  }
+  function scanCards(root=document){
+    try{ (root||document).querySelectorAll('.product').forEach(hideCardIfEmpty); }catch(e){}
+  }
+  function hideModalIfEmpty(n){
+    try{
+      const p = getProductByNumber(n || window.__lastOpenSnackImageNumber || 0);
+      if(!isSnackProduct(p)) return;
+      const modal = document.getElementById('modal') || document.querySelector('.modal');
+      if(!modal) return;
+      const box = modal.querySelector('.modalBox');
+      const pic = modal.querySelector('.modalPic');
+      const img = pic && pic.querySelector('img');
+      const missing = !pic || pic.classList.contains('imgMissing') || !img || !img.getAttribute('src') || /^(?:\s*|undefined|null)$/i.test(img.getAttribute('src'));
+      if(missing){
+        if(box) box.classList.add('noModalImage');
+        if(pic) pic.classList.add('noModalImage');
+      }else{
+        if(box) box.classList.remove('noModalImage');
+        if(pic) pic.classList.remove('noModalImage');
+      }
+    }catch(e){}
+  }
+  function hideQuickIfEmpty(n){
+    try{
+      const p = getProductByNumber(n || window.__lastQuickSnackImageNumber || 0);
+      if(!isSnackProduct(p)) return;
+      document.querySelectorAll('.quickShopPic').forEach(function(pic){
+        const img = pic.querySelector('img');
+        const missing = pic.classList.contains('imgMissing') || !img || !img.getAttribute('src') || /^(?:\s*|undefined|null)$/i.test(img.getAttribute('src'));
+        if(missing) pic.classList.add('noQuickImage'); else pic.classList.remove('noQuickImage');
+      });
+    }catch(e){}
+  }
+
+  const oldTry = window.tryProductImageFallback;
+  if(typeof oldTry === 'function' && !oldTry.__v276){
+    window.tryProductImageFallback = function(img,n){
+      const out = oldTry.apply(this, arguments);
+      setTimeout(function(){
+        const card = img && img.closest && img.closest('.product');
+        if(card) hideCardIfEmpty(card);
+        const modalPic = img && img.closest && img.closest('.modalPic');
+        if(modalPic) hideModalIfEmpty(n);
+        const quickPic = img && img.closest && img.closest('.quickShopPic');
+        if(quickPic) hideQuickIfEmpty(n);
+      }, 30);
+      setTimeout(scanCards, 120);
+      return out;
+    };
+    window.tryProductImageFallback.__v276 = true;
+  }
+
+  const oldRender = window.render;
+  if(typeof oldRender === 'function' && !oldRender.__v276){
+    window.render = function(){
+      const out = oldRender.apply(this, arguments);
+      setTimeout(scanCards, 80);
+      setTimeout(scanCards, 240);
+      setTimeout(scanCards, 500);
+      return out;
+    };
+    window.render.__v276 = true;
+  }
+
+  const oldOpenProduct = window.openProduct;
+  if(typeof oldOpenProduct === 'function' && !oldOpenProduct.__v276){
+    window.openProduct = function(n){
+      window.__lastOpenSnackImageNumber = Number(n||0);
+      const out = oldOpenProduct.apply(this, arguments);
+      setTimeout(function(){ hideModalIfEmpty(n); scanCards(); }, 80);
+      setTimeout(function(){ hideModalIfEmpty(n); scanCards(); }, 240);
+      return out;
+    };
+    window.openProduct.__v276 = true;
+  }
+
+  const oldQuickShop = window.quickShop;
+  if(typeof oldQuickShop === 'function' && !oldQuickShop.__v276){
+    window.quickShop = function(n){
+      window.__lastQuickSnackImageNumber = Number(n||0);
+      const out = oldQuickShop.apply(this, arguments);
+      setTimeout(function(){ hideQuickIfEmpty(n); scanCards(); }, 80);
+      setTimeout(function(){ hideQuickIfEmpty(n); scanCards(); }, 240);
+      return out;
+    };
+    window.quickShop.__v276 = true;
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(scanCards, 120);
+    setTimeout(scanCards, 350);
+    setTimeout(scanCards, 700);
+  });
+  window.addEventListener('load', function(){
+    setTimeout(scanCards, 150);
+    setTimeout(scanCards, 400);
+    setTimeout(scanCards, 800);
+  });
+  window.addEventListener('hashchange', function(){
+    setTimeout(scanCards, 120);
+    setTimeout(scanCards, 350);
+  });
+})();
+</script>
+
 </body>
 </html>
