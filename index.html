@@ -10820,56 +10820,5 @@ textarea.requiredCustomerField:focus{
 })();
 </script>
 
-
-<style id="almalika-v270-hide-missing-decor-fixed">
-.decorThumb.missingDecorImage{display:none!important}
-.decorThumbs{grid-template-columns:repeat(3,minmax(74px,1fr))!important}
-</style>
-<script id="almalika-v270-existing-decor-folder-only">
-(function(){
-  const EXISTING_DECOR_GALLERY = {};
-
-  function escHtml(v){
-    try{ if(typeof esc==='function') return esc(v); }catch(e){}
-    return String(v||'').replace(/[&<>"']/g,function(s){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]});
-  }
-
-  window.decorGalleryFiles = decorGalleryFiles = function(p){
-    const n = Number(p && (p.number || p.id));
-    if(EXISTING_DECOR_GALLERY[n] && EXISTING_DECOR_GALLERY[n].length) return EXISTING_DECOR_GALLERY[n].slice();
-    if(p && p.decorGallery && p.decorGallery.length) return p.decorGallery;
-    return [p && p.image ? p.image : (n ? n + '.jpg' : '')];
-  };
-
-  window.decorGalleryHtml = decorGalleryHtml = function(p){
-    const n = Number(p && (p.number || p.id));
-    const files = decorGalleryFiles(p).filter(Boolean);
-    const isDecor = (typeof isDecorEvent === 'function') ? isDecorEvent(p) : String(p && p.category || '').includes('تجهيز');
-    if(!isDecor || !files.length) return '';
-    const buttons = files.map(function(img,i){
-      const label = i===0 ? 'الصورة الأساسية' : 'شكل ' + i;
-      const safe = escHtml(img);
-      return `<button type="button" class="decorThumb ${i===0?'active':''}" data-decor-img="${safe}" data-decor-label="${escHtml(label)}" onclick="selectDecorImage(${n},this.dataset.decorImg,this)">
-        <img src="${safe}" onerror="var b=this.closest('.decorThumb');if(b)b.classList.add('missingDecorImage')">
-        <small>${escHtml(label)}</small>
-      </button>`;
-    }).join('');
-    return `<div class="decorGallery v270ExistingOnly">
-      <div class="decorGalleryTitle">اختر شكل الديكور المناسب للزبون</div>
-      <div class="decorThumbs">${buttons}</div>
-      <input type="hidden" id="decorImage_${n}" value="${escHtml(files[0]||'')}">
-      <div class="addonHint">اختيار الصورة يساعد الإدارة تعرف شكل الديكور المطلوب بالضبط. الصورة المختارة تظهر داخل رسالة الطلب.</div>
-    </div>`;
-  };
-
-  window.modalMediaHtml = modalMediaHtml = function(p){
-    const n = Number(p && (p.number || p.id));
-    const files = decorGalleryFiles(p).filter(Boolean);
-    const first = files[0] || (p && p.image) || (n + '.jpg');
-    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${n}" src="${escHtml(first)}" onerror="this.style.display='none'">${decorGalleryHtml(p)}</div>`;
-  };
-})();
-</script>
-
 </body>
 </html>
