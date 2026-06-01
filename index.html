@@ -10668,141 +10668,6 @@ textarea.requiredCustomerField:focus{
 </script>
 
 
-<style id="almalika-v268-decor-gallery-by-number">
-/* ربط صور الديكورات حسب رقم البند: 200.jpg, 200-1.jpg ... */
-.decorThumbs{
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(74px,1fr))!important;
-  gap:10px!important;
-  max-height:420px!important;
-  overflow:auto!important;
-  padding:8px!important;
-}
-.decorThumb{
-  min-height:120px!important;
-  border-radius:14px!important;
-}
-.decorThumb img{
-  width:100%!important;
-  height:74px!important;
-  object-fit:cover!important;
-  border-radius:10px!important;
-  background:#fff8e8!important;
-}
-.decorThumb.missingDecorImage{
-  display:none!important;
-}
-</style>
-<script id="almalika-v268-decor-gallery-by-number">
-(function(){
-  const DECOR_COUNTS = {
-    200:20,201:20,202:20,203:20,204:20,205:20,206:20,207:20,208:20,209:20,
-    210:8,211:8,212:8,300:4,301:4
-  };
-
-  function escHtml(v){
-    try{
-      if(typeof esc === 'function') return esc(v);
-      if(typeof escV230 === 'function') return escV230(v);
-      if(typeof escV229 === 'function') return escV229(v);
-    }catch(e){}
-    return String(v||'').replace(/[&<>"']/g,function(s){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]});
-  }
-
-  function isDecorNumber(p){
-    const n = Number(p && (p.number || p.id));
-    return !!DECOR_COUNTS[n];
-  }
-
-  function baseNames(n){
-    const max = DECOR_COUNTS[Number(n)] || 1;
-    const arr = [String(n)];
-    for(let i=1;i<=max;i++) arr.push(String(n)+'-'+i);
-    return arr;
-  }
-
-  function candidatesForBase(base){
-    return [
-      base + '.jpg', base + '.jpeg', base + '.png', base + '.webp',
-      './' + base + '.jpg', './' + base + '.jpeg', './' + base + '.png', './' + base + '.webp',
-      'images/' + base + '.jpg', 'images/' + base + '.jpeg', 'images/' + base + '.png', 'images/' + base + '.webp',
-      './images/' + base + '.jpg', './images/' + base + '.jpeg', './images/' + base + '.png', './images/' + base + '.webp',
-      'assets/' + base + '.jpg', 'assets/' + base + '.jpeg', 'assets/' + base + '.png', 'assets/' + base + '.webp',
-      './assets/' + base + '.jpg', './assets/' + base + '.jpeg', './assets/' + base + '.png', './assets/' + base + '.webp'
-    ];
-  }
-
-  window.decorGalleryFiles = decorGalleryFiles = function(p){
-    const n = Number(p && (p.number || p.id));
-    if(DECOR_COUNTS[n]) return baseNames(n).map(x => x + '.jpg');
-    if(p && p.decorGallery && p.decorGallery.length) return p.decorGallery;
-    return [p && p.image ? p.image : (n ? n + '.jpg' : '')];
-  };
-
-  window.tryDecorThumbImage = function(img){
-    try{
-      let list = [];
-      try{ list = JSON.parse(img.dataset.candidates || '[]'); }catch(e){}
-      let i = Number(img.dataset.candidateIndex || 0) + 1;
-      img.dataset.candidateIndex = String(i);
-      if(i < list.length){
-        img.onerror = function(){ window.tryDecorThumbImage(img); };
-        img.src = list[i];
-      }else{
-        img.onerror = null;
-        const b = img.closest('.decorThumb');
-        if(b) b.classList.add('missingDecorImage');
-      }
-    }catch(e){}
-  };
-
-  window.decorGalleryHtml = decorGalleryHtml = function(p){
-    const n = Number(p && (p.number || p.id));
-    const isDecor = (typeof isDecorEvent === 'function') ? isDecorEvent(p) : String(p && p.category || '').includes('تجهيز');
-    const show = isDecor || DECOR_COUNTS[n];
-    if(!show) return '';
-
-    const bases = DECOR_COUNTS[n] ? baseNames(n) : (decorGalleryFiles(p)||[]).map(x => String(x||'').replace(/\.(jpg|jpeg|png|webp)$/i,''));
-    const buttons = bases.map(function(base,i){
-      const cands = candidatesForBase(base);
-      const label = i===0 ? 'الصورة الأساسية' : 'شكل ' + i;
-      return `<button type="button" class="decorThumb ${i===0?'active':''}" data-decor-img="${escHtml(cands[0])}" data-decor-label="${escHtml(label)}" onclick="selectDecorImage(${n},this.dataset.decorImg,this)">
-        <img src="${escHtml(cands[0])}" data-candidates='${escHtml(JSON.stringify(cands))}' data-candidate-index="0" onerror="window.tryDecorThumbImage(this)">
-        <small>${escHtml(label)}</small>
-      </button>`;
-    }).join('');
-
-    const first = candidatesForBase(String(n))[0] || (p && p.image) || (n + '.jpg');
-    return `<div class="decorGallery v268NumberedGallery">
-      <div class="decorGalleryTitle">اختر شكل الديكور المناسب للزبون</div>
-      <div class="decorThumbs">${buttons}</div>
-      <input type="hidden" id="decorImage_${n}" value="${escHtml(first)}">
-      <div class="addonHint">اختيار الصورة يساعد الإدارة تعرف شكل الديكور المطلوب بالضبط. الصورة المختارة تظهر داخل رسالة الطلب.</div>
-    </div>`;
-  };
-
-  window.modalMediaHtml = modalMediaHtml = function(p){
-    const n = Number(p && (p.number || p.id));
-    const first = (DECOR_COUNTS[n] ? candidatesForBase(String(n))[0] : ((decorGalleryFiles(p)||[])[0] || (p && p.image) || (n + '.jpg')));
-    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${n}" src="${escHtml(first)}" onerror="window.tryProductImageFallback?window.tryProductImageFallback(this,'${n}'):this.style.display='none'">${decorGalleryHtml(p)}</div>`;
-  };
-
-  const oldOpenProduct = window.openProduct;
-  if(typeof oldOpenProduct === 'function'){
-    window.openProduct = function(){
-      const out = oldOpenProduct.apply(this, arguments);
-      setTimeout(function(){
-        document.querySelectorAll('#modal .decorThumb img').forEach(function(img){
-          if(img.complete && img.naturalWidth===0) window.tryDecorThumbImage(img);
-        });
-      },250);
-      return out;
-    };
-  }
-})();
-</script>
-
-
 <script id="almalika-v269-other-items-sheet">
 (function(){
   function fixOtherCards(){
@@ -10817,6 +10682,155 @@ textarea.requiredCustomerField:focus{
   }
   document.addEventListener('DOMContentLoaded',function(){setTimeout(fixOtherCards,120)});
   window.addEventListener('hashchange',function(){setTimeout(fixOtherCards,120)});
+})();
+</script>
+
+
+
+<style id="almalika-v271-decor-images-from-upload">
+.decorThumbs{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(74px,1fr))!important;
+  gap:10px!important;
+  max-height:420px!important;
+  overflow:auto!important;
+  padding:8px!important;
+}
+.decorThumb img{
+  width:100%!important;
+  height:74px!important;
+  object-fit:cover!important;
+  border-radius:10px!important;
+  background:#fff8e8!important;
+}
+.decorThumb.missingDecorImage{display:none!important}
+</style>
+<script id="almalika-v271-decor-images-from-upload">
+(function(){
+  const DECOR_GALLERY = {"200":["200.jpeg","200-1.jpeg","200-2.jpeg","200-3.jpeg","200-4.jpeg","200-5.jpeg","200-6.jpg","200-7.jpeg","200-8.jpeg","200-9.jpeg","200-10.jpeg","200-11.jpeg","200-12.jpeg","200-13.jpeg","200-14.jpeg","200-15.jpeg","200-16.jpeg","200-17.jpeg","200-18.jpeg","200-19.jpeg","200-20.jpeg","200-21.jpeg","200-22.jpeg","200-23.jpeg"],"201":["201.jpg","201-1.jpeg","201-2.jpeg","201-2.jpg","201-3.jpeg","201-4.jpeg","201-5.jpeg","201-6.jpeg","201-7.jpeg","201-8.jpeg","201-9.jpeg","201-10.jpeg","201-11.jpeg","201-12.jpeg","201-13.jpg"],"202":["202.jpg","202-1.jpeg","202-2.jpeg","202-3.jpeg","202-4.jpeg","202-5.jpeg"],"203":["203.jpeg","203-1.jpeg","203-2.jpeg","203-3.jpeg","203-4.jpeg","203-5.jpeg","203-6.jpeg","203-7.jpeg","203-8.jpeg"],"204":["204.jpg","204-1.jpg","204-2.jpg","204-3.jpg","204-4.jpg","204-5.jpg","204-6.jpg","204-7.jpeg","204-8.jpg"],"205":["205.jpeg","205-1.jpg","205-2.jpg","205-3.jpeg","205-4.jpeg","205-5.jpg","205-6.jpeg"],"206":["206.jpg","206-1.jpeg","206-2.jpeg","206-3.jpeg","206-4.jpeg","206-5.jpeg","206-6.jpeg","206-7.jpeg","206-8.jpeg","206-9.jpeg","206-10.jpeg"],"207":["207.jpeg","207-1.jpeg","207-2.jpg","207-3.jpeg","207-4.jpeg","207-5.jpeg","207-6.jpeg","207-7.jpeg","207-8.jpeg","207-9.jpeg","207-10.jpeg","207-11.jpeg"],"208":["208.jpg","208-1.jpeg","208-2.jpeg"],"209":["209.jpg","209-1.jpeg","209-2.jpeg","209-3.jpg","209-4.jpg","209-5.jpg","209-6.jpeg","209-6.jpg","209-7.jpeg","209-7.jpg","209-8.jpeg","209-9.jpeg","209-10.jpeg","209-11.jpeg","209-12.jpeg","209-13.jpeg","209-14.jpeg","209-15.jpeg"],"210":["210.jpg"],"211":["211.jpeg","211-1.jpeg","211-2.jpeg","211-3.jpg","211-4.jpeg","211-5.jpg","211-6.jpeg","211-7.jpeg","211-8.jpeg"],"212":["212.jpeg","212-1.jpeg","212-2.jpeg","212-3.jpeg","212-4.jpeg","212-5.jpeg","212-6.jpeg","212-7.jpeg","212-8.jpeg","212-9.jpeg","212-10.jpeg","212-11.jpeg","212-12.jpeg","212-13.jpeg"],"300":["300.jpg"],"301":["301.jpg"]};
+
+  function escHtml(v){
+    try{ if(typeof esc==='function') return esc(v); }catch(e){}
+    return String(v||'').replace(/[&<>"']/g,function(s){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]});
+  }
+
+  window.decorGalleryFiles = decorGalleryFiles = function(p){
+    const n = Number(p && (p.number || p.id));
+    if(DECOR_GALLERY[n] && DECOR_GALLERY[n].length) return DECOR_GALLERY[n].slice();
+    if(p && p.decorGallery && p.decorGallery.length) return p.decorGallery;
+    return [p && p.image ? p.image : (n ? n + '.jpg' : '')];
+  };
+
+  window.decorGalleryHtml = decorGalleryHtml = function(p){
+    const n = Number(p && (p.number || p.id));
+    const files = decorGalleryFiles(p).filter(Boolean);
+    const isDecor = (typeof isDecorEvent === 'function') ? isDecorEvent(p) : String(p && p.category || '').includes('تجهيز');
+    if(!isDecor || !files.length) return '';
+    const buttons = files.map(function(img,i){
+      const label = i===0 ? 'الصورة الأساسية' : 'شكل ' + i;
+      return `<button type="button" class="decorThumb ${i===0?'active':''}" data-decor-img="${escHtml(img)}" data-decor-label="${escHtml(label)}" onclick="selectDecorImage(${n},this.dataset.decorImg,this)">
+        <img src="${escHtml(img)}" onerror="var b=this.closest('.decorThumb');if(b)b.classList.add('missingDecorImage')">
+        <small>${escHtml(label)}</small>
+      </button>`;
+    }).join('');
+    return `<div class="decorGallery v271Uploaded">
+      <div class="decorGalleryTitle">اختر شكل الديكور المناسب للزبون</div>
+      <div class="decorThumbs">${buttons}</div>
+      <input type="hidden" id="decorImage_${n}" value="${escHtml(files[0]||'')}">
+      <div class="addonHint">اختيار الصورة يساعد الإدارة تعرف شكل الديكور المطلوب بالضبط. الصورة المختارة تظهر داخل رسالة الطلب.</div>
+    </div>`;
+  };
+
+  window.modalMediaHtml = modalMediaHtml = function(p){
+    const n = Number(p && (p.number || p.id));
+    const files = decorGalleryFiles(p).filter(Boolean);
+    const first = files[0] || (p && p.image) || (n + '.jpg');
+    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${n}" src="${escHtml(first)}" onerror="this.style.display='none'">${decorGalleryHtml(p)}</div>`;
+  };
+})();
+</script>
+
+
+<style id="almalika-v272-remove-empty-images">
+.decorThumb.missingDecorImage,
+.decorThumb:has(img[src=""]),
+.decorThumb:has(img:not([src])){
+  display:none!important;
+}
+.decorGallery .decorThumbs:empty,
+.decorGallery.noImages{
+  display:none!important;
+}
+.modalPic > img.mainDecorImg[src=""],
+.modalPic > img.mainDecorImg:not([src]){
+  display:none!important;
+}
+</style>
+<script id="almalika-v272-remove-empty-images">
+(function(){
+  function markMissing(img){
+    try{
+      var btn = img.closest('.decorThumb');
+      if(btn) btn.remove();
+      cleanEmptyGalleries();
+    }catch(e){}
+  }
+
+  function cleanEmptyGalleries(){
+    try{
+      document.querySelectorAll('.decorGallery').forEach(function(g){
+        var thumbs = g.querySelectorAll('.decorThumb');
+        if(!thumbs.length) g.classList.add('noImages');
+      });
+    }catch(e){}
+  }
+
+  function removeEmptyImages(root){
+    try{
+      (root||document).querySelectorAll('.decorThumb img').forEach(function(img){
+        if(!img.getAttribute('src')){
+          markMissing(img);
+          return;
+        }
+        img.onerror = function(){ markMissing(img); };
+        if(img.complete && img.naturalWidth === 0){
+          markMissing(img);
+        }
+      });
+
+      (root||document).querySelectorAll('.mainDecorImg').forEach(function(img){
+        img.onerror = function(){
+          try{
+            var first = document.querySelector('#modal .decorThumb img');
+            if(first && first.getAttribute('src')){
+              img.src = first.getAttribute('src');
+            }else{
+              img.style.display = 'none';
+            }
+          }catch(e){}
+        };
+        if(img.complete && img.naturalWidth === 0){
+          img.onerror();
+        }
+      });
+
+      cleanEmptyGalleries();
+    }catch(e){}
+  }
+
+  var oldOpenProduct = window.openProduct;
+  if(typeof oldOpenProduct === 'function'){
+    window.openProduct = function(){
+      var out = oldOpenProduct.apply(this, arguments);
+      setTimeout(function(){ removeEmptyImages(document.getElementById('modal')||document); }, 80);
+      setTimeout(function(){ removeEmptyImages(document.getElementById('modal')||document); }, 350);
+      setTimeout(function(){ removeEmptyImages(document.getElementById('modal')||document); }, 900);
+      return out;
+    };
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(function(){ removeEmptyImages(document); }, 200); });
+  window.addEventListener('load', function(){ setTimeout(function(){ removeEmptyImages(document); }, 300); });
 })();
 </script>
 
