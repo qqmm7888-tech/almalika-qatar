@@ -10856,13 +10856,13 @@ body{
 </script>
 
 
-<style id="almalika-v259-home-one-image">
+<style id="almalika-v258-single-hero-image">
 .hero{
-  padding:16px 0 20px!important;
-  background:linear-gradient(180deg,#fff3f8,#fff8ef)!important;
+  padding:14px 0 18px!important;
+  background:linear-gradient(180deg,#fff3f8,#fff8ee)!important;
 }
 .hero > div{
-  width:min(100% - 34px,1440px)!important;
+  width:min(100% - 36px,1440px)!important;
   max-width:1440px!important;
   height:360px!important;
   margin:0 auto!important;
@@ -10871,18 +10871,17 @@ body{
   position:relative!important;
   background:#fff!important;
 }
-.hero > div > img:first-of-type{
+.hero > div > img{
   width:100%!important;
   height:100%!important;
   object-fit:cover!important;
-  object-position:center center!important;
+  object-position:center!important;
   display:block!important;
+  border:0!important;
 }
 .hero > div > img:not(:first-of-type),
-.hero > div > div,
-.hero > div > picture,
-.hero > div > canvas,
-.hero > div > svg{
+.hero > div .almalika-v242-hero,
+.hero > div picture:not(:first-child){
   display:none!important;
 }
 @media(max-width:900px){
@@ -10892,45 +10891,35 @@ body{
   .hero > div{height:190px!important}
 }
 </style>
-<script id="almalika-v259-home-one-image">
+<script id="almalika-v258-single-hero-image">
 (function(){
-  function fixHomeHero(){
+  function fixHeroSingleImage(){
     try{
-      const hero = document.querySelector('.hero');
+      var hero=document.querySelector('.hero');
       if(!hero) return;
-      const box = hero.querySelector(':scope > div');
+      var box=hero.querySelector(':scope > div');
       if(!box) return;
-      const directImgs = Array.from(box.children).filter(el => el.tagName === 'IMG');
-      if(directImgs.length){
-        const keep = directImgs[0];
-        Array.from(box.children).forEach(el => {
-          if(el !== keep) el.remove();
-        });
-      }else{
-        const firstImg = box.querySelector('img');
-        if(firstImg){
-          const src = firstImg.getAttribute('src');
-          const alt = firstImg.getAttribute('alt') || 'واجهة شركة الملكة';
-          box.innerHTML = '';
-          const img = document.createElement('img');
-          img.src = src;
-          img.alt = alt;
-          box.appendChild(img);
-        }
+      var imgs=Array.prototype.slice.call(box.querySelectorAll('img'));
+      if(imgs.length>1){
+        imgs.slice(1).forEach(function(img){img.remove();});
       }
+      var nested=box.querySelectorAll('.almalika-v242-hero,.almalika-v242-hero img');
+      nested.forEach(function(el){
+        if(el.tagName !== 'IMG') el.remove();
+      });
     }catch(e){}
   }
-  const oldRenderHome = window.renderHome;
-  if(typeof oldRenderHome === 'function'){
-    window.renderHome = function(){
-      const out = oldRenderHome.apply(this, arguments);
-      setTimeout(fixHomeHero, 20);
-      setTimeout(fixHomeHero, 150);
+  var oldRenderHome=window.renderHome;
+  if(typeof oldRenderHome==='function'){
+    window.renderHome=function(){
+      var out=oldRenderHome.apply(this,arguments);
+      setTimeout(fixHeroSingleImage,20);
+      setTimeout(fixHeroSingleImage,150);
       return out;
     };
   }
-  document.addEventListener('DOMContentLoaded', function(){setTimeout(fixHomeHero,100);});
-  window.addEventListener('load', function(){setTimeout(fixHomeHero,200);});
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(fixHeroSingleImage,100);});
+  window.addEventListener('load',function(){setTimeout(fixHeroSingleImage,200);});
 })();
 </script>
 
