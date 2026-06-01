@@ -5437,7 +5437,7 @@ ${booked?`<div class="availabilityMini">${booked.note}</div>`:''}
 </div>
 </div>
 </div>
-<div class="pic" onclick="openProduct(${p.number})">${booked?`<div class="bookedImageStamp">${forced?'غير متاح':'محجوز'}</div>`:``}<img src="${esc(p.image)}" alt="${esc(p.name)}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div></div>`}
+<div class="pic" onclick="openProduct(${p.number})">${booked?`<div class="bookedImageStamp">${forced?'غير متاح':'محجوز'}</div>`:``}<img src="${esc(p.image)}" alt="${esc(p.name)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,\'${p.number}\')"></div></div>`}
 function itemPrice(x){return Number(x.selectedPrice||price(x)||0)}
 function saveCart(){localStorage.setItem('almalikaCart',JSON.stringify(cart)); updateCartUI();}
 function updateCartUI(){const count=cart.reduce((a,x)=>a+(x.qty||1),0); const total=cart.reduce((a,x)=>a+itemPrice(x)*(x.qty||1),0); const c=document.getElementById('cartCount'), ct=document.getElementById('cartCountTop'), tm=document.getElementById('cartTotalMini'); if(c)c.textContent=count; if(ct)ct.textContent=count; if(tm)tm.textContent=total;}
@@ -5498,7 +5498,7 @@ function decorGalleryHtml(p){
 }
 function modalMediaHtml(p){
   const first=(decorGalleryFiles(p)[0]||p.image||`${p.number}.jpg`);
-  return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${p.number}" src="${esc(first)}" onerror="this.src='${p.number}.jpg';this.onerror=null">${decorGalleryHtml(p)}</div>`;
+  return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${p.number}" src="${esc(first)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,\'${p.number}\')">${decorGalleryHtml(p)}</div>`;
 }
 function selectDecorImage(n,img,btn){
   const realImg = String((btn && btn.dataset && btn.dataset.decorImg) ? btn.dataset.decorImg : img || '');
@@ -6068,7 +6068,7 @@ function quickShop(n){
   }
 
   const opts = quickOptionsFor(p);
-  modal.innerHTML=`<div class="modalBox quickShopModal"><button class="quickClose" onclick="closeModal()">×</button><div class="quickShopPic"><img src="${esc(p.image)}" onerror="this.src='${p.number}.jpg';this.onerror=null"></div><div class="quickShopInfo"><div class="quickShopTop"><span class="tag">#${p.number}</span><span class="tag">${esc(shortType(p))}</span></div><h2>${esc(p.name)}</h2><div class="quickPrice" id="quickTotal_${p.number}">${Number(opts[0]?.price||0).toLocaleString('en-US')} ر.ق</div><div class="quickLabel">اختيار سريع بدون تعبئة بيانات الحجز</div><div class="quickOptions">${opts.map((o,i)=>`<label class="quickOpt"><input type="radio" name="quick_opt_${p.number}" value="${esc(o.id)}" ${i===0?'checked':''} onchange="updateQuickTotal(${p.number})"><span>${esc(o.label)}</span><b>${Number(o.price||0).toLocaleString('en-US')} ر.ق</b>${o.note?`<small>${esc(o.note)}</small>`:''}</label>`).join('')}</div><div class="quickShopControls"><button onclick="setQuickQty(${p.number},-1)">−</button><b id="quickQty_${p.number}">1</b><button onclick="setQuickQty(${p.number},1)">+</button></div><button class="quickAdd" onclick="addQuickToCart(${p.number})">أضف إلى السلة</button><button class="quickNow" onclick="quickOrderWa(${p.number})">اطلب الآن واتساب</button></div></div>`;
+  modal.innerHTML=`<div class="modalBox quickShopModal"><button class="quickClose" onclick="closeModal()">×</button><div class="quickShopPic"><img src="${esc(p.image)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,\'${p.number}\')"></div><div class="quickShopInfo"><div class="quickShopTop"><span class="tag">#${p.number}</span><span class="tag">${esc(shortType(p))}</span></div><h2>${esc(p.name)}</h2><div class="quickPrice" id="quickTotal_${p.number}">${Number(opts[0]?.price||0).toLocaleString('en-US')} ر.ق</div><div class="quickLabel">اختيار سريع بدون تعبئة بيانات الحجز</div><div class="quickOptions">${opts.map((o,i)=>`<label class="quickOpt"><input type="radio" name="quick_opt_${p.number}" value="${esc(o.id)}" ${i===0?'checked':''} onchange="updateQuickTotal(${p.number})"><span>${esc(o.label)}</span><b>${Number(o.price||0).toLocaleString('en-US')} ر.ق</b>${o.note?`<small>${esc(o.note)}</small>`:''}</label>`).join('')}</div><div class="quickShopControls"><button onclick="setQuickQty(${p.number},-1)">−</button><b id="quickQty_${p.number}">1</b><button onclick="setQuickQty(${p.number},1)">+</button></div><button class="quickAdd" onclick="addQuickToCart(${p.number})">أضف إلى السلة</button><button class="quickNow" onclick="quickOrderWa(${p.number})">اطلب الآن واتساب</button></div></div>`;
   modal.classList.add('show');
   setTimeout(()=>window.applyDateLight&&window.applyDateLight(modal),60);
   if(isDecorEvent(p))setTimeout(()=>updateDecorTotal(p.number),80);
@@ -9939,7 +9939,7 @@ textarea.requiredCustomerField:focus{
   window.modalMediaHtml = modalMediaHtml = function(p){
     const files = (typeof decorGalleryFiles === 'function' ? decorGalleryFiles(p) : (p.decorGallery || [p.image])).filter(Boolean);
     const first = files[0] || (p && p.image) || ((p && p.number) ? p.number + '.jpg' : '');
-    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${Number(p.number||p.id||0)}" src="${escV229(first)}" onerror="this.src='${Number(p.number||p.id||0)}.jpg';this.onerror=null">${decorGalleryHtml(p)}</div>`;
+    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${Number(p.number||p.id||0)}" src="${escV229(first)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,\'${Number(p.number||p.id||0)}\')">${decorGalleryHtml(p)}</div>`;
   };
 
   function readV229Choice(n){
@@ -10117,7 +10117,7 @@ textarea.requiredCustomerField:focus{
     const id=productId(p);
     const files = (typeof decorGalleryFiles === 'function' ? decorGalleryFiles(p) : (p.decorGallery || [p.image])).filter(Boolean);
     const first = files[0] || (p && p.image) || (id ? id + '.jpg' : '');
-    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${Number(p.number||p.id||0)}" src="${escV230(first)}" onerror="this.src='${Number(p.number||p.id||0)}.jpg';this.onerror=null">${decorGalleryHtml(p)}</div>`;
+    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${Number(p.number||p.id||0)}" src="${escV230(first)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,\'${Number(p.number||p.id||0)}\')">${decorGalleryHtml(p)}</div>`;
   };
 
   const oldProductImageUrlV230 = window.productImageUrl;
@@ -10277,7 +10277,7 @@ textarea.requiredCustomerField:focus{
     }
     const files = (typeof decorGalleryFiles === 'function' ? decorGalleryFiles(p) : (p.decorGallery || [p.image])).filter(Boolean);
     const first = files[0] || (p && p.image) || (id ? id + '.jpg' : '');
-    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${Number(p.number||p.id||0)}" src="${escV231(first)}" onerror="this.src='${Number(p.number||p.id||0)}.jpg';this.onerror=null">${decorGalleryHtml(p)}</div>`;
+    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${Number(p.number||p.id||0)}" src="${escV231(first)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,\'${Number(p.number||p.id||0)}\')">${decorGalleryHtml(p)}</div>`;
   };
 
   const oldThemeHtmlV231 = window.decorThemeSelectHtml;
@@ -10601,6 +10601,132 @@ textarea.requiredCustomerField:focus{
     window.render=function(){var out=oldRender.apply(this,arguments);setTimeout(refreshProductImages,40);return out;}
   }
   document.addEventListener('DOMContentLoaded', function(){setTimeout(refreshProductImages,120);});
+})();
+</script>
+
+
+<style id="almalika-v265-image-fallbacks">
+/* منع ظهور مساحة بيضاء كبيرة عند تأخر/فشل الصورة */
+.pic img,.modalPic img,.quickShopPic img,.cartItem img{
+  background:linear-gradient(135deg,#fff,#fff8e7,#fff3f8)!important;
+}
+.pic.imgMissing,.modalPic.imgMissing,.quickShopPic.imgMissing{
+  position:relative!important;
+}
+.pic.imgMissing::after,.modalPic.imgMissing::after,.quickShopPic.imgMissing::after{
+  content:"📷 الصورة قيد التحميل";
+  position:absolute;inset:auto 10px 10px 10px;
+  text-align:center;font-weight:900;font-size:12px;color:#7a1734;
+  background:rgba(255,255,255,.86);border:1px solid #f3d2df;border-radius:999px;
+  padding:6px 8px;
+}
+</style>
+<script id="almalika-v265-image-fallbacks">
+(function(){
+  function productByNumber(n){
+    try{return (Array.isArray(products)?products:[]).find(function(p){return Number(p.number)===Number(n) || Number(p.id)===Number(n) || Number(p.bounceNo)===Number(n);});}catch(e){return null}
+  }
+  function digits(v){return String(v||'').replace(/[^0-9]/g,'');}
+  function candidateList(n, currentSrc){
+    n=digits(n);
+    var bases=[];
+    if(currentSrc && !/^data:/i.test(currentSrc)) bases.push(currentSrc);
+    if(n){
+      [n+'.jpg',n+'.jpeg',n+'.png',n+'.webp',
+       './'+n+'.jpg','./'+n+'.jpeg','./'+n+'.png','./'+n+'.webp',
+       'images/'+n+'.jpg','images/'+n+'.jpeg','images/'+n+'.png','images/'+n+'.webp',
+       './images/'+n+'.jpg','./images/'+n+'.jpeg','./images/'+n+'.png','./images/'+n+'.webp',
+       '/images/'+n+'.jpg','/images/'+n+'.jpeg','/images/'+n+'.png','/images/'+n+'.webp',
+       'img/'+n+'.jpg','img/'+n+'.jpeg','img/'+n+'.png','img/'+n+'.webp',
+       '/img/'+n+'.jpg','/img/'+n+'.jpeg','/img/'+n+'.png','/img/'+n+'.webp',
+       'assets/'+n+'.jpg','assets/'+n+'.jpeg','assets/'+n+'.png','assets/'+n+'.webp',
+       '/assets/'+n+'.jpg','/assets/'+n+'.jpeg','/assets/'+n+'.png','/assets/'+n+'.webp'
+      ].forEach(function(x){bases.push(x);});
+    }
+    var seen={};
+    return bases.filter(function(x){if(!x||seen[x])return false;seen[x]=1;return true;});
+  }
+  window.tryProductImageFallback=function(img,n){
+    try{
+      n=digits(n || img.dataset.productNumber || img.closest('.product')?.querySelector('.num')?.textContent || '');
+      var list = img._almalikaCandidates || candidateList(n, img.getAttribute('src')||'');
+      var i = Number(img._almalikaIndex||0) + 1;
+      img._almalikaCandidates = list;
+      img._almalikaIndex = i;
+      if(i < list.length){
+        img.onerror=function(){window.tryProductImageFallback(img,n)};
+        img.src=list[i];
+      }else{
+        img.onerror=null;
+        var box=img.closest('.pic,.modalPic,.quickShopPic');
+        if(box) box.classList.add('imgMissing');
+      }
+    }catch(e){try{img.onerror=null}catch(_e){}}
+  };
+  function numberFromCard(card){
+    var no=digits(card.querySelector('.num')?.textContent || '');
+    if(no) return no;
+    var el=card.querySelector('[onclick*="openProduct("],[onclick*="quickShop("]');
+    var m=el && (el.getAttribute('onclick')||'').match(/\((\d+)\)/);
+    return m?m[1]:'';
+  }
+  function prepareImages(root){
+    try{
+      (root||document).querySelectorAll('.product').forEach(function(card){
+        var n=numberFromCard(card), p=productByNumber(n), img=card.querySelector('.pic img');
+        if(!img || !n) return;
+        img.dataset.productNumber=n;
+        var src=(p&&p.image)||img.getAttribute('src')||n+'.jpg';
+        img._almalikaCandidates=candidateList(n,src);
+        img._almalikaIndex=0;
+        img.onerror=function(){window.tryProductImageFallback(img,n)};
+        if(!img.getAttribute('src')) img.src=img._almalikaCandidates[0];
+      });
+      (root||document).querySelectorAll('.modalPic img,.quickShopPic img,.cartItem img').forEach(function(img){
+        var src=img.getAttribute('src')||'';
+        var n=digits(img.id||src);
+        if(!n){
+          var txt=(img.closest('.modalBox,.cartItem')||{}).textContent||'';
+          var m=txt.match(/#\s*(\d+)/); if(m)n=m[1];
+        }
+        if(!n) return;
+        img.dataset.productNumber=n;
+        img._almalikaCandidates=candidateList(n,src);
+        img._almalikaIndex=0;
+        img.onerror=function(){window.tryProductImageFallback(img,n)};
+      });
+    }catch(e){}
+  }
+  var oldRender=window.render;
+  if(typeof oldRender==='function'){
+    window.render=function(){
+      var out=oldRender.apply(this,arguments);
+      setTimeout(function(){prepareImages(document)},30);
+      setTimeout(function(){prepareImages(document)},180);
+      return out;
+    }
+  }
+  var oldOpenProduct=window.openProduct;
+  if(typeof oldOpenProduct==='function'){
+    window.openProduct=function(){
+      var out=oldOpenProduct.apply(this,arguments);
+      setTimeout(function(){prepareImages(document.getElementById('modal')||document)},30);
+      setTimeout(function(){prepareImages(document.getElementById('modal')||document)},180);
+      return out;
+    }
+  }
+  var oldQuickShop=window.quickShop;
+  if(typeof oldQuickShop==='function'){
+    window.quickShop=function(){
+      var out=oldQuickShop.apply(this,arguments);
+      setTimeout(function(){prepareImages(document.getElementById('modal')||document)},30);
+      setTimeout(function(){prepareImages(document.getElementById('modal')||document)},180);
+      return out;
+    }
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){prepareImages(document)},120)});
+  window.addEventListener('load',function(){setTimeout(function(){prepareImages(document)},220)});
+  window.addEventListener('hashchange',function(){setTimeout(function(){prepareImages(document)},120)});
 })();
 </script>
 
