@@ -10667,5 +10667,140 @@ textarea.requiredCustomerField:focus{
 })();
 </script>
 
+
+<style id="almalika-v268-decor-gallery-by-number">
+/* ربط صور الديكورات حسب رقم البند: 200.jpg, 200-1.jpg ... */
+.decorThumbs{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(74px,1fr))!important;
+  gap:10px!important;
+  max-height:420px!important;
+  overflow:auto!important;
+  padding:8px!important;
+}
+.decorThumb{
+  min-height:120px!important;
+  border-radius:14px!important;
+}
+.decorThumb img{
+  width:100%!important;
+  height:74px!important;
+  object-fit:cover!important;
+  border-radius:10px!important;
+  background:#fff8e8!important;
+}
+.decorThumb.missingDecorImage{
+  display:none!important;
+}
+</style>
+<script id="almalika-v268-decor-gallery-by-number">
+(function(){
+  const DECOR_COUNTS = {
+    200:20,201:20,202:20,203:20,204:20,205:20,206:20,207:20,208:20,209:20,
+    210:8,211:8,212:8,300:4,301:4
+  };
+
+  function escHtml(v){
+    try{
+      if(typeof esc === 'function') return esc(v);
+      if(typeof escV230 === 'function') return escV230(v);
+      if(typeof escV229 === 'function') return escV229(v);
+    }catch(e){}
+    return String(v||'').replace(/[&<>"']/g,function(s){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]});
+  }
+
+  function isDecorNumber(p){
+    const n = Number(p && (p.number || p.id));
+    return !!DECOR_COUNTS[n];
+  }
+
+  function baseNames(n){
+    const max = DECOR_COUNTS[Number(n)] || 1;
+    const arr = [String(n)];
+    for(let i=1;i<=max;i++) arr.push(String(n)+'-'+i);
+    return arr;
+  }
+
+  function candidatesForBase(base){
+    return [
+      base + '.jpg', base + '.jpeg', base + '.png', base + '.webp',
+      './' + base + '.jpg', './' + base + '.jpeg', './' + base + '.png', './' + base + '.webp',
+      'images/' + base + '.jpg', 'images/' + base + '.jpeg', 'images/' + base + '.png', 'images/' + base + '.webp',
+      './images/' + base + '.jpg', './images/' + base + '.jpeg', './images/' + base + '.png', './images/' + base + '.webp',
+      'assets/' + base + '.jpg', 'assets/' + base + '.jpeg', 'assets/' + base + '.png', 'assets/' + base + '.webp',
+      './assets/' + base + '.jpg', './assets/' + base + '.jpeg', './assets/' + base + '.png', './assets/' + base + '.webp'
+    ];
+  }
+
+  window.decorGalleryFiles = decorGalleryFiles = function(p){
+    const n = Number(p && (p.number || p.id));
+    if(DECOR_COUNTS[n]) return baseNames(n).map(x => x + '.jpg');
+    if(p && p.decorGallery && p.decorGallery.length) return p.decorGallery;
+    return [p && p.image ? p.image : (n ? n + '.jpg' : '')];
+  };
+
+  window.tryDecorThumbImage = function(img){
+    try{
+      let list = [];
+      try{ list = JSON.parse(img.dataset.candidates || '[]'); }catch(e){}
+      let i = Number(img.dataset.candidateIndex || 0) + 1;
+      img.dataset.candidateIndex = String(i);
+      if(i < list.length){
+        img.onerror = function(){ window.tryDecorThumbImage(img); };
+        img.src = list[i];
+      }else{
+        img.onerror = null;
+        const b = img.closest('.decorThumb');
+        if(b) b.classList.add('missingDecorImage');
+      }
+    }catch(e){}
+  };
+
+  window.decorGalleryHtml = decorGalleryHtml = function(p){
+    const n = Number(p && (p.number || p.id));
+    const isDecor = (typeof isDecorEvent === 'function') ? isDecorEvent(p) : String(p && p.category || '').includes('تجهيز');
+    const show = isDecor || DECOR_COUNTS[n];
+    if(!show) return '';
+
+    const bases = DECOR_COUNTS[n] ? baseNames(n) : (decorGalleryFiles(p)||[]).map(x => String(x||'').replace(/\.(jpg|jpeg|png|webp)$/i,''));
+    const buttons = bases.map(function(base,i){
+      const cands = candidatesForBase(base);
+      const label = i===0 ? 'الصورة الأساسية' : 'شكل ' + i;
+      return `<button type="button" class="decorThumb ${i===0?'active':''}" data-decor-img="${escHtml(cands[0])}" data-decor-label="${escHtml(label)}" onclick="selectDecorImage(${n},this.dataset.decorImg,this)">
+        <img src="${escHtml(cands[0])}" data-candidates='${escHtml(JSON.stringify(cands))}' data-candidate-index="0" onerror="window.tryDecorThumbImage(this)">
+        <small>${escHtml(label)}</small>
+      </button>`;
+    }).join('');
+
+    const first = candidatesForBase(String(n))[0] || (p && p.image) || (n + '.jpg');
+    return `<div class="decorGallery v268NumberedGallery">
+      <div class="decorGalleryTitle">اختر شكل الديكور المناسب للزبون</div>
+      <div class="decorThumbs">${buttons}</div>
+      <input type="hidden" id="decorImage_${n}" value="${escHtml(first)}">
+      <div class="addonHint">اختيار الصورة يساعد الإدارة تعرف شكل الديكور المطلوب بالضبط. الصورة المختارة تظهر داخل رسالة الطلب.</div>
+    </div>`;
+  };
+
+  window.modalMediaHtml = modalMediaHtml = function(p){
+    const n = Number(p && (p.number || p.id));
+    const first = (DECOR_COUNTS[n] ? candidatesForBase(String(n))[0] : ((decorGalleryFiles(p)||[])[0] || (p && p.image) || (n + '.jpg')));
+    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${n}" src="${escHtml(first)}" onerror="window.tryProductImageFallback?window.tryProductImageFallback(this,'${n}'):this.style.display='none'">${decorGalleryHtml(p)}</div>`;
+  };
+
+  const oldOpenProduct = window.openProduct;
+  if(typeof oldOpenProduct === 'function'){
+    window.openProduct = function(){
+      const out = oldOpenProduct.apply(this, arguments);
+      setTimeout(function(){
+        document.querySelectorAll('#modal .decorThumb img').forEach(function(img){
+          if(img.complete && img.naturalWidth===0) window.tryDecorThumbImage(img);
+        });
+      },250);
+      return out;
+    };
+  }
+})();
+</script>
+
 </body>
 </html>
