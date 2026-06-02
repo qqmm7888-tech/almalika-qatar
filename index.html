@@ -11430,5 +11430,160 @@ function openOfferImage(n){
 })();
 </script>
 
+
+
+<!-- ===== V293 FIX: فتح اختيار شكل الديكور لبند أعمدة ديكور بالونات #250 ===== -->
+<style id="almalika-v293-open-decor-shape-250">
+#modal .modalBox.hasDecor250{
+  grid-template-columns:330px minmax(0,1fr)!important;
+  max-width:1120px!important;
+}
+#modal .modalBox.hasDecor250 .modalPic{
+  display:block!important;
+  background:linear-gradient(145deg,#fff,#fff8e8 55%,#fff1f6)!important;
+  border-left:1px solid #eadce4!important;
+}
+#modal .decorGallery.v293Decor250{
+  display:block!important;
+  margin-top:12px!important;
+  background:linear-gradient(135deg,#fff,#fff6df)!important;
+  border:1px solid rgba(212,175,55,.55)!important;
+  border-radius:20px!important;
+  padding:12px!important;
+}
+#modal .decorGallery.v293Decor250 .decorGalleryTitle{
+  font-size:18px!important;
+  font-weight:1000!important;
+  color:#6A1B2E!important;
+  margin-bottom:10px!important;
+  text-align:center!important;
+}
+#modal .decorGallery.v293Decor250 .decorThumbs{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+  max-height:none!important;
+  overflow:visible!important;
+  padding:0!important;
+}
+#modal .decorGallery.v293Decor250 .decorThumb{
+  display:grid!important;
+  grid-template-columns:74px 1fr!important;
+  gap:10px!important;
+  align-items:center!important;
+  min-height:76px!important;
+  text-align:right!important;
+  border:2px solid #f5d7e3!important;
+  border-radius:16px!important;
+  background:#fff!important;
+  padding:8px!important;
+}
+#modal .decorGallery.v293Decor250 .decorThumb.active{
+  border-color:#e11d48!important;
+  background:linear-gradient(135deg,#fff7fb,#fff8df)!important;
+  box-shadow:0 0 0 3px rgba(225,29,72,.12),0 10px 24px rgba(106,27,46,.12)!important;
+}
+#modal .decorGallery.v293Decor250 .decorThumb img{
+  width:74px!important;
+  height:58px!important;
+  object-fit:cover!important;
+  border-radius:12px!important;
+  background:#fff8e8!important;
+}
+#modal .decorGallery.v293Decor250 .decorThumb small{
+  font-size:14px!important;
+  color:#6A1B2E!important;
+  font-weight:1000!important;
+  text-align:right!important;
+  margin:0!important;
+}
+#modal .decorGallery.v293Decor250 .addonHint{
+  margin-top:10px!important;
+  font-size:12px!important;
+  line-height:1.7!important;
+  color:#6b4a00!important;
+  background:#fff9e8!important;
+  border:1px dashed rgba(212,175,55,.55)!important;
+  border-radius:14px!important;
+  padding:9px!important;
+}
+@media(max-width:980px){
+  #modal .modalBox.hasDecor250{grid-template-columns:1fr!important;max-width:760px!important}
+  #modal .modalBox.hasDecor250 .modalPic{border-left:0!important;border-bottom:1px solid #eadce4!important}
+}
+</style>
+<script id="almalika-v293-open-decor-shape-250">
+(function(){
+  function h(v){
+    try{ if(typeof esc==='function') return esc(v); }catch(e){}
+    return String(v||'').replace(/[&<>"']/g,function(s){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]});
+  }
+  function is250(p){ return Number(p && (p.number || p.id || p.serial || 0)) === 250; }
+  const oldDecorGalleryFiles = window.decorGalleryFiles;
+  window.decorGalleryFiles = decorGalleryFiles = function(p){
+    if(is250(p)){
+      return ['250.jpg','250.jpeg','250-1.jpg','250-1.jpeg','250-2.jpg','250-2.jpeg','250-3.jpg','250-3.jpeg','250-4.jpg','250-4.jpeg'];
+    }
+    return typeof oldDecorGalleryFiles === 'function' ? oldDecorGalleryFiles(p) : ((p && p.image) ? [p.image] : []);
+  };
+
+  const oldDecorGalleryHtml = window.decorGalleryHtml;
+  window.decorGalleryHtml = decorGalleryHtml = function(p){
+    if(!is250(p)) return typeof oldDecorGalleryHtml === 'function' ? oldDecorGalleryHtml(p) : '';
+    const n = 250;
+    const opts = [
+      {label:'عمود بالونات فردي', img:'250.jpg'},
+      {label:'عمودين بالونات للمدخل', img:'250-1.jpg'},
+      {label:'أعمدة ديكور بالونات حسب التصميم', img:'250-2.jpg'},
+      {label:'حسب الطلب / تصميم خاص', img:'250-3.jpg'}
+    ];
+    const buttons = opts.map(function(o,i){
+      return `<button type="button" class="decorThumb ${i===0?'active':''}" data-decor-img="${h(o.img)}" data-decor-label="${h(o.label)}" onclick="selectDecorImage(${n},this.dataset.decorImg,this)">
+        <img src="${h(o.img)}" onerror="this.style.display='none'">
+        <small>${h(o.label)}</small>
+      </button>`;
+    }).join('');
+    return `<div class="decorGallery v293Decor250" id="decorGallery_250">
+      <div class="decorGalleryTitle">اختر شكل الديكور المناسب للزبون</div>
+      <div class="decorThumbs">${buttons}</div>
+      <input type="hidden" id="decorImage_${n}" value="250.jpg">
+      <input type="hidden" id="decorImageLabel_${n}" value="عمود بالونات فردي">
+      <div class="addonHint">تم فتح الاختيار لهذا البند. اختار الشكل المطلوب أو خليها حسب الطلب، وسيظهر الاختيار داخل رسالة الحجز والسلة.</div>
+    </div>`;
+  };
+
+  const oldModalMediaHtml = window.modalMediaHtml;
+  window.modalMediaHtml = modalMediaHtml = function(p){
+    if(is250(p)){
+      return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_250" src="250.jpg" onerror="this.style.display='none'">${decorGalleryHtml(p)}</div>`;
+    }
+    return typeof oldModalMediaHtml === 'function' ? oldModalMediaHtml(p) : '';
+  };
+
+  function fix250Modal(){
+    try{
+      const box = document.querySelector('#modal .modalBox');
+      if(!box) return;
+      const title = box.querySelector('.modalInfo h2');
+      if(title && /أعمدة\s+ديكور\s+بالونات/.test(title.textContent||'')){
+        box.classList.remove('noMedia');
+        box.classList.add('hasDecor250');
+        const pic = box.querySelector('.modalPic');
+        if(pic) pic.style.display = '';
+      }
+    }catch(e){}
+  }
+  const oldOpen = window.openProduct;
+  if(typeof oldOpen === 'function'){
+    window.openProduct = openProduct = function(n){
+      const out = oldOpen.apply(this, arguments);
+      if(Number(n)===250){ setTimeout(fix250Modal,30); setTimeout(fix250Modal,160); setTimeout(fix250Modal,380); }
+      return out;
+    };
+  }
+  document.addEventListener('click', function(){ setTimeout(fix250Modal,80); }, true);
+})();
+</script>
+
 </body>
 </html>
