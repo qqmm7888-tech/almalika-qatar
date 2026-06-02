@@ -5436,8 +5436,129 @@ body .cartItem .qtyBox b{
 #v342WaChoice .v342Ad small{display:none!important}
 #v342WaChoice .v342Ad span{display:block!important;font-size:14px!important;color:#7a2946!important;margin-top:6px!important}
 </style>
+
+<style id="v361-hard-top-ticker-style">
+/* V361: شريط أخبار العروض أعلى الصفحة فعلياً */
+#v361TopTickerWrap{
+  position:sticky!important;
+  top:0!important;
+  z-index:999999!important;
+  width:100%!important;
+  direction:rtl!important;
+  background:#fff!important;
+  border-bottom:2px solid #9d0014!important;
+  box-shadow:0 4px 14px rgba(0,0,0,.18)!important;
+}
+.v361Ticker{
+  display:flex!important;
+  align-items:center!important;
+  min-height:44px!important;
+  width:100%!important;
+  overflow:hidden!important;
+  background:linear-gradient(180deg,#ffffff 0%,#f4f4f4 100%)!important;
+  font-family:inherit!important;
+}
+.v361TickerLabel{
+  flex:0 0 auto!important;
+  min-width:155px!important;
+  height:44px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  padding:0 16px!important;
+  background:linear-gradient(180deg,#d71920 0%,#970014 100%)!important;
+  color:#fff!important;
+  font-weight:1000!important;
+  font-size:15px!important;
+  border:0!important;
+  cursor:pointer!important;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.25)!important;
+}
+.v361TickerLabel .dot{
+  width:9px!important;
+  height:9px!important;
+  border-radius:50%!important;
+  background:#fff!important;
+  display:inline-block!important;
+  animation:v361Blink 1s infinite!important;
+}
+.v361TickerWindow{
+  flex:1!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  position:relative!important;
+}
+.v361TickerWindow:before,.v361TickerWindow:after{
+  content:""!important;
+  position:absolute!important;
+  top:0!important;
+  bottom:0!important;
+  width:44px!important;
+  z-index:2!important;
+  pointer-events:none!important;
+}
+.v361TickerWindow:before{right:0!important;background:linear-gradient(to left,#fff,rgba(255,255,255,0))!important;}
+.v361TickerWindow:after{left:0!important;background:linear-gradient(to right,#fff,rgba(255,255,255,0))!important;}
+.v361TickerTrack{
+  display:flex!important;
+  align-items:center!important;
+  gap:11px!important;
+  width:max-content!important;
+  padding:6px 14px!important;
+  animation:v361TickerMove 18s linear infinite!important;
+  will-change:transform!important;
+}
+.v361Ticker:hover .v361TickerTrack{animation-play-state:paused!important;}
+.v361TickerItem{
+  flex:0 0 auto!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  background:transparent!important;
+  border:0!important;
+  cursor:pointer!important;
+  white-space:nowrap!important;
+  padding:5px 10px!important;
+  border-radius:999px!important;
+  color:#111!important;
+  font:inherit!important;
+}
+.v361TickerItem:hover{background:#fff0f0!important;}
+.v361TickerTag{
+  background:#111!important;
+  color:#fff!important;
+  border:1px solid #d6b15b!important;
+  font-size:10px!important;
+  font-weight:1000!important;
+  border-radius:999px!important;
+  padding:3px 8px!important;
+}
+.v361TickerText{
+  color:#111!important;
+  font-size:14px!important;
+  font-weight:900!important;
+}
+.v361TickerSep{
+  color:#c40018!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+@keyframes v361TickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes v361Blink{0%,55%{opacity:1}56%,100%{opacity:.35}}
+@media(max-width:700px){
+  .v361Ticker{min-height:38px!important;}
+  .v361TickerLabel{height:38px!important;min-width:96px!important;font-size:12px!important;padding:0 8px!important;}
+  .v361TickerTrack{animation-duration:13s!important;padding:5px 10px!important;}
+  .v361TickerText{font-size:12px!important;}
+  .v361TickerTag{font-size:9px!important;padding:3px 6px!important;}
+}
+</style>
+
 </head>
 <body>
+<div id="v361TopTickerWrap"><div class="v361Ticker"><button class="v361TickerLabel" type="button" onclick="showSection('offers')"><span class="dot"></span><span>آخر العروض</span></button><div class="v361TickerWindow"><div class="v361TickerTrack" id="v361TickerTrack"><span class="v361TickerText">جاري تحميل العروض...</span></div></div></div></div>
+
 <div class="siteMagic" aria-hidden="true">
   <span class="trail t1"></span>
   <span class="trail t2"></span>
@@ -12686,6 +12807,59 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 })();
 </script>
 
+
+<script id="v361-hard-top-ticker-script">
+(function(){
+  function clean(s){return String(s||'').replace(/\s+/g,' ').replace(/[\n\r\t]+/g,' ').trim();}
+  function short(s,n){s=clean(s);var a=s.split(' ').filter(Boolean);return a.length<=n?s:a.slice(0,n).join(' ')+'...';}
+  function isOffer(p){try{return sectionOf(p)==='offers'}catch(e){return (p&&(/عرض|بكج|باقة|عروض/.test(String(p.name||'')+' '+String(p.category||''))))}}
+  function disabled(p){try{return (typeof forcedUnavailableCatalog==='function'&&forcedUnavailableCatalog(p.number))||(typeof isUnavailableForVip==='function'&&isUnavailableForVip(p));}catch(e){return false}}
+  function getPrice(p){
+    var v=0;
+    try{
+      if(p&&p.packagePrices){var nums=Object.values(p.packagePrices).map(Number).filter(function(x){return x>0}); if(nums.length)v=Math.min.apply(null,nums);}
+      if(!v&&p&&p.baseDecorPrice)v=Number(p.baseDecorPrice||0);
+      if(!v&&typeof price==='function')v=Number(price(p)||0);
+      if(!v&&p)v=Number(p.priceOneDay||p.priceTwoDays||p.price||0);
+    }catch(e){}
+    return v>0?'يبدأ من '+(typeof money==='function'?money(v):v)+' ر.ق':'';
+  }
+  function details(p){
+    var d=clean((p&&(p.offerIncludes||p.shortWebsiteText||p.shortText||p.details||p.description||p.note||p.notes))||'');
+    d=d.replace(/[،؛]+/g,' • ');
+    var first=d.split('•').map(clean).filter(Boolean)[0]||d;
+    return short(first,7);
+  }
+  function summary(p){
+    return ['#'+(p.number||''), short(p.name||'عرض خاص',4), getPrice(p), details(p)].filter(Boolean).join(' — ');
+  }
+  function build(){
+    try{
+      var track=document.getElementById('v361TickerTrack'); if(!track)return;
+      var arr=(window.products||products||[]).filter(function(p){return isOffer(p)&&!disabled(p)}).slice(0,30);
+      if(!arr.length){track.innerHTML='<span class="v361TickerText">لا توجد عروض مضافة حالياً</span>';return;}
+      var html=arr.map(function(p){return '<button type="button" class="v361TickerItem" onclick="openProduct('+Number(p.number)+')"><span class="v361TickerTag">عرض</span><span class="v361TickerText">'+esc(summary(p))+'</span></button><span class="v361TickerSep">•</span>';}).join('');
+      track.innerHTML=html+html;
+    }catch(e){}
+  }
+  function ensureTop(){
+    var wrap=document.getElementById('v361TopTickerWrap'); if(!wrap)return;
+    if(document.body.firstElementChild!==wrap) document.body.insertBefore(wrap, document.body.firstElementChild);
+    build();
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(ensureTop,50);setTimeout(ensureTop,300);});
+  window.addEventListener('load',function(){setTimeout(ensureTop,100);});
+  if(typeof window.render==='function'){
+    var old=window.render;
+    window.render=function(){var r=old.apply(this,arguments);setTimeout(ensureTop,50);return r;};
+  }
+  if(typeof window.showSection==='function'){
+    var oldShow=window.showSection;
+    window.showSection=function(){var r=oldShow.apply(this,arguments);setTimeout(ensureTop,50);return r;};
+  }
+})();
+</script>
+
 </body>
 </html>
 
@@ -15883,280 +16057,5 @@ section.wrap,
   document.addEventListener('DOMContentLoaded',function(){const o=getOrderFromUrl(); if(o) setTimeout(function(){renderAdminOrder(o)},10);});
   window.cartMessage=function(){try{const o=buildOrder();return adminMsg(o)}catch(e){return 'شركة الملكة للحفلات - قطر'} };
   window.shareProduct=window.shareProduct||function(n){const p=findProduct(n);if(!p)return;const img=productUrlFromItem({number:p.number,image:p.image});const msg=[AD_IMG,'','👑 شوف هذا المنتج من شركة الملكة للحفلات','#'+p.number+' - '+p.name,(img?'📸 صورة المنتج: '+img:''),'🔗 الموقع: '+SITE,'للحجز: 33317720 / 33317705'].filter(Boolean).join('\n');window.open('https://wa.me/?text='+enc(msg),'_blank')};
-})();
-</script>
-
-
-<style id="v359-offers-news-ticker-style">
-.v359TickerSection{padding-top:6px!important}
-.v359TickerHint{margin:0 0 10px!important;color:#7f5a67!important;font-weight:800!important;font-size:13px!important;text-align:right!important}
-.v359TickerBar{display:flex!important;align-items:stretch!important;gap:0!important;background:#fff!important;border:1px solid #f0c6d8!important;border-radius:22px!important;overflow:hidden!important;box-shadow:0 12px 28px rgba(115,16,54,.08)!important;min-height:62px!important}
-.v359TickerHead{border:0!important;cursor:pointer!important;background:linear-gradient(180deg,#8a0e33,#6f0b29)!important;color:#fff!important;font-weight:1000!important;font-size:17px!important;letter-spacing:.2px!important;min-width:170px!important;padding:0 18px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important;white-space:nowrap!important}
-.v359TickerHead small{display:block!important;font-size:11px!important;opacity:.9!important;font-weight:800!important;margin-top:2px!important}
-.v359TickerViewport{position:relative!important;overflow:hidden!important;flex:1!important;background:linear-gradient(180deg,#fffafc,#fff)!important}
-.v359TickerViewport:before,.v359TickerViewport:after{content:"";position:absolute;top:0;bottom:0;width:56px;z-index:2;pointer-events:none!important}
-.v359TickerViewport:before{right:0;background:linear-gradient(to left,rgba(255,255,255,.98),rgba(255,255,255,0))}
-.v359TickerViewport:after{left:0;background:linear-gradient(to right,rgba(255,255,255,.98),rgba(255,255,255,0))}
-.v359TickerTrack{display:flex!important;align-items:center!important;gap:14px!important;width:max-content!important;padding:11px 18px!important;animation:v359TickerMove 55s linear infinite}
-.v359TickerBar:hover .v359TickerTrack{animation-play-state:paused}
-.v359TickerItem{flex:0 0 auto!important;display:flex!important;align-items:center!important;gap:10px!important;border:0!important;background:transparent!important;padding:7px 14px!important;border-radius:999px!important;cursor:pointer!important;color:#5d243f!important;font:inherit!important;white-space:nowrap!important;max-width:none!important}
-.v359TickerItem:hover{background:#fff0f6!important}
-.v359TickerFlash{display:inline-flex!important;align-items:center!important;justify-content:center!important;background:#f03577!important;color:#fff!important;font-size:11px!important;font-weight:1000!important;padding:5px 10px!important;border-radius:999px!important;box-shadow:0 4px 12px rgba(240,53,119,.24)!important}
-.v359TickerText{font-weight:900!important;font-size:15px!important;color:#5b213d!important}
-.v359TickerSep{color:#e29ab7!important;font-weight:900!important;font-size:22px!important;line-height:1!important}
-@keyframes v359TickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@media (max-width:900px){
-  .v359TickerBar{flex-direction:column!important;border-radius:18px!important}
-  .v359TickerHead{min-width:100%!important;justify-content:flex-start!important;padding:12px 16px!important;font-size:16px!important}
-  .v359TickerTrack{padding:10px 12px!important;animation-duration:42s!important}
-  .v359TickerText{font-size:14px!important}
-}
-</style>
-<script id="v359-offers-news-ticker-script">
-(function(){
-  function v359CleanText(s){
-    return String(s||'').replace(/\s+/g,' ').replace(/[\n\r\t]+/g,' ').replace(/\s*[-–—]+\s*/g,' - ').trim();
-  }
-  function v359TruncateWords(s,maxWords){
-    s=v359CleanText(s);
-    if(!s) return '';
-    var arr=s.split(' ').filter(Boolean);
-    return arr.length<=maxWords?s:arr.slice(0,maxWords).join(' ')+'...';
-  }
-  function v359OfferProducts(){
-    try{
-      return (products||[]).filter(function(p){
-        return sectionOf(p)==='offers' && !(typeof isUnavailableForVip==='function' && isUnavailableForVip(p)) && !(typeof forcedUnavailableCatalog==='function' && forcedUnavailableCatalog(p.number));
-      });
-    }catch(e){return []}
-  }
-  function v359KidsText(p){
-    try{
-      var list=[];
-      if(p && p.packagePrices){
-        list=Object.keys(p.packagePrices).map(Number).filter(function(x){return x>0;}).sort(function(a,b){return a-b;});
-      }else if(p && p.decorPackages){
-        list=Object.keys(p.decorPackages).map(Number).filter(function(x){return x>0 && ![100,150,200].includes(x);}).sort(function(a,b){return a-b;});
-      }
-      if(!list.length) return '';
-      return 'باقات '+list.slice(0,4).join('/')+' طفل';
-    }catch(e){return ''}
-  }
-  function v359DetailText(p){
-    var details=v359CleanText((p&&((p.shortWebsiteText||p.shortText||p.details||p.description||p.note||p.notes)))||'');
-    details=details.replace(/^(يشمل|تشمل|يتضمن|تتضمن|عرض|باقة|بكج)\s*/,'');
-    details=details.replace(/[،؛]+/g,' • ');
-    var bits=details.split('•').map(function(x){return v359CleanText(x);}).filter(Boolean);
-    if(bits.length) return v359TruncateWords(bits[0],7);
-    return v359TruncateWords(details,7);
-  }
-  function v359PriceText(p){
-    var val=0;
-    try{
-      if(p && p.packagePrices){
-        var nums=Object.values(p.packagePrices).map(Number).filter(function(x){return x>0;});
-        val=nums.length?Math.min.apply(null,nums):0;
-      }
-      if(!val && p && p.baseDecorPrice) val=Number(p.baseDecorPrice||0);
-      if(!val && typeof price==='function') val=Number(price(p)||0);
-      if(!val && p) val=Number(p.priceOneDay||p.priceTwoDays||p.price||0);
-    }catch(e){}
-    return val>0?('يبدأ من '+(typeof money==='function'?money(val):val)+' ر.ق'):'';
-  }
-  function v359OfferSummary(p){
-    var parts=[];
-    parts.push('#'+String(p.number||''));
-    parts.push(v359TruncateWords(v359CleanText(p.name||'عرض خاص'),4));
-    var pt=v359PriceText(p); if(pt) parts.push(pt);
-    var kt=v359KidsText(p); if(kt) parts.push(kt);
-    else if(p && (p.durationOneDay||p.durationTwoDays)) parts.push(v359CleanText(p.durationOneDay||p.durationTwoDays));
-    var dt=v359DetailText(p); if(dt) parts.push(dt);
-    return parts.filter(Boolean).join(' — ');
-  }
-  function v359TickerItemsHtml(){
-    var arr=v359OfferProducts();
-    if(!arr.length) return '';
-    var items=arr.map(function(p){
-      return '<button type="button" class="v359TickerItem" onclick="openProduct('+Number(p.number)+')">'
-        +'<span class="v359TickerFlash">عرض</span>'
-        +'<span class="v359TickerText">'+esc(v359OfferSummary(p))+'</span>'
-        +'</button><span class="v359TickerSep">•</span>';
-    }).join('');
-    return items+items;
-  }
-  function v359TickerCoreHtml(){
-    var items=v359TickerItemsHtml();
-    if(!items) return '';
-    return '<div class="v359TickerHint">شريط متحرك لأهم العروض المختصرة — اضغط على أي عرض لفتح التفاصيل الكاملة.</div>'
-      +'<div class="v359TickerBar" role="region" aria-label="شريط العروض المتحرك">'
-      +'<button type="button" class="v359TickerHead" onclick="showSection(\'offers\')"><span>📰 آخر العروض</span></button>'
-      +'<div class="v359TickerViewport"><div class="v359TickerTrack">'+items+'</div></div>'
-      +'</div>';
-  }
-  function v359InsertHomeTicker(){
-    try{
-      if(!window.app || app.querySelector('.v359TickerSection')) return;
-      var hero=app.querySelector('.hero');
-      if(!hero) return;
-      var html=v359TickerCoreHtml();
-      if(!html) return;
-      hero.insertAdjacentHTML('afterend','<section class="wrap section v359TickerSection">'+html+'</section>');
-    }catch(e){}
-  }
-  function v359InsertOffersTicker(){
-    try{
-      if(!window.app || current!=='offers' || app.querySelector('.v359TickerSection')) return;
-      var box=app.querySelector('.wrap.section');
-      if(!box) return;
-      var toolbar=box.querySelector('.chips');
-      var html=v359TickerCoreHtml();
-      if(!html) return;
-      if(toolbar) toolbar.insertAdjacentHTML('beforebegin','<div class="v359TickerSection" style="margin:14px 0 16px">'+html+'</div>');
-      else box.insertAdjacentHTML('afterbegin','<div class="v359TickerSection" style="margin:14px 0 16px">'+html+'</div>');
-    }catch(e){}
-  }
-  function v359AfterRender(){
-    v359InsertHomeTicker();
-    v359InsertOffersTicker();
-  }
-  if(typeof window.renderHome==='function'){
-    var oldRenderHome=window.renderHome;
-    window.renderHome=function(){ var r=oldRenderHome.apply(this,arguments); v359AfterRender(); return r; };
-  }
-  if(typeof window.render==='function'){
-    var oldRender=window.render;
-    window.render=function(){ var r=oldRender.apply(this,arguments); v359AfterRender(); return r; };
-  }
-  document.addEventListener('DOMContentLoaded',function(){setTimeout(v359AfterRender,120);});
-})();
-</script>
-
-
-<style id="v360-top-aljazeera-ticker-style">
-/* v360: شريط العروض أعلى الصفحة مباشرة + سرعة أسرع + ألوان قريبة من شريط الجزيرة */
-.v359TickerSection{
-  margin:0!important;
-  padding:0!important;
-  max-width:none!important;
-  width:100%!important;
-}
-#app > .v359TickerSection{
-  position:relative!important;
-  z-index:20!important;
-  margin:0 0 12px!important;
-}
-.v359TickerHint{display:none!important}
-.v359TickerBar{
-  border-radius:0!important;
-  border:0!important;
-  min-height:42px!important;
-  box-shadow:0 6px 18px rgba(0,0,0,.14)!important;
-  background:#ffffff!important;
-}
-.v359TickerHead{
-  min-width:150px!important;
-  font-size:15px!important;
-  padding:0 14px!important;
-  border-radius:0!important;
-  background:linear-gradient(180deg,#d71920,#9f0014)!important;
-  color:#fff!important;
-  box-shadow:inset -1px 0 0 rgba(255,255,255,.22)!important;
-}
-.v359TickerHead:before{
-  content:"●";
-  color:#fff;
-  font-size:11px;
-  animation:v360Blink 1s infinite;
-}
-.v359TickerHead span{display:flex!important;align-items:center!important;gap:7px!important}
-.v359TickerViewport{
-  background:linear-gradient(180deg,#fff,#f7f7f7)!important;
-  border-top:1px solid rgba(0,0,0,.08)!important;
-  border-bottom:1px solid rgba(0,0,0,.08)!important;
-}
-.v359TickerTrack{
-  padding:6px 12px!important;
-  gap:10px!important;
-  animation:v359TickerMove 24s linear infinite!important;
-}
-.v359TickerItem{
-  padding:4px 10px!important;
-  color:#101010!important;
-}
-.v359TickerItem:hover{
-  background:#fff1f1!important;
-}
-.v359TickerFlash{
-  background:#111!important;
-  color:#fff!important;
-  border:1px solid #d7b15e!important;
-  font-size:10px!important;
-  padding:4px 8px!important;
-  box-shadow:none!important;
-}
-.v359TickerText{
-  color:#161616!important;
-  font-size:14px!important;
-  font-weight:900!important;
-}
-.v359TickerSep{
-  color:#b80016!important;
-  font-size:20px!important;
-}
-@keyframes v360Blink{0%,55%{opacity:1}56%,100%{opacity:.35}}
-@media (max-width:900px){
-  .v359TickerBar{min-height:38px!important;flex-direction:row!important}
-  .v359TickerHead{min-width:105px!important;font-size:13px!important;padding:0 9px!important}
-  .v359TickerTrack{animation-duration:18s!important;padding:6px 10px!important}
-  .v359TickerText{font-size:12.5px!important}
-  .v359TickerFlash{font-size:9px!important;padding:3px 7px!important}
-}
-</style>
-<script id="v360-top-aljazeera-ticker-script">
-(function(){
-  function moveTickerToVeryTop(){
-    try{
-      if(!window.app) return;
-      var existing=app.querySelector('.v359TickerSection');
-      if(!existing){
-        if(typeof v359InsertHomeTicker==='function') v359InsertHomeTicker();
-        existing=app.querySelector('.v359TickerSection');
-      }
-      if(existing && app.firstElementChild!==existing){
-        app.insertBefore(existing, app.firstElementChild);
-      }
-    }catch(e){}
-  }
-  function forceTickerTopAfterRender(){
-    setTimeout(moveTickerToVeryTop,20);
-    setTimeout(moveTickerToVeryTop,120);
-    setTimeout(moveTickerToVeryTop,350);
-  }
-  if(typeof window.renderHome==='function'){
-    var rh=window.renderHome;
-    window.renderHome=function(){
-      var r=rh.apply(this,arguments);
-      forceTickerTopAfterRender();
-      return r;
-    };
-  }
-  if(typeof window.render==='function'){
-    var rr=window.render;
-    window.render=function(){
-      var r=rr.apply(this,arguments);
-      forceTickerTopAfterRender();
-      return r;
-    };
-  }
-  if(typeof window.showSection==='function'){
-    var ss=window.showSection;
-    window.showSection=function(){
-      var r=ss.apply(this,arguments);
-      forceTickerTopAfterRender();
-      return r;
-    };
-  }
-  document.addEventListener('DOMContentLoaded',forceTickerTopAfterRender);
-  window.addEventListener('hashchange',forceTickerTopAfterRender);
 })();
 </script>
