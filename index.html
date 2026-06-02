@@ -12430,176 +12430,94 @@ function openOfferImage(n){
 
 
 
-<!-- ===== V319: تجميد الصورة الرئيسية داخل مكانها الصحيح يمين النافذة ===== -->
-<style id="almalika-v319-right-panel-frozen-main-image-css">
-/* لا نستخدم position:fixed نهائياً حتى لا تطلع الصورة خارج مكانها */
-#modal .modalBox.hasDecorMedia,
-#modal .modalBox.detailed.eventDetailed,
-#modal .modalBox.detailed.hasDecorMedia,
-#modal .modalBox.detailed.hasDecorMedia.eventDetailed{
-  height:min(92vh,860px)!important;
-  max-height:92vh!important;
-  overflow:hidden!important;
-  align-items:stretch!important;
-}
+<style id="almalika-v316-sticky-main-decor-preview">
+/* V316: تثبيت الصورة الرئيسية أعلى معرض الديكور حتى تبقى ظاهرة أثناء نزول الزبون لاختيار صورة */
 #modal .modalBox.hasDecorMedia > .modalPic,
 #modal .modalBox.detailed.eventDetailed > .modalPic,
 #modal .modalBox.detailed.hasDecorMedia > .modalPic,
 #modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalPic{
-  position:relative!important;
-  top:auto!important;
-  right:auto!important;
-  left:auto!important;
-  bottom:auto!important;
-  display:flex!important;
-  flex-direction:column!important;
-  overflow:hidden!important;
-  height:100%!important;
-  max-height:92vh!important;
-  min-height:0!important;
-  background:linear-gradient(180deg,#fffdf7,#fff6df)!important;
-}
-#modal .modalBox.hasDecorMedia > .modalInfo,
-#modal .modalBox.detailed.eventDetailed > .modalInfo,
-#modal .modalBox.detailed.hasDecorMedia > .modalInfo,
-#modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalInfo{
-  height:100%!important;
-  max-height:92vh!important;
   overflow-y:auto!important;
   overflow-x:hidden!important;
-  min-height:0!important;
+  scroll-behavior:smooth!important;
+  padding-top:12px!important;
 }
-#modal .modalPic > .v302MainWrap,
-#modal .modalPic > img.mainDecorImg,
-#modal .modalPic > img.v302MainImg,
-#modal .modalPic > .mainDecorPreview{
-  position:relative!important;
-  top:auto!important;
-  left:auto!important;
-  right:auto!important;
-  width:100%!important;
-  max-width:100%!important;
-  flex:0 0 auto!important;
-  z-index:5!important;
-  background:linear-gradient(180deg,#fffaf2 0%,#fff7fb 100%)!important;
-  padding-bottom:10px!important;
-  margin:0 0 10px!important;
+#modal .modalPic .decorMainPreviewBox{
+  position:sticky!important;
+  top:0!important;
+  z-index:80!important;
+  margin:0 0 12px!important;
+  padding:0 0 10px!important;
+  background:linear-gradient(180deg,#fffaf0 0%,#fff7fb 72%,rgba(255,247,251,.94) 100%)!important;
   border-bottom:2px solid rgba(227,175,74,.28)!important;
-  box-shadow:0 10px 24px rgba(106,27,46,.10)!important;
+  box-shadow:0 12px 22px rgba(106,27,46,.08)!important;
 }
-#modal .modalPic > .v302MainWrap img,
-#modal .modalPic > img.mainDecorImg,
-#modal .modalPic > img.v302MainImg,
-#modal .modalPic > .mainDecorPreview{
+#modal .modalPic .decorMainPreviewBox img.mainDecorImg{
+  cursor:zoom-in!important;
+  width:100%!important;
   height:220px!important;
   max-height:220px!important;
   object-fit:contain!important;
-  cursor:zoom-in!important;
-}
-#modal .modalPic .decorGallery,
-#modal .modalPic .decorGallery.v302Gallery,
-#modal .modalPic .decorGallery.v295Decor250,
-#modal .modalPic .decorGallery.v293Decor250{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  overflow:hidden!important;
-  display:flex!important;
-  flex-direction:column!important;
-  width:100%!important;
-  margin:0!important;
+  background:#fff!important;
+  border:1px solid rgba(212,175,55,.45)!important;
+  border-radius:18px!important;
+  box-shadow:0 8px 18px rgba(106,27,46,.10)!important;
 }
 #modal .modalPic .decorGalleryTitle{
-  flex:0 0 auto!important;
-  position:relative!important;
-  top:auto!important;
-  z-index:4!important;
-  background:linear-gradient(180deg,#fffaf2,#fff7fb)!important;
+  position:sticky!important;
+  top:242px!important;
+  z-index:70!important;
+  background:linear-gradient(180deg,#fffaf0,#fff7fb)!important;
   padding:8px 4px 10px!important;
-  margin:0 0 8px!important;
-  text-align:center!important;
+  margin-bottom:8px!important;
+  border-bottom:1px solid rgba(227,175,74,.18)!important;
 }
-#modal .modalPic .decorThumbs{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  max-height:none!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  padding:2px 4px 16px!important;
-  scrollbar-width:thin!important;
-}
-#modal .modalPic .decorThumbs::-webkit-scrollbar,
-#modal .modalInfo::-webkit-scrollbar{width:8px!important}
-#modal .modalPic .decorThumbs::-webkit-scrollbar-thumb,
-#modal .modalInfo::-webkit-scrollbar-thumb{background:#d8b7c6!important;border-radius:999px!important}
 @media(max-width:980px){
-  #modal .modalBox.hasDecorMedia,
-  #modal .modalBox.detailed.eventDetailed,
-  #modal .modalBox.detailed.hasDecorMedia,
-  #modal .modalBox.detailed.hasDecorMedia.eventDetailed{
-    height:auto!important;max-height:92vh!important;overflow-y:auto!important;
-  }
-  #modal .modalBox.hasDecorMedia > .modalPic,
-  #modal .modalBox.detailed.eventDetailed > .modalPic,
-  #modal .modalBox.detailed.hasDecorMedia > .modalPic,
-  #modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalPic,
-  #modal .modalBox.hasDecorMedia > .modalInfo,
-  #modal .modalBox.detailed.eventDetailed > .modalInfo,
-  #modal .modalBox.detailed.hasDecorMedia > .modalInfo,
-  #modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalInfo{
-    height:auto!important;max-height:none!important;overflow:visible!important;
-  }
-  #modal .modalPic .decorThumbs{overflow:visible!important;max-height:none!important;}
+  #modal .modalPic .decorMainPreviewBox,
+  #modal .modalPic .decorGalleryTitle{position:relative!important;top:auto!important;}
 }
 </style>
-<script id="almalika-v319-right-panel-frozen-main-image-js">
+<script id="almalika-v316-sticky-main-decor-preview-js">
 (function(){
-  function qs(s,r){return (r||document).querySelector(s)}
-  function qsa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
-  function normalizeDecorModal(){
+  function fixStickyPreview(){
     try{
-      var box=qs('#modal .modalBox.hasDecorMedia, #modal .modalBox.detailed.eventDetailed, #modal .modalBox.detailed.hasDecorMedia');
-      if(!box) return;
-      var pic=qs(':scope > .modalPic',box);
-      var info=qs(':scope > .modalInfo',box);
-      if(!pic) return;
-      box.classList.add('v319FrozenLayout');
-      pic.classList.add('v319FrozenPic');
-      if(info) info.classList.add('v319ScrollInfo');
-      /* ألغِ أي تثبيت قديم كان يطلع الصورة خارج يمين/يسار النافذة */
-      qsa('.v317FixedMain,.v318FixedMain,.v319NoFixed',pic).forEach(function(el){
-        el.classList.remove('v317FixedMain','v318FixedMain');
-        el.style.position='';el.style.left='';el.style.right='';el.style.top='';el.style.width='';el.style.maxWidth='';el.style.zIndex='';
+      var modal=document.getElementById('modal');
+      if(!modal) return;
+      var pics=modal.querySelectorAll('.modalBox.hasDecorMedia .modalPic, .modalBox.detailed.eventDetailed .modalPic, .modalBox.detailed.hasDecorMedia .modalPic');
+      pics.forEach(function(pic){
+        pic.style.overflowY='auto';
+        pic.style.overflowX='hidden';
+        var wrap=pic.querySelector('.decorMainPreviewBox');
+        if(wrap){
+          wrap.style.position='sticky';
+          wrap.style.top='0px';
+          wrap.style.zIndex='80';
+        }
+        var main=pic.querySelector('img.mainDecorImg');
+        if(main){
+          main.style.cursor='zoom-in';
+          if(!main.title) main.title='اضغط لتكبير الصورة';
+        }
       });
-      var ph=qs(':scope > .v317MainPlaceholder, :scope > .v318MainPlaceholder',pic); if(ph) ph.remove();
-      var mainWrap=qs(':scope > .v302MainWrap',pic);
-      var mainImg=qs(':scope > img.mainDecorImg, :scope > img.v302MainImg, .v302MainWrap img, .mainDecorPreview',pic);
-      var gallery=qs(':scope > .decorGallery',pic);
-      if(mainImg) mainImg.style.cursor='zoom-in';
-      /* لو الصورة ليست داخل غلاف، اعمل لها غلاف داخل نفس مكانها */
-      if(mainImg && !mainWrap && mainImg.parentElement===pic){
-        mainWrap=document.createElement('div');
-        mainWrap.className='v302MainWrap v319MainWrap';
-        pic.insertBefore(mainWrap, mainImg);
-        mainWrap.appendChild(mainImg);
-      }
-      /* تأكد أن الصورة الرئيسية تبقى أول عنصر في لوحة اليمين، والمعرض تحتها */
-      if(mainWrap && gallery && mainWrap.nextElementSibling!==gallery){
-        pic.insertBefore(mainWrap, gallery);
-      }
-      if(gallery){ gallery.classList.add('v319GalleryScroll'); }
     }catch(e){}
   }
-  function normalizeMany(){normalizeDecorModal();setTimeout(normalizeDecorModal,60);setTimeout(normalizeDecorModal,220);setTimeout(normalizeDecorModal,650)}
+  document.addEventListener('click',function(e){
+    if(e.target && e.target.closest && e.target.closest('#modal .decorThumb')){
+      setTimeout(fixStickyPreview,0);
+      setTimeout(fixStickyPreview,80);
+    }
+  },true);
   var oldOpen=window.openProduct;
   if(typeof oldOpen==='function'){
-    window.openProduct=function(){var r=oldOpen.apply(this,arguments);normalizeMany();return r;};
+    window.openProduct=function(){
+      var r=oldOpen.apply(this,arguments);
+      setTimeout(fixStickyPreview,0);
+      setTimeout(fixStickyPreview,120);
+      setTimeout(fixStickyPreview,500);
+      return r;
+    };
   }
-  document.addEventListener('click',function(e){
-    if(e.target && e.target.closest && e.target.closest('#modal .decorThumb')) normalizeMany();
-  },true);
-  window.addEventListener('resize',normalizeDecorModal,{passive:true});
-  document.addEventListener('DOMContentLoaded',normalizeMany);
-  window.v319NormalizeDecorModal=normalizeMany;
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(fixStickyPreview,80);});
+  window.fixStickyDecorPreview=fixStickyPreview;
 })();
 </script>
 
@@ -13578,3 +13496,136 @@ section.wrap,
 </script>
 
 
+
+
+<!-- ===== V317 TRUE FIXED MAIN DECOR PREVIEW: يبقى ثابتاً أثناء تمرير قائمة الصور ===== -->
+<style id="almalika-v317-fixed-main-decor-preview-css">
+#modal .modalBox.eventDetailed.hasDecorMedia .modalPic,
+#modal .modalBox.hasDecorMedia .modalPic,
+#modal .modalBox.detailed.hasDecorMedia .modalPic,
+#modal .modalBox.detailed.eventDetailed .modalPic{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  position:sticky!important;
+  top:12px!important;
+}
+#modal .modalPic > .v302MainWrap,
+#modal .modalPic .decorGallery.v295Decor250 > img.mainDecorPreview{
+  z-index:2147483000!important;
+  background:linear-gradient(180deg,#fffaf2 0%,#fff7fb 82%,#fff7fb 100%)!important;
+  border-bottom:2px solid rgba(227,175,74,.35)!important;
+  box-shadow:0 12px 28px rgba(106,27,46,.16)!important;
+  padding-bottom:10px!important;
+  margin-bottom:12px!important;
+}
+#modal .modalPic > .v302MainWrap.v317FixedMain,
+#modal .modalPic .decorGallery.v295Decor250 > img.mainDecorPreview.v317FixedMain{
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:auto!important;
+  width:300px!important;
+  max-width:300px!important;
+  pointer-events:auto!important;
+}
+#modal .modalPic > .v302MainWrap .v302MainImg,
+#modal .modalPic > .v302MainWrap img.mainDecorImg,
+#modal .modalPic .decorGallery.v295Decor250 > img.mainDecorPreview{
+  display:block!important;
+  width:100%!important;
+  height:230px!important;
+  max-height:230px!important;
+  object-fit:contain!important;
+  cursor:zoom-in!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  border:1px solid rgba(212,175,55,.45)!important;
+  box-shadow:0 8px 18px rgba(106,27,46,.10)!important;
+}
+#modal .modalPic .v317MainPlaceholder{
+  display:block!important;
+  width:100%!important;
+  height:252px!important;
+  min-height:252px!important;
+  flex:0 0 auto!important;
+}
+#modal .modalPic .decorGalleryTitle{
+  position:static!important;
+  top:auto!important;
+  z-index:auto!important;
+}
+@media(max-width:980px){
+  #modal .modalPic > .v302MainWrap.v317FixedMain,
+  #modal .modalPic .decorGallery.v295Decor250 > img.mainDecorPreview.v317FixedMain{
+    position:relative!important;
+    top:auto!important;left:auto!important;width:100%!important;max-width:none!important;
+  }
+  #modal .modalPic .v317MainPlaceholder{display:none!important;height:0!important;min-height:0!important;}
+}
+</style>
+<script id="almalika-v317-fixed-main-decor-preview-js">
+(function(){
+  function qs(s,r){return (r||document).querySelector(s)}
+  function qsa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+  function getPic(){return qs('#modal .modalBox.eventDetailed.hasDecorMedia .modalPic, #modal .modalBox.hasDecorMedia .modalPic, #modal .modalBox.detailed.hasDecorMedia .modalPic, #modal .modalBox.detailed.eventDetailed .modalPic')}
+  function getMain(pic){
+    if(!pic) return null;
+    return qs(':scope > .v302MainWrap',pic) || qs('.decorGallery.v295Decor250 > img.mainDecorPreview',pic) || qs(':scope > img.mainDecorImg',pic);
+  }
+  function makePlaceholder(pic,main){
+    if(!pic||!main) return null;
+    var ph=pic.querySelector(':scope > .v317MainPlaceholder');
+    if(!ph){
+      ph=document.createElement('div');
+      ph.className='v317MainPlaceholder';
+      main.parentNode.insertBefore(ph,main);
+    }
+    var h=Math.max(240, Math.ceil(main.getBoundingClientRect().height||240)+14);
+    ph.style.height=h+'px';
+    ph.style.minHeight=h+'px';
+    return ph;
+  }
+  function pinMain(){
+    try{
+      var pic=getPic();
+      if(!pic) return;
+      var main=getMain(pic);
+      if(!main) return;
+      var img=(main.tagName&&main.tagName.toLowerCase()==='img')?main:qs('img',main);
+      if(!img) return;
+      img.style.cursor='zoom-in';
+      if(window.innerWidth<=980){
+        main.classList.remove('v317FixedMain');
+        var old=pic.querySelector(':scope > .v317MainPlaceholder'); if(old) old.remove();
+        main.style.position='relative'; main.style.left=''; main.style.top=''; main.style.width=''; main.style.maxWidth='';
+        return;
+      }
+      makePlaceholder(pic,main);
+      var r=pic.getBoundingClientRect();
+      var cs=getComputedStyle(pic);
+      var padL=parseFloat(cs.paddingLeft)||0, padR=parseFloat(cs.paddingRight)||0, padT=parseFloat(cs.paddingTop)||0;
+      main.classList.add('v317FixedMain');
+      main.style.position='fixed';
+      main.style.left=(r.left+padL)+'px';
+      main.style.top=(r.top+padT)+'px';
+      main.style.width=Math.max(180,(r.width-padL-padR))+'px';
+      main.style.maxWidth=Math.max(180,(r.width-padL-padR))+'px';
+      main.style.zIndex='2147483000';
+      main.style.background='linear-gradient(180deg,#fffaf2 0%,#fff7fb 82%,#fff7fb 100%)';
+    }catch(e){}
+  }
+  function pinMany(){pinMain(); setTimeout(pinMain,60); setTimeout(pinMain,200); setTimeout(pinMain,600);}
+  var oldOpen=window.openProduct;
+  if(typeof oldOpen==='function'){
+    window.openProduct=function(){var r=oldOpen.apply(this,arguments); pinMany(); return r;};
+  }
+  document.addEventListener('click',function(e){
+    if(e.target && e.target.closest && e.target.closest('#modal .decorThumb')){ pinMany(); }
+    if(e.target && e.target.closest && e.target.closest('#modal .mainDecorImg, #modal .v302MainImg, #modal .mainDecorPreview')){ pinMain(); }
+  },true);
+  ['scroll','resize'].forEach(function(ev){window.addEventListener(ev,pinMain,{passive:true});});
+  document.addEventListener('DOMContentLoaded',pinMany);
+  setInterval(function(){ if(document.getElementById('modal') && getPic()) pinMain(); },900);
+  window.v317PinMainDecorPreview=pinMany;
+})();
+</script>
