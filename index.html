@@ -14720,7 +14720,7 @@ section.wrap,
   }
   function showContactModal(title,msg,body){
     const m=ensureModal();
-    document.getElementById('v331ModalContent').innerHTML='<h2>'+title+'</h2><p class="lead">اختر أحد الموظفين للتواصل، أو اضغط زر واتساب للاثنين لإرسال نفس الطلب للرقمين.</p><div class="v331MiniContact">'+contactCards(msg)+'</div><div class="v331ContactBtns" style="margin-top:12px"><a class="v331Wa" href="javascript:void(0)" onclick="window.v331OpenBothWhatsApp(window.v331LastMsg)">📲 إرسال واتساب للاثنين</a><a class="v331Call" href="tel:33317720">📞 اتصال 33317720</a></div>'+(body||'');
+    document.getElementById('v331ModalContent').innerHTML='<h2>'+title+'</h2><p class="lead">اختر الموظف المناسب للتواصل معه مباشرة عبر واتساب أو اتصال.</p><div class="v331MiniContact">'+contactCards(msg)+'</div>'+(body||'');
     window.v331LastMsg=msg||msgDefault();
     m.classList.add('show');
   }
@@ -14773,12 +14773,40 @@ section.wrap,
     const app=document.getElementById('app'); if(!app)return;
     if(!document.getElementById('v331FooterBar')) app.insertAdjacentHTML('beforeend',footerHtml());
     if(!document.getElementById('v331QuickContactFixed')){
-      document.body.insertAdjacentHTML('beforeend','<div class="v331QuickContactFixed" id="v331QuickContactFixed"><button onclick="v331ShowContactModal(\'اتصال سريع\',\'السلام عليكم، أريد الاستفسار عن خدمات شركة الملكة للحفلات.\')">📞 اتصال / واتساب</button><button onclick="v331OpenBothWhatsApp(\'السلام عليكم، أريد الاستفسار عن خدمات شركة الملكة للحفلات.\')">واتساب للاثنين</button></div>');
+      document.body.insertAdjacentHTML('beforeend','<div class="v331QuickContactFixed" id="v331QuickContactFixed"><button onclick="v331ShowContactModal(\'اتصال سريع\',\'السلام عليكم، أريد الاستفسار عن خدمات شركة الملكة للحفلات.\')">📞 اتصال / واتساب</button></div>');
     }
   }
   const oldRender=window.render; window.render=function(){if(typeof oldRender==='function')oldRender.apply(this,arguments); setTimeout(injectFooter,50)};
   const oldRenderHome=window.renderHome; window.renderHome=function(){if(typeof oldRenderHome==='function')oldRenderHome.apply(this,arguments); setTimeout(injectFooter,50)};
   document.addEventListener('DOMContentLoaded',function(){setTimeout(injectFooter,100);});
   setTimeout(injectFooter,500);
+})();
+</script>
+
+
+<!-- ===== V333: إلغاء زر إرسال واتساب للاثنين والخدمة المزدوجة السريعة ===== -->
+<style id="almalika-v333-remove-dual-service-style">
+  #v331ContactModal .v331ModalBox > #v331ModalContent > .v331ContactBtns[style*="margin-top:12px"]{display:none!important;}
+  #v331QuickContactFixed button:nth-child(n+2){display:none!important;}
+</style>
+<script id="almalika-v333-remove-dual-service-js">
+(function(){
+  function cleanDualButtons(){
+    document.querySelectorAll('#v331ContactModal .v331ModalBox #v331ModalContent > .v331ContactBtns').forEach(function(box){
+      var t=(box.textContent||'').replace(/\s+/g,' ');
+      if(t.includes('واتساب للاثنين') || t.includes('إرسال واتساب للاثنين') || t.includes('اتصل 33317720') || t.includes('اتصال 33317720')) box.remove();
+    });
+    document.querySelectorAll('#v331QuickContactFixed button').forEach(function(btn,i){
+      if(i>0 || /واتساب للاثنين|إرسال واتساب للاثنين/.test(btn.textContent||'')) btn.remove();
+    });
+    document.querySelectorAll('a,button').forEach(function(el){
+      var t=(el.textContent||'').replace(/\s+/g,' ');
+      if(/إرسال واتساب للاثنين|واتساب للاثنين/.test(t)) el.remove();
+    });
+  }
+  document.addEventListener('click',function(){setTimeout(cleanDualButtons,20);setTimeout(cleanDualButtons,160);},true);
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanDualButtons,100);setTimeout(cleanDualButtons,500);});
+  setTimeout(cleanDualButtons,300);
+  setTimeout(cleanDualButtons,1000);
 })();
 </script>
