@@ -11334,5 +11334,101 @@ function openOfferImage(n){
 })();
 </script>
 
+
+<!-- ===== V292 FIX: منع ظهور غير متاح داخل مختارات VIP نهائياً ===== -->
+<script id="almalika-v292-hide-unavailable-vip-final">
+(function(){
+  function vipBlockedProduct(p){
+    if(!p) return true;
+    var n = Number(p.number || p.id || p.serial || 0);
+    if(typeof forcedUnavailableCatalog === 'function' && forcedUnavailableCatalog(n)) return true;
+    var blob = [
+      p.name, p.title, p.status, p.badge, p.note, p.notes,
+      p.availability, p.availableText, p.unavailableText,
+      p.details, p.description, p.type, p.category
+    ].map(function(v){return v == null ? '' : String(v);}).join(' ');
+    return p.available === false || p.disabled === true || p.outOfStock === true ||
+           p.isUnavailable === true || p.unavailable === true ||
+           /غير\s*متاح|خارج\s*عن\s*الخدمة|عطلان|متوقف|غير\s*متوفر/.test(blob);
+  }
+
+  // المختارات العامة: خذ أول بندين متاحين فقط من كل قسم، ولا تحسب غير المتاح أصلاً.
+  window.vipGeneralProducts = vipGeneralProducts = function(){
+    var order = ['bouncies','snacks','events','rentals','other'];
+    var out = [];
+    order.forEach(function(sec){
+      var picked = 0;
+      products
+        .filter(function(p){ return sectionOf(p) === sec; })
+        .sort(function(a,b){ return Number(a.number||0) - Number(b.number||0); })
+        .some(function(p){
+          if(vipBlockedProduct(p)) return false;
+          if(!out.some(function(x){ return Number(x.number) === Number(p.number); })){
+            out.push(p);
+            picked++;
+          }
+          return picked >= 2;
+        });
+    });
+    return out.slice(0,10);
+  };
+
+  // مختارات العروض: أي عرض غير متاح لا يظهر في مختارات العروض.
+  window.vipOfferProducts = vipOfferProducts = function(){
+    var seen = new Set();
+    return products
+      .filter(function(p){ return sectionOf(p) === 'offers'; })
+      .filter(function(p){ return !vipBlockedProduct(p); })
+      .sort(function(a,b){ return Number(a.number||0) - Number(b.number||0); })
+      .filter(function(p){
+        var k = Number(p.number);
+        if(seen.has(k)) return false;
+        seen.add(k);
+        return true;
+      });
+  };
+
+  // تنظيف احتياطي بعد الرسم: يستهدف كروت الموقع الحقيقية .product داخل سكاشن المختارات فقط.
+  function cleanVipUnavailableCards(){
+    try{
+      document.querySelectorAll('section').forEach(function(section){
+        var title = section.querySelector('h1,h2,h3');
+        var t = title ? title.textContent : section.textContent.slice(0,250);
+        if(!/مختارات\s*VIP\s*عامة|مختارات\s*خاصة\s*للعروض|VIP/.test(t)) return;
+        section.querySelectorAll('.product,.card,.product-card,.productCard,[data-product],[data-id]').forEach(function(card){
+          var txt = card.textContent || '';
+          var nTxt = (card.querySelector('.num') || {}).textContent || '';
+          var n = Number(String(nTxt).replace(/[^0-9]/g,''));
+          if(/غير\s*متاح|خارج\s*عن\s*الخدمة|عطلان|متوقف|غير\s*متوفر/.test(txt) || (n && typeof forcedUnavailableCatalog==='function' && forcedUnavailableCatalog(n))){
+            card.remove();
+          }
+        });
+      });
+    }catch(e){}
+  }
+
+  var oldRender = window.render;
+  if(typeof oldRender === 'function' && !oldRender.__vipClean292){
+    window.render = render = function(){
+      var out = oldRender.apply(this, arguments);
+      setTimeout(cleanVipUnavailableCards, 20);
+      setTimeout(cleanVipUnavailableCards, 120);
+      setTimeout(cleanVipUnavailableCards, 350);
+      return out;
+    };
+    window.render.__vipClean292 = true;
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    if(typeof render === 'function') render();
+    setTimeout(cleanVipUnavailableCards, 120);
+  });
+  window.addEventListener('load', function(){
+    setTimeout(cleanVipUnavailableCards, 120);
+    setTimeout(cleanVipUnavailableCards, 500);
+  });
+})();
+</script>
+
 </body>
 </html>
