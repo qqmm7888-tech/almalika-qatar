@@ -11768,6 +11768,54 @@ function openOfferImage(n){
 })();
 </script>
 
+
+
+<style id="almalika-v299-remove-broken-decor-images-final-css">
+/* V299: لا تعرض أي صورة ديكور غير موجودة نهائياً */
+#modal .decorThumb.decorImgBroken{display:none!important;visibility:hidden!important;width:0!important;height:0!important;padding:0!important;margin:0!important;border:0!important;overflow:hidden!important;}
+#modal .modalBox.eventDetailed.hasDecorMedia .decorThumb.decorImgBroken,
+#modal .modalBox.hasDecor250 .decorThumb.decorImgBroken{display:none!important;}
+#modal .modalPic .decorGallery:has(.decorThumbs:empty){display:none!important;}
+#modal .modalPic{direction:rtl!important;}
+</style>
+<script id="almalika-v299-remove-broken-decor-images-final">
+(function(){
+  function removeThumb(img){
+    try{
+      var b = img && img.closest ? img.closest('.decorThumb') : null;
+      if(b){ b.classList.add('decorImgBroken'); b.remove(); }
+    }catch(e){}
+  }
+  function cleanBrokenDecorImages(){
+    try{
+      document.querySelectorAll('#modal .decorThumb img').forEach(function(img){
+        if(img.complete && (!img.naturalWidth || img.naturalWidth < 2)) removeThumb(img);
+      });
+      document.querySelectorAll('#modal .decorGallery').forEach(function(g){
+        if(!g.querySelector('.decorThumb')) g.style.setProperty('display','none','important');
+      });
+    }catch(e){}
+  }
+  document.addEventListener('error', function(ev){
+    var t = ev.target;
+    if(t && t.tagName === 'IMG' && t.closest && t.closest('#modal .decorThumb')){
+      removeThumb(t);
+      setTimeout(cleanBrokenDecorImages, 20);
+    }
+  }, true);
+  var oldOpen = window.openProduct;
+  if(typeof oldOpen === 'function'){
+    window.openProduct = function(){
+      var r = oldOpen.apply(this, arguments);
+      setTimeout(cleanBrokenDecorImages, 80);
+      setTimeout(cleanBrokenDecorImages, 300);
+      setTimeout(cleanBrokenDecorImages, 1000);
+      return r;
+    };
+  }
+  window.cleanBrokenDecorImages = cleanBrokenDecorImages;
+})();
+</script>
 </body>
 </html>
 
