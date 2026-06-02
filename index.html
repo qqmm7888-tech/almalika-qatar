@@ -12521,6 +12521,220 @@ function openOfferImage(n){
 })();
 </script>
 
+
+
+<!-- ===== V318 TRUE FROZEN DECOR PREVIEW: الصورة الرئيسية ثابتة داخل العمود ولا تتحرك مع التمرير ===== -->
+<style id="almalika-v318-true-frozen-decor-preview-css">
+/* اجعل نافذة التفاصيل نفسها ثابتة، والتمرير يكون داخل البيانات فقط وداخل قائمة الصور فقط */
+#modal .modalBox.eventDetailed.hasDecorMedia,
+#modal .modalBox.detailed.eventDetailed.hasDecorMedia,
+#modal .modalBox.hasDecorMedia{
+  display:flex!important;
+  flex-direction:row!important;
+  direction:rtl!important;
+  width:min(1180px,95vw)!important;
+  max-width:1180px!important;
+  height:calc(100vh - 34px)!important;
+  max-height:calc(100vh - 34px)!important;
+  overflow:hidden!important;
+  align-items:stretch!important;
+  gap:0!important;
+}
+#modal .modalBox.eventDetailed.hasDecorMedia > .modalPic,
+#modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalPic,
+#modal .modalBox.hasDecorMedia > .modalPic{
+  order:0!important;
+  flex:0 0 330px!important;
+  width:330px!important;
+  max-width:330px!important;
+  min-width:330px!important;
+  height:100%!important;
+  max-height:100%!important;
+  overflow:hidden!important;
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  display:flex!important;
+  flex-direction:column!important;
+  direction:rtl!important;
+  background:linear-gradient(180deg,#fffdf7,#fff6df)!important;
+  border-right:1px solid rgba(212,175,55,.35)!important;
+  border-left:0!important;
+  padding:14px!important;
+  box-sizing:border-box!important;
+}
+#modal .modalBox.eventDetailed.hasDecorMedia > .modalInfo,
+#modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalInfo,
+#modal .modalBox.hasDecorMedia > .modalInfo{
+  order:1!important;
+  flex:1 1 auto!important;
+  min-width:0!important;
+  height:100%!important;
+  max-height:100%!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  direction:rtl!important;
+  padding:24px!important;
+  box-sizing:border-box!important;
+}
+/* إلغاء كل محاولات fixed/sticky القديمة للصورة الرئيسية */
+#modal .modalPic > .v302MainWrap,
+#modal .modalPic > .v302MainWrap.v317FixedMain,
+#modal .modalPic .v302MainWrap,
+#modal .modalPic .decorMainPreviewBox,
+#modal .modalPic > img.mainDecorImg,
+#modal .modalPic .mainDecorPreview{
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  flex:0 0 auto!important;
+  z-index:5!important;
+  margin:0 0 12px!important;
+  padding:0 0 10px!important;
+  background:linear-gradient(180deg,#fffaf2 0%,#fff7fb 100%)!important;
+  border-bottom:2px solid rgba(227,175,74,.35)!important;
+  box-shadow:0 12px 26px rgba(106,27,46,.12)!important;
+  box-sizing:border-box!important;
+}
+#modal .modalPic > .v302MainWrap img,
+#modal .modalPic > .v302MainWrap .v302MainImg,
+#modal .modalPic > .v302MainWrap img.mainDecorImg,
+#modal .modalPic > img.mainDecorImg,
+#modal .modalPic .mainDecorPreview{
+  display:block!important;
+  width:100%!important;
+  height:245px!important;
+  max-height:245px!important;
+  object-fit:contain!important;
+  cursor:zoom-in!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  border:1px solid rgba(212,175,55,.45)!important;
+  box-shadow:0 8px 18px rgba(106,27,46,.10)!important;
+}
+#modal .modalPic .v317MainPlaceholder{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;}
+/* المعرض يأخذ باقي ارتفاع العمود، والتمرير داخل الصور المصغرة فقط */
+#modal .modalPic .decorGallery,
+#modal .modalPic .decorGallery.v302Gallery,
+#modal .modalPic .decorGallery.v297DecorAll,
+#modal .modalPic .decorGallery.v296Decor250,
+#modal .modalPic .decorGallery.v295Decor250{
+  display:flex!important;
+  flex-direction:column!important;
+  flex:1 1 auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:hidden!important;
+  background:transparent!important;
+  border:0!important;
+  padding:0!important;
+  margin:0!important;
+}
+#modal .modalPic .decorGalleryTitle{
+  flex:0 0 auto!important;
+  position:relative!important;
+  top:auto!important;
+  z-index:6!important;
+  background:linear-gradient(180deg,#fffdf7,#fff6df)!important;
+  color:#6A1B2E!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+  text-align:center!important;
+  line-height:1.3!important;
+  margin:0 0 10px!important;
+  padding:4px 0 8px!important;
+}
+#modal .modalPic .decorThumbs{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+  padding:0 0 14px!important;
+  align-content:start!important;
+  scrollbar-width:thin!important;
+}
+#modal .modalPic .addonHint{
+  flex:0 0 auto!important;
+  margin-top:8px!important;
+}
+#modal .modalPic .decorThumb img{height:112px!important;object-fit:cover!important;}
+@media(max-width:980px){
+  #modal .modalBox.eventDetailed.hasDecorMedia,
+  #modal .modalBox.detailed.eventDetailed.hasDecorMedia,
+  #modal .modalBox.hasDecorMedia{
+    flex-direction:column!important;
+    height:calc(100vh - 22px)!important;
+    max-height:calc(100vh - 22px)!important;
+    width:min(760px,95vw)!important;
+  }
+  #modal .modalBox.eventDetailed.hasDecorMedia > .modalPic,
+  #modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalPic,
+  #modal .modalBox.hasDecorMedia > .modalPic{
+    width:100%!important;max-width:none!important;min-width:0!important;flex:0 0 auto!important;height:auto!important;max-height:48vh!important;
+  }
+  #modal .modalBox.eventDetailed.hasDecorMedia > .modalInfo,
+  #modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalInfo,
+  #modal .modalBox.hasDecorMedia > .modalInfo{height:auto!important;flex:1 1 auto!important;}
+  #modal .modalPic > .v302MainWrap img,
+  #modal .modalPic > .v302MainWrap .v302MainImg,
+  #modal .modalPic > img.mainDecorImg{height:190px!important;}
+}
+</style>
+<script id="almalika-v318-true-frozen-decor-preview-js">
+(function(){
+  function q(s,r){return (r||document).querySelector(s)}
+  function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+  function normalizeFrozenPreview(){
+    try{
+      var box=q('#modal .modalBox.hasDecorMedia, #modal .modalBox.eventDetailed.hasDecorMedia, #modal .modalBox.detailed.eventDetailed.hasDecorMedia');
+      if(!box) return;
+      box.style.display='flex';
+      box.style.flexDirection=(window.innerWidth>980?'row':'column');
+      box.style.overflow='hidden';
+      box.style.direction='rtl';
+      var pic=q(':scope > .modalPic',box), info=q(':scope > .modalInfo',box);
+      if(pic){
+        pic.style.position='relative'; pic.style.top='auto'; pic.style.left='auto'; pic.style.right='auto';
+        pic.style.overflow='hidden'; pic.style.display='flex'; pic.style.flexDirection='column';
+        pic.style.order='0';
+      }
+      if(info){info.style.overflowY='auto'; info.style.order='1';}
+      qa('#modal .v317MainPlaceholder').forEach(function(x){x.remove();});
+      qa('#modal .v317FixedMain').forEach(function(x){
+        x.classList.remove('v317FixedMain');
+        x.style.position='relative'; x.style.top='auto'; x.style.left='auto'; x.style.right='auto';
+        x.style.width='100%'; x.style.maxWidth='100%'; x.style.zIndex='5';
+      });
+      var main=q('#modal .modalPic .v302MainWrap, #modal .modalPic > img.mainDecorImg, #modal .modalPic .mainDecorPreview');
+      if(main){
+        main.style.position='relative'; main.style.top='auto'; main.style.left='auto'; main.style.right='auto';
+        main.style.width='100%'; main.style.maxWidth='100%'; main.style.zIndex='5';
+      }
+    }catch(e){}
+  }
+  var oldOpen=window.openProduct;
+  if(typeof oldOpen==='function'){
+    window.openProduct=function(){var r=oldOpen.apply(this,arguments); setTimeout(normalizeFrozenPreview,0); setTimeout(normalizeFrozenPreview,80); setTimeout(normalizeFrozenPreview,250); return r;};
+  }
+  document.addEventListener('click',function(e){
+    if(e.target && e.target.closest && e.target.closest('#modal .decorThumb')){
+      setTimeout(normalizeFrozenPreview,0); setTimeout(normalizeFrozenPreview,80);
+    }
+  },true);
+  window.addEventListener('resize',normalizeFrozenPreview,{passive:true});
+  setInterval(function(){ if(document.querySelector('#modal.show .modalBox.hasDecorMedia')) normalizeFrozenPreview(); },700);
+})();
+</script>
+
 </body>
 </html>
 
