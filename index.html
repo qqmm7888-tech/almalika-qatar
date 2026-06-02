@@ -11816,6 +11816,197 @@ function openOfferImage(n){
   window.cleanBrokenDecorImages = cleanBrokenDecorImages;
 })();
 </script>
+
+
+<!-- ===== V300 FINAL FIX: decor right gallery shows ONLY successfully loaded images; primary image included correctly ===== -->
+<style id="almalika-v300-decor-gallery-existing-only-css">
+#modal .modalBox.eventDetailed.hasDecorMedia{
+  grid-template-columns:minmax(0,1fr) 300px!important;
+  align-items:start!important;
+}
+#modal .modalBox.eventDetailed.hasDecorMedia .modalPic{
+  order:2!important;
+  position:sticky!important;
+  top:10px!important;
+  align-self:start!important;
+  max-height:88vh!important;
+  overflow:auto!important;
+  padding:14px!important;
+  background:linear-gradient(180deg,#fffaf0,#fff7fb)!important;
+  border-right:1px solid rgba(212,175,55,.35)!important;
+}
+#modal .modalBox.eventDetailed.hasDecorMedia .modalInfo{order:1!important;}
+#modal .decorMainPreviewBox{margin-bottom:12px!important;}
+#modal .decorMainPreviewBox img.mainDecorImg{
+  display:block!important;width:100%!important;height:220px!important;object-fit:contain!important;
+  border-radius:18px!important;background:#fff!important;border:1px solid rgba(212,175,55,.45)!important;
+  box-shadow:0 10px 22px rgba(106,27,46,.08)!important;
+}
+#modal .decorGallery.v300OnlyLoaded{background:transparent!important;border:0!important;padding:0!important;margin:0!important;}
+#modal .decorGallery.v300OnlyLoaded .decorGalleryTitle{
+  color:#6A1B2E!important;font-size:20px!important;font-weight:1000!important;line-height:1.25!important;text-align:center!important;margin:0 0 10px!important;
+}
+#modal .decorGallery.v300OnlyLoaded .decorThumbs{
+  display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;
+  max-height:none!important;overflow:visible!important;padding:0!important;
+}
+#modal .decorGallery.v300OnlyLoaded .decorThumb{
+  display:block!important;min-height:0!important;padding:7px!important;background:#fff!important;border:2px solid #f3d3df!important;
+  border-radius:16px!important;text-align:center!important;box-shadow:0 8px 18px rgba(106,27,46,.06)!important;overflow:hidden!important;
+}
+#modal .decorGallery.v300OnlyLoaded .decorThumb.active{
+  border-color:#e11d48!important;background:linear-gradient(135deg,#fff7fb,#fff8df)!important;
+  box-shadow:0 0 0 3px rgba(225,29,72,.12),0 12px 24px rgba(106,27,46,.14)!important;
+}
+#modal .decorGallery.v300OnlyLoaded .decorThumb img{display:block!important;width:100%!important;height:105px!important;object-fit:cover!important;border-radius:12px!important;background:#fff8e8!important;margin-bottom:6px!important;}
+#modal .decorGallery.v300OnlyLoaded .decorThumb small{display:block!important;font-size:11px!important;color:#6A1B2E!important;font-weight:1000!important;text-align:center!important;line-height:1.35!important;min-height:26px!important;}
+#modal .decorGalleryLoading{font-size:12px!important;font-weight:900!important;color:#8a6f2d!important;text-align:center!important;border:1px dashed rgba(212,175,55,.45)!important;border-radius:14px!important;padding:10px!important;background:#fff!important;}
+#modal .decorNoLoaded{font-size:12px!important;font-weight:900!important;color:#6A1B2E!important;text-align:center!important;border:1px dashed rgba(212,175,55,.45)!important;border-radius:14px!important;padding:10px!important;background:#fff8e8!important;}
+@media(max-width:980px){
+  #modal .modalBox.eventDetailed.hasDecorMedia{grid-template-columns:1fr!important;}
+  #modal .modalBox.eventDetailed.hasDecorMedia .modalPic{order:1!important;position:relative!important;top:auto!important;max-height:none!important;}
+  #modal .modalBox.eventDetailed.hasDecorMedia .modalInfo{order:2!important;}
+  #modal .decorGallery.v300OnlyLoaded .decorThumbs{grid-template-columns:repeat(3,minmax(0,1fr))!important;}
+}
+@media(max-width:620px){#modal .decorGallery.v300OnlyLoaded .decorThumbs{grid-template-columns:repeat(2,minmax(0,1fr))!important;}#modal .decorMainPreviewBox img.mainDecorImg{height:190px!important;}}
+</style>
+<script id="almalika-v300-decor-gallery-existing-only-js">
+(function(){
+  function esc(x){return String(x==null?'':x).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function nOf(p){return Number(p && (p.number||p.id||0));}
+  function isEventDecor(p){
+    var cat=String((p&&p.category)||''), typ=String((p&&p.type)||''), name=String((p&&p.name)||'');
+    return nOf(p)>=200 && nOf(p)<=250 && (cat.indexOf('تجهيز')>-1 || cat.indexOf('حفلات')>-1 || typ.indexOf('ديكور')>-1 || name.indexOf('ديكور')>-1 || name.indexOf('ستاند')>-1 || name.indexOf('بالونات')>-1 || name.indexOf('قوس')>-1);
+  }
+  function baseFile(p){
+    var n=nOf(p);
+    return String((p&&p.image)||'').trim() || (n ? (n+'.jpg') : '');
+  }
+  function variants(file){
+    var a=[]; function add(x){if(x && a.indexOf(x)<0)a.push(x)}
+    add(file);
+    if(/\.jpg$/i.test(file)) add(file.replace(/\.jpg$/i,'.jpeg'));
+    if(/\.jpeg$/i.test(file)) add(file.replace(/\.jpeg$/i,'.jpg'));
+    if(/\.png$/i.test(file)){ add(file.replace(/\.png$/i,'.jpg')); add(file.replace(/\.png$/i,'.jpeg')); }
+    return a;
+  }
+  function candidates(p){
+    var n=nOf(p), out=[]; function add(x){x=String(x||'').trim(); if(x && out.indexOf(x)<0) out.push(x);}
+    variants(baseFile(p)).forEach(add);
+    if(typeof window.decorGalleryFiles==='function'){
+      try{(window.decorGalleryFiles(p)||[]).forEach(function(x){variants(x).forEach(add);});}catch(e){}
+    }
+    if(n>=200 && n<=250){
+      // Probe common names, but create thumbnails ONLY after the image loads successfully.
+      for(var i=1;i<=20;i++){add(n+'-'+i+'.jpg');add(n+'-'+i+'.jpeg');add(n+'-'+i+'.png');}
+    }
+    return out;
+  }
+  function loadFirst(list, ok, fail){
+    var i=0;
+    function next(){
+      if(i>=list.length){ if(fail) fail(); return; }
+      var src=list[i++], im=new Image();
+      im.onload=function(){ ok(src); };
+      im.onerror=next;
+      im.src=src;
+    }
+    next();
+  }
+  function addThumb(n, src, label, active){
+    var box=document.getElementById('decorThumbs_'+n); if(!box) return;
+    if(box.querySelector('[data-decor-img="'+CSS.escape(src)+'"]')) return;
+    var btn=document.createElement('button');
+    btn.type='button'; btn.className='decorThumb'+(active?' active':'');
+    btn.dataset.decorImg=src; btn.dataset.decorLabel=label;
+    btn.onclick=function(){ window.selectDecorImage(n,src,btn); };
+    btn.innerHTML='<img src="'+esc(src)+'" alt="'+esc(label)+'"><small>'+esc(label)+'</small>';
+    box.appendChild(btn);
+    if(active){
+      var h=document.getElementById('decorImage_'+n), hl=document.getElementById('decorImageLabel_'+n);
+      if(h) h.value=src; if(hl) hl.value=label;
+    }
+  }
+  function buildGallery(p){
+    var n=nOf(p); if(!n || !isEventDecor(p) || n===250) return;
+    var box=document.getElementById('decorThumbs_'+n), loading=document.getElementById('decorLoading_'+n); if(!box) return;
+    box.innerHTML='';
+    var seen={}, added=0;
+    var list=candidates(p);
+    // Main image first: use product image as الصورة الأساسية only if it loads.
+    loadFirst(variants(baseFile(p)), function(src){
+      var main=document.getElementById('mainImg_'+n); if(main){main.src=src; main.style.visibility='visible'; main.style.display='block';}
+      seen[src]=true; added++; addThumb(n, src, 'الصورة الأساسية', true);
+    }, function(){
+      var main=document.getElementById('mainImg_'+n); if(main){main.style.display='none';}
+    });
+    list.forEach(function(src,idx){
+      setTimeout(function(){
+        if(seen[src]) return;
+        var im=new Image();
+        im.onload=function(){
+          if(seen[src]) return; seen[src]=true; added++;
+          var label = (src===baseFile(p) || idx===0) ? 'الصورة الأساسية' : ('شكل '+(box.children.length+1));
+          addThumb(n, src, label, box.children.length===0);
+          if(loading) loading.style.display='none';
+        };
+        im.onerror=function(){
+          setTimeout(function(){ if(loading && box.children.length>0) loading.style.display='none'; if(loading && box.children.length===0 && idx===list.length-1){loading.outerHTML='<div class="decorNoLoaded">لا توجد صور إضافية متاحة لهذا الديكور حالياً</div>'; } },60);
+        };
+        im.src=src;
+      }, idx*12);
+    });
+    setTimeout(function(){ if(loading && box.children.length>0) loading.style.display='none'; },1200);
+  }
+  var oldSelect=window.selectDecorImage;
+  window.selectDecorImage=function(n,img,btn){
+    var label=String((btn&&btn.dataset&&btn.dataset.decorLabel)?btn.dataset.decorLabel:((btn&&btn.querySelector('small'))?btn.querySelector('small').textContent.trim():'الصورة المختارة'));
+    var main=document.getElementById('mainImg_'+n), hidden=document.getElementById('decorImage_'+n), hiddenLabel=document.getElementById('decorImageLabel_'+n);
+    if(main){main.style.display='block';main.style.visibility='visible';main.src=img;main.alt=label;}
+    if(hidden) hidden.value=img;
+    if(hiddenLabel) hiddenLabel.value=label;
+    document.querySelectorAll('#modal .decorThumb').forEach(function(b){b.classList.remove('active');});
+    if(btn) btn.classList.add('active');
+    window.__selectedDecorChoices=window.__selectedDecorChoices||{};
+    window.__selectedDecorChoices[String(n)]={img:img,label:label};
+    if(oldSelect && oldSelect!==window.selectDecorImage){try{}catch(e){}}
+  };
+  window.modalMediaHtml=function(p){
+    var n=nOf(p);
+    if(!isEventDecor(p)){
+      var img=baseFile(p);
+      return img ? '<div class="modalPic"><img src="'+esc(img)+'" alt=""></div>' : '';
+    }
+    if(n===250 && typeof window.decorGalleryHtml==='function'){
+      try{return '<div class="modalPic">'+window.decorGalleryHtml(p)+'</div>'; }catch(e){}
+    }
+    var first=baseFile(p);
+    return '<div class="modalPic">'+
+      '<div class="decorMainPreviewBox"><img class="mainDecorImg" id="mainImg_'+n+'" src="'+esc(first)+'" alt="'+esc(p.name||'')+'"></div>'+
+      '<div class="decorGallery v300OnlyLoaded" id="decorGallery_'+n+'">'+
+        '<div class="decorGalleryTitle">اختر شكل الديكور المناسب للزبون</div>'+
+        '<div class="decorThumbs" id="decorThumbs_'+n+'"></div>'+
+        '<div class="decorGalleryLoading" id="decorLoading_'+n+'">جاري تحميل الصور المتوفرة فقط...</div>'+
+        '<input type="hidden" id="decorImage_'+n+'" value="'+esc(first)+'">'+
+        '<input type="hidden" id="decorImageLabel_'+n+'" value="الصورة الأساسية">'+
+      '</div></div>';
+  };
+  window.openProduct=function(n){
+    var list=(window.products|| (typeof products!=='undefined'?products:[]));
+    var p=list.find(function(x){return Number(x.number)===Number(n);});
+    if(!p)return;
+    try{ if(typeof forcedUnavailableCatalog==='function' && forcedUnavailableCatalog(n)){alert('هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.'); return;} }catch(e){}
+    var boxClass='modalBox detailed '+((typeof isEvent==='function'&&isEvent(p))?'eventDetailed ':'')+(isEventDecor(p)?'hasDecorMedia ':'');
+    var intro=(typeof productIntroHtml==='function'?productIntroHtml(p):'');
+    var prices=(typeof priceHtml==='function'?priceHtml(p):'');
+    var form=(typeof formHtml==='function'?formHtml(p):'');
+    var policy=(typeof policyHtml==='function'?policyHtml(p):'');
+    modal.innerHTML='<div class="'+boxClass+'">'+window.modalMediaHtml(p)+'<div class="modalInfo"><div class="modalHead"><h2>'+esc(p.name)+'</h2><button class="close" onclick="closeModal()">×</button></div><div class="tags" style="margin-top:10px"><span class="tag">#'+esc(p.number)+'</span><span class="tag">'+esc(p.category)+'</span><span class="tag">'+(isEventDecor(p)?'تجهيز الحفلات':esc(p.type||''))+'</span></div>'+intro+prices+form+policy+'<div class="modalActions three"><button onclick="productInquiryWa('+p.number+')" style="background:var(--green);color:#fff">استفسار واتساب</button><button onclick="addToCart('+p.number+')">احجز الآن وأضف للسلة</button><button onclick="closeModal()">إغلاق</button></div></div></div>';
+    modal.classList.add('show');
+    setTimeout(function(){buildGallery(p);},30);
+  };
+})();
+</script>
 </body>
 </html>
 
