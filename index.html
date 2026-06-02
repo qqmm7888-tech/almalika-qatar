@@ -13404,222 +13404,267 @@ section.wrap,
 
 
 
-<!-- ===== V320 FIX: إعادة الصورة الأساسية إلى داخل العمود اليمين فوق الصور المصغرة ===== -->
-<style id="almalika-v320-main-image-correct-place">
+<!-- ===== V321 FIX: إجبار الصورة الأساسية داخل العمود اليمين فقط ===== -->
+<style id="almalika-v321-force-main-image-right">
 #modal .modalBox.eventDetailed.hasDecorMedia,
 #modal .modalBox.hasDecorMedia.eventDetailed,
-#modal .modalBox.detailed.eventDetailed.hasDecorMedia{
+#modal .modalBox.detailed.eventDetailed.hasDecorMedia,
+#modal .modalBox.detailed.hasDecorMedia.eventDetailed,
+#modal .modalBox.hasDecorMedia{
   display:grid!important;
   grid-template-columns:minmax(0,1fr) 320px!important;
-  direction:rtl!important;
+  direction:ltr!important;
   align-items:start!important;
-  width:min(1200px,95vw)!important;
-  max-width:1200px!important;
+  justify-content:stretch!important;
+  gap:0!important;
+  width:min(1180px,95vw)!important;
+  max-width:1180px!important;
   overflow:visible!important;
 }
 #modal .modalBox.eventDetailed.hasDecorMedia > .modalInfo,
 #modal .modalBox.hasDecorMedia.eventDetailed > .modalInfo,
-#modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalInfo{
+#modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalInfo,
+#modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalInfo,
+#modal .modalBox.hasDecorMedia > .modalInfo{
   grid-column:1!important;
   order:1!important;
   min-width:0!important;
+  direction:rtl!important;
+  text-align:right!important;
 }
 #modal .modalBox.eventDetailed.hasDecorMedia > .modalPic,
 #modal .modalBox.hasDecorMedia.eventDetailed > .modalPic,
-#modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalPic{
+#modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalPic,
+#modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalPic,
+#modal .modalBox.hasDecorMedia > .modalPic{
   grid-column:2!important;
   order:2!important;
   width:320px!important;
   min-width:320px!important;
   max-width:320px!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:stretch!important;
-  justify-content:flex-start!important;
-  gap:0!important;
-  position:relative!important;
-  inset:auto!important;
-  top:auto!important;
-  right:auto!important;
-  left:auto!important;
-  bottom:auto!important;
-  transform:none!important;
-  float:none!important;
-  margin:0!important;
-  padding:14px!important;
-  overflow-y:auto!important;
-  max-height:92vh!important;
-  background:linear-gradient(180deg,#fffdf7,#fff6df)!important;
-  border-left:1px solid rgba(212,175,55,.35)!important;
-  border-right:0!important;
-}
-#modal .modalBox.eventDetailed.hasDecorMedia > .modalPic > img.mainDecorImg,
-#modal .modalBox.hasDecorMedia.eventDetailed > .modalPic > img.mainDecorImg,
-#modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalPic > img.mainDecorImg,
-#modal .modalBox.eventDetailed.hasDecorMedia .almalikaMainPreviewTop > img.mainDecorImg,
-#modal .modalBox.hasDecorMedia.eventDetailed .almalikaMainPreviewTop > img.mainDecorImg,
-#modal .modalBox.detailed.eventDetailed.hasDecorMedia .almalikaMainPreviewTop > img.mainDecorImg,
-#modal .modalBox.eventDetailed.hasDecorMedia .almalikaMainPreviewTop > img.v302MainImg,
-#modal .modalBox.hasDecorMedia.eventDetailed .almalikaMainPreviewTop > img.v302MainImg,
-#modal .modalBox.detailed.eventDetailed.hasDecorMedia .almalikaMainPreviewTop > img.v302MainImg{
-  position:static!important;
-  inset:auto!important;
-  top:auto!important;
-  right:auto!important;
-  left:auto!important;
-  bottom:auto!important;
-  transform:none!important;
-  float:none!important;
   display:block!important;
-  visibility:visible!important;
-  opacity:1!important;
-  width:100%!important;
-  min-width:0!important;
-  max-width:100%!important;
-  height:245px!important;
-  max-height:245px!important;
-  object-fit:contain!important;
-  border-radius:18px!important;
-  background:#fff!important;
-  border:1px solid rgba(212,175,55,.38)!important;
-  box-shadow:0 10px 22px rgba(106,27,46,.08)!important;
+  direction:rtl!important;
+  text-align:right!important;
+  background:linear-gradient(180deg,#fffdf7,#fff6df)!important;
+  border-left:1px solid rgba(212,175,55,.32)!important;
+  border-right:0!important;
+  padding:14px!important;
+  position:sticky!important;
+  top:12px!important;
+  max-height:calc(100vh - 40px)!important;
+  overflow:auto!important;
   margin:0!important;
-  z-index:auto!important;
 }
-#modal .almalikaMainPreviewTop{
+#modal .v321MainHolder{
   display:block!important;
   width:100%!important;
   margin:0 0 12px 0!important;
   padding:0!important;
-  position:relative!important;
+}
+#modal .v321MainHolder > img,
+#modal .modalPic > img.mainDecorImg,
+#modal .modalPic .v302MainWrap > img,
+#modal .modalPic .decorMainPreviewBox > img,
+#modal .modalPic .mainDecorPreview,
+#modal .modalPic .v302MainImg{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  height:230px!important;
+  max-height:230px!important;
+  min-height:230px!important;
+  object-fit:contain!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  border:1px solid rgba(212,175,55,.40)!important;
+  box-shadow:0 10px 22px rgba(106,27,46,.08)!important;
+  margin:0!important;
+  position:static!important;
+  inset:auto!important;
+  transform:none!important;
+  float:none!important;
+  visibility:visible!important;
+  opacity:1!important;
 }
 #modal .modalPic .decorGallery,
-#modal .modalPic .decorGallery.v302Gallery{
-  order:2!important;
+#modal .modalPic .decorGallery.v302Gallery,
+#modal .modalPic .v296Decor250,
+#modal .modalPic .v295Decor250{
+  display:block!important;
   width:100%!important;
   margin:0!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
 }
 #modal .modalPic .decorGalleryTitle{
-  margin-top:0!important;
+  text-align:center!important;
+  margin:0 0 10px 0!important;
+}
+#modal .modalPic .decorThumbs{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+#modal .modalPic .decorThumb{
+  text-align:center!important;
 }
 @media(max-width:980px){
   #modal .modalBox.eventDetailed.hasDecorMedia,
   #modal .modalBox.hasDecorMedia.eventDetailed,
-  #modal .modalBox.detailed.eventDetailed.hasDecorMedia{
+  #modal .modalBox.detailed.eventDetailed.hasDecorMedia,
+  #modal .modalBox.detailed.hasDecorMedia.eventDetailed,
+  #modal .modalBox.hasDecorMedia{
     grid-template-columns:1fr!important;
     width:min(94vw,760px)!important;
   }
   #modal .modalBox.eventDetailed.hasDecorMedia > .modalPic,
   #modal .modalBox.hasDecorMedia.eventDetailed > .modalPic,
-  #modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalPic{
+  #modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalPic,
+  #modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalPic,
+  #modal .modalBox.hasDecorMedia > .modalPic{
     grid-column:1!important;
     order:1!important;
     width:100%!important;
     min-width:0!important;
     max-width:none!important;
+    position:relative!important;
+    top:auto!important;
     max-height:none!important;
     border-left:0!important;
-    border-bottom:1px solid rgba(212,175,55,.35)!important;
+    border-bottom:1px solid rgba(212,175,55,.32)!important;
   }
   #modal .modalBox.eventDetailed.hasDecorMedia > .modalInfo,
   #modal .modalBox.hasDecorMedia.eventDetailed > .modalInfo,
-  #modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalInfo{
+  #modal .modalBox.detailed.eventDetailed.hasDecorMedia > .modalInfo,
+  #modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalInfo,
+  #modal .modalBox.hasDecorMedia > .modalInfo{
     grid-column:1!important;
     order:2!important;
   }
 }
 </style>
 
-<script id="almalika-v320-main-image-correct-place-js">
+<script id="almalika-v321-force-main-image-right-js">
 (function(){
   function qs(s,r){return (r||document).querySelector(s)}
   function qsa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
 
-  function fixMainImagePlace(){
+  function cleanupExternalMainPreviews(modal,pic){
+    try{
+      if(!modal) return;
+      Array.from(modal.children || []).forEach(function(ch){
+        if(!ch) return;
+        if(ch.classList && ch.classList.contains('modalBox')) return;
+        if(ch.querySelector && ch.querySelector('img.mainDecorImg, img.v302MainImg, img.mainDecorPreview')){
+          ch.style.display='none';
+        }
+      });
+      qsa('body > .almalikaMainPreviewTop, body > .v302MainWrap, body > .decorMainPreviewBox, body > img.mainDecorImg, body > img.v302MainImg, body > img.mainDecorPreview').forEach(function(el){
+        el.remove();
+      });
+      qsa('img.mainDecorImg, img.v302MainImg, img.mainDecorPreview', document).forEach(function(img){
+        if(pic && pic.contains(img)) return;
+        var holder = img.parentElement;
+        if(holder && !holder.closest('.modalPic')){
+          holder.style.display='none';
+        }
+      });
+    }catch(e){}
+  }
+
+  function forceMainImageRight(){
     try{
       var modal=qs('#modal');
       if(!modal) return;
-      var box=qs('.modalBox.eventDetailed.hasDecorMedia, .modalBox.hasDecorMedia.eventDetailed, .modalBox.detailed.eventDetailed.hasDecorMedia', modal);
+      var box=qs('.modalBox.eventDetailed.hasDecorMedia, .modalBox.hasDecorMedia.eventDetailed, .modalBox.detailed.eventDetailed.hasDecorMedia, .modalBox.detailed.hasDecorMedia.eventDetailed, .modalBox.hasDecorMedia', modal);
       if(!box) return;
       var pic=qs('.modalPic', box);
-      if(!pic) return;
-      var main=qs('img.mainDecorImg, img.v302MainImg, img.mainDecorPreview', pic);
-      var gallery=qs('.decorGallery', pic);
-      if(!main) return;
+      var info=qs('.modalInfo', box);
+      if(!pic || !info) return;
 
-      var wrap=qs('.almalikaMainPreviewTop', pic);
-      if(!wrap){
-        wrap=document.createElement('div');
-        wrap.className='almalikaMainPreviewTop';
-        pic.insertBefore(wrap, pic.firstChild);
+      box.style.display='grid';
+      box.style.gridTemplateColumns=(window.innerWidth>980?'minmax(0,1fr) 320px':'1fr');
+      box.style.direction='ltr';
+
+      pic.style.gridColumn=(window.innerWidth>980?'2':'1');
+      pic.style.order=(window.innerWidth>980?'2':'1');
+      pic.style.width=(window.innerWidth>980?'320px':'100%');
+      pic.style.minWidth=(window.innerWidth>980?'320px':'0');
+      pic.style.maxWidth=(window.innerWidth>980?'320px':'none');
+      pic.style.position=(window.innerWidth>980?'sticky':'relative');
+      pic.style.top=(window.innerWidth>980?'12px':'auto');
+      pic.style.borderLeft=(window.innerWidth>980?'1px solid rgba(212,175,55,.32)':'0');
+      pic.style.borderRight='0';
+      pic.style.direction='rtl';
+      pic.style.textAlign='right';
+
+      info.style.gridColumn='1';
+      info.style.order=(window.innerWidth>980?'1':'2');
+      info.style.direction='rtl';
+      info.style.textAlign='right';
+
+      var main=qs('img.mainDecorImg, img.v302MainImg, img.mainDecorPreview, .v302MainWrap img, .decorMainPreviewBox img', pic);
+      if(main){
+        var holder=qs('.v321MainHolder', pic);
+        if(!holder){
+          holder=document.createElement('div');
+          holder.className='v321MainHolder';
+          pic.insertBefore(holder, pic.firstChild);
+        }
+        if(main.parentNode!==holder){ holder.appendChild(main); }
+        if(pic.firstChild!==holder){ pic.insertBefore(holder, pic.firstChild); }
+        main.style.display='block';
+        main.style.visibility='visible';
+        main.style.opacity='1';
       }
 
-      if(main.parentNode!==wrap){
-        wrap.appendChild(main);
-      }
-
-      [pic,wrap,main].forEach(function(el){
-        if(!el) return;
-        el.style.position='';
-        el.style.top='';
-        el.style.left='';
-        el.style.right='';
-        el.style.bottom='';
-        el.style.transform='';
-        el.style.float='';
-      });
-
-      main.style.display='block';
-      main.style.visibility='visible';
-      main.style.opacity='1';
-      if(gallery){ gallery.style.display='block'; }
+      cleanupExternalMainPreviews(modal,pic);
     }catch(e){}
   }
 
   document.addEventListener('DOMContentLoaded', function(){
-    fixMainImagePlace();
-    setTimeout(fixMainImagePlace, 100);
-    setTimeout(fixMainImagePlace, 400);
+    forceMainImageRight();
+    setTimeout(forceMainImageRight,100);
+    setTimeout(forceMainImageRight,400);
   });
-
   document.addEventListener('click', function(){
-    setTimeout(fixMainImagePlace, 0);
-    setTimeout(fixMainImagePlace, 60);
-    setTimeout(fixMainImagePlace, 220);
+    setTimeout(forceMainImageRight,0);
+    setTimeout(forceMainImageRight,60);
+    setTimeout(forceMainImageRight,220);
   }, true);
+  window.addEventListener('resize', function(){ setTimeout(forceMainImageRight,0); });
 
   var oldOpen=window.openProduct;
   if(typeof oldOpen==='function'){
     window.openProduct=function(){
       var r=oldOpen.apply(this, arguments);
-      setTimeout(fixMainImagePlace, 0);
-      setTimeout(fixMainImagePlace, 80);
-      setTimeout(fixMainImagePlace, 250);
-      setTimeout(fixMainImagePlace, 600);
+      setTimeout(forceMainImageRight,0);
+      setTimeout(forceMainImageRight,100);
+      setTimeout(forceMainImageRight,350);
+      setTimeout(forceMainImageRight,800);
       return r;
     };
   }
-
   var oldSelect=window.selectDecorImage;
   if(typeof oldSelect==='function'){
     window.selectDecorImage=function(){
       var r=oldSelect.apply(this, arguments);
-      setTimeout(fixMainImagePlace, 0);
-      setTimeout(fixMainImagePlace, 50);
+      setTimeout(forceMainImageRight,0);
+      setTimeout(forceMainImageRight,80);
       return r;
     };
   }
-
   if(window.MutationObserver){
-    var mo=new MutationObserver(function(){ fixMainImagePlace(); });
     setTimeout(function(){
       var modal=qs('#modal');
-      if(modal) mo.observe(modal,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
+      if(!modal) return;
+      var mo=new MutationObserver(function(){ forceMainImageRight(); });
+      mo.observe(modal,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style','src']});
     },200);
   }
-
-  setTimeout(fixMainImagePlace, 0);
-  setTimeout(fixMainImagePlace, 500);
-  setTimeout(fixMainImagePlace, 1200);
+  setTimeout(forceMainImageRight,0);
+  setTimeout(forceMainImageRight,500);
+  setTimeout(forceMainImageRight,1200);
 })();
 </script>
