@@ -11585,5 +11585,103 @@ function openOfferImage(n){
 })();
 </script>
 
+
+
+<!-- ===== V294 FIX: صور ظاهرة لبند #250 بدل روابط مفقودة ===== -->
+<style id="almalika-v294-decor250-visible-images">
+#modal .decorGallery.v294Decor250{
+  display:block!important;margin-top:12px!important;background:linear-gradient(135deg,#fff,#fff6df)!important;
+  border:1px solid rgba(212,175,55,.55)!important;border-radius:20px!important;padding:12px!important;
+}
+#modal .decorGallery.v294Decor250 .decorGalleryTitle{font-size:18px!important;font-weight:1000!important;color:#6A1B2E!important;margin-bottom:10px!important;text-align:center!important}
+#modal .decorGallery.v294Decor250 .decorThumbs{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;max-height:none!important;overflow:visible!important;padding:0!important}
+#modal .decorGallery.v294Decor250 .decorThumb{display:grid!important;grid-template-columns:96px 1fr!important;gap:10px!important;align-items:center!important;min-height:86px!important;text-align:right!important;border:2px solid #f5d7e3!important;border-radius:16px!important;background:#fff!important;padding:8px!important}
+#modal .decorGallery.v294Decor250 .decorThumb.active{border-color:#e11d48!important;background:linear-gradient(135deg,#fff7fb,#fff8df)!important;box-shadow:0 0 0 3px rgba(225,29,72,.12),0 10px 24px rgba(106,27,46,.12)!important}
+#modal .decorGallery.v294Decor250 .decorThumb img{display:block!important;width:96px!important;height:68px!important;object-fit:cover!important;border-radius:12px!important;background:#fff8e8!important;border:1px solid rgba(212,175,55,.35)!important}
+#modal .decorGallery.v294Decor250 .decorThumb small{font-size:14px!important;color:#6A1B2E!important;font-weight:1000!important;text-align:right!important;margin:0!important;line-height:1.5!important}
+#modal .decorGallery.v294Decor250 .addonHint{margin-top:10px!important;font-size:12px!important;line-height:1.7!important;color:#6b4a00!important;background:#fff9e8!important;border:1px dashed rgba(212,175,55,.55)!important;border-radius:14px!important;padding:9px!important}
+#modal .modalBox.hasDecor250 .modalPic img.mainDecorImg{display:block!important;width:100%!important;max-height:250px!important;object-fit:contain!important;border-radius:18px!important;background:#fff8e8!important;border:1px solid rgba(212,175,55,.35)!important}
+</style>
+<script id="almalika-v294-decor250-visible-images">
+(function(){
+  const DECOR250 = [{"label": "عمود بالونات فردي", "img": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22420%22%20height%3D%22280%22%20viewBox%3D%220%200%20420%20280%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff8df%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ffe7f1%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22sh%22%3E%3CfeDropShadow%20dx%3D%220%22%20dy%3D%228%22%20stdDeviation%3D%226%22%20flood-opacity%3D%22.22%22/%3E%3C/filter%3E%3C/defs%3E%3Crect%20width%3D%22420%22%20height%3D%22280%22%20rx%3D%2228%22%20fill%3D%22url%28%23bg%29%22/%3E%3Ctext%20x%3D%22210%22%20y%3D%2238%22%20font-family%3D%22Arial%22%20font-size%3D%2221%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%236A1B2E%22%3E%D8%B9%D9%85%D9%88%D8%AF%20%D8%A8%D8%A7%D9%84%D9%88%D9%86%D8%A7%D8%AA%20%D9%81%D8%B1%D8%AF%D9%8A%3C/text%3E%3Cg%20filter%3D%22url%28%23sh%29%22%3E%3Crect%20x%3D%22200%22%20y%3D%2290%22%20width%3D%2218%22%20height%3D%22128%22%20rx%3D%229%22%20fill%3D%22%236A1B2E%22/%3E%3Ccircle%20cx%3D%22209%22%20cy%3D%2274%22%20r%3D%2225%22%20fill%3D%22%23D4AF37%22/%3E%3Ccircle%20cx%3D%22175%22%20cy%3D%22102%22%20r%3D%2224%22%20fill%3D%22%23f472b6%22/%3E%3Ccircle%20cx%3D%22243%22%20cy%3D%22103%22%20r%3D%2224%22%20fill%3D%22%2360a5fa%22/%3E%3Ccircle%20cx%3D%22176%22%20cy%3D%22145%22%20r%3D%2224%22%20fill%3D%22%23fb923c%22/%3E%3Ccircle%20cx%3D%22242%22%20cy%3D%22145%22%20r%3D%2224%22%20fill%3D%22%2322c55e%22/%3E%3Ccircle%20cx%3D%22178%22%20cy%3D%22188%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20stroke%3D%22%23D4AF37%22%20stroke-width%3D%223%22/%3E%3Ccircle%20cx%3D%22240%22%20cy%3D%22188%22%20r%3D%2224%22%20fill%3D%22%23a855f7%22/%3E%3Crect%20x%3D%22155%22%20y%3D%22218%22%20width%3D%22110%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23D4AF37%22/%3E%3C/g%3E%3C/svg%3E"}, {"label": "عمودين بالونات للمدخل", "img": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22420%22%20height%3D%22280%22%20viewBox%3D%220%200%20420%20280%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff8df%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f0f9ff%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22sh%22%3E%3CfeDropShadow%20dx%3D%220%22%20dy%3D%228%22%20stdDeviation%3D%226%22%20flood-opacity%3D%22.22%22/%3E%3C/filter%3E%3C/defs%3E%3Crect%20width%3D%22420%22%20height%3D%22280%22%20rx%3D%2228%22%20fill%3D%22url%28%23bg%29%22/%3E%3Ctext%20x%3D%22210%22%20y%3D%2238%22%20font-family%3D%22Arial%22%20font-size%3D%2221%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%236A1B2E%22%3E%D8%B9%D9%85%D9%88%D8%AF%D9%8A%D9%86%20%D8%A8%D8%A7%D9%84%D9%88%D9%86%D8%A7%D8%AA%20%D9%84%D9%84%D9%85%D8%AF%D8%AE%D9%84%3C/text%3E%3Cpath%20d%3D%22M150%20225%20V96%20M270%20225%20V96%22%20stroke%3D%22%236A1B2E%22%20stroke-width%3D%2215%22%20stroke-linecap%3D%22round%22/%3E%3Cg%20filter%3D%22url%28%23sh%29%22%3E%3Ccircle%20cx%3D%22150%22%20cy%3D%2270%22%20r%3D%2223%22%20fill%3D%22%23D4AF37%22/%3E%3Ccircle%20cx%3D%22120%22%20cy%3D%22102%22%20r%3D%2222%22%20fill%3D%22%23f472b6%22/%3E%3Ccircle%20cx%3D%22180%22%20cy%3D%22102%22%20r%3D%2222%22%20fill%3D%22%2360a5fa%22/%3E%3Ccircle%20cx%3D%22122%22%20cy%3D%22142%22%20r%3D%2222%22%20fill%3D%22%23fff%22%20stroke%3D%22%23D4AF37%22%20stroke-width%3D%223%22/%3E%3Ccircle%20cx%3D%22178%22%20cy%3D%22142%22%20r%3D%2222%22%20fill%3D%22%2322c55e%22/%3E%3Ccircle%20cx%3D%22270%22%20cy%3D%2270%22%20r%3D%2223%22%20fill%3D%22%23D4AF37%22/%3E%3Ccircle%20cx%3D%22240%22%20cy%3D%22102%22%20r%3D%2222%22%20fill%3D%22%23a855f7%22/%3E%3Ccircle%20cx%3D%22300%22%20cy%3D%22102%22%20r%3D%2222%22%20fill%3D%22%23fb923c%22/%3E%3Ccircle%20cx%3D%22242%22%20cy%3D%22142%22%20r%3D%2222%22%20fill%3D%22%2360a5fa%22/%3E%3Ccircle%20cx%3D%22298%22%20cy%3D%22142%22%20r%3D%2222%22%20fill%3D%22%23fff%22%20stroke%3D%22%23D4AF37%22%20stroke-width%3D%223%22/%3E%3Crect%20x%3D%2296%22%20y%3D%22225%22%20width%3D%22108%22%20height%3D%2217%22%20rx%3D%228%22%20fill%3D%22%23D4AF37%22/%3E%3Crect%20x%3D%22216%22%20y%3D%22225%22%20width%3D%22108%22%20height%3D%2217%22%20rx%3D%228%22%20fill%3D%22%23D4AF37%22/%3E%3Cpath%20d%3D%22M135%20208%20C160%20184%20260%20184%20285%20208%22%20stroke%3D%22%23D4AF37%22%20stroke-width%3D%228%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22/%3E%3C/g%3E%3C/svg%3E"}, {"label": "أعمدة ديكور بالونات حسب التصميم", "img": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22420%22%20height%3D%22280%22%20viewBox%3D%220%200%20420%20280%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff7ed%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23fff0f6%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22sh%22%3E%3CfeDropShadow%20dx%3D%220%22%20dy%3D%229%22%20stdDeviation%3D%227%22%20flood-opacity%3D%22.22%22/%3E%3C/filter%3E%3C/defs%3E%3Crect%20width%3D%22420%22%20height%3D%22280%22%20rx%3D%2228%22%20fill%3D%22url%28%23bg%29%22/%3E%3Ctext%20x%3D%22210%22%20y%3D%2238%22%20font-family%3D%22Arial%22%20font-size%3D%2220%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%236A1B2E%22%3E%D8%A3%D8%B9%D9%85%D8%AF%D8%A9%20%D8%AD%D8%B3%D8%A8%20%D8%A7%D9%84%D8%AA%D8%B5%D9%85%D9%8A%D9%85%3C/text%3E%3Cg%20filter%3D%22url%28%23sh%29%22%3E%3Crect%20x%3D%2264%22%20y%3D%22205%22%20width%3D%22292%22%20height%3D%2220%22%20rx%3D%2210%22%20fill%3D%22%236A1B2E%22/%3E%3Cpath%20d%3D%22M88%20200%20C112%20108%20150%2087%20210%2082%20C270%2087%20308%20108%20332%20200%22%20stroke%3D%22%23D4AF37%22%20stroke-width%3D%2214%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22/%3E%3Ccircle%20cx%3D%2298%22%20cy%3D%22176%22%20r%3D%2222%22%20fill%3D%22%23f472b6%22/%3E%3Ccircle%20cx%3D%22125%22%20cy%3D%22137%22%20r%3D%2222%22%20fill%3D%22%2360a5fa%22/%3E%3Ccircle%20cx%3D%22164%22%20cy%3D%22105%22%20r%3D%2222%22%20fill%3D%22%2322c55e%22/%3E%3Ccircle%20cx%3D%22210%22%20cy%3D%2290%22%20r%3D%2224%22%20fill%3D%22%23fff%22%20stroke%3D%22%23D4AF37%22%20stroke-width%3D%223%22/%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%22105%22%20r%3D%2222%22%20fill%3D%22%23fb923c%22/%3E%3Ccircle%20cx%3D%22295%22%20cy%3D%22137%22%20r%3D%2222%22%20fill%3D%22%23a855f7%22/%3E%3Ccircle%20cx%3D%22322%22%20cy%3D%22176%22%20r%3D%2222%22%20fill%3D%22%23D4AF37%22/%3E%3Ctext%20x%3D%22210%22%20y%3D%22179%22%20font-family%3D%22Arial%22%20font-size%3D%2232%22%20font-weight%3D%22900%22%20text-anchor%3D%22middle%22%20fill%3D%22%236A1B2E%22%3EVIP%3C/text%3E%3C/g%3E%3C/svg%3E"}, {"label": "حسب الطلب / تصميم خاص", "img": "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22420%22%20height%3D%22280%22%20viewBox%3D%220%200%20420%20280%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20stop-color%3D%22%23fff8df%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23f5f3ff%22/%3E%3C/linearGradient%3E%3Cfilter%20id%3D%22sh%22%3E%3CfeDropShadow%20dx%3D%220%22%20dy%3D%228%22%20stdDeviation%3D%226%22%20flood-opacity%3D%22.22%22/%3E%3C/filter%3E%3C/defs%3E%3Crect%20width%3D%22420%22%20height%3D%22280%22%20rx%3D%2228%22%20fill%3D%22url%28%23bg%29%22/%3E%3Ctext%20x%3D%22210%22%20y%3D%2238%22%20font-family%3D%22Arial%22%20font-size%3D%2221%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%236A1B2E%22%3E%D8%AD%D8%B3%D8%A8%20%D8%A7%D9%84%D8%B7%D9%84%D8%A8%20/%20%D8%AA%D8%B5%D9%85%D9%8A%D9%85%20%D8%AE%D8%A7%D8%B5%3C/text%3E%3Cg%20filter%3D%22url%28%23sh%29%22%3E%3Crect%20x%3D%2282%22%20y%3D%2294%22%20width%3D%22256%22%20height%3D%22124%22%20rx%3D%2228%22%20fill%3D%22%23fff%22%20stroke%3D%22%23D4AF37%22%20stroke-width%3D%225%22/%3E%3Ccircle%20cx%3D%22114%22%20cy%3D%2280%22%20r%3D%2222%22%20fill%3D%22%23D4AF37%22/%3E%3Ccircle%20cx%3D%22148%22%20cy%3D%2274%22%20r%3D%2221%22%20fill%3D%22%23f472b6%22/%3E%3Ccircle%20cx%3D%22184%22%20cy%3D%2277%22%20r%3D%2221%22%20fill%3D%22%2360a5fa%22/%3E%3Ccircle%20cx%3D%22220%22%20cy%3D%2274%22%20r%3D%2221%22%20fill%3D%22%2322c55e%22/%3E%3Ccircle%20cx%3D%22256%22%20cy%3D%2277%22%20r%3D%2221%22%20fill%3D%22%23fb923c%22/%3E%3Ccircle%20cx%3D%22292%22%20cy%3D%2280%22%20r%3D%2222%22%20fill%3D%22%23a855f7%22/%3E%3Ctext%20x%3D%22210%22%20y%3D%22144%22%20font-family%3D%22Arial%22%20font-size%3D%2227%22%20font-weight%3D%22900%22%20text-anchor%3D%22middle%22%20fill%3D%22%236A1B2E%22%3E%D8%A7%D8%AE%D8%AA%D9%8A%D8%A7%D8%B1%20%D8%A7%D9%84%D8%B9%D9%85%D9%8A%D9%84%3C/text%3E%3Ctext%20x%3D%22210%22%20y%3D%22178%22%20font-family%3D%22Arial%22%20font-size%3D%2217%22%20font-weight%3D%22700%22%20text-anchor%3D%22middle%22%20fill%3D%22%237a1734%22%3E%D8%A3%D9%84%D9%88%D8%A7%D9%86%20%2B%20%D8%B4%D9%83%D9%84%20%2B%20%D9%85%D9%86%D8%A7%D8%B3%D8%A8%D8%A9%3C/text%3E%3C/g%3E%3C/svg%3E"}];
+  function is250(p){ return Number(p && (p.number || p.id || p.serial || 0)) === 250; }
+  function h(v){
+    try{ if(typeof esc==='function') return esc(v); }catch(e){}
+    return String(v||'').replace(/[&<>"']/g,function(s){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]});
+  }
+  const oldProductImageUrl = window.productImageUrl;
+  window.productImageUrl = productImageUrl = function(p){
+    if(is250(p)) return DECOR250[0].img;
+    return typeof oldProductImageUrl === 'function' ? oldProductImageUrl(p) : ((p && p.image) || '');
+  };
+  window.decorGalleryFiles = decorGalleryFiles = function(p){
+    if(is250(p)) return DECOR250.map(x=>x.img);
+    return (p && p.decorGallery && p.decorGallery.length) ? p.decorGallery : ((p && p.image) ? [p.image] : []);
+  };
+  window.decorGalleryHtml = decorGalleryHtml = function(p){
+    if(!is250(p)){
+      const files = decorGalleryFiles(p).filter(Boolean);
+      if(!files.length) return '';
+      return `<div class="decorGallery"><div class="decorGalleryTitle">اختر شكل الديكور المناسب للزبون</div><div class="decorThumbs">${files.map((img,i)=>`<button type="button" class="decorThumb ${i===0?'active':''}" data-decor-img="${h(img)}" data-decor-label="${i===0?'الصورة الأساسية':'شكل '+i}" onclick="selectDecorImage(${p.number},this.dataset.decorImg,this)"><img src="${h(img)}" onerror="var b=this.closest('.decorThumb');if(b)b.style.display='none'"><small>${i===0?'الصورة الأساسية':'شكل '+i}</small></button>`).join('')}</div><input type="hidden" id="decorImage_${p.number}" value="${h(files[0]||'')}"><div class="addonHint">اختيار الصورة يساعد الإدارة تعرف شكل الديكور المطلوب بالضبط.</div></div>`;
+    }
+    const buttons = DECOR250.map(function(o,i){
+      return `<button type="button" class="decorThumb ${i===0?'active':''}" data-decor-img="${h(o.img)}" data-decor-label="${h(o.label)}" onclick="selectDecorImage(250,this.dataset.decorImg,this)">
+        <img src="${h(o.img)}" alt="${h(o.label)}">
+        <small>${h(o.label)}</small>
+      </button>`;
+    }).join('');
+    return `<div class="decorGallery v294Decor250" id="decorGallery_250">
+      <div class="decorGalleryTitle">اختر شكل الديكور المناسب للزبون</div>
+      <div class="decorThumbs">${buttons}</div>
+      <input type="hidden" id="decorImage_250" value="${h(DECOR250[0].img)}">
+      <input type="hidden" id="decorImageLabel_250" value="${h(DECOR250[0].label)}">
+      <div class="addonHint">الصور الآن ظاهرة داخل الاختيار. عند الضغط على أي شكل يتم حفظه في السلة ورسالة الطلب.</div>
+    </div>`;
+  };
+  window.modalMediaHtml = modalMediaHtml = function(p){
+    if(is250(p)) return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_250" src="${h(DECOR250[0].img)}" alt="أعمدة ديكور بالونات">${decorGalleryHtml(p)}</div>`;
+    const first=(decorGalleryFiles(p)[0] || (p && p.image) || ((p&&p.number)?p.number+'.jpg':''));
+    return `<div class="modalPic"><img class="mainDecorImg" id="mainImg_${p.number}" src="${h(first)}" onerror="this.style.display='none'">${decorGalleryHtml(p)}</div>`;
+  };
+  const oldSelect = window.selectDecorImage;
+  window.selectDecorImage = selectDecorImage = function(n,img,btn){
+    const out = typeof oldSelect === 'function' ? oldSelect.apply(this, arguments) : undefined;
+    try{
+      const main=document.getElementById('mainImg_'+n), hidden=document.getElementById('decorImage_'+n);
+      const realImg=String((btn&&btn.dataset&&btn.dataset.decorImg)?btn.dataset.decorImg:img||'');
+      const realLabel=String((btn&&btn.dataset&&btn.dataset.decorLabel)?btn.dataset.decorLabel:'الصورة المختارة');
+      if(main){ main.style.display='block'; main.src=realImg; }
+      if(hidden) hidden.value=realImg;
+      let lab=document.getElementById('decorImageLabel_'+n);
+      if(!lab && hidden){ lab=document.createElement('input'); lab.type='hidden'; lab.id='decorImageLabel_'+n; hidden.insertAdjacentElement('afterend', lab); }
+      if(lab) lab.value=realLabel;
+      window.__selectedDecorChoices = window.__selectedDecorChoices || {};
+      window.__selectedDecorChoices[String(n)] = {img:realImg,label:realLabel};
+    }catch(e){}
+    return out;
+  };
+  function fix250Modal(){
+    try{
+      const box=document.querySelector('#modal .modalBox'); if(!box)return;
+      const title=box.querySelector('.modalInfo h2');
+      if(title && /أعمدة\s+ديكور\s+بالونات/.test(title.textContent||'')){
+        box.classList.add('hasDecor250');
+        const img=document.getElementById('mainImg_250'); if(img){img.style.display='block'; if(!img.src) img.src=DECOR250[0].img;}
+      }
+    }catch(e){}
+  }
+  const oldOpen = window.openProduct;
+  if(typeof oldOpen === 'function'){
+    window.openProduct = openProduct = function(n){
+      const out=oldOpen.apply(this, arguments);
+      if(Number(n)===250){ setTimeout(fix250Modal,20); setTimeout(fix250Modal,150); }
+      return out;
+    };
+  }
+  document.addEventListener('click', function(){ setTimeout(fix250Modal,60); }, true);
+})();
+</script>
+
 </body>
 </html>
