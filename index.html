@@ -12809,3 +12809,174 @@ section.wrap,
   .products{grid-template-columns:1fr!important;}
 }
 </style>
+
+<style id="almalika-v305-force-rtl-nav-and-decor-panel">
+/* ===== V305 FORCE RTL ONLY - لا يغير الصور ولا الأسعار ولا البيانات ===== */
+
+/* القوائم العلوية تبدأ فعلياً من اليمين */
+.header .headTop{
+  display:grid!important;
+  grid-template-columns:auto minmax(0,1fr) auto!important;
+  grid-template-areas:"logo nav buttons"!important;
+  direction:rtl!important;
+  align-items:center!important;
+  justify-content:stretch!important;
+  gap:10px!important;
+}
+.header .logo{
+  grid-area:logo!important;
+  justify-self:start!important;
+  margin-inline-start:0!important;
+  margin-inline-end:0!important;
+  text-align:right!important;
+  direction:rtl!important;
+}
+.header .nav{
+  grid-area:nav!important;
+  direction:rtl!important;
+  display:flex!important;
+  flex-direction:row!important;
+  justify-content:flex-start!important;
+  align-items:center!important;
+  flex-wrap:wrap!important;
+  text-align:right!important;
+  margin-inline-start:0!important;
+  margin-inline-end:0!important;
+}
+.header .nav button{
+  direction:rtl!important;
+  text-align:center!important;
+}
+.header .headBtns{
+  grid-area:buttons!important;
+  direction:rtl!important;
+  display:flex!important;
+  flex-direction:row!important;
+  justify-content:flex-start!important;
+  align-items:center!important;
+  margin-inline-start:0!important;
+  margin-inline-end:0!important;
+}
+.header .searchRow{
+  direction:rtl!important;
+  text-align:right!important;
+}
+.header .search,
+.header .search input,
+.header .searchRow select{
+  direction:rtl!important;
+  text-align:right!important;
+}
+
+/* نافذة التفاصيل: لوحة اختيار شكل الديكور تكون يمين النافذة فعلياً */
+#modal .modalBox.hasDecorMedia,
+#modal .modalBox.detailed.eventDetailed,
+#modal .modalBox.detailed.hasDecorMedia.eventDetailed{
+  display:flex!important;
+  flex-direction:row-reverse!important;
+  align-items:stretch!important;
+  justify-content:center!important;
+  direction:rtl!important;
+  gap:0!important;
+}
+#modal .modalBox.hasDecorMedia > .modalPic,
+#modal .modalBox.detailed.eventDetailed > .modalPic,
+#modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalPic{
+  flex:0 0 320px!important;
+  width:320px!important;
+  max-width:320px!important;
+  order:0!important;
+  direction:rtl!important;
+  text-align:right!important;
+  border-left:0!important;
+  border-right:1px solid rgba(212,175,55,.28)!important;
+  overflow-y:auto!important;
+  max-height:92vh!important;
+}
+#modal .modalBox.hasDecorMedia > .modalInfo,
+#modal .modalBox.detailed.eventDetailed > .modalInfo,
+#modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalInfo{
+  flex:1 1 auto!important;
+  min-width:0!important;
+  order:1!important;
+  direction:rtl!important;
+  text-align:right!important;
+}
+#modal .modalPic .decorGallery,
+#modal .modalPic .decorGallery.v302Gallery{
+  direction:rtl!important;
+  text-align:right!important;
+  width:100%!important;
+  margin-inline-start:0!important;
+  margin-inline-end:0!important;
+}
+#modal .modalPic .decorGalleryTitle{
+  direction:rtl!important;
+  text-align:right!important;
+  justify-content:flex-start!important;
+}
+#modal .modalPic .decorThumbs{
+  direction:rtl!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  justify-content:start!important;
+  justify-items:stretch!important;
+  align-items:start!important;
+}
+#modal .modalPic .decorThumb{
+  direction:rtl!important;
+  text-align:center!important;
+}
+
+@media(max-width:980px){
+  .header .headTop{
+    grid-template-columns:1fr!important;
+    grid-template-areas:"logo" "nav" "buttons"!important;
+  }
+  .header .logo,
+  .header .nav,
+  .header .headBtns{
+    justify-self:stretch!important;
+    justify-content:flex-start!important;
+  }
+  #modal .modalBox.hasDecorMedia,
+  #modal .modalBox.detailed.eventDetailed,
+  #modal .modalBox.detailed.hasDecorMedia.eventDetailed{
+    display:flex!important;
+    flex-direction:column!important;
+  }
+  #modal .modalBox.hasDecorMedia > .modalPic,
+  #modal .modalBox.detailed.eventDetailed > .modalPic,
+  #modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalPic{
+    flex:0 0 auto!important;
+    width:100%!important;
+    max-width:none!important;
+    max-height:none!important;
+    border-right:0!important;
+  }
+}
+</style>
+
+<script id="almalika-v305-force-inline-rtl-after-render">
+(function(){
+  function forceRTL(){
+    try{
+      var head=document.querySelector('.header .headTop');
+      var nav=document.getElementById('nav');
+      var btns=document.querySelector('.header .headBtns');
+      if(head){head.style.direction='rtl';head.style.justifyContent='stretch';}
+      if(nav){nav.style.direction='rtl';nav.style.justifyContent='flex-start';nav.style.flexDirection='row';nav.style.textAlign='right';}
+      if(btns){btns.style.direction='rtl';btns.style.justifyContent='flex-start';btns.style.flexDirection='row';}
+      var modalBox=document.querySelector('#modal .modalBox.hasDecorMedia, #modal .modalBox.detailed.eventDetailed');
+      if(modalBox){modalBox.style.display='flex';modalBox.style.flexDirection='row-reverse';modalBox.style.direction='rtl';}
+      var pic=document.querySelector('#modal .modalBox .modalPic');
+      if(pic){pic.style.direction='rtl';pic.style.textAlign='right';pic.style.order='0';}
+      var info=document.querySelector('#modal .modalBox .modalInfo');
+      if(info){info.style.direction='rtl';info.style.textAlign='right';info.style.order='1';}
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',forceRTL);
+  document.addEventListener('click',function(){setTimeout(forceRTL,30);setTimeout(forceRTL,250);},true);
+  setTimeout(forceRTL,0);setTimeout(forceRTL,300);setTimeout(forceRTL,900);
+})();
+</script>
