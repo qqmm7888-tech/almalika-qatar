@@ -15498,3 +15498,202 @@ section.wrap,
   document.addEventListener('DOMContentLoaded',function(){const o=getOrderFromUrl(); if(o) setTimeout(function(){renderAdminOrder(o)},0);});
 })();
 </script>
+
+
+<!-- ===== V343: Restore / update / show snack products 412-422 ===== -->
+<style id="almalika-v343-show-412-422-style">
+.product.noProductImage412to422{
+  grid-template-columns:minmax(0,1fr) 190px!important;
+  min-height:unset!important;
+}
+.product[data-number="412"],
+.product[data-number="413"],
+.product[data-number="414"],
+.product[data-number="415"],
+.product[data-number="416"],
+.product[data-number="417"],
+.product[data-number="418"],
+.product[data-number="419"],
+.product[data-number="420"],
+.product[data-number="421"],
+.product[data-number="422"]{
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+.product[data-number="412"] .pic,
+.product[data-number="413"] .pic,
+.product[data-number="414"] .pic,
+.product[data-number="415"] .pic,
+.product[data-number="416"] .pic,
+.product[data-number="417"] .pic,
+.product[data-number="418"] .pic,
+.product[data-number="419"] .pic,
+.product[data-number="420"] .pic,
+.product[data-number="421"] .pic,
+.product[data-number="422"] .pic,
+.product.noProductImage412to422 .pic{
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+  min-height:254px!important;
+}
+.product[data-number="412"] .pic img,
+.product[data-number="413"] .pic img,
+.product[data-number="414"] .pic img,
+.product[data-number="415"] .pic img,
+.product[data-number="416"] .pic img,
+.product[data-number="417"] .pic img,
+.product[data-number="418"] .pic img,
+.product[data-number="419"] .pic img,
+.product[data-number="420"] .pic img,
+.product[data-number="421"] .pic img,
+.product[data-number="422"] .pic img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:contain!important;
+}
+</style>
+<script id="almalika-v343-restore-update-show-412-422-js">
+(function(){
+  var ITEMS = {
+    412:{name:'عربة البانكيك', price:550, piecePrice:10, img:'412.jpg'},
+    413:{name:'عربة الوافل', price:550, piecePrice:10, img:'413.jpg'},
+    414:{name:'ماكينة الفشار + العربة الجديدة', price:450, piecePrice:5, img:'414.jpg'},
+    415:{name:'ماكينة غزل البنات + العربة الجديدة', price:450, piecePrice:5, img:'415.jpg'},
+    416:{name:'عربة البطاطا الحلزونية الجديدة', price:550, piecePrice:10, img:'416.jpg'},
+    417:{name:'عربة الذرة الحلوة الجديدة', price:550, piecePrice:10, img:'417.jpg'},
+    418:{name:'عربة العصير البارد الجديدة', price:550, piecePrice:10, img:'418.jpg'},
+    419:{name:'عربة العصير السلاش الجديدة', price:550, piecePrice:10, img:'419.jpg'},
+    420:{name:'عربة سلاش البراد + الايسكريم الجديدة', price:550, piecePrice:10, img:'420.jpg'},
+    421:{name:'عربة ايس كريم الجديدة', price:550, piecePrice:10, img:'421.jpg'},
+    422:{name:'عربة نافورة الشوكولاته الجديدة', price:590, piecePrice:12, img:'422.jpg'}
+  };
+  function pkg(price, staff){
+    return [
+      {kids:20,children:20,price:price,note:'مدة الخدمة 3 ساعات مع موظفة'},
+      {kids:30,children:30,price:price+100,note:'مدة الخدمة 3 ساعات مع موظفة'},
+      {kids:40,children:40,price:price+200,note:'مدة الخدمة 3 ساعات مع موظفة'},
+      {kids:50,children:50,price:price+300,note:'مدة الخدمة 3 ساعات مع موظفة'},
+      {kids:100,children:100,price:price+800,note:'مدة الخدمة 3 ساعات مع موظفة'},
+      {kids:150,children:150,price:price+1300,note:'مدة الخدمة 3 ساعات مع موظفة'},
+      {kids:200,children:200,price:price+1800,note:'مدة الخدمة 3 ساعات مع موظفة'}
+    ];
+  }
+  function baseProduct(n, d){
+    var staff = 150;
+    return {
+      id:n, number:n, name:d.name,
+      rentType:'ايجار', type:'سناك', category:'السناك والعربات', section:'snacks',
+      priceOneDay:d.price, priceTwoDays:d.price, price:d.price,
+      durationOneDay:'3 ساعات', durationTwoDays:'3 ساعات',
+      length:'', width:'', height:'', age:'حسب عدد الأطفال',
+      image:d.img, mainImage:d.img, images:[d.img],
+      piecePrice:d.piecePrice || 10, staffPrice:staff, employeePrice:staff, cartStaffPrice:200,
+      baseTotal:350, included:'موظفة', available:true, hidden:false, isHidden:false,
+      disabled:false, isDisabled:false, status:'',
+      snackPackages:pkg(d.price, staff),
+      details:d.name+' - مدة الخدمة 3 ساعات مع موظفة. تظهر في قسم السناك والعربات مع صورة المنتج.'
+    };
+  }
+  function productList(){
+    try{
+      if(typeof products!=='undefined' && Array.isArray(products)) return products;
+      if(Array.isArray(window.products)) return window.products;
+    }catch(e){}
+    return null;
+  }
+  function patchProducts(){
+    var arr = productList();
+    if(!arr) return;
+    Object.keys(ITEMS).forEach(function(k){
+      var n = Number(k), d = ITEMS[n];
+      var p = arr.find(function(x){return Number(x.number||x.id)===n;});
+      if(!p){
+        arr.push(baseProduct(n,d));
+      }else{
+        var fresh = baseProduct(n,d);
+        Object.keys(fresh).forEach(function(key){
+          if(key==='id' || key==='number') return;
+          p[key] = fresh[key];
+        });
+        p.id=n; p.number=n;
+      }
+    });
+    try{ window.products = arr; }catch(e){}
+  }
+  patchProducts();
+
+  var oldHide = window.hideProductImageRange412422;
+  window.hideProductImageRange412422 = hideProductImageRange412422 = function(p){return false;};
+
+  if(typeof window.forcedUnavailableCatalog === 'function' && !window.__v343ForcedWrap){
+    window.__v343ForcedWrap = true;
+    var oldForced = window.forcedUnavailableCatalog;
+    window.forcedUnavailableCatalog = forcedUnavailableCatalog = function(num){
+      var n=Number(num);
+      if(n>=412 && n<=422) return null;
+      return oldForced.apply(this, arguments);
+    };
+  }
+
+  function ensureCards(){
+    try{
+      document.querySelectorAll('.product').forEach(function(card){
+        var numEl = card.querySelector('.num');
+        var n = numEl ? Number(String(numEl.textContent||'').replace(/[^0-9]/g,'')) : Number(card.getAttribute('data-number')||0);
+        if(n>=412 && n<=422){
+          card.setAttribute('data-number', n);
+          card.classList.remove('noProductImage412to422','bookedProduct');
+          var pic = card.querySelector('.pic');
+          if(!pic){
+            pic = document.createElement('div');
+            pic.className = 'pic';
+            pic.title = 'اضغط لفتح التفاصيل';
+            pic.setAttribute('onclick','openProduct('+n+')');
+            pic.innerHTML = '<img src="'+n+'.jpg" alt="" loading="eager" decoding="async" fetchpriority="high" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,\''+n+'\')">';
+            card.appendChild(pic);
+          }else{
+            pic.style.display = 'grid';
+            var img = pic.querySelector('img');
+            if(img && !img.getAttribute('src')) img.setAttribute('src', n+'.jpg');
+          }
+        }
+      });
+    }catch(e){}
+  }
+  var oldCard = window.card;
+  if(typeof oldCard === 'function' && !window.__v343CardWrap){
+    window.__v343CardWrap = true;
+    window.card = card = function(p){
+      patchProducts();
+      var html = oldCard.apply(this, arguments);
+      var n = Number((p&&p.number)||(p&&p.id)||0);
+      if(n>=412 && n<=422){
+        html = html.replace('class="product ', 'data-number="'+n+'" class="product ');
+        html = html.replace(/noProductImage412to422/g,'');
+        html = html.replace(/bookedProduct/g,'');
+      }
+      return html;
+    };
+  }
+  var oldRender = window.render;
+  if(typeof oldRender === 'function' && !window.__v343RenderWrap){
+    window.__v343RenderWrap = true;
+    window.render = function(){
+      patchProducts();
+      var r = oldRender.apply(this, arguments);
+      setTimeout(ensureCards, 0);
+      setTimeout(ensureCards, 120);
+      return r;
+    };
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    patchProducts();
+    ensureCards();
+    setTimeout(function(){patchProducts(); ensureCards();}, 250);
+  });
+  setTimeout(function(){patchProducts(); ensureCards();}, 50);
+})();
+</script>
