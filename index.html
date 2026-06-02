@@ -13439,3 +13439,80 @@ section.wrap,
   setTimeout(function(){clean(document);},500);
 })();
 </script>
+
+<!-- ===== V309 FIX: تصحيح شكل كروت السناك بعد إخفاء الصورة الفارغة ===== -->
+<style id="almalika-v309-fix-snack-noimage-card-height">
+/* لا تمدّد كرت السناك الذي أُخفيت صورته على طول صف الشبكة */
+.products .product.snackNoImage{
+  align-self:start!important;
+  height:auto!important;
+  min-height:0!important;
+  display:block!important;
+  overflow:hidden!important;
+}
+.products .product.snackNoImage .pic,
+.products .product .pic.snackRemovedImage{
+  display:none!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  overflow:hidden!important;
+}
+.products .product.snackNoImage .body{
+  display:flex!important;
+  flex-direction:column!important;
+  padding-top:18px!important;
+  padding-bottom:16px!important;
+  min-height:0!important;
+}
+.products .product.snackNoImage .body h3,
+.products .product.snackNoImage .desc,
+.products .product.snackNoImage .tags{
+  min-height:auto!important;
+}
+.products .product.snackNoImage .bottom{
+  margin-top:12px!important;
+}
+/* الصور الموجودة تبقى كما هي بدون لمس */
+.products .product:not(.snackNoImage) .pic img{
+  display:block;
+}
+</style>
+<script id="almalika-v309-fix-snack-noimage-card-height">
+(function(){
+  function fix(){
+    try{
+      document.querySelectorAll('.product.snackNoImage').forEach(function(card){
+        card.style.alignSelf='start';
+        card.style.height='auto';
+        card.style.minHeight='0';
+        card.style.display='block';
+        var pic=card.querySelector('.pic');
+        if(pic){
+          pic.style.display='none';
+          pic.style.height='0';
+          pic.style.minHeight='0';
+          pic.style.maxHeight='0';
+          pic.style.padding='0';
+          pic.style.margin='0';
+          pic.style.border='0';
+          pic.style.overflow='hidden';
+        }
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){fix();setTimeout(fix,150);});
+  window.addEventListener('load',function(){fix();setTimeout(fix,300);});
+  var oldRender=window.render;
+  if(typeof oldRender==='function' && !oldRender.__v309Wrapped){
+    var wrapped=function(){var r=oldRender.apply(this,arguments);setTimeout(fix,0);setTimeout(fix,150);return r;};
+    wrapped.__v309Wrapped=true;window.render=wrapped;
+  }
+  var mo=new MutationObserver(function(){fix();});
+  try{mo.observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});}catch(e){}
+  setTimeout(fix,0);setTimeout(fix,500);
+})();
+</script>
