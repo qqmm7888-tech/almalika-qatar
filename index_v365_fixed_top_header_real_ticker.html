@@ -5555,10 +5555,92 @@ body .cartItem .qtyBox b{
 }
 </style>
 
+
+<style id="v365-fixed-top-header-real-ticker-style">
+/* v365: شريط عروض حقيقي + تجميع الهيدر والبحث وتثبيتهم أعلى الموقع */
+#v361TopTickerWrap{display:none!important}
+#almTopStickyGroup{
+  position:sticky!important;
+  top:0!important;
+  z-index:2147483500!important;
+  width:100%!important;
+  background:#fff!important;
+  box-shadow:0 8px 26px rgba(90,0,35,.13)!important;
+}
+#almRealNewsTicker{
+  height:40px!important;
+  min-height:40px!important;
+  display:flex!important;
+  align-items:center!important;
+  direction:rtl!important;
+  background:#111!important;
+  border-bottom:3px solid #d71920!important;
+  overflow:hidden!important;
+  font-family:inherit!important;
+}
+.almTickerLabel{
+  flex:0 0 150px!important;
+  height:40px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  background:linear-gradient(180deg,#d71920,#980014)!important;
+  color:#fff!important;
+  font-size:15px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+}
+.almTickerDot{
+  width:8px!important;
+  height:8px!important;
+  border-radius:50%!important;
+  background:#fff!important;
+  display:inline-block!important;
+  animation:almBlink 1s infinite!important;
+}
+.almTickerWindow{
+  flex:1!important;
+  min-width:0!important;
+  height:40px!important;
+  display:flex!important;
+  align-items:center!important;
+  overflow:hidden!important;
+  background:#111!important;
+}
+.almTickerMarquee{
+  width:100%!important;
+  height:40px!important;
+  line-height:40px!important;
+  color:#fff!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  direction:rtl!important;
+}
+.header{
+  position:relative!important;
+  top:auto!important;
+  z-index:1!important;
+  margin:0!important;
+  border-bottom:1px solid #f3d7e4!important;
+  background:rgba(255,255,255,.97)!important;
+  backdrop-filter:blur(8px)!important;
+}
+#almTopStickyGroup .header{
+  box-shadow:none!important;
+}
+@keyframes almBlink{0%,55%{opacity:1}56%,100%{opacity:.35}}
+@media(max-width:900px){
+  #almRealNewsTicker{height:36px!important;min-height:36px!important}
+  .almTickerLabel{height:36px!important;flex-basis:105px!important;font-size:12px!important}
+  .almTickerWindow,.almTickerMarquee{height:36px!important;line-height:36px!important}
+  .almTickerMarquee{font-size:13px!important}
+}
+</style>
+
 </head>
 <body>
-<div id="v361TopTickerWrap"><div class="v361Ticker"><button class="v361TickerLabel" type="button" onclick="showSection('offers')"><span class="dot"></span><span>آخر العروض</span></button><div class="v361TickerWindow"><div class="v361TickerTrack" id="v361TickerTrack"><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#600 — SUMMER SPECIAL - عروض الصيف — يبدأ من 700 ر.ق — حفلة فوم مع جهاز صابون + زحلاقية...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#601 — صيف معنا — يبدأ من 700 ر.ق — ملعب صابوني + جهاز صابون + خدمة...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#602 — نطاطية كبيرة مع فوم — يبدأ من 800 ر.ق — نطاطية كبيرة + فوم</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#603 — صيف معنا — يبدأ من 700 ر.ق — ملعب صابوني أو حوض سباحة + جهاز...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#604 — زحلاقية بيبي شرك المائية — يبدأ من 700 ر.ق — زحلاقية مائية + جهاز صابون قوي</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#605 — عرض الصيف — يبدأ من 980 ر.ق — ملعب صابوني ضخم + كرة سلة هوائي...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#606 — زحلاقية يونيكورن المائية — يبدأ من 850 ر.ق — زحلاقية مائية يونيكورن مع منطقة لعب مائية</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#607 — نطاطية كبيرة مع بركة — يبدأ من 1050 ر.ق — نطاطية كبيرة مع بركة مائية</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#608 — فرصة ما تتعوض — يبدأ من 1800 ر.ق — نطاطية كبيرة بركة + نطاطية صغيرة بركة...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#609 — صيف الملكة - باقة 30... — يبدأ من 1950 ر.ق — نطاطية كبيرة بركة + نطاطية صغيرة بركة...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#610 — صيف الملكة - فرحة الصيف — يبدأ من 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#611 — عرض المتعة — يبدأ من 1700 ر.ق — حوض بركة مع جهاز فوم صابون +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#612 — حفلة متكاملة - عرض شامل... — يبدأ من 2950 ر.ق — نطاطية + ديكور مع بالون + بطاطا...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#613 — عيد ميلاد سعيد - عرض... — يبدأ من 2680 ر.ق — ديكور مع بالون + طاولات وكراسي 20...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#614 — ديكور فخم لامع — يبدأ من 1200 ر.ق — خلفية فاخرة + بالون فاخر + 3...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#615 — عرض الفخامة - ديكور +... — يبدأ من 1750 ر.ق — ديكور فخم + ماكينة آيس كريم 20...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#616 — بكج ميلاد VIP — يبدأ من 2450 ر.ق — خلفية راقية مع بالون + Happy Birthday...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#617 — بكج التخرج الملكي — يبدأ من 2990 ر.ق — خلفية مع بالونات + ستيج مضيء 3×3...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#618 — بكج تخرج Class of 2026 — يبدأ من 1850 ر.ق — ديكور تخرج فاخر 2026 + عربة ذرة...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#619 — ديكورات تخرج حسب الشكل — يبدأ من 700 ر.ق — تصميم حسب الطلب + تركيب احترافي +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#620 — صيف معنا - خدمة 30... — يبدأ من 1700 ر.ق — بركة سباحة + ماكينة آيس كريم +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#621 — جمعتكم معنا - الباقة الذهبية — يبدأ من 1800 ر.ق — فشار 20 + غزل البنات 20 +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#622 — ديكورات مميزة لجميع المناسبات — يبدأ من 800 ر.ق — تصاميم عصرية وألوان جذابة + تنفيذ احترافي...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#623 — حفلة متكاملة للأطفال — يبدأ من 3550 ر.ق — نطاطية وزحلاقية ديناصور 2 + ديكور مع...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#600 — SUMMER SPECIAL - عروض الصيف — يبدأ من 700 ر.ق — حفلة فوم مع جهاز صابون + زحلاقية...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#601 — صيف معنا — يبدأ من 700 ر.ق — ملعب صابوني + جهاز صابون + خدمة...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#602 — نطاطية كبيرة مع فوم — يبدأ من 800 ر.ق — نطاطية كبيرة + فوم</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#603 — صيف معنا — يبدأ من 700 ر.ق — ملعب صابوني أو حوض سباحة + جهاز...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#604 — زحلاقية بيبي شرك المائية — يبدأ من 700 ر.ق — زحلاقية مائية + جهاز صابون قوي</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#605 — عرض الصيف — يبدأ من 980 ر.ق — ملعب صابوني ضخم + كرة سلة هوائي...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#606 — زحلاقية يونيكورن المائية — يبدأ من 850 ر.ق — زحلاقية مائية يونيكورن مع منطقة لعب مائية</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#607 — نطاطية كبيرة مع بركة — يبدأ من 1050 ر.ق — نطاطية كبيرة مع بركة مائية</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#608 — فرصة ما تتعوض — يبدأ من 1800 ر.ق — نطاطية كبيرة بركة + نطاطية صغيرة بركة...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#609 — صيف الملكة - باقة 30... — يبدأ من 1950 ر.ق — نطاطية كبيرة بركة + نطاطية صغيرة بركة...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#610 — صيف الملكة - فرحة الصيف — يبدأ من 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#611 — عرض المتعة — يبدأ من 1700 ر.ق — حوض بركة مع جهاز فوم صابون +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#612 — حفلة متكاملة - عرض شامل... — يبدأ من 2950 ر.ق — نطاطية + ديكور مع بالون + بطاطا...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#613 — عيد ميلاد سعيد - عرض... — يبدأ من 2680 ر.ق — ديكور مع بالون + طاولات وكراسي 20...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#614 — ديكور فخم لامع — يبدأ من 1200 ر.ق — خلفية فاخرة + بالون فاخر + 3...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#615 — عرض الفخامة - ديكور +... — يبدأ من 1750 ر.ق — ديكور فخم + ماكينة آيس كريم 20...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#616 — بكج ميلاد VIP — يبدأ من 2450 ر.ق — خلفية راقية مع بالون + Happy Birthday...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#617 — بكج التخرج الملكي — يبدأ من 2990 ر.ق — خلفية مع بالونات + ستيج مضيء 3×3...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#618 — بكج تخرج Class of 2026 — يبدأ من 1850 ر.ق — ديكور تخرج فاخر 2026 + عربة ذرة...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#619 — ديكورات تخرج حسب الشكل — يبدأ من 700 ر.ق — تصميم حسب الطلب + تركيب احترافي +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#620 — صيف معنا - خدمة 30... — يبدأ من 1700 ر.ق — بركة سباحة + ماكينة آيس كريم +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#621 — جمعتكم معنا - الباقة الذهبية — يبدأ من 1800 ر.ق — فشار 20 + غزل البنات 20 +...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#622 — ديكورات مميزة لجميع المناسبات — يبدأ من 800 ر.ق — تصاميم عصرية وألوان جذابة + تنفيذ احترافي...</span></span><span class="v361TickerSep">•</span><span class="v361TickerItem"><span class="v361TickerTag">عرض</span><span class="v361TickerText">#623 — حفلة متكاملة للأطفال — يبدأ من 3550 ر.ق — نطاطية وزحلاقية ديناصور 2 + ديكور مع...</span></span><span class="v361TickerSep">•</span></div></div></div></div>
-
 <div class="siteMagic" aria-hidden="true">
   <span class="trail t1"></span>
   <span class="trail t2"></span>
@@ -5570,6 +5652,14 @@ body .cartItem .qtyBox b{
   <span class="spark s5">✦</span>
 </div>
 
+
+<div id="almTopStickyGroup">
+  <div id="almRealNewsTicker" aria-label="شريط آخر العروض">
+    <div class="almTickerLabel"><span class="almTickerDot"></span><span>آخر العروض</span></div>
+    <div class="almTickerWindow">
+      <marquee class="almTickerMarquee" behavior="scroll" direction="right" scrollamount="8" scrolldelay="0" truespeed>🔥 عرض الصيف 1950 ر.ق — 30 طفل: نطاطية كبيرة بركة + نطاطية صغيرة بركة + آيس كريم + جهاز صابون • 🔥 فرحة الصيف 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 + عربة وجبة ناجتس مع بطاطا 20 + 2 طاولة و10 كراسي • 🔥 عرض المتعة 1700 ر.ق — حوض بركة مع جهاز فوم صابون + آيس كريم وفشار • 🔥 حفلة متكاملة 2950 ر.ق — نطاطية + ديكور بالون + بطاطا حلزوني + ليزر + هدايا • 🔥 عيد ميلاد سعيد 2680 ر.ق — ديكور بالون + طاولات وكراسي + نطاطية صغيرة + فشار وغزل ومسابقات • 🔥 ديكور فخم لامع 1200 ر.ق — خلفية لامعة + كلمة مضيئة + بالون فاخر + 3 طاولات + ليزر • 🔥 عرض الفخامة 1750 ر.ق — ديكور فخم + ماكينة آيس كريم 20 طفل • 🔥 بكج ميلاد VIP 2450 ر.ق — خلفية راقية + LED Happy Birthday + ستيج مضيء + آيس كريم + بطاطا حلزوني • 🔥 بكج التخرج الملكي 2990 ر.ق — ديكور تخرج + ستيج مضيء + ليزر + آيس كريم + بطاطا حلزوني + كراسي • 🔥 بكج تخرج Class of 2026 — 1850 ر.ق — ديكور فاخر + ذرة حلوة + بطاطا حلزوني + طاولة أطفال + بالونات هيليوم • 🔥 ديكورات تخرج تبدأ من 700 ر.ق — تصاميم مميزة وتركيب احترافي وخامات عالية • 🔥 ديكورات مميزة لجميع المناسبات تبدأ من 800 ر.ق</marquee>
+    </div>
+  </div>
 <header class="header">
   <div class="wrap headTop">
     <div class="logo" onclick="showHome()">الملكة</div>
@@ -5584,6 +5674,7 @@ body .cartItem .qtyBox b{
     <div class="eventDateBox"><div class="eventDateLabel">فترة الحجز</div><div class="eventDateInputs"><input id="catalogEventDate" type="date" onchange="render()" title="تاريخ بداية الحجز"><input id="catalogEventEndDate" type="date" onchange="render()" title="تاريخ نهاية الحجز اختياري"></div><small>اختر تاريخ البداية أولاً. تاريخ النهاية اختياري ويجب أن يكون نفس تاريخ البداية أو بعده.</small></div>
   </div>
 </header>
+</div>
 <main id="app"></main>
 <button class="cartBar" onclick="openCart()">🛒 سلة الحجز: <span id="cartCount">0</span> بند — <span id="cartTotalMini">0</span> ر.ق</button>
 <div class="modal" id="modal"></div>
@@ -13135,6 +13226,40 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   });
   window.addEventListener('load',fixTicker);
   setInterval(fixTicker,1200);
+})();
+</script>
+
+
+<script id="v365-fixed-top-header-real-ticker-script">
+(function(){
+  function keepTopGroup(){
+    try{
+      var group=document.getElementById('almTopStickyGroup');
+      var header=document.querySelector('header.header');
+      if(group && header && header.parentNode!==group){
+        group.appendChild(header);
+      }
+      if(group && document.body.firstElementChild!==group && document.body.contains(group)){
+        document.body.insertBefore(group, document.body.firstElementChild);
+      }
+      document.querySelectorAll('#v361TopTickerWrap').forEach(function(x){x.style.display='none';});
+      var mq=document.querySelector('#almRealNewsTicker marquee');
+      if(mq){
+        mq.setAttribute('scrollamount','8');
+        mq.setAttribute('scrolldelay','0');
+        mq.setAttribute('truespeed','');
+        try{mq.start();}catch(e){}
+      }
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    keepTopGroup();
+    setTimeout(keepTopGroup,100);
+    setTimeout(keepTopGroup,500);
+  });
+  window.addEventListener('load',keepTopGroup);
+  window.addEventListener('hashchange',keepTopGroup);
+  setInterval(keepTopGroup,1500);
 })();
 </script>
 
