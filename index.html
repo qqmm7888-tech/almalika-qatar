@@ -12122,6 +12122,98 @@ function openOfferImage(n){
 })();
 </script>
 
+
+
+<style id="almalika-v304-rtl-top-and-right-decor-panel">
+/* ===== V304: ترتيب من اليمين بدون تغيير بيانات أو صور ===== */
+
+/* 1) نافذة التفاصيل: اجعل قسم "اختر شكل الديكور" يبدأ من جهة اليمين */
+#modal .modalBox.eventDetailed.hasDecorMedia{
+  direction:ltr!important;
+  grid-template-columns:minmax(0,1fr) 320px!important;
+}
+#modal .modalBox.eventDetailed.hasDecorMedia .modalInfo{
+  grid-column:1!important;
+  order:1!important;
+  direction:rtl!important;
+}
+#modal .modalBox.eventDetailed.hasDecorMedia .modalPic{
+  grid-column:2!important;
+  order:2!important;
+  direction:rtl!important;
+  border-right:1px solid rgba(212,175,55,.35)!important;
+  border-left:0!important;
+}
+#modal .modalBox.eventDetailed.hasDecorMedia .decorGallery,
+#modal .modalBox.eventDetailed.hasDecorMedia .decorThumbs{
+  direction:rtl!important;
+}
+
+/* 2) القوائم العلوية في الرئيسية تبدأ من اليمين */
+.header .headTop,
+.header .headBtns,
+.header .nav,
+.header .searchRow{
+  direction:rtl!important;
+}
+.header .headTop{
+  justify-items:stretch!important;
+}
+.header .nav,
+.header .headBtns{
+  justify-content:flex-start!important;
+  align-items:center!important;
+}
+.header .nav button,
+.header .headBtns .btn{
+  direction:rtl!important;
+}
+.header .searchRow{
+  justify-content:start!important;
+}
+.header .searchRow > *,
+.header .search,
+.header .search input,
+.header .searchRow select{
+  direction:rtl!important;
+  text-align:right!important;
+}
+
+/* 3) عناصر الصفحة الرئيسية العلوية/الأقسام تبدأ من اليمين مع بقاء العرض الكامل */
+.mainCats,
+.chips,
+.stats,
+.title,
+.panel{
+  direction:rtl!important;
+}
+.mainCats,
+.chips,
+.stats{
+  justify-content:flex-start!important;
+}
+.title{
+  text-align:right!important;
+}
+
+@media(max-width:980px){
+  #modal .modalBox.eventDetailed.hasDecorMedia{
+    direction:rtl!important;
+    grid-template-columns:1fr!important;
+  }
+  #modal .modalBox.eventDetailed.hasDecorMedia .modalPic{
+    grid-column:1!important;
+    order:1!important;
+    border-right:0!important;
+    border-bottom:1px solid #eadce4!important;
+  }
+  #modal .modalBox.eventDetailed.hasDecorMedia .modalInfo{
+    grid-column:1!important;
+    order:2!important;
+  }
+}
+</style>
+
 </body>
 </html>
 
