@@ -15139,11 +15139,9 @@ section.wrap,
   }
   function showWhatsappChoice(msg,link){
     const m=ensureModal();
-    document.getElementById('v339WhatsappContent').innerHTML='<h2>📲 إرسال الطلب واتساب</h2><p>اختار رقم الإدارة للإرسال. بعد الضغط على واتساب سيتم تفريغ السلة تلقائياً.</p><div class="v339Ad">👑 شركة الملكة للحفلات - قطر<br>🔗 رابط الطلب:<br>'+esc(link)+'</div><div class="v339Btns"><a class="v339Wa" id="v339Wa1" target="_blank" href="'+waUrl(PHONES[0].wa,msg)+'">واتساب 33317720</a><a class="v339Wa" id="v339Wa2" target="_blank" href="'+waUrl(PHONES[1].wa,msg)+'">واتساب 33317705</a><button class="v339Both" id="v339Both" type="button">إرسال للرقمين</button><button class="v339Dark" type="button" id="v339Cancel">إغلاق</button></div>';
+    document.getElementById('v339WhatsappContent').innerHTML='<h2>📲 إرسال الطلب واتساب</h2><p>اختار رقم الإدارة للإرسال. بعد الضغط على واتساب سيتم تفريغ السلة تلقائياً.</p><div class="v339Ad">👑 شركة الملكة للحفلات - قطر<br>🔗 رابط الطلب:<br>'+esc(link)+'</div><div class="v339Btns"><a class="v339Wa" id="v339Wa1" target="_blank" href="'+waUrl(PHONES[0].wa,msg)+'">واتساب 33317720</a><a class="v339Wa" id="v339Wa2" target="_blank" href="'+waUrl(PHONES[1].wa,msg)+'">واتساب 33317705</a><button class="v339Dark" type="button" id="v339Cancel">إغلاق</button></div>';
     m.classList.add('show');
     ['v339Wa1','v339Wa2'].forEach(function(id){const a=document.getElementById(id); if(a)a.addEventListener('click',function(){setTimeout(clearCartAfterWhatsapp,250);});});
-    const both=document.getElementById('v339Both');
-    if(both) both.onclick=function(){window.open(waUrl(PHONES[0].wa,msg),'_blank');setTimeout(function(){window.open(waUrl(PHONES[1].wa,msg),'_blank');},450);setTimeout(clearCartAfterWhatsapp,700);};
     const c=document.getElementById('v339Cancel'); if(c)c.onclick=function(){m.classList.remove('show')};
   }
   window.sendCartWa=async function(){
@@ -15274,7 +15272,7 @@ section.wrap,
     let m=document.getElementById('v340WaChoice');
     if(!m){
       m=document.createElement('div');m.id='v340WaChoice';
-      m.innerHTML='<div class="v340Box"><h2>📲 إرسال الطلب واتساب</h2><p>اختار رقم الإدارة. عند الضغط على أي زر واتساب سيتم تفريغ السلة مباشرة.</p><div class="v340Ad" id="v340Ad"></div><div class="v340Btns"><a class="wa" id="v340wa1" target="_blank">واتساب 33317720</a><a class="wa" id="v340wa2" target="_blank">واتساب 33317705</a><button class="pink" id="v340both">إرسال للرقمين</button><button class="dark" id="v340close">إغلاق</button></div></div>';
+      m.innerHTML='<div class="v340Box"><h2>📲 إرسال الطلب واتساب</h2><p>اختار رقم الإدارة. عند الضغط على أي زر واتساب سيتم تفريغ السلة مباشرة.</p><div class="v340Ad" id="v340Ad"></div><div class="v340Btns"><a class="wa" id="v340wa1" target="_blank">واتساب 33317720</a><a class="wa" id="v340wa2" target="_blank">واتساب 33317705</a><button class="dark" id="v340close">إغلاق</button></div></div>';
       document.body.appendChild(m);
       m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')});
       document.getElementById('v340close').onclick=function(){m.classList.remove('show')};
@@ -15284,11 +15282,10 @@ section.wrap,
   function showChoice(msg,link){
     const m=modal();
     document.getElementById('v340Ad').innerHTML='👑 إعلان الملكة للحفلات<br>حجز سريع ومنظم + رابط متابعة الطلب<br><small>'+esc(link)+'</small>';
-    const a1=document.getElementById('v340wa1'), a2=document.getElementById('v340wa2'), both=document.getElementById('v340both');
+    const a1=document.getElementById('v340wa1'), a2=document.getElementById('v340wa2');
     a1.href=wa(WA1,msg); a2.href=wa(WA2,msg);
     a1.onclick=function(){setTimeout(setCartEmpty,150);};
     a2.onclick=function(){setTimeout(setCartEmpty,150);};
-    both.onclick=function(){window.open(wa(WA1,msg),'_blank');setTimeout(function(){window.open(wa(WA2,msg),'_blank')},350);setTimeout(setCartEmpty,500);};
     m.classList.add('show');
   }
   window.saveOrderToAdmin=function(){return Promise.resolve(null)};
@@ -15312,5 +15309,192 @@ section.wrap,
       return false;
     }
   },true);
+})();
+</script>
+
+
+<!-- ===== V341: حذف زر إرسال للرقمين نهائياً ===== -->
+<style id="almalika-v341-remove-both-whatsapp-style">
+#v339Both,#v340both,.v339Both{display:none!important}
+.v340Btns,.v339Btns{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.v340Btns .dark,.v339Btns .v339Dark{grid-column:1 / -1!important}
+</style>
+<script id="almalika-v341-remove-both-whatsapp-js">
+(function(){
+  function removeBoth(){
+    document.querySelectorAll('#v339Both,#v340both,.v339Both').forEach(function(el){el.remove();});
+    document.querySelectorAll('button').forEach(function(btn){
+      if((btn.textContent||'').trim()==='إرسال للرقمين') btn.remove();
+    });
+  }
+  document.addEventListener('DOMContentLoaded', removeBoth);
+  document.addEventListener('click', function(){ setTimeout(removeBoth,0); setTimeout(removeBoth,120); }, true);
+  if(window.MutationObserver){
+    setTimeout(function(){ new MutationObserver(removeBoth).observe(document.body,{childList:true,subtree:true}); },200);
+  }
+  setTimeout(removeBoth,0); setTimeout(removeBoth,500);
+})();
+</script>
+
+<!-- ===== V342: إعلان أعلى رسالة الواتساب + رابط طلب يعمل بعد تفريغ السلة ===== -->
+<style id="almalika-v342-order-link-style">
+#v342WaChoice{position:fixed;inset:0;z-index:999999;background:rgba(20,10,20,.58);display:none;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(4px)}
+#v342WaChoice.show{display:flex!important}
+#v342WaChoice .v342Box{width:min(640px,96vw);background:#fffdf8;border:1px solid #f3bfd7;border-radius:24px;padding:22px;box-shadow:0 28px 80px rgba(0,0,0,.28);direction:rtl;text-align:center;color:#6b2345}
+#v342WaChoice h2{margin:0 0 8px;font-size:28px;color:#7b183d}
+#v342WaChoice p{margin:0 0 14px;font-weight:800;line-height:1.8;color:#6b5b66}
+#v342WaChoice .v342Ad{background:linear-gradient(135deg,#fff3f8,#fff7df);border:1px dashed #ef9fc0;border-radius:18px;padding:14px;margin:14px 0;font-weight:900;line-height:1.7;color:#8b1748}
+#v342WaChoice .v342Ad small{display:block;margin-top:7px;direction:ltr;unicode-bidi:embed;color:#7b294d;word-break:break-all;font-size:12px}
+#v342WaChoice .v342Btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+#v342WaChoice a,#v342WaChoice button{border:0;border-radius:14px;padding:15px 10px;font-weight:900;font-size:17px;text-align:center;text-decoration:none;cursor:pointer}
+#v342WaChoice .wa{background:#18b85f;color:#fff}
+#v342WaChoice .dark{background:#111;color:#fff;grid-column:1/-1}
+.v342AdminPage{direction:rtl;min-height:100vh;background:linear-gradient(180deg,#fff7fb,#fffaf2);font-family:inherit;color:#5d203d;padding:24px}
+.v342AdminBox{max-width:980px;margin:0 auto;background:#fff;border:1px solid #f0c5d7;border-radius:26px;box-shadow:0 18px 55px rgba(114,39,78,.12);overflow:hidden}
+.v342AdminHero{background:linear-gradient(135deg,#ff5fa2,#ffd777);color:#fff;padding:24px;text-align:center}
+.v342AdminHero h1{margin:0;font-size:32px}.v342AdminHero p{margin:10px 0 0;font-weight:900}
+.v342AdminContent{padding:20px}.v342AdminGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}.v342Cell{background:#fff8fb;border:1px solid #f1cbdc;border-radius:14px;padding:12px;font-weight:800}.v342Cell b{color:#8b1748}
+.v342Items{display:grid;gap:12px}.v342Item{border:1px solid #f1cbdc;border-radius:16px;padding:14px;background:#fffdf8}.v342Item h3{margin:0 0 8px;color:#7b183d}.v342Item p{white-space:pre-wrap;line-height:1.7;margin:0}
+.v342Total{margin-top:16px;border-radius:16px;border:2px solid #e0ad48;background:#fff8df;padding:14px;font-size:22px;font-weight:900;display:flex;justify-content:space-between}.v342Actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.v342Actions a,.v342Actions button{border:0;border-radius:14px;padding:13px 20px;font-weight:900;text-decoration:none;color:#fff;background:#111;cursor:pointer}.v342Actions .home{background:#ef2b7a}.v342Actions .wa{background:#18b85f}
+@media(max-width:700px){#v342WaChoice .v342Btns,.v342AdminGrid{grid-template-columns:1fr}.v342AdminPage{padding:10px}.v342AdminHero h1{font-size:24px}}
+</style>
+<script id="almalika-v342-order-link-js">
+(function(){
+  const WA1='97433317720', WA2='97433317705';
+  function enc(s){return encodeURIComponent(String(s||''));}
+  function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+  function val(id){return (document.getElementById(id)?.value||'').trim();}
+  function getCart(){try{return Array.isArray(cart)?cart:(Array.isArray(window.cart)?window.cart:[])}catch(e){return []}}
+  function getPay(){try{return document.querySelector('input[name="payMethod"]:checked')?.value||''}catch(e){return ''}}
+  function getDeliveryArea(){try{return document.querySelector('#deliveryArea,#deliveryAreaSelect')?.value || document.querySelector('select')?.value || ''}catch(e){return ''}}
+  function subtotal(){try{return typeof cartSubtotal==='function'?Number(cartSubtotal()):getCart().reduce((s,it)=>s+(Number(it.selectedPrice||it.price||it.priceOneDay||0)||0)*(Number(it.qty||1)||1),0)}catch(e){return 0}}
+  function deliveryFee(){try{return typeof deliveryFee==='function'?Number(deliveryFee()):Number(document.getElementById('deliveryFeeView')?.textContent||0)||0}catch(e){return 0}}
+  function total(){try{return typeof cartTotal==='function'?Number(cartTotal()):subtotal()+deliveryFee()}catch(e){return subtotal()+deliveryFee()}}
+  function clearCartNow(){
+    try{if(Array.isArray(cart)) cart.length=0; else window.cart=[];}catch(e){window.cart=[]}
+    try{localStorage.setItem('almalikaCart','[]')}catch(e){}
+    try{localStorage.setItem('cart','[]')}catch(e){}
+    try{if(typeof saveCart==='function')saveCart()}catch(e){}
+    try{if(typeof updateCartBadge==='function')updateCartBadge()}catch(e){}
+    try{if(typeof updateCartUI==='function')updateCartUI()}catch(e){}
+  }
+  function b64url(str){
+    const bytes=new TextEncoder().encode(str); let bin='';
+    for(let i=0;i<bytes.length;i+=8192){bin+=String.fromCharCode.apply(null,bytes.slice(i,i+8192));}
+    return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  function unb64url(s){
+    s=String(s||'').replace(/-/g,'+').replace(/_/g,'/'); while(s.length%4)s+='=';
+    const bin=atob(s); const bytes=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+    return new TextDecoder().decode(bytes);
+  }
+  function minimalOrder(o){
+    return {orderId:o.orderId,createdAt:o.createdAt,customer:o.customer,items:o.items,subtotal:o.subtotal,deliveryFee:o.deliveryFee,total:o.total,status:o.status};
+  }
+  function orderLink(o){
+    const base=(location.origin&&location.origin!=='null'?location.origin:'https://project-5xlms.vercel.app')+location.pathname;
+    const token=b64url(JSON.stringify(minimalOrder(o)));
+    return base+'?adminOrder='+enc(o.orderId)+'&orderData='+token;
+  }
+  function buildOrder(){
+    const items=getCart();
+    const order={
+      orderId:'MQ-'+Date.now(),
+      createdAt:new Date().toISOString(),
+      createdAtArabic:new Date().toLocaleString('ar-QA'),
+      customer:{
+        name:val('custName')||val('customerName')||val('name'),
+        phone:val('custPhone')||val('customerPhone')||val('phone'),
+        date:val('custDate')||val('customerDate')||val('eventDate'),
+        endDate:val('custEndDate'),
+        map:val('custMap')||val('customerMap')||val('mapLink'),
+        zone:val('custZone')||val('zone'),street:val('custStreet')||val('street'),house:val('custHouse')||val('house'),
+        payment:getPay(),deliveryArea:getDeliveryArea(),note:val('custNote')||val('customerNote')||val('note')
+      },
+      items:items.map(function(it){return {number:it.number||it.id||'',name:it.name||'منتج',category:it.category||'',qty:it.qty||1,price:Number(it.selectedPrice||it.price||it.priceOneDay||0)||0,selectionLabel:it.selectionLabel||'',summary:it.bookingSummary||[],note:it.itemNote||'',image:it.selectedDecorImage||it.image||''};}),
+      subtotal:subtotal(),deliveryFee:deliveryFee(),total:total(),status:'طلب جديد'
+    };
+    try{const all=JSON.parse(localStorage.getItem('almalikaOrders')||'[]');all.unshift(order);localStorage.setItem('almalikaOrders',JSON.stringify(all.slice(0,300)));localStorage.setItem('almalikaLastOrder',JSON.stringify(order));localStorage.setItem('almalikaOrder_'+order.orderId,JSON.stringify(order));}catch(e){}
+    return order;
+  }
+  function makeMsg(o){
+    const link=orderLink(o);
+    const lines=[];
+    lines.push('🎉 *إعلان شركة الملكة للحفلات - قطر* 🎉');
+    lines.push('نجهز لكم أجمل المناسبات: نطاطيات، زحلاقيات، سناك، عربات وضيافة، ديكورات حفلات وأعياد ميلاد وتخرج.');
+    lines.push('حجز سريع • تنظيم راقٍ • اهتمام بالتفاصيل حتى نهاية الحفلة');
+    lines.push('━━━━━━━━━━━━━━');
+    lines.push('🔗 *رابط مشاهدة الطلب للإدارة:*');
+    lines.push(link);
+    lines.push('━━━━━━━━━━━━━━');
+    lines.push('📞 أرقام الملكة: 33317720 / 33317705');
+    lines.push('🧾 رقم الطلب: '+o.orderId);
+    if(o.customer.name) lines.push('👤 الاسم: '+o.customer.name);
+    if(o.customer.phone) lines.push('📱 الجوال: '+o.customer.phone);
+    if(o.customer.date) lines.push('📅 تاريخ الحجز: '+o.customer.date+(o.customer.endDate?' إلى '+o.customer.endDate:''));
+    if(o.customer.map) lines.push('📍 الموقع: '+o.customer.map);
+    if(o.customer.zone||o.customer.street||o.customer.house) lines.push('🏠 العنوان: منطقة '+(o.customer.zone||'-')+' / شارع '+(o.customer.street||'-')+' / منزل '+(o.customer.house||'-'));
+    if(o.customer.payment) lines.push('💳 الدفع: '+o.customer.payment);
+    lines.push(''); lines.push('📦 *المنتجات:*');
+    o.items.forEach(function(it,i){
+      lines.push((i+1)+') #'+it.number+' - '+it.name+(it.qty&&it.qty>1?' × '+it.qty:''));
+      lines.push('السعر: '+it.price+' ر.ق');
+      if(it.selectionLabel) lines.push('الخيار: '+it.selectionLabel);
+      if(it.summary&&it.summary.length) lines.push(it.summary.join('\n'));
+      if(it.note) lines.push('ملاحظة: '+it.note);
+      lines.push('---');
+    });
+    lines.push('💰 الإجمالي النهائي: '+o.total+' ر.ق');
+    if(o.customer.note) lines.push('📝 ملاحظات عامة: '+o.customer.note);
+    return lines.join('\n').replace(/33317705\s*\/\s*33317705\s*\/\s*33317720/g,'33317720 / 33317705').replace(/33317720\s*\/\s*33317705\s*\/\s*33317705/g,'33317720 / 33317705');
+  }
+  function wa(num,msg){return 'https://wa.me/'+num+'?text='+enc(msg);}
+  function choiceModal(){
+    let m=document.getElementById('v342WaChoice');
+    if(!m){
+      m=document.createElement('div');m.id='v342WaChoice';
+      m.innerHTML='<div class="v342Box"><h2>📲 إرسال الطلب واتساب</h2><p>اختار رقم الإدارة. بعد الضغط على واتساب سيتم تفريغ السلة مباشرة.</p><div class="v342Ad" id="v342Ad"></div><div class="v342Btns"><a class="wa" id="v342wa1" target="_blank" rel="noopener">واتساب 33317720</a><a class="wa" id="v342wa2" target="_blank" rel="noopener">واتساب 33317705</a><button class="dark" id="v342close">إغلاق</button></div></div>';
+      document.body.appendChild(m);
+      m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')});
+      document.getElementById('v342close').onclick=function(){m.classList.remove('show')};
+    }
+    return m;
+  }
+  function showChoice(o,msg){
+    const link=orderLink(o), m=choiceModal();
+    document.getElementById('v342Ad').innerHTML='👑 إعلان الملكة للحفلات<br>رابط الطلب يعمل حتى بعد تفريغ السلة<br><small>'+esc(link)+'</small>';
+    const a1=document.getElementById('v342wa1'), a2=document.getElementById('v342wa2');
+    a1.href=wa(WA1,msg); a2.href=wa(WA2,msg);
+    a1.onclick=function(){setTimeout(clearCartNow,120);setTimeout(function(){m.classList.remove('show')},250);};
+    a2.onclick=function(){setTimeout(clearCartNow,120);setTimeout(function(){m.classList.remove('show')},250);};
+    m.classList.add('show');
+  }
+  window.saveOrderToAdmin=function(){return Promise.resolve(null)};
+  window.sendCartWa=function(){
+    const items=getCart(); if(!items.length){alert('السلة فارغة');return false;}
+    try{if(typeof validateCustomerData==='function'&&!validateCustomerData(true))return false;}catch(e){}
+    const o=buildOrder(); const msg=makeMsg(o); showChoice(o,msg); return false;
+  };
+  window.__v342SendCartWa=window.sendCartWa;
+  document.addEventListener('click',function(e){
+    const btn=e.target&&e.target.closest&&e.target.closest('button,a'); if(!btn)return;
+    const t=(btn.textContent||'').replace(/\s+/g,' ').trim();
+    if(/إرسال السلة واتساب|ارسال السلة واتساب|إرسال الطلب واتساب/.test(t)){
+      e.preventDefault();e.stopImmediatePropagation();e.stopPropagation();window.__v342SendCartWa();return false;
+    }
+  },true);
+  function getOrderFromUrl(){
+    const qs=new URLSearchParams(location.search); const id=qs.get('adminOrder'); if(!id)return null;
+    let o=null;
+    try{const token=qs.get('orderData'); if(token)o=JSON.parse(unb64url(token));}catch(e){}
+    try{if(!o)o=JSON.parse(localStorage.getItem('almalikaOrder_'+id)||'null');}catch(e){}
+    try{if(!o){const all=JSON.parse(localStorage.getItem('almalikaOrders')||'[]');o=all.find(x=>x.orderId===id)||null;}}catch(e){}
+    return o||{orderId:id,items:[],customer:{},total:0,status:'طلب جديد'};
+  }
+  function renderAdminOrder(o){
+    document.documentElement.dir='rtl';
+    document.body.innerHTML='<div class="v342AdminPage"><div class="v342AdminBox"><div class="v342AdminHero"><h1>👑 إعلان الملكة للحفلات</h1><p>نطاطيات • زحلاقيات • سناك • تجهيز حفلات — طلب إدارة رقم '+esc(o.orderId)+'</p></div><div class="v342AdminContent"><div class="v342AdminGrid"><div class="v342Cell"><b>اسم العميل:</b> '+esc(o.customer?.name||'-')+'</div><div class="v342Cell"><b>الجوال:</b> '+esc(o.customer?.phone||'-')+'</div><div class="v342Cell"><b>تاريخ الحجز:</b> '+esc(o.customer?.date||'-')+(o.customer?.endDate?' إلى '+esc(o.customer.endDate):'')+'</div><div class="v342Cell"><b>الدفع:</b> '+esc(o.customer?.payment||'-')+'</div><div class="v342Cell"><b>الموقع:</b> '+(o.customer?.map?'<a href="'+esc(o.customer.map)+'" target="_blank">فتح الموقع</a>':'-')+'</div><div class="v342Cell"><b>العنوان:</b> منطقة '+esc(o.customer?.zone||'-')+' / شارع '+esc(o.customer?.street||'-')+' / منزل '+esc(o.customer?.house||'-')+'</div></div><h2>المنتجات</h2><div class="v342Items">'+(o.items&&o.items.length?o.items.map(function(it,i){return '<div class="v342Item"><h3>'+(i+1)+') #'+esc(it.number)+' - '+esc(it.name)+'</h3><p><b>السعر:</b> '+esc(it.price)+' ر.ق'+(it.selectionLabel?'\n<b>الخيار:</b> '+esc(it.selectionLabel):'')+'\n'+esc((it.summary||[]).join('\n'))+(it.note?'\n<b>ملاحظة:</b> '+esc(it.note):'')+'</p></div>';}).join(''):'<div class="v342Item"><h3>لا توجد منتجات محفوظة</h3><p>الرابط قديم أو تم فتحه بدون بيانات الطلب.</p></div>')+'</div><div class="v342Total"><span>الإجمالي النهائي</span><b>'+esc(o.total||0)+' ر.ق</b></div><div class="v342Actions"><a class="home" href="'+location.pathname+'">العودة للموقع</a><a class="wa" href="https://wa.me/97433317720" target="_blank">واتساب الإدارة</a><button onclick="window.print()">طباعة الطلب</button></div></div></div></div>';
+  }
+  document.addEventListener('DOMContentLoaded',function(){const o=getOrderFromUrl(); if(o) setTimeout(function(){renderAdminOrder(o)},0);});
 })();
 </script>
