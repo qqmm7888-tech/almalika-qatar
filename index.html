@@ -11218,5 +11218,69 @@ function openOfferImage(n){
 }
 </script>
 
+
+<script id="almalika-v290-hide-unavailable-from-vip">
+(function(){
+  function isUnavailableProduct(p){
+    if(!p) return false;
+    const blob = [
+      p.name, p.title, p.status, p.badge, p.note, p.notes,
+      p.availability, p.availableText, p.unavailableText,
+      p.details, p.description, p.type, p.category
+    ].map(v => v == null ? '' : String(v)).join(' ');
+    return p.available === false ||
+           p.disabled === true ||
+           p.outOfStock === true ||
+           p.isUnavailable === true ||
+           p.unavailable === true ||
+           /غير\s*متاح|خارج\s*عن\s*الخدمة|عطلان|متوقف|غير\s*متوفر/.test(blob);
+  }
+
+  const oldRelevantProducts = window.relevantProducts;
+  if(typeof oldRelevantProducts === 'function'){
+    window.relevantProducts = relevantProducts = function(){
+      let arr = oldRelevantProducts.apply(this, arguments) || [];
+      const cur = String(window.current || (typeof current !== 'undefined' ? current : ''));
+      const internalText = String(window.internal || (typeof internal !== 'undefined' ? internal : ''));
+      const isVip =
+        cur === 'vip' ||
+        cur === 'featured' ||
+        cur === 'special' ||
+        /مختارات|خاص|VIP|vip/.test(cur + ' ' + internalText);
+
+      if(isVip){
+        arr = arr.filter(p => !isUnavailableProduct(p));
+      }
+      return arr;
+    };
+  }
+
+  // احتياط إضافي بعد الرسم: إزالة أي بطاقة ظاهرة عليها "غير متاح" داخل المختارات فقط
+  const oldRender = window.render;
+  if(typeof oldRender === 'function'){
+    window.render = render = function(){
+      const out = oldRender.apply(this, arguments);
+      setTimeout(function(){
+        const cur = String(window.current || (typeof current !== 'undefined' ? current : ''));
+        const internalText = String(window.internal || (typeof internal !== 'undefined' ? internal : ''));
+        const isVip =
+          cur === 'vip' ||
+          cur === 'featured' ||
+          cur === 'special' ||
+          /مختارات|خاص|VIP|vip/.test(cur + ' ' + internalText);
+        if(!isVip) return;
+        document.querySelectorAll('.card, .product-card, [data-product], [data-id]').forEach(function(card){
+          const txt = card.textContent || '';
+          if(/غير\s*متاح|خارج\s*عن\s*الخدمة|عطلان|متوقف|غير\s*متوفر/.test(txt)){
+            card.remove();
+          }
+        });
+      }, 80);
+      return out;
+    };
+  }
+})();
+</script>
+
 </body>
 </html>
