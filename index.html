@@ -12860,6 +12860,71 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 })();
 </script>
 
+
+<style id="v362-ticker-always-moving-faster-style">
+/* v362: الشريط يمشي تلقائي بدون توقف وبسرعة أعلى */
+.v359TickerBar:hover .v359TickerTrack,
+.v361Ticker:hover .v361TickerTrack,
+.v360Ticker:hover .v360TickerTrack{
+  animation-play-state:running!important;
+}
+.v359TickerTrack,
+.v361TickerTrack,
+.v360TickerTrack{
+  animation-duration:14s!important;
+  animation-timing-function:linear!important;
+  animation-iteration-count:infinite!important;
+  animation-play-state:running!important;
+  will-change:transform!important;
+}
+.v359TickerItem,
+.v361TickerItem,
+.v360TickerItem{
+  pointer-events:none!important;
+  cursor:default!important;
+}
+.v359TickerHead,
+.v361TickerHead,
+.v360TickerHead{
+  pointer-events:none!important;
+  cursor:default!important;
+}
+@media(max-width:900px){
+  .v359TickerTrack,
+  .v361TickerTrack,
+  .v360TickerTrack{
+    animation-duration:10s!important;
+  }
+}
+</style>
+<script id="v362-ticker-always-moving-faster-script">
+(function(){
+  function forceTickerRun(){
+    try{
+      document.querySelectorAll('.v359TickerTrack,.v361TickerTrack,.v360TickerTrack').forEach(function(el){
+        el.style.animationPlayState='running';
+        el.style.animationTimingFunction='linear';
+        el.style.animationIterationCount='infinite';
+        el.style.animationDuration=(window.innerWidth<900?'10s':'14s');
+      });
+      document.querySelectorAll('.v359TickerItem,.v361TickerItem,.v360TickerItem,.v359TickerHead,.v361TickerHead,.v360TickerHead').forEach(function(el){
+        el.removeAttribute('onclick');
+        el.style.pointerEvents='none';
+        el.style.cursor='default';
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    forceTickerRun();
+    setTimeout(forceTickerRun,100);
+    setTimeout(forceTickerRun,400);
+  });
+  document.addEventListener('mouseover',forceTickerRun,true);
+  document.addEventListener('touchstart',forceTickerRun,true);
+  setInterval(forceTickerRun,1500);
+})();
+</script>
+
 </body>
 </html>
 
