@@ -11683,6 +11683,91 @@ function openOfferImage(n){
 })();
 </script>
 
+
+
+<!-- ===== V298 FIX: لا تظهر مربعات الصور الفارغة في اختيارات الديكور ===== -->
+<style id="almalika-v298-hide-broken-decor-thumbs">
+#modal .decorThumb.broken,
+#modal .decorThumb[hidden]{display:none!important}
+#modal .modalBox.eventDetailed.hasDecorMedia .decorThumbs{
+  grid-auto-flow:row!important;
+  align-items:start!important;
+}
+#modal .modalBox.eventDetailed.hasDecorMedia .modalPic{
+  grid-column:1!important; /* جهة اليمين لأن النافذة RTL */
+  order:0!important;
+}
+#modal .modalBox.eventDetailed.hasDecorMedia .modalInfo{
+  grid-column:2!important;
+  order:0!important;
+}
+#modal .decorGallery.is-empty{display:none!important}
+</style>
+<script id="almalika-v298-hide-broken-decor-thumbs">
+(function(){
+  function hideBrokenThumb(img){
+    if(!img) return;
+    var thumb = img.closest && img.closest('.decorThumb');
+    if(thumb){
+      thumb.classList.add('broken');
+      thumb.hidden = true;
+      thumb.style.display = 'none';
+      var gallery = thumb.closest('.decorGallery');
+      if(gallery){
+        var visible = Array.prototype.filter.call(gallery.querySelectorAll('.decorThumb'), function(b){
+          return !b.classList.contains('broken') && !b.hidden && b.style.display !== 'none';
+        });
+        if(!visible.length){
+          gallery.classList.add('is-empty');
+        }else if(thumb.classList.contains('active')){
+          visible[0].click();
+        }
+      }
+    }else{
+      img.style.display='none';
+      img.style.visibility='hidden';
+    }
+  }
+  function cleanupDecorImages(){
+    var modal = document.getElementById('modal');
+    if(!modal) return;
+    modal.querySelectorAll('.decorThumb img, img.mainDecorImg').forEach(function(img){
+      img.onerror = function(){ hideBrokenThumb(img); };
+      if(img.complete && img.naturalWidth === 0){ hideBrokenThumb(img); }
+    });
+    modal.querySelectorAll('.decorGallery').forEach(function(gallery){
+      var visible = Array.prototype.filter.call(gallery.querySelectorAll('.decorThumb'), function(b){
+        return !b.classList.contains('broken') && !b.hidden && b.style.display !== 'none';
+      });
+      if(!visible.length) gallery.classList.add('is-empty');
+    });
+  }
+  window.cleanupDecorImages = cleanupDecorImages;
+  document.addEventListener('error', function(e){
+    var t=e.target;
+    if(t && t.tagName === 'IMG' && t.closest && t.closest('#modal')) hideBrokenThumb(t);
+  }, true);
+  var oldOpen = window.openProduct;
+  if(typeof oldOpen === 'function'){
+    window.openProduct = openProduct = function(n){
+      var r = oldOpen.apply(this, arguments);
+      setTimeout(cleanupDecorImages, 0);
+      setTimeout(cleanupDecorImages, 150);
+      setTimeout(cleanupDecorImages, 600);
+      setTimeout(cleanupDecorImages, 1500);
+      return r;
+    };
+  }
+  var obs = new MutationObserver(function(){ setTimeout(cleanupDecorImages, 50); });
+  function start(){
+    var modal=document.getElementById('modal');
+    if(modal) obs.observe(modal,{childList:true,subtree:true});
+    cleanupDecorImages();
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
+})();
+</script>
+
 </body>
 </html>
 
