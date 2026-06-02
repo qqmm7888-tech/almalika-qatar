@@ -12980,3 +12980,210 @@ section.wrap,
   setTimeout(forceRTL,0);setTimeout(forceRTL,300);setTimeout(forceRTL,900);
 })();
 </script>
+
+<style id="almalika-v306-right-gallery-click-zoom">
+/* ===== V306: تثبيت معرض الديكور يمين + ضغط المصغرات يغير الصورة الكبيرة + تكبير الصورة الكبيرة ===== */
+#modal .modalBox.hasDecorMedia,
+#modal .modalBox.detailed.eventDetailed,
+#modal .modalBox.detailed.hasDecorMedia,
+#modal .modalBox.detailed.hasDecorMedia.eventDetailed{
+  display:flex!important;
+  flex-direction:row!important;
+  direction:rtl!important;
+  align-items:stretch!important;
+  justify-content:center!important;
+  gap:0!important;
+}
+#modal .modalBox.hasDecorMedia > .modalPic,
+#modal .modalBox.detailed.eventDetailed > .modalPic,
+#modal .modalBox.detailed.hasDecorMedia > .modalPic,
+#modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalPic{
+  order:0!important;
+  flex:0 0 320px!important;
+  width:320px!important;
+  max-width:320px!important;
+  min-width:320px!important;
+  direction:rtl!important;
+  text-align:right!important;
+  border-left:1px solid rgba(212,175,55,.28)!important;
+  border-right:0!important;
+  overflow-y:auto!important;
+  max-height:92vh!important;
+}
+#modal .modalBox.hasDecorMedia > .modalInfo,
+#modal .modalBox.detailed.eventDetailed > .modalInfo,
+#modal .modalBox.detailed.hasDecorMedia > .modalInfo,
+#modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalInfo{
+  order:1!important;
+  flex:1 1 auto!important;
+  min-width:0!important;
+  direction:rtl!important;
+  text-align:right!important;
+}
+#modal .modalPic .v302MainWrap,
+#modal .modalPic .mainDecorPreview,
+#modal .modalPic .mainDecorImg,
+#modal .modalPic .v302MainImg{
+  cursor:zoom-in!important;
+}
+#modal .modalPic .decorGallery,
+#modal .modalPic .decorGallery.v302Gallery{
+  direction:rtl!important;
+  text-align:right!important;
+  width:100%!important;
+}
+#modal .modalPic .decorGalleryTitle{
+  text-align:right!important;
+  justify-content:flex-start!important;
+  direction:rtl!important;
+}
+#modal .modalPic .decorThumbs{
+  direction:rtl!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+}
+#modal .modalPic .decorThumb{
+  direction:rtl!important;
+  text-align:center!important;
+}
+#almalikaImageZoom{
+  position:fixed!important;
+  inset:0!important;
+  z-index:999999!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,0,0,.82)!important;
+  padding:22px!important;
+  direction:rtl!important;
+}
+#almalikaImageZoom.show{display:flex!important;}
+#almalikaImageZoom img{
+  max-width:96vw!important;
+  max-height:92vh!important;
+  object-fit:contain!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  box-shadow:0 20px 70px rgba(0,0,0,.45)!important;
+}
+#almalikaImageZoom .zoomClose{
+  position:fixed!important;
+  top:16px!important;
+  right:18px!important;
+  width:46px!important;
+  height:46px!important;
+  border-radius:50%!important;
+  border:0!important;
+  background:#e91e63!important;
+  color:#fff!important;
+  font-size:30px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  cursor:pointer!important;
+}
+@media(max-width:980px){
+  #modal .modalBox.hasDecorMedia,
+  #modal .modalBox.detailed.eventDetailed,
+  #modal .modalBox.detailed.hasDecorMedia,
+  #modal .modalBox.detailed.hasDecorMedia.eventDetailed{
+    flex-direction:column!important;
+  }
+  #modal .modalBox.hasDecorMedia > .modalPic,
+  #modal .modalBox.detailed.eventDetailed > .modalPic,
+  #modal .modalBox.detailed.hasDecorMedia > .modalPic,
+  #modal .modalBox.detailed.hasDecorMedia.eventDetailed > .modalPic{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    flex:0 0 auto!important;
+    max-height:none!important;
+    border-left:0!important;
+  }
+}
+</style>
+
+<script id="almalika-v306-gallery-click-zoom-js">
+(function(){
+  function qs(s,r){return (r||document).querySelector(s)}
+  function qsa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+  function ensureZoom(){
+    var z=document.getElementById('almalikaImageZoom');
+    if(z) return z;
+    z=document.createElement('div');
+    z.id='almalikaImageZoom';
+    z.innerHTML='<button type="button" class="zoomClose" aria-label="إغلاق">×</button><img alt="صورة مكبرة">';
+    document.body.appendChild(z);
+    z.addEventListener('click',function(e){ if(e.target===z || e.target.classList.contains('zoomClose')) z.classList.remove('show'); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') z.classList.remove('show'); });
+    return z;
+  }
+  function openZoom(src){
+    if(!src) return;
+    var z=ensureZoom();
+    var im=qs('img',z);
+    im.src=src;
+    z.classList.add('show');
+  }
+  function forcePanelRight(){
+    try{
+      var box=qs('#modal .modalBox.hasDecorMedia, #modal .modalBox.detailed.eventDetailed, #modal .modalBox.detailed.hasDecorMedia');
+      if(box){box.style.display='flex';box.style.flexDirection=(window.innerWidth>980?'row':'column');box.style.direction='rtl';}
+      var pic=qs('#modal .modalBox .modalPic');
+      var info=qs('#modal .modalBox .modalInfo');
+      if(pic){pic.style.order='0';pic.style.direction='rtl';pic.style.textAlign='right';}
+      if(info){info.style.order='1';info.style.direction='rtl';info.style.textAlign='right';}
+    }catch(e){}
+  }
+  function updateMainFromButton(btn){
+    try{
+      var modal=qs('#modal');
+      if(!modal || !btn) return;
+      var imgEl=qs('img',btn);
+      var src=(btn.dataset&& (btn.dataset.fullSrc||btn.dataset.decorImg)) || (imgEl&&imgEl.currentSrc) || (imgEl&&imgEl.src) || '';
+      if(!src) return;
+      var main=qs('.modalPic .mainDecorImg, .modalPic .v302MainImg, .modalPic .mainDecorPreview, .modalPic .v302MainWrap img',modal);
+      if(main){
+        main.style.display='block';
+        main.style.visibility='visible';
+        main.src=src;
+        main.dataset.fullSrc=src;
+      }
+      qsa('.decorThumb',modal).forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      var n=(btn.getAttribute('onclick')||'').match(/selectDecorImage\((\d+)/);
+      var hidden=n?document.getElementById('decorImage_'+n[1]):null;
+      var lab=n?document.getElementById('decorImageLabel_'+n[1]):null;
+      if(hidden) hidden.value=(btn.dataset&&btn.dataset.decorImg)||src;
+      if(lab) lab.value=(btn.dataset&&btn.dataset.decorLabel)||btn.textContent.trim()||'الصورة المختارة';
+    }catch(e){}
+  }
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest && e.target.closest('#modal .decorThumb');
+    if(btn){ setTimeout(function(){updateMainFromButton(btn);forcePanelRight();},0); return; }
+    var main=e.target.closest && e.target.closest('#modal .modalPic .mainDecorImg, #modal .modalPic .v302MainImg, #modal .modalPic .mainDecorPreview, #modal .modalPic .v302MainWrap img');
+    if(main){
+      var src=main.dataset.fullSrc || main.currentSrc || main.src;
+      openZoom(src);
+    }
+  },true);
+  var oldSelect=window.selectDecorImage;
+  window.selectDecorImage=function(n,img,btn){
+    try{ if(typeof oldSelect==='function') oldSelect.apply(this,arguments); }catch(e){}
+    try{ updateMainFromButton(btn); }catch(e){}
+    try{ forcePanelRight(); }catch(e){}
+  };
+  var oldOpen=window.openProduct;
+  if(typeof oldOpen==='function'){
+    window.openProduct=function(){
+      var r=oldOpen.apply(this,arguments);
+      setTimeout(forcePanelRight,0);
+      setTimeout(forcePanelRight,80);
+      setTimeout(forcePanelRight,300);
+      return r;
+    };
+  }
+  document.addEventListener('DOMContentLoaded',function(){ensureZoom();forcePanelRight();});
+  setTimeout(forcePanelRight,0);setTimeout(forcePanelRight,500);
+})();
+</script>
