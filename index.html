@@ -13188,6 +13188,59 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 })();
 </script>
 
+
+<style id="v370-very-slow-readable-ticker-style">
+/* v370: أبطأ أكثر لشريط العروض حتى يقرأه الزبون بسهولة */
+.almWorkingTickerTrack,
+.v359TickerTrack,
+.v361TickerTrack,
+.v360TickerTrack{
+  animation-duration:160s!important;
+  animation-play-state:running!important;
+  animation-timing-function:linear!important;
+}
+#almWorkingTicker:hover .almWorkingTickerTrack,
+.v359TickerBar:hover .v359TickerTrack,
+.v361Ticker:hover .v361TickerTrack,
+.v360Ticker:hover .v360TickerTrack{
+  animation-play-state:running!important;
+}
+@media(max-width:900px){
+  .almWorkingTickerTrack,
+  .v359TickerTrack,
+  .v361TickerTrack,
+  .v360TickerTrack{
+    animation-duration:140s!important;
+  }
+}
+</style>
+<script id="v370-very-slow-readable-ticker-script">
+(function(){
+  function verySlowTicker(){
+    try{
+      document.querySelectorAll('.almWorkingTickerTrack,.v359TickerTrack,.v361TickerTrack,.v360TickerTrack').forEach(function(el){
+        el.style.animationDuration = (window.innerWidth < 900 ? '140s' : '160s');
+        el.style.animationTimingFunction = 'linear';
+        el.style.animationPlayState = 'running';
+      });
+      document.querySelectorAll('marquee.almTickerMarquee').forEach(function(mq){
+        mq.setAttribute('scrollamount','1');
+        mq.setAttribute('scrolldelay','45');
+        try{mq.start();}catch(e){}
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    verySlowTicker();
+    setTimeout(verySlowTicker,100);
+    setTimeout(verySlowTicker,500);
+  });
+  window.addEventListener('load',verySlowTicker);
+  window.addEventListener('resize',verySlowTicker);
+  setInterval(verySlowTicker,2000);
+})();
+</script>
+
 </body>
 </html>
 
