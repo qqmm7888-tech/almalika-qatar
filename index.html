@@ -14730,3 +14730,320 @@ section.wrap,
   setTimeout(injectFooter,300);setInterval(cleanOld,1000);
 })();
 </script>
+
+<!-- ===== V337: تحديد واضح للون البالونات المختار ===== -->
+<style id="almalika-v337-balloon-selected-style">
+.colorSwatch{
+  position:relative!important;
+  transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease!important;
+}
+.colorSwatch input[name^="balloon_"]{
+  cursor:pointer!important;
+}
+.colorSwatch:has(input[name^="balloon_"]:checked),
+.colorSwatch.is-selected{
+  border-color:#e11d48!important;
+  background:linear-gradient(135deg,#fff0f7 0%,#fff8dd 100%)!important;
+  box-shadow:0 0 0 3px rgba(225,29,72,.12), 0 12px 28px rgba(225,29,72,.16)!important;
+  transform:translateY(-2px)!important;
+}
+.colorSwatch:has(input[name^="balloon_"]:checked) span,
+.colorSwatch.is-selected span{
+  color:#8b0f2f!important;
+  font-weight:900!important;
+}
+.colorSwatch:has(input[name^="balloon_"]:checked) .colorDot,
+.colorSwatch.is-selected .colorDot{
+  box-shadow:0 0 0 3px #fff, 0 0 0 6px rgba(225,29,72,.28)!important;
+  transform:scale(1.08)!important;
+}
+.colorSwatch:has(input[name^="balloon_"]:checked)::after,
+.colorSwatch.is-selected::after{
+  content:'✓'!important;
+  position:absolute!important;
+  top:7px!important;
+  left:8px!important;
+  width:22px!important;
+  height:22px!important;
+  border-radius:999px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:#e11d48!important;
+  color:#fff!important;
+  font-size:14px!important;
+  font-weight:900!important;
+  box-shadow:0 6px 14px rgba(225,29,72,.24)!important;
+}
+#modal .v328BalloonChoiceBox .colorSwatch:has(input[name^="balloon_"]:checked),
+#modal .v328BalloonChoiceBox .colorSwatch.is-selected,
+#modal .v327BalloonOnlyBox .colorSwatch:has(input[name^="balloon_"]:checked),
+#modal .v327BalloonOnlyBox .colorSwatch.is-selected,
+#modal .balloonColorBox .colorSwatch:has(input[name^="balloon_"]:checked),
+#modal .balloonColorBox .colorSwatch.is-selected{
+  border-color:#d61f69!important;
+}
+</style>
+<script id="almalika-v337-balloon-selected-js">
+(function(){
+  function syncBalloonSelectedState(root){
+    root = root || document;
+    root.querySelectorAll('label.colorSwatch').forEach(function(label){
+      var input = label.querySelector('input[name^="balloon_"]');
+      if(!input) return;
+      if(input.checked) label.classList.add('is-selected');
+      else label.classList.remove('is-selected');
+    });
+  }
+  document.addEventListener('change', function(e){
+    var t = e.target;
+    if(t && t.matches && t.matches('input[name^="balloon_"]')) syncBalloonSelectedState(document);
+  }, true);
+  document.addEventListener('click', function(){
+    setTimeout(function(){ syncBalloonSelectedState(document); }, 0);
+    setTimeout(function(){ syncBalloonSelectedState(document); }, 120);
+  }, true);
+  if(window.MutationObserver){
+    setTimeout(function(){
+      try{
+        new MutationObserver(function(){ syncBalloonSelectedState(document); }).observe(document.body,{childList:true,subtree:true});
+      }catch(e){}
+    },300);
+  }
+  var oldOpenProduct = window.openProduct;
+  if(typeof oldOpenProduct === 'function' && !window.__v337BalloonSyncWrapped){
+    window.__v337BalloonSyncWrapped = true;
+    window.openProduct = function(){
+      var out = oldOpenProduct.apply(this, arguments);
+      setTimeout(function(){ syncBalloonSelectedState(document); }, 0);
+      setTimeout(function(){ syncBalloonSelectedState(document); }, 150);
+      setTimeout(function(){ syncBalloonSelectedState(document); }, 450);
+      return out;
+    };
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    setTimeout(function(){ syncBalloonSelectedState(document); }, 100);
+    setTimeout(function(){ syncBalloonSelectedState(document); }, 500);
+  });
+  setTimeout(function(){ syncBalloonSelectedState(document); }, 200);
+})();
+</script>
+
+<!-- ===== V338: WhatsApp admin message: unique phones + order link + branded header ===== -->
+<style id="almalika-v338-order-whatsapp-style">
+#v338OrderContactModal{position:fixed;inset:0;background:rgba(38,22,35,.62);backdrop-filter:blur(5px);z-index:100000;display:none;align-items:center;justify-content:center;padding:18px;direction:rtl}
+#v338OrderContactModal.show{display:flex}
+.v338ContactBox{width:min(760px,96vw);background:#fffdf9;border:1px solid #f2c5d9;border-radius:30px;box-shadow:0 26px 70px rgba(0,0,0,.28);padding:22px;position:relative}
+.v338Close{position:absolute;left:16px;top:14px;width:42px;height:42px;border-radius:50%;border:0;background:linear-gradient(135deg,#ff4f9a,#e91e73);color:#fff;font-size:26px;font-weight:900;cursor:pointer}
+.v338ContactBox h2{margin:0 0 8px;color:#5f2145;font-size:28px}
+.v338ContactBox .lead{margin:0 0 14px;color:#7b6072;font-weight:850;line-height:1.8}
+.v338PreviewLink{background:#f0fff3;border:1px solid #b7e9c2;color:#136b31;border-radius:16px;padding:11px 14px;margin:12px 0;font-weight:900;line-height:1.7;word-break:break-all}
+.v338ContactGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.v338ContactCard{border:1px solid #f0cade;border-radius:22px;background:linear-gradient(180deg,#fff,#fff7fb);padding:14px;text-align:center;box-shadow:0 8px 18px rgba(0,0,0,.035)}
+.v338ContactCard b{display:block;color:#5f2145;font-size:19px;margin-bottom:5px}
+.v338ContactCard span{display:block;color:#846273;font-weight:850;margin-bottom:10px}
+.v338ContactBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.v338ContactBtns a{border-radius:999px;padding:11px 12px;text-decoration:none;font-weight:1000;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px}
+.v338Wa{background:linear-gradient(135deg,#22c767,#16b55c)}
+.v338Call{background:linear-gradient(135deg,#ff5fa2,#e91e73)}
+#v338AdminOrderViewer{position:fixed;inset:0;background:rgba(28,18,28,.55);backdrop-filter:blur(4px);z-index:100001;display:none;align-items:center;justify-content:center;padding:16px;direction:rtl}
+#v338AdminOrderViewer.show{display:flex}
+.v338OrderBox{width:min(900px,96vw);max-height:92vh;overflow:auto;background:#fffdf9;border-radius:28px;border:1px solid #f2c5d9;box-shadow:0 28px 80px rgba(0,0,0,.30);padding:22px;position:relative}
+.v338OrderBox h2{margin:0 0 8px;color:#5f2145;font-size:28px}
+.v338OrderAd{border-radius:22px;background:linear-gradient(135deg,#fff0f7,#fff8df);border:1px solid #f3c8dd;padding:16px;margin:10px 0 16px;display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center}
+.v338OrderAd .crown{font-size:44px}
+.v338OrderAd b{font-size:22px;color:#b4145a;display:block}
+.v338OrderAd span{color:#6f4e5d;font-weight:900;line-height:1.8}
+.v338OrderDetails{background:#fff7fb;border:1px dashed #efbfd7;border-radius:18px;padding:14px 18px;line-height:2;color:#5f2145;font-weight:850}
+.v338OrderItems{display:grid;gap:10px;margin-top:12px}
+.v338OrderItem{border:1px solid #f0d6e4;border-radius:16px;background:#fff;padding:12px;line-height:1.8}
+@media(max-width:700px){.v338ContactGrid{grid-template-columns:1fr}.v338OrderAd{grid-template-columns:1fr;text-align:center}}
+</style>
+<script id="almalika-v338-order-whatsapp-js">
+(function(){
+  const ADMIN_CONTACTS=[
+    {name:'خدمة العملاء 1',phone:'33317720',wa:'97433317720',desc:'للحجز السريع وتأكيد الطلبات'},
+    {name:'خدمة العملاء 2',phone:'33317705',wa:'97433317705',desc:'للمتابعة والاستفسارات'}
+  ];
+  function enc(s){return encodeURIComponent(String(s||''));}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function uniquePhonesLine(){
+    return '33317720 / 33317705';
+  }
+  function cleanPhoneDupes(msg){
+    msg=String(msg||'');
+    msg=msg.replace(/33317721|33317716/g,'33317705');
+    msg=msg.replace(/(?:33317705\s*[\/،,\-\s]+){1,}33317705/g,'33317705');
+    msg=msg.replace(/33317705\s*\/\s*33317720\s*\/\s*33317705/g,'33317720 / 33317705');
+    msg=msg.replace(/33317705\s*\/\s*33317705\s*\/\s*33317720/g,'33317720 / 33317705');
+    msg=msg.replace(/33317720\s*\/\s*33317705\s*\/\s*33317705/g,'33317720 / 33317705');
+    msg=msg.replace(/أرقام الملكة\s*:\s*[0-9\s\/،,\-]+/g,'أرقام الملكة: '+uniquePhonesLine());
+    msg=msg.replace(/للتواصل والاستفسار\s*:\s*[0-9\s\/،,\-]+/g,'للتواصل والاستفسار: '+uniquePhonesLine());
+    return msg;
+  }
+  function safeB64(obj){
+    try{return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));}catch(e){return '';}
+  }
+  function decodeB64(s){
+    try{return JSON.parse(decodeURIComponent(escape(atob(s))));}catch(e){return null;}
+  }
+  function slimOrder(order){
+    order=order||{};
+    return {
+      orderId:order.orderId||('MQ-'+Date.now()),
+      createdAtArabic:order.createdAtArabic||'',
+      eventDateArabic:order.eventDateArabic||order.eventDate||'',
+      customer:order.customer||{},
+      items:(order.items||[]).map(x=>({
+        number:x.number,name:x.name,option:x.option,qty:x.qty,unitPrice:x.unitPrice,lineTotal:x.lineTotal,
+        bookingSummary:(x.bookingSummary||[]).slice(0,12),note:x.note||'',image:x.image||''
+      })),
+      subtotal:order.subtotal||0,
+      deliveryFee:order.deliveryFee||0,
+      deliveryLabel:order.deliveryLabel||'',
+      total:order.total||0,
+      depositRequired:order.depositRequired||0,
+      status:order.status||'طلب جديد'
+    };
+  }
+  function orderLink(order){
+    const payload=safeB64(slimOrder(order));
+    const base=(location.origin||'')+(location.pathname||'/');
+    return base+'#admin-order='+encodeURIComponent(payload);
+  }
+  function saveOrderForIpad(order){
+    try{
+      const arr=JSON.parse(localStorage.getItem('almalikaAdminOrders')||'[]');
+      const exists=arr.some(x=>String(x.orderId)===String(order.orderId));
+      if(!exists){arr.unshift(order);localStorage.setItem('almalikaAdminOrders',JSON.stringify(arr));}
+      localStorage.setItem('almalikaLastAdminOrder',JSON.stringify(order));
+    }catch(e){}
+    try{
+      const url=localStorage.getItem('almalikaAdminApiUrl')||'';
+      if(url) fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'createOrder',order:order})});
+    }catch(e){}
+  }
+  function buildOrder(){
+    try{
+      if(typeof buildAdminOrder==='function'){
+        const o=buildAdminOrder();
+        saveOrderForIpad(o);
+        return o;
+      }
+    }catch(e){}
+    const d=(typeof getCustomerData==='function')?getCustomerData():{};
+    const items=(typeof cart!=='undefined'?cart:[]).map(p=>({
+      number:p.number,name:p.name,option:p.selectionLabel||'',qty:p.qty||1,
+      unitPrice:Number(p.selectedPrice||(typeof price==='function'?price(p):0)||0),
+      lineTotal:Number(p.selectedPrice||(typeof price==='function'?price(p):0)||0)*(p.qty||1),
+      bookingSummary:p.bookingSummary||[],note:p.itemNote||'',image:p.image||''
+    }));
+    const subtotal=(typeof cartSubtotal==='function')?cartSubtotal():items.reduce((a,x)=>a+x.lineTotal,0);
+    const delivery=(typeof deliveryFee==='function')?deliveryFee():0;
+    const total=(typeof cartTotal==='function')?cartTotal():subtotal+delivery;
+    const o={orderId:'MQ-'+new Date().toISOString().replace(/[-:.TZ]/g,'').slice(0,14)+'-'+Math.floor(Math.random()*900+100),createdAt:new Date().toISOString(),createdAtArabic:(typeof arabicNowText==='function'?arabicNowText():new Date().toLocaleString('ar-QA')),eventDate:d.date||'',eventDateArabic:(typeof arabicDateText==='function'?arabicDateText(d.date):d.date||''),customer:{name:d.name||'',phone:d.phone||'',map:d.map||'',zone:d.zone||'',street:d.street||'',house:d.house||'',payment:d.payment||'',note:d.note||'',deliveryArea:d.deliveryArea||''},items,subtotal,deliveryFee:delivery,deliveryLabel:(typeof deliveryLabel==='function'?deliveryLabel():''),total,depositRequired:0,status:'طلب جديد'};
+    saveOrderForIpad(o);
+    return o;
+  }
+  function normalCartText(){
+    try{
+      if(typeof window.__v338OriginalCartMessage==='function') return window.__v338OriginalCartMessage();
+      if(typeof cartMessage==='function') return cartMessage();
+    }catch(e){}
+    return 'طلب حجز - شركة الملكة';
+  }
+  function makeWhatsAppMessage(order){
+    const link=orderLink(order);
+    let base=normalCartText();
+    base=cleanPhoneDupes(base);
+    const header=[
+      link,
+      '',
+      '👑 إعلان شركة الملكة للحفلات - قطر',
+      'نطاطيات • زحلاقيات • سناك • تجهيز حفلات',
+      'واجهة أسهل للحجز ومشاهدة تفاصيل الطلب مباشرة من الرابط أعلاه.',
+      'أرقام الملكة: '+uniquePhonesLine(),
+      '━━━━━━━━━━━━━━',
+      ''
+    ].join('\n');
+    const idLine='رقم الطلب: '+(order&&order.orderId?order.orderId:'')+'\nرابط مشاهدة الطلب للإدارة والآيباد:\n'+link+'\n━━━━━━━━━━━━━━\n';
+    return cleanPhoneDupes(header+idLine+base);
+  }
+  function ensureContactModal(){
+    let m=document.getElementById('v338OrderContactModal');
+    if(m) return m;
+    m=document.createElement('div');
+    m.id='v338OrderContactModal';
+    m.innerHTML='<div class="v338ContactBox"><button class="v338Close" onclick="document.getElementById(\'v338OrderContactModal\').classList.remove(\'show\')">×</button><div id="v338OrderContactContent"></div></div>';
+    document.body.appendChild(m);
+    m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')});
+    return m;
+  }
+  function showContact(msg,link){
+    const m=ensureContactModal();
+    document.getElementById('v338OrderContactContent').innerHTML=
+      '<h2>📲 إرسال الطلب للإدارة</h2>'+
+      '<p class="lead">تم تجهيز رسالة الطلب. اختار رقم الإدارة الذي تريد الإرسال له. الرابط الأخضر في أعلى رسالة الواتساب يفتح طلب الزبون للمشاهدة على الموقع والآيباد.</p>'+
+      '<div class="v338PreviewLink">🔗 رابط الطلب:<br>'+esc(link||'')+'</div>'+
+      '<div class="v338ContactGrid">'+ADMIN_CONTACTS.map(c=>
+        '<div class="v338ContactCard"><b>'+esc(c.name)+'</b><span>'+esc(c.phone+' — '+c.desc)+'</span><div class="v338ContactBtns"><a class="v338Wa" target="_blank" href="https://wa.me/'+c.wa+'?text='+enc(msg)+'">واتساب</a><a class="v338Call" href="tel:'+c.phone+'">اتصال</a></div></div>'
+      ).join('')+'</div>';
+    m.classList.add('show');
+  }
+  function renderOrderViewer(order){
+    if(!order)return;
+    saveOrderForIpad(order);
+    let m=document.getElementById('v338AdminOrderViewer');
+    if(!m){
+      m=document.createElement('div');
+      m.id='v338AdminOrderViewer';
+      m.innerHTML='<div class="v338OrderBox"><button class="v338Close" onclick="document.getElementById(\'v338AdminOrderViewer\').classList.remove(\'show\')">×</button><div id="v338AdminOrderContent"></div></div>';
+      document.body.appendChild(m);
+      m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')});
+    }
+    const c=order.customer||{};
+    const items=(order.items||[]).map((it,i)=>'<div class="v338OrderItem"><b>'+(i+1)+'. #'+esc(it.number)+' - '+esc(it.name)+'</b><br>الباقة: '+esc(it.option||'-')+' | الكمية: '+esc(it.qty||1)+' | السعر: '+esc(it.lineTotal||it.unitPrice||0)+' ر.ق'+(it.bookingSummary&&it.bookingSummary.length?'<br>'+it.bookingSummary.map(esc).join('<br>'):'')+(it.note?'<br>ملاحظة: '+esc(it.note):'')+'</div>').join('');
+    const loc=c.map?'<a target="_blank" href="'+esc(c.map)+'">'+esc(c.map)+'</a>':'منطقة '+esc(c.zone||'')+' / شارع '+esc(c.street||'')+' / منزل '+esc(c.house||'');
+    document.getElementById('v338AdminOrderContent').innerHTML=
+      '<div class="v338OrderAd"><div class="crown">👑</div><div><b>شركة الملكة للحفلات - قطر</b><span>طلب حجز جديد من الموقع • نطاطيات • زحلاقيات • سناك • تجهيز حفلات</span></div></div>'+
+      '<h2>طلب رقم '+esc(order.orderId||'')+'</h2>'+
+      '<div class="v338OrderDetails">'+
+      'العميل: '+esc(c.name||'')+'<br>الجوال: '+esc(c.phone||'')+'<br>تاريخ الفعالية: '+esc(order.eventDateArabic||order.eventDate||'')+'<br>الموقع: '+loc+'<br>الدفع: '+esc(c.payment||'')+'<br>الإجمالي: '+esc(order.total||0)+' ر.ق<br>العربون المطلوب: '+esc(order.depositRequired||0)+' ر.ق'+(c.note?'<br>ملاحظات العميل: '+esc(c.note):'')+
+      '</div><div class="v338OrderItems">'+items+'</div>';
+    m.classList.add('show');
+  }
+  function checkOrderHash(){
+    const h=String(location.hash||'');
+    const m=h.match(/admin-order=([^&]+)/);
+    if(!m)return;
+    const order=decodeB64(decodeURIComponent(m[1]));
+    if(order) setTimeout(()=>renderOrderViewer(order),400);
+  }
+
+  if(typeof window.__v338OriginalCartMessage!=='function'){
+    try{window.__v338OriginalCartMessage=(typeof cartMessage==='function')?cartMessage:null;}catch(e){}
+  }
+  window.cartMessage=cartMessage=function(){
+    const o=buildOrder();
+    return makeWhatsAppMessage(o);
+  };
+  window.sendCartWa=async function(){
+    try{
+      if(typeof cart!=='undefined'&&!cart.length){alert('السلة فارغة');return}
+      if(typeof validateCustomerData==='function'&&!validateCustomerData(true))return;
+      const order=buildOrder();
+      const msg=makeWhatsAppMessage(order);
+      showContact(msg,orderLink(order));
+    }catch(e){
+      alert('حدث خطأ في تجهيز رسالة الطلب. حاول مرة أخرى.');
+      console.error(e);
+    }
+  };
+  window.v338OpenLastOrder=function(){
+    try{renderOrderViewer(JSON.parse(localStorage.getItem('almalikaLastAdminOrder')||'null'));}catch(e){}
+  };
+  window.addEventListener('hashchange',checkOrderHash);
+  document.addEventListener('DOMContentLoaded',checkOrderHash);
+  setTimeout(checkOrderHash,500);
+})();
+</script>
