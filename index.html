@@ -14810,3 +14810,114 @@ section.wrap,
   setTimeout(cleanDualButtons,1000);
 })();
 </script>
+
+
+<!-- ===== V334: الفوتر معلومات فقط + التواصل مع الإدارة فقط ===== -->
+<style id="almalika-v334-footer-info-only-style">
+  /* إلغاء كروت الاتصال الثابتة من أسفل الفوتر */
+  #v331FooterBar .v331ContactPanel{display:none!important;}
+  /* إلغاء الزر العائم الخاص بالاتصال/واتساب */
+  #v331QuickContactFixed{display:none!important;}
+  #v331FooterBar{padding-bottom:18px!important;}
+  #v331FooterBar .v331FooterSub::after{
+    content:"  • اضغط على أي بند لقراءة التفاصيل، والتواصل فقط من خلال تواصل معنا.";
+    color:#8b335f;font-weight:900;
+  }
+  #v331ContactModal .v334InfoList{
+    line-height:2.1;color:#5f2145;font-weight:850;background:#fff7fb;border:1px dashed #f1bfd6;border-radius:18px;padding:15px 18px;margin-top:12px;
+  }
+  #v331ContactModal .v334InfoList ul{margin:8px 0 0 0;padding:0 20px 0 0;}
+  #v331ContactModal .v334InfoList li{margin:6px 0;}
+  #v331ContactModal .v334AdminContact{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px;}
+  #v331ContactModal .v334AdminCard{border:1px solid #f0cade;border-radius:22px;background:linear-gradient(180deg,#fff,#fff7fb);padding:14px;text-align:center;box-shadow:0 8px 18px rgba(0,0,0,.035)}
+  #v331ContactModal .v334AdminCard b{display:block;color:#5f2145;font-size:19px;margin-bottom:5px;}
+  #v331ContactModal .v334AdminCard span{display:block;color:#846273;font-weight:850;margin-bottom:10px;}
+  #v331ContactModal .v334AdminBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  #v331ContactModal .v334AdminBtns a{border-radius:999px;padding:10px 12px;text-decoration:none;font-weight:1000;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px;}
+  #v331ContactModal .v334Wa{background:linear-gradient(135deg,#22c767,#16b55c)}
+  #v331ContactModal .v334Call{background:linear-gradient(135deg,#ff5fa2,#e91e73)}
+  @media(max-width:720px){#v331ContactModal .v334AdminContact{grid-template-columns:1fr;}}
+</style>
+<script id="almalika-v334-footer-info-only-js">
+(function(){
+  var ADMIN_CONTACTS=[
+    {name:'التواصل مع الإدارة 1',phone:'33317720',wa:'97433317720',desc:'للحجز وتأكيد الطلبات'},
+    {name:'التواصل مع الإدارة 2',phone:'33317705',wa:'97433317705',desc:'للمتابعة والاستفسارات'}
+  ];
+  function enc(s){return encodeURIComponent(String(s||''));}
+  function waUrl(c,msg){return 'https://wa.me/'+c.wa+'?text='+enc(msg||'السلام عليكم، أريد التواصل مع إدارة شركة الملكة للحفلات.');}
+  function telUrl(c){return 'tel:'+c.phone;}
+  function ensureModal(){
+    var m=document.getElementById('v331ContactModal');
+    if(m) return m;
+    m=document.createElement('div');m.id='v331ContactModal';m.className='v331ModalOverlay';
+    m.innerHTML='<div class="v331ModalBox"><button class="v331ModalClose" onclick="document.getElementById(\'v331ContactModal\').classList.remove(\'show\')">×</button><div id="v331ModalContent"></div></div>';
+    document.body.appendChild(m);
+    m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')});
+    return m;
+  }
+  function showModal(html){
+    var m=ensureModal();
+    var c=document.getElementById('v331ModalContent');
+    if(c)c.innerHTML=html;
+    m.classList.add('show');
+  }
+  var INFO={
+    terms:{title:'الشروط',icon:'📋',items:[
+      'تأكيد الحجز يتم بعد تحديد التاريخ والوقت والموقع والمنتج المطلوب.',
+      'يجب تقديم الطلب قبل موعد الفعالية بوقت كافٍ لضمان توفر الخدمة.',
+      'يتم تجهيز الطلب حسب تفاصيل المنتج والصور والاختيارات الموجودة في السلة.',
+      'في حال الإلغاء بعد تثبيت الطلب تطبق شروط الإلغاء حسب سياسة الشركة.'
+    ]},
+    safety:{title:'الأمن والسلامة',icon:'🛡️',items:[
+      'سلامة الأطفال أولوية أساسية قبل وأثناء تشغيل الألعاب.',
+      'يجب وجود شخص بالغ للإشراف على الأطفال طوال وقت الاستخدام.',
+      'يلزم توفير مساحة آمنة وخالية من العوائق قبل وصول فريق التركيب.',
+      'في حال الرياح أو المطر يحق للفريق تأجيل أو إيقاف التشغيل حفاظاً على السلامة.'
+    ]},
+    about:{title:'من نحن',icon:'👑',items:[
+      'شركة الملكة للحفلات في قطر متخصصة في النطاطيات والزحلاقيات والسناك وتجهيز المناسبات.',
+      'نهتم بالنظافة والترتيب وجودة الشكل وسرعة تجهيز الطلب.',
+      'هدفنا تقديم تجربة مريحة للعميل وفرحة آمنة للأطفال.',
+      'نحرص على تطوير الخدمات والصور والخيارات لتناسب جميع المناسبات.'
+    ]},
+    booking:{title:'طريقة الحجز',icon:'💖',items:[
+      'اختر المنتج أو الباقة المناسبة من الكتالوج.',
+      'حدد التاريخ والوقت وأضف التفاصيل المطلوبة داخل السلة.',
+      'راجع الطلب قبل الإرسال للتأكد من الأسماء والألوان والملاحظات.',
+      'بعد الإرسال يتم مراجعة التوفر وتأكيد الطلب من الإدارة.'
+    ]}
+  };
+  function infoHtml(type){
+    var x=INFO[type]||INFO.terms;
+    return '<h2>'+x.icon+' '+x.title+'</h2><p class="lead">هذه الصفحة للمعلومات فقط، بدون أزرار اتصال أو واتساب.</p><div class="v334InfoList"><ul>'+x.items.map(function(t){return '<li>'+t+'</li>';}).join('')+'</ul></div>';
+  }
+  function contactHtml(){
+    var msg='السلام عليكم، أريد التواصل مع إدارة شركة الملكة للحفلات.';
+    return '<h2>📞 تواصل مع الإدارة</h2><p class="lead">للحجز أو الاستفسار، يرجى التواصل مع الإدارة على أحد الرقمين التاليين.</p><div class="v334AdminContact">'+
+      ADMIN_CONTACTS.map(function(c){return '<div class="v334AdminCard"><b>'+c.name+'</b><span>'+c.phone+' — '+c.desc+'</span><div class="v334AdminBtns"><a class="v334Wa" target="_blank" href="'+waUrl(c,msg)+'">واتساب</a><a class="v334Call" href="'+telUrl(c)+'">اتصال</a></div></div>';}).join('')+
+      '</div>';
+  }
+  window.v331OpenInfo=function(type){
+    if(type==='contact') showModal(contactHtml());
+    else showModal(infoHtml(type));
+  };
+  window.generalWa=function(){showModal(contactHtml());};
+  window.v331ShowContactModal=function(){showModal(contactHtml());};
+  function cleanFooterContacts(){
+    document.querySelectorAll('#v331FooterBar .v331ContactPanel').forEach(function(el){el.remove();});
+    var quick=document.getElementById('v331QuickContactFixed'); if(quick) quick.remove();
+    document.querySelectorAll('#v331FooterBar .v331FooterSub').forEach(function(el){
+      el.textContent='معلومات واضحة عن خدماتنا وسياساتنا، والتواصل يكون فقط من خلال تواصل معنا.';
+    });
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanFooterContacts,50);setTimeout(cleanFooterContacts,400);});
+  document.addEventListener('click',function(){setTimeout(cleanFooterContacts,50);},true);
+  var oldRender=window.render;
+  if(typeof oldRender==='function'){
+    window.render=function(){var r=oldRender.apply(this,arguments);setTimeout(cleanFooterContacts,80);setTimeout(cleanFooterContacts,350);return r;};
+  }
+  setTimeout(cleanFooterContacts,200);
+  setTimeout(cleanFooterContacts,1000);
+})();
+</script>
