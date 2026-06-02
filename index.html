@@ -16030,3 +16030,133 @@ section.wrap,
   document.addEventListener('DOMContentLoaded',function(){setTimeout(v359AfterRender,120);});
 })();
 </script>
+
+
+<style id="v360-top-aljazeera-ticker-style">
+/* v360: شريط العروض أعلى الصفحة مباشرة + سرعة أسرع + ألوان قريبة من شريط الجزيرة */
+.v359TickerSection{
+  margin:0!important;
+  padding:0!important;
+  max-width:none!important;
+  width:100%!important;
+}
+#app > .v359TickerSection{
+  position:relative!important;
+  z-index:20!important;
+  margin:0 0 12px!important;
+}
+.v359TickerHint{display:none!important}
+.v359TickerBar{
+  border-radius:0!important;
+  border:0!important;
+  min-height:42px!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.14)!important;
+  background:#ffffff!important;
+}
+.v359TickerHead{
+  min-width:150px!important;
+  font-size:15px!important;
+  padding:0 14px!important;
+  border-radius:0!important;
+  background:linear-gradient(180deg,#d71920,#9f0014)!important;
+  color:#fff!important;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.22)!important;
+}
+.v359TickerHead:before{
+  content:"●";
+  color:#fff;
+  font-size:11px;
+  animation:v360Blink 1s infinite;
+}
+.v359TickerHead span{display:flex!important;align-items:center!important;gap:7px!important}
+.v359TickerViewport{
+  background:linear-gradient(180deg,#fff,#f7f7f7)!important;
+  border-top:1px solid rgba(0,0,0,.08)!important;
+  border-bottom:1px solid rgba(0,0,0,.08)!important;
+}
+.v359TickerTrack{
+  padding:6px 12px!important;
+  gap:10px!important;
+  animation:v359TickerMove 24s linear infinite!important;
+}
+.v359TickerItem{
+  padding:4px 10px!important;
+  color:#101010!important;
+}
+.v359TickerItem:hover{
+  background:#fff1f1!important;
+}
+.v359TickerFlash{
+  background:#111!important;
+  color:#fff!important;
+  border:1px solid #d7b15e!important;
+  font-size:10px!important;
+  padding:4px 8px!important;
+  box-shadow:none!important;
+}
+.v359TickerText{
+  color:#161616!important;
+  font-size:14px!important;
+  font-weight:900!important;
+}
+.v359TickerSep{
+  color:#b80016!important;
+  font-size:20px!important;
+}
+@keyframes v360Blink{0%,55%{opacity:1}56%,100%{opacity:.35}}
+@media (max-width:900px){
+  .v359TickerBar{min-height:38px!important;flex-direction:row!important}
+  .v359TickerHead{min-width:105px!important;font-size:13px!important;padding:0 9px!important}
+  .v359TickerTrack{animation-duration:18s!important;padding:6px 10px!important}
+  .v359TickerText{font-size:12.5px!important}
+  .v359TickerFlash{font-size:9px!important;padding:3px 7px!important}
+}
+</style>
+<script id="v360-top-aljazeera-ticker-script">
+(function(){
+  function moveTickerToVeryTop(){
+    try{
+      if(!window.app) return;
+      var existing=app.querySelector('.v359TickerSection');
+      if(!existing){
+        if(typeof v359InsertHomeTicker==='function') v359InsertHomeTicker();
+        existing=app.querySelector('.v359TickerSection');
+      }
+      if(existing && app.firstElementChild!==existing){
+        app.insertBefore(existing, app.firstElementChild);
+      }
+    }catch(e){}
+  }
+  function forceTickerTopAfterRender(){
+    setTimeout(moveTickerToVeryTop,20);
+    setTimeout(moveTickerToVeryTop,120);
+    setTimeout(moveTickerToVeryTop,350);
+  }
+  if(typeof window.renderHome==='function'){
+    var rh=window.renderHome;
+    window.renderHome=function(){
+      var r=rh.apply(this,arguments);
+      forceTickerTopAfterRender();
+      return r;
+    };
+  }
+  if(typeof window.render==='function'){
+    var rr=window.render;
+    window.render=function(){
+      var r=rr.apply(this,arguments);
+      forceTickerTopAfterRender();
+      return r;
+    };
+  }
+  if(typeof window.showSection==='function'){
+    var ss=window.showSection;
+    window.showSection=function(){
+      var r=ss.apply(this,arguments);
+      forceTickerTopAfterRender();
+      return r;
+    };
+  }
+  document.addEventListener('DOMContentLoaded',forceTickerTopAfterRender);
+  window.addEventListener('hashchange',forceTickerTopAfterRender);
+})();
+</script>
