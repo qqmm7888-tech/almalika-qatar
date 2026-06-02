@@ -13276,6 +13276,67 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 })();
 </script>
 
+
+<style id="v374-restore-offers-packages-header-style">
+/* v374: إرجاع العروض والباكجات في الهيدر، وإخفاء واتساب فقط إذا كان بجانب السلة */
+header.header a,
+header.header button{
+  visibility:visible;
+}
+header.header a[href*="wa.me"],
+header.header a[href*="whatsapp"],
+header.header button[onclick*="WhatsApp"],
+header.header button[onclick*="whatsapp"],
+header.header button[onclick*="wa.me"],
+header.header .waBtn{
+  display:none!important;
+}
+</style>
+<script id="v374-restore-offers-packages-header-script">
+(function(){
+  function t(el){
+    return ((el && el.textContent) || '').replace(/\s+/g,' ').trim();
+  }
+  function restoreOffersAndHideWhatsappOnly(){
+    try{
+      document.querySelectorAll('header.header a, header.header button').forEach(function(el){
+        var text=t(el);
+        var href=(el.getAttribute && (el.getAttribute('href')||'')) || '';
+        var onclick=(el.getAttribute && (el.getAttribute('onclick')||'')) || '';
+
+        // مهم: رجّع العروض والباكجات ولا تخفيها نهائياً
+        if(text.indexOf('العروض')>-1 || text.indexOf('الباكجات')>-1 || /offers|packages/i.test(href+onclick)){
+          el.style.removeProperty('display');
+          el.style.setProperty('display','inline-flex','important');
+          el.style.setProperty('visibility','visible','important');
+          el.style.setProperty('opacity','1','important');
+          return;
+        }
+
+        // إخفاء واتساب فقط من الهيدر
+        if(text.indexOf('واتساب')>-1 || /wa\.me|whatsapp/i.test(href+onclick)){
+          el.style.setProperty('display','none','important');
+        }
+      });
+    }catch(e){}
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    restoreOffersAndHideWhatsappOnly();
+    setTimeout(restoreOffersAndHideWhatsappOnly,100);
+    setTimeout(restoreOffersAndHideWhatsappOnly,500);
+    setTimeout(restoreOffersAndHideWhatsappOnly,1200);
+  });
+  window.addEventListener('load',restoreOffersAndHideWhatsappOnly);
+  window.addEventListener('hashchange',restoreOffersAndHideWhatsappOnly);
+  document.addEventListener('click',function(){
+    setTimeout(restoreOffersAndHideWhatsappOnly,40);
+    setTimeout(restoreOffersAndHideWhatsappOnly,250);
+  },true);
+  setInterval(restoreOffersAndHideWhatsappOnly,1500);
+})();
+</script>
+
 </body>
 </html>
 
