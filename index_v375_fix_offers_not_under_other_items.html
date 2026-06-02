@@ -13337,6 +13337,130 @@ header.header .waBtn{
 })();
 </script>
 
+
+<style id="v375-fix-offers-under-other-items-style">
+/* v375: منع اختفاء زر العروض والباكجات تحت بنود أخرى */
+header.header,
+#almTopFixedGroup header.header{
+  overflow:visible!important;
+}
+
+/* صف الأقسام في الهيدر يبقى صف واحد، وأي زيادة تظهر بسكرول أفقي بدل ما تركب فوق بعض */
+header.header .nav,
+header.header nav,
+header.header .tabs,
+header.header .categories,
+header.header .catBar,
+header.header .categoryBar,
+header.header [class*="nav"],
+header.header [class*="Nav"],
+header.header [class*="tabs"],
+header.header [class*="Tabs"],
+header.header [class*="categor"],
+header.header [class*="Categor"]{
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  white-space:nowrap!important;
+  flex-wrap:nowrap!important;
+  scrollbar-width:thin!important;
+}
+
+/* كل أزرار الهيدر لا تنزل فوق بعضها */
+header.header a,
+header.header button{
+  flex:0 0 auto!important;
+  position:relative!important;
+}
+
+/* زر العروض والباكجات يظهر فوق أي زر آخر ولا يختفي تحت بنود أخرى */
+header.header a,
+header.header button{
+  z-index:2!important;
+}
+header.header a[data-section="offers"],
+header.header button[data-section="offers"],
+header.header a[href*="offers"],
+header.header button[onclick*="offers"]{
+  z-index:50!important;
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+/* احتياط: لو الزر نصه العروض والباكجات رجّعه */
+header.header .v375OffersForce{
+  z-index:80!important;
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  flex:0 0 auto!important;
+}
+</style>
+<script id="v375-fix-offers-under-other-items-script">
+(function(){
+  function textOf(el){
+    return ((el && el.textContent) || '').replace(/\s+/g,' ').trim();
+  }
+
+  function fixOffers(){
+    try{
+      var header = document.querySelector('header.header');
+      if(!header) return;
+
+      // رجّع زر العروض والباكجات لو كان مخفي أو راكب تحت زر ثاني
+      var all = Array.from(header.querySelectorAll('a,button'));
+      all.forEach(function(el){
+        var t = textOf(el);
+        var href = (el.getAttribute && (el.getAttribute('href') || '')) || '';
+        var onclick = (el.getAttribute && (el.getAttribute('onclick') || '')) || '';
+
+        if(t.indexOf('العروض') > -1 || t.indexOf('الباكجات') > -1 || /offers|packages/i.test(href + onclick)){
+          el.classList.add('v375OffersForce');
+          el.style.setProperty('display','inline-flex','important');
+          el.style.setProperty('visibility','visible','important');
+          el.style.setProperty('opacity','1','important');
+          el.style.setProperty('z-index','80','important');
+          el.style.setProperty('position','relative','important');
+          el.style.setProperty('flex','0 0 auto','important');
+        }
+      });
+
+      // خلي الحاوية القريبة من زر العروض سكرول أفقي وتمنع التراكب
+      var offer = all.find(function(el){
+        var t=textOf(el);
+        return t.indexOf('العروض')>-1 || t.indexOf('الباكجات')>-1;
+      });
+      if(offer){
+        var p = offer.parentElement;
+        for(var i=0; p && i<5; i++, p=p.parentElement){
+          var cs = getComputedStyle(p);
+          if(cs.display === 'flex' || p.scrollWidth > p.clientWidth || p.children.length >= 3){
+            p.style.setProperty('overflow-x','auto','important');
+            p.style.setProperty('overflow-y','hidden','important');
+            p.style.setProperty('white-space','nowrap','important');
+            p.style.setProperty('flex-wrap','nowrap','important');
+            p.style.setProperty('align-items','center','important');
+            break;
+          }
+        }
+      }
+    }catch(e){}
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    fixOffers();
+    setTimeout(fixOffers,100);
+    setTimeout(fixOffers,500);
+    setTimeout(fixOffers,1200);
+  });
+  window.addEventListener('load',fixOffers);
+  window.addEventListener('resize',fixOffers);
+  window.addEventListener('hashchange',fixOffers);
+  document.addEventListener('click',function(){setTimeout(fixOffers,60);},true);
+  setInterval(fixOffers,1500);
+})();
+</script>
+
 </body>
 </html>
 
