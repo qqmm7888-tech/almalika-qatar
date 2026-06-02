@@ -14302,3 +14302,195 @@ section.wrap,
   setTimeout(forceProductData,500);
 })();
 </script>
+
+
+<!-- ===== V328: FORCE SHOW balloon color choices for 210/211/250 ===== -->
+<style id="almalika-v328-force-balloon-choices-style">
+#modal .v328BalloonChoiceBox{
+  display:block!important;
+  margin:14px 0!important;
+  padding:14px!important;
+  border-radius:18px!important;
+  background:linear-gradient(180deg,#fffafc,#fff2f8)!important;
+  border:1px solid #f3bfd7!important;
+  box-shadow:0 10px 24px rgba(179,57,113,.08)!important;
+}
+#modal .v328BalloonChoiceBox .choiceBoxTitle{
+  font-size:21px!important;
+  font-weight:900!important;
+  color:#8b184d!important;
+  margin-bottom:10px!important;
+}
+#modal .v328BalloonChoiceBox .colorSwatches{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:8px!important;
+}
+#modal .v328BalloonChoiceBox .colorSwatch{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  min-height:48px!important;
+  border-radius:14px!important;
+  border:1px solid #f5cddd!important;
+  background:#fff!important;
+  padding:10px 8px!important;
+  cursor:pointer!important;
+  font-weight:900!important;
+  color:#63273f!important;
+}
+#modal .v328BalloonChoiceBox .colorSwatch input{width:18px!important;height:18px!important;min-height:auto!important;}
+#modal .v328BalloonChoiceBox .colorDot{width:18px!important;height:18px!important;border-radius:50%!important;border:1px solid rgba(0,0,0,.18)!important;display:inline-block!important;flex:0 0 auto!important;}
+#modal .v328BalloonChoiceBox .addonHint{margin-top:10px!important;font-weight:800!important;color:#7b2d55!important;line-height:1.8!important;}
+#modal .v328OnlyBalloonNotice{background:#fff7fb!important;border:1px dashed #ea96bf!important;border-radius:14px!important;padding:11px!important;margin:10px 0!important;color:#8b184d!important;font-weight:900!important;line-height:1.8!important;}
+#modal .v328HideForBalloonOnly{display:none!important;}
+@media(max-width:700px){#modal .v328BalloonChoiceBox .colorSwatches{grid-template-columns:repeat(2,minmax(0,1fr))!important;}}
+</style>
+<script id="almalika-v328-force-balloon-choices-js">
+(function(){
+  var TARGETS={210:1,211:1,250:1};
+  var COLORS=[
+    ['وردي','#ff9ac8'],['أزرق','#2d9bf0'],['أبيض','#ffffff'],['ذهبي','#d4af37'],
+    ['سماوي','#6ecff6'],['أصفر','#ffd400'],['أسود','#111111'],['خمري','#8b1538'],
+    ['بنفسجي','#8e44ad'],['أحمر','#ef4444'],['أخضر','#22b573'],['برتقالي','#ff8c1a'],
+    ['بيبي وردي','#ffd1e3'],['بيبي أزرق','#b7e3ff'],['بيبي أصفر','#fff2a8'],['بيبي موف','#dac4ff']
+  ];
+  function isTarget(n){return !!TARGETS[Number(n)]}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function today(){try{return (typeof todayISO==='function')?todayISO():new Date().toISOString().slice(0,10)}catch(e){return new Date().toISOString().slice(0,10)}}
+  function numFromAny(x){return Number((x&&x.number)||(x&&x.id)||x||0)}
+  function currentModalNumber(){
+    var tag=document.querySelector('#modal .modalInfo .tag');
+    if(tag){var m=String(tag.textContent||'').match(/#?\s*(\d+)/); if(m) return Number(m[1]);}
+    var field=document.querySelector('#modal [id^="date_"]');
+    if(field){var m2=String(field.id||'').match(/date_(\d+)/); if(m2) return Number(m2[1]);}
+    return 0;
+  }
+  function updateProductFlags(){
+    try{(window.products||products||[]).forEach(function(p){
+      var n=numFromAny(p);
+      if(!isTarget(n)) return;
+      p.noSnack=true; p.noChildName=true; p.noTables=true; p.noDecorExtras=true;
+      p.decorPackages={}; p.roundTablePrice=0; p.extraServicePrice=0; p.complexPrice=0; p.snackType='';
+      if(n===210) p.details='بالونات هيليوم حسب العدد واللون المطلوب - يوجد اختيار ألوان البالونات فقط - بدون سناك وبدون اسم طفل وبدون طاولات.';
+      if(n===211) p.details='قوس بالونات بطول 6 متر حسب اللون المطلوب - يوجد اختيار ألوان البالونات فقط - بدون سناك وبدون اسم طفل وبدون طاولات.';
+      if(n===250) p.details='أعمدة ديكور بالونات كما في الصورة - غير شامل التوصيل - يوجد اختيار ألوان البالونات فقط - بدون سناك وبدون اسم طفل وبدون طاولات.';
+    });}catch(e){}
+  }
+  function balloonBox(n){
+    return '<div class="v328BalloonChoiceBox" id="v328BalloonChoiceBox_'+n+'">'+
+      '<div class="choiceBoxTitle">🎈 اختيار ألوان البالونات <span style="background:#c0266d;color:#fff;border-radius:999px;padding:3px 10px;font-size:13px">مطلوب</span></div>'+
+      '<div class="colorSwatches">'+COLORS.map(function(c){return '<label class="colorSwatch"><input type="checkbox" name="balloon_'+n+'" value="'+esc(c[0])+'"><span class="colorDot" style="background:'+c[1]+'"></span><span>'+esc(c[0])+'</span></label>';}).join('')+'</div>'+
+      '<div class="addonHint">يمكن اختيار لون واحد أو أكثر. هذا البند فقط لاختيار ألوان البالونات، بدون سناك وبدون اسم طفل وبدون طاولات.</div>'+
+    '</div>';
+  }
+  function targetForm(p){
+    var n=numFromAny(p), extra='';
+    if(n===210) extra='<input id="qty_'+n+'" type="number" min="1" value="1" placeholder="عدد البالونات المطلوب">';
+    if(n===211) extra='<input id="setup_'+n+'" placeholder="ملاحظات القوس أو المقاس">';
+    if(n===250) extra='<input id="qty_'+n+'" type="number" min="1" value="1" placeholder="عدد الأعمدة المطلوبة">';
+    return '<h3>بيانات الحجز</h3>'+
+      '<div class="bookingSimple compactBooking simpleNoDecorExtras">'+
+      '<input type="date" id="date_'+n+'" min="'+today()+'">'+
+      '<select id="period_'+n+'"><option value="">اختار وقت التنفيذ من 9 صباحاً إلى 5 مساءً</option><option>صباحاً</option><option>ظهراً</option><option>عصراً</option></select>'+
+      '<select id="occasion_'+n+'"><option value="">نوع المناسبة</option><option>عيد ميلاد</option><option>تخرج</option><option>استقبال مولود</option><option>فعالية مدرسية</option><option>خطوبة / مناسبة خاصة</option><option>أخرى</option></select>'+
+      '<select id="place_'+n+'"><option value="">مكان التنفيذ</option><option>منزل</option><option>قاعة</option><option>مدرسة / روضة</option><option>خارجي</option></select>'+
+      extra+
+      '</div>'+
+      balloonBox(n)+
+      '<div class="v328OnlyBalloonNotice">هذا البند فيه اختيار ألوان البالونات فقط — بدون سناك وبدون اسم طفل وبدون طاولات.</div>'+
+      '<div class="workingHoursHint">⏰ صباحاً / ظهراً / عصراً — من 9 صباحاً إلى 5 مساءً — لا يقبل تاريخ سابق</div>'+
+      '<textarea id="note_'+n+'" placeholder="ملاحظات إضافية إن وجدت"></textarea>';
+  }
+  var oldForm=window.formHtml;
+  window.formHtml=formHtml=function(p){
+    var n=numFromAny(p);
+    if(!isTarget(n)) return (typeof oldForm==='function'?oldForm.apply(this,arguments):'');
+    return targetForm(p);
+  };
+
+  function hideByText(root){
+    var blocks=root.querySelectorAll('*');
+    blocks.forEach(function(el){
+      if(!el || el.classList && (el.classList.contains('v328BalloonChoiceBox')||el.classList.contains('modalActions'))) return;
+      var t=(el.textContent||'').replace(/\s+/g,' ').trim();
+      if(!t) return;
+      if(/الشخصية\s*\/\s*الثيم|الثيم|السناك|الملصقات|الطاولات/.test(t) && (t.length<120 || /اختيار|مطلوب/.test(t))){
+        if(!el.closest('.v328BalloonChoiceBox') && !el.closest('.modalActions')) el.classList.add('v328HideForBalloonOnly');
+      }
+    });
+  }
+  function ensureModalPatch(){
+    updateProductFlags();
+    var modal=document.getElementById('modal'); if(!modal || !modal.classList.contains('show')) return;
+    var n=currentModalNumber(); if(!isTarget(n)) return;
+    var info=modal.querySelector('.modalInfo'); if(!info) return;
+    hideByText(info);
+    var legacyColors=info.querySelector('#colors_'+n);
+    if(legacyColors) legacyColors.classList.add('v328HideForBalloonOnly');
+    info.querySelectorAll('.snackChoiceBox,.themeChoiceBox,.addonsCardsWrap,.addonsCards,.decorBigTotalBox,[id^="snackBox_"],[id^="themeBox_"]').forEach(function(el){el.classList.add('v328HideForBalloonOnly');});
+    if(!info.querySelector('input[name="balloon_'+n+'"]')){
+      var booking=info.querySelector('.bookingSimple') || info.querySelector('h3');
+      var holder=document.createElement('div');
+      holder.innerHTML=balloonBox(n);
+      if(booking && booking.insertAdjacentElement){ booking.insertAdjacentElement('afterend', holder.firstChild); }
+      else { info.appendChild(holder.firstChild); }
+    }
+    var notice=info.querySelector('.v328OnlyBalloonNotice');
+    if(!notice){
+      var hint=info.querySelector('.workNotice,.workingHoursHint,textarea[id="note_'+n+'"]');
+      var d=document.createElement('div');
+      d.className='v328OnlyBalloonNotice';
+      d.textContent='هذا البند فيه اختيار ألوان البالونات فقط — بدون سناك وبدون اسم طفل وبدون طاولات.';
+      if(hint) info.insertBefore(d,hint); else info.appendChild(d);
+    }
+  }
+
+  function selectedColors(n){
+    return Array.prototype.slice.call(document.querySelectorAll('input[name="balloon_'+n+'"]:checked')).map(function(x){return x.value}).join(' + ');
+  }
+
+  var oldCollect=window.collectBooking;
+  window.collectBooking=collectBooking=function(p){
+    var n=numFromAny(p);
+    if(!isTarget(n)) return (typeof oldCollect==='function'?oldCollect.apply(this,arguments):null);
+    var k=(typeof kindOf==='function'?kindOf(p):'event');
+    var date=document.getElementById('date_'+n)?.value||'';
+    var period=document.getElementById('period_'+n)?.value||'';
+    var place=document.getElementById('place_'+n)?.value||'';
+    var note=document.getElementById('note_'+n)?.value||'';
+    var opt=(typeof selectedOpt==='function'?selectedOpt(p):{label:'ديكور فقط',price:Number(p.priceOneDay||p.priceTwoDays||0)});
+    if(!date||!period){alert('يرجى تحديد التاريخ والوقت قبل الإضافة للسلة');return null}
+    if(window.isPastDate&&window.isPastDate(date)){alert('لا يمكن قبول تاريخ سابق أو منتهي. اختر تاريخ اليوم أو تاريخ قادم.');return null}
+    if(typeof isPastDate==='function'&&isPastDate(date)){alert('لا يمكن قبول تاريخ سابق أو منتهي. اختر تاريخ اليوم أو تاريخ قادم.');return null}
+    var balloon=selectedColors(n);
+    if(!balloon){alert('يرجى اختيار لون واحد على الأقل من ألوان البالونات');return null}
+    var extra=['ألوان البالونات: '+balloon];
+    ['occasion','setup','qty'].forEach(function(id){var v=document.getElementById(id+'_'+n)?.value; if(v) extra.push((id==='occasion'?'المناسبة':id==='setup'?'ملاحظات القوس':'الكمية')+': '+v);});
+    var total=Number(opt.price||0);
+    return {bookingKind:k,bookingDate:date,period:period,place:place,selectionLabel:opt.label,selectedPrice:total,itemNote:note,selectedDecorImage:'',selectedDecorLabel:'',bookingSummary:[
+      '📅 التاريخ: '+(typeof arabicDateText==='function'?arabicDateText(date):date),
+      '🕒 الوقت: '+period,
+      place?'📍 المكان: '+place:'',
+      '📦 الخيار: '+(opt.label||'الأساسي'),
+      '🎈 ألوان البالونات: '+balloon,
+      '💵 السعر: '+total+' ر.ق',
+      ...extra.filter(function(x){return !String(x).startsWith('ألوان البالونات:')})
+    ].filter(Boolean)};
+  };
+
+  var oldOpen=window.openProduct;
+  window.openProduct=openProduct=function(arg){
+    var out=(typeof oldOpen==='function')?oldOpen.apply(this,arguments):undefined;
+    setTimeout(ensureModalPatch,0); setTimeout(ensureModalPatch,120); setTimeout(ensureModalPatch,400);
+    return out;
+  };
+  document.addEventListener('click',function(){setTimeout(ensureModalPatch,60);setTimeout(ensureModalPatch,220);setTimeout(ensureModalPatch,500);},true);
+  if(window.MutationObserver){
+    setTimeout(function(){var modal=document.getElementById('modal'); if(!modal) return; new MutationObserver(function(){ensureModalPatch();}).observe(modal,{childList:true,subtree:true,attributes:true});},200);
+  }
+  updateProductFlags();
+  setTimeout(updateProductFlags,0); setTimeout(updateProductFlags,400); setTimeout(ensureModalPatch,700);
+})();
+</script>
