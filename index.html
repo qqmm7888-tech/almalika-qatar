@@ -14921,3 +14921,112 @@ section.wrap,
   setTimeout(cleanFooterContacts,1000);
 })();
 </script>
+
+
+<!-- ===== V335 HARD REMOVE: إلغاء نهائي لخدمة اتصل 33317720 / إرسال واتساب للاثنين ===== -->
+<style id="almalika-v335-hard-remove-dual-buttons-style">
+  #v331QuickContactFixed,
+  .v331QuickContactFixed{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+  #v331ContactModal .v335RemoveDual,
+  .v335RemoveDual{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;overflow:hidden!important;margin:0!important;padding:0!important;border:0!important;}
+</style>
+<script id="almalika-v335-hard-remove-dual-buttons-js">
+(function(){
+  function txt(el){return (el && (el.textContent||'') || '').replace(/\s+/g,' ').trim();}
+  function isDualServiceText(t){
+    return /إرسال\s*واتساب\s*لل(ا|إ)?ثنين|واتساب\s*لل(ا|إ)?ثنين|اتصل\s*33317720|اتصال\s*33317720|إرسل\s*واتساب\s*لل(ا|إ)?ثنين/.test(t||'');
+  }
+  function removeNode(el){
+    if(!el) return;
+    try{ el.classList && el.classList.add('v335RemoveDual'); }catch(e){}
+    try{ el.remove(); }catch(e){ try{el.style.display='none';}catch(_){}}
+  }
+  function cleanHard(){
+    // إزالة الزر العائم بالكامل
+    document.querySelectorAll('#v331QuickContactFixed,.v331QuickContactFixed').forEach(removeNode);
+
+    // إزالة أي صف أو زر فيه الخدمة القديمة
+    document.querySelectorAll('a,button,div,section,footer').forEach(function(el){
+      var t=txt(el);
+      if(!isDualServiceText(t)) return;
+      var target=el;
+      var p=el.closest('.v331ContactBtns,.v331MiniContact,.v331ContactPanel,.modalActions,.actions,.v331ModalBox .v331ContactBtns');
+      if(p) target=p;
+      // لو الصف فيه خدمتين فقط: احذفه كله
+      removeNode(target);
+    });
+
+    // داخل مودال التواصل: لو ظهر زوج الأزرار القديم، احذف الحاوية التي تحملهم
+    document.querySelectorAll('#v331ContactModal .v331ModalBox *').forEach(function(el){
+      var t=txt(el);
+      if(isDualServiceText(t)){
+        var target=el.closest('.v331ContactBtns, .v331MiniContact, .v331ContactPanel, .modalActions, div') || el;
+        removeNode(target);
+      }
+    });
+  }
+
+  // إيقاف دالة الإرسال للاثنين نهائياً
+  window.v331OpenBothWhatsApp=function(){
+    alert('تم إلغاء خدمة إرسال واتساب للاثنين. الرجاء استخدام تواصل معنا واختيار الرقم المناسب.');
+  };
+
+  // إعادة تعريف معلومات الفوتر حتى الشروط/الأمن/من نحن/طريقة الحجز نصوص فقط
+  var ADMIN_CONTACTS=[
+    {name:'الإدارة 1',phone:'33317720',wa:'97433317720',desc:'للحجز وتأكيد الطلبات'},
+    {name:'الإدارة 2',phone:'33317705',wa:'97433317705',desc:'للمتابعة والاستفسارات'}
+  ];
+  function enc(s){return encodeURIComponent(String(s||''));}
+  function waUrl(c,msg){return 'https://wa.me/'+c.wa+'?text='+enc(msg||'السلام عليكم، أريد التواصل مع إدارة شركة الملكة للحفلات.');}
+  function telUrl(c){return 'tel:'+c.phone;}
+  function ensureModal(){
+    var m=document.getElementById('v331ContactModal');
+    if(!m){
+      m=document.createElement('div');m.id='v331ContactModal';m.className='v331ModalOverlay';
+      m.innerHTML='<div class="v331ModalBox"><button class="v331ModalClose" onclick="document.getElementById(\'v331ContactModal\').classList.remove(\'show\')">×</button><div id="v331ModalContent"></div></div>';
+      document.body.appendChild(m);
+      m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')});
+    }
+    return m;
+  }
+  function show(html){
+    var m=ensureModal();
+    var c=document.getElementById('v331ModalContent');
+    if(c)c.innerHTML=html;
+    m.classList.add('show');
+    setTimeout(cleanHard,30);
+  }
+  var INFO={
+    terms:{title:'الشروط',icon:'📋',items:['تأكيد الحجز يكون بعد تحديد التاريخ والوقت والموقع والمنتج المطلوب.','يفضل تقديم الطلب قبل موعد المناسبة بثلاثة أيام على الأقل لضمان توفر الخدمة.','يتم تجهيز الطلب حسب تفاصيل السلة والصور والاختيارات التي يحددها العميل.','في حال الإلغاء بعد تثبيت الطلب تطبق سياسة الشركة حسب حالة الطلب ووقت الإلغاء.']},
+    safety:{title:'الأمن والسلامة',icon:'🛡️',items:['سلامة الأطفال أولوية أساسية في جميع خدمات الملكة.','يجب وجود شخص بالغ للإشراف على الأطفال أثناء استخدام الألعاب.','يلزم تجهيز مساحة آمنة وخالية من العوائق قبل وصول فريق التركيب.','في حال الرياح أو الأمطار يتم التنسيق بما يحافظ على سلامة الجميع.']},
+    about:{title:'من نحن',icon:'👑',items:['شركة الملكة للحفلات في قطر متخصصة في النطاطيات والزحلاقيات والسناك وتجهيز المناسبات.','نهتم بالنظافة والترتيب وجودة الشكل وسرعة تجهيز الطلب.','هدفنا تقديم تجربة مريحة للعميل وفرحة آمنة للأطفال.','نحرص على تطوير الخدمات والصور والخيارات لتناسب جميع المناسبات.']},
+    booking:{title:'طريقة الحجز',icon:'💖',items:['اختر المنتج أو الباقة المناسبة من الكتالوج.','حدد التاريخ والوقت وأضف التفاصيل المطلوبة داخل السلة.','راجع الطلب قبل الإرسال للتأكد من الأسماء والألوان والملاحظات.','بعد الإرسال يتم مراجعة التوفر وتأكيد الطلب من الإدارة.']}
+  };
+  function infoHtml(type){
+    var x=INFO[type]||INFO.terms;
+    return '<h2>'+x.icon+' '+x.title+'</h2><p class="lead">هذه الصفحة للمعلومات فقط، بدون أزرار اتصال أو واتساب.</p><div class="v334InfoList"><ul>'+x.items.map(function(i){return '<li>'+i+'</li>';}).join('')+'</ul></div>';
+  }
+  function contactHtml(){
+    var msg='السلام عليكم، أريد التواصل مع إدارة شركة الملكة للحفلات.';
+    return '<h2>📞 تواصل مع الإدارة</h2><p class="lead">للحجز أو الاستفسار، يرجى التواصل مع الإدارة على أحد الرقمين فقط.</p><div class="v334AdminContact">'+
+      ADMIN_CONTACTS.map(function(c){return '<div class="v334AdminCard"><b>'+c.name+'</b><span>'+c.phone+' — '+c.desc+'</span><div class="v334AdminBtns"><a class="v334Wa" target="_blank" href="'+waUrl(c,msg)+'">واتساب</a><a class="v334Call" href="'+telUrl(c)+'">اتصال</a></div></div>';}).join('')+
+      '</div>';
+  }
+  window.v331OpenInfo=function(type){
+    if(type==='contact') show(contactHtml());
+    else show(infoHtml(type));
+  };
+  window.generalWa=function(){show(contactHtml());};
+  window.v331ShowContactModal=function(){show(contactHtml());};
+
+  // إذا حاول أي كود قديم يفتح المودال القديم، ننظفه فوراً
+  document.addEventListener('click',function(){setTimeout(cleanHard,20);setTimeout(cleanHard,150);setTimeout(cleanHard,500);},true);
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanHard,50);setTimeout(cleanHard,300);setTimeout(cleanHard,1000);});
+  if(window.MutationObserver){
+    var mo=new MutationObserver(function(){cleanHard();});
+    setTimeout(function(){mo.observe(document.body,{childList:true,subtree:true,characterData:true});},200);
+  }
+  setInterval(cleanHard,1000);
+  setTimeout(cleanHard,0);setTimeout(cleanHard,500);setTimeout(cleanHard,1500);
+})();
+</script>
