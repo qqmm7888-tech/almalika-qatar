@@ -5282,11 +5282,30 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
 function snackPackage20Price(p){const one=Number(p.priceOneDay||p.priceTwoDays||0), two=Number(p.priceTwoDays||one||0); const step=two>one?(two-one)/2:0; return Math.max(0, Math.round((one-step)/10)*10)}
 function price(p){if(p.packagePrices){return Math.min(...Object.values(p.packagePrices).map(Number).filter(x=>x>0))} return Number(p.priceOneDay||p.priceTwoDays||0)}
 function duration(p){return p.durationOneDay||p.durationTwoDays||'حسب الحجز'}
-function sectionOf(p){let c=p.category||'', t=p.type||'', n=p.name||'', d=p.details||''; const blob=c+' '+t+' '+n+' '+d; if(c==='الطاولات والكراسي والشخصيات')return 'rentals'; if(c==='السناك والعربات')return 'snacks'; if(c==='تجهيز الحفلات والمناسبات')return 'events'; if(blob.includes('طاول')||blob.includes('طاولة')||blob.includes('كراسي')||blob.includes('كرسي')||blob.includes('شخصيات')||blob.includes('شخصية كرتونية')||blob.includes('كرتونية'))return 'rentals'; if(c==='بنود أخرى')return 'other'; return 'bouncies'}
+function sectionOf(p){let c=p.category||'', t=p.type||'', n=p.name||'', d=p.details||''; const blob=c+' '+t+' '+n+' '+d;
+ if(/عروض|عرض|بكج|بكجات|باقة|باقات/.test(blob))return 'offers';
+ if(c==='الطاولات والكراسي والشخصيات')return 'rentals';
+ if(c==='السناك والعربات')return 'snacks';
+ if(c==='تجهيز الحفلات والمناسبات')return 'events';
+ if(blob.includes('طاول')||blob.includes('طاولة')||blob.includes('كراسي')||blob.includes('كرسي')||blob.includes('شخصيات')||blob.includes('شخصية كرتونية')||blob.includes('كرتونية'))return 'rentals';
+ if(c==='بنود أخرى')return 'other';
+ return 'bouncies'}
 function allLabel(sec){return 'الجميع'}
 function normalizeArabic(s){return decodeURIComponent(String(s||'')).replace(/\+/g,' ').trim()}
 function isAllSub(sub){const x=normalizeArabic(sub); return !x || x==='الجميع' || x==='الكل' || x.includes('جميع') || x.includes('الكل')}
-function matchesInternal(p,sub){const name=(p.name||''), c=(p.category||''), t=(p.type||''), d=(p.details||''); if(isAllSub(sub))return true;
+function matchesInternal(p,sub){
+ const __blob=[p&&p.category,p&&p.type,p&&p.name,p&&p.details,p&&p.offerIncludes].join(' ');
+ if(current==='offers'){
+   if(isAllSub(sub))return true;
+   if(sub.includes('نطاطيات'))return /نطاط|زحلاق|مائي|صابوني|فوم|حوض|بركة/.test(__blob);
+   if(sub.includes('صابونية')||sub.includes('فوم'))return /صابوني|فوم|رغوة|جهاز صابون/.test(__blob);
+   if(sub.includes('مسابح'))return /حوض|مسبح|بركة/.test(__blob);
+   if(sub.includes('سناك'))return /سناك|فشار|غزل|بطاط|ذرة|عربة|ماكينة/.test(__blob);
+   if(sub.includes('حفلات'))return /حفلة|حفلات|ديكور|مناسبات/.test(__blob);
+   if(sub.includes('طاولات')||sub.includes('كراسي')||sub.includes('شخصيات'))return /طاولة|طاولات|كراسي|شخصية|كرتونية/.test(__blob);
+   return true;
+ }
+const name=(p.name||''), c=(p.category||''), t=(p.type||''), d=(p.details||''); if(isAllSub(sub))return true;
  if(sub.includes('مائية'))return c.includes('مائية')||t.includes('مائية')||name.includes('مائية'); if(sub.includes('جافة'))return c.includes('الجافة')||t.includes('جافة'); if(sub.includes('زحاليق'))return c.includes('زحلاقيات')||name.includes('زحلاقية')||name.includes('زحلاقية'); if(sub.includes('صابونية')||sub.includes('فوم'))return c.includes('صابونية')||t.includes('صابوني')||name.includes('رغوة')||name.includes('فوم'); if(sub.includes('أحواض')||sub.includes('مسابح'))return t.includes('حوض')||name.includes('حوض')||name.includes('مسبح'); if(sub.includes('رغوة'))return t.includes('رغوة')||name.includes('رغوة');
  if(sub.includes('فشار'))return name.includes('فشار'); if(sub.includes('غزل'))return name.includes('غزل'); if(sub.includes('بطاط'))return name.includes('بطاط'); if(sub.includes('ذرة'))return name.includes('ذرة'); if(sub.includes('العصير والبراد'))return name.includes('عصير')||name.includes('براد'); if(sub.includes('السلاش'))return name.includes('سلاش'); if(sub.includes('ايسكريم')||sub.includes('الايسكريم'))return name.includes('ايس كريم')||name.includes('ايسكريم'); if(sub.includes('براد مع الايسكريم'))return name.includes('سلاش البراد')||name.includes('براد')||name.includes('ايس كريم')||name.includes('ايسكريم'); if(sub.includes('شوكولات'))return name.includes('شوك')||name.includes('شوكولات'); if(sub.includes('وافل'))return name.includes('وافل'); if(sub.includes('بانكيك'))return name.includes('بانكيك'); if(sub.includes('برجر'))return name.includes('برجر')||name.includes('نقتس')||name.includes('شيبس'); if(sub.includes('بدون عربة'))return name.includes('ماكينة')&&!name.includes('العربة')&&!name.includes('عربة');
  if(sub.includes('الشخصيات')||sub.includes('كرتونية')){const blob=name+' '+t+' '+d; const isChairTable=blob.includes('طاول')||blob.includes('طاولة')||blob.includes('كراسي')||blob.includes('كرسي'); return !isChairTable && (name.includes('شخصية')||name.includes('شخصيات')||name.includes('كرتونية')||t.includes('شخصية')||t.includes('شخصيات')||t.includes('كرتونية')||c.includes('شخصيات'));} if(sub.includes('طاولات')&&sub.includes('كراسي')){const blob=name+' '+t+' '+d; return blob.includes('طاول')||blob.includes('طاولة')||blob.includes('كراسي')||blob.includes('كرسي');}
@@ -5300,15 +5319,19 @@ function showHome(){current='home';internal=allLabel('bouncies');renderNav(); ca
 function showSection(sec){current=sec; internal=allLabel(sec); renderNav(); fillInternal(); render(); setHash();}
 function fillInternal(){const list=internalSections[current]||['الجميع']; if(!list.includes(internal) || isAllSub(internal)) internal=list[0]||'الجميع'; catSelect.innerHTML=list.map(x=>`<option value="${esc(x)}" ${x===internal?'selected':''}>${x}</option>`).join('')}
 function relevantProducts(){
-  let base=products.filter(p=>current==='home'||current==='offers'?true:sectionOf(p)===current);
-  if(current==='offers')base=products.filter(p=>['bouncies','snacks','events','rentals'].includes(sectionOf(p))).slice(0,36);
+  let base;
+  if(current==='home'){
+    base=products.slice();
+  }else if(current==='offers'){
+    base=products.filter(p=>sectionOf(p)==='offers');
+  }else{
+    base=products.filter(p=>sectionOf(p)===current);
+  }
   let arr=base.filter(p=>matchesInternal(p,internal));
-  // حماية من الروابط القديمة مثل: #snacks/جميع العربات أو #events/كل الحفلات
   if(!arr.length && isAllSub(internal)) arr=base.slice();
-  // حماية إضافية: لو رابط قديم أو فلتر غير معروف لا نخلي الصفحة فاضية
   if(!arr.length && current!=='home') arr=base.slice();
   const term=(q?.value||'').trim().toLowerCase();
-  if(term)arr=arr.filter(p=>`${p.number} ${p.name} ${p.category} ${p.type} ${p.age} ${p.details||''}`.toLowerCase().includes(term));
+  if(term)arr=arr.filter(p=>`${p.number} ${p.name} ${p.category} ${p.type} ${p.age} ${p.details||''} ${p.offerIncludes||''}`.toLowerCase().includes(term));
   const sort=sortSelect?.value||'number';
   arr.sort((a,b)=>sort==='priceAsc'?price(a)-price(b):sort==='priceDesc'?price(b)-price(a):Number(a.number)-Number(b.number));
   return arr
@@ -11044,77 +11067,6 @@ textarea.requiredCustomerField:focus{
 })();
 </script>
 
-
-<script id="almalika-v278-offers-bouncy-section">
-(function(){
-  const oldSectionOf = window.sectionOf;
-  window.sectionOf = sectionOf = function(p){
-    const blob = [p && p.category, p && p.type, p && p.name, p && p.details].join(' ');
-    if(/عروض|عرض|بكج|بكجات|باقة|باقات/.test(blob)) return 'offers';
-    if(typeof oldSectionOf === 'function') return oldSectionOf(p);
-    return 'bouncies';
-  };
-
-  const oldMatchesInternal = window.matchesInternal;
-  window.matchesInternal = matchesInternal = function(p, sub){
-    const x = (typeof normalizeArabic==='function' ? normalizeArabic(sub) : String(sub||'')).trim();
-    const blob = [p && p.category, p && p.type, p && p.name, p && p.details, p && p.offerIncludes].join(' ');
-    if(!x || x==='الجميع' || x==='الكل' || x.includes('جميع')) return true;
-    if(current === 'offers'){
-      if(x.includes('نطاطيات')) return /نطاط|زحلاق|مائي|صابوني|فوم|حوض|بركة/.test(blob);
-      if(x.includes('صابونية') || x.includes('فوم')) return /صابوني|فوم|رغوة|جهاز صابون/.test(blob);
-      if(x.includes('مسابح')) return /حوض|مسبح|بركة/.test(blob);
-      if(x.includes('سناك')) return /سناك|فشار|غزل|بطاط|ذرة|عربة|ماكينة/.test(blob);
-      if(x.includes('حفلات')) return /حفلة|حفلات|ديكور|مناسبات/.test(blob);
-      if(x.includes('طاولات') || x.includes('كراسي') || x.includes('شخصيات')) return /طاولة|طاولات|كراسي|شخصية|كرتونية/.test(blob);
-      return true;
-    }
-    return (typeof oldMatchesInternal === 'function') ? oldMatchesInternal(p, sub) : true;
-  };
-
-  const oldRelevantProducts = window.relevantProducts;
-  window.relevantProducts = relevantProducts = function(){
-    let base;
-    if(current === 'offers'){
-      base = products.filter(p => sectionOf(p) === 'offers');
-      if(!base.length) base = products.filter(p => /عرض|عروض|بكج|بكجات|باقة|باقات/.test([p.name,p.category,p.type,p.details].join(' ')));
-    }else if(current === 'home'){
-      base = products.slice();
-    }else{
-      base = products.filter(p => sectionOf(p) === current);
-    }
-
-    let arr = base.filter(p => matchesInternal(p, internal));
-    if(!arr.length && (typeof isAllSub==='function' ? isAllSub(internal) : true)) arr = base.slice();
-    if(!arr.length && current !== 'home') arr = base.slice();
-
-    const term = (q?.value || '').trim().toLowerCase();
-    if(term) arr = arr.filter(p => `${p.number} ${p.name} ${p.category} ${p.type} ${p.age} ${p.details||''}`.toLowerCase().includes(term));
-    const sort = sortSelect?.value || 'number';
-    arr.sort((a,b) => sort === 'priceAsc' ? price(a)-price(b) : sort === 'priceDesc' ? price(b)-price(a) : Number(a.number)-Number(b.number));
-    return arr;
-  };
-
-  const oldOptList = window.optList;
-  window.optList = optList = function(p){
-    const blob = [p && p.category, p && p.type, p && p.name, p && p.details].join(' ');
-    if(/عروض|عرض/.test(blob)){
-      const one = Number(p.priceOneDay || p.priceTwoDays || 0);
-      const two = Number(p.priceTwoDays || one || 0);
-      const d1 = p.durationOneDay || 'العرض';
-      const d2 = p.durationTwoDays || d1;
-      if(one && two && one !== two){
-        return [
-          {id:'weekday', label:d1, price:one, note:p.offerIncludes || 'عرض خاص'},
-          {id:'weekend', label:d2, price:two, note:p.offerIncludes || 'عرض خاص'}
-        ];
-      }
-      return [{id:'offer', label:d1, price:one || two, note:p.offerIncludes || p.details || 'عرض خاص'}];
-    }
-    return (typeof oldOptList === 'function') ? oldOptList(p) : [];
-  };
-})();
-</script>
 
 </body>
 </html>
