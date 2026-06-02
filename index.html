@@ -12692,6 +12692,113 @@ html[lang="ar"] body{direction:rtl!important;text-align:right!important}
 })();
 </script>
 
+
+
+<!-- ===== V354: REAL visible language toggle + red product number circles ===== -->
+<style id="almalika-v354-real-lang-badges">
+  /* Hide older duplicated language widgets only */
+  #v350LangSwitch,#v352LangSwitch,.v350LangSwitch,.v352LangSwitch{display:none!important;visibility:hidden!important;pointer-events:none!important}
+  #almalikaLangToggleV354{
+    position:fixed!important;top:8px!important;right:12px!important;left:auto!important;z-index:2147483647!important;
+    display:flex!important;gap:5px!important;align-items:center!important;justify-content:center!important;
+    background:rgba(255,255,255,.98)!important;border:1px solid rgba(236,72,153,.50)!important;border-radius:999px!important;
+    padding:4px!important;box-shadow:0 8px 26px rgba(190,24,93,.22)!important;direction:ltr!important;text-align:center!important;
+    font-family:inherit!important;backdrop-filter:blur(10px)!important;
+  }
+  #almalikaLangToggleV354 button{
+    width:54px!important;height:38px!important;min-width:54px!important;border-radius:999px!important;border:1px solid rgba(236,72,153,.28)!important;
+    background:#fff!important;color:#8a174a!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;
+    gap:1px!important;font-weight:1000!important;font-size:13px!important;line-height:1!important;padding:3px 4px!important;cursor:pointer!important;
+  }
+  #almalikaLangToggleV354 button small{display:block!important;font-size:8px!important;line-height:1!important;font-weight:900!important;margin-top:1px!important;opacity:.95!important;white-space:nowrap!important;}
+  #almalikaLangToggleV354 button.active{background:linear-gradient(135deg,#ec1f70,#ff5aa4)!important;color:#fff!important;border-color:transparent!important;box-shadow:0 7px 16px rgba(236,31,112,.28)!important;}
+  body{padding-top:50px!important;}
+  .header,.topbar,header{z-index:9999!important;}
+  /* Product number badges: visible red circles, not oversized */
+  .product{position:relative!important;}
+  .product .num, .products .num{
+    position:absolute!important;top:9px!important;left:9px!important;right:auto!important;
+    width:36px!important;height:36px!important;min-width:36px!important;max-width:36px!important;
+    padding:0!important;margin:0!important;border-radius:50%!important;
+    background:#e11d48!important;color:#fff!important;border:2px solid #fff!important;
+    box-shadow:0 8px 18px rgba(225,29,72,.32)!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;
+    font-size:13px!important;font-weight:1000!important;line-height:1!important;letter-spacing:-.4px!important;
+    overflow:hidden!important;white-space:nowrap!important;
+  }
+  .product .num::first-letter{font-size:0!important;}
+  @media(max-width:700px){
+    #almalikaLangToggleV354{top:6px!important;right:8px!important;padding:3px!important;}
+    #almalikaLangToggleV354 button{width:50px!important;height:36px!important;min-width:50px!important;font-size:12px!important;}
+    #almalikaLangToggleV354 button small{font-size:8px!important;}
+    body{padding-top:46px!important;}
+    .product .num,.products .num{width:34px!important;height:34px!important;min-width:34px!important;max-width:34px!important;font-size:12px!important;}
+  }
+</style>
+<script id="almalika-v354-real-lang-badges-script">
+(function(){
+  var dictEN={
+    'الرئيسية':'Home','النطاطيات والزحلاقيات':'Inflatables & Slides','السناك والعربات':'Snacks & Carts','تجهيز الحفلات':'Party Setup','الطاولات والكراسي والشخصيات':'Tables, Chairs & Characters','العروض والبكجات':'Offers & Packages','بنود أخرى':'Other Items','العروض':'Offers','واتساب':'WhatsApp','السلة':'Cart','تفاصيل':'Details','التسوق السريع':'Quick Shop','تحويل لصديق':'Send to Friend','يبدأ من':'Starts from','ر.ق':'QAR','الإجمالي':'Total','مختارات VIP عامة':'General VIP Picks','الأقسام الرئيسية':'Main Categories','عدد البنود المعروضة':'Displayed items'};
+  var dictAR={}; Object.keys(dictEN).forEach(function(k){dictAR[dictEN[k]]=k;});
+  function removeOldLangWidgets(){
+    try{document.querySelectorAll('#v350LangSwitch,#v352LangSwitch,.v350LangSwitch,.v352LangSwitch').forEach(function(x){x.remove();});}catch(e){}
+    try{document.querySelectorAll('body div, body section').forEach(function(el){
+      if(el.id==='almalikaLangToggleV354')return;
+      var t=(el.textContent||'').replace(/\s+/g,'').trim();
+      var st=getComputedStyle(el);
+      if((t==='GBENQAARالعربية'||t.indexOf('GBEN')>=0||t.indexOf('QAAR')>=0) && (st.position==='fixed'||st.position==='sticky'||el.className.toString().toLowerCase().indexOf('lang')>=0)){el.remove();}
+    });}catch(e){}
+  }
+  function ensureToggle(){
+    removeOldLangWidgets();
+    var box=document.getElementById('almalikaLangToggleV354');
+    if(!box){
+      box=document.createElement('div'); box.id='almalikaLangToggleV354'; box.className='notranslate';
+      box.innerHTML='<button type="button" data-lang-v354="ar">AR<small>العربية</small></button><button type="button" data-lang-v354="en">EN<small>English</small></button>';
+      document.body.appendChild(box);
+      box.addEventListener('click',function(e){var b=e.target.closest('button[data-lang-v354]'); if(b) setLang(b.getAttribute('data-lang-v354'),true);});
+    }
+    var lang=localStorage.getItem('almalika_lang_v354')||localStorage.getItem('almalika_lang_v352')||localStorage.getItem('almalika_lang_v350')||document.documentElement.lang||'en';
+    setActive(lang==='ar'?'ar':'en');
+  }
+  function setActive(lang){document.querySelectorAll('#almalikaLangToggleV354 button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang-v354')===lang);});}
+  function replaceTextNode(n,map){
+    var v=n.nodeValue, nv=v;
+    Object.keys(map).forEach(function(k){ if(nv.indexOf(k)>=0) nv=nv.split(k).join(map[k]); });
+    if(nv!==v)n.nodeValue=nv;
+  }
+  function translateVisible(lang){
+    var map=lang==='en'?dictEN:dictAR;
+    try{
+      var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{acceptNode:function(node){
+        var p=node.parentElement; if(!p||p.closest('#almalikaLangToggleV354,script,style,textarea,input')) return NodeFilter.FILTER_REJECT;
+        return /[\u0600-\u06FF]|Home|Inflatables|Slides|Snacks|Other Items|Offers|Details|Cart|QAR|VIP/.test(node.nodeValue||'')?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_SKIP;
+      }});
+      var nodes=[], x; while(x=walker.nextNode()) nodes.push(x); nodes.forEach(function(n){replaceTextNode(n,map);});
+    }catch(e){}
+  }
+  function setLang(lang,user){
+    lang=(lang==='ar')?'ar':'en';
+    try{localStorage.setItem('almalika_lang_v354',lang);localStorage.setItem('almalika_lang_v352',lang);localStorage.setItem('almalika_lang_v350',lang);}catch(e){}
+    document.documentElement.lang=lang; document.documentElement.dir=(lang==='ar'?'rtl':'ltr'); document.body.dir=(lang==='ar'?'rtl':'ltr');
+    setActive(lang);
+    try{ if(typeof window.applyLang==='function') window.applyLang(lang); }catch(e){}
+    try{ if(typeof window.__v353ApplyLang==='function') window.__v353ApplyLang(lang); }catch(e){}
+    setTimeout(function(){translateVisible(lang);fixProductBadges();},60);
+    setTimeout(function(){translateVisible(lang);fixProductBadges();},500);
+  }
+  function fixProductBadges(){
+    try{document.querySelectorAll('.product .num,.products .num').forEach(function(el){
+      var n=(el.textContent||'').replace(/[^0-9]/g,''); if(n){el.textContent=n; el.setAttribute('aria-label','Product '+n);}
+    });}catch(e){}
+  }
+  function boot(){ensureToggle(); setLang(localStorage.getItem('almalika_lang_v354')||'en'); fixProductBadges();}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot); else boot();
+  var t=null; new MutationObserver(function(){clearTimeout(t); t=setTimeout(function(){ensureToggle(); translateVisible((localStorage.getItem('almalika_lang_v354')||'en')); fixProductBadges();},120);}).observe(document.documentElement,{childList:true,subtree:true});
+  setTimeout(boot,300); setTimeout(boot,1200); setTimeout(boot,2500);
+})();
+</script>
+
 </body>
 </html>
 
@@ -15906,152 +16013,5 @@ section.wrap,
   document.addEventListener('DOMContentLoaded',function(){const o=getOrderFromUrl(); if(o) setTimeout(function(){renderAdminOrder(o)},10);});
   window.cartMessage=function(){try{const o=buildOrder();return adminMsg(o)}catch(e){return 'شركة الملكة للحفلات - قطر'} };
   window.shareProduct=window.shareProduct||function(n){const p=findProduct(n);if(!p)return;const img=productUrlFromItem({number:p.number,image:p.image});const msg=[AD_IMG,'','👑 شوف هذا المنتج من شركة الملكة للحفلات','#'+p.number+' - '+p.name,(img?'📸 صورة المنتج: '+img:''),'🔗 الموقع: '+SITE,'للحجز: 33317720 / 33317705'].filter(Boolean).join('\n');window.open('https://wa.me/?text='+enc(msg),'_blank')};
-})();
-</script>
-
-
-<!-- ===== V353: fixed top language buttons + clearer small red product circles ===== -->
-<style id="almalika-v353-lang-and-badges-final">
-  /* Language selector: clear, fixed at the very top, no flag letters (GB/QA) */
-  #v350LangSwitch, #v352LangSwitch,
-  .v350LangSwitch, .v352LangSwitch{
-    position:fixed!important;
-    top:10px!important;
-    right:14px!important;
-    left:auto!important;
-    z-index:2147483647!important;
-    display:flex!important;
-    gap:6px!important;
-    align-items:center!important;
-    justify-content:center!important;
-    background:rgba(255,255,255,.96)!important;
-    border:1px solid rgba(244,114,182,.45)!important;
-    border-radius:999px!important;
-    padding:5px!important;
-    box-shadow:0 10px 28px rgba(181, 30, 95, .18)!important;
-    backdrop-filter:blur(10px)!important;
-    transform:none!important;
-    direction:ltr!important;
-    text-align:center!important;
-    min-width:auto!important;
-  }
-  #v350LangSwitch button, #v352LangSwitch button,
-  .v350LangSwitch button, .v352LangSwitch button{
-    width:58px!important;
-    min-width:58px!important;
-    height:42px!important;
-    padding:4px 5px!important;
-    border-radius:999px!important;
-    border:1px solid rgba(244,114,182,.30)!important;
-    background:#fff!important;
-    color:#8a174a!important;
-    font-weight:1000!important;
-    line-height:1.05!important;
-    font-size:13px!important;
-    box-shadow:none!important;
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:center!important;
-    justify-content:center!important;
-    gap:1px!important;
-    white-space:normal!important;
-  }
-  #v350LangSwitch button.active, #v352LangSwitch button.active,
-  .v350LangSwitch button.active, .v352LangSwitch button.active{
-    background:linear-gradient(135deg,#ff2f86,#ff6aae)!important;
-    color:#fff!important;
-    border-color:transparent!important;
-    box-shadow:0 7px 16px rgba(255,47,134,.25)!important;
-  }
-  #v350LangSwitch .v350Icon, #v352LangSwitch .ico,
-  .v350LangSwitch .v350Icon, .v352LangSwitch .ico{display:none!important}
-  #v350LangSwitch small, #v352LangSwitch small,
-  .v350LangSwitch small, .v352LangSwitch small{
-    font-size:9px!important;
-    font-weight:900!important;
-    opacity:.95!important;
-    line-height:1.05!important;
-    margin:0!important;
-  }
-  html[lang="en"] #v350LangSwitch, html[lang="en"] #v352LangSwitch,
-  html[lang="en"] .v350LangSwitch, html[lang="en"] .v352LangSwitch{
-    right:14px!important;left:auto!important;
-  }
-  /* Keep header/search slightly lower so the fixed language selector is not hidden */
-  body{padding-top:54px!important;}
-  .header{top:0!important;}
-
-  /* Product number badge: small red circle with clearer number */
-  .product .num, .num,
-  .product-number, .productNumber, .productNo, .product-badge, .productBadge,
-  [class*="product-number"], [class*="productNumber"], [class*="product-badge"]{
-    width:34px!important;
-    height:34px!important;
-    min-width:34px!important;
-    max-width:34px!important;
-    padding:0!important;
-    border-radius:50%!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    text-align:center!important;
-    background:#e11d48!important;
-    color:#fff!important;
-    border:2px solid #fff!important;
-    box-shadow:0 8px 18px rgba(225,29,72,.28)!important;
-    font-size:12px!important;
-    font-weight:1000!important;
-    line-height:1!important;
-    letter-spacing:-.4px!important;
-    overflow:hidden!important;
-  }
-  .product .num{top:10px!important;left:10px!important;right:auto!important;}
-
-  @media(max-width:700px){
-    #v350LangSwitch, #v352LangSwitch,
-    .v350LangSwitch, .v352LangSwitch{top:8px!important;right:8px!important;left:auto!important;padding:4px!important;gap:5px!important;}
-    #v350LangSwitch button, #v352LangSwitch button,
-    .v350LangSwitch button, .v352LangSwitch button{width:52px!important;min-width:52px!important;height:38px!important;font-size:12px!important;}
-    #v350LangSwitch small, #v352LangSwitch small,
-    .v350LangSwitch small, .v352LangSwitch small{font-size:8px!important;}
-    body{padding-top:48px!important;}
-    .product .num, .num{width:32px!important;height:32px!important;min-width:32px!important;max-width:32px!important;font-size:11px!important;}
-  }
-</style>
-<script id="almalika-v353-lang-buttons-final">
-(function(){
-  function fixLangBox(){
-    try{
-      var old=document.getElementById('v350LangSwitch');
-      if(old) old.remove();
-      var box=document.getElementById('v352LangSwitch');
-      if(!box){
-        box=document.createElement('div');
-        box.id='v352LangSwitch';
-        box.className='v352LangSwitch notranslate';
-        document.body.appendChild(box);
-      }
-      box.innerHTML='<button type="button" data-v352-lang="ar" title="العربية">AR<small>العربية</small></button><button type="button" data-v352-lang="en" title="English">EN<small>English</small></button>';
-      box.onclick=function(e){
-        var b=e.target.closest('button[data-v352-lang]');
-        if(!b) return;
-        var lang=b.getAttribute('data-v352-lang');
-        try{localStorage.setItem('almalika_lang_v352',lang);localStorage.setItem('almalika_lang_v350',lang);}catch(err){}
-        if(typeof window.__v353ApplyLang==='function') window.__v353ApplyLang(lang);
-        if(typeof window.applyLang==='function') window.applyLang(lang);
-        try{
-          document.documentElement.lang=lang;
-          document.documentElement.dir=(lang==='en'?'ltr':'rtl');
-          document.body.dir=(lang==='en'?'ltr':'rtl');
-        }catch(err){}
-        document.querySelectorAll('[data-v352-lang]').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-v352-lang')===lang);});
-      };
-      var lang=(localStorage.getItem('almalika_lang_v352')||localStorage.getItem('almalika_lang_v350')||'en');
-      document.querySelectorAll('[data-v352-lang]').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-v352-lang')===lang);});
-    }catch(e){}
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fixLangBox); else fixLangBox();
-  setTimeout(fixLangBox,200); setTimeout(fixLangBox,1000); setTimeout(fixLangBox,2500);
-  new MutationObserver(function(){clearTimeout(window.__v353LangBoxT);window.__v353LangBoxT=setTimeout(fixLangBox,120);}).observe(document.documentElement,{childList:true,subtree:true});
 })();
 </script>
