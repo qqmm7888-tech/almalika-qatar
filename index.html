@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Almalika Parties | Quick Booking Catalog</title>
+<title>الملكة للحفلات | كتالوج الحجز السريع</title>
 <!-- v7: robust routing + detailed booking forms + no empty sections -->
-<meta name="description" content="Almalika party catalog, inflatables, slides, snacks and event setup in Qatar - quick booking via WhatsApp">
+<meta name="description" content="كتالوج الملكة للحفلات وتأجير النطاطيات والسناك داخل قطر - حجز سريع عبر واتساب">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
@@ -12602,47 +12602,14 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 </script>
 
 
-<!-- ===== V355: Arabic only - remove translation and language buttons ===== -->
-<style id="almalika-v355-arabic-only">
-  #v350LangSwitch,#v352LangSwitch,#almalikaLangToggleV354,.v350LangSwitch,.v352LangSwitch,[id*="LangToggle"],[class*="LangSwitch"]{
-    display:none!important;visibility:hidden!important;pointer-events:none!important;
-  }
-  html,body{direction:rtl!important;text-align:right!important;}
-  body{padding-top:0!important;}
-  .product{position:relative!important;}
-  .product .num,.products .num{
-    position:absolute!important;top:9px!important;left:9px!important;right:auto!important;
-    width:34px!important;height:34px!important;min-width:34px!important;max-width:34px!important;
-    padding:0!important;margin:0!important;border-radius:50%!important;
-    background:#e11d48!important;color:#fff!important;border:2px solid #fff!important;
-    box-shadow:0 7px 16px rgba(225,29,72,.30)!important;
-    display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;
-    font-size:13px!important;font-weight:1000!important;line-height:1!important;letter-spacing:-.3px!important;
-    overflow:hidden!important;white-space:nowrap!important;
-  }
-  @media(max-width:700px){.product .num,.products .num{width:32px!important;height:32px!important;min-width:32px!important;max-width:32px!important;font-size:12px!important;}}
+<!-- V356_ARABIC_ONLY_PRE_TRANSLATION_SAFE -->
+<style id="v356-ar-only-clean">
+  #v350LangSwitch,#v352LangSwitch,#almalikaLangToggleV354,.v350LangSwitch,.v352LangSwitch,[id*="LangToggle"],[class*="LangSwitch"]{display:none!important;visibility:hidden!important;pointer-events:none!important}
+  html,body{direction:rtl!important}
 </style>
-<script id="almalika-v355-arabic-only-script">
-(function(){
-  try{
-    ['almalika_lang_v350','almalika_lang_v352','almalika_lang_v354','almalika_lang'].forEach(function(k){localStorage.removeItem(k);});
-  }catch(e){}
-  window.applyLang=function(){return false};
-  window.__v350LangInstalled=true;
-  window.__v352ForceLang=true;
-  document.documentElement.lang='ar';
-  document.documentElement.dir='rtl';
-  function clean(){
-    document.documentElement.lang='ar';document.documentElement.dir='rtl';
-    if(document.body){document.body.dir='rtl';document.body.style.direction='rtl';}
-    document.querySelectorAll('#v350LangSwitch,#v352LangSwitch,#almalikaLangToggleV354,.v350LangSwitch,.v352LangSwitch,[id*="LangToggle"],[class*="LangSwitch"]').forEach(function(el){el.remove();});
-    document.querySelectorAll('.product .num,.products .num').forEach(function(el){var n=(el.textContent||'').replace(/[^0-9]/g,''); if(n) el.textContent=n;});
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',clean); else clean();
-  setTimeout(clean,100); setTimeout(clean,800); setTimeout(clean,1800);
-})();
+<script id="v356-ar-only-clean-script">
+(function(){try{['almalika_lang_v350','almalika_lang_v352','almalika_lang_v354','almalika_lang'].forEach(function(k){localStorage.removeItem(k);});}catch(e){};document.documentElement.lang='ar';document.documentElement.dir='rtl';if(document.body){document.body.dir='rtl';}})();
 </script>
-
 </body>
 </html>
 
@@ -15743,25 +15710,8 @@ section.wrap,
     try{const all=JSON.parse(localStorage.getItem('almalikaOrders')||'[]');all.unshift(order);localStorage.setItem('almalikaOrders',JSON.stringify(all.slice(0,300)));localStorage.setItem('almalikaLastOrder',JSON.stringify(order));localStorage.setItem('almalikaOrder_'+order.orderId,JSON.stringify(order));}catch(e){}
     return order;
   }
-  function compactOrderForLink(o){
-    // رابط الواتساب لازم يكون قصير: لا نضع كل تفاصيل الاختيارات الطويلة داخل الرابط.
-    // التفاصيل الكاملة تبقى مكتوبة في رسالة الواتساب، وصفحة الطلب تعرض الصور والبيانات الأساسية.
-    const cleanCustomer={};
-    ['name','phone','date','endDate','map','zone','street','house','payment','deliveryArea','note'].forEach(k=>{if(o.customer&&o.customer[k])cleanCustomer[k]=String(o.customer[k]).slice(0,220)});
-    const cleanItems=(o.items||[]).map(it=>({
-      number:String(it.number||''),
-      name:String(it.name||'').slice(0,120),
-      qty:Number(it.qty||1)||1,
-      price:Number(it.price||0)||0,
-      selectionLabel:String(it.selectionLabel||'').slice(0,120),
-      imageUrl:String(it.imageUrl||'').replace(/^data:image\/[^;]+;base64,.*/,'').slice(0,260),
-      productLink:String(it.productLink||'').slice(0,220)
-    }));
-    return {orderId:o.orderId,createdAt:o.createdAt,customer:cleanCustomer,items:cleanItems,subtotal:o.subtotal,deliveryFee:o.deliveryFee,total:o.total,status:o.status||'طلب جديد'};
-  }
   function orderLink(o){
-    const slim=compactOrderForLink(o);
-    const token=b64url(JSON.stringify(slim));
+    const token=b64url(JSON.stringify(o));
     return SITE+'/home?adminOrder='+enc(o.orderId)+'&od='+token;
   }
   function adminMsg(o){
@@ -15818,7 +15768,7 @@ section.wrap,
   function wa(num,msg){return 'https://wa.me/'+num+'?text='+enc(msg);}
   function choiceModal(){
     let m=document.getElementById('v349WaChoice');
-    if(!m){m=document.createElement('div');m.id='v349WaChoice';m.innerHTML='<div class="v349Box"><h2>📲 إرسال الطلب واتساب</h2><p>اختر رقم الإدارة للإرسال. بعد الضغط على واتساب سيتم تفريغ السلة مباشرة.</p><div class="v349Ad">👑 إعلان شركة الملكة للحفلات<br><b>رابط الطلب صار مختصر وواضح، والتفاصيل الكاملة داخل الرسالة</b><div class="v349Note">لن يظهر الرابط الطويل داخل هذه النافذة.</div></div><div class="v349Btns"><a class="wa" id="v349wa1" target="_blank" rel="noopener">واتساب 33317720</a><a class="wa" id="v349wa2" target="_blank" rel="noopener">واتساب 33317705</a><a class="v349Customer" id="v349customer" target="_blank" rel="noopener">إرسال نسخة للزبون</a><button class="v349Dark" id="v349close" type="button">إغلاق</button></div></div>';document.body.appendChild(m);m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')});document.getElementById('v349close').onclick=function(){m.classList.remove('show')};}
+    if(!m){m=document.createElement('div');m.id='v349WaChoice';m.innerHTML='<div class="v349Box"><h2>📲 إرسال الطلب واتساب</h2><p>اختر رقم الإدارة للإرسال. بعد الضغط على واتساب سيتم تفريغ السلة مباشرة.</p><div class="v349Ad">👑 إعلان شركة الملكة للحفلات<br><b>صورة الإعلان ورابط الطلب وصور المنتجات موجودة داخل رسالة الواتساب</b><div class="v349Note">لن يظهر الرابط الطويل داخل هذه النافذة.</div></div><div class="v349Btns"><a class="wa" id="v349wa1" target="_blank" rel="noopener">واتساب 33317720</a><a class="wa" id="v349wa2" target="_blank" rel="noopener">واتساب 33317705</a><a class="v349Customer" id="v349customer" target="_blank" rel="noopener">إرسال نسخة للزبون</a><button class="v349Dark" id="v349close" type="button">إغلاق</button></div></div>';document.body.appendChild(m);m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')});document.getElementById('v349close').onclick=function(){m.classList.remove('show')};}
     return m;
   }
   function showChoice(o){
