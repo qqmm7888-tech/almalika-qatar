@@ -5280,7 +5280,15 @@ let viewMode=localStorage.getItem('almalikaViewMode')||'wide';
 let cart=JSON.parse(localStorage.getItem('almalikaCart')||'[]');
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function snackPackage20Price(p){const one=Number(p.priceOneDay||p.priceTwoDays||0), two=Number(p.priceTwoDays||one||0); const step=two>one?(two-one)/2:0; return Math.max(0, Math.round((one-step)/10)*10)}
-function price(p){if(p.packagePrices){return Math.min(...Object.values(p.packagePrices).map(Number).filter(x=>x>0))} return Number(p.priceOneDay||p.priceTwoDays||0)}
+function price(p){if(p.packagePrices){return Math.min(...Object.values(p.packagePrices).map(Number).filter(x=>x>0))}
+
+function isUnavailableForVip(p){
+  if(!p) return false;
+  const blob=[p.name,p.title,p.status,p.badge,p.note,p.notes,p.availability,p.availableText,p.unavailableText,p.details,p.description,p.type,p.category]
+    .map(v=>v==null?'':String(v)).join(' ');
+  return p.available===false || p.disabled===true || p.outOfStock===true || p.isUnavailable===true || p.unavailable===true || /غير\s*متاح|خارج\s*عن\s*الخدمة|عطلان|متوقف|غير\s*متوفر/.test(blob);
+}
+ return Number(p.priceOneDay||p.priceTwoDays||0)}
 function duration(p){return p.durationOneDay||p.durationTwoDays||'حسب الحجز'}
 function sectionOf(p){
   let c=p.category||'', t=p.type||'', n=p.name||'', d=p.details||'';
@@ -11279,6 +11287,50 @@ function openOfferImage(n){
       return out;
     };
   }
+})();
+</script>
+
+
+<script id="almalika-v291-remove-unavailable-vip-cards">
+(function(){
+  function isBad(card){
+    const txt = card && card.textContent || '';
+    return /غير\s*متاح|خارج\s*عن\s*الخدمة|عطلان|متوقف|غير\s*متوفر/.test(txt);
+  }
+  function cleanVip(){
+    try{
+      const all = Array.from(document.querySelectorAll('h1,h2,h3,h4,h5,.sectionTitle,.section-title,.title,div,strong,b'));
+      const heads = all.filter(el=>/مختارات\s*VIP\s*عامة|مختارات\s*خاصة|VIP/.test(el.textContent||''));
+      heads.forEach(function(h){
+        let box = h;
+        for(let i=0;i<8 && box && box!==document.body;i++){
+          const cards = box.querySelectorAll ? box.querySelectorAll('.card,.product-card,.productCard,[data-product],[data-id]') : [];
+          if(cards && cards.length>=1){ break; }
+          box = box.parentElement;
+        }
+        if(!box) box = document.body;
+        box.querySelectorAll('.card,.product-card,.productCard,[data-product],[data-id]').forEach(function(card){ if(isBad(card)) card.remove(); });
+      });
+      if(/home|#home|الجميع/.test(location.href) && /مختارات\s*VIP\s*عامة/.test(document.body.textContent||'')){
+        document.querySelectorAll('.card,.product-card,.productCard,[data-product],[data-id]').forEach(function(card){
+          const nearTitle = card.closest('section,.section,.panel,.wrap,.container,main,body');
+          if(isBad(card) && nearTitle && /مختارات\s*VIP\s*عامة|مختارات\s*خاصة|VIP/.test(nearTitle.textContent||'')) card.remove();
+        });
+      }
+    }catch(e){}
+  }
+  const oldRender = window.render;
+  if(typeof oldRender === 'function' && !oldRender.__vipClean291){
+    window.render = render = function(){
+      const out = oldRender.apply(this, arguments);
+      setTimeout(cleanVip,30); setTimeout(cleanVip,120); setTimeout(cleanVip,350);
+      return out;
+    };
+    window.render.__vipClean291 = true;
+  }
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(cleanVip,80); setTimeout(cleanVip,400); });
+  window.addEventListener('load', function(){ setTimeout(cleanVip,80); setTimeout(cleanVip,400); setTimeout(cleanVip,900); });
+  document.addEventListener('click', function(){ setTimeout(cleanVip,100); }, true);
 })();
 </script>
 
