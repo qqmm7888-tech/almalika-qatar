@@ -13206,3 +13206,39 @@ section.wrap,
   setTimeout(forcePanelRight,0);setTimeout(forcePanelRight,500);
 })();
 </script>
+
+
+<script id="almalika-v308-remove-products-412-422">
+(function(){
+  var removedOnce=false;
+  function productNo(p){
+    var v = p && (p.number != null ? p.number : (p.id != null ? p.id : (p.serial != null ? p.serial : p.bounceNo)));
+    return Number(v);
+  }
+  function purge412to422(){
+    try{
+      if(typeof products !== 'undefined' && Array.isArray(products)){
+        for(var i=products.length-1;i>=0;i--){
+          var num=productNo(products[i]);
+          if(num>=412 && num<=422){ products.splice(i,1); removedOnce=true; }
+        }
+      }
+      if(typeof cart !== 'undefined' && Array.isArray(cart)){
+        for(var j=cart.length-1;j>=0;j--){
+          var cnum=productNo(cart[j]) || productNo(cart[j] && cart[j].product);
+          if(cnum>=412 && cnum<=422){ cart.splice(j,1); }
+        }
+      }
+      if(typeof render==='function') render();
+      if(typeof updateCartBar==='function') updateCartBar();
+    }catch(e){ console.warn('remove 412-422 failed', e); }
+  }
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',purge412to422,{once:true});
+  }else{
+    purge412to422();
+  }
+  setTimeout(purge412to422,80);
+  setTimeout(purge412to422,500);
+})();
+</script>
