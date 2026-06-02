@@ -5665,6 +5665,26 @@ body{
 
 </head>
 <body>
+
+<script id="v367-block-sent-old-link">
+(function(){
+  try{
+    var path = location.pathname || '';
+    var hash = decodeURIComponent(location.hash || '');
+    var isOldSharedLink = (path === '/home' || path.endsWith('/home')) && hash.indexOf('#home/') === 0;
+    if(isOldSharedLink){
+      document.documentElement.innerHTML =
+        '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+
+        '<title>الرابط غير متاح</title>'+
+        '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#fff6fa;font-family:Arial,Tahoma,sans-serif;direction:rtl;color:#5b1935}.box{max-width:520px;margin:20px;padding:34px;border:1px solid #f0bfd2;border-radius:24px;background:#fff;box-shadow:0 18px 45px rgba(120,0,50,.12);text-align:center}.box h1{margin:0 0 12px;font-size:28px}.box p{font-size:17px;line-height:1.8;margin:0;color:#7b4b5f}</style></head>'+
+        '<body><div class="box"><h1>الرابط غير متاح حالياً</h1><p>تم تغيير رابط كتالوج الملكة. يرجى التواصل مع الإدارة للحصول على الرابط الجديد.</p></div></body>';
+      throw new Error('Blocked old shared link');
+    }
+  }catch(e){}
+})();
+</script>
+
+
 <div class="siteMagic" aria-hidden="true">
   <span class="trail t1"></span>
   <span class="trail t2"></span>
@@ -13056,6 +13076,115 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   window.addEventListener('resize',v366FixTop);
   window.addEventListener('hashchange',v366FixTop);
   setInterval(v366FixTop,1500);
+})();
+</script>
+
+
+<style id="v368-slow-readable-ticker-style">
+/* v368: تخفيف سرعة شريط العروض ليكون مقروء للزبون */
+.almWorkingTickerTrack,
+.v359TickerTrack,
+.v361TickerTrack,
+.v360TickerTrack{
+  animation-duration:70s!important;
+  animation-play-state:running!important;
+  animation-timing-function:linear!important;
+}
+#almWorkingTicker:hover .almWorkingTickerTrack,
+.v359TickerBar:hover .v359TickerTrack,
+.v361Ticker:hover .v361TickerTrack,
+.v360Ticker:hover .v360TickerTrack{
+  animation-play-state:running!important;
+}
+.almTickerMarquee{
+  scroll-behavior:auto!important;
+}
+@media(max-width:900px){
+  .almWorkingTickerTrack,
+  .v359TickerTrack,
+  .v361TickerTrack,
+  .v360TickerTrack{
+    animation-duration:60s!important;
+  }
+}
+</style>
+<script id="v368-slow-readable-ticker-script">
+(function(){
+  function slowTicker(){
+    try{
+      document.querySelectorAll('.almWorkingTickerTrack,.v359TickerTrack,.v361TickerTrack,.v360TickerTrack').forEach(function(el){
+        el.style.animationDuration = (window.innerWidth < 900 ? '60s' : '70s');
+        el.style.animationTimingFunction = 'linear';
+        el.style.animationPlayState = 'running';
+      });
+      document.querySelectorAll('marquee.almTickerMarquee').forEach(function(mq){
+        mq.setAttribute('scrollamount','3');
+        mq.setAttribute('scrolldelay','25');
+        try{mq.start();}catch(e){}
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    slowTicker();
+    setTimeout(slowTicker,100);
+    setTimeout(slowTicker,500);
+  });
+  window.addEventListener('load',slowTicker);
+  window.addEventListener('resize',slowTicker);
+  setInterval(slowTicker,2000);
+})();
+</script>
+
+
+<style id="v369-extra-slow-readable-ticker-style">
+/* v369: تخفيف إضافي لسرعة شريط العروض */
+.almWorkingTickerTrack,
+.v359TickerTrack,
+.v361TickerTrack,
+.v360TickerTrack{
+  animation-duration:110s!important;
+  animation-play-state:running!important;
+  animation-timing-function:linear!important;
+}
+#almWorkingTicker:hover .almWorkingTickerTrack,
+.v359TickerBar:hover .v359TickerTrack,
+.v361Ticker:hover .v361TickerTrack,
+.v360Ticker:hover .v360TickerTrack{
+  animation-play-state:running!important;
+}
+@media(max-width:900px){
+  .almWorkingTickerTrack,
+  .v359TickerTrack,
+  .v361TickerTrack,
+  .v360TickerTrack{
+    animation-duration:95s!important;
+  }
+}
+</style>
+<script id="v369-extra-slow-readable-ticker-script">
+(function(){
+  function extraSlowTicker(){
+    try{
+      document.querySelectorAll('.almWorkingTickerTrack,.v359TickerTrack,.v361TickerTrack,.v360TickerTrack').forEach(function(el){
+        el.style.animationDuration = (window.innerWidth < 900 ? '95s' : '110s');
+        el.style.animationTimingFunction = 'linear';
+        el.style.animationPlayState = 'running';
+      });
+      document.querySelectorAll('marquee.almTickerMarquee').forEach(function(mq){
+        mq.setAttribute('scrollamount','2');
+        mq.setAttribute('scrolldelay','35');
+        try{mq.start();}catch(e){}
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    extraSlowTicker();
+    setTimeout(extraSlowTicker,100);
+    setTimeout(extraSlowTicker,500);
+  });
+  window.addEventListener('load',extraSlowTicker);
+  window.addEventListener('resize',extraSlowTicker);
+  setInterval(extraSlowTicker,2000);
 })();
 </script>
 
