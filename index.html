@@ -5430,6 +5430,12 @@ body .cartItem .qtyBox b{
 @media(max-width:700px){.mainCats .cat.richCat{min-height:180px!important}.mainCats .cat.richCat .richIcon{width:78px!important;height:78px!important}.nav button.navIconBtn{padding:7px 10px!important;font-size:12px!important}}
 </style>
 
+
+<style id="almalika-v347-wa-modal-clean-link">
+#v342WaChoice .v342Ad{overflow:hidden!important;word-break:normal!important;line-height:1.8!important}
+#v342WaChoice .v342Ad small{display:none!important}
+#v342WaChoice .v342Ad span{display:block!important;font-size:14px!important;color:#7a2946!important;margin-top:6px!important}
+</style>
 </head>
 <body>
 <div class="siteMagic" aria-hidden="true">
@@ -15281,7 +15287,7 @@ section.wrap,
   }
   function showChoice(msg,link){
     const m=modal();
-    document.getElementById('v340Ad').innerHTML='👑 إعلان الملكة للحفلات<br>حجز سريع ومنظم + رابط متابعة الطلب<br><small>'+esc(link)+'</small>';
+    document.getElementById('v340Ad').innerHTML='👑 إعلان الملكة للحفلات<br>حجز سريع ومنظم — رابط الطلب سيصل داخل رسالة الواتساب للإدارة';
     const a1=document.getElementById('v340wa1'), a2=document.getElementById('v340wa2');
     a1.href=wa(WA1,msg); a2.href=wa(WA2,msg);
     a1.onclick=function(){setTimeout(setCartEmpty,150);};
@@ -15462,7 +15468,7 @@ section.wrap,
   }
   function showChoice(o,msg){
     const link=orderLink(o), m=choiceModal();
-    document.getElementById('v342Ad').innerHTML='👑 إعلان الملكة للحفلات<br>رابط الطلب يعمل حتى بعد تفريغ السلة<br><small>'+esc(link)+'</small>';
+    document.getElementById('v342Ad').innerHTML='👑 إعلان شركة الملكة للحفلات<br><b>حجز سريع وتنظيم راقٍ واهتمام بالتفاصيل</b><br><span>رابط متابعة الطلب سيتم إرساله داخل رسالة الواتساب فقط.</span>';
     const a1=document.getElementById('v342wa1'), a2=document.getElementById('v342wa2');
     a1.href=wa(WA1,msg); a2.href=wa(WA2,msg);
     a1.onclick=function(){setTimeout(clearCartNow,120);setTimeout(function(){m.classList.remove('show')},250);};
@@ -15614,5 +15620,183 @@ section.wrap,
     </div>`;
     modal.classList.add('show');
   };
+})();
+</script>
+
+
+<!-- ===== V349: أفضل رسالة واتساب للإدارة/الزبون/الصديق + إعلان أعلى الرسالة + رابط طلب مختصر بدون صور داخل الرابط ===== -->
+<style id="almalika-v349-best-whatsapp-style">
+#v349WaChoice{position:fixed;inset:0;z-index:999999;background:rgba(40,20,35,.72);backdrop-filter:blur(7px);display:none;align-items:center;justify-content:center;padding:18px;direction:rtl}
+#v349WaChoice.show{display:flex!important}
+#v349WaChoice .v349Box{width:min(680px,96vw);max-height:92vh;overflow:auto;background:#fffdf9;border:1px solid #f4b7cf;border-radius:24px;box-shadow:0 28px 90px rgba(0,0,0,.28);padding:24px;text-align:center;font-family:inherit}
+#v349WaChoice h2{margin:0 0 8px;color:#7b183d;font-size:28px;font-weight:900}
+#v349WaChoice p{margin:0;color:#6b5b66;font-weight:800;line-height:1.8}
+#v349WaChoice .v349Ad{margin:16px 0;padding:14px;border-radius:18px;background:linear-gradient(135deg,#fff2f8,#fff8df);border:1px dashed #ef9fc0;color:#8b1748;font-weight:900;line-height:1.7}
+#v349WaChoice .v349Note{font-size:13px;color:#7d6072;margin-top:8px;line-height:1.7}
+#v349WaChoice .v349Btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+#v349WaChoice a,#v349WaChoice button{border:0;border-radius:15px;padding:15px 10px;font-weight:900;font-size:17px;text-align:center;text-decoration:none;cursor:pointer}
+#v349WaChoice .wa{background:#18b85f;color:#fff}.v349Customer{background:#ef2b7a!important;color:#fff!important}.v349Dark{background:#111!important;color:#fff!important;grid-column:1/-1}
+.v349AdminHeroImg{width:100%;max-height:260px;object-fit:cover;border-radius:18px;border:1px solid #f0c5d7;margin-bottom:14px;background:#fff7fb}.v349ItemImg{width:120px;height:100px;object-fit:cover;border-radius:14px;border:1px solid #f0c5d7;background:#fff;margin-inline-start:12px;float:right}
+@media(max-width:700px){#v349WaChoice .v349Btns{grid-template-columns:1fr}.v349ItemImg{float:none;width:100%;height:auto;margin:0 0 10px}}
+</style>
+<script id="almalika-v349-best-whatsapp-js">
+(function(){
+  const WA1='97433317720', WA2='97433317705';
+  const SITE='https://project-5xlms.vercel.app';
+  const AD_IMG=SITE+'/order-ad.jpg';
+  function enc(s){return encodeURIComponent(String(s||''));}
+  function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+  function val(id){const el=document.getElementById(id);return el?(el.value||'').trim():'';}
+  function getCart(){try{return Array.isArray(window.cart)?window.cart:(typeof cart!=='undefined'&&Array.isArray(cart)?cart:[])}catch(e){return []}}
+  function money(n){n=Number(n||0);return isFinite(n)?String(Math.round(n*100)/100):'0'}
+  function absUrl(u){
+    u=String(u||'').trim();
+    if(!u || /^data:/i.test(u) || /^blob:/i.test(u)) return '';
+    if(/^https?:\/\//i.test(u)) return u;
+    if(u.startsWith('/')) return SITE+u;
+    return SITE+'/'+u.replace(/^\.\//,'');
+  }
+  function findProduct(n){try{return (window.products||products||[]).find(x=>String(x.number||x.id)===String(n))||null}catch(e){return null}}
+  function productUrlFromItem(it){
+    let u=absUrl(it.imageUrl||it.imageFile||it.image||'');
+    if(u) return u;
+    const p=findProduct(it.number);
+    try{ if(p && typeof window.productImageUrl==='function') u=absUrl(window.productImageUrl(p)); }catch(e){}
+    if(!u && p) u=absUrl(p.image||p.img||p.photo||'');
+    return u||'';
+  }
+  function productPageLink(n){return SITE+'/home?product='+enc(n||'');}
+  function getPay(){try{return document.querySelector('input[name="payMethod"]:checked')?.value||''}catch(e){return ''}}
+  function getDeliveryArea(){try{return document.querySelector('#deliveryArea,#deliveryAreaSelect')?.value || ''}catch(e){return ''}}
+  function subtotal(){try{return typeof cartSubtotal==='function'?Number(cartSubtotal()):getCart().reduce((s,it)=>s+(Number(it.selectedPrice||it.price||it.priceOneDay||0)||0)*(Number(it.qty||1)||1),0)}catch(e){return 0}}
+  function fee(){try{return typeof deliveryFee==='function'?Number(deliveryFee()):Number(String(document.getElementById('deliveryFeeView')?.textContent||'0').replace(/[^0-9.]/g,''))||0}catch(e){return 0}}
+  function total(){try{return typeof cartTotal==='function'?Number(cartTotal()):subtotal()+fee()}catch(e){return subtotal()+fee()}}
+  function clearCartNow(){
+    try{ if(Array.isArray(window.cart)) window.cart.length=0; }catch(e){}
+    try{ if(typeof cart!=='undefined'&&Array.isArray(cart)) cart.length=0; }catch(e){}
+    try{localStorage.setItem('almalikaCart','[]');localStorage.setItem('cart','[]')}catch(e){}
+    try{if(typeof saveCart==='function')saveCart()}catch(e){}
+    try{if(typeof renderCart==='function')renderCart()}catch(e){}
+    try{if(typeof updateCartBadge==='function')updateCartBadge()}catch(e){}
+    try{if(typeof updateCartUI==='function')updateCartUI()}catch(e){}
+  }
+  function b64url(str){const bytes=new TextEncoder().encode(str);let bin='';for(let i=0;i<bytes.length;i+=8192)bin+=String.fromCharCode.apply(null,bytes.slice(i,i+8192));return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
+  function unb64url(s){s=String(s||'').replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';const bin=atob(s);const bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return new TextDecoder().decode(bytes);}
+  function itemSummary(it){
+    const arr=[];
+    if(it.selectionLabel) arr.push('الخيار: '+it.selectionLabel);
+    if(Array.isArray(it.summary)) arr.push(...it.summary.filter(Boolean));
+    if(it.note) arr.push('ملاحظة: '+it.note);
+    return arr.join('\n');
+  }
+  function buildOrder(){
+    const items=getCart().map(function(it){
+      const num=it.number||it.id||'';
+      const img=productUrlFromItem({number:num,image:it.imageUrl||it.imageFile||it.image||it.selectedDecorImage||''});
+      return {number:num,name:it.name||'منتج',category:it.category||'',qty:Number(it.qty||1)||1,price:Number(it.selectedPrice||it.price||it.priceOneDay||0)||0,selectionLabel:it.selectionLabel||'',summary:it.bookingSummary||[],note:it.itemNote||'',imageUrl:img,productLink:productPageLink(num)};
+    });
+    const order={orderId:'MQ-'+Date.now(),createdAt:new Date().toISOString(),customer:{
+      name:val('custName')||val('customerName')||val('name'),phone:val('custPhone')||val('customerPhone')||val('phone'),date:val('custDate')||val('customerDate')||val('eventDate'),endDate:val('custEndDate'),map:val('custMap')||val('customerMap')||val('mapLink'),zone:val('custZone')||val('zone'),street:val('custStreet')||val('street'),house:val('custHouse')||val('house'),payment:getPay(),deliveryArea:getDeliveryArea(),note:val('custNote')||val('customerNote')||val('note')
+    },items:items,subtotal:subtotal(),deliveryFee:fee(),total:total(),status:'طلب جديد'};
+    try{const all=JSON.parse(localStorage.getItem('almalikaOrders')||'[]');all.unshift(order);localStorage.setItem('almalikaOrders',JSON.stringify(all.slice(0,300)));localStorage.setItem('almalikaLastOrder',JSON.stringify(order));localStorage.setItem('almalikaOrder_'+order.orderId,JSON.stringify(order));}catch(e){}
+    return order;
+  }
+  function orderLink(o){
+    const token=b64url(JSON.stringify(o));
+    return SITE+'/home?adminOrder='+enc(o.orderId)+'&od='+token;
+  }
+  function adminMsg(o){
+    const link=orderLink(o), lines=[];
+    lines.push(AD_IMG);
+    lines.push('');
+    lines.push('👑 *شركة الملكة للحفلات - قطر*');
+    lines.push('نطاطيات • زحلاقيات • سناك • تجهيز حفلات');
+    lines.push('حجز سريع وتنظيم راقٍ واهتمام بالتفاصيل حتى نهاية الحفلة.');
+    lines.push('━━━━━━━━━━━━━━');
+    lines.push('🔗 *رابط مشاهدة الطلب كامل مع الصور:*'); lines.push(link);
+    lines.push('━━━━━━━━━━━━━━');
+    lines.push('🧾 رقم الطلب: '+o.orderId);
+    if(o.customer.name) lines.push('👤 اسم العميل: '+o.customer.name);
+    if(o.customer.phone) lines.push('📱 الجوال: '+o.customer.phone);
+    if(o.customer.date) lines.push('📅 تاريخ الحجز: '+o.customer.date+(o.customer.endDate?' إلى '+o.customer.endDate:''));
+    if(o.customer.map) lines.push('📍 الموقع: '+o.customer.map);
+    if(o.customer.zone||o.customer.street||o.customer.house) lines.push('🏠 العنوان: منطقة '+(o.customer.zone||'-')+' / شارع '+(o.customer.street||'-')+' / منزل '+(o.customer.house||'-'));
+    if(o.customer.payment) lines.push('💳 الدفع: '+o.customer.payment);
+    lines.push('━━━━━━━━━━━━━━'); lines.push('🎪 *المنتجات المطلوبة:*');
+    o.items.forEach(function(it,i){
+      lines.push((i+1)+') #'+it.number+' - '+it.name+(it.qty>1?' × '+it.qty:''));
+      lines.push('💰 السعر: '+money(it.price)+' ر.ق');
+      const s=itemSummary(it); if(s) lines.push(s);
+      if(it.imageUrl) lines.push('📸 صورة المنتج: '+it.imageUrl);
+      lines.push('---');
+    });
+    lines.push('💰 إجمالي المنتجات: '+money(o.subtotal)+' ر.ق');
+    lines.push('🚚 مصاريف التوصيل: '+money(o.deliveryFee)+' ر.ق');
+    lines.push('✅ *الإجمالي النهائي: '+money(o.total)+' ر.ق*');
+    if(o.customer.note) lines.push('📝 ملاحظات عامة: '+o.customer.note);
+    lines.push('━━━━━━━━━━━━━━');
+    lines.push('📌 يرجى مراجعة الطلب والتواصل مع العميل لتأكيد التاريخ والتوفر.');
+    lines.push('📞 الإدارة: 33317720 / 33317705');
+    return lines.join('\n').replace(/33317705\s*\/\s*33317705\s*\/\s*33317720/g,'33317720 / 33317705');
+  }
+  function customerMsg(o){
+    const link=orderLink(o), lines=[];
+    lines.push(AD_IMG); lines.push('');
+    lines.push('👑 *شكرًا لاختياركم شركة الملكة للحفلات - قطر*');
+    lines.push('تم استلام طلبكم بنجاح، وهذه نسخة للمراجعة:');
+    lines.push('🔗 رابط مشاهدة الطلب مع الصور:'); lines.push(link);
+    lines.push('━━━━━━━━━━━━━━');
+    lines.push('🧾 رقم الطلب: '+o.orderId);
+    if(o.customer.date) lines.push('📅 تاريخ الحجز: '+o.customer.date+(o.customer.endDate?' إلى '+o.customer.endDate:''));
+    if(o.customer.deliveryArea) lines.push('📍 منطقة التوصيل: '+o.customer.deliveryArea);
+    lines.push('🎪 المنتجات:');
+    o.items.forEach(function(it,i){lines.push((i+1)+') #'+it.number+' - '+it.name+' — '+money(it.price)+' ر.ق'); if(it.imageUrl) lines.push('📸 '+it.imageUrl);});
+    lines.push('✅ الإجمالي النهائي: '+money(o.total)+' ر.ق');
+    lines.push('سيتواصل معكم فريق الملكة لتأكيد التفاصيل والتوفر. نسعد بخدمتكم 🌸👑');
+    lines.push('33317720 / 33317705');
+    return lines.join('\n');
+  }
+  function wa(num,msg){return 'https://wa.me/'+num+'?text='+enc(msg);}
+  function choiceModal(){
+    let m=document.getElementById('v349WaChoice');
+    if(!m){m=document.createElement('div');m.id='v349WaChoice';m.innerHTML='<div class="v349Box"><h2>📲 إرسال الطلب واتساب</h2><p>اختر رقم الإدارة للإرسال. بعد الضغط على واتساب سيتم تفريغ السلة مباشرة.</p><div class="v349Ad">👑 إعلان شركة الملكة للحفلات<br><b>صورة الإعلان ورابط الطلب وصور المنتجات موجودة داخل رسالة الواتساب</b><div class="v349Note">لن يظهر الرابط الطويل داخل هذه النافذة.</div></div><div class="v349Btns"><a class="wa" id="v349wa1" target="_blank" rel="noopener">واتساب 33317720</a><a class="wa" id="v349wa2" target="_blank" rel="noopener">واتساب 33317705</a><a class="v349Customer" id="v349customer" target="_blank" rel="noopener">إرسال نسخة للزبون</a><button class="v349Dark" id="v349close" type="button">إغلاق</button></div></div>';document.body.appendChild(m);m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')});document.getElementById('v349close').onclick=function(){m.classList.remove('show')};}
+    return m;
+  }
+  function showChoice(o){
+    const m=choiceModal();
+    document.getElementById('v349wa1').href=wa(WA1,adminMsg(o));
+    document.getElementById('v349wa2').href=wa(WA2,adminMsg(o));
+    const cust=o.customer.phone?String(o.customer.phone).replace(/\D/g,''):'';
+    const custWa=cust?(cust.startsWith('974')?cust:'974'+cust):WA1;
+    document.getElementById('v349customer').href=wa(custWa,customerMsg(o));
+    ['v349wa1','v349wa2','v349customer'].forEach(id=>{document.getElementById(id).onclick=function(){setTimeout(clearCartNow,180);setTimeout(()=>m.classList.remove('show'),350)}});
+    m.classList.add('show');
+  }
+  window.saveOrderToAdmin=function(){return Promise.resolve(null)};
+  window.sendCartWa=function(){
+    const items=getCart(); if(!items.length){alert('السلة فارغة');return false;}
+    try{if(typeof validateCustomerData==='function'&&!validateCustomerData(true))return false;}catch(e){}
+    const o=buildOrder(); showChoice(o); return false;
+  };
+  window.__v349SendCartWa=window.sendCartWa;
+  document.addEventListener('click',function(e){
+    const btn=e.target&&e.target.closest&&e.target.closest('button,a'); if(!btn)return;
+    const t=(btn.textContent||'').replace(/\s+/g,' ').trim();
+    if(/إرسال السلة واتساب|ارسال السلة واتساب|إرسال الطلب واتساب/.test(t)){e.preventDefault();e.stopImmediatePropagation();e.stopPropagation();window.__v349SendCartWa();return false;}
+  },true);
+  function getOrderFromUrl(){
+    const qs=new URLSearchParams(location.search); const id=qs.get('adminOrder'); if(!id)return null; let o=null;
+    try{const token=qs.get('od')||qs.get('orderData'); if(token)o=JSON.parse(unb64url(token));}catch(e){}
+    try{if(!o)o=JSON.parse(localStorage.getItem('almalikaOrder_'+id)||'null')}catch(e){}
+    return o||{orderId:id,items:[],customer:{},total:0,subtotal:0,deliveryFee:0};
+  }
+  function renderAdminOrder(o){
+    document.documentElement.dir='rtl';
+    const items=(o.items||[]).map(function(it,i){const img=it.imageUrl?'<img class="v349ItemImg" src="'+esc(it.imageUrl)+'" alt="">':'';return '<div class="v342Item">'+img+'<h3>'+(i+1)+') #'+esc(it.number)+' - '+esc(it.name)+'</h3><p><b>السعر:</b> '+esc(money(it.price))+' ر.ق'+(itemSummary(it)?'\n'+esc(itemSummary(it)):'')+'</p><div style="clear:both"></div></div>';}).join('')||'<div class="v342Item"><h3>لا توجد منتجات محفوظة</h3></div>';
+    document.body.innerHTML='<div class="v342AdminPage"><div class="v342AdminBox"><div class="v342AdminHero"><img class="v349AdminHeroImg" src="'+AD_IMG+'" alt="إعلان الملكة"><h1>👑 طلب شركة الملكة للحفلات</h1><p>طلب إدارة رقم '+esc(o.orderId)+'</p></div><div class="v342AdminContent"><div class="v342AdminGrid"><div class="v342Cell"><b>اسم العميل:</b> '+esc(o.customer?.name||'-')+'</div><div class="v342Cell"><b>الجوال:</b> '+esc(o.customer?.phone||'-')+'</div><div class="v342Cell"><b>تاريخ الحجز:</b> '+esc(o.customer?.date||'-')+(o.customer?.endDate?' إلى '+esc(o.customer.endDate):'')+'</div><div class="v342Cell"><b>الدفع:</b> '+esc(o.customer?.payment||'-')+'</div><div class="v342Cell"><b>الموقع:</b> '+(o.customer?.map?'<a href="'+esc(o.customer.map)+'" target="_blank">فتح الموقع</a>':'-')+'</div><div class="v342Cell"><b>العنوان:</b> منطقة '+esc(o.customer?.zone||'-')+' / شارع '+esc(o.customer?.street||'-')+' / منزل '+esc(o.customer?.house||'-')+'</div></div><h2>المنتجات</h2><div class="v342Items">'+items+'</div><div class="v342Total"><span>الإجمالي النهائي</span><b>'+esc(money(o.total||0))+' ر.ق</b></div><div class="v342Actions"><a class="home" href="'+location.pathname+'">العودة للموقع</a><a class="wa" href="https://wa.me/97433317720" target="_blank">واتساب الإدارة</a><button onclick="window.print()">طباعة الطلب</button></div></div></div></div>';
+  }
+  document.addEventListener('DOMContentLoaded',function(){const o=getOrderFromUrl(); if(o) setTimeout(function(){renderAdminOrder(o)},10);});
+  window.cartMessage=function(){try{const o=buildOrder();return adminMsg(o)}catch(e){return 'شركة الملكة للحفلات - قطر'} };
+  window.shareProduct=window.shareProduct||function(n){const p=findProduct(n);if(!p)return;const img=productUrlFromItem({number:p.number,image:p.image});const msg=[AD_IMG,'','👑 شوف هذا المنتج من شركة الملكة للحفلات','#'+p.number+' - '+p.name,(img?'📸 صورة المنتج: '+img:''),'🔗 الموقع: '+SITE,'للحجز: 33317720 / 33317705'].filter(Boolean).join('\n');window.open('https://wa.me/?text='+enc(msg),'_blank')};
 })();
 </script>
