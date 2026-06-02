@@ -5665,26 +5665,6 @@ body{
 
 </head>
 <body>
-
-<script id="v367-block-sent-old-link">
-(function(){
-  try{
-    var path = location.pathname || '';
-    var hash = decodeURIComponent(location.hash || '');
-    var isOldSharedLink = (path === '/home' || path.endsWith('/home')) && hash.indexOf('#home/') === 0;
-    if(isOldSharedLink){
-      document.documentElement.innerHTML =
-        '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+
-        '<title>الرابط غير متاح</title>'+
-        '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#fff6fa;font-family:Arial,Tahoma,sans-serif;direction:rtl;color:#5b1935}.box{max-width:520px;margin:20px;padding:34px;border:1px solid #f0bfd2;border-radius:24px;background:#fff;box-shadow:0 18px 45px rgba(120,0,50,.12);text-align:center}.box h1{margin:0 0 12px;font-size:28px}.box p{font-size:17px;line-height:1.8;margin:0;color:#7b4b5f}</style></head>'+
-        '<body><div class="box"><h1>الرابط غير متاح حالياً</h1><p>تم تغيير رابط كتالوج الملكة. يرجى التواصل مع الإدارة للحصول على الرابط الجديد.</p></div></body>';
-      throw new Error('Blocked old shared link');
-    }
-  }catch(e){}
-})();
-</script>
-
-
 <div class="siteMagic" aria-hidden="true">
   <span class="trail t1"></span>
   <span class="trail t2"></span>
@@ -13237,6 +13217,99 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   window.addEventListener('load',verySlowTicker);
   window.addEventListener('resize',verySlowTicker);
   setInterval(verySlowTicker,2000);
+})();
+</script>
+
+
+<style id="v372-unblock-cart-top-style">
+/* v372: فتح الموقع مرة ثانية + جعل السلة والنوافذ فوق الشريط والهيدر + إخفاء واتساب والعروض بجانب السلة */
+#almTopFixedGroup{
+  z-index:2147482000!important;
+}
+
+/* كل النوافذ والسلة فوق الهيدر والشريط */
+.modal,
+.modal.show,
+#modal,
+#cartModal,
+.cartModal,
+.cartDrawer,
+.drawer,
+.quickModal,
+.choiceModal,
+.offerModal,
+.bookingModal,
+.detailsModal,
+[class*="modal"],
+[class*="Modal"],
+[class*="cartModal"],
+[class*="CartModal"]{
+  z-index:2147483646!important;
+}
+.modalBackdrop,
+.backdrop,
+.overlay,
+[class*="backdrop"],
+[class*="Backdrop"],
+[class*="overlay"],
+[class*="Overlay"]{
+  z-index:2147483645!important;
+}
+
+/* إخفاء أزرار واتساب والعروض العلوية فقط وترك السلة */
+header.header a[href*="wa.me"],
+header.header a[href*="whatsapp"],
+header.header button[onclick*="WhatsApp"],
+header.header button[onclick*="whatsapp"],
+header.header button[onclick*="wa.me"],
+header.header .waBtn,
+header.header .offersBtn{
+  display:none!important;
+}
+</style>
+<script id="v372-unblock-cart-top-script">
+(function(){
+  function textOf(el){
+    return ((el && el.textContent) || '').replace(/\s+/g,' ').trim();
+  }
+  function isHeaderButtonToHide(el){
+    try{
+      var t = textOf(el);
+      var href = (el.getAttribute && (el.getAttribute('href') || '')) || '';
+      var onclick = (el.getAttribute && (el.getAttribute('onclick') || '')) || '';
+      var cls = (el.className || '') + '';
+      if(t.indexOf('السلة') > -1) return false;
+      if(t.indexOf('واتساب') > -1) return true;
+      if(t.indexOf('العروض') > -1) return true;
+      if(/wa\.me|whatsapp/i.test(href + onclick + cls)) return true;
+    }catch(e){}
+    return false;
+  }
+  function fix(){
+    try{
+      document.querySelectorAll('header.header a, header.header button').forEach(function(el){
+        if(isHeaderButtonToHide(el)){
+          el.style.setProperty('display','none','important');
+        }
+      });
+      document.querySelectorAll('.modal,.modal.show,#modal,#cartModal,.cartModal,.cartDrawer,.drawer,.quickModal,.choiceModal,.offerModal,.bookingModal,.detailsModal,[class*="modal"],[class*="Modal"],[class*="cartModal"],[class*="CartModal"]').forEach(function(el){
+        el.style.setProperty('z-index','2147483646','important');
+      });
+      document.querySelectorAll('.modalBackdrop,.backdrop,.overlay,[class*="backdrop"],[class*="Backdrop"],[class*="overlay"],[class*="Overlay"]').forEach(function(el){
+        el.style.setProperty('z-index','2147483645','important');
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    fix();
+    setTimeout(fix,100);
+    setTimeout(fix,500);
+    setTimeout(fix,1200);
+  });
+  window.addEventListener('load',fix);
+  window.addEventListener('hashchange',fix);
+  document.addEventListener('click',function(){setTimeout(fix,40);setTimeout(fix,250);},true);
+  setInterval(fix,1500);
 })();
 </script>
 
