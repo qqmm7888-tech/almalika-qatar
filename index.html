@@ -13806,3 +13806,138 @@ section.wrap,
   setTimeout(forceMainImageRight,1200);
 })();
 </script>
+
+
+<!-- ===== V324: 300/301 بدون سناك/أسماء/طاولات/بالونات ===== -->
+<script id="almalika-v324-simple-items-300-301">
+(function(){
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function today(){try{return (typeof todayISO==='function')?todayISO():new Date().toISOString().slice(0,10)}catch(e){return new Date().toISOString().slice(0,10)}}
+  function isSimple300301(x){
+    var n = Number((x&&x.number) || (x&&x.id) || x || 0);
+    return n===300 || n===301;
+  }
+  function eachProduct(fn){try{(window.products||products||[]).forEach(fn)}catch(e){try{products.forEach(fn)}catch(_){}}}
+  function applyData(){
+    eachProduct(function(p){
+      var n = Number((p&&p.number)||(p&&p.id)||0);
+      if(!isSimple300301(n)) return;
+      p.noSnack = true;
+      p.noChildName = true;
+      p.noTables = true;
+      p.noDecorExtras = true;
+      p.noBalloons = true;
+      p.decorPackages = {};
+      p.roundTablePrice = 0;
+      p.extraServicePrice = 0;
+      p.complexPrice = 0;
+      p.staffPrice = 0;
+      p.piecePrice = 0;
+      p.snackType = '';
+      if(n===300){
+        p.details='جهاز فقاعات الصابون - عدد 1 - بدون سناك وبدون اسم طفل وبدون طاولات وبدون بالونات.';
+      }
+      if(n===301){
+        p.details='جهاز ماكينة الدخان - عدد 1 - بدون سناك وبدون اسم طفل وبدون طاولات وبدون بالونات.';
+      }
+    });
+  }
+  applyData();
+
+  var oldForm = window.formHtml;
+  window.formHtml = formHtml = function(p){
+    if(!isSimple300301(p)){
+      if(typeof oldForm === 'function') return oldForm.apply(this, arguments);
+      return '';
+    }
+    var n = Number((p&&p.number)||(p&&p.id)||0);
+    return '<h3>بيانات الحجز</h3>'+
+      '<div class="bookingSimple compactBooking simpleNoDecorExtras">'+
+      '<input type="date" id="date_'+n+'" min="'+today()+'">'+
+      '<select id="period_'+n+'"><option value="">اختار وقت التنفيذ من 9 صباحاً إلى 5 مساءً</option><option>صباحاً</option><option>ظهراً</option><option>عصراً</option></select>'+
+      '<select id="occasion_'+n+'"><option value="">نوع المناسبة</option><option>عيد ميلاد</option><option>تخرج</option><option>استقبال مولود</option><option>فعالية مدرسية</option><option>خطوبة / مناسبة خاصة</option><option>أخرى</option></select>'+
+      '<select id="place_'+n+'"><option value="">مكان التنفيذ</option><option>منزل</option><option>قاعة</option><option>مدرسة / روضة</option><option>خارجي</option></select>'+
+      '<input id="flavor_'+n+'" placeholder="ملاحظات أو نوع التشغيل المطلوب">'+
+      '</div>'+
+      '<div class="workNotice">هذا البند بدون سناك وبدون اسم طفل وبدون طاولات وبدون بالونات.</div>'+
+      '<div class="workingHoursHint">⏰ صباحاً / ظهراً / عصراً — من 9 صباحاً إلى 5 مساءً — لا يقبل تاريخ سابق</div>'+
+      '<textarea id="note_'+n+'" placeholder="ملاحظات إضافية إن وجدت"></textarea>';
+  };
+
+  var oldSnack = window.snackItemsHtml;
+  window.snackItemsHtml = snackItemsHtml = function(n){
+    if(isSimple300301(n)) return '';
+    if(typeof oldSnack === 'function') return oldSnack.apply(this, arguments);
+    return '';
+  };
+
+  var oldTheme = window.decorThemeSelectHtml;
+  window.decorThemeSelectHtml = decorThemeSelectHtml = function(n){
+    if(isSimple300301(n)) return '';
+    if(typeof oldTheme === 'function') return oldTheme.apply(this, arguments);
+    return '';
+  };
+
+  var oldBalloon = window.balloonColorHtml;
+  window.balloonColorHtml = balloonColorHtml = function(n){
+    if(isSimple300301(n)) return '';
+    if(typeof oldBalloon === 'function') return oldBalloon.apply(this, arguments);
+    return '';
+  };
+
+  var oldAddons = window.decorAddonsCardsHtml;
+  if(typeof oldAddons === 'function'){
+    window.decorAddonsCardsHtml = decorAddonsCardsHtml = function(n){
+      if(isSimple300301(n)) return '';
+      return oldAddons.apply(this, arguments);
+    };
+  }
+
+  var oldBig = window.decorBigTotalHtml;
+  if(typeof oldBig === 'function'){
+    window.decorBigTotalHtml = decorBigTotalHtml = function(n){
+      if(isSimple300301(n)) return '';
+      return oldBig.apply(this, arguments);
+    };
+  }
+
+  var oldSelectedBalloon = window.selectedBalloonColors;
+  if(typeof oldSelectedBalloon === 'function'){
+    window.selectedBalloonColors = selectedBalloonColors = function(n){
+      if(isSimple300301(n)) return '';
+      return oldSelectedBalloon.apply(this, arguments);
+    };
+  }
+
+  var oldCollect = window.collectBooking;
+  window.collectBooking = collectBooking = function(p){
+    if(!isSimple300301(p)){
+      if(typeof oldCollect === 'function') return oldCollect.apply(this, arguments);
+      return null;
+    }
+    var n=p.number, k=(typeof kindOf==='function'?kindOf(p):''), date=document.getElementById('date_'+n)?.value||'', period=document.getElementById('period_'+n)?.value||'', place=document.getElementById('place_'+n)?.value||'', note=document.getElementById('note_'+n)?.value||'', opt=(typeof selectedOpt==='function'?selectedOpt(p):{label:'',price:Number(p.priceOneDay||p.priceTwoDays||0)});
+    if(!date||!period){alert('يرجى تحديد التاريخ والوقت قبل الإضافة للسلة');return null}
+    if(window.isPastDate&&window.isPastDate(date)){alert('لا يمكن قبول تاريخ سابق أو منتهي. اختر تاريخ اليوم أو تاريخ قادم.');return null}
+    if(typeof isPastDate==='function' && isPastDate(date)){alert('لا يمكن قبول تاريخ سابق أو منتهي. اختر تاريخ اليوم أو تاريخ قادم.');return null}
+    var extra=[];
+    ['occasion','flavor','qty'].forEach(function(fieldId){
+      var v=document.getElementById(fieldId+'_'+n)?.value;
+      if(!v) return;
+      extra.push((fieldId==='occasion'?'المناسبة':fieldId==='flavor'?'ملاحظات التشغيل':'الكمية')+': '+v);
+    });
+    var total=Number(opt.price||0);
+    return {bookingKind:k,bookingDate:date,period:period,place:place,selectionLabel:opt.label,selectedPrice:total,itemNote:note,selectedDecorImage:'',selectedDecorLabel:'',bookingSummary:[
+      '📅 التاريخ: '+(typeof arabicDateText==='function'?arabicDateText(date):date),
+      '🕒 الوقت: '+period,
+      place?'📍 المكان: '+place:'',
+      '📦 الخيار: '+(opt.label||'الأساسي'),
+      '💵 السعر: '+total+' ر.ق',
+      ...extra
+    ].filter(Boolean)};
+  };
+
+  document.addEventListener('DOMContentLoaded', applyData);
+  setTimeout(applyData,0);
+  setTimeout(applyData,300);
+})();
+</script>
