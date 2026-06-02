@@ -12602,65 +12602,44 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 </script>
 
 
-<style id="v350LangStyles">
-.v350LangSwitch{position:fixed;top:88px;left:14px;z-index:2147483000;display:flex;gap:8px;align-items:center;background:rgba(255,255,255,.94);border:1px solid rgba(233,30,99,.25);box-shadow:0 10px 30px rgba(107,22,57,.18);border-radius:999px;padding:7px;backdrop-filter:blur(10px);font-family:inherit}
-.v350LangSwitch button{border:0;border-radius:999px;padding:8px 12px;font-weight:900;cursor:pointer;background:#fff;color:#7b1739;border:1px solid rgba(233,30,99,.18);line-height:1;min-width:58px;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.v350LangSwitch button.active{background:linear-gradient(135deg,#f72585,#ff6ba8);color:#fff;border-color:transparent;box-shadow:0 8px 20px rgba(247,37,133,.25)}
-.v350LangSwitch .v350Icon{font-size:17px;margin-inline-end:4px}
-html[lang="en"] body{direction:ltr;text-align:left}
-html[lang="en"] .v350KeepRtl, html[lang="en"] [dir="rtl"]{direction:ltr!important;text-align:left!important}
-html[lang="en"] input, html[lang="en"] textarea, html[lang="en"] select{direction:ltr;text-align:left}
-html[lang="en"] .product-card, html[lang="en"] .card, html[lang="en"] .modal, html[lang="en"] .v349Box{direction:ltr;text-align:left}
-html[lang="en"] .v350LangSwitch{left:14px;right:auto}
-@media(max-width:700px){.v350LangSwitch{top:72px;left:8px;transform:scale(.92);transform-origin:left top}.v350LangSwitch button{padding:7px 10px;min-width:50px}}
+<!-- ===== V355: Arabic only - remove translation and language buttons ===== -->
+<style id="almalika-v355-arabic-only">
+  #v350LangSwitch,#v352LangSwitch,#almalikaLangToggleV354,.v350LangSwitch,.v352LangSwitch,[id*="LangToggle"],[class*="LangSwitch"]{
+    display:none!important;visibility:hidden!important;pointer-events:none!important;
+  }
+  html,body{direction:rtl!important;text-align:right!important;}
+  body{padding-top:0!important;}
+  .product{position:relative!important;}
+  .product .num,.products .num{
+    position:absolute!important;top:9px!important;left:9px!important;right:auto!important;
+    width:34px!important;height:34px!important;min-width:34px!important;max-width:34px!important;
+    padding:0!important;margin:0!important;border-radius:50%!important;
+    background:#e11d48!important;color:#fff!important;border:2px solid #fff!important;
+    box-shadow:0 7px 16px rgba(225,29,72,.30)!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;
+    font-size:13px!important;font-weight:1000!important;line-height:1!important;letter-spacing:-.3px!important;
+    overflow:hidden!important;white-space:nowrap!important;
+  }
+  @media(max-width:700px){.product .num,.products .num{width:32px!important;height:32px!important;min-width:32px!important;max-width:32px!important;font-size:12px!important;}}
 </style>
-<script id="v350FullEnglishToggle">
+<script id="almalika-v355-arabic-only-script">
 (function(){
-  if(window.__v350LangInstalled) return; window.__v350LangInstalled=true;
-  const EXACT={
-    'الرئيسية':'Home','النطاطيات والزحلاقيات':'Inflatables & Slides','النطاطيات':'Inflatables','الزحلاقيات':'Slides','الألعاب المائية':'Water Games','الألعاب الصابونية':'Foam Games','الفوم بارتي':'Foam Party','الألعاب الكهربائية':'Electric Games','السناك والعربات':'Snacks & Carts','تجهيز الحفلات':'Party Setup','الطاولات والكراسي والشخصيات':'Tables, Chairs & Characters','العروض والبكجات':'Offers & Packages','بند أخرى':'Other Items','العروض':'Offers','واتساب':'WhatsApp','السلة':'Cart','تفاصيل':'Details','التسوق السريع':'Quick Shop','تحويل لصديق':'Send to Friend','احجز الآن وأضف للسلة':'Book Now & Add to Cart','استفسار واتساب':'WhatsApp Inquiry','إغلاق':'Close','متابعة التسوق':'Continue Shopping','تفريغ السلة':'Empty Cart','إرسال السلة واتساب':'Send Cart by WhatsApp','إرسال الطلب واتساب':'Send Order by WhatsApp','فتح تفاصيل العرض':'Open Offer Details','اختر شكل الديكور المناسب للزبون':'Choose the suitable decoration style for the customer','الصورة الأساسية':'Main Image','شكل':'Style','مختصر الديكور':'Decoration Summary','اختيار باقة الديكور':'Choose Decoration Package','بيانات حجز الديكور':'Decoration Booking Details','اختيار ألوان البالونات':'Choose Balloon Colors','الألوان اللامعة':'Shiny Colors','الشخصية / الثيم':'Character / Theme','اسم الطفل / الطفلة على البنر':'Child Name on Banner','حسب الطلب / ثيم خاص':'Custom Theme / By Request','حسب الطلب':'By Request','حسب الاتفاق':'By Agreement','مطلوب':'Required','السعر':'Price','المقاس':'Size','النوع':'Type','مدة الإيجار بالساعات':'Rental Duration','عدد الأطفال':'Number of Children','عدد الأشخاص':'Number of People','يشمل':'Includes','إضافات/خيارات':'Add-ons / Options','شروط/ملاحظات':'Terms / Notes','النص المختصر للموقع':'Short Website Text','يوم واحد':'One Day','يومين':'Two Days','فترة الصيف':'Summer Period','حسب الحجز':'By Booking','داخل الدوحة':'Inside Doha','خارج الدوحة':'Outside Doha','مصاريف التوصيل':'Delivery Fee','الإجمالي النهائي':'Final Total','إجمالي المنتجات':'Products Total','منطقة التوصيل':'Delivery Area','اسم العميل':'Customer Name','رقم الجوال':'Mobile Number','تاريخ الحجز':'Booking Date','تاريخ النهاية':'End Date','رابط خرائط Google للموقع':'Google Maps Location Link','استخدام موقعي الحالي':'Use My Current Location','او اكتب البيانات اليدوية التالية':'Or enter the address details below','رقم المنطقة':'Zone Number','رقم الشارع':'Street Number','رقم المنزل':'House Number','كاش':'Cash','تحويل / بطاقة':'Transfer / Card','ملاحظات عامة للطلب':'General Order Notes','الشروط':'Terms','الأمن والسلامة':'Safety & Security','من نحن':'About Us','تواصل معنا':'Contact Us','طريقة الحجز':'Booking Method','خدمات الملكة للحفلات':'Almalika Party Services','راحة في الحجز، سرعة في الرد، واهتمام بالتفاصيل من أول رسالة حتى نهاية الحفلة.':'Easy booking, quick replies, and attention to every detail from the first message to the end of the party.','شركة الملكة للحفلات - قطر':'Almalika Parties - Qatar','نطاطيات · زحلاقيات · سناك · تجهيز حفلات':'Inflatables · Slides · Snacks · Party Setup','الأقسام الرئيسية':'Main Categories','تقسيم واضح مع واجهة VIP مرنة وسريعة في التصفح.':'Clear sections with a flexible, fast VIP browsing experience.','مختارات VIP عامة':'General VIP Picks','مختارات عامة من جميع الأقسام: نطاطيات، سناك، تجهيز حفلات، طاولات وشخصيات، وبنود أخرى.':'General picks from all sections: inflatables, snacks, party setup, tables, characters, and more.','طريقة عرض المنتجات':'Product View Mode','ابحث بالرقم أو الاسم أو القسم...':'Search by number, name, or category...','بالرقم':'By Number','الجميع':'All','الإجمالي':'Total','بند':'Item','لا توجد منتجات محفوظة':'No saved products','العودة للموقع':'Back to Website','واتساب الإدارة':'Admin WhatsApp','طباعة الطلب':'Print Order','طلب شركة الملكة للحفلات':'Almalika Party Order','رقم الطلب':'Order Number','المنتجات':'Products','فتح الموقع':'Open Location','العنوان':'Address','الدفع':'Payment','الجوال':'Mobile','تاريخ الحجز':'Booking Date','رابط مشاهدة الطلب مع الصور':'Order View Link with Images','المنتجات المطلوبة':'Requested Products','صورة المنتج':'Product Image','الإجمالي':'Total','ريال':'QAR','ر.ق':'QAR','يبدأ من':'Starts from','مناسبة للجميع':'Suitable for All','مناسب للأطفال':'Suitable for Children','من 6 سنوات الى 18 سنة':'From 6 to 18 years','من2 سنوات الى 8 سنة':'From 2 to 8 years','من 2 سنوات الى 13 سنة':'From 2 to 13 years','عند الضغط على واتساب سيتم تفريغ السلة مباشرة.':'After clicking WhatsApp, the cart will be emptied immediately.','اختر رقم الإدارة للإرسال.':'Choose the admin number to send to.','لن يظهر الرابط الطويل داخل هذه النافذة.':'The long link will not appear in this window.','إرسال نسخة للزبون':'Send Copy to Customer','رابط الطلب صار مختصر وواضح، والتفاصيل الكاملة داخل الرسالة':'The order link is shorter; full details are inside the WhatsApp message',
-    'وردي':'Pink','أزرق':'Blue','أبيض':'White','ذهبي':'Gold','خمري':'Burgundy','أسود':'Black','سماوي':'Sky Blue','أصفر':'Yellow','أخضر':'Green','أحمر':'Red','بنفسجي':'Purple','برتقالي':'Orange','بيبي وردي':'Baby Pink','بيبي أزرق':'Baby Blue','بيبي أصفر':'Baby Yellow','بيبي موف':'Baby Mauve','بيبي أبيض':'Baby White','بيبي سماوي':'Baby Sky Blue','بيبي خوخي':'Baby Peach','بيبي أخضر':'Baby Green'
-  };
-  const PHRASES=[
-    ['شركة الملكة للحفلات وتأجير النطاطيات','Almalika Parties & Inflatable Rentals'],['شركة الملكة للحفلات','Almalika Parties'],['كتالوج الحجز السريع','Quick Booking Catalog'],['للحفلات وتأجير النطاطيات','for Parties & Inflatable Rentals'],['لتنظيم حفلات الأطفال وتوفير نطاطيات وتأجيرها','for organizing children parties and renting inflatables'],['حفلة متكاملة','Complete Party'],['كل ما يحتاجه طفلك في حفلة واحدة','Everything your child needs in one party'],['نطاطية وزحلاقية','Inflatable & Slide'],['نطاطية صغيرة','Small Inflatable'],['نطاطية كبيرة','Large Inflatable'],['نطاطية','Inflatable'],['زحلاقية','Slide'],['ملعب صابوني هوائي','Inflatable Foam Playground'],['الملعب الصابوني','Foam Playground'],['ملعب صابوني','Foam Playground'],['صابوني هوائي','Inflatable Foam'],['حوض بركة','Pool'],['بركة سباحة','Swimming Pool'],['جهاز فوم صابون','Foam Machine'],['مع جهاز صابون','with Foam Machine'],['ماكينة آيس كريم','Ice Cream Machine'],['آيس كريم','Ice Cream'],['ماكينة الفشار','Popcorn Machine'],['عربة فشار','Popcorn Cart'],['فشار','Popcorn'],['غزل البنات','Cotton Candy'],['غزل','Cotton Candy'],['بطاطا حلزوني','Spiral Potato'],['ذرة حلوة','Sweet Corn'],['عصير بارد','Cold Juice'],['سلاش','Slush'],['نافورة الشوكولاتة','Chocolate Fountain'],['شوكولاتة','Chocolate'],['وافل','Waffle'],['بان كيك','Pancake'],['ديكور حفلة عيد ميلاد','Birthday Party Decoration'],['ديكور حفلة','Party Decoration'],['ديكور تخرج','Graduation Decoration'],['ديكور','Decoration'],['استاند مربع كبير لامع','Large Shiny Square Stand'],['استاند مربع صغير لامع','Small Shiny Square Stand'],['استاند مربع','Square Stand'],['استاند دائري أرضي','Floor Round Stand'],['استاند دائري مرفوع','Raised Round Stand'],['قوس بالونات','Balloon Arch'],['بالونات هيليوم','Helium Balloons'],['بالونات','Balloons'],['طاولات وكراسي','Tables & Chairs'],['طاولة وكرسي','Table & Chair'],['طاولة','Table'],['كراسي','Chairs'],['شخصيات كرتونية','Cartoon Characters'],['رسم وجه','Face Painting'],['مسابقات مع هدايا','Games with Gifts'],['مسابقات','Games'],['هدايا','Gifts'],['خلفية فاخرة','Luxury Backdrop'],['بالون فاخر','Luxury Balloons'],['ليزر','Laser'],['ستيج مضيء','LED Stage'],['ستاند كيك','Cake Stand'],['كيك','Cake'],['موظفة','Staff'],['توصيل وتركيب','Delivery & Setup'],['نظافة وتعقيم','Cleaning & Sanitization'],['فريق عمل محترف','Professional Team'],['أمان وجودة عالية','High Safety & Quality'],['داخل الدوحة فقط','Inside Doha Only'],['داخل الدوحة','Inside Doha'],['خارج الدوحة','Outside Doha'],['حسب الصورة','As Shown'],['حسب التوفر','Subject to Availability'],['غير شامل التوصيل','Delivery Not Included'],['شامل التوصيل','Delivery Included'],['الحجز قبل','Book Before'],['حسب الشكل','By Style'],['حسب اللون المطلوب','By Requested Color'],['بدون سناك','No Snacks'],['بدون اسم طفل','No Child Name'],['بدون طاولات','No Tables'],['بدون بالونات','No Balloons'],['أسماء أطفال','Children Names'],['اسم طفل','Child Name'],['اسماء اطفال','Children Names'],['عدد الأطفال','Children Count'],['طفل','Child'],['شخص','Person'],['حبة','Piece'],['ساعة','Hour'],['ساعات','Hours'],['أيام','Days'],['يوم','Day'],['متر','m'],['ريال قطري','QAR'],['ريال','QAR'],['ر.ق','QAR'],['السعر الأساسي','Base Price'],['إضافة','Add'],['إضافي','Extra'],['شامل','Included'],['إيجار','Rental'],['ايجار','Rental'],['بيع','Sale'],['خدمة','Service'],['الدوحة','Doha'],['قطر','Qatar'],['الملكة','Almalika'],['صيف الملكة','Almalika Summer'],['عرض المتعة','Fun Offer'],['عرض شامل ومميز','Complete Special Offer'],['عيد ميلاد سعيد','Happy Birthday'],['عرض الفخامة','Luxury Offer'],['بكج ميلاد','Birthday Package'],['بكج التخرج الملكي','Royal Graduation Package'],['بكج تخرج','Graduation Package'],['جمعتكم معنا','Your Gathering with Us'],['الباقة الذهبية','Golden Package'],['ديكورات مميزة لجميع المناسبات','Special Decorations for All Occasions'],['خدمة 30 شخص','Service for 30 People'],['Class of 2026','Class of 2026']
-  ];
-  function norm(s){return String(s||'').replace(/\s+/g,' ').trim()}
-  function enText(s){
-    if(!s) return s; let t=String(s); const n=norm(t); if(EXACT[n]) return t.replace(n,EXACT[n]);
-    t=t.replace(/ر\.ق/g,'QAR').replace(/د\.ق/g,'QAR').replace(/([0-9٠-٩,.]+)\s*ريال/g,'$1 QAR');
-    for(const [a,b] of PHRASES){ t=t.split(a).join(b); }
-    t=t.replace(/من\s*([0-9٠-٩]+)\s*سنوات?\s*الى\s*([0-9٠-٩]+)\s*سنة/g,'from $1 to $2 years');
-    t=t.replace(/الطول/g,'Length').replace(/العرض/g,'Width').replace(/الارتفاع/g,'Height').replace(/العمر المناسب/g,'Suitable age');
-    return t;
+  try{
+    ['almalika_lang_v350','almalika_lang_v352','almalika_lang_v354','almalika_lang'].forEach(function(k){localStorage.removeItem(k);});
+  }catch(e){}
+  window.applyLang=function(){return false};
+  window.__v350LangInstalled=true;
+  window.__v352ForceLang=true;
+  document.documentElement.lang='ar';
+  document.documentElement.dir='rtl';
+  function clean(){
+    document.documentElement.lang='ar';document.documentElement.dir='rtl';
+    if(document.body){document.body.dir='rtl';document.body.style.direction='rtl';}
+    document.querySelectorAll('#v350LangSwitch,#v352LangSwitch,#almalikaLangToggleV354,.v350LangSwitch,.v352LangSwitch,[id*="LangToggle"],[class*="LangSwitch"]').forEach(function(el){el.remove();});
+    document.querySelectorAll('.product .num,.products .num').forEach(function(el){var n=(el.textContent||'').replace(/[^0-9]/g,''); if(n) el.textContent=n;});
   }
-  function shouldSkip(node){let e=node.nodeType===3?node.parentElement:node; if(!e) return true; return !!e.closest('script,style,noscript,svg,canvas,code,pre,[data-no-translate],.notranslate');}
-  function walk(root,lang){
-    if(!root || shouldSkip(root)) return;
-    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode(n){if(shouldSkip(n))return NodeFilter.FILTER_REJECT;if(!norm(n.nodeValue))return NodeFilter.FILTER_REJECT;return NodeFilter.FILTER_ACCEPT;}});
-    const nodes=[]; while(walker.nextNode())nodes.push(walker.currentNode);
-    nodes.forEach(n=>{ if(!n.parentElement.dataset.v350OrigText)n.parentElement.dataset.v350OrigText=n.nodeValue; const o=n.parentElement.dataset.v350OrigText; n.nodeValue=(lang==='en'?enText(o):o); });
-    root.querySelectorAll&&root.querySelectorAll('input,textarea,select,button,a,[title],[aria-label]').forEach(el=>{
-      ['placeholder','title','aria-label','value'].forEach(attr=>{ if(!el.hasAttribute(attr))return; if(attr==='value' && !/^(button|submit|reset)$/i.test(el.type||'') && el.tagName!=='BUTTON')return; const key='v350Orig_'+attr; if(!el.dataset[key])el.dataset[key]=el.getAttribute(attr); const o=el.dataset[key]; el.setAttribute(attr,lang==='en'?enText(o):o); });
-    });
-  }
-  function applyLang(lang){
-    localStorage.setItem('almalika_lang_v350',lang);
-    document.documentElement.lang=lang; document.documentElement.dir=(lang==='en'?'ltr':'rtl'); document.body&&document.body.setAttribute('dir',lang==='en'?'ltr':'rtl');
-    walk(document.body,lang);
-    document.querySelectorAll('[data-v350-lang]').forEach(b=>b.classList.toggle('active',b.dataset.v350Lang===lang));
-  }
-  function addSwitch(){
-    if(document.getElementById('v350LangSwitch')) return;
-    const box=document.createElement('div'); box.id='v350LangSwitch'; box.className='v350LangSwitch notranslate';
-    box.innerHTML='<button type="button" data-v350-lang="ar" title="العربية"><span class="v350Icon">🇶🇦</span>AR<br><small>العربية</small></button><button type="button" data-v350-lang="en" title="English"><span class="v350Icon">🇬🇧</span>EN<br><small>English</small></button>';
-    document.body.appendChild(box);
-    box.addEventListener('click',function(e){const b=e.target.closest('button[data-v350-lang]'); if(!b)return; applyLang(b.dataset.v350Lang); setTimeout(()=>applyLang(b.dataset.v350Lang),120);});
-  }
-  function install(){addSwitch(); const saved=localStorage.getItem('almalika_lang_v350')||'en'; applyLang(saved); setTimeout(()=>applyLang(saved),500); setTimeout(()=>applyLang(saved),1500);
-    const mo=new MutationObserver(function(muts){const lang=localStorage.getItem('almalika_lang_v350')||'en'; clearTimeout(window.__v350LangT); window.__v350LangT=setTimeout(()=>{muts.forEach(m=>m.addedNodes&&m.addedNodes.forEach(n=>{if(n.nodeType===1)walk(n,lang)})); document.querySelectorAll('[data-v350-lang]').forEach(b=>b.classList.toggle('active',b.dataset.v350Lang===lang));},50);});
-    mo.observe(document.documentElement,{childList:true,subtree:true});
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',install); else install();
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',clean); else clean();
+  setTimeout(clean,100); setTimeout(clean,800); setTimeout(clean,1800);
 })();
 </script>
 
