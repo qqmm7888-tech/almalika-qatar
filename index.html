@@ -5282,14 +5282,18 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&l
 function snackPackage20Price(p){const one=Number(p.priceOneDay||p.priceTwoDays||0), two=Number(p.priceTwoDays||one||0); const step=two>one?(two-one)/2:0; return Math.max(0, Math.round((one-step)/10)*10)}
 function price(p){if(p.packagePrices){return Math.min(...Object.values(p.packagePrices).map(Number).filter(x=>x>0))} return Number(p.priceOneDay||p.priceTwoDays||0)}
 function duration(p){return p.durationOneDay||p.durationTwoDays||'حسب الحجز'}
-function sectionOf(p){let c=p.category||'', t=p.type||'', n=p.name||'', d=p.details||''; const blob=c+' '+t+' '+n+' '+d;
- if(/عروض|عرض|بكج|بكجات|باقة|باقات/.test(blob))return 'offers';
- if(c==='الطاولات والكراسي والشخصيات')return 'rentals';
- if(c==='السناك والعربات')return 'snacks';
- if(c==='تجهيز الحفلات والمناسبات')return 'events';
- if(blob.includes('طاول')||blob.includes('طاولة')||blob.includes('كراسي')||blob.includes('كرسي')||blob.includes('شخصيات')||blob.includes('شخصية كرتونية')||blob.includes('كرتونية'))return 'rentals';
- if(c==='بنود أخرى')return 'other';
- return 'bouncies'}
+function sectionOf(p){
+  let c=p.category||'', t=p.type||'', n=p.name||'', d=p.details||'';
+  const num=Number(p.number||p.id||0);
+  const blob=c+' '+t+' '+n+' '+d;
+  if((num>=600 && num<=699) || /^عروض/.test(c) || /^عرض/.test(t) || /^بكج/.test(t) || /^باقة/.test(t)) return 'offers';
+  if(c==='الطاولات والكراسي والشخصيات')return 'rentals';
+  if(c==='السناك والعربات')return 'snacks';
+  if(c==='تجهيز الحفلات والمناسبات')return 'events';
+  if(blob.includes('طاول')||blob.includes('طاولة')||blob.includes('كراسي')||blob.includes('كرسي')||blob.includes('شخصيات')||blob.includes('شخصية كرتونية')||blob.includes('كرتونية'))return 'rentals';
+  if(c==='بنود أخرى')return 'other';
+  return 'bouncies'
+}
 function allLabel(sec){return 'الجميع'}
 function normalizeArabic(s){return decodeURIComponent(String(s||'')).replace(/\+/g,' ').trim()}
 function isAllSub(sub){const x=normalizeArabic(sub); return !x || x==='الجميع' || x==='الكل' || x.includes('جميع') || x.includes('الكل')}
@@ -5327,9 +5331,16 @@ function relevantProducts(){
   }else{
     base=products.filter(p=>sectionOf(p)===current);
   }
+
   let arr=base.filter(p=>matchesInternal(p,internal));
-  if(!arr.length && isAllSub(internal)) arr=base.slice();
-  if(!arr.length && current!=='home') arr=base.slice();
+
+  if(current==='offers'){
+    if(!arr.length && isAllSub(internal)) arr=base.slice();
+  }else{
+    if(!arr.length && isAllSub(internal)) arr=base.slice();
+    if(!arr.length && current!=='home') arr=base.slice();
+  }
+
   const term=(q?.value||'').trim().toLowerCase();
   if(term)arr=arr.filter(p=>`${p.number} ${p.name} ${p.category} ${p.type} ${p.age} ${p.details||''} ${p.offerIncludes||''}`.toLowerCase().includes(term));
   const sort=sortSelect?.value||'number';
@@ -11069,6 +11080,31 @@ textarea.requiredCustomerField:focus{
 })();
 </script>
 
+
+
+<script id="almalika-v282-offers-strict-no-bouncy-pull">
+(function(){
+  function isRealOffer(p){
+    const c=String(p&&p.category||''), t=String(p&&p.type||'');
+    const n=Number(p&&(p.number||p.id)||0);
+    return (n>=600&&n<=699) || /^عروض/.test(c) || /^عرض/.test(t) || /^بكج/.test(t) || /^باقة/.test(t);
+  }
+  const oldSectionOf = window.sectionOf;
+  if(typeof oldSectionOf === 'function'){
+    window.sectionOf = sectionOf = function(p){
+      if(isRealOffer(p)) return 'offers';
+      const c=String(p&&p.category||''), t=String(p&&p.type||''), nm=String(p&&p.name||''), d=String(p&&p.details||'');
+      const blob=c+' '+t+' '+nm+' '+d;
+      if(c==='الطاولات والكراسي والشخصيات')return 'rentals';
+      if(c==='السناك والعربات')return 'snacks';
+      if(c==='تجهيز الحفلات والمناسبات')return 'events';
+      if(blob.includes('طاول')||blob.includes('طاولة')||blob.includes('كراسي')||blob.includes('كرسي')||blob.includes('شخصيات')||blob.includes('شخصية كرتونية')||blob.includes('كرتونية'))return 'rentals';
+      if(c==='بنود أخرى')return 'other';
+      return 'bouncies';
+    };
+  }
+})();
+</script>
 
 </body>
 </html>
