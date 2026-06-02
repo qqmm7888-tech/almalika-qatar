@@ -14067,3 +14067,67 @@ section.wrap,
   setTimeout(applyData,300);
 })();
 </script>
+
+
+<!-- ===== V326 FORCE: إظهار اختيار ألوان البالونات للأرقام 210/211/250 بعد فتح التفاصيل ===== -->
+<style id="almalika-v326-force-balloon-colors-style">
+#modal .forcedBalloonColors210211250{display:block!important;margin:12px 0!important;visibility:visible!important;opacity:1!important}
+</style>
+<script id="almalika-v326-force-balloon-colors-js">
+(function(){
+  function isTarget(n){n=Number(n); return n===210||n===211||n===250;}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  var fallbackColors = [
+    ['أبيض','#ffffff'],['ذهبي','#d4af37'],['فضي','#c0c0c0'],['وردي','#ff8cc6'],['أزرق','#64b5f6'],['بنفسجي','#9c27b0'],['أحمر','#ef4444'],['أصفر','#fde047'],['أخضر','#22c55e'],['أسود','#111111']
+  ];
+  function buildBalloonBox(n){
+    if(typeof window.balloonColorHtml==='function'){
+      try{
+        var html = window.balloonColorHtml(n);
+        if(html && html.indexOf('balloon_'+n)>=0) return html;
+      }catch(e){}
+    }
+    return '<div class="balloonColorBox forcedBalloonColors210211250" id="forcedBalloonBox_'+n+'">'+
+      '<div class="choiceBoxTitle">🎈 اختيار ألوان البالونات</div>'+
+      '<div class="colorSwatches">'+fallbackColors.map(function(c){return '<label class="colorSwatch"><input type="checkbox" name="balloon_'+n+'" value="'+esc(c[0])+'"><span class="colorDot" style="background:'+c[1]+'"></span>'+esc(c[0])+'</label>';}).join('')+'</div>'+
+      '<div class="addonHint">يمكن اختيار لون واحد أو أكثر، وإذا تركها الزبون فاضية يتم التنسيق مع الإدارة.</div>'+
+      '</div>';
+  }
+  function currentProductNumber(){
+    var tag=document.querySelector('#modal .modalInfo .tag');
+    if(tag){var m=String(tag.textContent||'').match(/#?\s*(\d+)/); if(m)return Number(m[1]);}
+    var title=document.querySelector('#modal [id^="date_"]');
+    if(title){var m2=title.id.match(/date_(\d+)/); if(m2)return Number(m2[1]);}
+    return 0;
+  }
+  function ensureBalloonBox(){
+    try{
+      var n=currentProductNumber();
+      if(!isTarget(n)) return;
+      var info=document.querySelector('#modal .modalInfo');
+      if(!info) return;
+      if(info.querySelector('input[name="balloon_'+n+'"]')) return;
+      var insertBefore = info.querySelector('.workNotice, .workingHoursHint, textarea[id="note_'+n+'"], .modalActions');
+      var holder=document.createElement('div');
+      holder.className='forcedBalloonColors210211250';
+      holder.innerHTML=buildBalloonBox(n);
+      if(insertBefore) info.insertBefore(holder, insertBefore); else info.appendChild(holder);
+    }catch(e){}
+  }
+  var oldOpen=window.openProduct;
+  if(typeof oldOpen==='function'){
+    window.openProduct=function(){
+      var r=oldOpen.apply(this, arguments);
+      setTimeout(ensureBalloonBox,0);
+      setTimeout(ensureBalloonBox,100);
+      setTimeout(ensureBalloonBox,350);
+      return r;
+    };
+  }
+  document.addEventListener('click',function(){setTimeout(ensureBalloonBox,80);setTimeout(ensureBalloonBox,250);},true);
+  if(window.MutationObserver){
+    setTimeout(function(){var modal=document.getElementById('modal'); if(modal) new MutationObserver(function(){ensureBalloonBox();}).observe(modal,{childList:true,subtree:true});},200);
+  }
+  setTimeout(ensureBalloonBox,0); setTimeout(ensureBalloonBox,700);
+})();
+</script>
