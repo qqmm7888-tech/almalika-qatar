@@ -14494,3 +14494,157 @@ section.wrap,
   setTimeout(updateProductFlags,0); setTimeout(updateProductFlags,400); setTimeout(ensureModalPatch,700);
 })();
 </script>
+
+
+<!-- ===== V329: Add pastel icons/symbols similar to reference ===== -->
+<style id="almalika-v329-pastel-symbols-style">
+  :root{
+    --v329-pink:#ff5fa2;
+    --v329-pink2:#ff7fb7;
+    --v329-lilac:#ccb8ff;
+    --v329-blue:#cfe9ff;
+    --v329-babyblue:#bce8ff;
+    --v329-gold:#ffd777;
+    --v329-mint:#c9f4e2;
+    --v329-cream:#fff8ef;
+    --v329-border:#f3d8e6;
+    --v329-text:#5d2451;
+  }
+  .nav{gap:10px !important;flex-wrap:wrap !important}
+  .nav .v329NavBtn{
+    display:flex !important;align-items:center !important;gap:10px !important;
+    border-radius:999px !important;padding:10px 16px !important;
+    border:1px solid #f3d8e6 !important;background:#fffafc !important;color:#6f2555 !important;
+    box-shadow:0 6px 18px rgba(214,79,146,.08) !important;transition:.18s ease !important;
+    font-weight:900 !important;
+  }
+  .nav .v329NavBtn:hover{transform:translateY(-2px) !important;box-shadow:0 10px 24px rgba(214,79,146,.13) !important}
+  .nav .v329NavBtn.active{
+    background:linear-gradient(135deg,var(--v329-pink),#ff4f8d) !important;color:#fff !important;border-color:transparent !important;
+    box-shadow:0 12px 24px rgba(255,92,153,.26) !important;
+  }
+  .v329NavBubble{
+    width:34px;height:34px;display:grid;place-items:center;border-radius:50%;flex:0 0 34px;
+    background:rgba(255,255,255,.9);box-shadow:inset 0 0 0 1px rgba(255,255,255,.5),0 4px 10px rgba(0,0,0,.06);
+  }
+  .v329NavBtn:not(.active) .v329NavBubble.v329-home{background:linear-gradient(135deg,#ffe4ef,#fff8fb)}
+  .v329NavBtn:not(.active) .v329NavBubble.v329-bouncies{background:linear-gradient(135deg,#fff0bf,#fff9e4)}
+  .v329NavBtn:not(.active) .v329NavBubble.v329-snacks{background:linear-gradient(135deg,#ffe5c0,#fff6e6)}
+  .v329NavBtn:not(.active) .v329NavBubble.v329-events{background:linear-gradient(135deg,#ffe0f1,#fff7fc)}
+  .v329NavBtn:not(.active) .v329NavBubble.v329-rentals{background:linear-gradient(135deg,#dff6f3,#f4fffd)}
+  .v329NavBtn:not(.active) .v329NavBubble.v329-offers{background:linear-gradient(135deg,#efe4ff,#fcf8ff)}
+  .v329NavBtn:not(.active) .v329NavBubble.v329-other{background:linear-gradient(135deg,#dff0ff,#f7fbff)}
+  .v329NavBtn.active .v329NavBubble{background:rgba(255,255,255,.18)}
+  .v329NavLabel{line-height:1.1}
+
+  .mainCats .cat.v329DecorCat{
+    position:relative;overflow:hidden;border-radius:26px !important;border:1px solid rgba(214,163,197,.45)!important;
+    box-shadow:0 10px 30px rgba(185,107,151,.10)!important;padding:18px 16px 16px !important;
+    min-height:210px;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:flex-start !important;text-align:center !important;
+  }
+  .mainCats .cat.v329DecorCat::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.95;
+    background:radial-gradient(circle at 15% 14%,rgba(255,255,255,.9),rgba(255,255,255,0) 28%), radial-gradient(circle at 84% 18%,rgba(255,255,255,.46),rgba(255,255,255,0) 22%);
+  }
+  .mainCats .cat.v329DecorCat .icon{display:none !important}
+  .mainCats .cat.v329DecorCat .v329CardBubble{
+    width:88px;height:88px;border-radius:28px;display:grid;place-items:center;margin:2px auto 12px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),0 10px 24px rgba(0,0,0,.06);
+    position:relative;z-index:1;
+  }
+  .mainCats .cat.v329DecorCat .v329CardBubble.round{border-radius:50%}
+  .mainCats .cat.v329DecorCat h3{font-size:22px !important;line-height:1.25 !important;color:#47205d !important;position:relative;z-index:1;margin:0 0 8px !important}
+  .mainCats .cat.v329DecorCat p{font-size:13px !important;font-weight:900 !important;color:#6b5371 !important;position:relative;z-index:1;margin:0 !important}
+  .mainCats .cat.v329DecorCat .v329Explore{
+    margin-top:auto;position:relative;z-index:1;background:#fff;border:1px solid rgba(222,176,197,.65);
+    color:#b23075;font-weight:900;border-radius:999px;padding:8px 18px;font-size:14px;
+    box-shadow:0 4px 10px rgba(0,0,0,.03);
+  }
+  .mainCats .cat.v329-bouncies{background:linear-gradient(180deg,#fff3c9 0%,#fff9ea 100%) !important}
+  .mainCats .cat.v329-snacks{background:linear-gradient(180deg,#ffe1ca 0%,#fff5ee 100%) !important}
+  .mainCats .cat.v329-events{background:linear-gradient(180deg,#ffe1f1 0%,#fff5fb 100%) !important}
+  .mainCats .cat.v329-rentals{background:linear-gradient(180deg,#def7f3 0%,#f4fffd 100%) !important}
+  .mainCats .cat.v329-offers{background:linear-gradient(180deg,#eee3ff 0%,#fbf8ff 100%) !important}
+  .mainCats .cat.v329-other{background:linear-gradient(180deg,#dff0ff 0%,#f7fbff 100%) !important}
+
+  .headBtns .btn.green::before,.headBtns .btn.red::before,.headBtns .cartMini::before,
+  .actions .details::before,.actions .quickShop::before,.actions .shareFriend::before,.actions .wa::before{
+    display:inline-block;margin-inline-end:6px;font-size:14px;vertical-align:middle
+  }
+  .headBtns .btn.green::before{content:"💬"}
+  .headBtns .btn.red::before{content:"🔥"}
+  .headBtns .cartMini::before,.actions .quickShop::before{content:"🛒"}
+  .actions .details::before{content:"✨"}
+  .actions .shareFriend::before{content:"🎁"}
+  .actions .wa::before{content:"📱"}
+
+  .title h2 .v329TitleIcon{display:inline-flex;vertical-align:middle;margin-inline-start:6px}
+  @media(max-width:700px){
+    .nav .v329NavBtn{padding:9px 12px !important;gap:8px !important}
+    .v329NavBubble{width:30px;height:30px;flex-basis:30px}
+    .mainCats .cat.v329DecorCat{min-height:190px;padding:14px 12px !important}
+    .mainCats .cat.v329DecorCat .v329CardBubble{width:72px;height:72px}
+    .mainCats .cat.v329DecorCat h3{font-size:18px !important}
+  }
+</style>
+<script id="almalika-v329-pastel-symbols-js">
+(function(){
+  const names={home:'الرئيسية',bouncies:'النطاطيات والزحلاقيات',snacks:'السناك والعربات',events:'تجهيز الحفلات',rentals:'الطاولات والكراسي والشخصيات',offers:'العروض والبكجات',other:'بنود أخرى'};
+  const countsFor = () => ({
+    bouncies:(((typeof products!=='undefined')?products:window.products)||[]).filter(p=>typeof sectionOf==='function'&&sectionOf(p)==='bouncies').length,
+    snacks:(((typeof products!=='undefined')?products:window.products)||[]).filter(p=>typeof sectionOf==='function'&&sectionOf(p)==='snacks').length,
+    events:(((typeof products!=='undefined')?products:window.products)||[]).filter(p=>typeof sectionOf==='function'&&sectionOf(p)==='events').length,
+    rentals:(((typeof products!=='undefined')?products:window.products)||[]).filter(p=>typeof sectionOf==='function'&&sectionOf(p)==='rentals').length,
+    other:(((typeof products!=='undefined')?products:window.products)||[]).filter(p=>typeof sectionOf==='function'&&sectionOf(p)==='other').length,
+    offers:(((typeof products!=='undefined')?products:window.products)||[]).filter(p=>typeof sectionOf==='function'&&sectionOf(p)==='offers').length
+  });
+  function svg(sec, size){
+    size=size||56;
+    const map={
+      home:`<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true"><g><path d="M32 10l16 9c4 2 5 8 1 11l-17 13-17-13c-4-3-3-9 1-11l16-9z" fill="#f4a11a"/><path d="M22 39h20v10c0 4-3 7-7 7h-6c-4 0-7-3-7-7V39z" fill="#ff5fa2"/><circle cx="20" cy="26" r="4" fill="#ffd777"/><circle cx="44" cy="26" r="4" fill="#ffd777"/><circle cx="32" cy="20" r="4" fill="#ffd777"/><path d="M27 33h10" stroke="#ffd777" stroke-width="3" stroke-linecap="round"/></g></svg>`,
+      bouncies:`<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true"><g><path d="M10 52V31l9-9h26l9 9v21z" fill="#ffce5b"/><path d="M15 52V34l8-7h18l8 7v18z" fill="#ff7fa8"/><path d="M23 27l4-15 8 8 8-8 4 15" fill="#ff8a2a"/><rect x="18" y="36" width="8" height="16" rx="2" fill="#73c9ff"/><rect x="38" y="36" width="8" height="16" rx="2" fill="#73c9ff"/><rect x="28" y="40" width="8" height="12" rx="2" fill="#fff5ee"/></g></svg>`,
+      snacks:`<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true"><g><rect x="14" y="27" width="36" height="20" rx="4" fill="#ffd777"/><path d="M18 21h28l4 8H14z" fill="#ff8c4b"/><path d="M22 47h20v5H22z" fill="#ff5fa2"/><circle cx="20" cy="54" r="4" fill="#b95d25"/><circle cx="44" cy="54" r="4" fill="#b95d25"/><path d="M24 16c0-3 2-5 5-5 2 0 4 1 5 3 1-2 3-3 5-3 3 0 5 2 5 5" fill="none" stroke="#ff5fa2" stroke-width="3" stroke-linecap="round"/></g></svg>`,
+      events:`<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true"><g><circle cx="19" cy="24" r="8" fill="#ff82bc"/><circle cx="32" cy="16" r="8" fill="#ffd777"/><circle cx="45" cy="24" r="8" fill="#a4d9ff"/><path d="M19 32l3 14M32 24v22M45 32l-3 14" stroke="#c48a3d" stroke-width="2.6" stroke-linecap="round"/><path d="M24 44h16v10H24z" fill="#ff5fa2"/><path d="M20 38l12 8 12-8" fill="#ff97c7"/><path d="M32 38v16" stroke="#fff" stroke-width="2.5"/></g></svg>`,
+      rentals:`<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true"><g><rect x="14" y="20" width="18" height="12" rx="4" fill="#7de0d7"/><rect x="16" y="32" width="4" height="18" rx="2" fill="#56bdb3"/><rect x="26" y="32" width="4" height="18" rx="2" fill="#56bdb3"/><rect x="36" y="26" width="16" height="6" rx="3" fill="#ffce5b"/><rect x="42" y="32" width="4" height="18" rx="2" fill="#d8a93f"/><rect x="34" y="32" width="4" height="18" rx="2" fill="#d8a93f"/></g></svg>`,
+      offers:`<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true"><g><rect x="14" y="24" width="36" height="26" rx="5" fill="#cfb5ff"/><path d="M14 30h36" stroke="#fff" stroke-width="3"/><path d="M32 24v26" stroke="#fff" stroke-width="3"/><path d="M22 21c0-4 5-6 8-2l2 3-2 2h-3c-3 0-5-1-5-3z" fill="#ff84ba"/><path d="M42 21c0-4-5-6-8-2l-2 3 2 2h3c3 0 5-1 5-3z" fill="#ffd777"/></g></svg>`,
+      other:`<svg viewBox="0 0 64 64" width="${size}" height="${size}" aria-hidden="true"><g><path d="M20 35c4-8 10-12 12-12s8 4 12 12c-4 5-10 8-12 8s-8-3-12-8z" fill="#67c7ff"/><circle cx="32" cy="20" r="7" fill="#9fdcff"/><circle cx="18" cy="24" r="4" fill="#bfe8ff"/><circle cx="46" cy="24" r="4" fill="#bfe8ff"/></g></svg>`
+    };
+    return map[sec]||map.home;
+  }
+  function navHTML(sec,label,active){
+    return `<button class="v329NavBtn ${active?'active':''}" onclick="showSection('${sec}')"><span class="v329NavBubble v329-${sec}">${svg(sec,22)}</span><span class="v329NavLabel">${label}</span></button>`;
+  }
+  function patchNav(){
+    const nav=document.getElementById('nav');
+    const secs=(typeof sections!=='undefined')?sections:(window.sections||[]);
+    const cur=(typeof current!=='undefined')?current:window.current;
+    if(!nav||!secs||!secs.length) return;
+    nav.innerHTML=secs.map(s=>navHTML(s[0], s[1], cur===s[0])).join('');
+  }
+  function decorateHomeCards(){
+    const wrap=document.querySelector('.mainCats'); if(!wrap) return;
+    const countMap=countsFor();
+    wrap.querySelectorAll('.cat').forEach(btn=>{
+      const m=(btn.getAttribute('onclick')||'').match(/showSection\('([^']+)'\)/); if(!m) return;
+      const sec=m[1]; if(sec==='home') return;
+      btn.classList.add('v329DecorCat','v329-'+sec);
+      const label=(btn.querySelector('h3')?.textContent||names[sec]||'').trim();
+      const count = countMap[sec] || btn.querySelector('p')?.textContent || '';
+      const bubbleClass=(sec==='events'||sec==='other'||sec==='rentals'||sec==='offfers')?'round':'';
+      btn.innerHTML=`<div class="v329CardBubble ${sec==='other'?'round':''}">${svg(sec,60)}</div><h3>${label}</h3><p>${count}</p><div class="v329Explore">استكشف</div>`;
+    });
+    const t=document.querySelector('.title h2');
+    if(t && /الأقسام الرئيسية/.test(t.textContent) && !t.querySelector('.v329TitleIcon')){
+      t.innerHTML=`الأقسام الرئيسية <span class="v329TitleIcon">${svg('offers',20)}</span>`;
+    }
+  }
+  const oldRenderNav=window.renderNav;
+  window.renderNav=function(){ if(typeof oldRenderNav==='function'){ oldRenderNav.apply(this,arguments); } patchNav(); };
+  const oldRenderHome=window.renderHome;
+  window.renderHome=function(){ if(typeof oldRenderHome==='function'){ oldRenderHome.apply(this,arguments); } patchNav(); decorateHomeCards(); };
+  const oldRender=window.render;
+  window.render=function(){ if(typeof oldRender==='function'){ oldRender.apply(this,arguments); } patchNav(); if(((typeof current!=='undefined')?current:window.current)==='home') decorateHomeCards(); };
+  document.addEventListener('DOMContentLoaded',function(){ setTimeout(function(){ patchNav(); if(((typeof current!=='undefined')?current:window.current)==='home') decorateHomeCards(); },50); });
+  setTimeout(function(){ patchNav(); if(((typeof current!=='undefined')?current:window.current)==='home') decorateHomeCards(); },300);
+})();
+</script>
