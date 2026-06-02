@@ -14648,3 +14648,108 @@ section.wrap,
   setTimeout(function(){ patchNav(); if(((typeof current!=='undefined')?current:window.current)==='home') decorateHomeCards(); },300);
 })();
 </script>
+
+
+<!-- ===== V331: Dual contact routing + footer info icons ===== -->
+<style id="almalika-v331-dual-contact-footer-style">
+:root{--v331-pink:#ff4f9a;--v331-pink2:#ff7fbc;--v331-purple:#6b2a78;--v331-gold:#d4af37;--v331-cream:#fff8ef;--v331-soft:#fff4fa;--v331-border:#f4c7dd;--v331-green:#20c76a;--v331-dark:#5f2145}
+.v331FooterBar{margin:34px auto 18px;width:min(1240px,calc(100% - 28px));background:linear-gradient(135deg,#fffafc,#fff7ef);border:1px solid var(--v331-border);border-radius:28px;padding:16px;box-shadow:0 12px 34px rgba(173,72,127,.10);direction:rtl}
+.v331FooterTitle{text-align:center;color:var(--v331-dark);font-weight:1000;font-size:24px;margin:4px 0 4px}.v331FooterSub{text-align:center;color:#7f5b70;font-weight:800;margin:0 0 14px;font-size:13px}
+.v331FooterGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.v331FooterBtn{border:1px solid var(--v331-border);background:#fff;border-radius:22px;padding:14px 10px;min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 7px 18px rgba(0,0,0,.035);transition:.18s ease;color:#5b2550;font-weight:1000;text-align:center}.v331FooterBtn:hover{transform:translateY(-3px);box-shadow:0 14px 26px rgba(173,72,127,.13)}
+.v331FooterIcon{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,#ffe4ef,#fff8fb);box-shadow:inset 0 0 0 1px #fff,0 6px 14px rgba(0,0,0,.06)}.v331FooterBtn:nth-child(2) .v331FooterIcon{background:linear-gradient(135deg,#e8ddff,#fff8ff)}.v331FooterBtn:nth-child(3) .v331FooterIcon{background:linear-gradient(135deg,#dbf6ff,#f7fdff)}.v331FooterBtn:nth-child(4) .v331FooterIcon{background:linear-gradient(135deg,#fff0bf,#fffaf0)}.v331FooterBtn:nth-child(5) .v331FooterIcon{background:linear-gradient(135deg,#dff8ec,#f4fff9)}
+.v331ContactPanel{margin:18px auto 0;padding:14px;border:1px dashed var(--v331-border);border-radius:22px;background:rgba(255,255,255,.72);display:grid;grid-template-columns:1fr 1fr;gap:12px}.v331ContactCard{background:#fff;border:1px solid #f2ccdc;border-radius:20px;padding:14px;text-align:center;box-shadow:0 8px 18px rgba(0,0,0,.035)}.v331ContactCard h4{margin:0 0 5px;color:#5e2247;font-size:18px}.v331ContactCard p{margin:0 0 10px;color:#816476;font-weight:800;font-size:13px}.v331ContactBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}.v331ContactBtns a,.v331MiniContact a{border-radius:999px;padding:10px 12px;text-decoration:none;font-weight:1000;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px}.v331Wa{background:linear-gradient(135deg,#22c767,#16b55c)}.v331Call{background:linear-gradient(135deg,#ff5fa2,#e91e73)}
+.v331ModalOverlay{position:fixed;inset:0;background:rgba(34,20,32,.58);backdrop-filter:blur(5px);z-index:99999;display:none;align-items:center;justify-content:center;padding:18px}.v331ModalOverlay.show{display:flex}.v331ModalBox{width:min(720px,96vw);max-height:92vh;overflow:auto;background:#fffdf8;border-radius:30px;border:1px solid #f2c5d9;box-shadow:0 26px 60px rgba(0,0,0,.25);direction:rtl;padding:22px;position:relative}.v331ModalClose{position:absolute;left:16px;top:14px;width:42px;height:42px;border-radius:50%;border:0;background:linear-gradient(135deg,#ff4f9a,#e91e73);color:#fff;font-size:26px;font-weight:900;cursor:pointer}.v331ModalBox h2{margin:0 0 8px;color:#5f2145;font-size:28px}.v331ModalBox .lead{margin:0 0 16px;color:#7b6072;font-weight:850;line-height:1.8}.v331MiniContact{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0}.v331MiniContact .v331Person{border:1px solid #f0cade;border-radius:22px;background:linear-gradient(180deg,#fff,#fff7fb);padding:14px;text-align:center}.v331Person b{display:block;color:#5f2145;font-size:19px;margin-bottom:4px}.v331Person span{display:block;color:#846273;font-weight:850;margin-bottom:10px}.v331InfoText{line-height:2;color:#5f2145;font-weight:800;background:#fff7fb;border:1px dashed #f1bfd6;border-radius:18px;padding:14px}.v331QuickContactFixed{position:fixed;right:14px;bottom:86px;z-index:9990;display:flex;flex-direction:column;gap:8px}.v331QuickContactFixed button{border:0;border-radius:999px;padding:11px 14px;background:linear-gradient(135deg,#ff5fa2,#e91e73);color:#fff;font-weight:1000;box-shadow:0 12px 24px rgba(194,47,114,.25);cursor:pointer}.v331QuickContactFixed button:last-child{background:linear-gradient(135deg,#20c76a,#16b55c)}
+@media(max-width:800px){.v331FooterGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.v331ContactPanel,.v331MiniContact{grid-template-columns:1fr}.v331FooterBtn{min-height:92px}.v331QuickContactFixed{right:10px;bottom:78px}.v331QuickContactFixed button{padding:10px 12px;font-size:13px}}
+@media(max-width:500px){.v331FooterGrid{grid-template-columns:1fr}.v331ContactBtns{grid-template-columns:1fr}}
+</style>
+<script id="almalika-v331-dual-contact-footer-js">
+(function(){
+  const CONTACTS=[{name:'خدمة العملاء 1',phone:'33317720',wa:'97433317720',desc:'للحجز السريع وتأكيد الطلبات'},{name:'خدمة العملاء 2',phone:'33317705',wa:'97433317705',desc:'للمتابعة والاستفسارات'}];
+  function enc(s){return encodeURIComponent(String(s||''));}
+  function msgDefault(){return 'السلام عليكم، أريد الاستفسار عن كتالوج شركة الملكة للحفلات.'}
+  function normalizeMsg(msg){return String(msg||msgDefault()).replace(/33317721|33317716/g,'33317705').replace(/33317720\s*\/\s*33317705/g,'33317720 / 33317705');}
+  function waUrl(c,msg){return 'https://wa.me/'+c.wa+'?text='+enc(normalizeMsg(msg));}
+  function telUrl(c){return 'tel:'+c.phone;}
+  function openBothWhatsApp(msg){
+    msg=normalizeMsg(msg||msgDefault());
+    // تفتح رسالتين: الأولى مباشرة والثانية بفاصل بسيط حتى لا يضيع الطلب على الموظف الثاني
+    window.open(waUrl(CONTACTS[0],msg),'_blank');
+    setTimeout(function(){window.open(waUrl(CONTACTS[1],msg),'_blank');},500);
+  }
+  function contactCards(msg){
+    msg=normalizeMsg(msg||msgDefault());
+    return CONTACTS.map(c=>'<div class="v331Person"><b>'+c.name+'</b><span>'+c.phone+' — '+c.desc+'</span><div class="v331ContactBtns"><a class="v331Wa" target="_blank" href="'+waUrl(c,msg)+'">واتساب</a><a class="v331Call" href="'+telUrl(c)+'">اتصال</a></div></div>').join('');
+  }
+  function ensureModal(){
+    let m=document.getElementById('v331ContactModal');
+    if(m) return m;
+    m=document.createElement('div');m.id='v331ContactModal';m.className='v331ModalOverlay';
+    m.innerHTML='<div class="v331ModalBox"><button class="v331ModalClose" onclick="document.getElementById(\'v331ContactModal\').classList.remove(\'show\')">×</button><div id="v331ModalContent"></div></div>';
+    document.body.appendChild(m);
+    m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')});
+    return m;
+  }
+  function showContactModal(title,msg,body){
+    const m=ensureModal();
+    document.getElementById('v331ModalContent').innerHTML='<h2>'+title+'</h2><p class="lead">اختر أحد الموظفين للتواصل، أو اضغط زر واتساب للاثنين لإرسال نفس الطلب للرقمين.</p><div class="v331MiniContact">'+contactCards(msg)+'</div><div class="v331ContactBtns" style="margin-top:12px"><a class="v331Wa" href="javascript:void(0)" onclick="window.v331OpenBothWhatsApp(window.v331LastMsg)">📲 إرسال واتساب للاثنين</a><a class="v331Call" href="tel:33317720">📞 اتصال 33317720</a></div>'+(body||'');
+    window.v331LastMsg=msg||msgDefault();
+    m.classList.add('show');
+  }
+  function buildProductMsg(n){
+    try{
+      const p=(products||[]).find(x=>Number(x.number)===Number(n));
+      if(!p) return msgDefault();
+      return `السلام عليكم، أريد الاستفسار عن المنتج:\n#${p.number} - ${p.name}\nالقسم: ${p.category||''}\nالسعر يبدأ من: ${(typeof price==='function'?price(p):Number(p.priceOneDay||0))} ر.ق\n\nأرقام الملكة:\n33317720 / 33317705`;
+    }catch(e){return msgDefault()}
+  }
+  function buildCartMsg(){
+    try{return (typeof cartMessage==='function')?normalizeMsg(cartMessage()):msgDefault()}catch(e){return msgDefault()}
+  }
+  window.v331OpenBothWhatsApp=openBothWhatsApp;
+  window.v331ShowContactModal=showContactModal;
+  window.generalWa=function(){showContactModal('تواصل معنا',msgDefault())};
+  window.quickWa=function(n){showContactModal('استفسار واتساب',buildProductMsg(n))};
+  window.productInquiryWa=function(n){showContactModal('استفسار عن منتج',buildProductMsg(n))};
+  window.sendCartWa=async function(){
+    try{if(!cart.length){alert('السلة فارغة');return} if(typeof validateCustomerData==='function'&&!validateCustomerData(true))return; if(typeof saveOrderToAdmin==='function') await saveOrderToAdmin();}catch(e){}
+    showContactModal('إرسال السلة للموظفين',buildCartMsg(),'<div class="v331InfoText" style="margin-top:12px">سيتم تجهيز رسالة السلة نفسها، ويمكنك إرسالها للرقمين 33317720 و33317705 حتى يتابع الطلب الموظفان.</div>');
+  };
+
+  function footerHtml(){return `
+  <section class="v331FooterBar" id="v331FooterBar">
+    <div class="v331FooterTitle">خدمات الملكة للحفلات 👑</div>
+    <p class="v331FooterSub">راحة في الحجز، سرعة في الرد، واهتمام بالتفاصيل من أول رسالة حتى نهاية الحفلة.</p>
+    <div class="v331FooterGrid">
+      <button class="v331FooterBtn" onclick="v331OpenInfo('terms')"><span class="v331FooterIcon">📋</span><span>الشروط</span></button>
+      <button class="v331FooterBtn" onclick="v331OpenInfo('safety')"><span class="v331FooterIcon">🛡️</span><span>الأمن والسلامة</span></button>
+      <button class="v331FooterBtn" onclick="v331OpenInfo('about')"><span class="v331FooterIcon">👑</span><span>من نحن</span></button>
+      <button class="v331FooterBtn" onclick="v331OpenInfo('contact')"><span class="v331FooterIcon">📞</span><span>تواصل معنا</span></button>
+      <button class="v331FooterBtn" onclick="v331OpenInfo('booking')"><span class="v331FooterIcon">💖</span><span>طريقة الحجز</span></button>
+    </div>
+    <div class="v331ContactPanel">
+      ${CONTACTS.map(c=>`<div class="v331ContactCard"><h4>${c.name}</h4><p>${c.desc}</p><div class="v331ContactBtns"><a class="v331Wa" target="_blank" href="${waUrl(c,msgDefault())}">واتساب ${c.phone}</a><a class="v331Call" href="${telUrl(c)}">اتصال</a></div></div>`).join('')}
+    </div>
+  </section>`}
+  window.v331OpenInfo=function(type){
+    const info={
+      terms:['الشروط','يتم تأكيد الحجز بعد تحديد التاريخ والوقت والموقع وتوفر المنتج. نرجو إرسال اللوكيشن الصحيح وتجهيز المكان قبل وصول الفريق. قد تختلف بعض التفاصيل حسب مساحة المكان ونوع المناسبة.'],
+      safety:['الأمن والسلامة','سلامة الأطفال أولويتنا. يجب وجود شخص بالغ للإشراف أثناء اللعب، وتوفير كهرباء آمنة ومساحة خالية من العوائق، وفي حال الرياح أو المطر يتم التنسيق بما يحافظ على سلامة الجميع.'],
+      about:['من نحن','شركة الملكة للحفلات في قطر متخصصة في تأجير النطاطيات والزحلاقيات والسناك وتجهيز الحفلات. نهتم بالشكل الجميل، النظافة، سرعة التركيب، وتجربة مريحة للعميل والطفل.'],
+      contact:['تواصل معنا','للحجز والاستفسار يمكنك التواصل مع الموظفين على الرقمين 33317720 و33317705 عبر الاتصال أو واتساب. هدفنا الرد السريع وتأكيد طلبك بأوضح التفاصيل.'],
+      booking:['طريقة الحجز','اختر المنتج، حدد التاريخ والوقت، أرسل السلة عبر واتساب، وسيقوم الموظفون بمراجعة التفاصيل وتأكيد التوفر والسعر النهائي قبل اعتماد الطلب.']
+    }[type]||['معلومات','مرحباً بك في شركة الملكة للحفلات.'];
+    showContactModal(info[0],msgDefault(),'<div class="v331InfoText">'+info[1]+'</div>');
+  };
+  function injectFooter(){
+    const app=document.getElementById('app'); if(!app)return;
+    if(!document.getElementById('v331FooterBar')) app.insertAdjacentHTML('beforeend',footerHtml());
+    if(!document.getElementById('v331QuickContactFixed')){
+      document.body.insertAdjacentHTML('beforeend','<div class="v331QuickContactFixed" id="v331QuickContactFixed"><button onclick="v331ShowContactModal(\'اتصال سريع\',\'السلام عليكم، أريد الاستفسار عن خدمات شركة الملكة للحفلات.\')">📞 اتصال / واتساب</button><button onclick="v331OpenBothWhatsApp(\'السلام عليكم، أريد الاستفسار عن خدمات شركة الملكة للحفلات.\')">واتساب للاثنين</button></div>');
+    }
+  }
+  const oldRender=window.render; window.render=function(){if(typeof oldRender==='function')oldRender.apply(this,arguments); setTimeout(injectFooter,50)};
+  const oldRenderHome=window.renderHome; window.renderHome=function(){if(typeof oldRenderHome==='function')oldRenderHome.apply(this,arguments); setTimeout(injectFooter,50)};
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(injectFooter,100);});
+  setTimeout(injectFooter,500);
+})();
+</script>
