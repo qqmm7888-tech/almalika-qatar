@@ -5239,6 +5239,24 @@ body .cartItem .qtyBox b{
 }
 </style>
 
+
+<style>
+/* v307: حذف صور المنتجات 412 إلى 422 فقط بدون حذف المنتج */
+.product.noProductImage412to422{
+  grid-template-columns:1fr!important;
+  min-height:auto!important;
+  align-self:start!important;
+}
+.product.noProductImage412to422>.pic{display:none!important}
+.product.noProductImage412to422>.body{
+  grid-column:1/-1!important;
+  min-height:auto!important;
+}
+.product.noProductImage412to422 .body h3,
+.product.noProductImage412to422 .desc,
+.product.noProductImage412to422 .tags{min-height:auto!important}
+.product.noProductImage412to422 .bottom{margin-top:12px!important}
+</style>
 </head>
 <body>
 <div class="siteMagic" aria-hidden="true">
@@ -5454,8 +5472,9 @@ function forcedUnavailableCatalog(num){
   return unavailable.includes(Number(num)) ? {status:'غير متاح', note:'هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.'} : null;
 }
 
+function hideProductImageRange412422(p){const n=Number(p&&p.number);return n>=412&&n<=422;}
 function card(p){const inCart=cart.some(x=>Number(x.number)===Number(p.number)); const forced=forcedUnavailableCatalog(p.number); const booked=forced || bookingInfoForCatalog(p.number,getCatalogEventDate(),getCatalogEventEndDate()); const disabled=booked?'disabled':''; return `
-<div class="product ${booked?'bookedProduct':''}">
+<div class="product ${hideProductImageRange412422(p)?'noProductImage412to422':''} ${booked?'bookedProduct':''}">
 <div class="num">#${p.number}</div>
 <div class="body">
 <h3>${esc(p.name)}${booked?`<div class="bookedCatalogWord">${booked.status}</div>`:''}</h3>
@@ -5479,7 +5498,7 @@ ${booked?`<div class="availabilityMini">${booked.note}</div>`:''}
 </div>
 </div>
 </div>
-<div class="pic ${sectionOf(p)==='offers'?'offerZoomPic':''}" title="${sectionOf(p)==='offers'?'اضغط لتكبير صورة العرض':'اضغط لفتح التفاصيل'}" onclick="${sectionOf(p)==='offers'?'openOfferImage('+p.number+')':'openProduct('+p.number+')'}">${booked?`<div class="bookedImageStamp">${forced?'غير متاح':'محجوز'}</div>`:``}<img src="${esc(productImageUrl(p))}" alt="${esc(p.name)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,'${p.number}')"></div></div>`}
+${hideProductImageRange412422(p)?'':`<div class="pic ${sectionOf(p)==='offers'?'offerZoomPic':''}" title="${sectionOf(p)==='offers'?'اضغط لتكبير صورة العرض':'اضغط لفتح التفاصيل'}" onclick="${sectionOf(p)==='offers'?'openOfferImage('+p.number+')':'openProduct('+p.number+')'}">${booked?`<div class="bookedImageStamp">${forced?'غير متاح':'محجوز'}</div>`:``}<img src="${esc(productImageUrl(p))}" alt="${esc(p.name)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,'${p.number}')"></div>`}</div>`}
 function itemPrice(x){return Number(x.selectedPrice||price(x)||0)}
 function saveCart(){localStorage.setItem('almalikaCart',JSON.stringify(cart)); updateCartUI();}
 function updateCartUI(){const count=cart.reduce((a,x)=>a+(x.qty||1),0); const total=cart.reduce((a,x)=>a+itemPrice(x)*(x.qty||1),0); const c=document.getElementById('cartCount'), ct=document.getElementById('cartCountTop'), tm=document.getElementById('cartTotalMini'); if(c)c.textContent=count; if(ct)ct.textContent=count; if(tm)tm.textContent=total;}
