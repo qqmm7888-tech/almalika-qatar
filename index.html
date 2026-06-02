@@ -5676,7 +5676,9 @@ async function updateThemePreview(n){
   if(realImg && sel.selectedOptions[0]===opt){img.src=realImg;}
 }
 function balloonColorHtml(n){
-  const shinyDecorOnly = [102,103].includes(Number(n));
+  const shinyDecorOnly = [201,202].includes(Number(n));
+  /* V281: الألوان اللامعة مفعلة للديكورات 201 و202 */
+
   const shinySection = shinyDecorOnly ? `
     <div class="shinyBalloonBox">
       <div class="shinyBalloonTitle">✨ الألوان اللامعة</div>
