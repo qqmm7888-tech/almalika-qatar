@@ -5662,63 +5662,6 @@ body{
   .almWorkingTickerTrack{height:38px!important;line-height:38px!important;font-size:13px!important;animation-duration:24s!important}
 }
 </style>
-
-
-<style id="v373-force-unblock-style">
-/* v373: فتح الموقع وإلغاء أي حجب للرابط */
-#almTopFixedGroup{z-index:2147482000!important}
-.modal,.modal.show,#modal,#cartModal,.cartModal,.cartDrawer,.drawer,.quickModal,.choiceModal,.offerModal,.bookingModal,.detailsModal,[class*="modal"],[class*="Modal"],[class*="cartModal"],[class*="CartModal"]{z-index:2147483646!important}
-.modalBackdrop,.backdrop,.overlay,[class*="backdrop"],[class*="Backdrop"],[class*="overlay"],[class*="Overlay"]{z-index:2147483645!important}
-header.header a[href*="wa.me"],header.header a[href*="whatsapp"],header.header button[onclick*="WhatsApp"],header.header button[onclick*="whatsapp"],header.header button[onclick*="wa.me"],header.header .waBtn,header.header .offersBtn{display:none!important}
-</style>
-<script id="v373-force-unblock-script">
-(function(){
-  window.__ALMALIKA_BLOCK_OLD_LINK_DISABLED__ = true;
-
-  function txt(el){return ((el&&el.textContent)||'').replace(/\s+/g,' ').trim();}
-  function hideTopButtons(){
-    try{
-      document.querySelectorAll('header.header a, header.header button').forEach(function(el){
-        var t=txt(el);
-        var href=(el.getAttribute&&el.getAttribute('href'))||'';
-        var onclick=(el.getAttribute&&el.getAttribute('onclick'))||'';
-        if(t.indexOf('السلة')>-1) return;
-        if(t.indexOf('واتساب')>-1 || t.indexOf('العروض')>-1 || /wa\.me|whatsapp/i.test(href+onclick)){
-          el.style.setProperty('display','none','important');
-        }
-      });
-    }catch(e){}
-  }
-
-  function putCartAbove(){
-    try{
-      document.querySelectorAll('.modal,.modal.show,#modal,#cartModal,.cartModal,.cartDrawer,.drawer,.quickModal,.choiceModal,.offerModal,.bookingModal,.detailsModal,[class*="modal"],[class*="Modal"],[class*="cartModal"],[class*="CartModal"]').forEach(function(el){
-        el.style.setProperty('z-index','2147483646','important');
-      });
-      document.querySelectorAll('.modalBackdrop,.backdrop,.overlay,[class*="backdrop"],[class*="Backdrop"],[class*="overlay"],[class*="Overlay"]').forEach(function(el){
-        el.style.setProperty('z-index','2147483645','important');
-      });
-    }catch(e){}
-  }
-
-  function fix(){
-    hideTopButtons();
-    putCartAbove();
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    fix();
-    setTimeout(fix,100);
-    setTimeout(fix,500);
-    setTimeout(fix,1200);
-  });
-  window.addEventListener('load',fix);
-  window.addEventListener('hashchange',fix);
-  document.addEventListener('click',function(){setTimeout(fix,40);setTimeout(fix,250);},true);
-  setInterval(fix,1500);
-})();
-</script>
-
 </head>
 <body>
 <div class="siteMagic" aria-hidden="true">
@@ -13276,13 +13219,56 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 })();
 </script>
 
-
-<style id="v374-restore-offers-packages-header-style">
-/* v374: إرجاع العروض والباكجات في الهيدر، وإخفاء واتساب فقط إذا كان بجانب السلة */
-header.header a,
-header.header button{
-  visibility:visible;
+<style id="v376-stop-hiding-offers-on-hover-style">
+/* v376: منع اختفاء العروض والباكجات عند المرور فوق بنود أخرى */
+#almTopFixedGroup{z-index:2147482000!important}
+header.header,
+#almTopFixedGroup header.header{
+  overflow:visible!important;
 }
+
+/* الهيدر صف واحد بدون تراكب */
+header.header .headTop{
+  grid-template-columns:1fr auto auto!important;
+  overflow:visible!important;
+}
+header.header .nav{
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  white-space:nowrap!important;
+  align-items:center!important;
+  gap:10px!important;
+  position:relative!important;
+  z-index:10!important;
+  scrollbar-width:thin!important;
+}
+header.header .nav button{
+  flex:0 0 auto!important;
+  position:relative!important;
+  z-index:2!important;
+  transform:none!important;
+  white-space:nowrap!important;
+}
+header.header .nav button:hover{
+  transform:none!important;
+}
+
+/* زر العروض والباكجات دائمًا فوق بنود أخرى */
+header.header .nav button.v376OffersBtn{
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  z-index:999!important;
+  order:90!important;
+}
+header.header .nav button.v376OtherBtn{
+  z-index:1!important;
+  order:100!important;
+}
+
+/* إخفاء واتساب فقط من منطقة الأزرار العلوية، وليس العروض */
 header.header a[href*="wa.me"],
 header.header a[href*="whatsapp"],
 header.header button[onclick*="WhatsApp"],
@@ -13291,173 +13277,94 @@ header.header button[onclick*="wa.me"],
 header.header .waBtn{
   display:none!important;
 }
-</style>
-<script id="v374-restore-offers-packages-header-script">
-(function(){
-  function t(el){
-    return ((el && el.textContent) || '').replace(/\s+/g,' ').trim();
-  }
-  function restoreOffersAndHideWhatsappOnly(){
-    try{
-      document.querySelectorAll('header.header a, header.header button').forEach(function(el){
-        var text=t(el);
-        var href=(el.getAttribute && (el.getAttribute('href')||'')) || '';
-        var onclick=(el.getAttribute && (el.getAttribute('onclick')||'')) || '';
 
-        // مهم: رجّع العروض والباكجات ولا تخفيها نهائياً
-        if(text.indexOf('العروض')>-1 || text.indexOf('الباكجات')>-1 || /offers|packages/i.test(href+onclick)){
-          el.style.removeProperty('display');
-          el.style.setProperty('display','inline-flex','important');
-          el.style.setProperty('visibility','visible','important');
-          el.style.setProperty('opacity','1','important');
-          return;
-        }
-
-        // إخفاء واتساب فقط من الهيدر
-        if(text.indexOf('واتساب')>-1 || /wa\.me|whatsapp/i.test(href+onclick)){
-          el.style.setProperty('display','none','important');
-        }
-      });
-    }catch(e){}
-  }
-
-  document.addEventListener('DOMContentLoaded',function(){
-    restoreOffersAndHideWhatsappOnly();
-    setTimeout(restoreOffersAndHideWhatsappOnly,100);
-    setTimeout(restoreOffersAndHideWhatsappOnly,500);
-    setTimeout(restoreOffersAndHideWhatsappOnly,1200);
-  });
-  window.addEventListener('load',restoreOffersAndHideWhatsappOnly);
-  window.addEventListener('hashchange',restoreOffersAndHideWhatsappOnly);
-  document.addEventListener('click',function(){
-    setTimeout(restoreOffersAndHideWhatsappOnly,40);
-    setTimeout(restoreOffersAndHideWhatsappOnly,250);
-  },true);
-  setInterval(restoreOffersAndHideWhatsappOnly,1500);
-})();
-</script>
-
-
-<style id="v375-fix-offers-under-other-items-style">
-/* v375: منع اختفاء زر العروض والباكجات تحت بنود أخرى */
-header.header,
-#almTopFixedGroup header.header{
-  overflow:visible!important;
+/* السلة والنوافذ فوق الهيدر والشريط */
+.modal,.modal.show,#modal,#cartModal,.cartModal,.cartDrawer,.drawer,.quickModal,.choiceModal,.offerModal,.bookingModal,.detailsModal,[class*="modal"],[class*="Modal"],[class*="cartModal"],[class*="CartModal"]{
+  z-index:2147483646!important;
 }
-
-/* صف الأقسام في الهيدر يبقى صف واحد، وأي زيادة تظهر بسكرول أفقي بدل ما تركب فوق بعض */
-header.header .nav,
-header.header nav,
-header.header .tabs,
-header.header .categories,
-header.header .catBar,
-header.header .categoryBar,
-header.header [class*="nav"],
-header.header [class*="Nav"],
-header.header [class*="tabs"],
-header.header [class*="Tabs"],
-header.header [class*="categor"],
-header.header [class*="Categor"]{
-  overflow-x:auto!important;
-  overflow-y:hidden!important;
-  white-space:nowrap!important;
-  flex-wrap:nowrap!important;
-  scrollbar-width:thin!important;
-}
-
-/* كل أزرار الهيدر لا تنزل فوق بعضها */
-header.header a,
-header.header button{
-  flex:0 0 auto!important;
-  position:relative!important;
-}
-
-/* زر العروض والباكجات يظهر فوق أي زر آخر ولا يختفي تحت بنود أخرى */
-header.header a,
-header.header button{
-  z-index:2!important;
-}
-header.header a[data-section="offers"],
-header.header button[data-section="offers"],
-header.header a[href*="offers"],
-header.header button[onclick*="offers"]{
-  z-index:50!important;
-  display:inline-flex!important;
-  visibility:visible!important;
-  opacity:1!important;
-}
-
-/* احتياط: لو الزر نصه العروض والباكجات رجّعه */
-header.header .v375OffersForce{
-  z-index:80!important;
-  display:inline-flex!important;
-  visibility:visible!important;
-  opacity:1!important;
-  flex:0 0 auto!important;
+.modalBackdrop,.backdrop,.overlay,[class*="backdrop"],[class*="Backdrop"],[class*="overlay"],[class*="Overlay"]{
+  z-index:2147483645!important;
 }
 </style>
-<script id="v375-fix-offers-under-other-items-script">
+<script id="v376-stop-hiding-offers-on-hover-script">
 (function(){
-  function textOf(el){
+  function txt(el){
     return ((el && el.textContent) || '').replace(/\s+/g,' ').trim();
   }
 
-  function fixOffers(){
+  function fixHeader(){
     try{
       var header = document.querySelector('header.header');
       if(!header) return;
 
-      // رجّع زر العروض والباكجات لو كان مخفي أو راكب تحت زر ثاني
-      var all = Array.from(header.querySelectorAll('a,button'));
-      all.forEach(function(el){
-        var t = textOf(el);
-        var href = (el.getAttribute && (el.getAttribute('href') || '')) || '';
-        var onclick = (el.getAttribute && (el.getAttribute('onclick') || '')) || '';
+      var nav = header.querySelector('#nav,.nav,nav');
+      if(nav){
+        nav.style.setProperty('display','flex','important');
+        nav.style.setProperty('flex-wrap','nowrap','important');
+        nav.style.setProperty('overflow-x','auto','important');
+        nav.style.setProperty('overflow-y','hidden','important');
+        nav.style.setProperty('white-space','nowrap','important');
+        nav.style.setProperty('position','relative','important');
+        nav.style.setProperty('z-index','10','important');
 
-        if(t.indexOf('العروض') > -1 || t.indexOf('الباكجات') > -1 || /offers|packages/i.test(href + onclick)){
-          el.classList.add('v375OffersForce');
-          el.style.setProperty('display','inline-flex','important');
-          el.style.setProperty('visibility','visible','important');
-          el.style.setProperty('opacity','1','important');
-          el.style.setProperty('z-index','80','important');
-          el.style.setProperty('position','relative','important');
+        Array.from(nav.querySelectorAll('button,a')).forEach(function(el){
+          var t = txt(el);
+          var oc = (el.getAttribute && (el.getAttribute('onclick') || '')) || '';
+          var href = (el.getAttribute && (el.getAttribute('href') || '')) || '';
+
           el.style.setProperty('flex','0 0 auto','important');
+          el.style.setProperty('position','relative','important');
+          el.style.setProperty('white-space','nowrap','important');
+          el.style.setProperty('transform','none','important');
+
+          if(t.indexOf('العروض') > -1 || t.indexOf('الباكجات') > -1 || /offers|packages/i.test(oc + href)){
+            el.classList.add('v376OffersBtn');
+            el.style.setProperty('display','inline-flex','important');
+            el.style.setProperty('visibility','visible','important');
+            el.style.setProperty('opacity','1','important');
+            el.style.setProperty('z-index','999','important');
+            el.style.setProperty('order','90','important');
+          } else if(t.indexOf('بنود أخرى') > -1 || /other/i.test(oc + href)){
+            el.classList.add('v376OtherBtn');
+            el.style.setProperty('z-index','1','important');
+            el.style.setProperty('order','100','important');
+          }
+        });
+      }
+
+      /* نخفي واتساب فقط، ولا نلمس العروض */
+      Array.from(header.querySelectorAll('a,button')).forEach(function(el){
+        var t = txt(el);
+        var href = (el.getAttribute && (el.getAttribute('href') || '')) || '';
+        var oc = (el.getAttribute && (el.getAttribute('onclick') || '')) || '';
+        if(t.indexOf('السلة') > -1) return;
+        if(t.indexOf('العروض') > -1 || t.indexOf('الباكجات') > -1 || /offers|packages/i.test(href + oc)) return;
+        if(t.indexOf('واتساب') > -1 || /wa\.me|whatsapp/i.test(href + oc)){
+          el.style.setProperty('display','none','important');
         }
       });
 
-      // خلي الحاوية القريبة من زر العروض سكرول أفقي وتمنع التراكب
-      var offer = all.find(function(el){
-        var t=textOf(el);
-        return t.indexOf('العروض')>-1 || t.indexOf('الباكجات')>-1;
+      document.querySelectorAll('.modal,.modal.show,#modal,#cartModal,.cartModal,.cartDrawer,.drawer,.quickModal,.choiceModal,.offerModal,.bookingModal,.detailsModal,[class*="modal"],[class*="Modal"],[class*="cartModal"],[class*="CartModal"]').forEach(function(el){
+        el.style.setProperty('z-index','2147483646','important');
       });
-      if(offer){
-        var p = offer.parentElement;
-        for(var i=0; p && i<5; i++, p=p.parentElement){
-          var cs = getComputedStyle(p);
-          if(cs.display === 'flex' || p.scrollWidth > p.clientWidth || p.children.length >= 3){
-            p.style.setProperty('overflow-x','auto','important');
-            p.style.setProperty('overflow-y','hidden','important');
-            p.style.setProperty('white-space','nowrap','important');
-            p.style.setProperty('flex-wrap','nowrap','important');
-            p.style.setProperty('align-items','center','important');
-            break;
-          }
-        }
-      }
+      document.querySelectorAll('.modalBackdrop,.backdrop,.overlay,[class*="backdrop"],[class*="Backdrop"],[class*="overlay"],[class*="Overlay"]').forEach(function(el){
+        el.style.setProperty('z-index','2147483645','important');
+      });
     }catch(e){}
   }
 
   document.addEventListener('DOMContentLoaded',function(){
-    fixOffers();
-    setTimeout(fixOffers,100);
-    setTimeout(fixOffers,500);
-    setTimeout(fixOffers,1200);
+    fixHeader();
+    setTimeout(fixHeader,100);
+    setTimeout(fixHeader,400);
+    setTimeout(fixHeader,1000);
   });
-  window.addEventListener('load',fixOffers);
-  window.addEventListener('resize',fixOffers);
-  window.addEventListener('hashchange',fixOffers);
-  document.addEventListener('click',function(){setTimeout(fixOffers,60);},true);
-  setInterval(fixOffers,1500);
+  window.addEventListener('load',fixHeader);
+  window.addEventListener('resize',fixHeader);
+  window.addEventListener('hashchange',fixHeader);
+  document.addEventListener('mouseover',function(){setTimeout(fixHeader,20);},true);
+  document.addEventListener('click',function(){setTimeout(fixHeader,40);},true);
+  setInterval(fixHeader,1200);
 })();
 </script>
 
