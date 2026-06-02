@@ -6331,7 +6331,7 @@ function quickShop(n){
   }
 
   const opts = quickOptionsFor(p);
-  modal.innerHTML=`<div class="modalBox quickShopModal"><button class="quickClose" onclick="closeModal()">×</button><div class="quickShopPic"><img src="${esc(productImageUrl(p))}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,\'${p.number}\')"></div><div class="quickShopInfo"><div class="quickShopTop"><span class="tag">#${p.number}</span><span class="tag">${esc(shortType(p))}</span></div><h2>${esc(p.name)}</h2><div class="quickPrice" id="quickTotal_${p.number}">${Number(opts[0]?.price||0).toLocaleString('en-US')} ر.ق</div><div class="quickLabel">اختيار سريع بدون تعبئة بيانات الحجز</div><div class="quickOptions">${opts.map((o,i)=>`<label class="quickOpt"><input type="radio" name="quick_opt_${p.number}" value="${esc(o.id)}" ${i===0?'checked':''} onchange="updateQuickTotal(${p.number})"><span>${esc(o.label)}</span><b>${Number(o.price||0).toLocaleString('en-US')} ر.ق</b>${o.note?`<small>${esc(o.note)}</small>`:''}</label>`).join('')}</div><div class="quickShopControls"><button onclick="setQuickQty(${p.number},-1)">−</button><b id="quickQty_${p.number}">1</b><button onclick="setQuickQty(${p.number},1)">+</button></div><button class="quickAdd" onclick="addQuickToCart(${p.number})">أضف إلى السلة</button><button class="quickNow" onclick="quickOrderWa(${p.number})">اطلب الآن واتساب</button></div></div>`;
+  modal.innerHTML=`<div class="modalBox quickShopModal"><button class="quickClose" onclick="closeModal()">×</button><div class="quickShopPic"><img src="${esc(productImageUrl(p))}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,\'${p.number}\')"></div><div class="quickShopInfo"><div class="quickShopTop"><span class="tag">#${p.number}</span><span class="tag">${esc(shortType(p))}</span></div><h2>${esc(p.name)}</h2><div class="quickPrice" id="quickTotal_${p.number}">${Number(opts[0]?.price||0).toLocaleString('en-US')} ر.ق</div><div class="quickLabel">اختيار سريع بدون تعبئة بيانات الحجز</div><div class="quickOptions">${opts.map((o,i)=>`<label class="quickOpt"><input type="radio" name="quick_opt_${p.number}" value="${esc(o.id)}" ${i===0?'checked':''} onchange="updateQuickTotal(${p.number})"><span>${esc(o.label)}</span><b>${Number(o.price||0).toLocaleString('en-US')} ر.ق</b>${o.note?`<small>${esc(o.note)}</small>`:''}</label>`).join('')}</div><button class="quickAdd" onclick="addQuickToCart(${p.number})">أضف إلى السلة</button><button class="quickNow" onclick="quickOrderWa(${p.number})">اطلب الآن واتساب</button></div></div>`;
   modal.classList.add('show');
   setTimeout(()=>window.applyDateLight&&window.applyDateLight(modal),60);
   if(isDecorEvent(p))setTimeout(()=>updateDecorTotal(p.number),80);
@@ -12610,6 +12610,82 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 <script id="v356-ar-only-clean-script">
 (function(){try{['almalika_lang_v350','almalika_lang_v352','almalika_lang_v354','almalika_lang'].forEach(function(k){localStorage.removeItem(k);});}catch(e){};document.documentElement.lang='ar';document.documentElement.dir='rtl';if(document.body){document.body.dir='rtl';}})();
 </script>
+
+
+<!-- v357: حذف عداد الكمية من نافذة التسوق السريع -->
+<style id="v357RemoveQuantityCounterStyle">
+  .quickShopControls{display:none !important; visibility:hidden !important; height:0 !important; overflow:hidden !important; margin:0 !important; padding:0 !important;}
+</style>
+<script id="v357RemoveQuantityCounterScript">
+(function(){
+  /* تثبيت الكمية على 1 وإلغاء عداد (- 1 +) من التسوق السريع فقط */
+  window.quickQty = function(){ return 1; };
+  window.setQuickQty = function(){ return false; };
+  window.updateQuickTotal = function(n){
+    try{
+      const p = (window.products||[]).find(x=>Number(x.number)===Number(n));
+      if(!p) return;
+      const opt = (typeof window.quickSelectedOpt==='function') ? window.quickSelectedOpt(p) : null;
+      const total = Number((opt&&opt.price)||0);
+      const el = document.getElementById('quickTotal_'+n);
+      if(el) el.textContent = total.toLocaleString('en-US') + ' ر.ق';
+    }catch(e){}
+  };
+  const oldQuickShop = window.quickShop;
+  window.quickShop = function(n){
+    if(typeof oldQuickShop === 'function') oldQuickShop(n);
+    setTimeout(function(){
+      document.querySelectorAll('.quickShopControls').forEach(function(el){ el.remove(); });
+      try{ window.updateQuickTotal(n); }catch(e){}
+    },0);
+    setTimeout(function(){
+      document.querySelectorAll('.quickShopControls').forEach(function(el){ el.remove(); });
+    },120);
+  };
+})();
+</script>
+
+
+<!-- V358: force remove quick shop quantity counter (- 1 +) everywhere -->
+<style id="v358RemoveQuickQtyCounter">
+.quickShopControls,
+.quickShopModal .quickShopControls,
+[id^="quickQty_"],
+.quickShopControls button,
+.quickShopControls b{
+  display:none !important;
+  visibility:hidden !important;
+  width:0 !important;
+  height:0 !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  border:0 !important;
+  overflow:hidden !important;
+}
+</style>
+<script id="v358RemoveQuickQtyCounterScript">
+(function(){
+  function removeQuickQtyCounter(){
+    document.querySelectorAll('.quickShopControls,[id^="quickQty_"]').forEach(function(el){
+      el.remove();
+    });
+  }
+  window.quickQty=function(){return 1;};
+  window.setQuickQty=function(n,delta){
+    var q=document.getElementById('quickQty_'+n);
+    if(q) q.textContent='1';
+    if(typeof window.updateQuickTotal==='function') window.updateQuickTotal(n);
+    removeQuickQtyCounter();
+    return false;
+  };
+  document.addEventListener('DOMContentLoaded', removeQuickQtyCounter);
+  document.addEventListener('click', function(){setTimeout(removeQuickQtyCounter,30);}, true);
+  new MutationObserver(removeQuickQtyCounter).observe(document.documentElement,{childList:true,subtree:true});
+})();
+</script>
+
 </body>
 </html>
 
