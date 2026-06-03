@@ -6025,6 +6025,17 @@ body{
   }
 </style>
 
+
+<!-- ===== V425 QA: mobile intro appears before catalog content (no flash) ===== -->
+<script id="almalika-v425-intro-early-guard">
+(function(){try{if(window.matchMedia&&window.matchMedia('(max-width: 768px)').matches){document.documentElement.classList.add('almIntroPending');}}catch(e){}})();
+</script>
+<style id="almalika-v425-intro-early-style">
+@media(max-width:768px){
+  html.almIntroPending body > *:not(#almMobileIntro){visibility:hidden!important;}
+  html.almIntroPending #almMobileIntro, html.almIntroPending #almMobileIntro *{visibility:visible!important;}
+}
+</style>
 </head>
 <body>
 
@@ -14464,6 +14475,101 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 })();
 </script>
 
+
+
+<!-- ===== V425 QA STEP 3: mobile cleanup, stronger layout, hide unavailable, sticky modal actions ===== -->
+<style id="almalika-v425-mobile-final-qa-style">
+@media(max-width:768px){
+  body.almAppEntered{padding-bottom:105px!important;overflow-x:hidden!important;}
+  body.almAppEntered #app{padding-bottom:115px!important;}
+
+  /* ترتيب الأقسام على الجوال: شبكة واضحة بدل السحب الناقص */
+  body.almAppEntered .nav{
+    display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;
+    overflow:visible!important;padding:10px 14px 12px!important;justify-content:center!important;
+  }
+  body.almAppEntered .nav button{
+    width:100%!important;min-width:0!important;height:58px!important;border-radius:22px!important;
+    flex-direction:row!important;gap:8px!important;font-size:15px!important;line-height:1.25!important;
+    padding:8px 10px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+  }
+  body.almAppEntered .nav button span, body.almAppEntered .nav button i{font-size:18px!important;flex:0 0 auto!important;}
+  body.almAppEntered .logo{margin-top:7px!important;margin-bottom:7px!important;}
+
+  /* البحث والفلتر: لا نترك حقول فارغة ضخمة */
+  body.almAppEntered .searchRow{padding:8px 14px 10px!important;}
+  body.almAppEntered .searchRow select:empty{display:none!important;}
+  body.almAppEntered .search{height:50px!important;font-size:14px!important;}
+
+  /* تقليل الفراغات بين العنوان والمنتجات */
+  body.almAppEntered .panel{margin:6px 12px 6px!important;padding:15px 14px!important;}
+  body.almAppEntered .chips{padding:7px 10px 8px!important;margin-bottom:4px!important;}
+  body.almAppEntered #app>.wrap.section{padding-top:8px!important;}
+
+  /* بطاقات المنتجات: عمود واحد واضح ومعلومات غير مخفية */
+  body.almAppEntered .products{grid-template-columns:1fr!important;gap:14px!important;padding:0 14px 110px!important;}
+  body.almAppEntered .product{border-radius:26px!important;overflow:hidden!important;}
+  body.almAppEntered .product .pic{height:auto!important;min-height:0!important;aspect-ratio:1.12/1!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+  body.almAppEntered .product .pic img{width:100%!important;height:100%!important;object-fit:contain!important;padding:8px!important;}
+  body.almAppEntered .product .body{padding:14px 13px 18px!important;}
+  body.almAppEntered .product .body h3{font-size:20px!important;line-height:1.35!important;min-height:0!important;margin-bottom:8px!important;}
+  body.almAppEntered .product .bottom{margin-top:8px!important;}
+  body.almAppEntered .product .actions{grid-template-columns:1fr!important;gap:7px!important;}
+  body.almAppEntered .product .actions button{min-height:42px!important;font-size:13px!important;border-radius:16px!important;}
+
+  /* السلة لا تغطي النصوص والأزرار */
+  body.almAppEntered .cartBar{bottom:12px!important;z-index:9999!important;}
+
+  /* نافذة التفاصيل: رأس أخف، صورة أقل ارتفاعاً، وأزرار ثابتة */
+  body.almAppEntered .modal{align-items:flex-end!important;padding:0!important;}
+  body.almAppEntered .modalBox, body.almAppEntered .modalBox.detailed, body.almAppEntered .modalBox.eventDetailed{
+    width:100%!important;max-width:100%!important;max-height:92dvh!important;border-radius:30px 30px 0 0!important;
+    overflow:auto!important;grid-template-columns:1fr!important;padding-bottom:0!important;
+  }
+  body.almAppEntered .modalPic{min-height:190px!important;max-height:255px!important;padding:10px!important;display:flex!important;align-items:center!important;justify-content:center!important;}
+  body.almAppEntered .modalPic img, body.almAppEntered .mainDecorImg{max-height:235px!important;width:100%!important;object-fit:contain!important;border-radius:18px!important;}
+  body.almAppEntered .modalInfo{padding:14px 14px 0!important;}
+  body.almAppEntered .modalHead{gap:10px!important;align-items:center!important;}
+  body.almAppEntered .modalInfo h2{font-size:24px!important;line-height:1.3!important;}
+  body.almAppEntered .contentBlock, body.almAppEntered .introBlock, body.almAppEntered .rulesBlock{padding:15px 13px!important;margin:10px 0!important;border-radius:20px!important;}
+  body.almAppEntered .contentBlock h3{font-size:18px!important;margin-bottom:8px!important;}
+  body.almAppEntered .contentBlock p, body.almAppEntered .contentBlock li{font-size:14px!important;line-height:1.8!important;}
+  body.almAppEntered .priceChoiceGrid, body.almAppEntered .decorPackageGrid{display:flex!important;overflow-x:auto!important;gap:8px!important;padding:8px 5px 10px!important;scroll-snap-type:x mandatory!important;}
+  body.almAppEntered .priceChoice, body.almAppEntered .decorPackage{flex:0 0 46%!important;min-width:150px!important;scroll-snap-align:start!important;}
+  body.almAppEntered .modalActions{
+    position:sticky!important;bottom:0!important;z-index:30!important;background:linear-gradient(180deg,rgba(255,255,255,.86),#fff 35%)!important;
+    padding:10px 0 calc(env(safe-area-inset-bottom,0px) + 10px)!important;margin:12px -14px 0!important;
+    display:grid!important;grid-template-columns:1fr!important;gap:8px!important;box-shadow:0 -12px 28px rgba(0,0,0,.08)!important;
+  }
+  body.almAppEntered .modalActions button{min-height:46px!important;border-radius:16px!important;font-size:14px!important;margin:0 14px!important;}
+
+  /* صور اختيارات الديكور: واضحة لكن بدون طول مبالغ */
+  body.almAppEntered .decorThumbs{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;}
+  body.almAppEntered .decorThumb{border-radius:18px!important;padding:8px!important;}
+  body.almAppEntered .decorThumb img{height:120px!important;object-fit:cover!important;border-radius:14px!important;}
+}
+@media(max-width:390px){
+  body.almAppEntered .nav button{font-size:13px!important;height:54px!important;}
+  body.almAppEntered .product .body h3{font-size:18px!important;}
+}
+</style>
+<script id="almalika-v425-hide-unavailable-global">
+(function(){
+  function cleanUnavailable(){
+    try{
+      document.querySelectorAll('.product').forEach(function(card){
+        var txt=(card.textContent||'');
+        if(/غير\s*متاح|خارج\s*عن\s*الخدمة|عطلان|متوقف|غير\s*متوفر/.test(txt)){card.remove();}
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanUnavailable,80);setTimeout(cleanUnavailable,400);setTimeout(cleanUnavailable,1200);});
+  window.addEventListener('load',function(){setTimeout(cleanUnavailable,200);});
+  document.addEventListener('click',function(){setTimeout(cleanUnavailable,200);},true);
+  try{new MutationObserver(function(){setTimeout(cleanUnavailable,60);}).observe(document.body,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
+
 </body>
 </html>
 
@@ -18321,6 +18427,7 @@ body.almV402ProductsMode #app .products{
     if(intro){intro.classList.remove('almShow'); setTimeout(function(){intro.remove();},360);} 
     document.body.classList.add('almAppEntered');
     try{sessionStorage.setItem('almIntroEntered','1')}catch(e){}
+    try{document.documentElement.classList.remove('almIntroPending')}catch(e){}
     setTimeout(function(){window.dispatchEvent(new Event('resize'));},80);
   }
   function showIntro(){
@@ -18335,10 +18442,11 @@ body.almV402ProductsMode #app .products{
   function boot(){
     if(isMobile()){
       document.body.classList.add('almAppEntered');
-      try{ if(sessionStorage.getItem('almIntroEntered')==='1'){return;} }catch(e){}
+      try{ if(sessionStorage.getItem('almIntroEntered')==='1'){document.documentElement.classList.remove('almIntroPending'); return;} }catch(e){}
       showIntro();
     }else{
       document.body.classList.remove('almAppEntered');
+      try{document.documentElement.classList.remove('almIntroPending')}catch(e){}
       var intro=document.getElementById('almMobileIntro'); if(intro) intro.remove();
     }
   }
@@ -18437,7 +18545,7 @@ body.almV402ProductsMode #app .products{
 </style>
 <script id="almalika-v419-welcome15-and-rich-slider-script">
 (function(){
-  var CODE='WELCOME15';
+  var CODE='ALMALIKA15';
   var DISCOUNT_RATE=0.15;
   function qs(sel,root){return (root||document).querySelector(sel)}
   function qsa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel))}
@@ -18471,7 +18579,7 @@ body.almV402ProductsMode #app .products{
     qsa('#almPulseTickerBar').forEach(function(el){el.style.display='none';});
     var bar=qs('#almWelcome15Bar');
     if(!bar){bar=document.createElement('div'); bar.id='almWelcome15Bar';}
-    bar.innerHTML='<span class="welcomePill">أول طلب فقط</span><span class="welcomeMain"><span class="small">مزايا ترحيبية لأول طلب</span><span class="big">وفر 15%</span><span class="small">الكود:</span><span class="code">WELCOME15</span><span class="small">للتطبيق فقط</span></span><button class="welcomeBtn" type="button" onclick="activateWelcome15()">تفعيل الكود</button>';
+    bar.innerHTML='<span class="welcomePill">أول طلب فقط</span><span class="welcomeMain"><span class="small">مزايا ترحيبية لأول طلب</span><span class="big">وفر 15%</span><span class="small">الكود:</span><span class="code">ALMALIKA15</span><span class="small">للتطبيق فقط</span></span><button class="welcomeBtn" type="button" onclick="activateWelcome15()">تفعيل الكود</button>';
     if(ticker.nextSibling!==bar) ticker.parentNode.insertBefore(bar,ticker.nextSibling);
     refreshTopHeight();
   }
@@ -18505,7 +18613,7 @@ body.almV402ProductsMode #app .products{
     row.innerHTML='<span>كود '+CODE+' مفعل — خصم 15%</span><b>- <span id="welcomeDiscountView">'+d+'</span> ر.ق</b>';
     if(totalFinal) summary.insertBefore(row,totalFinal); else summary.appendChild(row);
     var note=document.createElement('div'); note.className='welcomeCartNote';
-    var a=activeWelcome(); note.textContent='تم ربط كود WELCOME15 برقم الجوال: '+(a&&a.phone?a.phone:'')+' — مرة واحدة لكل رقم.';
+    var a=activeWelcome(); note.textContent='تم ربط كود ALMALIKA15 برقم الجوال: '+(a&&a.phone?a.phone:'')+' — مرة واحدة لكل رقم.';
     summary.appendChild(note);
     var t=qs('#cartTotalView'); if(t && typeof cartTotal==='function') t.textContent=cartTotal();
   }
@@ -18729,7 +18837,7 @@ body.almV402ProductsMode #app .products{
   function cleanBlueBar(){
     var bar=qs('#almWelcome15Bar');
     if(bar){
-      bar.innerHTML='<span class="welcomePill">أول طلب فقط</span><span class="welcomeMain"><span class="small">مزايا ترحيبية لأول طلب</span><span class="big">وفر 15%</span><span class="small">الكود:</span><span class="code">WELCOME15</span><span class="small">للتطبيق فقط</span></span><button class="welcomeBtn" type="button" onclick="activateWelcome15&&activateWelcome15()">تفعيل الكود</button>';
+      bar.innerHTML='<span class="welcomePill">أول طلب فقط</span><span class="welcomeMain"><span class="small">مزايا ترحيبية لأول طلب</span><span class="big">وفر 15%</span><span class="small">الكود:</span><span class="code">ALMALIKA15</span><span class="small">للتطبيق فقط</span></span><button class="welcomeBtn" type="button" onclick="activateWelcome15&&activateWelcome15()">تفعيل الكود</button>';
     }
     qsa('#almPulseTickerBar,#v361TopTickerWrap,.v361TopTickerWrap').forEach(function(x){x.style.display='none';});
   }
