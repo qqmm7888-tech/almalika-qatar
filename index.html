@@ -18786,3 +18786,146 @@ body.almV402ProductsMode #app .products{
   setInterval(function(){run(false)},5000);
 })();
 </script>
+
+
+<style id="almalika-v422-hard-slider-style">
+/* v422: إصلاح نهائي قوي للسلايدر الرئيسي فقط */
+#almHomePromoSlider[data-v422="1"]{direction:rtl!important;user-select:none!important;touch-action:pan-y!important}
+#almHomePromoSlider[data-v422="1"] .almPromoSlider{position:relative!important;overflow:hidden!important;border-radius:30px!important;background:linear-gradient(135deg,#fff8fc,#fffdf8)!important;border:1px solid rgba(235,205,223,.9)!important;box-shadow:0 16px 38px rgba(122,23,52,.10)!important}
+#almHomePromoSlider[data-v422="1"] .almPromoViewport{position:relative!important;min-height:470px!important}
+#almHomePromoSlider[data-v422="1"] .almPromoSlide{position:absolute!important;inset:0!important;opacity:0!important;pointer-events:none!important;transform:translateX(28px) scale(.992)!important;transition:opacity .55s ease,transform .55s ease!important;display:grid!important;grid-template-columns:minmax(0,.95fr) minmax(420px,1.05fr)!important;gap:24px!important;align-items:center!important;padding:24px!important;background:var(--promoBg,linear-gradient(135deg,#fff7fb,#fffaf1))!important}
+#almHomePromoSlider[data-v422="1"] .almPromoSlide.active{opacity:1!important;pointer-events:auto!important;transform:none!important;z-index:2!important}
+#almHomePromoSlider[data-v422="1"] .almPromoMosaic{display:grid!important;grid-template-columns:1.25fr .82fr!important;grid-template-rows:1fr 1fr!important;gap:12px!important;min-height:398px!important;cursor:grab!important}
+#almHomePromoSlider[data-v422="1"] .almPromoMosaic:active{cursor:grabbing!important}
+#almHomePromoSlider[data-v422="1"] .almPromoCard{display:block!important;position:relative!important;overflow:hidden!important;border-radius:24px!important;background:#fff!important;box-shadow:0 14px 30px rgba(122,23,52,.11)!important;border:1px solid rgba(255,255,255,.92)!important;min-width:0!important;min-height:0!important;height:auto!important}
+#almHomePromoSlider[data-v422="1"] .almPromoCard.main{grid-column:1!important;grid-row:1 / span 2!important}
+#almHomePromoSlider[data-v422="1"] .almPromoCard.sideTop{grid-column:2!important;grid-row:1!important}
+#almHomePromoSlider[data-v422="1"] .almPromoCard.sideBottom{grid-column:2!important;grid-row:2!important}
+#almHomePromoSlider[data-v422="1"] .almPromoCard img{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important;background:#fff8ee!important;pointer-events:none!important}
+#almHomePromoSlider[data-v422="1"] .almPromoCard .overlay{position:absolute!important;inset:auto 0 0 0!important;padding:13px 14px!important;background:linear-gradient(180deg,transparent 0%,rgba(30,10,18,.82) 100%)!important;color:#fff!important;text-align:center!important;pointer-events:none!important}
+#almHomePromoSlider[data-v422="1"] .almPromoCard .overlay strong{display:block!important;font-size:14px!important;line-height:1.25!important;font-weight:1000!important;text-shadow:0 2px 8px rgba(0,0,0,.35)!important}
+#almHomePromoSlider[data-v422="1"] .almPromoCard .overlay small{display:block!important;font-size:11px!important;line-height:1.35!important;font-weight:900!important;opacity:.96!important;margin-top:3px!important}
+#almHomePromoSlider[data-v422="1"] .almPromoContent{text-align:right!important;padding:0 8px!important}
+#almHomePromoSlider[data-v422="1"] .almPromoKicker{display:inline-flex!important;background:rgba(255,255,255,.88)!important;border:1px solid rgba(230,193,214,.8)!important;border-radius:999px!important;padding:8px 14px!important;color:#7a1734!important;font-weight:1000!important;font-size:13px!important}
+#almHomePromoSlider[data-v422="1"] .almPromoTitle{font-size:42px!important;line-height:1.18!important;margin:16px 0 10px!important;color:#2f111b!important;font-weight:1000!important}
+#almHomePromoSlider[data-v422="1"] .almPromoText{font-size:16px!important;line-height:1.9!important;color:#6d5d67!important;font-weight:800!important;margin:0 0 14px!important;max-width:100%!important}
+#almHomePromoSlider[data-v422="1"] .almPromoFeatures{display:flex!important;gap:8px!important;flex-wrap:wrap!important;margin:0 0 18px!important}
+#almHomePromoSlider[data-v422="1"] .almPromoFeatures span{border:1px solid rgba(230,193,214,.9)!important;border-radius:999px!important;background:rgba(255,255,255,.75)!important;padding:8px 12px!important;font-size:12px!important;color:#65354f!important;font-weight:900!important}
+#almHomePromoSlider[data-v422="1"] .almPromoActions{display:flex!important;gap:10px!important;flex-wrap:wrap!important}
+#almHomePromoSlider[data-v422="1"] .almPromoBtn{border:0!important;border-radius:16px!important;padding:13px 18px!important;font-weight:1000!important;font-size:14px!important;cursor:pointer!important;box-shadow:0 12px 26px rgba(122,23,52,.13)!important}
+#almHomePromoSlider[data-v422="1"] .almPromoBtn.primary{background:#7a1734!important;color:#fff!important}
+#almHomePromoSlider[data-v422="1"] .almPromoBtn.secondary{background:#fff!important;color:#7a1734!important;border:1px solid rgba(122,23,52,.18)!important}
+#almHomePromoSlider[data-v422="1"] .almPromoTimeBadge{position:absolute!important;top:14px!important;right:18px!important;z-index:20!important;background:#fff!important;color:#7a1734!important;border-radius:999px!important;padding:7px 12px!important;font-size:12px!important;font-weight:1000!important;box-shadow:0 8px 18px rgba(0,0,0,.08)!important}
+#almHomePromoSlider[data-v422="1"] .almPromoNav{position:absolute!important;top:50%!important;transform:translateY(-50%)!important;z-index:20!important;width:44px!important;height:44px!important;border-radius:50%!important;border:0!important;background:rgba(255,255,255,.94)!important;color:#7a1734!important;box-shadow:0 12px 28px rgba(0,0,0,.13)!important;font-size:25px!important;font-weight:1000!important;cursor:pointer!important;display:flex!important;align-items:center!important;justify-content:center!important}
+#almHomePromoSlider[data-v422="1"] .almPromoNav.prev{right:14px!important}
+#almHomePromoSlider[data-v422="1"] .almPromoNav.next{left:14px!important}
+#almHomePromoSlider[data-v422="1"] .almPromoDots{position:absolute!important;left:18px!important;bottom:14px!important;z-index:20!important;display:flex!important;gap:8px!important}
+#almHomePromoSlider[data-v422="1"] .almPromoDot{width:11px!important;height:11px!important;border-radius:50%!important;border:0!important;background:rgba(122,23,52,.23)!important;padding:0!important;cursor:pointer!important}
+#almHomePromoSlider[data-v422="1"] .almPromoDot.active{background:#ff2f86!important;box-shadow:0 0 0 4px rgba(255,47,134,.13)!important}
+@media(max-width:1000px){
+  #almHomePromoSlider[data-v422="1"] .almPromoViewport{min-height:720px!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoSlide{grid-template-columns:1fr!important;gap:14px!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoMosaic{grid-template-columns:1fr 1fr!important;grid-template-rows:230px 160px!important;min-height:0!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoCard.main{grid-column:1 / span 2!important;grid-row:1!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoCard.sideTop{grid-column:1!important;grid-row:2!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoCard.sideBottom{grid-column:2!important;grid-row:2!important}
+}
+@media(max-width:700px){
+  #almHomePromoSlider[data-v422="1"] .almPromoSlider{border-radius:24px!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoViewport{min-height:635px!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoSlide{padding:13px!important;gap:10px!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoTitle{font-size:27px!important;margin:12px 0 8px!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoText{font-size:13.5px!important;line-height:1.75!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoMosaic{grid-template-columns:1fr 1fr!important;grid-template-rows:190px 128px!important;gap:9px!important}
+  #almHomePromoSlider[data-v422="1"] .almPromoCard{border-radius:18px!important}
+}
+</style>
+<script id="almalika-v422-hard-slider-script">
+(function(){
+  var SLIDE_MS=8000;
+  var lastHour=-1;
+  var timer=null;
+  function qs(s,r){return (r||document).querySelector(s)}
+  function qsa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+  function esc(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function sec(p){try{return sectionOf(p)}catch(e){return ''}}
+  function img(p){try{return productImageUrl(p)}catch(e){return ''}}
+  function minPrice(p){
+    try{var a=[]; if(p.packagePrices) Object.keys(p.packagePrices).forEach(function(k){var v=Number(p.packagePrices[k]||0); if(v>0)a.push(v)}); ['baseDecorPrice','priceOneDay','priceTwoDays','price'].forEach(function(k){var v=Number(p[k]||0); if(v>0)a.push(v)}); if(!a.length)return 'حسب الطلب'; var m=Math.min.apply(null,a); return (typeof money==='function'?money(m):m)+' ر.ق'}catch(e){return 'حسب الطلب'}
+  }
+  function productsFor(key){try{return (window.products||products||[]).filter(function(p){return sec(p)===key && !(typeof forcedUnavailableCatalog==='function'&&forcedUnavailableCatalog(p.number))})}catch(e){return []}}
+  function pick3(key){
+    var arr=productsFor(key), h=new Date().getHours();
+    if(!arr.length)return [];
+    var start=(h*3)%arr.length, out=[];
+    for(var i=0;i<3;i++) out.push(arr[(start+i)%arr.length]);
+    return out;
+  }
+  function card(p,i){
+    var cls=i===0?'main':(i===1?'sideTop':'sideBottom');
+    if(!p) return '<div class="almPromoCard '+cls+'"><div class="overlay"><strong>قريبًا</strong><small>سيتم إضافة صور جديدة</small></div></div>';
+    return '<div class="almPromoCard '+cls+'"><img src="'+esc(img(p))+'" alt="'+esc(p.name||'')+'" loading="lazy" onerror="this.style.opacity=.28"><div class="overlay"><strong>'+esc(p.name||'')+'</strong><small>يبدأ من '+esc(minPrice(p))+'</small></div></div>';
+  }
+  function slidesData(){return [
+    {key:'bouncies',k:'🏰 النطاطيات والزحلاقيات',t:'نطاطيات وزحلاقيات بتجهيز مرتب',txt:'ثلاث صور فقط لكل إعلان، تتغير مجموعتها كل ساعة، مع تبديل منتظم كل 8 ثواني وتحكم بالماوس.',bg:'linear-gradient(135deg,#fff2fb,#fff9ed,#effbff)'},
+    {key:'snacks',k:'🍿 السناك والعربات',t:'سناك وعربات ضيافة بشكل أنيق',txt:'ثلاث صور مختارة من عربات الضيافة والسناك، مرتبة بمقاسات ثابتة وشكل نظيف للعرض.',bg:'linear-gradient(135deg,#fff8ed,#fff3fb,#effcff)'},
+    {key:'events',k:'🎀 تجهيز الحفلات',t:'ديكورات وحفلات بتفاصيل راقية',txt:'ثلاث صور فقط من تجهيزات الحفلات والديكورات، مع تغيير الصور كل ساعة حتى يبقى العرض متجدد.',bg:'linear-gradient(135deg,#fff3fb,#fffdf7,#f3f7ff)'},
+    {key:'offers',k:'🎁 العروض والبكجات',t:'بكجات مختارة وسريعة للحجز',txt:'ثلاث صور من البكجات والعروض فقط، بتبديل منظم وحركة سهلة من اليمين أو اليسار.',bg:'linear-gradient(135deg,#fff3f7,#fff8ec,#eefcff)'}
+  ]}
+  function html(){
+    var rows=slidesData();
+    var out='<div id="almHomePromoSlider" data-v422="1"><div class="almPromoSlider"><div class="almPromoTimeBadge">يتبدل كل 8 ثواني</div><button class="almPromoNav prev" type="button" aria-label="السابق">›</button><button class="almPromoNav next" type="button" aria-label="التالي">‹</button><div class="almPromoViewport">';
+    rows.forEach(function(s,i){
+      var items=pick3(s.key); while(items.length<3)items.push(null);
+      out+='<article class="almPromoSlide '+(i===0?'active':'')+'" data-slide-index="'+i+'" style="--promoBg:'+s.bg+'"><div class="almPromoContent"><span class="almPromoKicker">'+s.k+'</span><h2 class="almPromoTitle">'+s.t+'</h2><p class="almPromoText">'+s.txt+'</p><div class="almPromoFeatures"><span>3 صور فقط</span><span>تبديل 8 ثواني</span><span>تغيير كل ساعة</span><span>تحكم يمين/يسار</span></div><div class="almPromoActions"><button class="almPromoBtn primary" onclick="showSection(\''+s.key+'\')">استكشف القسم</button><button class="almPromoBtn secondary" onclick="quickWaSection&&quickWaSection(\''+s.key+'\')">واتساب</button></div></div><div class="almPromoMosaic" title="يمين: السابق / يسار: التالي">'+items.slice(0,3).map(card).join('')+'</div></article>';
+    });
+    out+='</div><div class="almPromoDots">'+rows.map(function(_,i){return '<button class="almPromoDot '+(i===0?'active':'')+'" type="button" data-dot="'+i+'"></button>'}).join('')+'</div></div></div>';
+    return out;
+  }
+  function show(root,i){
+    var slides=qsa('.almPromoSlide',root),dots=qsa('.almPromoDot',root); if(!slides.length)return;
+    i=(i+slides.length)%slides.length; root.dataset.index=String(i);
+    slides.forEach(function(s,n){s.classList.toggle('active',n===i)}); dots.forEach(function(d,n){d.classList.toggle('active',n===i)});
+  }
+  function stop(){if(timer){clearInterval(timer);timer=null}}
+  function start(root){stop(); timer=setInterval(function(){show(root,Number(root.dataset.index||0)+1)},SLIDE_MS)}
+  function bind(root){
+    if(!root || root.dataset.boundV422==='1')return; root.dataset.boundV422='1'; root.dataset.index='0';
+    var downX=null;
+    root.addEventListener('click',function(e){
+      if(e.target.closest('.almPromoBtn')) return;
+      var dot=e.target.closest('.almPromoDot'); if(dot){show(root,Number(dot.getAttribute('data-dot')||0));start(root);return;}
+      if(e.target.closest('.almPromoNav.prev')){show(root,Number(root.dataset.index||0)-1);start(root);return;}
+      if(e.target.closest('.almPromoNav.next')){show(root,Number(root.dataset.index||0)+1);start(root);return;}
+      var slide=e.target.closest('.almPromoSlide,.almPromoMosaic'); if(!slide)return;
+      var r=root.getBoundingClientRect();
+      if((e.clientX-r.left)>r.width/2) show(root,Number(root.dataset.index||0)-1); else show(root,Number(root.dataset.index||0)+1);
+      start(root);
+    },true);
+    root.addEventListener('mousedown',function(e){if(e.target.closest('.almPromoSlide,.almPromoMosaic'))downX=e.clientX;},true);
+    root.addEventListener('mouseup',function(e){if(downX===null)return; var dx=e.clientX-downX; downX=null; if(Math.abs(dx)<45)return; if(dx>0)show(root,Number(root.dataset.index||0)-1); else show(root,Number(root.dataset.index||0)+1); start(root);},true);
+    root.addEventListener('touchstart',function(e){if(e.touches&&e.touches[0])downX=e.touches[0].clientX;},{passive:true});
+    root.addEventListener('touchend',function(e){if(downX===null)return; var t=e.changedTouches&&e.changedTouches[0]; if(!t)return; var dx=t.clientX-downX; downX=null; if(Math.abs(dx)<45)return; if(dx>0)show(root,Number(root.dataset.index||0)-1); else show(root,Number(root.dataset.index||0)+1); start(root);},{passive:true});
+    show(root,0); start(root);
+  }
+  function rebuild(){
+    var hero=qs('#app .hero'); if(!hero)return;
+    var old=qs('#almHomePromoSlider'); if(old)old.remove();
+    hero.insertAdjacentHTML('beforeend',html());
+    bind(qs('#almHomePromoSlider[data-v422="1"]'));
+    lastHour=new Date().getHours();
+  }
+  function ensure(){
+    var hero=qs('#app .hero'); if(!hero)return;
+    var root=qs('#almHomePromoSlider');
+    var h=new Date().getHours();
+    if(!root || root.getAttribute('data-v422')!=='1' || root.querySelectorAll('.almPromoSlide.active .almPromoCard').length!==3 || h!==lastHour) rebuild();
+    else {bind(root);}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(ensure,80);setTimeout(ensure,500);setTimeout(ensure,1200)});
+  window.addEventListener('load',function(){setTimeout(ensure,120);setTimeout(ensure,800)});
+  document.addEventListener('click',function(e){if(e.target.closest('#nav button,.nav button,.mainCats .cat,.logo,.chip,.btn')){setTimeout(ensure,150);setTimeout(ensure,600)}},true);
+  new MutationObserver(function(){setTimeout(ensure,60)}).observe(document.documentElement,{childList:true,subtree:true});
+  setInterval(ensure,1800);
+})();
+</script>
