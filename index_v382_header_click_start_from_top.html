@@ -17053,3 +17053,82 @@ header.header .headBtns .cartMini{
 })();
 </script>
 
+<style id="v382-header-click-start-from-top-style">
+/* v382: عند الضغط على أي أيقونة في الهيدر تبدأ صفحة المنتجات من الأعلى */
+html{
+  scroll-behavior:smooth;
+}
+</style>
+<script id="v382-header-click-start-from-top-script">
+(function(){
+  function topOffset(){
+    try{
+      var fixed = document.getElementById('almTopFixedGroup');
+      if(fixed){
+        return Math.ceil(fixed.getBoundingClientRect().height || fixed.offsetHeight || 0) + 8;
+      }
+      var header = document.querySelector('header.header');
+      if(header && getComputedStyle(header).position === 'fixed'){
+        return Math.ceil(header.getBoundingClientRect().height || header.offsetHeight || 0) + 8;
+      }
+    }catch(e){}
+    return 0;
+  }
+
+  function scrollProductsToTop(){
+    try{
+      var target =
+        document.querySelector('#app') ||
+        document.querySelector('main') ||
+        document.querySelector('.products') ||
+        document.querySelector('.grid') ||
+        document.body;
+
+      var y = 0;
+      if(target && target !== document.body){
+        y = target.getBoundingClientRect().top + window.pageYOffset - topOffset();
+        if(y < 0) y = 0;
+      }
+      window.scrollTo({top:y, behavior:'smooth'});
+    }catch(e){
+      window.scrollTo(0,0);
+    }
+  }
+
+  function isHeaderCategoryClick(el){
+    if(!el || !el.closest) return false;
+    var header = el.closest('header.header');
+    if(!header) return false;
+
+    var btn = el.closest('button,a');
+    if(!btn) return false;
+
+    var txt = ((btn.textContent || '').replace(/\s+/g,' ').trim());
+    var onclick = (btn.getAttribute && (btn.getAttribute('onclick') || '')) || '';
+    var cls = (btn.className || '') + '';
+
+    if(txt.indexOf('السلة') > -1) return false;
+    if(/showSection|showHome|navIconBtn|nav-|cat/i.test(onclick + ' ' + cls)) return true;
+
+    /* احتياط لأي أيقونة من أقسام الهيدر */
+    if(header.querySelector('.nav') && btn.closest('.nav')) return true;
+
+    return false;
+  }
+
+  document.addEventListener('click',function(e){
+    if(isHeaderCategoryClick(e.target)){
+      setTimeout(scrollProductsToTop,60);
+      setTimeout(scrollProductsToTop,220);
+      setTimeout(scrollProductsToTop,520);
+    }
+  },true);
+
+  /* إذا تغير القسم من الهاش أيضاً نرجع لأعلى المنتجات */
+  window.addEventListener('hashchange',function(){
+    setTimeout(scrollProductsToTop,120);
+    setTimeout(scrollProductsToTop,420);
+  });
+})();
+</script>
+
