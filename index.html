@@ -18834,3 +18834,326 @@ body.almV402ProductsMode #app .products{
   setInterval(boot,1200);
 })();
 </script>
+
+
+<!-- ===== V415: شريط واحد فقط أزرق للمزايا الترحيبية + إلغاء كل أشرطة العروض القديمة ===== -->
+<style id="almalika-v415-single-blue-welcome-bar-style">
+/* إخفاء كل أشرطة العروض القديمة التي سببت التكرار واللخبطة */
+#v361TopTickerWrap,
+.v361TopTickerWrap,
+#almPulseTickerBar,
+.almWorkingTickerWrap,
+#almTopStickyGroup,
+.almTickerMarquee,
+marquee.almTickerMarquee{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+}
+#almWelcomeTopSingle{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:26px!important;
+  width:100%!important;
+  min-height:42px!important;
+  padding:6px 14px!important;
+  box-sizing:border-box!important;
+  direction:rtl!important;
+  color:#fff!important;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 1px,rgba(255,255,255,0) 1px 4px),
+    linear-gradient(180deg,#19a9f4 0%,#087bdc 48%,#0059b9 100%)!important;
+  border-top:1px solid rgba(255,255,255,.38)!important;
+  border-bottom:3px solid #e00022!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 5px 13px rgba(0,74,160,.22)!important;
+  animation:almV415BlueBreath 9s ease-in-out infinite!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  position:relative!important;
+  z-index:1002!important;
+}
+#almWelcomeTopSingle::before,
+#almWelcomeTopSingle::after{
+  content:''!important;
+  flex:1 1 160px!important;
+  max-width:380px!important;
+  height:2px!important;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.78),transparent)!important;
+  opacity:.72!important;
+}
+#almWelcomeTopSingle .almWelcomePill{
+  flex:0 0 auto!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  border:1px solid rgba(255,255,255,.42)!important;
+  background:rgba(0,58,135,.28)!important;
+  border-radius:999px!important;
+  padding:5px 12px!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18)!important;
+}
+#almWelcomeTopSingle .almWelcomeText{
+  flex:0 0 auto!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:18px!important;
+  font-weight:1000!important;
+  text-shadow:0 2px 4px rgba(0,0,0,.24)!important;
+}
+#almWelcomeTopSingle .almWelcomeSmall{font-size:14px!important;opacity:.96!important;}
+#almWelcomeTopSingle .almWelcomeBig{font-size:25px!important;line-height:1!important;}
+#almWelcomeTopSingle .almWelcomeCode{font-size:22px!important;letter-spacing:.5px!important;}
+#almWelcomeTopSingle .almWelcomeBtn{
+  flex:0 0 auto!important;
+  background:#fff!important;
+  color:#0057b8!important;
+  border:0!important;
+  border-radius:999px!important;
+  padding:7px 15px!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  box-shadow:0 5px 14px rgba(0,0,0,.20)!important;
+  cursor:pointer!important;
+}
+#almWelcomeTopSingle .almWelcomeBtn:active{transform:scale(.97)!important;}
+@keyframes almV415BlueBreath{
+  0%,100%{filter:brightness(1);box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 5px 13px rgba(0,74,160,.22)}
+  50%{filter:brightness(1.09);box-shadow:inset 0 0 28px rgba(255,255,255,.20),0 0 22px rgba(30,160,255,.40)}
+}
+@media(max-width:760px){
+  #almWelcomeTopSingle{
+    justify-content:flex-start!important;
+    gap:11px!important;
+    min-height:38px!important;
+    padding:6px 10px!important;
+    overflow-x:auto!important;
+    scrollbar-width:none!important;
+  }
+  #almWelcomeTopSingle::-webkit-scrollbar{display:none!important;}
+  #almWelcomeTopSingle::before,#almWelcomeTopSingle::after{display:none!important;}
+  #almWelcomeTopSingle .almWelcomeText{gap:11px!important;}
+  #almWelcomeTopSingle .almWelcomePill{font-size:11px!important;padding:5px 10px!important;}
+  #almWelcomeTopSingle .almWelcomeSmall{font-size:12px!important;}
+  #almWelcomeTopSingle .almWelcomeBig{font-size:18px!important;}
+  #almWelcomeTopSingle .almWelcomeCode{font-size:16px!important;}
+  #almWelcomeTopSingle .almWelcomeBtn{font-size:11px!important;padding:6px 10px!important;}
+}
+</style>
+<script id="almalika-v415-single-blue-welcome-bar-script">
+(function(){
+  var CODE='WELCOME15', PERCENT=15;
+  function html(){
+    return '<span class="almWelcomePill">أول طلب فقط</span>'+
+      '<span class="almWelcomeText">'+
+      '<span class="almWelcomeSmall">مزايا ترحيبية لأول طلب</span>'+
+      '<span class="almWelcomeBig">وفر '+PERCENT+'%</span>'+
+      '<span class="almWelcomeSmall">الكود: <b class="almWelcomeCode">'+CODE+'</b></span>'+
+      '<span class="almWelcomeSmall">للتطبيق فقط</span>'+
+      '</span>'+
+      '<button class="almWelcomeBtn" type="button" onclick="almOpenWelcome15Modal&&almOpenWelcome15Modal()">تفعيل الكود</button>';
+  }
+  function ensureSingleBar(){
+    try{
+      var group=document.getElementById('almTopFixedGroup');
+      var body=document.body;
+      if(!body) return;
+      if(!group){
+        group=document.createElement('div');
+        group.id='almTopFixedGroup';
+        body.insertBefore(group, body.firstChild);
+      }
+      var bar=document.getElementById('almWelcomeTopSingle');
+      if(!bar){
+        bar=document.createElement('div');
+        bar.id='almWelcomeTopSingle';
+      }
+      bar.innerHTML=html();
+      if(group.firstElementChild!==bar) group.insertBefore(bar, group.firstChild);
+
+      /* إخفاء أي شريط قديم مهما أعادته السكربتات السابقة */
+      document.querySelectorAll('#v361TopTickerWrap,.v361TopTickerWrap,#almPulseTickerBar,.almWorkingTickerWrap,#almTopStickyGroup,marquee.almTickerMarquee,.almTickerMarquee').forEach(function(el){
+        if(el!==bar){
+          el.style.setProperty('display','none','important');
+          el.style.setProperty('visibility','hidden','important');
+          el.style.setProperty('height','0','important');
+          el.style.setProperty('max-height','0','important');
+          el.style.setProperty('overflow','hidden','important');
+          el.style.setProperty('padding','0','important');
+          el.style.setProperty('margin','0','important');
+          el.style.setProperty('border','0','important');
+        }
+      });
+      var h=Math.ceil(group.getBoundingClientRect().height || group.offsetHeight || 42);
+      if(h){
+        document.documentElement.style.setProperty('--almFixedTopHeight',h+'px');
+        document.body.style.paddingTop=h+'px';
+      }
+    }catch(e){}
+  }
+  function fixModalWords(){
+    try{
+      var m=document.getElementById('almWelcome15Modal');
+      if(!m) return;
+      var h=m.querySelector('.almWelcome15Box h2'); if(h) h.textContent='ميزة 15% لأول طلب';
+      var p=m.querySelector('.almWelcome15Box p'); if(p) p.innerHTML='اكتب رقم جوالك لتفعيل الكود <b>'+CODE+'</b>. الميزة تستخدم مرة واحدة فقط لكل رقم جوال على هذا الجهاز.';
+      var btn=m.querySelector('#almWelcome15Apply'); if(btn) btn.textContent='تفعيل الميزة';
+    }catch(e){}
+  }
+  function boot(){ensureSingleBar();fixModalWords();}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(boot,40);setTimeout(boot,200);setTimeout(boot,700);setTimeout(boot,1500);});
+  window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(boot,500);});
+  document.addEventListener('click',function(){setTimeout(boot,80);setTimeout(fixModalWords,180);},true);
+  window.addEventListener('resize',function(){setTimeout(boot,120);});
+  setInterval(boot,900);
+})();
+</script>
+
+
+<!-- ===== V416: إرجاع الشريط الأسود المتحرك + إبقاء الأزرق للمزايا فقط ===== -->
+<style id="almalika-v416-two-bars-fixed-style">
+/* الشريط الأسود للأخبار/آخر العروض شغال ويتحرك مثل السابق */
+#almTopFixedGroup > #almWorkingTicker{
+  display:flex!important;
+  visibility:visible!important;
+  height:42px!important;
+  min-height:42px!important;
+  max-height:42px!important;
+  padding:0!important;
+  margin:0!important;
+  border-bottom:3px solid #d71920!important;
+  overflow:hidden!important;
+  background:#111!important;
+  direction:rtl!important;
+  order:1!important;
+}
+#almTopFixedGroup > #almWorkingTicker .almWorkingTickerLabel{
+  display:flex!important;
+  visibility:visible!important;
+  flex:0 0 155px!important;
+  height:42px!important;
+  background:linear-gradient(180deg,#d71920,#9b0012)!important;
+  color:#fff!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  font-weight:1000!important;
+  font-size:15px!important;
+}
+#almTopFixedGroup > #almWorkingTicker .almWorkingTickerWindow{
+  display:block!important;
+  visibility:visible!important;
+  flex:1 1 auto!important;
+  min-width:0!important;
+  height:42px!important;
+  overflow:hidden!important;
+  background:#111!important;
+}
+#almTopFixedGroup > #almWorkingTicker .almWorkingTickerTrack{
+  display:flex!important;
+  visibility:visible!important;
+  align-items:center!important;
+  width:max-content!important;
+  min-width:max-content!important;
+  height:42px!important;
+  line-height:42px!important;
+  white-space:nowrap!important;
+  gap:80px!important;
+  color:#fff!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  animation:almV408TickerMove 140s linear infinite!important;
+  animation-play-state:running!important;
+  will-change:transform!important;
+}
+#almTopFixedGroup > #almWorkingTicker .almWorkingTickerTrack span{
+  display:inline-block!important;
+  color:#fff!important;
+  white-space:nowrap!important;
+}
+#almTopFixedGroup > #almWorkingTicker:hover .almWorkingTickerTrack{animation-play-state:running!important;}
+
+/* الشريط الأزرق للمزايا الترحيبية فقط تحت الأسود */
+#almTopFixedGroup > #almWelcomeTopSingle{
+  display:flex!important;
+  visibility:visible!important;
+  height:auto!important;
+  min-height:42px!important;
+  max-height:none!important;
+  padding:6px 14px!important;
+  margin:0!important;
+  border-top:1px solid rgba(255,255,255,.38)!important;
+  border-bottom:3px solid #e00022!important;
+  overflow:hidden!important;
+  order:2!important;
+  z-index:1001!important;
+}
+#almTopFixedGroup{
+  display:flex!important;
+  flex-direction:column!important;
+}
+@media(max-width:760px){
+  #almTopFixedGroup > #almWorkingTicker{height:38px!important;min-height:38px!important;max-height:38px!important;}
+  #almTopFixedGroup > #almWorkingTicker .almWorkingTickerLabel{height:38px!important;flex-basis:108px!important;font-size:12px!important;}
+  #almTopFixedGroup > #almWorkingTicker .almWorkingTickerWindow{height:38px!important;}
+  #almTopFixedGroup > #almWorkingTicker .almWorkingTickerTrack{height:38px!important;line-height:38px!important;font-size:13px!important;animation-duration:120s!important;}
+  #almTopFixedGroup > #almWelcomeTopSingle{min-height:38px!important;padding:6px 10px!important;}
+}
+</style>
+<script id="almalika-v416-two-bars-fixed-script">
+(function(){
+  function fixTwoBars(){
+    try{
+      var group=document.getElementById('almTopFixedGroup');
+      var black=document.getElementById('almWorkingTicker');
+      var blue=document.getElementById('almWelcomeTopSingle');
+      if(!group || !black || !blue) return;
+
+      /* ترتيب نهائي: الأسود أولاً ثم الأزرق ثم الهيدر */
+      if(group.firstElementChild!==black) group.insertBefore(black, group.firstChild);
+      if(blue.previousElementSibling!==black) group.insertBefore(blue, black.nextSibling);
+
+      /* إظهار الأسود حتى لو سكربت سابق حاول يخفي أشرطة العروض */
+      [black, black.querySelector('.almWorkingTickerWindow'), black.querySelector('.almWorkingTickerTrack')].forEach(function(el){
+        if(!el) return;
+        el.style.setProperty('display', el.classList && el.classList.contains('almWorkingTickerTrack') ? 'flex' : (el.id==='almWorkingTicker'?'flex':'block'), 'important');
+        el.style.setProperty('visibility','visible','important');
+        el.style.setProperty('overflow', el.classList && el.classList.contains('almWorkingTickerWindow') ? 'hidden' : 'hidden', 'important');
+      });
+      var tr=black.querySelector('.almWorkingTickerTrack');
+      if(tr){
+        var seconds=window.innerWidth<760?120:140;
+        tr.style.setProperty('animation','almV408TickerMove '+seconds+'s linear infinite','important');
+        tr.style.setProperty('animation-play-state','running','important');
+      }
+
+      /* الأزرق يبقى للمزايا فقط */
+      blue.style.setProperty('display','flex','important');
+      blue.style.setProperty('visibility','visible','important');
+      blue.style.setProperty('height','auto','important');
+      blue.style.setProperty('min-height',window.innerWidth<760?'38px':'42px','important');
+      blue.style.setProperty('max-height','none','important');
+
+      var h=Math.ceil(group.getBoundingClientRect().height || group.offsetHeight || 84);
+      if(h){
+        document.documentElement.style.setProperty('--almFixedTopHeight',h+'px');
+        document.body.style.paddingTop=h+'px';
+      }
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(fixTwoBars,60);setTimeout(fixTwoBars,250);setTimeout(fixTwoBars,900);setTimeout(fixTwoBars,1800);});
+  window.addEventListener('load',function(){setTimeout(fixTwoBars,100);setTimeout(fixTwoBars,700);});
+  window.addEventListener('resize',function(){setTimeout(fixTwoBars,120);});
+  document.addEventListener('click',function(){setTimeout(fixTwoBars,120);},true);
+  setInterval(fixTwoBars,700);
+})();
+</script>
