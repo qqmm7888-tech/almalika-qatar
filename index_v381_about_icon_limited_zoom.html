@@ -16723,238 +16723,333 @@ header.header .headBtns .cartMini{
 })();
 </script>
 
-<style id="v378-about-us-2016-style">
-.aboutText2016,
-.v378AboutText{
-  font-size:15px!important;
-  line-height:2!important;
-  color:#6A1B2E!important;
-  font-weight:800!important;
-  text-align:right!important;
+<style id="v381-about-modal-and-limited-zoom-style">
+/* v381: من نحن كأيقونة فقط + تكبير صور النطاطيات والسناك فقط */
+.v381AboutInfoText{
+  display:none!important;
 }
-</style>
-<script id="v378-about-us-2016-script">
-(function(){
-  var ABOUT_TEXT = 'نحن شركة الملكة للحفلات في قطر، نعمل في مجال تأجير النطاطيات والزحلاقيات وتجهيز الحفلات منذ عام 2016. خلال هذه السنوات اكتسبنا خبرة كبيرة في تنظيم مناسبات الأطفال والعائلات والمدارس والفعاليات الخاصة، ونسعى دائمًا لتقديم خدمات مرتبة وآمنة وبجودة عالية. نهتم بالتفاصيل من لحظة الحجز وحتى التركيب والتسليم، ونحرص على أن تكون كل مناسبة جميلة ومريحة وذكرى لا تُنسى.';
-
-  function updateAboutText(){
-    try{
-      document.querySelectorAll('h1,h2,h3,h4,button,a,div,span').forEach(function(el){
-        var title = ((el.textContent || '').replace(/\s+/g,' ').trim());
-        if(title === '👑 من نحن' || title === 'من نحن'){
-          var box = el.parentElement;
-          if(box){
-            var ps = box.querySelectorAll('p, .desc, .text, .content, .v378AboutText');
-            if(ps.length){
-              ps.forEach(function(p){
-                if((p.textContent||'').length > 20){
-                  p.textContent = ABOUT_TEXT;
-                  p.classList.add('v378AboutText');
-                }
-              });
-            }else{
-              var p = document.createElement('p');
-              p.className = 'v378AboutText';
-              p.textContent = ABOUT_TEXT;
-              box.appendChild(p);
-            }
-          }
-        }
-      });
-
-      /* في حال كان عندك نافذة معلومات مبنية ديناميكياً */
-      document.querySelectorAll('[id*="about"],[class*="about"],[class*="About"]').forEach(function(el){
-        var txt = (el.textContent || '');
-        if(txt.indexOf('من نحن') > -1 || txt.indexOf('الملكة') > -1){
-          var ps = el.querySelectorAll('p');
-          if(ps.length){
-            ps[0].textContent = ABOUT_TEXT;
-            ps[0].classList.add('v378AboutText');
-          }
-        }
-      });
-    }catch(e){}
-  }
-
-  document.addEventListener('DOMContentLoaded', function(){
-    updateAboutText();
-    setTimeout(updateAboutText,100);
-    setTimeout(updateAboutText,500);
-    setTimeout(updateAboutText,1200);
-  });
-  window.addEventListener('load', updateAboutText);
-  document.addEventListener('click', function(){ setTimeout(updateAboutText,80); setTimeout(updateAboutText,300); }, true);
-  setInterval(updateAboutText, 2000);
-})();
-</script>
-
-<style id="v379-product-image-zoom-style">
-/* v379: تكبير صور المنتجات عند الضغط عليها */
-#v379ImageZoomOverlay{
+#v381InfoOverlay,
+#v381ImageZoomOverlay{
   position:fixed!important;
   inset:0!important;
   z-index:2147483647!important;
-  background:rgba(0,0,0,.82)!important;
+  background:rgba(0,0,0,.78)!important;
   display:none!important;
   align-items:center!important;
   justify-content:center!important;
   padding:18px!important;
   backdrop-filter:blur(6px)!important;
+  direction:rtl!important;
+  font-family:Cairo,Tahoma,Arial,sans-serif!important;
 }
-#v379ImageZoomOverlay.show{
+#v381InfoOverlay.show,
+#v381ImageZoomOverlay.show{
   display:flex!important;
 }
-#v379ImageZoomBox{
+#v381InfoBox,
+#v381ImageZoomBox{
   position:relative!important;
-  width:min(96vw,1100px)!important;
-  max-height:94vh!important;
+  width:min(94vw,680px)!important;
+  max-height:92vh!important;
+  overflow:auto!important;
   background:#fff!important;
   border-radius:24px!important;
-  padding:16px!important;
-  box-shadow:0 30px 90px rgba(0,0,0,.45)!important;
-  display:grid!important;
-  grid-template-rows:auto 1fr!important;
-  gap:10px!important;
-  direction:rtl!important;
-}
-#v379ImageZoomTitle{
-  font-weight:1000!important;
+  border:1px solid #f2c7d8!important;
+  box-shadow:0 30px 90px rgba(0,0,0,.42)!important;
+  padding:26px!important;
   color:#6A1B2E!important;
-  font-size:18px!important;
-  line-height:1.5!important;
-  padding:0 48px 0 6px!important;
+  text-align:right!important;
 }
-#v379ImageZoomClose{
+#v381InfoBox h2{
+  margin:0 0 14px!important;
+  font-size:26px!important;
+  line-height:1.5!important;
+  text-align:center!important;
+}
+#v381InfoBox p{
+  margin:0!important;
+  font-size:17px!important;
+  line-height:2.05!important;
+  font-weight:800!important;
+}
+.v381CloseBtn{
   position:absolute!important;
   top:12px!important;
   right:12px!important;
   width:42px!important;
   height:42px!important;
   border-radius:50%!important;
+  border:0!important;
   background:#e11d48!important;
   color:#fff!important;
-  font-size:28px!important;
+  font-size:26px!important;
   line-height:1!important;
-  font-weight:900!important;
-  border:0!important;
+  font-weight:1000!important;
   cursor:pointer!important;
-  z-index:2!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
 }
-#v379ImageZoomImg{
+#v381ImageZoomBox{
+  width:min(96vw,1120px)!important;
+  padding:16px!important;
+  display:grid!important;
+  grid-template-rows:auto 1fr auto!important;
+  gap:10px!important;
+}
+#v381ImageZoomTitle{
+  font-weight:1000!important;
+  color:#6A1B2E!important;
+  font-size:18px!important;
+  line-height:1.5!important;
+  padding:0 52px 0 6px!important;
+}
+#v381ImageZoomImg{
   width:100%!important;
-  height:calc(94vh - 92px)!important;
+  height:calc(92vh - 142px)!important;
   object-fit:contain!important;
   background:linear-gradient(135deg,#fff,#fff8e8)!important;
   border-radius:18px!important;
   border:1px solid #f0dce7!important;
 }
-.product .pic img,
-.modalPic img,
-.cartItem img{
+#v381ImageZoomActions{
+  display:flex!important;
+  gap:10px!important;
+  justify-content:center!important;
+  align-items:center!important;
+}
+#v381ImageZoomActions button{
+  border:0!important;
+  border-radius:14px!important;
+  padding:12px 24px!important;
+  font-size:15px!important;
+  font-weight:1000!important;
+  cursor:pointer!important;
+}
+#v381OpenDetailsBtn{
+  background:#e11d48!important;
+  color:#fff!important;
+}
+#v381CloseImageBtn{
+  background:#111!important;
+  color:#fff!important;
+}
+.product .pic img{
+  cursor:default!important;
+}
+.product.v381ZoomAllowed .pic img,
+.modalPic img{
   cursor:zoom-in!important;
 }
-#modal .decorThumb img,
-#modal .decorGallery img{
+/* إخفاء أي نص طويل تسرب داخل كرت من نحن في الخدمات */
+.v381ServicesAboutCard p,
+.v381ServicesAboutCard .v378AboutText,
+.v381ServicesAboutCard .aboutText2016{
+  display:none!important;
+}
+.v381ServicesAboutCard{
   cursor:pointer!important;
 }
 @media(max-width:700px){
-  #v379ImageZoomBox{
+  #v381InfoBox,#v381ImageZoomBox{
     width:96vw!important;
-    padding:12px!important;
+    padding:18px!important;
     border-radius:18px!important;
   }
-  #v379ImageZoomImg{
-    height:calc(94vh - 82px)!important;
+  #v381ImageZoomImg{
+    height:calc(92vh - 134px)!important;
   }
-  #v379ImageZoomTitle{
+  #v381ImageZoomTitle{
     font-size:15px!important;
-    padding-right:44px!important;
+    padding-right:48px!important;
   }
 }
 </style>
-<script id="v379-product-image-zoom-script">
+<script id="v381-about-modal-and-limited-zoom-script">
 (function(){
-  function ensureZoom(){
-    var ov=document.getElementById('v379ImageZoomOverlay');
-    if(ov) return ov;
-    ov=document.createElement('div');
-    ov.id='v379ImageZoomOverlay';
-    ov.innerHTML='<div id="v379ImageZoomBox"><button id="v379ImageZoomClose" type="button">×</button><div id="v379ImageZoomTitle">صورة المنتج</div><img id="v379ImageZoomImg" alt="صورة المنتج"></div>';
-    document.body.appendChild(ov);
-    ov.addEventListener('click',function(e){
-      if(e.target===ov) closeZoom();
-    });
-    document.getElementById('v379ImageZoomClose').addEventListener('click',closeZoom);
-    document.addEventListener('keydown',function(e){
-      if(e.key==='Escape') closeZoom();
-    });
-    return ov;
+  var ABOUT_TEXT = 'نحن شركة الملكة للحفلات في قطر، نعمل في مجال تأجير النطاطيات والزحلاقيات وتجهيز الحفلات منذ عام 2016. خلال هذه السنوات اكتسبنا خبرة كبيرة في تنظيم مناسبات الأطفال والعائلات والمدارس والفعاليات الخاصة، ونسعى دائمًا لتقديم خدمات مرتبة وآمنة وبجودة عالية. نهتم بالتفاصيل من لحظة الحجز وحتى التركيب والتسليم، ونحرص على أن تكون كل مناسبة جميلة ومريحة وذكرى لا تُنسى.';
+  var currentZoomProduct = null;
+
+  function norm(t){ return ((t||'')+'').replace(/\s+/g,' ').trim(); }
+
+  function sectionOfProductCard(card){
+    try{
+      var btn = card.querySelector('button[onclick*="showSection"], a[onclick*="showSection"]');
+      var text = norm(card.textContent);
+      var badge = norm((card.querySelector('.badge,.tag,.cat,.chip')||{}).textContent);
+      var all = text + ' ' + badge + ' ' + ((card.className||'')+'');
+      if(/نطاط|زحلاق|صابوني|فوم|بركة|bounc|slide/i.test(all)) return 'bouncies';
+      if(/سناك|فشار|غزل|بطاط|ذرة|ايس|آيس|براد|سلاش|عربة|snack|popcorn|cotton|ice|slush|cart/i.test(all)) return 'snacks';
+      if(/طاولات|كراسي|شخصيات|characters|tables|chairs/i.test(all)) return 'blocked';
+    }catch(e){}
+    return '';
   }
 
-  function closeZoom(){
-    var ov=document.getElementById('v379ImageZoomOverlay');
-    if(ov) ov.classList.remove('show');
+  function productFromImg(img){
+    return img && img.closest ? img.closest('.product,.card,.item') : null;
   }
 
-  function cleanSrc(src){
-    if(!src) return '';
-    return String(src).trim();
+  function allowZoomForImage(img){
+    if(!img || !img.closest) return false;
+    if(img.closest('.decorGallery,.decorThumb')) return false;
+
+    var product = productFromImg(img);
+    if(product){
+      var sec = sectionOfProductCard(product);
+      return sec === 'bouncies' || sec === 'snacks';
+    }
+
+    /* داخل نافذة التفاصيل: نسمح فقط إذا المنتج الحالي من النطاطيات أو السناك */
+    if(img.closest('.modalPic')){
+      var modal = img.closest('.modal,.modalBox,#modal');
+      var all = norm(modal ? modal.textContent : '');
+      if(/طاولات|كراسي|شخصيات|characters|tables|chairs/i.test(all)) return false;
+      if(/نطاط|زحلاق|صابوني|فوم|بركة|سناك|فشار|غزل|بطاط|ذرة|ايس|آيس|براد|سلاش|عربة/i.test(all)) return true;
+    }
+    return false;
   }
 
   function titleFor(img){
     try{
-      var product=img.closest('.product');
+      var product=productFromImg(img);
       if(product){
-        var h=product.querySelector('h3');
-        if(h && h.textContent.trim()) return h.textContent.trim();
+        var h=product.querySelector('h3,h2,.title');
+        if(h && norm(h.textContent)) return norm(h.textContent);
       }
-      var modal=img.closest('.modalBox,.modal');
+      var modal=img.closest('.modalBox,.modal,#modal');
       if(modal){
         var h2=modal.querySelector('h2,h3');
-        if(h2 && h2.textContent.trim()) return h2.textContent.trim();
-      }
-      var cart=img.closest('.cartItem');
-      if(cart){
-        var ch=cart.querySelector('h3');
-        if(ch && ch.textContent.trim()) return ch.textContent.trim();
+        if(h2 && norm(h2.textContent)) return norm(h2.textContent);
       }
     }catch(e){}
     return 'صورة المنتج';
   }
 
-  function openZoom(img){
-    var src=cleanSrc(img.currentSrc || img.src || img.getAttribute('src'));
-    if(!src) return;
-    var ov=ensureZoom();
-    var zimg=document.getElementById('v379ImageZoomImg');
-    var title=document.getElementById('v379ImageZoomTitle');
-    title.textContent=titleFor(img);
-    zimg.src=src;
+  function ensureInfoModal(){
+    var ov=document.getElementById('v381InfoOverlay');
+    if(ov) return ov;
+    ov=document.createElement('div');
+    ov.id='v381InfoOverlay';
+    ov.innerHTML='<div id="v381InfoBox"><button type="button" class="v381CloseBtn" aria-label="إغلاق">×</button><h2>👑 من نحن</h2><p></p></div>';
+    document.body.appendChild(ov);
+    ov.querySelector('p').textContent=ABOUT_TEXT;
+    ov.addEventListener('click',function(e){ if(e.target===ov) ov.classList.remove('show'); });
+    ov.querySelector('.v381CloseBtn').addEventListener('click',function(){ ov.classList.remove('show'); });
+    return ov;
+  }
+
+  function openAbout(){
+    var ov=ensureInfoModal();
+    ov.querySelector('p').textContent=ABOUT_TEXT;
     ov.classList.add('show');
   }
 
-  function isAllowedImage(img){
-    if(!img) return false;
-    /* المطلوب: النطاطيات + السناك والعربات + الشخصيات، ونخليها عامة لصور المنتجات الرئيسية بدون صور الديكور المصغرة */
-    if(img.closest('.decorGallery,.decorThumb')) return false;
-    if(img.closest('.product .pic')) return true;
-    if(img.closest('.modalPic')) return true;
-    if(img.closest('.cartItem')) return true;
-    return false;
+  function ensureZoomModal(){
+    var ov=document.getElementById('v381ImageZoomOverlay');
+    if(ov) return ov;
+    ov=document.createElement('div');
+    ov.id='v381ImageZoomOverlay';
+    ov.innerHTML='<div id="v381ImageZoomBox"><button type="button" class="v381CloseBtn" aria-label="إغلاق">×</button><div id="v381ImageZoomTitle">صورة المنتج</div><img id="v381ImageZoomImg" alt="صورة المنتج"><div id="v381ImageZoomActions"><button type="button" id="v381OpenDetailsBtn">تفاصيل المنتج</button><button type="button" id="v381CloseImageBtn">إغلاق</button></div></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click',function(e){ if(e.target===ov) closeZoom(); });
+    ov.querySelector('.v381CloseBtn').addEventListener('click',closeZoom);
+    ov.querySelector('#v381CloseImageBtn').addEventListener('click',closeZoom);
+    ov.querySelector('#v381OpenDetailsBtn').addEventListener('click',function(){
+      closeZoom();
+      try{
+        if(currentZoomProduct){
+          var detailsBtn = currentZoomProduct.querySelector('button[onclick*="openProduct"],button[onclick*="details"],.detailsBtn');
+          if(detailsBtn) detailsBtn.click();
+        }
+      }catch(e){}
+    });
+    return ov;
+  }
+
+  function openZoom(img){
+    var src = img.currentSrc || img.src || img.getAttribute('src');
+    if(!src) return;
+    currentZoomProduct = productFromImg(img);
+    var ov=ensureZoomModal();
+    ov.querySelector('#v381ImageZoomTitle').textContent = titleFor(img);
+    ov.querySelector('#v381ImageZoomImg').src = src;
+    ov.classList.add('show');
+  }
+
+  function closeZoom(){
+    var ov=document.getElementById('v381ImageZoomOverlay');
+    if(ov) ov.classList.remove('show');
+  }
+
+  function fixAboutCards(){
+    try{
+      document.querySelectorAll('h1,h2,h3,h4,button,a,div,span').forEach(function(el){
+        var t = norm(el.textContent);
+        if(t === '👑 من نحن' || t === 'من نحن'){
+          var card = el.closest('.serviceCard,.infoCard,.footerCard,.card,div');
+          if(card){
+            card.classList.add('v381ServicesAboutCard');
+            card.querySelectorAll('p,.v378AboutText,.aboutText2016').forEach(function(p){ p.style.setProperty('display','none','important'); });
+          }
+        }
+      });
+    }catch(e){}
+  }
+
+  function markZoomCards(){
+    try{
+      document.querySelectorAll('.product,.card,.item').forEach(function(card){
+        var sec = sectionOfProductCard(card);
+        if(sec === 'bouncies' || sec === 'snacks') card.classList.add('v381ZoomAllowed');
+        else card.classList.remove('v381ZoomAllowed');
+      });
+    }catch(e){}
   }
 
   document.addEventListener('click',function(e){
-    var img=e.target && e.target.closest ? e.target.closest('img') : null;
-    if(!isAllowedImage(img)) return;
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-    openZoom(img);
-    return false;
+    var about = e.target && e.target.closest ? e.target.closest('.v381ServicesAboutCard') : null;
+    if(about){
+      e.preventDefault();
+      e.stopPropagation();
+      openAbout();
+      return;
+    }
+
+    var img = e.target && e.target.closest ? e.target.closest('img') : null;
+    if(img && allowZoomForImage(img)){
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      openZoom(img);
+      return false;
+    }
   },true);
 
-  /* في حال الصور تنبني بعد فتح التفاصيل */
-  document.addEventListener('DOMContentLoaded',ensureZoom);
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){
+      closeZoom();
+      var info=document.getElementById('v381InfoOverlay');
+      if(info) info.classList.remove('show');
+    }
+  });
+
+  function runFixes(){
+    ensureInfoModal();
+    ensureZoomModal();
+    fixAboutCards();
+    markZoomCards();
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    runFixes();
+    setTimeout(runFixes,100);
+    setTimeout(runFixes,500);
+    setTimeout(runFixes,1200);
+  });
+  window.addEventListener('load',runFixes);
+  document.addEventListener('mouseover',function(){ setTimeout(runFixes,40); },true);
+  document.addEventListener('click',function(){ setTimeout(runFixes,80); setTimeout(runFixes,300); },true);
+  setInterval(runFixes,2000);
 })();
 </script>
 
