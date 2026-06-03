@@ -17855,3 +17855,361 @@ body.almV402ProductsMode #app .products{
   setInterval(schedule,1200);
 })();
 </script>
+
+
+<style id="almalika-v410-home-promo-style">
+#almPulseTickerBar{
+  display:flex!important;align-items:center!important;gap:12px!important;
+  width:100%!important;padding:8px 14px!important;box-sizing:border-box!important;
+  background:linear-gradient(90deg,#fff4fb 0%,#fff9ef 48%,#fdf4ff 100%)!important;
+  border-top:1px solid rgba(212,175,55,.32)!important;
+  border-bottom:1px solid rgba(212,175,55,.32)!important;
+  animation:almPulseTickerGlow 3.8s ease-in-out infinite!important;
+}
+#almPulseTickerBar .almPulseTickerLabel{
+  flex:0 0 auto!important;background:#7a1734!important;color:#fff!important;
+  border-radius:999px!important;padding:7px 12px!important;font-size:12px!important;
+  font-weight:1000!important;box-shadow:0 6px 16px rgba(122,23,52,.18)!important;
+}
+#almPulseTickerBar .almPulseTickerContent{
+  min-width:0!important;flex:1 1 auto!important;overflow-x:auto!important;overflow-y:hidden!important;
+  scrollbar-width:none!important;white-space:nowrap!important;padding-bottom:2px!important;
+}
+#almPulseTickerBar .almPulseTickerContent::-webkit-scrollbar{display:none!important}
+#almPulseTickerBar .almPulseTickerTrack{
+  display:inline-flex!important;align-items:center!important;gap:10px!important;white-space:nowrap!important;
+}
+#almPulseTickerBar .almPulseTickerItem{
+  display:inline-flex!important;align-items:center!important;gap:6px!important;
+  background:rgba(255,255,255,.88)!important;border:1px solid rgba(212,175,55,.32)!important;
+  border-radius:999px!important;padding:7px 11px!important;color:#3d2430!important;font-size:12px!important;font-weight:900!important;
+}
+#almPulseTickerBar .almPulseTickerItem b{color:#e61f72!important}
+#almPulseTickerBar .almPulseTickerSep{color:#c0801a!important;font-weight:1000!important}
+@keyframes almPulseTickerGlow{
+  0%,100%{opacity:1;box-shadow:0 0 0 rgba(255,106,167,0), inset 0 0 0 rgba(255,106,167,0)}
+  50%{opacity:.92;box-shadow:0 0 28px rgba(255,106,167,.12), inset 0 0 28px rgba(255,227,156,.22)}
+}
+
+.hero #almHomePromoSlider{
+  margin-top:18px!important;direction:rtl!important;position:relative!important;
+}
+.almPromoSlider{
+  position:relative!important;overflow:hidden!important;border-radius:34px!important;
+  background:linear-gradient(145deg,#fff9fd 0%,#fffefa 100%)!important;
+  border:1px solid rgba(235,205,223,.92)!important;box-shadow:0 18px 45px rgba(122,23,52,.13)!important;
+}
+.almPromoViewport{position:relative!important;min-height:445px!important}
+.almPromoSlide{
+  position:absolute!important;inset:0!important;opacity:0!important;pointer-events:none!important;
+  transform:translateX(18px) scale(.985)!important;transition:opacity .55s ease,transform .55s ease!important;
+  padding:24px!important;display:grid!important;grid-template-columns:minmax(0,1.05fr) minmax(340px,.95fr)!important;
+  gap:18px!important;align-items:stretch!important;
+}
+.almPromoSlide.active{opacity:1!important;pointer-events:auto!important;transform:none!important;z-index:2!important}
+.almPromoSlide::before{
+  content:''!important;position:absolute!important;inset:0!important;border-radius:34px!important;
+  background:var(--promoBg,linear-gradient(135deg,#fffaf6,#fef3ff))!important;z-index:0!important;
+}
+.almPromoSlide::after{
+  content:''!important;position:absolute!important;inset:0!important;border-radius:34px!important;z-index:0!important;
+  background:radial-gradient(circle at 12% 14%,rgba(255,255,255,.92),transparent 26%),radial-gradient(circle at 88% 16%,rgba(255,255,255,.58),transparent 20%),radial-gradient(circle at 88% 84%,rgba(255,215,95,.18),transparent 18%)!important;
+}
+.almPromoContent,.almPromoMosaic{position:relative!important;z-index:1!important}
+.almPromoContent{
+  display:flex!important;flex-direction:column!important;justify-content:center!important;text-align:right!important;
+  padding:10px 6px 10px 6px!important;
+}
+.almPromoKicker{
+  display:inline-flex!important;align-items:center!important;gap:8px!important;align-self:flex-start!important;
+  background:rgba(255,255,255,.82)!important;border:1px solid rgba(255,255,255,.82)!important;border-radius:999px!important;
+  color:#7a1734!important;padding:9px 14px!important;font-size:13px!important;font-weight:1000!important;
+  box-shadow:0 10px 24px rgba(122,23,52,.08)!important;
+}
+.almPromoTitle{font-size:42px!important;line-height:1.16!important;margin:16px 0 10px!important;color:#31131d!important;font-weight:1000!important}
+.almPromoText{font-size:17px!important;line-height:1.95!important;color:#6d5d67!important;margin:0 0 16px!important;font-weight:800!important;max-width:92%!important}
+.almPromoFeatures{display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin:0 0 18px!important}
+.almPromoFeatures span{
+  background:rgba(255,255,255,.78)!important;border:1px solid rgba(230,193,214,.95)!important;border-radius:999px!important;
+  padding:8px 12px!important;font-size:12px!important;font-weight:900!important;color:#5f3351!important;
+}
+.almPromoStats{display:flex!important;gap:10px!important;flex-wrap:wrap!important;margin:0 0 18px!important}
+.almPromoStat{
+  min-width:98px!important;background:rgba(255,255,255,.8)!important;border:1px solid rgba(224,193,122,.32)!important;border-radius:18px!important;
+  padding:11px 13px!important;text-align:center!important;box-shadow:0 10px 20px rgba(0,0,0,.04)!important;
+}
+.almPromoStat strong{display:block!important;font-size:21px!important;line-height:1.1!important;color:#1f1118!important;margin-bottom:4px!important}
+.almPromoStat small{font-size:12px!important;color:#6f5e68!important;font-weight:900!important}
+.almPromoActions{display:flex!important;flex-wrap:wrap!important;gap:10px!important}
+.almPromoBtn{
+  border:0!important;border-radius:16px!important;padding:13px 18px!important;font-size:14px!important;font-weight:1000!important;cursor:pointer!important;
+  box-shadow:0 12px 26px rgba(122,23,52,.14)!important;transition:.18s transform ease,.18s box-shadow ease!important;
+}
+.almPromoBtn:hover{transform:translateY(-2px)!important;box-shadow:0 16px 34px rgba(122,23,52,.18)!important}
+.almPromoBtn.primary{background:#7a1734!important;color:#fff!important}
+.almPromoBtn.secondary{background:#fff!important;color:#7a1734!important;border:1px solid rgba(122,23,52,.18)!important;box-shadow:0 10px 22px rgba(0,0,0,.06)!important}
+.almPromoMosaic{
+  display:grid!important;grid-template-columns:1.12fr .88fr!important;grid-template-rows:1fr 1fr!important;gap:12px!important;min-height:396px!important;
+}
+.almPromoCard{
+  position:relative!important;overflow:hidden!important;border-radius:26px!important;background:#fff!important;
+  border:1px solid rgba(255,255,255,.92)!important;box-shadow:0 16px 32px rgba(0,0,0,.08)!important;
+}
+.almPromoCard.main{grid-row:1 / span 2!important}
+.almPromoCard img{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important}
+.almPromoCard .overlay{
+  position:absolute!important;inset:auto 0 0 0!important;padding:14px 14px 12px!important;
+  background:linear-gradient(180deg,transparent 0%,rgba(32,16,24,0) 10%,rgba(32,16,24,.76) 100%)!important;color:#fff!important;
+}
+.almPromoCard .overlay strong{display:block!important;font-size:15px!important;line-height:1.2!important;font-weight:1000!important;margin-bottom:4px!important}
+.almPromoCard .overlay small{display:block!important;font-size:11px!important;line-height:1.4!important;font-weight:800!important;opacity:.95!important}
+.almPromoDots{
+  position:absolute!important;inset:auto 20px 18px auto!important;z-index:5!important;display:flex!important;gap:8px!important;
+}
+.almPromoDot{
+  width:11px!important;height:11px!important;border-radius:50%!important;border:0!important;cursor:pointer!important;padding:0!important;
+  background:rgba(122,23,52,.24)!important;box-shadow:inset 0 0 0 1px rgba(122,23,52,.12)!important;
+}
+.almPromoDot.active{background:#ff2f86!important;box-shadow:0 0 0 4px rgba(255,47,134,.14)!important}
+.almPromoNav{
+  position:absolute!important;top:50%!important;transform:translateY(-50%)!important;z-index:5!important;
+  width:44px!important;height:44px!important;border-radius:50%!important;border:0!important;cursor:pointer!important;
+  background:rgba(255,255,255,.92)!important;color:#7a1734!important;font-size:26px!important;font-weight:1000!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.12)!important;display:flex!important;align-items:center!important;justify-content:center!important;
+}
+.almPromoNav.prev{right:16px!important}.almPromoNav.next{left:16px!important}
+.almPromoTimeBadge{
+  position:absolute!important;left:22px!important;top:18px!important;z-index:5!important;
+  background:rgba(255,255,255,.9)!important;color:#7a1734!important;border-radius:999px!important;padding:7px 12px!important;
+  font-size:12px!important;font-weight:1000!important;box-shadow:0 10px 22px rgba(0,0,0,.06)!important;
+}
+.almPromoSectionNote{margin-top:10px!important;text-align:center!important;color:#7d6d75!important;font-size:12px!important;font-weight:900!important}
+
+@media(max-width:1100px){
+  .almPromoSlide{grid-template-columns:1fr!important;gap:14px!important}
+  .almPromoViewport{min-height:760px!important}
+  .almPromoMosaic{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:auto!important;min-height:300px!important}
+  .almPromoCard.main{grid-row:auto!important;min-height:270px!important}
+  .almPromoCard{min-height:160px!important}
+  .almPromoTitle{font-size:34px!important}.almPromoText{max-width:100%!important}
+}
+@media(max-width:700px){
+  #almPulseTickerBar{padding:7px 10px!important;gap:8px!important}
+  #almPulseTickerBar .almPulseTickerLabel{font-size:11px!important;padding:6px 10px!important}
+  #almPulseTickerBar .almPulseTickerItem{font-size:11px!important;padding:6px 9px!important}
+  .hero #almHomePromoSlider{margin-top:12px!important}
+  .almPromoSlider{border-radius:24px!important}
+  .almPromoViewport{min-height:690px!important}
+  .almPromoSlide{padding:14px!important}
+  .almPromoSlide::before,.almPromoSlide::after{border-radius:24px!important}
+  .almPromoTitle{font-size:27px!important;margin:12px 0 8px!important}
+  .almPromoText{font-size:14px!important;line-height:1.8!important}
+  .almPromoKicker{font-size:11px!important;padding:8px 12px!important}
+  .almPromoFeatures span,.almPromoStat small{font-size:11px!important}
+  .almPromoStat{min-width:78px!important;padding:9px 10px!important}
+  .almPromoStat strong{font-size:18px!important}
+  .almPromoActions{display:grid!important;grid-template-columns:1fr 1fr!important}
+  .almPromoBtn{padding:12px 12px!important;font-size:13px!important}
+  .almPromoMosaic{grid-template-columns:1fr 1fr!important;gap:9px!important;min-height:260px!important}
+  .almPromoCard{border-radius:18px!important;min-height:132px!important}
+  .almPromoCard.main{min-height:210px!important}
+  .almPromoCard .overlay{padding:10px 10px 9px!important}
+  .almPromoCard .overlay strong{font-size:12px!important}.almPromoCard .overlay small{font-size:10px!important}
+  .almPromoNav{width:38px!important;height:38px!important;font-size:22px!important}
+  .almPromoNav.prev{right:10px!important}.almPromoNav.next{left:10px!important}
+  .almPromoDots{bottom:12px!important;right:14px!important}
+  .almPromoTimeBadge{left:14px!important;top:14px!important;font-size:11px!important;padding:6px 10px!important}
+}
+</style>
+<script id="almalika-v410-home-promo-script">
+(function(){
+  function escHtml(s){
+    return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
+  }
+  function getSectionItems(key,count){
+    try{
+      var arr=(window.products||[]).filter(function(p){return typeof sectionOf==='function' && sectionOf(p)===key;});
+      return arr.slice(0,count||4);
+    }catch(e){return [];}
+  }
+  function minPriceFor(p){
+    try{
+      var nums=[];
+      if(p && p.packagePrices){ Object.keys(p.packagePrices).forEach(function(k){ var v=Number(p.packagePrices[k]||0); if(v>0) nums.push(v); }); }
+      ['baseDecorPrice','priceOneDay','priceTwoDays','price'].forEach(function(k){ var v=Number((p&&p[k])||0); if(v>0) nums.push(v); });
+      nums=nums.filter(function(x){return x>0;});
+      var val=nums.length?Math.min.apply(null,nums):0;
+      return val>0?(typeof money==='function'?money(val):val)+' ر.ق':'حسب الطلب';
+    }catch(e){return 'حسب الطلب';}
+  }
+  function sectionCount(key){
+    try{return (window.products||[]).filter(function(p){return typeof sectionOf==='function' && sectionOf(p)===key;}).length||0}catch(e){return 0}
+  }
+  function buildMosaicCards(items){
+    if(!items.length) return '<div class="almPromoCard main"><div class="overlay"><strong>قريبًا</strong><small>سيتم إضافة صور أكثر قريبًا</small></div></div>';
+    return items.map(function(p,idx){
+      var cls=idx===0?'almPromoCard main':'almPromoCard';
+      return '<div class="'+cls+'">'
+        + '<img src="'+escHtml(typeof productImageUrl==='function'?productImageUrl(p):'')+'" alt="'+escHtml(p.name||'')+'" loading="lazy">'
+        + '<div class="overlay"><strong>'+escHtml(p.name||'')+'</strong><small>يبدأ من '+escHtml(minPriceFor(p))+'</small></div>'
+        + '</div>';
+    }).join('');
+  }
+  function slideData(){
+    return [
+      {
+        key:'bouncies', title:'نطاطيات وزحلاقيات تبهر الأطفال',
+        kicker:'🏰 نطاطيات وزحلاقيات',
+        text:'مجموعة مختارة من النطاطيات والزحلاقيات المائية والجافة، مع تجهيز وتركيب احترافي ولمسة مبهجة تناسب الحدائق، المنازل، المدارس والفعاليات.',
+        features:['مائي وجاف','أشكال كبيرة وصغيرة','تركيب آمن','خيارات وسط الأسبوع'],
+        cta:'استكشف النطاطيات',
+        secondary:'واتساب القسم',
+        bg:'linear-gradient(135deg,#fff1fb 0%,#fff8ef 45%,#eefbff 100%)',
+        items:getSectionItems('bouncies',4)
+      },
+      {
+        key:'snacks', title:'سناك وعربات ضيافة بشكل أنيق',
+        kicker:'🍿 السناك والعربات',
+        text:'عربات فشار، غزل البنات، ذرة حلوة، بطاطا حلزونية، بوظة وآيس كريم وسلاش، بتنسيق جذاب يضيف طابع ضيافة مرتب ومحبوب للأطفال والضيوف.',
+        features:['فشار وغزل البنات','سلاش وآيس كريم','خدمة 3 ساعات','نكهات متعددة'],
+        cta:'استكشف السناك',
+        secondary:'واتساب القسم',
+        bg:'linear-gradient(135deg,#fff9f0 0%,#fff3fa 48%,#f2fbff 100%)',
+        items:getSectionItems('snacks',4)
+      },
+      {
+        key:'events', title:'تجهيز حفلات وديكورات راقية',
+        kicker:'🎀 تجهيز الحفلات',
+        text:'خلفيات، بالونات، ستاندات، بوابات حفلات، حفلات تخرج وميلاد، مع خيارات قابلة للتخصيص حسب الثيم والألوان وشكل المناسبة.',
+        features:['ثيم حسب الطلب','ألوان بالونات','تجهيز احترافي','تنسيق أنيق'],
+        cta:'استكشف الديكورات',
+        secondary:'واتساب القسم',
+        bg:'linear-gradient(135deg,#fff3fb 0%,#fffdf8 42%,#f4f7ff 100%)',
+        items:getSectionItems('events',4)
+      },
+      {
+        key:'offers', title:'عروض وبكجات توفر عليك أكثر',
+        kicker:'🎁 العروض والبكجات',
+        text:'باقات جاهزة ومميزة تجمع بين النطاطيات والسناك والديكور وأحيانًا الطاولات والكراسي، حتى يحصل الزبون على قيمة أعلى وخيارات أسرع للحجز.',
+        features:['أسعار أوضح','بكجات جاهزة','أنسب للعائلات','تجميع أكثر من خدمة'],
+        cta:'استكشف العروض',
+        secondary:'واتساب القسم',
+        bg:'linear-gradient(135deg,#fff3f7 0%,#fff8ec 42%,#eefcff 100%)',
+        items:getSectionItems('offers',4)
+      }
+    ];
+  }
+  function buildSlide(slide,index){
+    var cnt=sectionCount(slide.key);
+    var priceText=slide.items[0] ? minPriceFor(slide.items[0]) : 'حسب الطلب';
+    return '<article class="almPromoSlide'+(index===0?' active':'')+'" data-slide-index="'+index+'" style="--promoBg:'+slide.bg+'">'
+      + '<div class="almPromoContent">'
+      + '<span class="almPromoKicker">'+slide.kicker+'</span>'
+      + '<h2 class="almPromoTitle">'+slide.title+'</h2>'
+      + '<p class="almPromoText">'+slide.text+'</p>'
+      + '<div class="almPromoFeatures">'+slide.features.map(function(f){return '<span>'+escHtml(f)+'</span>';}).join('')+'</div>'
+      + '<div class="almPromoStats">'
+      + '<div class="almPromoStat"><strong>'+cnt+'</strong><small>منتج/خدمة</small></div>'
+      + '<div class="almPromoStat"><strong>'+escHtml(priceText)+'</strong><small>أسعار تبدأ من</small></div>'
+      + '<div class="almPromoStat"><strong>5s</strong><small>تبديل تلقائي</small></div>'
+      + '</div>'
+      + '<div class="almPromoActions">'
+      + '<button class="almPromoBtn primary" onclick="showSection(\''+slide.key+'\')">'+slide.cta+'</button>'
+      + '<button class="almPromoBtn secondary" onclick="quickWaSection&&quickWaSection(\''+slide.key+'\')">'+slide.secondary+'</button>'
+      + '</div>'
+      + '</div>'
+      + '<div class="almPromoMosaic">'+buildMosaicCards(slide.items)+'</div>'
+      + '</article>';
+  }
+  function buildSliderHtml(){
+    var slides=slideData();
+    return '<div id="almHomePromoSlider">'
+      + '<div class="almPromoSlider">'
+      + '<div class="almPromoTimeBadge">يتبدل تلقائيًا كل 5 ثواني</div>'
+      + '<button class="almPromoNav prev" type="button" aria-label="السابق">›</button>'
+      + '<button class="almPromoNav next" type="button" aria-label="التالي">‹</button>'
+      + '<div class="almPromoViewport">'+slides.map(buildSlide).join('')+'</div>'
+      + '<div class="almPromoDots">'+slides.map(function(_,i){return '<button class="almPromoDot'+(i===0?' active':'')+'" type="button" data-dot="'+i+'" aria-label="انتقال إلى الشريحة '+(i+1)+'"></button>';}).join('')+'</div>'
+      + '</div>'
+      + '<div class="almPromoSectionNote">إعلانات رئيسية متبدلة: النطاطيات، السناك، تجهيز الحفلات، والعروض والبكجات.</div>'
+      + '</div>';
+  }
+  function showPromoSlide(root,index){
+    if(!root) return;
+    var slides=root.querySelectorAll('.almPromoSlide');
+    var dots=root.querySelectorAll('.almPromoDot');
+    if(!slides.length) return;
+    index=(index+slides.length)%slides.length;
+    slides.forEach(function(slide,i){ slide.classList.toggle('active',i===index); });
+    dots.forEach(function(dot,i){ dot.classList.toggle('active',i===index); });
+    root.dataset.index=String(index);
+  }
+  function restartPromoTimer(root){
+    if(!root) return;
+    var old=Number(root.dataset.timerId||0);
+    if(old) clearInterval(old);
+    var id=setInterval(function(){
+      var current=Number(root.dataset.index||0); showPromoSlide(root,current+1);
+    },5000);
+    root.dataset.timerId=String(id);
+  }
+  function activatePromoSlider(root){
+    if(!root || root.dataset.bound==='1') return;
+    root.dataset.bound='1'; root.dataset.index='0';
+    root.addEventListener('click',function(e){
+      var dot=e.target.closest('.almPromoDot');
+      if(dot){ showPromoSlide(root,Number(dot.getAttribute('data-dot')||0)); restartPromoTimer(root); return; }
+      if(e.target.closest('.almPromoNav.prev')){ showPromoSlide(root,Number(root.dataset.index||0)-1); restartPromoTimer(root); return; }
+      if(e.target.closest('.almPromoNav.next')){ showPromoSlide(root,Number(root.dataset.index||0)+1); restartPromoTimer(root); return; }
+    });
+    root.addEventListener('mouseenter',function(){ var old=Number(root.dataset.timerId||0); if(old) clearInterval(old); });
+    root.addEventListener('mouseleave',function(){ restartPromoTimer(root); });
+    restartPromoTimer(root);
+  }
+  function quickWaSection(section){
+    var map={bouncies:'أرغب بالاستفسار عن قسم النطاطيات والزحلاقيات',snacks:'أرغب بالاستفسار عن قسم السناك والعربات',events:'أرغب بالاستفسار عن قسم تجهيز الحفلات',offers:'أرغب بالاستفسار عن قسم العروض والبكجات'};
+    var msg=encodeURIComponent(map[section]||'أرغب بالاستفسار عن منتجات الملكة');
+    window.open('https://wa.me/97433317720?text='+msg,'_blank');
+  }
+  window.quickWaSection=quickWaSection;
+  function ensureHomePromo(){
+    var hero=document.querySelector('#app .hero');
+    if(!hero) return;
+    if(hero.querySelector('#almHomePromoSlider')){ activatePromoSlider(hero.querySelector('#almHomePromoSlider')); return; }
+    hero.insertAdjacentHTML('beforeend', buildSliderHtml());
+    activatePromoSlider(hero.querySelector('#almHomePromoSlider'));
+  }
+  function offerSummaries(){
+    try{
+      var arr=(window.products||[]).filter(function(p){return typeof sectionOf==='function' && sectionOf(p)==='offers';}).slice(0,12);
+      return arr.map(function(p){ return '<span class="almPulseTickerItem"><b>#'+Number(p.number||0)+'</b> '+escHtml(p.name||'عرض')+' — يبدأ من '+escHtml(minPriceFor(p))+'</span>'; });
+    }catch(e){return [];}
+  }
+  function ensurePulseTicker(){
+    var group=document.getElementById('almTopFixedGroup');
+    if(!group) return;
+    var anchor=group.querySelector('.almWorkingTickerWrap,.v361TopTickerWrap,#v361TopTickerWrap');
+    if(!anchor) return;
+    var bar=document.getElementById('almPulseTickerBar');
+    if(!bar){
+      bar=document.createElement('div'); bar.id='almPulseTickerBar';
+      var next=anchor.nextSibling;
+      if(next) group.insertBefore(bar,next); else group.appendChild(bar);
+    }
+    var items=offerSummaries();
+    bar.innerHTML='<div class="almPulseTickerLabel">آخر العروض</div><div class="almPulseTickerContent"><div class="almPulseTickerTrack">'+(items.length?items.join('<span class="almPulseTickerSep">•</span>'):'<span class="almPulseTickerItem">لا توجد عروض مضافة حالياً</span>')+'</div></div>';
+    setTimeout(function(){
+      var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0); if(h){ document.documentElement.style.setProperty('--almFixedTopHeight',h+'px'); document.body.style.paddingTop=h+'px'; }
+    },20);
+  }
+  function run(){ ensurePulseTicker(); ensureHomePromo(); }
+  document.addEventListener('DOMContentLoaded',function(){ setTimeout(run,80); setTimeout(run,350); setTimeout(run,1000); });
+  window.addEventListener('load',function(){ setTimeout(run,120); setTimeout(run,500); });
+  document.addEventListener('click',function(e){
+    if(e.target && e.target.closest && e.target.closest('#nav button,.nav button,.mainCats .cat,.chip,.logo,.btn')){ setTimeout(run,120); setTimeout(run,420); }
+  },true);
+  var mo=new MutationObserver(function(){ run(); });
+  document.addEventListener('DOMContentLoaded',function(){ var app=document.getElementById('app'); if(app) mo.observe(app,{childList:true,subtree:false}); });
+  setInterval(function(){ ensurePulseTicker(); if(document.querySelector('#app .hero')) ensureHomePromo(); },2000);
+})();
+</script>
