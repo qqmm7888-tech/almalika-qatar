@@ -13917,17 +13917,6 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
 
 <!-- ===== V401: تجميد منطقة الهيدر + عنوان القسم والفلاتر بدون حركة ===== -->
 <style id="almalika-v401-freeze-top-and-section-area">
-/* إيقاف حركة شريط العروض حتى تبقى المنطقة العلوية ثابتة تماماً */
-.almWorkingTickerTrack,
-.v361TickerTrack,
-.v360TickerTrack,
-.v359TickerTrack{
-  animation:none!important;
-  transform:none!important;
-  will-change:auto!important;
-}
-#almWorkingTicker:hover .almWorkingTickerTrack{animation:none!important;}
-
 /* تثبيت عنوان القسم والفلاتر تحت الهيدر مباشرة */
 #app .almFrozenProductArea{
   position:sticky!important;
@@ -13967,9 +13956,7 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
 (function(){
   function stopTickerMotion(){
     document.querySelectorAll('.almWorkingTickerTrack,.v361TickerTrack,.v360TickerTrack,.v359TickerTrack').forEach(function(el){
-      el.style.setProperty('animation','none','important');
-      el.style.setProperty('transform','none','important');
-      el.style.setProperty('will-change','auto','important');
+      /* ticker motion kept active */
     });
   }
   function refreshFrozenOffset(){
@@ -13979,7 +13966,6 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
       document.documentElement.style.setProperty('--almFixedTopHeight', h+'px');
       document.body.style.paddingTop=h+'px';
     }
-    stopTickerMotion();
   }
   document.addEventListener('DOMContentLoaded',refreshFrozenOffset);
   window.addEventListener('load',refreshFrozenOffset);
@@ -13991,6 +13977,52 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
 
 <script id="almalika-v403-view-mode-cleanup">
 try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
+</script>
+
+
+
+<!-- ===== V406: إعادة حركة شريط آخر العروض مع بقاء الهيدر ثابت ===== -->
+<style id="almalika-v406-moving-offers-ticker">
+  #almWorkingTicker,
+  #almWorkingTicker .almWorkingTickerWindow{
+    overflow:hidden!important;
+  }
+  .almWorkingTickerTrack{
+    display:flex!important;
+    align-items:center!important;
+    width:max-content!important;
+    min-width:max-content!important;
+    white-space:nowrap!important;
+    will-change:transform!important;
+    animation:almV406TickerMove 38s linear infinite!important;
+    transform:none;
+  }
+  #almWorkingTicker:hover .almWorkingTickerTrack{
+    animation-play-state:running!important;
+  }
+  @keyframes almV406TickerMove{
+    0%{transform:translateX(0)}
+    100%{transform:translateX(50%)}
+  }
+  @media(max-width:700px){
+    .almWorkingTickerTrack{animation-duration:26s!important;}
+  }
+</style>
+<script id="almalika-v406-moving-offers-ticker-script">
+(function(){
+  function keepTickerMoving(){
+    document.querySelectorAll('.almWorkingTickerTrack').forEach(function(el){
+      el.style.setProperty('animation','almV406TickerMove 38s linear infinite','important');
+      el.style.setProperty('animation-play-state','running','important');
+      el.style.setProperty('will-change','transform','important');
+      if(el.style.transform==='none') el.style.removeProperty('transform');
+    });
+  }
+  document.addEventListener('DOMContentLoaded',keepTickerMoving);
+  window.addEventListener('load',keepTickerMoving);
+  window.addEventListener('resize',keepTickerMoving);
+  setInterval(keepTickerMoving,600);
+})();
 </script>
 
 </body>
@@ -17649,15 +17681,6 @@ body.almV402ProductsMode #app > section.wrap.section{
 body.almV402ProductsMode #app .products{
   scroll-margin-top:calc(var(--almFixedTopHeight,176px) + var(--almFrozenAreaHeight,132px) + 18px)!important;
 }
-/* منع شريط العروض من الحركة حتى تبقى المنطقة كلها ثابتة */
-.almWorkingTickerTrack,
-.v361TickerTrack,
-.v360TickerTrack,
-.v359TickerTrack{
-  animation:none!important;
-  transform:none!important;
-  will-change:auto!important;
-}
 @media(max-width:700px){
   body.almV402ProductsMode #app .almFrozenProductArea{
     width:min(100% - 16px,640px)!important;
@@ -17686,9 +17709,7 @@ body.almV402ProductsMode #app .products{
   }
   function stopTicker(){
     document.querySelectorAll('.almWorkingTickerTrack,.v361TickerTrack,.v360TickerTrack,.v359TickerTrack').forEach(function(el){
-      el.style.setProperty('animation','none','important');
-      el.style.setProperty('transform','none','important');
-      el.style.setProperty('will-change','auto','important');
+      /* ticker motion kept active */
     });
   }
   function refresh(){
@@ -17704,7 +17725,6 @@ body.almV402ProductsMode #app .products{
     // نقرأ ارتفاع العنوان والفلاتر بعد تثبيتها ثم نعوض المنتجات تحته
     var fh=Math.ceil(frozen.getBoundingClientRect().height || frozen.offsetHeight || 132);
     document.documentElement.style.setProperty('--almFrozenAreaHeight', fh+'px');
-    stopTicker();
   }
   function schedule(){
     refresh();
