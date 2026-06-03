@@ -17181,3 +17181,272 @@ html{
 })();
 </script>
 
+<style id="v385-fix-decor-image-zoom-style">
+/* v385: إصلاح تكبير صور الديكورات حتى يظهر فوق التفاصيل ولا يبقى بالخلفية */
+#v385ImageZoomOverlay{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483647!important;
+  background:rgba(0,0,0,.84)!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:18px!important;
+  backdrop-filter:blur(6px)!important;
+  direction:rtl!important;
+  font-family:Cairo,Tahoma,Arial,sans-serif!important;
+}
+#v385ImageZoomOverlay.show{
+  display:flex!important;
+}
+#v385ImageZoomBox{
+  position:relative!important;
+  width:min(96vw,1120px)!important;
+  max-height:94vh!important;
+  background:#fff!important;
+  border-radius:24px!important;
+  border:1px solid #f2c7d8!important;
+  box-shadow:0 30px 90px rgba(0,0,0,.50)!important;
+  padding:16px!important;
+  display:grid!important;
+  grid-template-rows:auto 1fr auto!important;
+  gap:10px!important;
+}
+#v385ImageZoomTitle{
+  font-weight:1000!important;
+  color:#6A1B2E!important;
+  font-size:18px!important;
+  line-height:1.5!important;
+  padding:0 56px 0 6px!important;
+}
+#v385ImageZoomCloseTop{
+  position:absolute!important;
+  top:12px!important;
+  right:12px!important;
+  width:44px!important;
+  height:44px!important;
+  border-radius:50%!important;
+  border:0!important;
+  background:#e11d48!important;
+  color:#fff!important;
+  font-size:28px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  cursor:pointer!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+#v385ImageZoomImg{
+  width:100%!important;
+  height:calc(94vh - 150px)!important;
+  object-fit:contain!important;
+  background:linear-gradient(135deg,#fff,#fff8e8)!important;
+  border-radius:18px!important;
+  border:1px solid #f0dce7!important;
+}
+#v385ImageZoomActions{
+  display:flex!important;
+  gap:10px!important;
+  justify-content:center!important;
+  align-items:center!important;
+}
+#v385ImageZoomActions button{
+  border:0!important;
+  border-radius:14px!important;
+  padding:12px 24px!important;
+  font-size:15px!important;
+  font-weight:1000!important;
+  cursor:pointer!important;
+}
+#v385DetailsBtn{
+  background:#e11d48!important;
+  color:#fff!important;
+}
+#v385CloseBtn{
+  background:#111!important;
+  color:#fff!important;
+}
+
+/* أي عارض صور قديم يجب أن لا يظهر فوق عارضنا */
+.offerImageViewer,
+.offerImageModal,
+.imageViewer,
+.imgViewer,
+.lightbox,
+[class*="ImageViewer"],
+[class*="imageViewer"],
+[class*="Lightbox"],
+[class*="lightbox"]{
+  z-index:2147483600!important;
+}
+
+@media(max-width:700px){
+  #v385ImageZoomBox{
+    width:96vw!important;
+    padding:12px!important;
+    border-radius:18px!important;
+  }
+  #v385ImageZoomImg{
+    height:calc(94vh - 140px)!important;
+  }
+  #v385ImageZoomTitle{
+    font-size:15px!important;
+    padding-right:52px!important;
+  }
+}
+</style>
+<script id="v385-fix-decor-image-zoom-script">
+(function(){
+  var currentProduct = null;
+
+  function norm(t){ return ((t || '') + '').replace(/\s+/g,' ').trim(); }
+
+  function cleanupOldImageViewers(){
+    try{
+      /* يغلق أي تكبير قديم أو صورة كبيرة بقيت بالخلف */
+      document.querySelectorAll('#v381ImageZoomOverlay,#v384ImageZoomOverlay,.offerImageViewer,.offerImageModal,.imageViewer,.imgViewer,.lightbox,[class*="ImageViewer"],[class*="imageViewer"],[class*="Lightbox"],[class*="lightbox"]').forEach(function(el){
+        if(el.id === 'v385ImageZoomOverlay') return;
+        el.classList.remove('show','open','active');
+        el.style.setProperty('display','none','important');
+        el.style.setProperty('visibility','hidden','important');
+        if((el.textContent || '').indexOf('تفاصيل المنتج') === -1 && (el.tagName || '').toLowerCase() !== 'body'){
+          /* لا نحذف مودالات التفاصيل؛ فقط عارض الصور */
+          if(/ImageViewer|imageViewer|Lightbox|lightbox|offerImage|imgViewer/.test(el.className + ' ' + el.id)){
+            setTimeout(function(){ try{ el.remove(); }catch(e){} }, 50);
+          }
+        }
+      });
+    }catch(e){}
+  }
+
+  function ensureZoom(){
+    var ov = document.getElementById('v385ImageZoomOverlay');
+    if(ov) return ov;
+    ov = document.createElement('div');
+    ov.id = 'v385ImageZoomOverlay';
+    ov.innerHTML =
+      '<div id="v385ImageZoomBox">' +
+        '<button id="v385ImageZoomCloseTop" type="button" aria-label="إغلاق">×</button>' +
+        '<div id="v385ImageZoomTitle">صورة المنتج</div>' +
+        '<img id="v385ImageZoomImg" alt="صورة المنتج">' +
+        '<div id="v385ImageZoomActions">' +
+          '<button type="button" id="v385DetailsBtn">تفاصيل المنتج</button>' +
+          '<button type="button" id="v385CloseBtn">إغلاق</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click',function(e){ if(e.target === ov) closeZoom(); });
+    ov.querySelector('#v385ImageZoomCloseTop').addEventListener('click',closeZoom);
+    ov.querySelector('#v385CloseBtn').addEventListener('click',closeZoom);
+    ov.querySelector('#v385DetailsBtn').addEventListener('click',function(){
+      closeZoom();
+      try{
+        if(currentProduct){
+          var detailsBtn = currentProduct.querySelector('button[onclick*="openProduct"],button[onclick*="details"],button.detailsBtn,.detailsBtn');
+          if(detailsBtn) detailsBtn.click();
+        }
+      }catch(e){}
+    });
+    return ov;
+  }
+
+  function closeZoom(){
+    var ov = document.getElementById('v385ImageZoomOverlay');
+    if(ov) ov.classList.remove('show');
+    cleanupOldImageViewers();
+  }
+
+  function getSrc(img){
+    return img && (img.currentSrc || img.src || img.getAttribute('src') || img.getAttribute('data-src') || '');
+  }
+
+  function productFromImage(img){
+    return img && img.closest ? img.closest('.product,.card,.item') : null;
+  }
+
+  function titleFor(img){
+    try{
+      var product = productFromImage(img);
+      if(product){
+        var h = product.querySelector('h3,h2,.title');
+        if(h && norm(h.textContent)) return norm(h.textContent);
+      }
+      var modal = img.closest('.modalBox,.modal,#modal');
+      if(modal){
+        var h2 = modal.querySelector('h2,h3');
+        if(h2 && norm(h2.textContent)) return norm(h2.textContent);
+      }
+    }catch(e){}
+    return 'صورة المنتج';
+  }
+
+  function isDecorContext(img){
+    try{
+      var txt = norm((img.closest('.modal,.modalBox,#modal,.product,.card,.item') || document.body).textContent);
+      return /ديكور|تجهيز الحفلات|ستاند|بوابة|بالون|بالونات|decor/i.test(txt);
+    }catch(e){}
+    return false;
+  }
+
+  function isAllowedZoom(img){
+    if(!img || !img.closest) return false;
+
+    /* صور اختيار الديكور الصغيرة والكبيرة داخل تفاصيل الديكور مسموحة الآن */
+    if(img.closest('.decorGallery,.decorThumb') || isDecorContext(img)) return true;
+
+    var product = productFromImage(img);
+    if(product){
+      var all = norm(product.textContent) + ' ' + ((product.className || '') + '');
+      if(/طاولات|كراسي|شخصيات|characters|tables|chairs/i.test(all)) return false;
+      if(/نطاط|زحلاق|صابوني|فوم|بركة|bounc|slide|سناك|فشار|غزل|بطاط|ذرة|ايس|آيس|براد|سلاش|عربة|snack|popcorn|cotton|ice|slush|cart/i.test(all)) return true;
+    }
+
+    if(img.closest('.modalPic')){
+      var modal = img.closest('.modal,.modalBox,#modal');
+      var txt = norm(modal ? modal.textContent : '');
+      if(/طاولات|كراسي|شخصيات|characters|tables|chairs/i.test(txt)) return false;
+      if(/نطاط|زحلاق|صابوني|فوم|بركة|سناك|فشار|غزل|بطاط|ذرة|ايس|آيس|براد|سلاش|عربة|ديكور|ستاند|بوابة|بالون/i.test(txt)) return true;
+    }
+
+    return false;
+  }
+
+  function openZoom(img){
+    var src = getSrc(img);
+    if(!src) return;
+    currentProduct = productFromImage(img);
+    cleanupOldImageViewers();
+    var ov = ensureZoom();
+    ov.querySelector('#v385ImageZoomTitle').textContent = titleFor(img);
+    ov.querySelector('#v385ImageZoomImg').src = src;
+
+    /* زر التفاصيل يظهر فقط لو الصورة من كرت منتج؛ داخل تفاصيل الديكور غالباً لا نحتاجه */
+    var detailsBtn = ov.querySelector('#v385DetailsBtn');
+    detailsBtn.style.display = currentProduct ? 'inline-block' : 'none';
+
+    ov.classList.add('show');
+  }
+
+  document.addEventListener('click',function(e){
+    var img = e.target && e.target.closest ? e.target.closest('img') : null;
+    if(!isAllowedZoom(img)) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    openZoom(img);
+    return false;
+  },true);
+
+  document.addEventListener('keydown',function(e){
+    if(e.key === 'Escape') closeZoom();
+  });
+
+  document.addEventListener('DOMContentLoaded',function(){
+    ensureZoom();
+    setTimeout(cleanupOldImageViewers,200);
+  });
+})();
+</script>
+
