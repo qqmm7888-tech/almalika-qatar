@@ -5677,7 +5677,157 @@ body{
         '<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+
         '<title>الرابط غير متاح</title>'+
         '<style>body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#fff6fa;font-family:Arial,Tahoma,sans-serif;direction:rtl;color:#5b1935}.box{max-width:520px;margin:20px;padding:34px;border:1px solid #f0bfd2;border-radius:24px;background:#fff;box-shadow:0 18px 45px rgba(120,0,50,.12);text-align:center}.box h1{margin:0 0 12px;font-size:28px}.box p{font-size:17px;line-height:1.8;margin:0;color:#7b4b5f}</style></head>'+
-        '<body><div class="box"><h1>الرابط غير متاح حالياً</h1><p>تم تغيير رابط كتالوج الملكة. يرجى التواصل مع الإدارة للحصول على الرابط الجديد.</p></div></body>';
+        '<body><div class="box"><h1>الرابط غير متاح حالياً</h1><p>تم تغيير رابط كتالوج الملكة. يرجى التواصل مع الإدارة للحصول على الرابط الجديد.</p></div>
+
+<!-- ===== V398: تكبير الديكورات والعروض بحجم كبير غير كامل الشاشة + أزرار أسفل الصورة ===== -->
+<style id="almalika-v398-not-fullscreen-image-viewer">
+/* النافذة تبقى فوق كل شيء، لكن الصورة نفسها داخل كرت كبير وليس كامل الشاشة */
+#almalikaV397ImageViewer{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483647!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex-direction:column!important;
+  gap:12px!important;
+  background:rgba(0,0,0,.78)!important;
+  backdrop-filter:blur(8px)!important;
+  padding:24px!important;
+  overflow:auto!important;
+  box-sizing:border-box!important;
+}
+#almalikaV397ImageViewer.show{display:flex!important;}
+#almalikaV397ImageViewer .v397Stage{
+  order:1!important;
+  width:min(820px,88vw)!important;
+  max-width:88vw!important;
+  max-height:calc(88vh - 82px)!important;
+  background:#fff!important;
+  border-radius:24px!important;
+  padding:12px!important;
+  box-shadow:0 24px 90px rgba(0,0,0,.48)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+}
+#almalikaV397ImageViewer img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:100%!important;
+  max-height:calc(88vh - 112px)!important;
+  object-fit:contain!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  box-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+#almalikaV397ImageViewer .v398Actions{
+  order:2!important;
+  width:min(820px,88vw)!important;
+  max-width:88vw!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:10px!important;
+  flex-wrap:wrap!important;
+  direction:rtl!important;
+}
+#almalikaV397ImageViewer .v397Close,
+#almalikaV397ImageViewer .v397Details{
+  position:static!important;
+  inset:auto!important;
+  top:auto!important;
+  right:auto!important;
+  left:auto!important;
+  bottom:auto!important;
+  order:0!important;
+  z-index:1!important;
+  width:auto!important;
+  min-width:170px!important;
+  height:50px!important;
+  min-height:50px!important;
+  border-radius:999px!important;
+  border:0!important;
+  padding:0 24px!important;
+  font-size:15px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  color:#fff!important;
+  cursor:pointer!important;
+  box-shadow:0 12px 28px rgba(0,0,0,.28)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+}
+#almalikaV397ImageViewer .v397Close{
+  background:#111!important;
+}
+#almalikaV397ImageViewer .v397Details{
+  background:linear-gradient(135deg,#ff2f80,#b31333)!important;
+  display:none!important;
+}
+#almalikaV397ImageViewer.hasDetails .v397Details{display:flex!important;}
+#almalikaV397ImageViewer:not(.hasDetails) .v397Close{min-width:220px!important;}
+body.v397ImageViewerOpen{overflow:hidden!important;}
+@media(max-width:640px){
+  #almalikaV397ImageViewer{padding:14px!important;gap:10px!important;}
+  #almalikaV397ImageViewer .v397Stage{width:94vw!important;max-width:94vw!important;border-radius:18px!important;padding:8px!important;max-height:calc(86vh - 76px)!important;}
+  #almalikaV397ImageViewer img{max-height:calc(86vh - 102px)!important;border-radius:14px!important;}
+  #almalikaV397ImageViewer .v398Actions{width:94vw!important;max-width:94vw!important;gap:8px!important;}
+  #almalikaV397ImageViewer .v397Close,
+  #almalikaV397ImageViewer .v397Details{min-width:0!important;flex:1 1 145px!important;height:48px!important;min-height:48px!important;font-size:14px!important;padding:0 16px!important;}
+  #almalikaV397ImageViewer:not(.hasDetails) .v397Close{flex:0 1 220px!important;}
+}
+</style>
+<script id="almalika-v398-not-fullscreen-image-viewer-js">
+(function(){
+  function patchViewer(){
+    var z=document.getElementById('almalikaV397ImageViewer');
+    if(!z) return;
+    var stage=z.querySelector('.v397Stage');
+    var close=z.querySelector('.v397Close');
+    var details=z.querySelector('.v397Details');
+    if(close) close.textContent='إغلاق';
+    if(details) details.textContent='✨ التفاصيل';
+    if(stage && close && !z.querySelector('.v398Actions')){
+      var actions=document.createElement('div');
+      actions.className='v398Actions';
+      stage.insertAdjacentElement('afterend',actions);
+      if(details) actions.appendChild(details);
+      actions.appendChild(close);
+    }
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    patchViewer();
+    setTimeout(patchViewer,120);
+    setTimeout(patchViewer,600);
+  });
+  document.addEventListener('click',function(){ setTimeout(patchViewer,0); },true);
+  var oldOffer=window.openOfferImage;
+  if(typeof oldOffer==='function'){
+    window.openOfferImage=function(n){
+      var r=oldOffer.apply(this,arguments);
+      setTimeout(patchViewer,0);
+      return r;
+    };
+  }
+  if(window.almalikaV397OpenViewer){
+    var oldOpen=window.almalikaV397OpenViewer;
+    window.almalikaV397OpenViewer=function(){
+      var r=oldOpen.apply(this,arguments);
+      setTimeout(patchViewer,0);
+      return r;
+    };
+  }
+})();
+</script>
+
+</body>';
       throw new Error('Blocked old shared link');
     }
   }catch(e){}
