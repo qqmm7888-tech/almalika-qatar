@@ -19157,3 +19157,292 @@ marquee.almTickerMarquee{
   setInterval(fixTwoBars,700);
 })();
 </script>
+
+
+<!-- ===== V417: تثبيت نهائي لترتيب الشريطين: الأسود المتحرك أولاً، الأزرق للمزايا فقط، ثم الهيدر ===== -->
+<style id="almalika-v417-final-bars-order-style">
+/* إخفاء كل أشرطة العروض القديمة التي كانت تظهر باللون الأزرق وفيها #600 #601 */
+#v361TopTickerWrap,
+.v361TopTickerWrap,
+#almPulseTickerBar,
+.almPulseTickerBar,
+#almTopStickyGroup,
+marquee.almTickerMarquee,
+.almTickerMarquee,
+.v360TickerWrap,
+.v361TickerWrap,
+.v359TickerWrap{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+}
+
+#almTopFixedGroup{
+  position:fixed!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  z-index:999990!important;
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  background:#fff!important;
+}
+#almTopFixedGroup > #almWorkingTicker{order:1!important;}
+#almTopFixedGroup > #almWelcomeTopSingle{order:2!important;}
+#almTopFixedGroup > header.header,
+#almTopFixedGroup > .header{order:3!important;}
+
+/* الشريط الأسود: آخر العروض متحرك فقط */
+#almTopFixedGroup > #almWorkingTicker{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  height:42px!important;
+  min-height:42px!important;
+  max-height:42px!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:#090909!important;
+  border-bottom:3px solid #e00022!important;
+  direction:rtl!important;
+}
+#almTopFixedGroup > #almWorkingTicker .almWorkingTickerLabel{
+  display:flex!important;
+  visibility:visible!important;
+  flex:0 0 155px!important;
+  height:42px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  background:linear-gradient(180deg,#d71920,#9b0012)!important;
+  color:#fff!important;
+  font-size:15px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+}
+#almTopFixedGroup > #almWorkingTicker .almWorkingTickerWindow{
+  display:block!important;
+  visibility:visible!important;
+  flex:1 1 auto!important;
+  min-width:0!important;
+  height:42px!important;
+  overflow:hidden!important;
+  background:#090909!important;
+}
+#almTopFixedGroup > #almWorkingTicker .almWorkingTickerTrack{
+  display:flex!important;
+  visibility:visible!important;
+  align-items:center!important;
+  gap:70px!important;
+  width:max-content!important;
+  min-width:max-content!important;
+  height:42px!important;
+  line-height:42px!important;
+  white-space:nowrap!important;
+  color:#fff!important;
+  font-size:15px!important;
+  font-weight:900!important;
+  transform:translateX(0);
+  animation:almV417BlackOffersMove 140s linear infinite!important;
+  animation-play-state:running!important;
+  will-change:transform!important;
+}
+#almTopFixedGroup > #almWorkingTicker .almWorkingTickerTrack span{
+  display:inline-block!important;
+  color:#fff!important;
+  white-space:nowrap!important;
+}
+#almTopFixedGroup > #almWorkingTicker:hover .almWorkingTickerTrack{animation-play-state:running!important;}
+@keyframes almV417BlackOffersMove{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(50%)}
+}
+
+/* الشريط الأزرق: للمزايا الترحيبية فقط */
+#almTopFixedGroup > #almWelcomeTopSingle{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  width:100%!important;
+  min-height:42px!important;
+  height:auto!important;
+  max-height:none!important;
+  padding:7px 14px!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:20px!important;
+  overflow:hidden!important;
+  direction:rtl!important;
+  color:#fff!important;
+  border-top:1px solid rgba(255,255,255,.35)!important;
+  border-bottom:3px solid #e00022!important;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.06) 0 1px,rgba(255,255,255,0) 1px 4px),
+    linear-gradient(180deg,#1aa1f2 0%,#0878cf 48%,#005fb5 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 18px rgba(0,127,220,.24)!important;
+  animation:almV417BlueSoftBlink 10s ease-in-out infinite!important;
+}
+#almTopFixedGroup > #almWelcomeTopSingle::before,
+#almTopFixedGroup > #almWelcomeTopSingle::after{display:none!important;content:none!important;}
+#almTopFixedGroup > #almWelcomeTopSingle .almWelcomePill{
+  flex:0 0 auto!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:1px solid rgba(255,255,255,.55)!important;
+  background:rgba(0,84,160,.30)!important;
+  color:#fff!important;
+  border-radius:999px!important;
+  padding:6px 13px!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+}
+#almTopFixedGroup > #almWelcomeTopSingle .almWelcomeText{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:22px!important;
+  flex-wrap:nowrap!important;
+  min-width:0!important;
+  white-space:nowrap!important;
+}
+#almTopFixedGroup > #almWelcomeTopSingle .almWelcomeSmall{
+  color:#fff!important;
+  font-size:15px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+}
+#almTopFixedGroup > #almWelcomeTopSingle .almWelcomeBig{
+  color:#fff!important;
+  font-size:25px!important;
+  font-weight:1000!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  text-shadow:0 2px 0 rgba(0,0,0,.18)!important;
+}
+#almTopFixedGroup > #almWelcomeTopSingle .almWelcomeCode{
+  color:#fff!important;
+  font-size:22px!important;
+  font-weight:1000!important;
+  letter-spacing:.5px!important;
+}
+#almTopFixedGroup > #almWelcomeTopSingle .almWelcomeBtn{
+  flex:0 0 auto!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border:0!important;
+  border-radius:999px!important;
+  background:#fff!important;
+  color:#005fb5!important;
+  padding:7px 15px!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  cursor:pointer!important;
+  box-shadow:0 6px 16px rgba(0,0,0,.15)!important;
+}
+@keyframes almV417BlueSoftBlink{
+  0%,100%{filter:brightness(1);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 12px rgba(0,127,220,.18)}
+  50%{filter:brightness(1.14);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 30px rgba(0,148,255,.36)}
+}
+
+@media(max-width:760px){
+  #almTopFixedGroup > #almWorkingTicker{height:36px!important;min-height:36px!important;max-height:36px!important;}
+  #almTopFixedGroup > #almWorkingTicker .almWorkingTickerLabel{height:36px!important;flex-basis:104px!important;font-size:12px!important;}
+  #almTopFixedGroup > #almWorkingTicker .almWorkingTickerWindow{height:36px!important;}
+  #almTopFixedGroup > #almWorkingTicker .almWorkingTickerTrack{height:36px!important;line-height:36px!important;font-size:12.5px!important;animation-duration:120s!important;}
+  #almTopFixedGroup > #almWelcomeTopSingle{min-height:38px!important;padding:6px 8px!important;gap:9px!important;overflow-x:auto!important;justify-content:flex-start!important;scrollbar-width:none!important;}
+  #almTopFixedGroup > #almWelcomeTopSingle::-webkit-scrollbar{display:none!important;}
+  #almTopFixedGroup > #almWelcomeTopSingle .almWelcomeText{gap:10px!important;}
+  #almTopFixedGroup > #almWelcomeTopSingle .almWelcomePill{font-size:10.5px!important;padding:5px 9px!important;}
+  #almTopFixedGroup > #almWelcomeTopSingle .almWelcomeSmall{font-size:11.5px!important;}
+  #almTopFixedGroup > #almWelcomeTopSingle .almWelcomeBig{font-size:17px!important;}
+  #almTopFixedGroup > #almWelcomeTopSingle .almWelcomeCode{font-size:15px!important;}
+  #almTopFixedGroup > #almWelcomeTopSingle .almWelcomeBtn{font-size:10.5px!important;padding:6px 9px!important;}
+}
+</style>
+<script id="almalika-v417-final-bars-order-script">
+(function(){
+  function welcomeHtml(){
+    return '<span class="almWelcomePill">أول طلب فقط</span>'+
+      '<span class="almWelcomeText">'+
+      '<span class="almWelcomeSmall">مزايا ترحيبية لأول طلب</span>'+
+      '<span class="almWelcomeBig">وفر 15%</span>'+
+      '<span class="almWelcomeSmall">الكود: <b class="almWelcomeCode">WELCOME15</b></span>'+
+      '<span class="almWelcomeSmall">للتطبيق فقط</span>'+
+      '</span>'+
+      '<button class="almWelcomeBtn" type="button" onclick="almOpenWelcome15Modal&&almOpenWelcome15Modal()">تفعيل الكود</button>';
+  }
+  function ensureFinalBars(){
+    try{
+      var group=document.getElementById('almTopFixedGroup');
+      if(!group){
+        group=document.createElement('div');
+        group.id='almTopFixedGroup';
+        document.body.insertBefore(group,document.body.firstChild);
+      }
+      var header=document.querySelector('header.header') || document.querySelector('.header');
+      if(header && header.parentNode!==group) group.appendChild(header);
+
+      var black=document.getElementById('almWorkingTicker');
+      if(!black){
+        black=document.createElement('div');
+        black.id='almWorkingTicker';
+        black.setAttribute('aria-label','آخر العروض');
+        black.innerHTML='<div class="almWorkingTickerLabel"><span class="almWorkingTickerDot"></span><b>آخر العروض</b></div><div class="almWorkingTickerWindow"><div class="almWorkingTickerTrack"><span>🔥 عرض الصيف 1950 ر.ق — 30 طفل: نطاطية كبيرة بركة + نطاطية صغيرة بركة + آيس كريم + جهاز صابون • 🔥 فرحة الصيف 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 + عربة وجبة ناجتس مع بطاطا 20 + 2 طاولة و10 كراسي • 🔥 عرض المتعة 1700 ر.ق — حوض بركة مع جهاز فوم صابون + آيس كريم وفشار • 🔥 حفلة متكاملة 2950 ر.ق — نطاطية + ديكور بالون + بطاطا حلزوني + ليزر + هدايا</span><span>🔥 عرض الصيف 1950 ر.ق — 30 طفل: نطاطية كبيرة بركة + نطاطية صغيرة بركة + آيس كريم + جهاز صابون • 🔥 فرحة الصيف 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 + عربة وجبة ناجتس مع بطاطا 20 + 2 طاولة و10 كراسي • 🔥 عرض المتعة 1700 ر.ق — حوض بركة مع جهاز فوم صابون + آيس كريم وفشار • 🔥 حفلة متكاملة 2950 ر.ق — نطاطية + ديكور بالون + بطاطا حلزوني + ليزر + هدايا</span></div></div>';
+      }
+      var blue=document.getElementById('almWelcomeTopSingle');
+      if(!blue){
+        blue=document.createElement('div');
+        blue.id='almWelcomeTopSingle';
+      }
+      blue.innerHTML=welcomeHtml();
+
+      /* ترتيب حقيقي داخل المجموعة */
+      if(group.firstElementChild!==black) group.insertBefore(black,group.firstChild);
+      if(blue.previousElementSibling!==black) group.insertBefore(blue,black.nextSibling);
+      if(header && header.previousElementSibling!==blue) group.insertBefore(header,blue.nextSibling);
+
+      /* إخفاء الأشرطة القديمة الزرقاء فقط، بدون المساس بالأسود */
+      document.querySelectorAll('#v361TopTickerWrap,.v361TopTickerWrap,#almPulseTickerBar,.almPulseTickerBar,#almTopStickyGroup,marquee.almTickerMarquee,.almTickerMarquee,.v360TickerWrap,.v361TickerWrap,.v359TickerWrap').forEach(function(el){
+        el.style.setProperty('display','none','important');
+        el.style.setProperty('visibility','hidden','important');
+        el.style.setProperty('height','0','important');
+        el.style.setProperty('max-height','0','important');
+        el.style.setProperty('overflow','hidden','important');
+        el.style.setProperty('padding','0','important');
+        el.style.setProperty('margin','0','important');
+        el.style.setProperty('border','0','important');
+      });
+
+      var tr=black.querySelector('.almWorkingTickerTrack');
+      if(tr){
+        tr.style.setProperty('animation','almV417BlackOffersMove '+(window.innerWidth<760?120:140)+'s linear infinite','important');
+        tr.style.setProperty('animation-play-state','running','important');
+      }
+      var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0);
+      if(h){
+        document.documentElement.style.setProperty('--almFixedTopHeight',h+'px');
+        document.body.style.paddingTop=h+'px';
+      }
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(ensureFinalBars,30);setTimeout(ensureFinalBars,180);setTimeout(ensureFinalBars,600);setTimeout(ensureFinalBars,1400);});
+  window.addEventListener('load',function(){setTimeout(ensureFinalBars,80);setTimeout(ensureFinalBars,500);});
+  window.addEventListener('resize',function(){setTimeout(ensureFinalBars,120);});
+  document.addEventListener('click',function(){setTimeout(ensureFinalBars,80);setTimeout(ensureFinalBars,260);},true);
+  setInterval(ensureFinalBars,350);
+})();
+</script>
