@@ -13486,6 +13486,69 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
   window.addEventListener('load',closeViewer);
 })();
 </script>
+
+
+<!-- ===== V400: عند الضغط على أي قسم في الهيدر يبدأ العرض من أول منتج ===== -->
+<script id="almalika-v400-header-click-scroll-first-product">
+(function(){
+  function getStickyHeaderHeight(){
+    var h=0;
+    var header=document.querySelector('.header, header.header, #header');
+    if(header){
+      var r=header.getBoundingClientRect();
+      h=Math.max(h, r.height||0);
+    }
+    var ticker=document.getElementById('v361TopTickerWrap');
+    if(ticker){
+      var tr=ticker.getBoundingClientRect();
+      if(getComputedStyle(ticker).position==='fixed' || ticker.getBoundingClientRect().top<=2){
+        h+=Math.max(0,tr.height||0);
+      }
+    }
+    return h;
+  }
+  function firstProductsBlock(){
+    return document.querySelector('#app .products') || document.querySelector('.products');
+  }
+  function scrollToFirstProductNow(){
+    var target=firstProductsBlock();
+    if(!target) return;
+    var offset=getStickyHeaderHeight()+14;
+    var y=target.getBoundingClientRect().top + (window.pageYOffset||document.documentElement.scrollTop||0) - offset;
+    if(!isFinite(y)) y=0;
+    window.scrollTo({top:Math.max(0,Math.round(y)), behavior:'auto'});
+  }
+  function scheduleScrollToFirstProduct(){
+    requestAnimationFrame(function(){
+      setTimeout(scrollToFirstProductNow,30);
+      setTimeout(scrollToFirstProductNow,140);
+      setTimeout(scrollToFirstProductNow,320);
+    });
+  }
+  window.almalikaScrollToFirstProduct=scheduleScrollToFirstProduct;
+
+  function wrapNavigationFunction(name){
+    var fn=window[name];
+    if(typeof fn!=='function' || fn.__v400Wrapped) return;
+    var wrapped=function(){
+      var r=fn.apply(this,arguments);
+      scheduleScrollToFirstProduct();
+      return r;
+    };
+    wrapped.__v400Wrapped=true;
+    window[name]=wrapped;
+  }
+
+  wrapNavigationFunction('showSection');
+  wrapNavigationFunction('showHome');
+
+  document.addEventListener('click',function(e){
+    var btn=e.target && e.target.closest ? e.target.closest('#nav button, .nav button.navIconBtn, .mainCats .cat.richCat') : null;
+    if(!btn) return;
+    scheduleScrollToFirstProduct();
+  },true);
+})();
+</script>
 </body>
 </html>
 
