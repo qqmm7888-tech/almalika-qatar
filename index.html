@@ -19446,3 +19446,66 @@ marquee.almTickerMarquee,
   setInterval(ensureFinalBars,350);
 })();
 </script>
+
+
+<style id="almalika-v418-black-first-final-style">
+/* v418: الشريط الأسود هو أول عنصر أعلى الصفحة، متحرك، ثم الأزرق، ثم الهيدر */
+html,body{scroll-padding-top:var(--almFixedTopHeight,150px)!important;}
+#almTopFixedGroup{
+  position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;
+  z-index:2147483000!important;display:flex!important;flex-direction:column!important;
+  background:#fff!important;margin:0!important;padding:0!important;box-shadow:0 6px 18px rgba(0,0,0,.06)!important;
+}
+#almTopFixedGroup > #almWorkingTicker{order:1!important;display:flex!important;position:relative!important;inset:auto!important;width:100%!important;height:34px!important;min-height:34px!important;max-height:34px!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#090909!important;border-bottom:3px solid #d80020!important;direction:rtl!important;z-index:3!important;}
+#almTopFixedGroup > #almWelcomeTopSingle{order:2!important;position:relative!important;z-index:2!important;}
+#almTopFixedGroup > header.header,#almTopFixedGroup > .header{order:3!important;position:relative!important;top:auto!important;z-index:1!important;}
+#almWorkingTicker .almWorkingTickerLabel{order:2!important;flex:0 0 150px!important;height:34px!important;background:#c70018!important;color:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;font-size:14px!important;font-weight:1000!important;white-space:nowrap!important;}
+#almWorkingTicker .almWorkingTickerDot{width:7px!important;height:7px!important;border-radius:50%!important;background:#fff!important;display:inline-block!important;box-shadow:0 0 10px rgba(255,255,255,.8)!important;}
+#almWorkingTicker .almWorkingTickerWindow{order:1!important;flex:1 1 auto!important;min-width:0!important;height:34px!important;overflow:hidden!important;background:#090909!important;direction:ltr!important;}
+#almWorkingTicker .almWorkingTickerTrack{display:flex!important;align-items:center!important;width:max-content!important;height:34px!important;line-height:34px!important;white-space:nowrap!important;color:#fff!important;font-size:15px!important;font-weight:1000!important;animation:almV418BlackTickerMove 140s linear infinite!important;animation-play-state:running!important;will-change:transform!important;}
+#almWorkingTicker .almWorkingTickerTrack span{display:inline-block!important;padding-inline:28px!important;color:#fff!important;text-shadow:0 1px 1px rgba(0,0,0,.4)!important;}
+#almWorkingTicker:hover .almWorkingTickerTrack{animation-play-state:running!important;}
+@keyframes almV418BlackTickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@media(max-width:760px){
+  #almTopFixedGroup > #almWorkingTicker{height:32px!important;min-height:32px!important;max-height:32px!important;}
+  #almWorkingTicker .almWorkingTickerLabel{flex-basis:110px!important;height:32px!important;font-size:12px!important;}
+  #almWorkingTicker .almWorkingTickerWindow{height:32px!important;}
+  #almWorkingTicker .almWorkingTickerTrack{height:32px!important;line-height:32px!important;font-size:12.5px!important;animation-duration:120s!important;}
+  #almWorkingTicker .almWorkingTickerTrack span{padding-inline:20px!important;}
+}
+</style>
+<script id="almalika-v418-black-first-final-script">
+(function(){
+  var OFFERS_TEXT='🔥 عرض الصيف 1950 ر.ق — 30 طفل: نطاطية كبيرة بركة + نطاطية صغيرة بركة + آيس كريم + جهاز صابون  •  🔥 فرحة الصيف 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 + عربة وجبة ناجتس مع بطاطا 20 + 2 طاولة و10 كراسي  •  🔥 عرض المتعة 1700 ر.ق — حوض بركة مع جهاز فوم صابون + آيس كريم وفشار  •  🔥 حفلة متكاملة 2950 ر.ق — نطاطية + ديكور بالون + بطاطا حلزوني + ليزر + هدايا  •  🔥 عيد ميلاد سعيد 2680 ر.ق — ديكور بالون + طاولات وكراسي + نطاطية صغيرة + فشار وغزل';
+  function ensureBlackFirst(){
+    try{
+      var group=document.getElementById('almTopFixedGroup');
+      if(!group){ group=document.createElement('div'); group.id='almTopFixedGroup'; document.body.insertBefore(group,document.body.firstChild); }
+      if(document.body.firstElementChild!==group) document.body.insertBefore(group,document.body.firstChild);
+      var black=document.getElementById('almWorkingTicker');
+      if(!black){ black=document.createElement('div'); black.id='almWorkingTicker'; }
+      black.innerHTML='<div class="almWorkingTickerLabel"><span class="almWorkingTickerDot"></span><b>آخر العروض</b></div><div class="almWorkingTickerWindow"><div class="almWorkingTickerTrack"><span>'+OFFERS_TEXT+'</span><span>'+OFFERS_TEXT+'</span></div></div>';
+      var blue=document.getElementById('almWelcomeTopSingle');
+      var header=document.querySelector('header.header') || document.querySelector('.header');
+      if(group.firstElementChild!==black) group.insertBefore(black,group.firstChild);
+      if(blue && blue.parentNode!==group) group.insertBefore(blue,black.nextSibling);
+      if(blue && blue.previousElementSibling!==black) group.insertBefore(blue,black.nextSibling);
+      if(header && header.parentNode!==group) group.appendChild(header);
+      if(header && blue && header.previousElementSibling!==blue) group.insertBefore(header,blue.nextSibling);
+      if(header && !blue && header.previousElementSibling!==black) group.insertBefore(header,black.nextSibling);
+      var tr=black.querySelector('.almWorkingTickerTrack');
+      if(tr){
+        tr.style.setProperty('animation','almV418BlackTickerMove '+(window.innerWidth<760?120:140)+'s linear infinite','important');
+        tr.style.setProperty('animation-play-state','running','important');
+      }
+      var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0);
+      if(h){ document.documentElement.style.setProperty('--almFixedTopHeight',h+'px'); document.body.style.paddingTop=h+'px'; }
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){ensureBlackFirst();setTimeout(ensureBlackFirst,100);setTimeout(ensureBlackFirst,500);setTimeout(ensureBlackFirst,1200);});
+  window.addEventListener('load',function(){ensureBlackFirst();setTimeout(ensureBlackFirst,300);});
+  window.addEventListener('resize',function(){setTimeout(ensureBlackFirst,120);});
+  document.addEventListener('click',function(){setTimeout(ensureBlackFirst,120);},true);
+  setInterval(ensureBlackFirst,1000);
+})();
+</script>
