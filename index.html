@@ -14373,7 +14373,7 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
       + '<div class="almPromoStats">'
       + '<div class="almPromoStat"><strong>'+cnt+'</strong><small>منتج/خدمة</small></div>'
       + '<div class="almPromoStat"><strong>'+escHtml(priceText)+'</strong><small>أسعار تبدأ من</small></div>'
-      + '<div class="almPromoStat"><strong>5s</strong><small>تبديل تلقائي</small></div>'
+      + '<div class="almPromoStat"><strong>8s</strong><small>تبديل تلقائي</small></div>'
       + '</div>'
       + '<div class="almPromoActions">'
       + '<button class="almPromoBtn primary" onclick="showSection(\''+slide.key+'\')">'+slide.cta+'</button>'
@@ -14387,7 +14387,7 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
     var slides=slideData();
     return '<div id="almHomePromoSlider">'
       + '<div class="almPromoSlider">'
-      + '<div class="almPromoTimeBadge">يتبدل تلقائيًا كل 5 ثواني</div>'
+      + '<div class="almPromoTimeBadge">يتبدل تلقائيًا كل 8 ثواني</div>'
       + '<button class="almPromoNav prev" type="button" aria-label="السابق">›</button>'
       + '<button class="almPromoNav next" type="button" aria-label="التالي">‹</button>'
       + '<div class="almPromoViewport">'+slides.map(buildSlide).join('')+'</div>'
@@ -14412,7 +14412,7 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
     if(old) clearInterval(old);
     var id=setInterval(function(){
       var current=Number(root.dataset.index||0); showPromoSlide(root,current+1);
-    },5000);
+    },8000);
     root.dataset.timerId=String(id);
   }
   function activatePromoSlider(root){
@@ -18529,7 +18529,7 @@ body.almV402ProductsMode #app .products{
     return r;
   };
   function escHtml(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  function secItems(key,count){try{return ((window.products|| (typeof products!=='undefined'?products:[]))||[]).filter(function(p){return typeof sectionOf==='function' && sectionOf(p)===key;}).slice(0,count||8)}catch(e){return []}}
+  function secItems(key,count){try{var all=((window.products|| (typeof products!=='undefined'?products:[]))||[]).filter(function(p){return typeof sectionOf==='function' && sectionOf(p)===key;});count=count||8;if(!all.length)return [];var hour=Math.floor(Date.now()/3600000);var offset=(hour*3)%all.length;var rotated=all.slice(offset).concat(all.slice(0,offset));return rotated.slice(0,count)}catch(e){return []}}
   function minPrice(p){try{var nums=[];if(p&&p.packagePrices){Object.keys(p.packagePrices).forEach(function(k){var v=Number(p.packagePrices[k]||0);if(v>0)nums.push(v);});}['baseDecorPrice','priceOneDay','priceTwoDays','price'].forEach(function(k){var v=Number((p&&p[k])||0);if(v>0)nums.push(v);});var val=nums.length?Math.min.apply(null,nums):0;return val>0?val+' ر.ق':'حسب الطلب'}catch(e){return 'حسب الطلب'}}
   function card(p,i){
     var cls='almPromoCard '+(i===0?'main ':((i===1||i===4)?'wide ':''));
@@ -18544,7 +18544,7 @@ body.almV402ProductsMode #app .products{
       {key:'events',k:'🎀 تجهيز الحفلات',t:'ديكورات وحفلات بتفاصيل راقية',txt:'خلفيات، بالونات، ستاندات وثيمات حفلات مع صور كثيرة لاختيار الشكل المناسب.',bg:'linear-gradient(135deg,#fff0f8,#fffdf5,#f3f7ff)'},
       {key:'offers',k:'🎁 العروض والبكجات',t:'بكجات جاهزة وسريعة الاختيار',txt:'باقات تجمع أكثر من خدمة في صفحة واحدة لتسهيل القرار والحجز.',bg:'linear-gradient(135deg,#fff3f7,#fff9e8,#eefcff)'}
     ];
-    var html='<div class="almPromoSlider"><div class="almPromoTimeBadge">يتبدل تلقائيًا كل 5 ثواني</div><button class="almPromoNav prev" type="button">›</button><button class="almPromoNav next" type="button">‹</button><div class="almPromoViewport">';
+    var html='<div class="almPromoSlider"><div class="almPromoTimeBadge">يتبدل تلقائيًا كل 8 ثواني</div><button class="almPromoNav prev" type="button">›</button><button class="almPromoNav next" type="button">‹</button><div class="almPromoViewport">';
     data.forEach(function(s,idx){
       var items=secItems(s.key,8);
       html+='<article class="almPromoSlide'+(idx===0?' active':'')+'" data-slide-index="'+idx+'" style="--promoBg:'+s.bg+'"><div class="almPromoContent"><span class="almPromoKicker">'+s.k+'</span><h2 class="almPromoTitle">'+s.t+'</h2><p class="almPromoText">'+s.txt+'</p><div class="almPromoFeatures"><span>صور كثيرة</span><span>مقاسات متناسقة</span><span>اختيار سريع</span><span>تبديل تلقائي</span></div><div class="almPromoActions"><button class="almPromoBtn primary" onclick="showSection(\''+s.key+'\')">استكشف القسم</button><button class="almPromoBtn secondary" onclick="quickWaSection&&quickWaSection(\''+s.key+'\')">واتساب</button></div></div><div class="almPromoMosaic">'+items.map(card).join('')+'</div></article>';
@@ -18556,15 +18556,16 @@ body.almV402ProductsMode #app .products{
   function bindSlider(root){
     if(!root) return; var timer=0;
     function show(i){var slides=qsa('.almPromoSlide',root),dots=qsa('.almPromoDot',root);if(!slides.length)return;i=(i+slides.length)%slides.length;slides.forEach(function(s,n){s.classList.toggle('active',n===i)});dots.forEach(function(d,n){d.classList.toggle('active',n===i)});root.dataset.index=i;}
-    function restart(){if(timer)clearInterval(timer);timer=setInterval(function(){show(Number(root.dataset.index||0)+1)},5000)}
+    function restart(){if(timer)clearInterval(timer);timer=setInterval(function(){show(Number(root.dataset.index||0)+1)},8000)}
     root.onclick=function(e){var dot=e.target.closest('.almPromoDot'); if(dot){show(Number(dot.getAttribute('data-dot')||0));restart();return} if(e.target.closest('.almPromoNav.prev')){show(Number(root.dataset.index||0)-1);restart();return} if(e.target.closest('.almPromoNav.next')){show(Number(root.dataset.index||0)+1);restart();return}};
-    root.onmouseenter=function(){if(timer)clearInterval(timer)};root.onmouseleave=restart;show(0);restart();
+    root.onmouseenter=function(){if(timer)clearInterval(timer)};root.onmouseleave=restart;show(new Date().getHours()%Math.max(1,qsa('.almPromoSlide',root).length));restart();
   }
   function run(){ensureBlueBar(); if(qs('#app .hero')) rebuildPromoSlider(); if(typeof updateCartUI==='function') updateCartUI();}
   document.addEventListener('DOMContentLoaded',function(){setTimeout(run,80);setTimeout(run,450);setTimeout(run,1200)});
   window.addEventListener('load',function(){setTimeout(run,120);setTimeout(run,700)});
   document.addEventListener('click',function(){setTimeout(run,220)},true);
   window.addEventListener('resize',function(){refreshTopHeight()});
-  setInterval(function(){ensureBlueBar(); if(qs('#app .hero') && !qs('#almHomePromoSlider .almPromoCard.main')) rebuildPromoSlider();},1800);
+  var almLastPromoHour=new Date().getHours();
+  setInterval(function(){ensureBlueBar(); var nowHour=new Date().getHours(); if(qs('#app .hero') && (!qs('#almHomePromoSlider .almPromoCard.main') || nowHour!==almLastPromoHour)){almLastPromoHour=nowHour; rebuildPromoSlider();}},1800);
 })();
 </script>
