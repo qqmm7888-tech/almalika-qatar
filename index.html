@@ -17499,3 +17499,170 @@ html{
 })();
 </script>
 
+<style id="v387-product-card-image-open-details-style">
+/* v387: صورة كرت المنتج من الخارج تفتح تفاصيل المنتج في كل الأقسام */
+.product .pic img,
+.product img,
+.card.product img{
+  cursor:pointer!important;
+}
+
+/* صور داخل نافذة التفاصيل تبقى حسب وظيفتها ولا تتعامل كفتح منتج خارجي */
+.modal img,
+.modalBox img,
+#modal img{
+  cursor:inherit;
+}
+.modalPic img{
+  cursor:zoom-in!important;
+}
+.decorGallery img,
+.decorThumb img{
+  cursor:pointer!important;
+}
+</style>
+
+<script id="v387-product-card-image-open-details-script">
+(function(){
+  function norm(t){ return ((t || '') + '').replace(/\s+/g,' ').trim(); }
+
+  function isInsideOpenedModal(el){
+    return !!(el && el.closest && el.closest('.modal,.modalBox,#modal,[class*="Modal"],[class*="modal"]'));
+  }
+
+  function getProductCard(img){
+    if(!img || !img.closest) return null;
+    /* لا نأخذ كروت صور الاختيار داخل التفاصيل */
+    if(isInsideOpenedModal(img)) return null;
+    return img.closest('.product,.card.product,[data-product],.item.product');
+  }
+
+  function getProductNumber(card){
+    if(!card) return '';
+    var candidates = [
+      card.getAttribute('data-number'),
+      card.getAttribute('data-id'),
+      card.getAttribute('data-product'),
+      card.dataset && (card.dataset.number || card.dataset.id || card.dataset.product)
+    ];
+    for(var i=0;i<candidates.length;i++){
+      if(candidates[i] && String(candidates[i]).match(/\d+/)) return String(candidates[i]).match(/\d+/)[0];
+    }
+
+    var badge = card.querySelector('.badge,.num,.number,[class*="badge"],[class*="number"]');
+    if(badge && norm(badge.textContent).match(/\d+/)) return norm(badge.textContent).match(/\d+/)[0];
+
+    var all = norm(card.textContent);
+    var m = all.match(/#\s*(\d+)/) || all.match(/(?:رقم|No\.?)\s*(\d+)/i);
+    return m ? m[1] : '';
+  }
+
+  function clickDetailsButton(card){
+    if(!card) return false;
+
+    /* أزرار التفاصيل بجميع أشكالها */
+    var selectors = [
+      'button[onclick*="openProduct"]',
+      'button[onclick*="details"]',
+      'button.detailsBtn',
+      '.detailsBtn',
+      'button'
+    ];
+
+    for(var s=0;s<selectors.length;s++){
+      var btns = Array.from(card.querySelectorAll(selectors[s]));
+      for(var i=0;i<btns.length;i++){
+        var b = btns[i];
+        var t = norm(b.textContent);
+        var oc = (b.getAttribute && (b.getAttribute('onclick') || '')) || '';
+        if(t.indexOf('تفاصيل') > -1 || /openProduct|details/i.test(oc) || b.classList.contains('detailsBtn')){
+          if(!b.disabled){
+            b.click();
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  function openByFunction(card){
+    var n = getProductNumber(card);
+    if(!n) return false;
+
+    try{
+      if(typeof window.openProduct === 'function'){
+        window.openProduct(Number(n));
+        return true;
+      }
+    }catch(e){}
+
+    try{
+      if(typeof window.showProduct === 'function'){
+        window.showProduct(Number(n));
+        return true;
+      }
+    }catch(e){}
+
+    try{
+      if(typeof window.openDetails === 'function'){
+        window.openDetails(Number(n));
+        return true;
+      }
+    }catch(e){}
+
+    return false;
+  }
+
+  function openProductFromCard(card){
+    if(!card) return false;
+
+    /* إذا المنتج غير متاح بالكامل، نترك زر التفاصيل الموجود يقرر؛ لكن الصورة يجب أن تستجيب */
+    if(clickDetailsButton(card)) return true;
+    if(openByFunction(card)) return true;
+
+    /* محاولة أخيرة: أي رابط داخل الكرت */
+    var a = card.querySelector('a[href]');
+    if(a){ a.click(); return true; }
+
+    return false;
+  }
+
+  document.addEventListener('click',function(e){
+    var img = e.target && e.target.closest ? e.target.closest('img') : null;
+    if(!img) return;
+
+    var card = getProductCard(img);
+    if(!card) return;
+
+    /*
+      مهم:
+      صور الكروت الخارجية في كل الأقسام تفتح التفاصيل.
+      أما صور التفاصيل/اختيار الديكور لا نلمسها حتى تستمر وظيفتها السابقة.
+    */
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+
+    openProductFromCard(card);
+    return false;
+  }, true);
+
+  /* في حال كان عند الكرت طبقة تغطي الصورة، نخلي نفس الفكرة تشتغل على مساحة الصورة */
+  document.addEventListener('click',function(e){
+    var card = e.target && e.target.closest ? e.target.closest('.product,.card.product,[data-product],.item.product') : null;
+    if(!card || isInsideOpenedModal(card)) return;
+
+    var pic = e.target.closest && e.target.closest('.pic,[class*="pic"],[class*="image"],[class*="photo"]');
+    if(!pic) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+
+    openProductFromCard(card);
+    return false;
+  }, true);
+})();
+</script>
+
