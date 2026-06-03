@@ -18213,3 +18213,149 @@ body.almV402ProductsMode #app .products{
   setInterval(schedule,1200);
 })();
 </script>
+
+
+<!-- ===== V412 MOBILE APP INTRO + RAFEEQ-STYLE EXPERIENCE FOR ALMALIKA ===== -->
+<style id="almalika-v412-mobile-app-style">
+/* شاشة بداية قبل دخول الكتالوج - هوية الملكة */
+#almMobileIntro{
+  position:fixed!important;inset:0!important;z-index:2147483000!important;
+  direction:rtl!important;display:none!important;align-items:stretch!important;justify-content:center!important;
+  background:
+    radial-gradient(circle at 20% 12%,rgba(255,217,125,.42),transparent 23%),
+    radial-gradient(circle at 85% 18%,rgba(255,72,150,.32),transparent 24%),
+    linear-gradient(155deg,#fff3fb 0%,#ffe7f2 28%,#fff8df 60%,#fff 100%)!important;
+  color:#321621!important;font-family:"Cairo",Tahoma,Arial,sans-serif!important;overflow:hidden!important;
+}
+#almMobileIntro.almShow{display:flex!important}
+#almMobileIntro .almIntroBgBubble{position:absolute!important;border-radius:999px!important;filter:blur(2px)!important;opacity:.72!important;pointer-events:none!important;animation:almIntroFloat 7s ease-in-out infinite!important}
+#almMobileIntro .b1{width:180px;height:180px;right:-54px;top:10%;background:rgba(255,47,134,.18)}
+#almMobileIntro .b2{width:220px;height:220px;left:-80px;bottom:13%;background:rgba(212,175,55,.18);animation-delay:1.2s!important}
+#almMobileIntro .b3{width:92px;height:92px;right:18%;bottom:8%;background:rgba(101,210,255,.20);animation-delay:2s!important}
+@keyframes almIntroFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.04)}}
+.almIntroPhone{
+  position:relative!important;z-index:2!important;width:min(100%,480px)!important;min-height:100dvh!important;
+  display:flex!important;flex-direction:column!important;padding:calc(env(safe-area-inset-top,0px) + 18px) 18px calc(env(safe-area-inset-bottom,0px) + 18px)!important;
+}
+.almIntroStatus{height:22px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;font-size:12px!important;font-weight:900!important;color:rgba(49,22,33,.75)!important;margin-bottom:10px!important}
+.almIntroTop{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;margin-bottom:18px!important}
+.almIntroBrand{display:flex!important;align-items:center!important;gap:10px!important}
+.almIntroLogoBadge{width:54px!important;height:54px!important;border-radius:18px!important;background:linear-gradient(135deg,#ff2f86,#7a1734)!important;color:#fff!important;display:grid!important;place-items:center!important;font-size:28px!important;box-shadow:0 16px 34px rgba(122,23,52,.22)!important;position:relative!important;overflow:hidden!important}
+.almIntroLogoBadge:after{content:'';position:absolute;inset:-50%;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.7),transparent 65%);transform:rotate(18deg);animation:almIntroShine 2.9s linear infinite!important}
+@keyframes almIntroShine{0%{translate:-80% 0}100%{translate:80% 0}}
+.almIntroBrand h1{margin:0!important;font-size:27px!important;line-height:1!important;color:#7a1734!important;font-weight:1000!important;letter-spacing:-.5px!important}
+.almIntroBrand p{margin:4px 0 0!important;font-size:12px!important;color:#7b6670!important;font-weight:900!important}
+.almIntroSkip{background:rgba(255,255,255,.72)!important;border:1px solid rgba(122,23,52,.10)!important;border-radius:999px!important;padding:9px 12px!important;color:#7a1734!important;font-size:12px!important;font-weight:1000!important;box-shadow:0 10px 24px rgba(0,0,0,.06)!important}
+.almIntroHeroCard{
+  position:relative!important;overflow:hidden!important;border-radius:34px!important;padding:22px 18px 20px!important;min-height:308px!important;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.88),rgba(255,248,225,.76)),
+    radial-gradient(circle at 80% 18%,rgba(255,47,134,.25),transparent 32%)!important;
+  border:1px solid rgba(255,255,255,.76)!important;box-shadow:0 28px 70px rgba(122,23,52,.18)!important;
+}
+.almIntroHeroCard:before{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 0 34%,rgba(255,255,255,.75) 38%,transparent 43% 100%);background-size:240px 240px;opacity:.75!important;animation:almIntroSweep 4.8s linear infinite!important}
+@keyframes almIntroSweep{0%{background-position:-260px 0}100%{background-position:260px 0}}
+.almIntroHeroInner{position:relative!important;z-index:2!important}
+.almIntroCrown{display:inline-flex!important;align-items:center!important;gap:8px!important;background:#fff!important;color:#7a1734!important;border-radius:999px!important;padding:8px 12px!important;font-size:12px!important;font-weight:1000!important;box-shadow:0 10px 24px rgba(0,0,0,.06)!important}
+.almIntroTitle{font-size:34px!important;line-height:1.16!important;margin:16px 0 10px!important;font-weight:1000!important;color:#211018!important;letter-spacing:-.8px!important}
+.almIntroTitle span{color:#ff2f86!important;text-shadow:0 6px 18px rgba(255,47,134,.16)!important}
+.almIntroText{font-size:14px!important;line-height:1.9!important;color:#6c5964!important;font-weight:900!important;margin:0 0 14px!important;max-width:92%!important}
+.almIntroMiniGrid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:8px!important;margin-top:12px!important}
+.almIntroMini{background:rgba(255,255,255,.82)!important;border:1px solid rgba(235,205,223,.75)!important;border-radius:18px!important;padding:10px 8px!important;text-align:center!important;box-shadow:0 10px 22px rgba(0,0,0,.045)!important}
+.almIntroMini b{display:block!important;font-size:20px!important;line-height:1.1!important;margin-bottom:4px!important}.almIntroMini small{font-size:10px!important;font-weight:900!important;color:#6c5964!important}
+.almIntroShowcase{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;margin:14px 0 0!important}
+.almIntroShowItem{border-radius:22px!important;min-height:96px!important;background:linear-gradient(135deg,#fff,#fff8e8)!important;border:1px solid rgba(255,255,255,.75)!important;box-shadow:0 12px 26px rgba(122,23,52,.08)!important;padding:12px!important;display:flex!important;flex-direction:column!important;justify-content:flex-end!important;overflow:hidden!important;position:relative!important}
+.almIntroShowItem:before{position:absolute!important;inset:auto -12px -10px auto!important;font-size:64px!important;opacity:.22!important;filter:drop-shadow(0 8px 10px rgba(0,0,0,.12))!important}
+.almIntroShowItem:nth-child(1):before{content:'🏰'}.almIntroShowItem:nth-child(2):before{content:'🍿'}.almIntroShowItem:nth-child(3):before{content:'🎀'}.almIntroShowItem:nth-child(4):before{content:'🎁'}
+.almIntroShowItem strong{position:relative!important;z-index:1!important;font-size:14px!important;color:#3a1824!important;font-weight:1000!important}.almIntroShowItem small{position:relative!important;z-index:1!important;font-size:10px!important;color:#7d6872!important;font-weight:900!important;margin-top:3px!important}
+.almIntroBottom{margin-top:auto!important;padding-top:16px!important}.almIntroEnter{width:100%!important;min-height:60px!important;border:0!important;border-radius:24px!important;background:linear-gradient(135deg,#ff2f86,#7a1734)!important;color:#fff!important;font-size:18px!important;font-weight:1000!important;box-shadow:0 18px 44px rgba(122,23,52,.25)!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:10px!important}
+.almIntroHint{text-align:center!important;margin:10px 0 0!important;font-size:11px!important;color:#816c76!important;font-weight:900!important}
+.almIntroDots{display:flex!important;justify-content:center!important;gap:7px!important;margin:12px 0 0!important}.almIntroDots span{width:8px!important;height:8px!important;border-radius:999px!important;background:rgba(122,23,52,.22)!important}.almIntroDots span:first-child{width:24px!important;background:#ff2f86!important}
+@media(min-width:800px){#almMobileIntro .almIntroPhone{width:min(520px,100%)!important}.almIntroHeroCard{min-height:330px!important}}
+
+/* تحسينات جوال فقط: تحويل الصفحة لإحساس تطبيق بدون تخريب الكمبيوتر */
+@media(max-width:768px){
+  body.almAppEntered{background:#f6f7fb!important;padding-bottom:92px!important}
+  body.almAppEntered #almTopFixedGroup{border-radius:0 0 26px 26px!important;overflow:hidden!important;background:#fff!important;box-shadow:0 12px 28px rgba(0,0,0,.06)!important}
+  body.almAppEntered .header{box-shadow:none!important;border-bottom:0!important;background:#fff!important}
+  body.almAppEntered .logo{font-size:28px!important;justify-content:center!important;margin:3px 0!important;color:#7a1734!important}
+  body.almAppEntered .headTop{padding:8px 10px 4px!important;gap:6px!important}
+  body.almAppEntered .headBtns{position:absolute!important;left:10px!important;top:58px!important;z-index:10!important;width:auto!important;display:flex!important;gap:6px!important}
+  body.almAppEntered .headBtns .btn{min-height:34px!important;padding:7px 10px!important;font-size:11px!important;border-radius:999px!important}
+  body.almAppEntered .nav{order:5!important;display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;justify-content:flex-start!important;background:#fff!important;border:0!important;box-shadow:none!important;padding:8px 10px 10px!important;gap:10px!important;scrollbar-width:none!important}
+  body.almAppEntered .nav::-webkit-scrollbar{display:none!important}
+  body.almAppEntered .nav button{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:5px!important;min-width:82px!important;height:78px!important;border-radius:24px!important;background:#f2f4f8!important;border:0!important;box-shadow:none!important;font-size:11px!important;color:#22151d!important;padding:8px!important;white-space:normal!important;line-height:1.25!important}
+  body.almAppEntered .nav button.active{background:linear-gradient(135deg,#fff0f8,#fff8e7)!important;color:#7a1734!important;box-shadow:0 8px 20px rgba(255,47,134,.11)!important}
+  body.almAppEntered .nav button span,body.almAppEntered .nav button i{font-size:22px!important}
+  body.almAppEntered .searchRow{grid-template-columns:1fr!important;padding:7px 10px 9px!important;gap:8px!important}
+  body.almAppEntered .search{height:52px!important;border-radius:24px!important;background:#f1f3f7!important;border:0!important;box-shadow:none!important;font-size:15px!important}
+  body.almAppEntered .searchRow select{display:none!important}
+  body.almAppEntered .almWorkingTickerWrap,body.almAppEntered #almPulseTickerBar{display:none!important}
+  body.almAppEntered .hero{padding:12px 10px 6px!important;background:#f6f7fb!important}
+  body.almAppEntered .homeHeroFrame{border-radius:24px!important;overflow:hidden!important;box-shadow:0 12px 24px rgba(0,0,0,.08)!important}
+  body.almAppEntered .homeHeroImage{border-radius:24px!important}
+  body.almAppEntered #almHomePromoSlider{margin-top:12px!important}
+  body.almAppEntered .almPromoSlider{border-radius:28px!important;background:#fff!important;border:0!important;box-shadow:0 10px 24px rgba(0,0,0,.06)!important}
+  body.almAppEntered .almPromoViewport{min-height:520px!important}
+  body.almAppEntered .almPromoSlide{grid-template-columns:1fr!important;padding:14px!important}
+  body.almAppEntered .almPromoContent{text-align:right!important;padding:4px!important}
+  body.almAppEntered .almPromoTitle{font-size:23px!important;margin:10px 0 5px!important}.almPromoText{font-size:13px!important;line-height:1.65!important}
+  body.almAppEntered .almPromoMosaic{min-height:210px!important;gap:8px!important}.almPromoCard{border-radius:18px!important;min-height:100px!important}.almPromoCard.main{min-height:190px!important}
+  body.almAppEntered #app>.wrap.section{padding-top:16px!important}
+  body.almAppEntered .title{padding:0 10px!important;margin-bottom:10px!important}.title h2{font-size:22px!important}.title p{font-size:12px!important}
+  body.almAppEntered .panel{margin:6px 10px 8px!important;border-radius:24px!important;background:#fff!important;box-shadow:0 8px 20px rgba(0,0,0,.045)!important}.panel h1{font-size:23px!important}.panel p{font-size:12px!important}
+  body.almAppEntered .chips{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;padding:8px 10px 10px!important;gap:8px!important;scrollbar-width:none!important}.chips::-webkit-scrollbar{display:none!important}.chip{flex:0 0 auto!important;border-radius:999px!important;background:#fff!important;box-shadow:0 5px 14px rgba(0,0,0,.05)!important}
+  body.almAppEntered .products{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important;padding:0 10px!important}
+  body.almAppEntered .product{display:block!important;min-height:0!important;border-radius:24px!important;background:#fff!important;box-shadow:0 8px 20px rgba(0,0,0,.045)!important;overflow:hidden!important;border:0!important}
+  body.almAppEntered .product .pic{height:155px!important;min-height:155px!important;background:#f5f2ec!important;border:0!important;border-radius:0!important}.product .pic img{object-fit:contain!important;padding:8px!important}
+  body.almAppEntered .product .body{padding:11px 10px 12px!important}.product .body h3{font-size:13px!important;min-height:38px!important;line-height:1.45!important}.product .desc{display:none!important}.product .tags{display:none!important}
+  body.almAppEntered .product .bottom{display:block!important}.product .price{display:inline-flex!important;align-items:center!important;gap:4px!important;background:transparent!important;border:0!important;padding:0!important;text-align:right!important}.product .price small{display:none!important}.product .price strong{font-size:15px!important;color:#7a1734!important}
+  body.almAppEntered .product .actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:6px!important;margin-top:8px!important}.product .actions .shareFriend,.product .actions .wa{display:none!important}.product .actions button{min-height:34px!important;border-radius:14px!important;font-size:11px!important;padding:8px!important}.product .actions .details{background:#ff2f86!important}.product .actions .quickShop{background:#1f141a!important;color:#fff!important}
+  body.almAppEntered .cartBar{bottom:14px!important;border-radius:28px!important;max-width:calc(100% - 22px)!important;width:calc(100% - 22px)!important;background:linear-gradient(135deg,#7a1734,#ff2f86)!important;box-shadow:0 16px 36px rgba(122,23,52,.24)!important}
+  body.almAppEntered .cartButton{min-height:58px!important;border-radius:28px!important;font-size:14px!important}
+  body.almAppEntered .modal{padding:0!important;align-items:flex-end!important;background:rgba(15,12,15,.55)!important}.modalBox,.modalBox.detailed{width:100%!important;max-width:100%!important;border-radius:32px 32px 0 0!important;grid-template-columns:1fr!important;max-height:92dvh!important;overflow:auto!important}.modalPic{position:relative!important;top:auto!important;min-height:240px!important}.modalInfo{padding:16px!important}.modalInfo h2{font-size:22px!important}
+}
+</style>
+<script id="almalika-v412-mobile-app-script">
+(function(){
+  function isMobile(){return window.matchMedia && window.matchMedia('(max-width: 768px)').matches;}
+  function introHtml(){return '<div id="almMobileIntro" class="almShow" aria-label="مرحبا بكم في كتالوج الملكة">'
+    +'<span class="almIntroBgBubble b1"></span><span class="almIntroBgBubble b2"></span><span class="almIntroBgBubble b3"></span>'
+    +'<div class="almIntroPhone">'
+    +'<div class="almIntroStatus"><span>قطر • الدوحة</span><span>👑 الملكة</span></div>'
+    +'<div class="almIntroTop"><div class="almIntroBrand"><div class="almIntroLogoBadge">👑</div><div><h1>الملكة</h1><p>كتالوج حفلات سريع داخل قطر</p></div></div><button class="almIntroSkip" type="button">تخطي</button></div>'
+    +'<section class="almIntroHeroCard"><div class="almIntroHeroInner"><span class="almIntroCrown">✨ تجربة جديدة قبل الدخول</span><h2 class="almIntroTitle">كل تجهيزات حفلتك <span>في مكان واحد</span></h2><p class="almIntroText">نطاطيات، زحلاقيات، سناك، ديكورات، طاولات، عروض وبكجات — بتجربة جوال تشبه التطبيق وسهلة للزبون.</p><div class="almIntroMiniGrid"><div class="almIntroMini"><b>🏰</b><small>نطاطيات</small></div><div class="almIntroMini"><b>🍿</b><small>سناك</small></div><div class="almIntroMini"><b>🎀</b><small>حفلات</small></div></div></div></section>'
+    +'<div class="almIntroShowcase"><div class="almIntroShowItem"><strong>زحلاقيات ونطاطيات</strong><small>اختيار سريع حسب المناسبة</small></div><div class="almIntroShowItem"><strong>عربات السناك</strong><small>فشار، غزل، سلاش وآيس كريم</small></div><div class="almIntroShowItem"><strong>ديكورات فاخرة</strong><small>ثيمات وبالونات حسب الطلب</small></div><div class="almIntroShowItem"><strong>عروض وبكجات</strong><small>باقات جاهزة للحجز السريع</small></div></div>'
+    +'<div class="almIntroBottom"><button class="almIntroEnter" type="button">ادخل كتالوج الملكة <span>←</span></button><div class="almIntroDots"><span></span><span></span><span></span></div><p class="almIntroHint">اضغط للدخول، بعدها يظهر الكتالوج بنظام تطبيق على الجوال.</p></div>'
+    +'</div></div>';}
+  function enterApp(){
+    var intro=document.getElementById('almMobileIntro');
+    if(intro){intro.classList.remove('almShow'); setTimeout(function(){intro.remove();},360);} 
+    document.body.classList.add('almAppEntered');
+    try{sessionStorage.setItem('almIntroEntered','1')}catch(e){}
+    setTimeout(function(){window.dispatchEvent(new Event('resize'));},80);
+  }
+  function showIntro(){
+    document.body.classList.add('almAppEntered');
+    if(document.getElementById('almMobileIntro'))return;
+    // تظهر شاشة البداية عند فتح الجوال، وتبقى قابلة للتخطي/الدخول
+    document.body.insertAdjacentHTML('beforeend', introHtml());
+    var intro=document.getElementById('almMobileIntro');
+    intro.querySelector('.almIntroEnter').addEventListener('click',enterApp);
+    intro.querySelector('.almIntroSkip').addEventListener('click',enterApp);
+  }
+  function boot(){
+    if(isMobile()){
+      document.body.classList.add('almAppEntered');
+      try{ if(sessionStorage.getItem('almIntroEntered')==='1'){return;} }catch(e){}
+      showIntro();
+    }else{
+      document.body.classList.remove('almAppEntered');
+      var intro=document.getElementById('almMobileIntro'); if(intro) intro.remove();
+    }
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(boot,80);setTimeout(boot,600);});
+  window.addEventListener('load',function(){setTimeout(boot,120);});
+  window.addEventListener('resize',function(){setTimeout(boot,120);});
+})();
+</script>
