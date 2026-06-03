@@ -19304,3 +19304,126 @@ body.almV402ProductsMode #app .products{
   setInterval(function(){unlockIntro();fixModalScroll();compactBlankGaps();},1200);
 })();
 </script>
+
+<!-- ===== V428 QA STEP 6: mobile rebuild patch - clean home, no floating modal buttons, no blank frozen gaps ===== -->
+<style id="almalika-v428-mobile-rebuild-patch">
+@media (max-width:768px){
+  html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important;background:#fffaf6!important;}
+  body{padding-bottom:92px!important;}
+
+  /* إلغاء تثبيت منطقة المنتجات الذي كان يسبب شاشة فاضية طويلة */
+  body.almV402ProductsMode #app .almFrozenProductArea,
+  #app .almFrozenProductArea{
+    position:static!important;top:auto!important;left:auto!important;right:auto!important;transform:none!important;
+    width:100%!important;max-width:100%!important;z-index:auto!important;margin:0!important;padding:0!important;
+  }
+  body.almV402ProductsMode #app .products,
+  body.almV402ProductsMode #app .section,
+  body.almV402ProductsMode #app .wrap.section,
+  #app .products,#app .section,#app .wrap.section{
+    margin-top:0!important;transform:none!important;min-height:0!important;height:auto!important;
+  }
+
+  /* الصفحة الرئيسية: حذف خربطة الشبكة القديمة وجعل الأقسام بسيطة وواضحة */
+  .header,.header .wrap,.headTop{overflow:visible!important;background:#fff!important;box-sizing:border-box!important;}
+  .logo{display:flex!important;justify-content:center!important;width:100%!important;margin:8px 0 10px!important;font-size:30px!important;line-height:1.1!important;}
+  .nav{
+    display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;
+    width:calc(100% - 20px)!important;max-width:620px!important;margin:0 auto!important;padding:10px!important;
+    border-radius:24px!important;overflow:hidden!important;background:#fff9fb!important;box-sizing:border-box!important;
+  }
+  .nav button,.nav .navIconBtn{
+    position:relative!important;display:flex!important;flex-direction:row-reverse!important;align-items:center!important;justify-content:center!important;gap:7px!important;
+    width:100%!important;min-width:0!important;height:58px!important;min-height:58px!important;max-height:58px!important;
+    padding:7px 8px!important;border-radius:18px!important;box-sizing:border-box!important;
+    white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;text-align:center!important;
+    font-size:15px!important;line-height:1.15!important;font-weight:1000!important;letter-spacing:0!important;transform:none!important;animation:none!important;
+  }
+  .nav button span:not(.navIconWrap){display:block!important;max-width:calc(100% - 34px)!important;font-size:15px!important;line-height:1.15!important;white-space:normal!important;overflow:hidden!important;text-overflow:clip!important;}
+  .nav button:nth-child(5) span:not(.navIconWrap){font-size:14px!important;}
+  .navIconWrap,.nav button .navIconWrap{
+    position:static!important;inset:auto!important;transform:none!important;flex:0 0 26px!important;width:26px!important;height:26px!important;margin:0!important;
+    display:flex!important;align-items:center!important;justify-content:center!important;border-radius:50%!important;opacity:1!important;
+  }
+  .navIconWrap svg,.nav button svg{width:18px!important;height:18px!important;display:block!important;}
+  .headBtns{display:flex!important;justify-content:center!important;margin:10px auto!important;gap:8px!important;width:100%!important;}
+  .headBtns .btn:not(.green){display:none!important;}
+  .headBtns .green{min-width:150px!important;height:48px!important;border-radius:18px!important;}
+  .searchRow{display:block!important;width:100%!important;padding:8px 14px 12px!important;box-sizing:border-box!important;}
+  .searchRow select{display:none!important;}
+  .search{width:100%!important;height:52px!important;border-radius:22px!important;box-sizing:border-box!important;}
+
+  /* الهيرو والسلايدر بدون فراغات ضخمة */
+  .hero,.homeHeroFrame,.homePromoBlock,#almHomePromoSlider,.almPromoSlider,.almPromoViewport,.almPromoSlide{
+    margin:0!important;padding-top:8px!important;min-height:0!important;height:auto!important;max-height:none!important;overflow:visible!important;
+  }
+  .homeHeroImage,.hero img{max-height:230px!important;width:100%!important;height:auto!important;object-fit:contain!important;}
+
+  /* عارض الصور المكبرة: لا شاشة فاضية، الصورة في وسط الشاشة */
+  #almalikaV397ImageViewer{
+    align-items:center!important;justify-content:center!important;padding:10px!important;overflow:hidden!important;min-height:100dvh!important;
+  }
+  #almalikaV397ImageViewer .v397Stage{
+    width:96vw!important;max-width:96vw!important;max-height:78dvh!important;margin:0!important;padding:8px!important;border-radius:18px!important;
+  }
+  #almalikaV397ImageViewer img{max-width:100%!important;max-height:74dvh!important;width:auto!important;height:auto!important;object-fit:contain!important;margin:0 auto!important;}
+  #almalikaV397ImageViewer .v398Actions{width:96vw!important;max-width:96vw!important;margin-top:8px!important;}
+
+  /* نافذة المنتج: الأزرار ليست عائمة ولا تغطي الباقات والبيانات */
+  #modal.modal.show{display:block!important;position:fixed!important;inset:0!important;overflow:hidden!important;background:rgba(0,0,0,.58)!important;z-index:10000!important;}
+  #modal .modalBox,#modal .modalBox.detailed,#modal .modalBox.eventDetailed,#modal .modalBox.hasDecor250,#modal .quickShopModal,#modal .cartModal{
+    display:block!important;width:100%!important;max-width:100%!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;
+    padding:12px 12px 34px!important;border-radius:0!important;box-sizing:border-box!important;overflow-y:auto!important;overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;background:#fffaf6!important;scroll-padding-bottom:40px!important;
+  }
+  #modal .modalInfo,#modal .quickShopInfo{display:block!important;height:auto!important;max-height:none!important;overflow:visible!important;padding:8px 6px 28px!important;box-sizing:border-box!important;}
+  #modal .modalPic,#modal .quickShopPic{margin:0 0 12px!important;padding:8px!important;min-height:0!important;height:auto!important;max-height:none!important;border-radius:22px!important;}
+  #modal .modalPic img,#modal .quickShopPic img,#modal .mainDecorImg,#modal .mainDecorPreview{display:block!important;width:100%!important;height:auto!important;max-height:285px!important;object-fit:contain!important;margin:0 auto!important;}
+  #modal .modalHead{display:block!important;margin:0 0 10px!important;padding:0 58px 0 0!important;text-align:right!important;}
+  #modal .modalHead h2{font-size:28px!important;line-height:1.25!important;margin:0!important;}
+  #modal .close,#modal .quickClose{position:fixed!important;left:14px!important;top:calc(env(safe-area-inset-top,0px) + 14px)!important;width:50px!important;height:50px!important;border-radius:50%!important;z-index:2147483647!important;background:#ff2f86!important;color:#fff!important;}
+  #modal .detailIntro,#modal .contentBlock,#modal .introBlock,#modal .rulesBlock,#modal .info,#modal .infoCard,#modal .note,#modal .fieldNote,#modal .workNotice{font-size:15px!important;line-height:1.75!important;margin:8px 0!important;padding:13px!important;border-radius:18px!important;}
+  #modal .priceChoiceGrid,#modal .decorPackageGrid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;overflow:visible!important;max-height:none!important;padding:8px 4px!important;}
+  #modal .priceChoice,#modal .decorPackage{min-width:0!important;min-height:86px!important;padding:9px 6px!important;box-sizing:border-box!important;}
+  #modal .bookingSimple,#modal .cartForm{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;overflow:visible!important;}
+  #modal .modalActions,#modal .modalActions.three{
+    position:static!important;display:grid!important;grid-template-columns:1fr!important;gap:8px!important;width:100%!important;
+    margin:14px 0 18px!important;padding:0!important;background:transparent!important;box-shadow:none!important;z-index:auto!important;order:999!important;
+  }
+  #modal .modalActions button,#modal .modalActions a{width:100%!important;min-height:52px!important;border-radius:16px!important;margin:0!important;font-size:16px!important;}
+  #modal .decorThumbs{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;max-height:none!important;overflow:visible!important;padding-bottom:18px!important;}
+  #modal .decorThumb img{height:110px!important;object-fit:cover!important;}
+
+  /* كروت المنتجات والسلة */
+  .products{display:grid!important;grid-template-columns:1fr!important;gap:14px!important;padding:0 14px 120px!important;}
+  .product .pic{height:auto!important;min-height:0!important;aspect-ratio:auto!important;}
+  .product .pic img{height:auto!important;max-height:360px!important;object-fit:contain!important;}
+  .cartBar{position:fixed!important;bottom:10px!important;left:50%!important;transform:translateX(-50%)!important;width:calc(100% - 24px)!important;z-index:9000!important;}
+}
+</style>
+<script id="almalika-v428-mobile-rebuild-script">
+(function(){
+  function mobile(){return window.matchMedia&&window.matchMedia('(max-width:768px)').matches;}
+  function fix(){
+    if(!mobile()) return;
+    try{document.documentElement.classList.remove('almIntroPending');document.body.classList.add('almAppEntered');}catch(e){}
+    try{var i=document.getElementById('almMobileIntro'); if(i) i.remove();}catch(e){}
+    /* منع نمط تثبيت منطقة المنتجات من توليد فراغ أبيض طويل */
+    try{document.body.classList.remove('almV402ProductsMode');document.documentElement.style.setProperty('--almFixedTopHeight','0px');}catch(e){}
+    /* عند فتح تفاصيل المنتج: انقل الأزرار بعد كل البيانات حتى لا تغطي الباقات */
+    try{
+      var m=document.getElementById('modal');
+      if(m&&m.classList.contains('show')){
+        var info=m.querySelector('.modalInfo,.quickShopInfo');
+        var act=m.querySelector('.modalActions');
+        if(info&&act&&act.parentNode!==info){info.appendChild(act);}
+      }
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(fix,0);setTimeout(fix,120);setTimeout(fix,600);});
+  window.addEventListener('load',function(){setTimeout(fix,50);setTimeout(fix,500);});
+  document.addEventListener('click',function(){setTimeout(fix,20);setTimeout(fix,180);setTimeout(fix,700);},true);
+  try{new MutationObserver(function(){setTimeout(fix,30);}).observe(document.documentElement,{childList:true,subtree:true,attributes:true});}catch(e){}
+  setInterval(fix,900);
+})();
+</script>
