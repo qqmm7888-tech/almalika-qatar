@@ -6001,7 +6001,7 @@ ${booked?`<div class="availabilityMini">${booked.note}</div>`:''}
 </div>
 </div>
 </div>
-${hideProductImageRange412422(p)?'':`<div class="pic ${sectionOf(p)==='offers'?'offerZoomPic':''}" title="${sectionOf(p)==='offers'?'اضغط لتكبير صورة العرض':'اضغط لفتح التفاصيل'}" onclick="${sectionOf(p)==='offers'?'openOfferImage('+p.number+')':'openProduct('+p.number+')'}">${booked?`<div class="bookedImageStamp">${forced?'غير متاح':'محجوز'}</div>`:``}<img src="${esc(productImageUrl(p))}" alt="${esc(p.name)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,'${p.number}')"></div>`}</div>`}
+${hideProductImageRange412422(p)?'':`<div class="pic ${sectionOf(p)==='offers'?'offerZoomPic':''}" title="اضغط لفتح التفاصيل" onclick="openProduct(${p.number})">${booked?`<div class="bookedImageStamp">${forced?'غير متاح':'محجوز'}</div>`:``}<img src="${esc(productImageUrl(p))}" alt="${esc(p.name)}" onclick="event.stopPropagation();openProduct(${p.number})" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,'${p.number}')"></div>`}</div>`}
 function itemPrice(x){return Number(x.selectedPrice||price(x)||0)}
 function saveCart(){localStorage.setItem('almalikaCart',JSON.stringify(cart)); updateCartUI();}
 function updateCartUI(){const count=cart.reduce((a,x)=>a+(x.qty||1),0); const total=cart.reduce((a,x)=>a+itemPrice(x)*(x.qty||1),0); const c=document.getElementById('cartCount'), ct=document.getElementById('cartCountTop'), tm=document.getElementById('cartTotalMini'); if(c)c.textContent=count; if(ct)ct.textContent=count; if(tm)tm.textContent=total;}
@@ -16801,37 +16801,30 @@ html{
 })();
 </script>
 
-<style id="v388-clean-image-clicks-about-style">
-/* v388: تنظيف نهائي لضغط الصور */
+<style id="v389-direct-image-open-details-style">
+/* v389: الحل من أصل الكرت، صورة المنتج تفتح التفاصيل مباشرة */
 .product .pic,
-.product .pic img,
-.card.product .pic,
-.card.product .pic img,
-[data-product] .pic,
-[data-product] .pic img{
+.product .pic img {
   cursor:pointer!important;
 }
-
-.modalPic img{
+.modalPic img {
   cursor:zoom-in!important;
 }
-
 .decorGallery img,
-.decorThumb img,
-[class*="decor"] img{
+.decorThumb img {
   cursor:pointer!important;
 }
 
-/* نافذة من نحن */
-.v388AboutCard p,
-.v388AboutCard .v378AboutText,
-.v388AboutCard .aboutText2016{
+/* من نحن كنافذة واحدة فقط */
+.v389AboutCard p,
+.v389AboutCard .v378AboutText,
+.v389AboutCard .aboutText2016 {
   display:none!important;
 }
-.v388AboutCard{cursor:pointer!important;}
+.v389AboutCard { cursor:pointer!important; }
 
-#v388AboutOverlay,
-#v388ImageZoomOverlay{
+#v389AboutOverlay,
+#v389ImageZoomOverlay {
   position:fixed!important;
   inset:0!important;
   z-index:2147483647!important;
@@ -16844,11 +16837,12 @@ html{
   direction:rtl!important;
   font-family:Cairo,Tahoma,Arial,sans-serif!important;
 }
-#v388AboutOverlay.show,
-#v388ImageZoomOverlay.show{display:flex!important;}
-
-#v388AboutBox,
-#v388ImageZoomBox{
+#v389AboutOverlay.show,
+#v389ImageZoomOverlay.show {
+  display:flex!important;
+}
+#v389AboutBox,
+#v389ImageZoomBox {
   position:relative!important;
   background:#fff!important;
   border-radius:24px!important;
@@ -16857,26 +16851,24 @@ html{
   color:#6A1B2E!important;
   text-align:right!important;
 }
-#v388AboutBox{
+#v389AboutBox {
   width:min(94vw,760px)!important;
   max-height:90vh!important;
   overflow:auto!important;
   padding:32px 34px 28px!important;
 }
-#v388AboutBox h2{
+#v389AboutBox h2 {
   margin:0 0 16px!important;
   font-size:28px!important;
-  line-height:1.4!important;
   text-align:center!important;
 }
-#v388AboutBox p{
+#v389AboutBox p {
   margin:0!important;
   font-size:18px!important;
   line-height:2.05!important;
   font-weight:850!important;
 }
-
-.v388CloseBtn{
+.v389CloseBtn {
   position:absolute!important;
   top:14px!important;
   right:14px!important;
@@ -16887,15 +16879,13 @@ html{
   background:#e11d48!important;
   color:#fff!important;
   font-size:28px!important;
-  line-height:1!important;
   font-weight:1000!important;
   cursor:pointer!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
 }
-
-#v388ImageZoomBox{
+#v389ImageZoomBox {
   width:min(96vw,1120px)!important;
   max-height:94vh!important;
   padding:16px!important;
@@ -16903,14 +16893,14 @@ html{
   grid-template-rows:auto 1fr auto!important;
   gap:10px!important;
 }
-#v388ImageZoomTitle{
+#v389ImageZoomTitle {
   font-weight:1000!important;
   color:#6A1B2E!important;
   font-size:18px!important;
   line-height:1.5!important;
   padding:0 56px 0 6px!important;
 }
-#v388ImageZoomImg{
+#v389ImageZoomImg {
   width:100%!important;
   height:calc(94vh - 150px)!important;
   object-fit:contain!important;
@@ -16918,57 +16908,67 @@ html{
   border-radius:18px!important;
   border:1px solid #f0dce7!important;
 }
-#v388ImageZoomActions{
+#v389ImageZoomActions {
   display:flex!important;
-  gap:10px!important;
   justify-content:center!important;
-  align-items:center!important;
 }
-#v388ImageZoomActions button{
+#v389CloseImageBtn {
   border:0!important;
   border-radius:14px!important;
-  padding:12px 24px!important;
+  padding:12px 28px!important;
   font-size:15px!important;
   font-weight:1000!important;
   cursor:pointer!important;
+  background:#111!important;
+  color:#fff!important;
 }
-#v388CloseImageBtn{background:#111!important;color:#fff!important;}
 </style>
 
-<script id="v388-clean-image-clicks-about-script">
+<script id="v389-direct-image-open-details-script">
 (function(){
   var ABOUT_TEXT = 'نحن شركة الملكة للحفلات في قطر، نعمل في مجال تأجير النطاطيات والزحلاقيات وتجهيز الحفلات منذ عام 2016. خلال هذه السنوات اكتسبنا خبرة كبيرة في تنظيم مناسبات الأطفال والعائلات والمدارس والفعاليات الخاصة، ونسعى دائمًا لتقديم خدمات مرتبة وآمنة وبجودة عالية. نهتم بالتفاصيل من لحظة الحجز وحتى التركيب والتسليم، ونحرص على أن تكون كل مناسبة جميلة ومريحة وذكرى لا تُنسى.';
 
   function norm(t){ return ((t || '') + '').replace(/\s+/g,' ').trim(); }
 
+  /* احتياط إضافي: لو أي كرت اتبنى لاحقاً، أعطي الصورة onclick مباشر */
+  function forceCardImageClicks(){
+    try{
+      document.querySelectorAll('.product').forEach(function(card){
+        var pic = card.querySelector('.pic');
+        if(!pic) return;
+        var num = '';
+        var n = card.querySelector('.num');
+        if(n && norm(n.textContent).match(/\d+/)) num = norm(n.textContent).match(/\d+/)[0];
+        if(!num) return;
+
+        pic.setAttribute('title','اضغط لفتح التفاصيل');
+        pic.onclick = function(ev){ ev.preventDefault(); ev.stopPropagation(); window.openProduct && window.openProduct(Number(num)); return false; };
+
+        var img = pic.querySelector('img');
+        if(img){
+          img.onclick = function(ev){ ev.preventDefault(); ev.stopPropagation(); window.openProduct && window.openProduct(Number(num)); return false; };
+          img.style.cursor = 'pointer';
+        }
+      });
+    }catch(e){}
+  }
+
   function ensureAboutModal(){
-    var ov = document.getElementById('v388AboutOverlay');
+    var ov = document.getElementById('v389AboutOverlay');
     if(ov) return ov;
     ov = document.createElement('div');
-    ov.id = 'v388AboutOverlay';
+    ov.id = 'v389AboutOverlay';
     ov.innerHTML =
-      '<div id="v388AboutBox">' +
-        '<button type="button" class="v388CloseBtn" aria-label="إغلاق">×</button>' +
+      '<div id="v389AboutBox">' +
+        '<button type="button" class="v389CloseBtn" aria-label="إغلاق">×</button>' +
         '<h2>👑 من نحن</h2>' +
         '<p></p>' +
       '</div>';
     document.body.appendChild(ov);
     ov.querySelector('p').textContent = ABOUT_TEXT;
-    ov.addEventListener('click', function(e){ if(e.target === ov) closeAbout(); });
-    ov.querySelector('.v388CloseBtn').addEventListener('click', closeAbout);
+    ov.addEventListener('click', function(e){ if(e.target === ov) ov.classList.remove('show'); });
+    ov.querySelector('.v389CloseBtn').addEventListener('click', function(){ ov.classList.remove('show'); });
     return ov;
-  }
-
-  function openAbout(){
-    closeOldImageViewers();
-    var ov = ensureAboutModal();
-    ov.querySelector('p').textContent = ABOUT_TEXT;
-    ov.classList.add('show');
-  }
-
-  function closeAbout(){
-    var ov = document.getElementById('v388AboutOverlay');
-    if(ov) ov.classList.remove('show');
   }
 
   function markAboutCards(){
@@ -16978,7 +16978,7 @@ html{
         if(t === '👑 من نحن' || t === 'من نحن'){
           var card = el.closest('.serviceCard,.infoCard,.footerCard,.card,div');
           if(card){
-            card.classList.add('v388AboutCard');
+            card.classList.add('v389AboutCard');
             card.querySelectorAll('p,.v378AboutText,.aboutText2016').forEach(function(p){
               p.style.setProperty('display','none','important');
             });
@@ -16993,75 +16993,39 @@ html{
       var node = target && target.closest ? target.closest('button,a,div,.card,.serviceCard,.infoCard') : null;
       if(!node) return false;
       var t = norm(node.textContent);
-      return t === 'من نحن' || t === '👑 من نحن' || (node.classList && node.classList.contains('v388AboutCard'));
+      return t === 'من نحن' || t === '👑 من نحن' || (node.classList && node.classList.contains('v389AboutCard'));
     }catch(e){}
     return false;
   }
 
   function ensureZoomModal(){
-    var ov = document.getElementById('v388ImageZoomOverlay');
+    var ov = document.getElementById('v389ImageZoomOverlay');
     if(ov) return ov;
     ov = document.createElement('div');
-    ov.id = 'v388ImageZoomOverlay';
+    ov.id = 'v389ImageZoomOverlay';
     ov.innerHTML =
-      '<div id="v388ImageZoomBox">' +
-        '<button type="button" class="v388CloseBtn" aria-label="إغلاق">×</button>' +
-        '<div id="v388ImageZoomTitle">صورة المنتج</div>' +
-        '<img id="v388ImageZoomImg" alt="صورة المنتج">' +
-        '<div id="v388ImageZoomActions"><button type="button" id="v388CloseImageBtn">إغلاق</button></div>' +
+      '<div id="v389ImageZoomBox">' +
+        '<button type="button" class="v389CloseBtn" aria-label="إغلاق">×</button>' +
+        '<div id="v389ImageZoomTitle">صورة المنتج</div>' +
+        '<img id="v389ImageZoomImg" alt="صورة المنتج">' +
+        '<div id="v389ImageZoomActions"><button type="button" id="v389CloseImageBtn">إغلاق</button></div>' +
       '</div>';
     document.body.appendChild(ov);
-    ov.addEventListener('click', function(e){ if(e.target === ov) closeZoom(); });
-    ov.querySelector('.v388CloseBtn').addEventListener('click', closeZoom);
-    ov.querySelector('#v388CloseImageBtn').addEventListener('click', closeZoom);
+    ov.addEventListener('click', function(e){ if(e.target === ov) ov.classList.remove('show'); });
+    ov.querySelector('.v389CloseBtn').addEventListener('click', function(){ ov.classList.remove('show'); });
+    ov.querySelector('#v389CloseImageBtn').addEventListener('click', function(){ ov.classList.remove('show'); });
     return ov;
   }
 
-  function closeZoom(){
-    var ov = document.getElementById('v388ImageZoomOverlay');
-    if(ov) ov.classList.remove('show');
-    closeOldImageViewers();
-  }
-
-  function openZoom(img){
-    var src = img.currentSrc || img.src || img.getAttribute('src') || img.getAttribute('data-src') || '';
-    if(!src) return;
-    closeOldImageViewers();
-    var ov = ensureZoomModal();
-    ov.querySelector('#v388ImageZoomTitle').textContent = titleFor(img);
-    ov.querySelector('#v388ImageZoomImg').src = src;
-    ov.classList.add('show');
-  }
-
-  function titleFor(img){
+  function titleForModalImage(img){
     try{
       var modal = img.closest('.modalBox,.modal,#modal');
       if(modal){
-        var h2 = modal.querySelector('h2,h3');
-        if(h2 && norm(h2.textContent)) return norm(h2.textContent);
-      }
-      var card = getProductCard(img);
-      if(card){
-        var h = card.querySelector('h3,h2,.title');
+        var h = modal.querySelector('h2,h3');
         if(h && norm(h.textContent)) return norm(h.textContent);
       }
     }catch(e){}
     return 'صورة المنتج';
-  }
-
-  function closeOldImageViewers(){
-    try{
-      document.querySelectorAll('#v381ImageZoomOverlay,#v384ImageZoomOverlay,#v386ImageZoomOverlay,.offerImageViewer,.offerImageModal,.imageViewer,.imgViewer,.lightbox,[class*="ImageViewer"],[class*="imageViewer"],[class*="Lightbox"],[class*="lightbox"]').forEach(function(el){
-        if(el.id === 'v388ImageZoomOverlay') return;
-        el.classList.remove('show','open','active');
-        el.style.setProperty('display','none','important');
-        el.style.setProperty('visibility','hidden','important');
-      });
-    }catch(e){}
-  }
-
-  function isInsideModal(el){
-    return !!(el && el.closest && el.closest('.modal,.modalBox,#modal,[class*="Modal"],[class*="modal"]'));
   }
 
   function isDecorThumb(img){
@@ -17077,135 +17041,47 @@ html{
 
   function isMainModalImage(img){
     if(!img || !img.closest) return false;
+    if(isDecorThumb(img)) return false;
     if(img.closest('.modalPic')) return true;
-
-    if(!isInsideModal(img)) return false;
+    var modal = img.closest('.modal,.modalBox,#modal');
+    if(!modal) return false;
     var r = img.getBoundingClientRect ? img.getBoundingClientRect() : {width:0,height:0};
-    if(r.width > 180 || r.height > 180) return true;
-    return false;
+    return (r.width > 180 || r.height > 180);
   }
 
-  function getProductCard(el){
-    if(!el || !el.closest) return null;
-    if(isInsideModal(el)) return null;
-    return el.closest('.product,.card.product,[data-product],.item.product');
-  }
-
-  function getProductNumber(card){
-    if(!card) return '';
-    var attrs = [
-      card.getAttribute('data-number'),
-      card.getAttribute('data-id'),
-      card.getAttribute('data-product'),
-      card.dataset && (card.dataset.number || card.dataset.id || card.dataset.product)
-    ];
-    for(var i=0;i<attrs.length;i++){
-      if(attrs[i] && String(attrs[i]).match(/\d+/)) return String(attrs[i]).match(/\d+/)[0];
-    }
-
-    var badge = card.querySelector('.badge,.num,.number,[class*="badge"],[class*="number"]');
-    if(badge && norm(badge.textContent).match(/\d+/)) return norm(badge.textContent).match(/\d+/)[0];
-
-    var all = norm(card.textContent);
-    var m = all.match(/#\s*(\d+)/) || all.match(/(?:رقم|No\.?)\s*(\d+)/i);
-    return m ? m[1] : '';
-  }
-
-  function clickDetailsButton(card){
-    if(!card) return false;
-    var btns = Array.from(card.querySelectorAll('button,a'));
-    for(var i=0;i<btns.length;i++){
-      var b = btns[i];
-      var t = norm(b.textContent);
-      var oc = (b.getAttribute && (b.getAttribute('onclick') || '')) || '';
-      if(t.indexOf('تفاصيل') > -1 || /openProduct|details/i.test(oc) || (b.classList && b.classList.contains('detailsBtn'))){
-        if(!b.disabled){
-          b.click();
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
-  function openByNumber(card){
-    var n = getProductNumber(card);
-    if(!n) return false;
-
-    try{
-      if(typeof window.openProduct === 'function'){
-        window.openProduct(Number(n));
-        return true;
-      }
-    }catch(e){}
-
-    try{
-      if(typeof openProduct === 'function'){
-        openProduct(Number(n));
-        return true;
-      }
-    }catch(e){}
-
-    return false;
-  }
-
-  function openProductFromCard(card){
-    closeOldImageViewers();
-    if(clickDetailsButton(card)) return true;
-    if(openByNumber(card)) return true;
-    return false;
-  }
-
-  function handleClick(e){
+  /* هذا لا يمس صور الكروت الخارجية؛ فقط الصورة الكبيرة داخل التفاصيل */
+  document.addEventListener('click', function(e){
     if(isAboutTarget(e.target)){
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-      openAbout();
+      var ov = ensureAboutModal();
+      ov.querySelector('p').textContent = ABOUT_TEXT;
+      ov.classList.add('show');
       return false;
     }
 
     var img = e.target && e.target.closest ? e.target.closest('img') : null;
-
-    /* داخل التفاصيل: صور الاختيار تختار فقط ولا نوقفها */
-    if(img && isDecorThumb(img)){
-      setTimeout(closeOldImageViewers,80);
-      setTimeout(closeOldImageViewers,250);
-      return;
-    }
-
-    /* داخل التفاصيل: الصورة الكبيرة فقط تكبر */
     if(img && isMainModalImage(img)){
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
-      openZoom(img);
+      var src = img.currentSrc || img.src || img.getAttribute('src') || '';
+      if(!src) return false;
+      var ov = ensureZoomModal();
+      ov.querySelector('#v389ImageZoomTitle').textContent = titleForModalImage(img);
+      ov.querySelector('#v389ImageZoomImg').src = src;
+      ov.classList.add('show');
       return false;
     }
-
-    /* خارج التفاصيل: صورة المنتج أو مساحة الصورة تفتح التفاصيل في كل الأقسام */
-    var card = null;
-    if(img) card = getProductCard(img);
-    if(!card && e.target && e.target.closest){
-      var pic = e.target.closest('.pic,[class*="pic"],[class*="image"],[class*="photo"]');
-      if(pic) card = getProductCard(pic);
-    }
-
-    if(card){
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      openProductFromCard(card);
-      return false;
-    }
-  }
-
-  document.addEventListener('click', handleClick, true);
+  }, true);
 
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape'){
-      closeAbout();
-      closeZoom();
+      var a = document.getElementById('v389AboutOverlay');
+      var z = document.getElementById('v389ImageZoomOverlay');
+      if(a) a.classList.remove('show');
+      if(z) z.classList.remove('show');
     }
   });
 
@@ -17213,7 +17089,7 @@ html{
     ensureAboutModal();
     ensureZoomModal();
     markAboutCards();
-    closeOldImageViewers();
+    forceCardImageClicks();
   }
 
   document.addEventListener('DOMContentLoaded', function(){
@@ -17223,8 +17099,8 @@ html{
     setTimeout(init,1200);
   });
   window.addEventListener('load', init);
-  document.addEventListener('mouseover', function(){ setTimeout(markAboutCards,60); }, true);
-  setInterval(markAboutCards, 2000);
+  document.addEventListener('mouseover', function(){ setTimeout(init,60); }, true);
+  setInterval(forceCardImageClicks, 1500);
 })();
 </script>
 
