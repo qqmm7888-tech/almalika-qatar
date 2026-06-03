@@ -17132,3 +17132,128 @@ html{
 })();
 </script>
 
+<style id="v383-fix-about-popup-content-style">
+/* v383: إصلاح نافذة من نحن حتى يظهر النص داخلها وليس العنوان فقط */
+#v381InfoOverlay #v381InfoBox,
+#v383AboutOverlay .v383AboutBox{
+  width:min(94vw,680px)!important;
+  max-height:90vh!important;
+  overflow:auto!important;
+  text-align:right!important;
+  direction:rtl!important;
+}
+#v381InfoOverlay #v381InfoBox h2,
+#v383AboutOverlay h2{
+  text-align:center!important;
+  margin:0 0 14px!important;
+  font-size:26px!important;
+  color:#6A1B2E!important;
+  user-select:none!important;
+}
+#v381InfoOverlay #v381InfoBox p,
+#v383AboutOverlay p,
+.v383AboutBody{
+  display:block!important;
+  margin:0!important;
+  padding:0!important;
+  color:#6A1B2E!important;
+  font-size:17px!important;
+  line-height:2.05!important;
+  font-weight:800!important;
+  text-align:right!important;
+  white-space:normal!important;
+  user-select:text!important;
+}
+</style>
+<script id="v383-fix-about-popup-content-script">
+(function(){
+  var ABOUT_TEXT = 'نحن شركة الملكة للحفلات في قطر، نعمل في مجال تأجير النطاطيات والزحلاقيات وتجهيز الحفلات منذ عام 2016. خلال هذه السنوات اكتسبنا خبرة كبيرة في تنظيم مناسبات الأطفال والعائلات والمدارس والفعاليات الخاصة، ونسعى دائمًا لتقديم خدمات مرتبة وآمنة وبجودة عالية. نهتم بالتفاصيل من لحظة الحجز وحتى التركيب والتسليم، ونحرص على أن تكون كل مناسبة جميلة ومريحة وذكرى لا تُنسى.';
+
+  function norm(t){ return ((t || '') + '').replace(/\s+/g,' ').trim(); }
+
+  function fillAboutInExistingModals(){
+    try{
+      document.querySelectorAll('.modal,.modalBox,#modal,[class*="Modal"],[class*="modal"]').forEach(function(modal){
+        var txt = norm(modal.textContent);
+        if(txt.indexOf('من نحن') === -1) return;
+
+        var h = modal.querySelector('h1,h2,h3,h4');
+        if(h && norm(h.textContent).indexOf('من نحن') > -1){
+          h.textContent = '👑 من نحن';
+          h.style.userSelect = 'none';
+        }
+
+        var body = modal.querySelector('.v383AboutBody');
+        if(!body){
+          body = modal.querySelector('p');
+          if(!body || norm(body.textContent).length < 20){
+            body = document.createElement('p');
+            body.className = 'v383AboutBody';
+            var target = modal.querySelector('.modalBox,.box,.content') || modal;
+            target.appendChild(body);
+          }else{
+            body.classList.add('v383AboutBody');
+          }
+        }
+        body.textContent = ABOUT_TEXT;
+        body.style.setProperty('display','block','important');
+        body.style.setProperty('line-height','2.05','important');
+      });
+    }catch(e){}
+  }
+
+  function openCleanAboutModal(){
+    try{
+      var old = document.getElementById('v383AboutOverlay');
+      if(old) old.remove();
+
+      var ov = document.createElement('div');
+      ov.id = 'v383AboutOverlay';
+      ov.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:rgba(0,0,0,.78);display:flex;align-items:center;justify-content:center;padding:18px;backdrop-filter:blur(6px);direction:rtl;font-family:Cairo,Tahoma,Arial,sans-serif;';
+      ov.innerHTML =
+        '<div class="v383AboutBox" style="position:relative;background:#fff;border-radius:24px;border:1px solid #f2c7d8;box-shadow:0 30px 90px rgba(0,0,0,.42);padding:30px;color:#6A1B2E;">' +
+          '<button type="button" class="v383Close" style="position:absolute;top:12px;right:12px;width:42px;height:42px;border-radius:50%;border:0;background:#e11d48;color:#fff;font-size:26px;font-weight:1000;cursor:pointer;">×</button>' +
+          '<h2>👑 من نحن</h2>' +
+          '<p class="v383AboutBody"></p>' +
+        '</div>';
+
+      document.body.appendChild(ov);
+      ov.querySelector('p').textContent = ABOUT_TEXT;
+      ov.querySelector('.v383Close').onclick = function(){ ov.remove(); };
+      ov.addEventListener('click', function(e){ if(e.target === ov) ov.remove(); });
+    }catch(e){}
+  }
+
+  function isAboutClick(el){
+    try{
+      var node = el && el.closest ? el.closest('button,a,div,.card,.serviceCard,.infoCard') : null;
+      if(!node) return false;
+      var t = norm(node.textContent);
+      if(t === 'من نحن' || t === '👑 من نحن') return true;
+      if(t.indexOf('من نحن') > -1 && node.closest('.v381ServicesAboutCard')) return true;
+    }catch(e){}
+    return false;
+  }
+
+  document.addEventListener('click', function(e){
+    if(isAboutClick(e.target)){
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      openCleanAboutModal();
+      return false;
+    }
+    setTimeout(fillAboutInExistingModals,60);
+    setTimeout(fillAboutInExistingModals,250);
+  }, true);
+
+  document.addEventListener('DOMContentLoaded', function(){
+    fillAboutInExistingModals();
+    setTimeout(fillAboutInExistingModals,100);
+    setTimeout(fillAboutInExistingModals,500);
+  });
+  window.addEventListener('load', fillAboutInExistingModals);
+  setInterval(fillAboutInExistingModals,1500);
+})();
+</script>
+
