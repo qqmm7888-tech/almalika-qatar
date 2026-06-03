@@ -17242,3 +17242,136 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
   document.addEventListener('DOMContentLoaded',ensureViewer);
 })();
 </script>
+
+<!-- ===== V402: تثبيت منطقة المنتجات بالكامل بدون فراغ أبيض أو تحرك ===== -->
+<style id="almalika-v402-freeze-products-area-no-gap">
+/* تثبيت منطقة عنوان القسم والفلاتر كقطعة واحدة أسفل الهيدر */
+body.almV402ProductsMode #app .almFrozenProductArea{
+  position:fixed!important;
+  top:var(--almFixedTopHeight,176px)!important;
+  left:50%!important;
+  right:auto!important;
+  transform:translateX(-50%)!important;
+  width:min(100% - 36px,var(--site-max,1440px))!important;
+  z-index:2147482600!important;
+  margin:0!important;
+  padding:8px 0 8px!important;
+  background:linear-gradient(180deg,rgba(255,250,252,.995),rgba(255,247,250,.99))!important;
+  backdrop-filter:blur(14px)!important;
+  -webkit-backdrop-filter:blur(14px)!important;
+  border-bottom:1px solid rgba(246,216,230,.95)!important;
+  box-shadow:0 12px 28px rgba(106,27,46,.08)!important;
+}
+body.almV402ProductsMode #app .almFrozenProductArea .panel{
+  margin:0 0 8px!important;
+  padding:16px 20px!important;
+}
+body.almV402ProductsMode #app .almFrozenProductArea .chips{
+  margin:0!important;
+  padding:3px 0 2px!important;
+  max-height:58px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  scrollbar-width:thin!important;
+  justify-content:flex-start!important;
+}
+/* تعويض ارتفاع المنطقة المثبتة حتى لا تختفي المنتجات تحتها */
+body.almV402ProductsMode #app > section.wrap.section{
+  padding-top:calc(var(--almFrozenAreaHeight,132px) + 14px)!important;
+}
+body.almV402ProductsMode #app .products{
+  scroll-margin-top:calc(var(--almFixedTopHeight,176px) + var(--almFrozenAreaHeight,132px) + 18px)!important;
+}
+/* منع شريط العروض من الحركة حتى تبقى المنطقة كلها ثابتة */
+.almWorkingTickerTrack,
+.v361TickerTrack,
+.v360TickerTrack,
+.v359TickerTrack{
+  animation:none!important;
+  transform:none!important;
+  will-change:auto!important;
+}
+@media(max-width:700px){
+  body.almV402ProductsMode #app .almFrozenProductArea{
+    width:min(100% - 16px,640px)!important;
+    padding:7px 0!important;
+  }
+  body.almV402ProductsMode #app .almFrozenProductArea .panel{
+    padding:12px 14px!important;
+    border-radius:18px!important;
+  }
+  body.almV402ProductsMode #app .almFrozenProductArea .panel h1{font-size:21px!important;}
+  body.almV402ProductsMode #app .almFrozenProductArea .panel p{font-size:12px!important;}
+  body.almV402ProductsMode #app .almFrozenProductArea .chips{max-height:96px!important;}
+}
+</style>
+<script id="almalika-v402-freeze-products-area-no-gap-script">
+(function(){
+  function topFixedHeight(){
+    var group=document.getElementById('almTopFixedGroup');
+    if(group) return Math.ceil(group.getBoundingClientRect().height || group.offsetHeight || 0);
+    var h=0;
+    var ticker=document.getElementById('v361TopTickerWrap') || document.querySelector('.almWorkingTickerWrap,.v361TopTickerWrap');
+    var header=document.querySelector('.header,header.header');
+    if(ticker) h += Math.ceil(ticker.getBoundingClientRect().height || ticker.offsetHeight || 0);
+    if(header) h += Math.ceil(header.getBoundingClientRect().height || header.offsetHeight || 0);
+    return h || 176;
+  }
+  function stopTicker(){
+    document.querySelectorAll('.almWorkingTickerTrack,.v361TickerTrack,.v360TickerTrack,.v359TickerTrack').forEach(function(el){
+      el.style.setProperty('animation','none','important');
+      el.style.setProperty('transform','none','important');
+      el.style.setProperty('will-change','auto','important');
+    });
+  }
+  function refresh(){
+    var frozen=document.querySelector('#app .almFrozenProductArea');
+    if(!frozen){
+      document.body.classList.remove('almV402ProductsMode');
+      return;
+    }
+    document.body.classList.add('almV402ProductsMode');
+    var top=topFixedHeight();
+    document.documentElement.style.setProperty('--almFixedTopHeight', top+'px');
+    document.body.style.paddingTop=top+'px';
+    // نقرأ ارتفاع العنوان والفلاتر بعد تثبيتها ثم نعوض المنتجات تحته
+    var fh=Math.ceil(frozen.getBoundingClientRect().height || frozen.offsetHeight || 132);
+    document.documentElement.style.setProperty('--almFrozenAreaHeight', fh+'px');
+    stopTicker();
+  }
+  function schedule(){
+    refresh();
+    requestAnimationFrame(function(){refresh(); setTimeout(refresh,80); setTimeout(refresh,260);});
+  }
+  var oldScroll=window.almalikaScrollToFirstProduct;
+  window.almalikaScrollToFirstProduct=function(){
+    schedule();
+    setTimeout(function(){
+      var products=document.querySelector('#app .products');
+      if(!products) return;
+      var top=topFixedHeight();
+      var frozen=document.querySelector('#app .almFrozenProductArea');
+      var fh=frozen ? Math.ceil(frozen.getBoundingClientRect().height||0) : 0;
+      var y=products.getBoundingClientRect().top + (window.pageYOffset||document.documentElement.scrollTop||0) - top - fh - 14;
+      window.scrollTo({top:Math.max(0,Math.round(y)),behavior:'auto'});
+    },120);
+    if(typeof oldScroll==='function') setTimeout(oldScroll,220);
+  };
+  document.addEventListener('DOMContentLoaded',schedule);
+  window.addEventListener('load',schedule);
+  window.addEventListener('resize',schedule);
+  window.addEventListener('hashchange',schedule);
+  document.addEventListener('click',function(e){
+    if(e.target && e.target.closest && e.target.closest('#nav button,.nav button,.mainCats .cat,.chip')){
+      setTimeout(schedule,30);
+      setTimeout(schedule,220);
+    }
+  },true);
+  var mo=new MutationObserver(function(){schedule();});
+  document.addEventListener('DOMContentLoaded',function(){
+    var app=document.getElementById('app');
+    if(app) mo.observe(app,{childList:true,subtree:false});
+  });
+  setInterval(schedule,1200);
+})();
+</script>
