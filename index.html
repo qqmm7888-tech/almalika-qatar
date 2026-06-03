@@ -18680,3 +18680,157 @@ body.almV402ProductsMode #app .products{
   setInterval(boot,2500);
 })();
 </script>
+
+
+<!-- ===== V414: حذف جمل العروض من الشريط + نص مزايا ترحيبية فقط + وميض أبطأ ===== -->
+<style id="almalika-v414-only-welcome-perks-style">
+/* توحيد لون الشريط مثل المرجع الأزرق، وإلغاء جمل المنتجات (#600 وغيرها) */
+#almPulseTickerBar,
+.almWelcome15SecondBar,
+.almWorkingTickerWrap,
+#v361TopTickerWrap,
+.v361TopTickerWrap{
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,rgba(0,0,0,0) 1px 3px),
+    linear-gradient(180deg,#1aa5f2 0%,#0877d7 45%,#0057b8 100%)!important;
+  color:#fff!important;
+  border-top:1px solid rgba(255,255,255,.30)!important;
+  border-bottom:2px solid #e00022!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 3px 12px rgba(0,82,170,.20)!important;
+  animation:almV414SlowBluePulse 7.5s ease-in-out infinite!important;
+}
+/* أي شريط عروض متحرك قديم: أوقفه وخليه يعرض النص الترحيبي فقط */
+.almWorkingTickerTrack,
+#v361TickerTrack,
+.v361TickerTrack,
+.v360TickerTrack,
+.v359TickerTrack{
+  animation:none!important;
+  transform:none!important;
+  width:100%!important;
+  justify-content:center!important;
+}
+.almWorkingTickerTrack > *,
+#v361TickerTrack > *,
+.v361TickerTrack > *,
+.v360TickerTrack > *,
+.v359TickerTrack > *{
+  display:none!important;
+}
+.almV414WelcomeOnly{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:24px!important;
+  width:100%!important;
+  min-height:34px!important;
+  color:#fff!important;
+  direction:rtl!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+  font-weight:1000!important;
+}
+.almV414WelcomeOnly::before,.almV414WelcomeOnly::after{
+  content:'';display:block;flex:1 1 auto;max-width:310px;height:2px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.78),transparent);
+  opacity:.72;
+}
+.almV414WelcomeOnly .mini{
+  font-size:13px!important;
+  opacity:.92!important;
+}
+.almV414WelcomeOnly .big{
+  font-size:25px!important;
+  line-height:1!important;
+  text-shadow:0 2px 3px rgba(0,0,0,.30)!important;
+}
+.almV414WelcomeOnly .code{
+  font-size:21px!important;
+  letter-spacing:.5px!important;
+}
+.almV414WelcomeOnly button,
+.almWelcome15UseBtn{
+  background:#fff!important;
+  color:#0057b8!important;
+  border:0!important;
+  border-radius:999px!important;
+  padding:7px 13px!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  box-shadow:0 4px 13px rgba(0,0,0,.18)!important;
+}
+#almPulseTickerBar .almWelcome15Text{gap:22px!important;animation:none!important;transform:none!important;}
+#almPulseTickerBar .almWelcome15Phrase{font-size:16px!important;}
+#almPulseTickerBar .almWelcome15Percent{font-size:25px!important;}
+@keyframes almV414SlowBluePulse{
+  0%,100%{filter:brightness(1);box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 3px 12px rgba(0,82,170,.20)}
+  50%{filter:brightness(1.08);box-shadow:inset 0 0 24px rgba(255,255,255,.18),0 0 20px rgba(20,151,239,.36)}
+}
+@media(max-width:760px){
+  .almV414WelcomeOnly{gap:10px!important;min-height:31px!important;overflow-x:auto!important;justify-content:flex-start!important;padding:0 8px!important;scrollbar-width:none!important;}
+  .almV414WelcomeOnly::-webkit-scrollbar{display:none!important;}
+  .almV414WelcomeOnly::before,.almV414WelcomeOnly::after{display:none!important;}
+  .almV414WelcomeOnly .mini{font-size:11px!important;}
+  .almV414WelcomeOnly .big{font-size:17px!important;}
+  .almV414WelcomeOnly .code{font-size:15px!important;}
+  .almV414WelcomeOnly button,.almWelcome15UseBtn{font-size:11px!important;padding:6px 10px!important;}
+}
+</style>
+<script id="almalika-v414-only-welcome-perks-script">
+(function(){
+  var CODE='WELCOME15', PERCENT=15;
+  function welcomeOnlyHtml(){
+    return '<span class="almV414WelcomeOnly">'
+      + '<span class="mini">مزايا ترحيبية لأول طلب</span>'
+      + '<span class="big">وفر '+PERCENT+'%</span>'
+      + '<span class="mini">الكود: <b class="code">'+CODE+'</b></span>'
+      + '<span class="mini">للتطبيق فقط</span>'
+      + '<button type="button" onclick="almOpenWelcome15Modal&&almOpenWelcome15Modal()">تفعيل الكود</button>'
+      + '</span>';
+  }
+  function applyWelcomeOnly(){
+    try{
+      /* الشريط الثاني */
+      var bar=document.getElementById('almPulseTickerBar');
+      if(bar){
+        bar.classList.add('almWelcome15SecondBar');
+        bar.innerHTML=welcomeOnlyHtml();
+      }
+      /* الشريط الأول/أي شريط قديم فيه #600 */
+      ['.almWorkingTickerTrack','#v361TickerTrack','.v361TickerTrack','.v360TickerTrack','.v359TickerTrack'].forEach(function(sel){
+        document.querySelectorAll(sel).forEach(function(track){
+          if(track.dataset.v414Done!=='1' || track.innerHTML.indexOf('almV414WelcomeOnly')===-1){
+            track.dataset.v414Done='1';
+            track.innerHTML=welcomeOnlyHtml();
+          }
+        });
+      });
+      var group=document.getElementById('almTopFixedGroup');
+      if(group){
+        var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0);
+        if(h){document.documentElement.style.setProperty('--almFixedTopHeight',h+'px');document.body.style.paddingTop=h+'px';}
+      }
+    }catch(e){}
+  }
+  /* تعديل نص نافذة التفعيل ليصير بدون كلمة خصومات */
+  var oldOpen;
+  function patchModalText(){
+    try{
+      var m=document.getElementById('almWelcome15Modal');
+      if(m){
+        var h=m.querySelector('.almWelcome15Box h2'); if(h) h.textContent='ميزة 15% لأول طلب';
+        var p=m.querySelector('.almWelcome15Box p'); if(p) p.innerHTML='اكتب رقم جوالك لتفعيل الكود <b>'+CODE+'</b>. الميزة تستخدم مرة واحدة فقط لكل رقم جوال على هذا الجهاز.';
+        var btn=m.querySelector('#almWelcome15Apply'); if(btn) btn.textContent='تفعيل الميزة';
+        m.querySelectorAll('.almWelcome15Msg,.almWelcome15CartBox').forEach(function(x){
+          x.innerHTML=x.innerHTML.replace(/خصم/g,'ميزة').replace(/الخصم/g,'الميزة').replace(/العرض/g,'الميزة');
+        });
+      }
+    }catch(e){}
+  }
+  function boot(){applyWelcomeOnly();patchModalText();}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(boot,80);setTimeout(boot,350);setTimeout(boot,1000);});
+  window.addEventListener('load',function(){setTimeout(boot,100);setTimeout(boot,600);});
+  document.addEventListener('click',function(){setTimeout(boot,120);setTimeout(patchModalText,260);},true);
+  setInterval(boot,1200);
+})();
+</script>
