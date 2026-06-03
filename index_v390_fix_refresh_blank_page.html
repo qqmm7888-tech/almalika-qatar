@@ -5663,69 +5663,32 @@ body{
 }
 </style>
 
-<style id="v380-block-old-shared-link-style">
-#v380BlockedPage{
-  min-height:100vh!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  padding:24px!important;
-  background:linear-gradient(180deg,#fff6fa,#fff)!important;
-  direction:rtl!important;
-  font-family:Cairo,Tahoma,Arial,sans-serif!important;
-}
-#v380BlockedPage .box{
-  width:min(520px,94vw)!important;
-  background:#fff!important;
-  border:1px solid #f0bfd2!important;
-  border-radius:26px!important;
-  box-shadow:0 20px 50px rgba(120,0,50,.14)!important;
-  text-align:center!important;
-  padding:36px 26px!important;
-  color:#6A1B2E!important;
-}
-#v380BlockedPage h1{
-  margin:0 0 12px!important;
-  font-size:28px!important;
-  line-height:1.4!important;
-}
-#v380BlockedPage p{
-  margin:0!important;
-  font-size:17px!important;
-  line-height:1.9!important;
-  color:#7b4b5f!important;
-  font-weight:800!important;
+<style id="v390-refresh-home-safe-style">
+/* v390: منع الصفحة البيضاء عند تحديث /home#home/الجميع */
+body:empty::before{
+  content:"جاري تحميل كتالوج الملكة...";
+  position:fixed;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  direction:rtl;
+  font-family:Cairo,Tahoma,Arial,sans-serif;
+  color:#6A1B2E;
+  font-weight:900;
+  background:#fff6fa;
 }
 </style>
-<script id="v380-block-old-shared-link">
+<script id="v390-refresh-home-safe-script">
 (function(){
+  /*
+    إصلاح التحديث:
+    تم إلغاء حجب /home#home/الجميع لأنه كان يوقف تحميل الصفحة.
+    هذا السكربت لا يحجب ولا يوقف الصفحة، فقط يضمن وجود هاش مناسب إن لزم.
+  */
   try{
-    var path = location.pathname || '';
-    var rawHash = location.hash || '';
-    var hash = '';
-    try{ hash = decodeURIComponent(rawHash); }catch(e){ hash = rawHash; }
-
-    /*
-      نحجب الرابط القديم فقط:
-      https://project-5xlms.vercel.app/home#home/الجميع
-      أما الرابط الأساسي يبقى يفتح عادي:
-      https://project-5xlms.vercel.app
-    */
-    var isOldSharedLink =
-      (path === '/home' || path.endsWith('/home')) &&
-      (hash.indexOf('#home/') === 0 || rawHash.indexOf('#home/') === 0);
-
-    if(isOldSharedLink){
-      document.addEventListener('DOMContentLoaded', function(){
-        document.body.innerHTML =
-          '<div id="v380BlockedPage">' +
-            '<div class="box">' +
-              '<h1>الرابط غير متاح حالياً</h1>' +
-              '<p>تم تغيير رابط كتالوج الملكة. يرجى التواصل مع الإدارة للحصول على الرابط الجديد.</p>' +
-            '</div>' +
-          '</div>';
-      });
-      window.stop && window.stop();
+    if((location.pathname === '/home' || location.pathname.endsWith('/home')) && !location.hash){
+      history.replaceState(null,'',location.pathname + '#home/الجميع');
     }
   }catch(e){}
 })();
