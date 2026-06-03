@@ -13329,73 +13329,17 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
 </style>
 <script id="almalika-v395-global-image-zoom-fix">
 (function(){
-  function qs(s,r){return (r||document).querySelector(s)}
-  function closest(el,sel){return el && el.closest ? el.closest(sel) : null}
-  function ensureViewer(){
-    var z=document.getElementById('almalikaGlobalImageZoom') || document.getElementById('almalikaImageZoom');
-    if(!z){
-      z=document.createElement('div');
-      z.id='almalikaGlobalImageZoom';
-      z.innerHTML='<button type="button" class="zoomClose" aria-label="إغلاق">×</button><img alt="صورة مكبرة">';
-      z.addEventListener('click',function(e){ if(e.target===z || (e.target.classList&&e.target.classList.contains('zoomClose'))) closeViewer(); });
-    }
-    z.style.setProperty('z-index','2147483647','important');
-    if(z.parentNode!==document.body || document.body.lastElementChild!==z){ document.body.appendChild(z); }
-    return z;
-  }
-  function cleanSrc(src){
-    src=String(src||'').trim();
-    if(!src || src==='#' || src==='undefined' || src==='null') return '';
-    return src;
-  }
-  function imgSrc(img){
-    if(!img) return '';
-    return cleanSrc((img.dataset&&(img.dataset.fullSrc||img.dataset.decorImg||img.dataset.full||img.dataset.src)) || img.currentSrc || img.src || img.getAttribute('src'));
-  }
-  function openViewer(src){
-    src=cleanSrc(src); if(!src) return;
-    var z=ensureViewer();
-    var im=qs('img',z); if(!im) return;
-    im.removeAttribute('src');
-    im.src=src;
-    z.classList.add('show');
-    z.style.setProperty('display','flex','important');
-    document.body.classList.add('v395ImageZoomOpen');
-  }
+  /* V396: تم إلغاء فتح الصور في طبقة خارجية لكل الأقسام حسب الطلب.
+     تبقى صور التفاصيل والثيمات والديكورات داخل نفس النافذة فقط، وصور الاختيار تغير الصورة الرئيسية بدون تكبير خارجي. */
   function closeViewer(){
     var z=document.getElementById('almalikaGlobalImageZoom') || document.getElementById('almalikaImageZoom');
-    if(z){ z.classList.remove('show'); z.style.removeProperty('display'); }
+    if(z){ z.classList.remove('show'); z.style.setProperty('display','none','important'); }
     document.body.classList.remove('v395ImageZoomOpen');
   }
-  window.almalikaOpenImageZoom=openViewer;
+  window.almalikaOpenImageZoom=function(){};
   window.almalikaCloseImageZoom=closeViewer;
-
-  document.addEventListener('click',function(e){
-    var t=e.target;
-    if(closest(t,'#almalikaGlobalImageZoom,#almalikaImageZoom')) return;
-
-    /* الصورة الرئيسية داخل تفاصيل المنتج: افتحها مكبرة فوق كل شيء */
-    var main=closest(t,'#modal .modalPic img, #modal .decorPreviewBox img, #modal .themeFixedPreview img, #modal .themePreview img, #modal .decorGallery img, #modal .cartItem img, .quickShopPic img');
-    if(main){
-      e.preventDefault();
-      e.stopPropagation();
-      openViewer(imgSrc(main));
-      return;
-    }
-
-    /* صور الاختيارات الصغيرة: نخلي اختيار الصورة يشتغل أولاً، ثم نفتح الصورة الكبيرة بعد التحديث */
-    var thumb=closest(t,'#modal .decorThumb');
-    if(thumb){
-      var thumbImg=qs('img',thumb);
-      var src=(thumb.dataset&&(thumb.dataset.fullSrc||thumb.dataset.decorImg)) || imgSrc(thumbImg);
-      setTimeout(function(){openViewer(src);},40);
-    }
-  },true);
-
-  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeViewer(); });
-  document.addEventListener('DOMContentLoaded',function(){ensureViewer();});
-  setTimeout(ensureViewer,80);
-  setTimeout(ensureViewer,600);
+  document.addEventListener('DOMContentLoaded',closeViewer);
+  window.addEventListener('load',closeViewer);
 })();
 </script>
 </body>
@@ -16798,3 +16742,47 @@ header.header,
 })();
 </script>
 
+
+
+<!-- ===== V396 DISABLE EXTERNAL IMAGE POPUP FOR ALL SECTIONS ===== -->
+<style id="almalika-v396-disable-external-image-popup">
+#almalikaGlobalImageZoom,
+#almalikaImageZoom{
+  display:none!important;
+  pointer-events:none!important;
+}
+#modal .modalPic img,
+#modal .decorThumb img,
+#modal .decorGallery img,
+#modal .themeFixedPreview img,
+#modal .themePreview img,
+#modal .decorPreviewBox img,
+#modal .cartItem img,
+.quickShopPic img,
+.offerZoomPic{
+  cursor:default!important;
+}
+.offerZoomPic:after{display:none!important;content:none!important;}
+.offerZoomPic:hover img{transform:none!important;}
+body.v395ImageZoomOpen{overflow:auto!important;}
+</style>
+<script id="almalika-v396-disable-external-image-popup">
+(function(){
+  function closeAnyImageZoom(){
+    ['almalikaGlobalImageZoom','almalikaImageZoom'].forEach(function(id){
+      var z=document.getElementById(id);
+      if(z){ z.classList.remove('show'); z.style.setProperty('display','none','important'); }
+    });
+    document.body.classList.remove('v395ImageZoomOpen');
+  }
+  /* العروض والبكجات: بدل فتح صورة مستقلة، افتح تفاصيل المنتج مباشرة */
+  window.openOfferImage=function(n){
+    closeAnyImageZoom();
+    if(typeof window.openProduct==='function') window.openProduct(Number(n));
+  };
+  window.almalikaOpenImageZoom=function(){};
+  window.almalikaCloseImageZoom=closeAnyImageZoom;
+  document.addEventListener('DOMContentLoaded',closeAnyImageZoom);
+  window.addEventListener('load',closeAnyImageZoom);
+})();
+</script>
