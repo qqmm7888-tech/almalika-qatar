@@ -13241,6 +13241,163 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 })();
 </script>
 
+
+
+<!-- ===== V395 GLOBAL IMAGE ZOOM FIX: الصور المكبرة فوق كل النوافذ بدون قص ===== -->
+<style id="almalika-v395-global-image-zoom-fix">
+/* السبب كان أن #modal في v394 يأخذ z-index:2147483647، بينما طبقة تكبير الصور القديمة أقل منه.
+   هذا الإصلاح يجعل طبقة الصور المكبرة عامة وخارج نافذة التفاصيل، وتظهر فوق التفاصيل والسلة والهيدر. */
+#almalikaGlobalImageZoom,
+#almalikaImageZoom{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483647!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,0,0,.86)!important;
+  backdrop-filter:blur(8px)!important;
+  padding:18px!important;
+  box-sizing:border-box!important;
+  direction:rtl!important;
+  overflow:hidden!important;
+}
+#almalikaGlobalImageZoom.show,
+#almalikaImageZoom.show{
+  display:flex!important;
+}
+#almalikaGlobalImageZoom img,
+#almalikaImageZoom img{
+  display:block!important;
+  width:auto!important;
+  height:auto!important;
+  max-width:96vw!important;
+  max-height:92vh!important;
+  object-fit:contain!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  box-shadow:0 26px 90px rgba(0,0,0,.55)!important;
+  transform:none!important;
+  filter:none!important;
+}
+#almalikaGlobalImageZoom .zoomClose,
+#almalikaImageZoom .zoomClose{
+  position:fixed!important;
+  top:16px!important;
+  right:18px!important;
+  z-index:2147483647!important;
+  width:50px!important;
+  height:50px!important;
+  border-radius:50%!important;
+  border:0!important;
+  background:#ef2d78!important;
+  color:#fff!important;
+  font-size:34px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  cursor:pointer!important;
+  box-shadow:0 12px 32px rgba(239,45,120,.42)!important;
+}
+#modal .modalPic img,
+#modal .decorThumb img,
+#modal .decorGallery img,
+#modal .themeFixedPreview img,
+#modal .themePreview img,
+#modal .decorPreviewBox img,
+#modal .cartItem img,
+.quickShopPic img{
+  cursor:zoom-in!important;
+}
+/* إيقاف تكبير الهوفر القديم لأنه كان يطلع الصورة داخل حدود النافذة ويتقص جزء منها */
+#modal .modalPic img:hover,
+#modal .mainDecorImg:hover,
+#modal .decorThumb:hover img,
+#modal .decorGallery img:hover,
+#modal .themeFixedPreview img:hover,
+#modal .themePreview img:hover,
+#modal .decorPreviewBox img:hover{
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+}
+body.v395ImageZoomOpen{overflow:hidden!important;}
+@media(max-width:640px){
+  #almalikaGlobalImageZoom,#almalikaImageZoom{padding:10px!important;}
+  #almalikaGlobalImageZoom img,#almalikaImageZoom img{max-width:98vw!important;max-height:88vh!important;border-radius:14px!important;}
+  #almalikaGlobalImageZoom .zoomClose,#almalikaImageZoom .zoomClose{top:10px!important;right:10px!important;width:46px!important;height:46px!important;font-size:30px!important;}
+}
+</style>
+<script id="almalika-v395-global-image-zoom-fix">
+(function(){
+  function qs(s,r){return (r||document).querySelector(s)}
+  function closest(el,sel){return el && el.closest ? el.closest(sel) : null}
+  function ensureViewer(){
+    var z=document.getElementById('almalikaGlobalImageZoom') || document.getElementById('almalikaImageZoom');
+    if(!z){
+      z=document.createElement('div');
+      z.id='almalikaGlobalImageZoom';
+      z.innerHTML='<button type="button" class="zoomClose" aria-label="إغلاق">×</button><img alt="صورة مكبرة">';
+      z.addEventListener('click',function(e){ if(e.target===z || (e.target.classList&&e.target.classList.contains('zoomClose'))) closeViewer(); });
+    }
+    z.style.setProperty('z-index','2147483647','important');
+    if(z.parentNode!==document.body || document.body.lastElementChild!==z){ document.body.appendChild(z); }
+    return z;
+  }
+  function cleanSrc(src){
+    src=String(src||'').trim();
+    if(!src || src==='#' || src==='undefined' || src==='null') return '';
+    return src;
+  }
+  function imgSrc(img){
+    if(!img) return '';
+    return cleanSrc((img.dataset&&(img.dataset.fullSrc||img.dataset.decorImg||img.dataset.full||img.dataset.src)) || img.currentSrc || img.src || img.getAttribute('src'));
+  }
+  function openViewer(src){
+    src=cleanSrc(src); if(!src) return;
+    var z=ensureViewer();
+    var im=qs('img',z); if(!im) return;
+    im.removeAttribute('src');
+    im.src=src;
+    z.classList.add('show');
+    z.style.setProperty('display','flex','important');
+    document.body.classList.add('v395ImageZoomOpen');
+  }
+  function closeViewer(){
+    var z=document.getElementById('almalikaGlobalImageZoom') || document.getElementById('almalikaImageZoom');
+    if(z){ z.classList.remove('show'); z.style.removeProperty('display'); }
+    document.body.classList.remove('v395ImageZoomOpen');
+  }
+  window.almalikaOpenImageZoom=openViewer;
+  window.almalikaCloseImageZoom=closeViewer;
+
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    if(closest(t,'#almalikaGlobalImageZoom,#almalikaImageZoom')) return;
+
+    /* الصورة الرئيسية داخل تفاصيل المنتج: افتحها مكبرة فوق كل شيء */
+    var main=closest(t,'#modal .modalPic img, #modal .decorPreviewBox img, #modal .themeFixedPreview img, #modal .themePreview img, #modal .decorGallery img, #modal .cartItem img, .quickShopPic img');
+    if(main){
+      e.preventDefault();
+      e.stopPropagation();
+      openViewer(imgSrc(main));
+      return;
+    }
+
+    /* صور الاختيارات الصغيرة: نخلي اختيار الصورة يشتغل أولاً، ثم نفتح الصورة الكبيرة بعد التحديث */
+    var thumb=closest(t,'#modal .decorThumb');
+    if(thumb){
+      var thumbImg=qs('img',thumb);
+      var src=(thumb.dataset&&(thumb.dataset.fullSrc||thumb.dataset.decorImg)) || imgSrc(thumbImg);
+      setTimeout(function(){openViewer(src);},40);
+    }
+  },true);
+
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeViewer(); });
+  document.addEventListener('DOMContentLoaded',function(){ensureViewer();});
+  setTimeout(ensureViewer,80);
+  setTimeout(ensureViewer,600);
+})();
+</script>
 </body>
 </html>
 
