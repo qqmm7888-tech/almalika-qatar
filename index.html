@@ -14919,6 +14919,108 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 })();
 </script>
 
+
+
+<!-- v432: mobile product modal fixed bottom actions - keep all details visible -->
+<style id="v432-mobile-modal-actions-fixed">
+@media (max-width: 700px){
+  /* نافذة المنتج تتحول لصفحة كاملة قابلة للتمرير */
+  #modal.show{
+    align-items:stretch !important;
+    justify-content:flex-start !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    background:rgba(0,0,0,.45) !important;
+  }
+  #modal.show .modalBox:not(.cartModal){
+    width:100vw !important;
+    height:100dvh !important;
+    max-height:100dvh !important;
+    min-height:100dvh !important;
+    border-radius:0 !important;
+    display:block !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    padding-bottom:190px !important;
+    box-sizing:border-box !important;
+    background:#fffdf8 !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalPic{
+    min-height:0 !important;
+    padding:14px 14px 8px !important;
+    border-radius:0 !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalPic img{
+    width:100% !important;
+    max-height:38dvh !important;
+    object-fit:contain !important;
+    border-radius:18px !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalInfo{
+    padding:14px 18px 210px !important;
+    box-sizing:border-box !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalInfo h2{
+    font-size:30px !important;
+    line-height:1.25 !important;
+    text-align:center !important;
+    margin:12px 0 10px !important;
+  }
+  /* زر الإغلاق الدائري العلوي فقط للرجوع السريع، لا يغطي المحتوى */
+  #modal.show .modalBox:not(.cartModal) .close{
+    position:fixed !important;
+    top:calc(env(safe-area-inset-top,0px) + 14px) !important;
+    left:16px !important;
+    width:54px !important;
+    height:54px !important;
+    z-index:1000000 !important;
+    box-shadow:0 12px 30px rgba(233,30,99,.35) !important;
+  }
+  /* الأزرار الثلاثة مثبتة دائماً بأسفل الشاشة */
+  #modal.show .modalBox:not(.cartModal) .modalActions.three{
+    position:fixed !important;
+    left:12px !important;
+    right:12px !important;
+    bottom:calc(env(safe-area-inset-bottom,0px) + 10px) !important;
+    z-index:999999 !important;
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+    margin:0 !important;
+    padding:10px !important;
+    background:rgba(255,255,255,.97) !important;
+    border:1px solid rgba(120,0,55,.08) !important;
+    border-radius:22px !important;
+    box-shadow:0 -10px 35px rgba(0,0,0,.18) !important;
+    backdrop-filter:blur(8px) !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalActions.three button,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three a{
+    width:100% !important;
+    min-height:54px !important;
+    border-radius:16px !important;
+    font-size:18px !important;
+    font-weight:900 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:12px !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(1)::before,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(1)::before{content:'💬 ';}
+  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(2)::before,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(2)::before{content:'🛒 ';}
+  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(3)::before,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(3)::before{content:'✕ ';}
+  /* منع أي قواعد قديمة من جعل الأزرار عالقة داخل النص */
+  #modal.show .modalBox:not(.cartModal) .modalActions.three + *,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three ~ *{
+    margin-bottom:0 !important;
+  }
+}
+</style>
+
 </body>
 </html>
 
@@ -19850,5 +19952,54 @@ body.almV402ProductsMode #app .products{
   window.addEventListener('resize',run);
   try{new MutationObserver(function(){setTimeout(run,40);}).observe(document.documentElement,{childList:true,subtree:true,attributes:true});}catch(e){}
   setInterval(run,800);
+})();
+</script>
+
+<!-- ===== V431 QA STEP 9: prevent refresh from reopening/scrolled-to image or old zoom state ===== -->
+<script id="almalika-v431-refresh-start-fix">
+(function(){
+  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+  var userOpenedZoom=false;
+  document.addEventListener('click',function(e){
+    try{
+      if(e.target && (e.target.closest('.pic') || e.target.closest('.offerZoomPic') || e.target.closest('.decorThumb') || e.target.closest('[data-zoom]'))){
+        userOpenedZoom=true;
+      }
+    }catch(_){ }
+  },true);
+  function closeAllImageViewers(){
+    try{
+      ['almalikaV397ImageViewer','almalikaGlobalImageZoom','almalikaImageZoom'].forEach(function(id){
+        var z=document.getElementById(id);
+        if(!z) return;
+        z.classList.remove('show','open','active');
+        z.style.display='none';
+        z.style.alignItems='center';
+        z.style.justifyContent='center';
+      });
+      document.querySelectorAll('.offerImageViewer').forEach(function(v){
+        var m=v.closest('.modal');
+        if(m && m.id==='modal') return;
+      });
+      document.body.classList.remove('v397ImageViewerOpen','v395ImageZoomOpen','modal-open','zoom-open');
+    }catch(e){}
+  }
+  function forceStartAtTop(){
+    try{
+      if(location.hash && /image|zoom|photo|pic/i.test(location.hash)){
+        history.replaceState(null,document.title,location.pathname+location.search);
+      }
+    }catch(e){}
+    try{ window.scrollTo({top:0,left:0,behavior:'auto'}); }catch(e){ try{window.scrollTo(0,0);}catch(_){} }
+    try{ document.documentElement.scrollTop=0; document.body.scrollTop=0; }catch(e){}
+  }
+  function bootClean(){
+    if(!userOpenedZoom) closeAllImageViewers();
+    forceStartAtTop();
+  }
+  window.addEventListener('beforeunload',function(){closeAllImageViewers();});
+  window.addEventListener('pageshow',function(){setTimeout(bootClean,0);setTimeout(bootClean,80);setTimeout(bootClean,350);});
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(bootClean,0);setTimeout(bootClean,120);setTimeout(bootClean,600);});
+  window.addEventListener('load',function(){setTimeout(bootClean,0);setTimeout(bootClean,250);setTimeout(bootClean,900);});
 })();
 </script>
