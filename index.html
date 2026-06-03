@@ -16654,3 +16654,68 @@ header.header .headBtns .cartMini{
 })();
 </script>
 
+<style id="v378-about-us-2016-style">
+.aboutText2016,
+.v378AboutText{
+  font-size:15px!important;
+  line-height:2!important;
+  color:#6A1B2E!important;
+  font-weight:800!important;
+  text-align:right!important;
+}
+</style>
+<script id="v378-about-us-2016-script">
+(function(){
+  var ABOUT_TEXT = 'نحن شركة الملكة للحفلات في قطر، نعمل في مجال تأجير النطاطيات والزحلاقيات وتجهيز الحفلات منذ عام 2016. خلال هذه السنوات اكتسبنا خبرة كبيرة في تنظيم مناسبات الأطفال والعائلات والمدارس والفعاليات الخاصة، ونسعى دائمًا لتقديم خدمات مرتبة وآمنة وبجودة عالية. نهتم بالتفاصيل من لحظة الحجز وحتى التركيب والتسليم، ونحرص على أن تكون كل مناسبة جميلة ومريحة وذكرى لا تُنسى.';
+
+  function updateAboutText(){
+    try{
+      document.querySelectorAll('h1,h2,h3,h4,button,a,div,span').forEach(function(el){
+        var title = ((el.textContent || '').replace(/\s+/g,' ').trim());
+        if(title === '👑 من نحن' || title === 'من نحن'){
+          var box = el.parentElement;
+          if(box){
+            var ps = box.querySelectorAll('p, .desc, .text, .content, .v378AboutText');
+            if(ps.length){
+              ps.forEach(function(p){
+                if((p.textContent||'').length > 20){
+                  p.textContent = ABOUT_TEXT;
+                  p.classList.add('v378AboutText');
+                }
+              });
+            }else{
+              var p = document.createElement('p');
+              p.className = 'v378AboutText';
+              p.textContent = ABOUT_TEXT;
+              box.appendChild(p);
+            }
+          }
+        }
+      });
+
+      /* في حال كان عندك نافذة معلومات مبنية ديناميكياً */
+      document.querySelectorAll('[id*="about"],[class*="about"],[class*="About"]').forEach(function(el){
+        var txt = (el.textContent || '');
+        if(txt.indexOf('من نحن') > -1 || txt.indexOf('الملكة') > -1){
+          var ps = el.querySelectorAll('p');
+          if(ps.length){
+            ps[0].textContent = ABOUT_TEXT;
+            ps[0].classList.add('v378AboutText');
+          }
+        }
+      });
+    }catch(e){}
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    updateAboutText();
+    setTimeout(updateAboutText,100);
+    setTimeout(updateAboutText,500);
+    setTimeout(updateAboutText,1200);
+  });
+  window.addEventListener('load', updateAboutText);
+  document.addEventListener('click', function(){ setTimeout(updateAboutText,80); setTimeout(updateAboutText,300); }, true);
+  setInterval(updateAboutText, 2000);
+})();
+</script>
+
