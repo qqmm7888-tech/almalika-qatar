@@ -18359,3 +18359,324 @@ body.almV402ProductsMode #app .products{
   window.addEventListener('resize',function(){setTimeout(boot,120);});
 })();
 </script>
+
+
+<!-- ===== V413: شريط WELCOME15 أزرق + وميض بطيء + ربط الكود برقم الجوال مرة واحدة ===== -->
+<style id="almalika-v413-welcome15-blue-style">
+/* الشريط الثاني: نفس روح المرفق — أزرق، ثابت، وميض بطيء */
+#almPulseTickerBar,
+.almWelcome15SecondBar{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:18px!important;
+  width:100%!important;
+  min-height:38px!important;
+  padding:7px 14px!important;
+  box-sizing:border-box!important;
+  direction:rtl!important;
+  overflow:hidden!important;
+  color:#fff!important;
+  border-top:1px solid rgba(255,255,255,.25)!important;
+  border-bottom:2px solid #c00018!important;
+  background:
+    radial-gradient(circle at 12% 50%,rgba(255,255,255,.18),transparent 22%),
+    radial-gradient(circle at 88% 50%,rgba(255,255,255,.16),transparent 25%),
+    linear-gradient(180deg,#1594e8 0%,#0465bf 48%,#004b9e 100%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 14px rgba(0,78,160,.18)!important;
+  animation:almWelcome15BlueBlink 3.6s ease-in-out infinite!important;
+}
+#almPulseTickerBar::before,
+.almWelcome15SecondBar::before,
+#almPulseTickerBar::after,
+.almWelcome15SecondBar::after{
+  content:''!important;
+  flex:1 1 auto!important;
+  max-width:260px!important;
+  height:2px!important;
+  opacity:.75!important;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.82),transparent)!important;
+}
+#almPulseTickerBar .almPulseTickerLabel,
+#almPulseTickerBar .almWelcome15Label,
+.almWelcome15Label{
+  background:rgba(0,0,0,.16)!important;
+  color:#fff!important;
+  border:1px solid rgba(255,255,255,.35)!important;
+  border-radius:999px!important;
+  padding:5px 10px!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+  box-shadow:none!important;
+}
+#almPulseTickerBar .almPulseTickerContent,
+.almWelcome15TextWrap{
+  flex:0 1 auto!important;
+  min-width:0!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+}
+#almPulseTickerBar .almPulseTickerTrack,
+.almWelcome15Text{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:18px!important;
+  white-space:nowrap!important;
+  animation:none!important;
+  transform:none!important;
+}
+#almPulseTickerBar .almPulseTickerItem,
+.almWelcome15Phrase{
+  background:transparent!important;
+  border:0!important;
+  color:#fff!important;
+  padding:0!important;
+  font-size:16px!important;
+  font-weight:1000!important;
+  letter-spacing:.1px!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.26)!important;
+  white-space:nowrap!important;
+}
+#almPulseTickerBar .almPulseTickerItem b,
+.almWelcome15Code{
+  color:#fff!important;
+  font-size:22px!important;
+  font-weight:1000!important;
+  letter-spacing:.5px!important;
+}
+.almWelcome15Percent{
+  font-size:26px!important;
+  font-weight:1000!important;
+  color:#fff!important;
+  text-shadow:0 2px 3px rgba(0,0,0,.30)!important;
+}
+.almWelcome15UseBtn{
+  background:#fff!important;
+  color:#0055ad!important;
+  border:0!important;
+  border-radius:999px!important;
+  padding:7px 13px!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  white-space:nowrap!important;
+  box-shadow:0 4px 14px rgba(0,0,0,.18)!important;
+}
+@keyframes almWelcome15BlueBlink{
+  0%,100%{filter:brightness(1);box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 14px rgba(0,78,160,.18)}
+  50%{filter:brightness(1.18);box-shadow:inset 0 0 30px rgba(255,255,255,.22),0 0 28px rgba(21,148,232,.55)}
+}
+@media(max-width:760px){
+  #almPulseTickerBar,.almWelcome15SecondBar{min-height:34px!important;gap:8px!important;padding:6px 8px!important}
+  #almPulseTickerBar::before,#almPulseTickerBar::after,.almWelcome15SecondBar::before,.almWelcome15SecondBar::after{display:none!important}
+  #almPulseTickerBar .almPulseTickerTrack,.almWelcome15Text{gap:10px!important}
+  #almPulseTickerBar .almPulseTickerItem,.almWelcome15Phrase{font-size:12px!important}
+  #almPulseTickerBar .almPulseTickerItem b,.almWelcome15Code{font-size:15px!important}
+  .almWelcome15Percent{font-size:18px!important}
+  .almWelcome15UseBtn{padding:6px 10px!important;font-size:11px!important}
+}
+
+/* نافذة تفعيل الكود */
+#almWelcome15Modal{position:fixed;inset:0;z-index:9999998;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.54);backdrop-filter:blur(8px);padding:18px;direction:rtl}
+#almWelcome15Modal.show{display:flex}
+.almWelcome15Box{width:min(94vw,430px);background:#fff;border-radius:28px;padding:22px;box-shadow:0 28px 80px rgba(0,0,0,.28);border:1px solid rgba(18,116,210,.18);text-align:center;color:#172033}
+.almWelcome15Box h2{margin:0 0 8px;font-size:25px;color:#004b9e;font-weight:1000}
+.almWelcome15Box p{margin:0 0 14px;color:#667085;font-size:14px;font-weight:800;line-height:1.7}
+.almWelcome15Box input{width:100%;height:52px;border:2px solid #d7e7ff;border-radius:18px;background:#f7fbff;padding:0 14px;font-size:18px;font-weight:900;text-align:center;outline:0;color:#111}
+.almWelcome15Box input:focus{border-color:#1274d2;box-shadow:0 0 0 4px rgba(18,116,210,.12)}
+.almWelcome15Msg{min-height:26px;margin:12px 0 0;font-size:13px;font-weight:900;line-height:1.6;color:#004b9e}
+.almWelcome15Btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.almWelcome15Btns button{min-height:46px;border-radius:16px;border:0;font-weight:1000;font-size:14px;cursor:pointer}
+.almWelcome15Apply{background:linear-gradient(135deg,#1594e8,#004b9e);color:#fff}
+.almWelcome15Close{background:#111;color:#fff}
+.almWelcome15CartBox{grid-column:1/-1;background:linear-gradient(135deg,#eaf5ff,#fff);border:2px dashed rgba(18,116,210,.35);border-radius:16px;padding:12px;margin:10px 0;font-weight:900;color:#004b9e;text-align:center;line-height:1.7}
+.almWelcome15CartBox.used{background:#fff3f3;border-color:#f3b6b6;color:#9b1c1c}
+.almWelcome15CartBox.active{background:#effaf3;border-color:#7bd69b;color:#08612a}
+</style>
+<script id="almalika-v413-welcome15-blue-script">
+(function(){
+  const CODE='WELCOME15', PERCENT=15;
+  const USED_KEY='almalika_welcome15_used_phones_v1';
+  const ACTIVE_KEY='almalika_welcome15_active_v1';
+  function esc(s){return String(s==null?'':s).replace(/[&<>\"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function digits(s){return String(s||'').replace(/\D/g,'');}
+  function normalizePhone(s){
+    let d=digits(s);
+    if(d.startsWith('00974')) d=d.slice(5);
+    if(d.startsWith('974') && d.length===11) d=d.slice(3);
+    if(d.length>8) d=d.slice(-8);
+    return d;
+  }
+  function isValidQatarMobile(d){return /^([3567]\d{7})$/.test(d||'') || /^\d{8}$/.test(d||'');}
+  function usedPhones(){try{return JSON.parse(localStorage.getItem(USED_KEY)||'{}')||{}}catch(e){return {}}}
+  function saveUsed(obj){localStorage.setItem(USED_KEY,JSON.stringify(obj||{}));}
+  function getActive(){try{return JSON.parse(localStorage.getItem(ACTIVE_KEY)||'null')}catch(e){return null}}
+  function setActive(phone){
+    const obj={code:CODE,phone,percent:PERCENT,activatedAt:new Date().toISOString()};
+    localStorage.setItem(ACTIVE_KEY,JSON.stringify(obj));
+    const used=usedPhones(); used[phone]=obj.activatedAt; saveUsed(used);
+    return obj;
+  }
+  function activeValidForCartPhone(){
+    const a=getActive(); if(!a||a.code!==CODE||!a.phone) return false;
+    const field=document.getElementById('custPhone')||document.getElementById('customerPhone')||document.getElementById('phone');
+    const f=normalizePhone(field&&field.value?field.value:a.phone);
+    return f===String(a.phone);
+  }
+  function baseSubtotal(){try{return typeof cartSubtotal==='function'?Number(cartSubtotal()||0):0}catch(e){return 0}}
+  function welcomeDiscount(){return activeValidForCartPhone()?Math.round(baseSubtotal()*PERCENT/100):0}
+  window.almalikaWelcome15Discount=welcomeDiscount;
+
+  /* تعديل الإجمالي النهائي عند تفعيل الكود */
+  function installTotalsPatch(){
+    try{
+      if(window.__almWelcome15TotalsPatched) return;
+      window.__almWelcome15TotalsPatched=true;
+      const oldCartTotal=window.cartTotal;
+      if(typeof oldCartTotal==='function'){
+        window.cartTotal=function(){
+          const subtotal=typeof cartSubtotal==='function'?Number(cartSubtotal()||0):0;
+          const fee=typeof deliveryFee==='function'?Number(deliveryFee()||0):0;
+          const disc=welcomeDiscount();
+          return Math.max(0, subtotal + fee - disc);
+        };
+      }
+      const oldUpdate=window.updateCartUI;
+      if(typeof oldUpdate==='function'){
+        window.updateCartUI=function(){
+          oldUpdate.apply(this,arguments);
+          try{const tm=document.getElementById('cartTotalMini'); if(tm && typeof cartTotal==='function') tm.textContent=cartTotal();}catch(e){}
+        };
+      }
+      const oldRefresh=window.refreshCartTotals;
+      if(typeof oldRefresh==='function'){
+        window.refreshCartTotals=function(){
+          oldRefresh.apply(this,arguments);
+          refreshWelcome15CartBox();
+          try{const t=document.getElementById('cartTotalView'); if(t && typeof cartTotal==='function') t.textContent=cartTotal();}catch(e){}
+        };
+      }
+      const oldMsg=window.cartMessage;
+      if(typeof oldMsg==='function'){
+        window.cartMessage=function(){
+          let msg=oldMsg.apply(this,arguments);
+          const disc=welcomeDiscount();
+          const a=getActive();
+          if(disc>0) msg=String(msg).replace(/الإجمالي النهائي:/,'خصم '+CODE+' ('+PERCENT+'%) لرقم '+a.phone+': -'+disc+' ر.ق\nالإجمالي النهائي:');
+          return msg;
+        };
+      }
+    }catch(e){}
+  }
+
+  function welcomeBarHtml(){
+    return '<span class="almWelcome15Phrase">خصومات تحية لأول طلب</span>'+
+      '<span class="almWelcome15Percent">خصم '+PERCENT+'%</span>'+
+      '<span class="almWelcome15Phrase">الكود: <b class="almWelcome15Code">'+CODE+'</b></span>'+
+      '<span class="almWelcome15Phrase">للتطبيق فقط</span>'+
+      '<button class="almWelcome15UseBtn" type="button" onclick="almOpenWelcome15Modal()">تفعيل الكود</button>';
+  }
+  function ensureBlueSecondBar(){
+    let group=document.getElementById('almTopFixedGroup') || document.body;
+    let bar=document.getElementById('almPulseTickerBar');
+    if(!bar){
+      bar=document.createElement('div'); bar.id='almPulseTickerBar';
+      const header=document.querySelector('header.header');
+      if(group && header && header.parentNode===group){ group.insertBefore(bar, header); }
+      else if(group && group.firstChild){ group.insertBefore(bar, group.firstChild); }
+      else document.body.insertBefore(bar, document.body.firstChild);
+    }
+    bar.classList.add('almWelcome15SecondBar');
+    bar.innerHTML='<span class="almWelcome15Label">لأول طلب فقط</span><div class="almWelcome15TextWrap"><div class="almWelcome15Text">'+welcomeBarHtml()+'</div></div>';
+    setTimeout(function(){
+      try{const g=document.getElementById('almTopFixedGroup'); if(g){const h=Math.ceil(g.getBoundingClientRect().height||g.offsetHeight||0); if(h){document.documentElement.style.setProperty('--almFixedTopHeight',h+'px'); document.body.style.paddingTop=h+'px';}}}catch(e){}
+    },30);
+  }
+
+  function ensureModal(){
+    let m=document.getElementById('almWelcome15Modal');
+    if(m) return m;
+    m=document.createElement('div');
+    m.id='almWelcome15Modal';
+    m.innerHTML='<div class="almWelcome15Box"><h2>خصم 15% لأول طلب</h2><p>اكتب رقم جوالك لتفعيل الكود <b>'+CODE+'</b>. العرض يستخدم مرة واحدة فقط لكل رقم جوال على هذا الجهاز.</p><input id="almWelcome15Phone" inputmode="numeric" placeholder="مثال: 33317720" maxlength="12"><div class="almWelcome15Msg" id="almWelcome15Msg"></div><div class="almWelcome15Btns"><button class="almWelcome15Apply" type="button" id="almWelcome15Apply">تفعيل الخصم</button><button class="almWelcome15Close" type="button" id="almWelcome15Close">إغلاق</button></div></div>';
+    document.body.appendChild(m);
+    m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')});
+    m.querySelector('#almWelcome15Close').onclick=function(){m.classList.remove('show')};
+    m.querySelector('#almWelcome15Apply').onclick=function(){
+      const inp=m.querySelector('#almWelcome15Phone');
+      const msg=m.querySelector('#almWelcome15Msg');
+      const phone=normalizePhone(inp.value);
+      if(!isValidQatarMobile(phone)){msg.style.color='#b31333'; msg.textContent='اكتب رقم جوال صحيح من 8 أرقام.'; return;}
+      const used=usedPhones();
+      if(used[phone]){msg.style.color='#b31333'; msg.textContent='هذا الرقم استخدم كود '+CODE+' من قبل. العرض مرة واحدة لكل رقم.'; return;}
+      setActive(phone);
+      const cust=document.getElementById('custPhone')||document.getElementById('customerPhone')||document.getElementById('phone');
+      if(cust && !cust.value) cust.value=phone;
+      msg.style.color='#087333'; msg.textContent='تم تفعيل الخصم لهذا الرقم: '+phone;
+      setTimeout(function(){m.classList.remove('show'); refreshWelcome15CartBox(); try{if(typeof refreshCartTotals==='function')refreshCartTotals(); if(typeof updateCartUI==='function')updateCartUI();}catch(e){}},700);
+    };
+    return m;
+  }
+  window.almOpenWelcome15Modal=function(){
+    const m=ensureModal();
+    const inp=m.querySelector('#almWelcome15Phone');
+    const phoneField=document.getElementById('custPhone')||document.getElementById('customerPhone')||document.getElementById('phone');
+    if(inp && phoneField && phoneField.value) inp.value=normalizePhone(phoneField.value);
+    const msg=m.querySelector('#almWelcome15Msg'); if(msg){msg.style.color='#004b9e';msg.textContent='';}
+    m.classList.add('show'); setTimeout(()=>inp&&inp.focus(),80);
+  };
+
+  function cartCouponHtml(){
+    const a=getActive();
+    const field=document.getElementById('custPhone')||document.getElementById('customerPhone')||document.getElementById('phone');
+    const ph=normalizePhone(field&&field.value?field.value:(a&&a.phone));
+    const used=usedPhones();
+    const disc=welcomeDiscount();
+    if(a && a.phone && ph===String(a.phone) && disc>0){
+      return '<div class="almWelcome15CartBox active" id="almWelcome15CartBox">✅ تم تفعيل كود '+CODE+' لرقم '+esc(a.phone)+'<br>قيمة الخصم: '+disc+' ر.ق</div>';
+    }
+    if(ph && used[ph]){
+      return '<div class="almWelcome15CartBox used" id="almWelcome15CartBox">⚠️ هذا الرقم استخدم كود '+CODE+' من قبل. العرض مرة واحدة لكل رقم.</div>';
+    }
+    return '<div class="almWelcome15CartBox" id="almWelcome15CartBox">🎁 خصم '+PERCENT+'% لأول طلب — الكود: <b>'+CODE+'</b><br><button type="button" class="almWelcome15UseBtn" onclick="almOpenWelcome15Modal()">تفعيل برقم الجوال</button></div>';
+  }
+  function injectCartCouponBox(){
+    const form=document.querySelector('.cartForm');
+    if(!form) return;
+    let box=document.getElementById('almWelcome15CartBox');
+    if(!box){
+      form.insertAdjacentHTML('afterbegin',cartCouponHtml());
+    }else{
+      box.outerHTML=cartCouponHtml();
+    }
+    const phone=document.getElementById('custPhone')||document.getElementById('customerPhone')||document.getElementById('phone');
+    if(phone && !phone.dataset.welcome15Bound){
+      phone.dataset.welcome15Bound='1';
+      phone.addEventListener('input',function(){setTimeout(function(){refreshWelcome15CartBox(); try{if(typeof refreshCartTotals==='function')refreshCartTotals(); if(typeof updateCartUI==='function')updateCartUI();}catch(e){}},50)});
+    }
+  }
+  function refreshWelcome15CartBox(){injectCartCouponBox();}
+  window.refreshWelcome15CartBox=refreshWelcome15CartBox;
+
+  function patchOpenCart(){
+    if(window.__almWelcome15OpenCartPatched) return;
+    if(typeof window.openCart!=='function') return;
+    window.__almWelcome15OpenCartPatched=true;
+    const old=window.openCart;
+    window.openCart=function(){
+      const r=old.apply(this,arguments);
+      setTimeout(function(){injectCartCouponBox(); try{if(typeof refreshCartTotals==='function')refreshCartTotals();}catch(e){}},80);
+      setTimeout(function(){injectCartCouponBox();},250);
+      return r;
+    };
+  }
+
+  function boot(){installTotalsPatch(); patchOpenCart(); ensureBlueSecondBar(); injectCartCouponBox();}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(boot,80);setTimeout(boot,400);setTimeout(boot,1000);});
+  window.addEventListener('load',function(){setTimeout(boot,120);setTimeout(boot,600);});
+  document.addEventListener('click',function(){setTimeout(boot,120);},true);
+  setInterval(boot,2500);
+})();
+</script>
