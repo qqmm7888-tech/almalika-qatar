@@ -13981,8 +13981,8 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 
 
 
-<!-- ===== V407: سرعة شريط آخر العروض 20 ثانية ===== -->
-<style id="almalika-v407-moving-offers-ticker">
+<!-- ===== V408: إبطاء شريط آخر العروض بشكل واضح جداً ===== -->
+<style id="almalika-v408-moving-offers-ticker-slower">
   #almWorkingTicker,
   #almWorkingTicker .almWorkingTickerWindow{
     overflow:hidden!important;
@@ -13994,34 +13994,42 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
     min-width:max-content!important;
     white-space:nowrap!important;
     will-change:transform!important;
-    animation:almV406TickerMove 20s linear infinite!important;
+    animation:almV408TickerMove 140s linear infinite!important;
     transform:none;
   }
   #almWorkingTicker:hover .almWorkingTickerTrack{
     animation-play-state:running!important;
   }
-  @keyframes almV406TickerMove{
+  @keyframes almV408TickerMove{
     0%{transform:translateX(0)}
     100%{transform:translateX(50%)}
   }
   @media(max-width:700px){
-    .almWorkingTickerTrack{animation-duration:20s!important;}
+    .almWorkingTickerTrack{animation-duration:120s!important;}
   }
 </style>
-<script id="almalika-v407-moving-offers-ticker-script">
+<script id="almalika-v408-moving-offers-ticker-slower-script">
 (function(){
-  function keepTickerMoving(){
+  function keepTickerMovingSlow(){
+    var seconds = window.innerWidth < 700 ? 120 : 140;
     document.querySelectorAll('.almWorkingTickerTrack').forEach(function(el){
-      el.style.setProperty('animation','almV406TickerMove 20s linear infinite','important');
+      el.style.setProperty('animation','almV408TickerMove '+seconds+'s linear infinite','important');
+      el.style.setProperty('animation-duration',seconds+'s','important');
+      el.style.setProperty('animation-timing-function','linear','important');
       el.style.setProperty('animation-play-state','running','important');
       el.style.setProperty('will-change','transform','important');
       if(el.style.transform==='none') el.style.removeProperty('transform');
     });
+    document.querySelectorAll('marquee.almTickerMarquee').forEach(function(mq){
+      mq.setAttribute('scrollamount','1');
+      mq.setAttribute('scrolldelay','80');
+      try{mq.start();}catch(e){}
+    });
   }
-  document.addEventListener('DOMContentLoaded',keepTickerMoving);
-  window.addEventListener('load',keepTickerMoving);
-  window.addEventListener('resize',keepTickerMoving);
-  setInterval(keepTickerMoving,600);
+  document.addEventListener('DOMContentLoaded',keepTickerMovingSlow);
+  window.addEventListener('load',keepTickerMovingSlow);
+  window.addEventListener('resize',keepTickerMovingSlow);
+  setInterval(keepTickerMovingSlow,600);
 })();
 </script>
 
