@@ -16786,3 +16786,175 @@ body.v395ImageZoomOpen{overflow:auto!important;}
   window.addEventListener('load',closeAnyImageZoom);
 })();
 </script>
+
+
+<!-- ===== V397: ديكورات تكبير من الصورة الأساسية فقط + عروض صورة خارجية مع تفاصيل/إغلاق ===== -->
+<style id="almalika-v397-decor-main-and-offer-popup">
+/* إرجاع مؤشر التكبير فقط للعروض من الخارج والصورة الأساسية للديكور داخل التفاصيل */
+.offerZoomPic{cursor:zoom-in!important;position:relative!important;}
+.offerZoomPic:after{display:none!important;content:none!important;}
+.offerZoomPic:hover img{transform:scale(1.025)!important;transition:.22s ease!important;}
+#modal .modalPic .mainDecorImg,
+#modal .modalPic .v302MainImg,
+#modal .modalPic .mainDecorPreview,
+#modal .modalPic .v302MainWrap img{cursor:zoom-in!important;}
+#modal .decorThumb,
+#modal .decorThumb img,
+#modal .decorGallery img:not(.mainDecorImg):not(.v302MainImg):not(.mainDecorPreview),
+#modal .themeFixedPreview img,
+#modal .themePreview img,
+#modal .decorPreviewBox img{cursor:pointer!important;}
+
+#almalikaV397ImageViewer{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483647!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,0,0,.88)!important;
+  backdrop-filter:blur(9px)!important;
+  padding:22px!important;
+  box-sizing:border-box!important;
+  direction:rtl!important;
+  overflow:hidden!important;
+}
+#almalikaV397ImageViewer.show{display:flex!important;}
+#almalikaV397ImageViewer .v397Stage{
+  position:relative!important;
+  width:min(980px,94vw)!important;
+  max-height:92vh!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+#almalikaV397ImageViewer img{
+  display:block!important;
+  max-width:94vw!important;
+  max-height:90vh!important;
+  width:auto!important;
+  height:auto!important;
+  object-fit:contain!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  box-shadow:0 26px 90px rgba(0,0,0,.58)!important;
+  transform:none!important;
+  filter:none!important;
+}
+#almalikaV397ImageViewer .v397Close,
+#almalikaV397ImageViewer .v397Details{
+  position:fixed!important;
+  z-index:2147483647!important;
+  border:0!important;
+  cursor:pointer!important;
+  font-weight:1000!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.30)!important;
+}
+#almalikaV397ImageViewer .v397Close{
+  top:18px!important;
+  right:22px!important;
+  width:54px!important;
+  height:54px!important;
+  border-radius:50%!important;
+  background:#ef2d78!important;
+  color:#fff!important;
+  font-size:34px!important;
+  line-height:1!important;
+}
+#almalikaV397ImageViewer .v397Details{
+  top:18px!important;
+  left:22px!important;
+  min-height:52px!important;
+  border-radius:999px!important;
+  background:linear-gradient(135deg,#ffd56b,#e11d48)!important;
+  color:#fff!important;
+  padding:0 22px!important;
+  font-size:15px!important;
+  display:none!important;
+  align-items:center!important;
+  gap:7px!important;
+}
+#almalikaV397ImageViewer.hasDetails .v397Details{display:flex!important;}
+body.v397ImageViewerOpen{overflow:hidden!important;}
+@media(max-width:640px){
+  #almalikaV397ImageViewer{padding:10px!important;}
+  #almalikaV397ImageViewer img{max-width:98vw!important;max-height:86vh!important;border-radius:14px!important;}
+  #almalikaV397ImageViewer .v397Close{top:10px!important;right:10px!important;width:48px!important;height:48px!important;font-size:30px!important;}
+  #almalikaV397ImageViewer .v397Details{top:10px!important;left:10px!important;min-height:46px!important;padding:0 15px!important;font-size:13px!important;}
+}
+</style>
+<script id="almalika-v397-decor-main-and-offer-popup">
+(function(){
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function qs(s,r){return (r||document).querySelector(s);}
+  function getProduct(n){
+    try{return (((typeof products!=='undefined')?products:window.products)||[]).find(function(p){return Number(p.number)===Number(n)||Number(p.id)===Number(n);});}catch(e){return null;}
+  }
+  function productSrc(p){
+    try{return (typeof productImageUrl==='function')?productImageUrl(p):(p&&(p.image||p.img||p.photo)||'');}catch(e){return (p&&(p.image||p.img||p.photo)||'');}
+  }
+  function ensureViewer(){
+    var z=document.getElementById('almalikaV397ImageViewer');
+    if(z) return z;
+    z=document.createElement('div');
+    z.id='almalikaV397ImageViewer';
+    z.innerHTML='<button type="button" class="v397Close" aria-label="إغلاق">×</button><button type="button" class="v397Details">✨ التفاصيل</button><div class="v397Stage"><img alt="صورة مكبرة"></div>';
+    document.body.appendChild(z);
+    z.addEventListener('click',function(e){ if(e.target===z || e.target.classList.contains('v397Close')) closeViewer(); });
+    qs('.v397Details',z).addEventListener('click',function(e){
+      e.preventDefault();e.stopPropagation();
+      var n=z.getAttribute('data-product-number');
+      closeViewer();
+      if(n && typeof window.openProduct==='function') setTimeout(function(){window.openProduct(Number(n));},30);
+    });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeViewer(); });
+    return z;
+  }
+  function closeViewer(){
+    var z=document.getElementById('almalikaV397ImageViewer');
+    if(z){z.classList.remove('show','hasDetails');z.removeAttribute('data-product-number');}
+    document.body.classList.remove('v397ImageViewerOpen');
+  }
+  function openViewer(src, productNumber){
+    if(!src) return;
+    var z=ensureViewer();
+    var im=qs('img',z);
+    im.src=src;
+    if(productNumber){z.setAttribute('data-product-number',productNumber);z.classList.add('hasDetails');}
+    else{z.removeAttribute('data-product-number');z.classList.remove('hasDetails');}
+    z.classList.add('show');
+    document.body.classList.add('v397ImageViewerOpen');
+  }
+  window.almalikaV397OpenViewer=openViewer;
+  window.almalikaV397CloseViewer=closeViewer;
+
+  /* العروض والبكجات: الضغط على صورة الكرت الخارجي يفتح الصورة فوق كل شيء، وبها زر تفاصيل وزر إغلاق */
+  window.openOfferImage=function(n){
+    var p=getProduct(n);
+    if(!p){ if(typeof window.openProduct==='function') return window.openProduct(Number(n)); return; }
+    openViewer(productSrc(p), Number(p.number||n));
+  };
+
+  /* تجهيز الحفلات/الديكورات: التكبير من الصورة الأساسية فقط، أما الصور الصغيرة تغيّر الصورة ولا تفتح خارجياً */
+  document.addEventListener('click',function(e){
+    var target=e.target;
+    if(!target || !target.closest) return;
+
+    if(target.closest('#modal .decorThumb, #modal .decorThumbs, #modal .themeFixedPreview, #modal .themePreview, #modal .decorPreviewBox')){
+      return;
+    }
+
+    var main=target.closest('#modal .modalPic .mainDecorImg, #modal .modalPic .v302MainImg, #modal .modalPic .mainDecorPreview, #modal .modalPic .v302MainWrap img');
+    if(main){
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      var src=main.getAttribute('data-full-src') || (main.dataset&&main.dataset.fullSrc) || main.currentSrc || main.src;
+      openViewer(src, null);
+      return false;
+    }
+  },true);
+
+  document.addEventListener('DOMContentLoaded',ensureViewer);
+})();
+</script>
