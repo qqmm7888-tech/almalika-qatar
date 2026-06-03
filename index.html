@@ -18359,3 +18359,212 @@ body.almV402ProductsMode #app .products{
   window.addEventListener('resize',function(){setTimeout(boot,120);});
 })();
 </script>
+
+
+<style id="almalika-v419-welcome15-and-rich-slider-style">
+/* v419: لا نلمس الشريط الأسود نهائياً — نضيف الشريط الأزرق فقط تحته */
+#almPulseTickerBar{display:none!important}
+#almWelcome15Bar{
+  direction:rtl!important;width:100%!important;height:52px!important;min-height:52px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;gap:22px!important;
+  box-sizing:border-box!important;padding:0 18px!important;overflow:hidden!important;position:relative!important;
+  color:#fff!important;border-top:2px solid #73c8ff!important;border-bottom:2px solid #ec1b72!important;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.22),transparent 22%),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 4px),
+    linear-gradient(180deg,#1fb4ff 0%,#008dea 46%,#006ac9 100%)!important;
+  box-shadow:0 5px 18px rgba(0,112,205,.22)!important;
+  animation:almBlueWelcomePulse 5.8s ease-in-out infinite!important;
+}
+#almWelcome15Bar::before,#almWelcome15Bar::after{
+  content:''!important;position:absolute!important;top:50%!important;width:210px!important;height:2px!important;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent)!important;opacity:.75!important;
+}
+#almWelcome15Bar::before{right:70px!important}#almWelcome15Bar::after{left:70px!important}
+#almWelcome15Bar .welcomePill{
+  position:relative!important;z-index:2!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
+  height:28px!important;padding:0 13px!important;border-radius:999px!important;border:1px solid rgba(255,255,255,.58)!important;
+  background:rgba(0,76,150,.18)!important;color:#fff!important;font-size:13px!important;font-weight:1000!important;white-space:nowrap!important;
+  box-shadow:inset 0 0 15px rgba(255,255,255,.08)!important;
+}
+#almWelcome15Bar .welcomeMain{
+  position:relative!important;z-index:2!important;display:flex!important;align-items:center!important;gap:14px!important;white-space:nowrap!important;
+  font-weight:1000!important;text-shadow:0 2px 5px rgba(0,48,99,.35)!important;
+}
+#almWelcome15Bar .welcomeMain .small{font-size:16px!important;opacity:.98!important}
+#almWelcome15Bar .welcomeMain .big{font-size:34px!important;line-height:1!important;letter-spacing:-1px!important}
+#almWelcome15Bar .welcomeMain .code{font-size:22px!important;direction:ltr!important;font-weight:1000!important}
+#almWelcome15Bar .welcomeBtn{
+  position:relative!important;z-index:2!important;border:0!important;border-radius:999px!important;background:#fff!important;color:#0069bd!important;
+  height:34px!important;padding:0 20px!important;font-size:14px!important;font-weight:1000!important;cursor:pointer!important;
+  box-shadow:0 8px 20px rgba(0,51,115,.18)!important;
+}
+#almWelcome15Bar .welcomeBtn:hover{transform:translateY(-1px)!important;box-shadow:0 10px 26px rgba(0,51,115,.25)!important}
+@keyframes almBlueWelcomePulse{
+  0%,100%{filter:saturate(1) brightness(1);box-shadow:0 5px 18px rgba(0,112,205,.22)}
+  50%{filter:saturate(1.18) brightness(1.08);box-shadow:0 7px 30px rgba(28,168,255,.36)}
+}
+@media(max-width:700px){
+  #almWelcome15Bar{height:44px!important;min-height:44px!important;gap:8px!important;padding:0 8px!important}
+  #almWelcome15Bar::before,#almWelcome15Bar::after{display:none!important}
+  #almWelcome15Bar .welcomePill{height:24px!important;font-size:10px!important;padding:0 8px!important}
+  #almWelcome15Bar .welcomeMain{gap:7px!important}
+  #almWelcome15Bar .welcomeMain .small{font-size:11px!important}
+  #almWelcome15Bar .welcomeMain .big{font-size:22px!important}
+  #almWelcome15Bar .welcomeMain .code{font-size:14px!important}
+  #almWelcome15Bar .welcomeBtn{height:28px!important;font-size:11px!important;padding:0 10px!important}
+}
+
+/* v419: السلايدر الرئيسي يصبح أكثر ثراءً وتناسقاً */
+#almHomePromoSlider .almPromoSlider{border-radius:30px!important;overflow:hidden!important;background:#fff!important}
+#almHomePromoSlider .almPromoViewport{min-height:500px!important}
+#almHomePromoSlider .almPromoSlide{grid-template-columns:minmax(0,.9fr) minmax(470px,1.1fr)!important;gap:22px!important;padding:26px!important}
+#almHomePromoSlider .almPromoMosaic{display:grid!important;grid-template-columns:1.2fr .8fr .8fr!important;grid-template-rows:repeat(3,132px)!important;gap:12px!important;min-height:0!important}
+#almHomePromoSlider .almPromoCard{min-height:0!important;height:auto!important;border-radius:22px!important;background:#fff!important;box-shadow:0 13px 30px rgba(122,23,52,.10)!important;border:1px solid rgba(255,255,255,.96)!important;overflow:hidden!important}
+#almHomePromoSlider .almPromoCard.main{grid-row:1 / span 3!important;grid-column:1!important}
+#almHomePromoSlider .almPromoCard.wide{grid-column:2 / span 2!important}
+#almHomePromoSlider .almPromoCard img{width:100%!important;height:100%!important;object-fit:cover!important;display:block!important;background:#fff8ee!important}
+#almHomePromoSlider .almPromoCard .overlay{background:linear-gradient(180deg,transparent 0%,rgba(36,15,25,.04) 25%,rgba(36,15,25,.82) 100%)!important;padding:13px!important}
+#almHomePromoSlider .almPromoTitle{font-size:42px!important}
+#almHomePromoSlider .almPromoText{font-size:16px!important;max-width:100%!important}
+@media(max-width:1100px){
+  #almHomePromoSlider .almPromoViewport{min-height:790px!important}
+  #almHomePromoSlider .almPromoSlide{grid-template-columns:1fr!important}
+  #almHomePromoSlider .almPromoMosaic{grid-template-columns:1fr 1fr 1fr!important;grid-template-rows:210px 130px 130px!important}
+  #almHomePromoSlider .almPromoCard.main{grid-column:1 / span 3!important;grid-row:1!important}
+  #almHomePromoSlider .almPromoCard.wide{grid-column:auto!important}
+}
+@media(max-width:700px){
+  #almHomePromoSlider .almPromoViewport{min-height:720px!important}
+  #almHomePromoSlider .almPromoSlide{padding:14px!important;gap:12px!important}
+  #almHomePromoSlider .almPromoMosaic{grid-template-columns:1fr 1fr!important;grid-template-rows:190px 128px 128px 128px!important;gap:9px!important}
+  #almHomePromoSlider .almPromoCard.main{grid-column:1 / span 2!important;grid-row:1!important}
+  #almHomePromoSlider .almPromoCard.wide{grid-column:1 / span 2!important}
+  #almHomePromoSlider .almPromoCard{border-radius:18px!important}
+}
+
+.welcomeDiscountRow{background:linear-gradient(135deg,#e7f6ff,#fff)!important;border-color:#2db6ff!important}
+.welcomeDiscountRow span{color:#005aa9!important}.welcomeDiscountRow b{color:#006dca!important}
+.welcomeCartNote{margin-top:8px;background:#f0f8ff;border:1px dashed #61bfff;color:#005aa9;border-radius:12px;padding:8px 10px;font-weight:900;text-align:center}
+</style>
+<script id="almalika-v419-welcome15-and-rich-slider-script">
+(function(){
+  var CODE='WELCOME15';
+  var DISCOUNT_RATE=0.15;
+  function qs(sel,root){return (root||document).querySelector(sel)}
+  function qsa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel))}
+  function normPhone(v){return String(v||'').replace(/[^0-9]/g,'').replace(/^974/,'').replace(/^00974/,'').slice(-8)}
+  function usedPhones(){try{return JSON.parse(localStorage.getItem('almWelcome15UsedPhones')||'[]')}catch(e){return []}}
+  function setUsedPhones(arr){localStorage.setItem('almWelcome15UsedPhones',JSON.stringify(Array.from(new Set(arr))))}
+  function activeWelcome(){try{return JSON.parse(localStorage.getItem('almWelcome15Active')||'null')}catch(e){return null}}
+  function setActiveWelcome(obj){localStorage.setItem('almWelcome15Active',JSON.stringify(obj||null))}
+  function isActive(){var a=activeWelcome();return !!(a&&a.phone&&a.code===CODE)}
+  function productSubtotal(){try{return typeof cartSubtotal==='function'?Number(cartSubtotal()||0):((window.cart||[]).reduce(function(s,x){return s+(Number(x.selectedPrice|| (typeof price==='function'?price(x):x.priceOneDay)||0)*(x.qty||1));},0))}catch(e){return 0}}
+  function welcomeDiscount(){return isActive()?Math.round(productSubtotal()*DISCOUNT_RATE):0}
+  window.almWelcome15DiscountAmount=welcomeDiscount;
+  window.activateWelcome15=function(){
+    var current='';
+    try{current=normPhone(qs('#custPhone')&&qs('#custPhone').value)}catch(e){}
+    var phone=prompt('اكتب رقم الجوال لتفعيل كود '+CODE+(current?'\nالرقم الحالي: '+current:''), current||'');
+    phone=normPhone(phone);
+    if(!phone || phone.length<8){alert('يرجى كتابة رقم جوال صحيح من 8 أرقام.');return;}
+    var used=usedPhones();
+    if(used.indexOf(phone)!==-1){
+      alert('هذا الرقم استخدم كود '+CODE+' من قبل. الميزة الترحيبية مرة واحدة لكل رقم جوال.');
+      return;
+    }
+    used.push(phone); setUsedPhones(used); setActiveWelcome({phone:phone,code:CODE,rate:DISCOUNT_RATE,activatedAt:new Date().toISOString()});
+    alert('تم تفعيل كود '+CODE+' لهذا الرقم. سيتم خصم 15% داخل السلة.');
+    if(typeof updateCartUI==='function') updateCartUI();
+    if(qs('.cartModal')) setTimeout(function(){ if(typeof openCart==='function') openCart(); },60);
+  };
+  function ensureBlueBar(){
+    var ticker=qs('#almWorkingTicker'); if(!ticker || !ticker.parentNode) return;
+    qsa('#almPulseTickerBar').forEach(function(el){el.style.display='none';});
+    var bar=qs('#almWelcome15Bar');
+    if(!bar){bar=document.createElement('div'); bar.id='almWelcome15Bar';}
+    bar.innerHTML='<span class="welcomePill">أول طلب فقط</span><span class="welcomeMain"><span class="small">مزايا ترحيبية لأول طلب</span><span class="big">وفر 15%</span><span class="small">الكود:</span><span class="code">WELCOME15</span><span class="small">للتطبيق فقط</span></span><button class="welcomeBtn" type="button" onclick="activateWelcome15()">تفعيل الكود</button>';
+    if(ticker.nextSibling!==bar) ticker.parentNode.insertBefore(bar,ticker.nextSibling);
+    refreshTopHeight();
+  }
+  function refreshTopHeight(){
+    setTimeout(function(){
+      var group=qs('#almTopFixedGroup');
+      if(group){var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0); if(h){document.documentElement.style.setProperty('--almFixedTopHeight',h+'px');document.body.style.paddingTop=h+'px';}}
+    },50);
+  }
+  var oldCartTotal=window.cartTotal;
+  window.cartTotal=function(){
+    var base=0;
+    try{base=oldCartTotal?Number(oldCartTotal.apply(this,arguments)||0):productSubtotal();}catch(e){base=productSubtotal();}
+    return Math.max(0,base-welcomeDiscount());
+  };
+  var oldUpdateCartUI=window.updateCartUI;
+  window.updateCartUI=function(){
+    if(oldUpdateCartUI) oldUpdateCartUI.apply(this,arguments);
+    try{
+      var tm=qs('#cartTotalMini');
+      if(tm && typeof cartTotal==='function') tm.textContent=cartTotal();
+    }catch(e){}
+  };
+  function injectCartDiscountRow(){
+    var modal=qs('.cartModal'); if(!modal) return;
+    var summary=qs('.moneySummary',modal); if(!summary) return;
+    qsa('.welcomeDiscountRow,.welcomeCartNote',summary).forEach(function(x){x.remove();});
+    var d=welcomeDiscount(); if(!(d>0)) return;
+    var totalFinal=qs('.moneyRow.totalFinal',summary);
+    var row=document.createElement('div'); row.className='moneyRow welcomeDiscountRow';
+    row.innerHTML='<span>كود '+CODE+' مفعل — خصم 15%</span><b>- <span id="welcomeDiscountView">'+d+'</span> ر.ق</b>';
+    if(totalFinal) summary.insertBefore(row,totalFinal); else summary.appendChild(row);
+    var note=document.createElement('div'); note.className='welcomeCartNote';
+    var a=activeWelcome(); note.textContent='تم ربط كود WELCOME15 برقم الجوال: '+(a&&a.phone?a.phone:'')+' — مرة واحدة لكل رقم.';
+    summary.appendChild(note);
+    var t=qs('#cartTotalView'); if(t && typeof cartTotal==='function') t.textContent=cartTotal();
+  }
+  var oldOpenCart=window.openCart;
+  window.openCart=function(){
+    var r=oldOpenCart?oldOpenCart.apply(this,arguments):undefined;
+    setTimeout(function(){injectCartDiscountRow();},30);
+    setTimeout(function(){injectCartDiscountRow();},160);
+    return r;
+  };
+  function escHtml(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function secItems(key,count){try{return ((window.products|| (typeof products!=='undefined'?products:[]))||[]).filter(function(p){return typeof sectionOf==='function' && sectionOf(p)===key;}).slice(0,count||8)}catch(e){return []}}
+  function minPrice(p){try{var nums=[];if(p&&p.packagePrices){Object.keys(p.packagePrices).forEach(function(k){var v=Number(p.packagePrices[k]||0);if(v>0)nums.push(v);});}['baseDecorPrice','priceOneDay','priceTwoDays','price'].forEach(function(k){var v=Number((p&&p[k])||0);if(v>0)nums.push(v);});var val=nums.length?Math.min.apply(null,nums):0;return val>0?val+' ر.ق':'حسب الطلب'}catch(e){return 'حسب الطلب'}}
+  function card(p,i){
+    var cls='almPromoCard '+(i===0?'main ':((i===1||i===4)?'wide ':''));
+    var img=''; try{img=typeof productImageUrl==='function'?productImageUrl(p):''}catch(e){}
+    return '<div class="'+cls+'"><img src="'+escHtml(img)+'" alt="'+escHtml(p.name||'')+'" loading="lazy" onerror="this.style.opacity=.2"><div class="overlay"><strong>'+escHtml(p.name||'')+'</strong><small>يبدأ من '+escHtml(minPrice(p))+'</small></div></div>';
+  }
+  function rebuildPromoSlider(){
+    var root=qs('#almHomePromoSlider'); if(!root) return;
+    var data=[
+      {key:'bouncies',k:'🏰 النطاطيات والزحلاقيات',t:'نطاطيات وزحلاقيات بتجهيز مرتب',txt:'صور متعددة من النطاطيات والزحلاقيات، مقاسات متناسقة، واختيار سريع حسب المناسبة.',bg:'linear-gradient(135deg,#fff2fb,#fff9ed,#effbff)'},
+      {key:'snacks',k:'🍿 السناك والعربات',t:'سناك وعربات ضيافة بشكل أنيق',txt:'فشار، غزل البنات، بطاطا حلزونية، ذرة، آيس كريم وسلاش بتنسيق يناسب الحفلات.',bg:'linear-gradient(135deg,#fff8ee,#fff0fb,#eefcff)'},
+      {key:'events',k:'🎀 تجهيز الحفلات',t:'ديكورات وحفلات بتفاصيل راقية',txt:'خلفيات، بالونات، ستاندات وثيمات حفلات مع صور كثيرة لاختيار الشكل المناسب.',bg:'linear-gradient(135deg,#fff0f8,#fffdf5,#f3f7ff)'},
+      {key:'offers',k:'🎁 العروض والبكجات',t:'بكجات جاهزة وسريعة الاختيار',txt:'باقات تجمع أكثر من خدمة في صفحة واحدة لتسهيل القرار والحجز.',bg:'linear-gradient(135deg,#fff3f7,#fff9e8,#eefcff)'}
+    ];
+    var html='<div class="almPromoSlider"><div class="almPromoTimeBadge">يتبدل تلقائيًا كل 5 ثواني</div><button class="almPromoNav prev" type="button">›</button><button class="almPromoNav next" type="button">‹</button><div class="almPromoViewport">';
+    data.forEach(function(s,idx){
+      var items=secItems(s.key,8);
+      html+='<article class="almPromoSlide'+(idx===0?' active':'')+'" data-slide-index="'+idx+'" style="--promoBg:'+s.bg+'"><div class="almPromoContent"><span class="almPromoKicker">'+s.k+'</span><h2 class="almPromoTitle">'+s.t+'</h2><p class="almPromoText">'+s.txt+'</p><div class="almPromoFeatures"><span>صور كثيرة</span><span>مقاسات متناسقة</span><span>اختيار سريع</span><span>تبديل تلقائي</span></div><div class="almPromoActions"><button class="almPromoBtn primary" onclick="showSection(\''+s.key+'\')">استكشف القسم</button><button class="almPromoBtn secondary" onclick="quickWaSection&&quickWaSection(\''+s.key+'\')">واتساب</button></div></div><div class="almPromoMosaic">'+items.map(card).join('')+'</div></article>';
+    });
+    html+='</div><div class="almPromoDots">'+data.map(function(_,i){return '<button class="almPromoDot'+(i===0?' active':'')+'" type="button" data-dot="'+i+'"></button>';}).join('')+'</div></div>';
+    root.innerHTML=html;
+    bindSlider(root);
+  }
+  function bindSlider(root){
+    if(!root) return; var timer=0;
+    function show(i){var slides=qsa('.almPromoSlide',root),dots=qsa('.almPromoDot',root);if(!slides.length)return;i=(i+slides.length)%slides.length;slides.forEach(function(s,n){s.classList.toggle('active',n===i)});dots.forEach(function(d,n){d.classList.toggle('active',n===i)});root.dataset.index=i;}
+    function restart(){if(timer)clearInterval(timer);timer=setInterval(function(){show(Number(root.dataset.index||0)+1)},5000)}
+    root.onclick=function(e){var dot=e.target.closest('.almPromoDot'); if(dot){show(Number(dot.getAttribute('data-dot')||0));restart();return} if(e.target.closest('.almPromoNav.prev')){show(Number(root.dataset.index||0)-1);restart();return} if(e.target.closest('.almPromoNav.next')){show(Number(root.dataset.index||0)+1);restart();return}};
+    root.onmouseenter=function(){if(timer)clearInterval(timer)};root.onmouseleave=restart;show(0);restart();
+  }
+  function run(){ensureBlueBar(); if(qs('#app .hero')) rebuildPromoSlider(); if(typeof updateCartUI==='function') updateCartUI();}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(run,80);setTimeout(run,450);setTimeout(run,1200)});
+  window.addEventListener('load',function(){setTimeout(run,120);setTimeout(run,700)});
+  document.addEventListener('click',function(){setTimeout(run,220)},true);
+  window.addEventListener('resize',function(){refreshTopHeight()});
+  setInterval(function(){ensureBlueBar(); if(qs('#app .hero') && !qs('#almHomePromoSlider .almPromoCard.main')) rebuildPromoSlider();},1800);
+})();
+</script>
