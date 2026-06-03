@@ -16719,3 +16719,173 @@ header.header .headBtns .cartMini{
 })();
 </script>
 
+<style id="v379-product-image-zoom-style">
+/* v379: تكبير صور المنتجات عند الضغط عليها */
+#v379ImageZoomOverlay{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483647!important;
+  background:rgba(0,0,0,.82)!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:18px!important;
+  backdrop-filter:blur(6px)!important;
+}
+#v379ImageZoomOverlay.show{
+  display:flex!important;
+}
+#v379ImageZoomBox{
+  position:relative!important;
+  width:min(96vw,1100px)!important;
+  max-height:94vh!important;
+  background:#fff!important;
+  border-radius:24px!important;
+  padding:16px!important;
+  box-shadow:0 30px 90px rgba(0,0,0,.45)!important;
+  display:grid!important;
+  grid-template-rows:auto 1fr!important;
+  gap:10px!important;
+  direction:rtl!important;
+}
+#v379ImageZoomTitle{
+  font-weight:1000!important;
+  color:#6A1B2E!important;
+  font-size:18px!important;
+  line-height:1.5!important;
+  padding:0 48px 0 6px!important;
+}
+#v379ImageZoomClose{
+  position:absolute!important;
+  top:12px!important;
+  right:12px!important;
+  width:42px!important;
+  height:42px!important;
+  border-radius:50%!important;
+  background:#e11d48!important;
+  color:#fff!important;
+  font-size:28px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  border:0!important;
+  cursor:pointer!important;
+  z-index:2!important;
+}
+#v379ImageZoomImg{
+  width:100%!important;
+  height:calc(94vh - 92px)!important;
+  object-fit:contain!important;
+  background:linear-gradient(135deg,#fff,#fff8e8)!important;
+  border-radius:18px!important;
+  border:1px solid #f0dce7!important;
+}
+.product .pic img,
+.modalPic img,
+.cartItem img{
+  cursor:zoom-in!important;
+}
+#modal .decorThumb img,
+#modal .decorGallery img{
+  cursor:pointer!important;
+}
+@media(max-width:700px){
+  #v379ImageZoomBox{
+    width:96vw!important;
+    padding:12px!important;
+    border-radius:18px!important;
+  }
+  #v379ImageZoomImg{
+    height:calc(94vh - 82px)!important;
+  }
+  #v379ImageZoomTitle{
+    font-size:15px!important;
+    padding-right:44px!important;
+  }
+}
+</style>
+<script id="v379-product-image-zoom-script">
+(function(){
+  function ensureZoom(){
+    var ov=document.getElementById('v379ImageZoomOverlay');
+    if(ov) return ov;
+    ov=document.createElement('div');
+    ov.id='v379ImageZoomOverlay';
+    ov.innerHTML='<div id="v379ImageZoomBox"><button id="v379ImageZoomClose" type="button">×</button><div id="v379ImageZoomTitle">صورة المنتج</div><img id="v379ImageZoomImg" alt="صورة المنتج"></div>';
+    document.body.appendChild(ov);
+    ov.addEventListener('click',function(e){
+      if(e.target===ov) closeZoom();
+    });
+    document.getElementById('v379ImageZoomClose').addEventListener('click',closeZoom);
+    document.addEventListener('keydown',function(e){
+      if(e.key==='Escape') closeZoom();
+    });
+    return ov;
+  }
+
+  function closeZoom(){
+    var ov=document.getElementById('v379ImageZoomOverlay');
+    if(ov) ov.classList.remove('show');
+  }
+
+  function cleanSrc(src){
+    if(!src) return '';
+    return String(src).trim();
+  }
+
+  function titleFor(img){
+    try{
+      var product=img.closest('.product');
+      if(product){
+        var h=product.querySelector('h3');
+        if(h && h.textContent.trim()) return h.textContent.trim();
+      }
+      var modal=img.closest('.modalBox,.modal');
+      if(modal){
+        var h2=modal.querySelector('h2,h3');
+        if(h2 && h2.textContent.trim()) return h2.textContent.trim();
+      }
+      var cart=img.closest('.cartItem');
+      if(cart){
+        var ch=cart.querySelector('h3');
+        if(ch && ch.textContent.trim()) return ch.textContent.trim();
+      }
+    }catch(e){}
+    return 'صورة المنتج';
+  }
+
+  function openZoom(img){
+    var src=cleanSrc(img.currentSrc || img.src || img.getAttribute('src'));
+    if(!src) return;
+    var ov=ensureZoom();
+    var zimg=document.getElementById('v379ImageZoomImg');
+    var title=document.getElementById('v379ImageZoomTitle');
+    title.textContent=titleFor(img);
+    zimg.src=src;
+    ov.classList.add('show');
+  }
+
+  function isAllowedImage(img){
+    if(!img) return false;
+    /* المطلوب: النطاطيات + السناك والعربات + الشخصيات، ونخليها عامة لصور المنتجات الرئيسية بدون صور الديكور المصغرة */
+    if(img.closest('.decorGallery,.decorThumb')) return false;
+    if(img.closest('.product .pic')) return true;
+    if(img.closest('.modalPic')) return true;
+    if(img.closest('.cartItem')) return true;
+    return false;
+  }
+
+  document.addEventListener('click',function(e){
+    var img=e.target && e.target.closest ? e.target.closest('img') : null;
+    if(!isAllowedImage(img)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    openZoom(img);
+    return false;
+  },true);
+
+  /* في حال الصور تنبني بعد فتح التفاصيل */
+  document.addEventListener('DOMContentLoaded',ensureZoom);
+})();
+</script>
+
