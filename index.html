@@ -18569,3 +18569,220 @@ body.almV402ProductsMode #app .products{
   setInterval(function(){ensureBlueBar(); var nowHour=new Date().getHours(); if(qs('#app .hero') && (!qs('#almHomePromoSlider .almPromoCard.main') || nowHour!==almLastPromoHour)){almLastPromoHour=nowHour; rebuildPromoSlider();}},1800);
 })();
 </script>
+
+
+<style id="almalika-v421-slider-3-clean-style">
+/* v421: ضبط السلايدر الرئيسي: 3 صور فقط، توقيت 8 ثواني، وتحكم بالماوس */
+#almHomePromoSlider .almPromoTimeBadge{
+  font-size:12px!important;
+  font-weight:1000!important;
+}
+#almHomePromoSlider .almPromoMosaic{
+  display:grid!important;
+  grid-template-columns:1.15fr .85fr!important;
+  grid-template-rows:1fr 1fr!important;
+  gap:14px!important;
+  min-height:410px!important;
+  cursor:pointer!important;
+  user-select:none!important;
+}
+#almHomePromoSlider .almPromoCard{
+  height:auto!important;
+  min-height:0!important;
+  border-radius:24px!important;
+  overflow:hidden!important;
+  background:#fff!important;
+  border:1px solid rgba(255,255,255,.95)!important;
+  box-shadow:0 14px 32px rgba(122,23,52,.10)!important;
+}
+#almHomePromoSlider .almPromoCard.main{
+  grid-column:1!important;
+  grid-row:1 / span 2!important;
+}
+#almHomePromoSlider .almPromoCard.sideTop{grid-column:2!important;grid-row:1!important}
+#almHomePromoSlider .almPromoCard.sideBottom{grid-column:2!important;grid-row:2!important}
+#almHomePromoSlider .almPromoCard.wide{grid-column:auto!important}
+#almHomePromoSlider .almPromoCard img{
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  display:block!important;
+  background:#fff7ef!important;
+}
+#almHomePromoSlider .almPromoMosaic::before,
+#almHomePromoSlider .almPromoMosaic::after{
+  content:''!important;
+  position:absolute!important;
+  pointer-events:none!important;
+}
+#almHomePromoSlider .almPromoSlider{position:relative!important}
+#almHomePromoSlider .almPromoNav{z-index:20!important}
+@media(max-width:1100px){
+  #almHomePromoSlider .almPromoViewport{min-height:700px!important}
+  #almHomePromoSlider .almPromoSlide{grid-template-columns:1fr!important}
+  #almHomePromoSlider .almPromoMosaic{
+    grid-template-columns:1fr 1fr!important;
+    grid-template-rows:260px 160px!important;
+    min-height:430px!important;
+  }
+  #almHomePromoSlider .almPromoCard.main{grid-column:1 / span 2!important;grid-row:1!important}
+  #almHomePromoSlider .almPromoCard.sideTop{grid-column:1!important;grid-row:2!important}
+  #almHomePromoSlider .almPromoCard.sideBottom{grid-column:2!important;grid-row:2!important}
+}
+@media(max-width:700px){
+  #almHomePromoSlider .almPromoViewport{min-height:635px!important}
+  #almHomePromoSlider .almPromoSlide{padding:13px!important;gap:10px!important}
+  #almHomePromoSlider .almPromoMosaic{
+    grid-template-columns:1fr 1fr!important;
+    grid-template-rows:190px 125px!important;
+    min-height:325px!important;
+    gap:9px!important;
+  }
+  #almHomePromoSlider .almPromoCard{border-radius:18px!important}
+}
+</style>
+<script id="almalika-v421-slider-3-click-clean-script">
+(function(){
+  var SLIDE_MS=8000;
+  var lastBuiltHour=-1;
+  var boundRoot=null;
+  var timer=0;
+  function qs(s,r){return (r||document).querySelector(s)}
+  function qsa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+  function escHtml(s){return String(s==null?'':s).replace(/[&<>\"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function sectionItems(key,count){
+    try{
+      var arr=((window.products|| (typeof products!=='undefined'?products:[]))||[]).filter(function(p){return typeof sectionOf==='function' && sectionOf(p)===key;});
+      if(!arr.length)return [];
+      var h=new Date().getHours();
+      var offset=(h*3)%arr.length;
+      return arr.slice(offset).concat(arr.slice(0,offset)).slice(0,count||3);
+    }catch(e){return []}
+  }
+  function minPrice(p){
+    try{
+      var nums=[];
+      if(p&&p.packagePrices){Object.keys(p.packagePrices).forEach(function(k){var v=Number(p.packagePrices[k]||0);if(v>0)nums.push(v);});}
+      ['baseDecorPrice','priceOneDay','priceTwoDays','price'].forEach(function(k){var v=Number((p&&p[k])||0);if(v>0)nums.push(v);});
+      var val=nums.length?Math.min.apply(null,nums):0;
+      return val>0?val+' ر.ق':'حسب الطلب';
+    }catch(e){return 'حسب الطلب'}
+  }
+  function imgUrl(p){try{return typeof productImageUrl==='function'?productImageUrl(p):''}catch(e){return ''}}
+  function promoCard(p,i){
+    var cls=i===0?'main':(i===1?'sideTop':'sideBottom');
+    if(!p){return '<div class="almPromoCard '+cls+'"><div class="overlay"><strong>قريبًا</strong><small>سيتم إضافة صور جديدة</small></div></div>';}
+    return '<div class="almPromoCard '+cls+'" data-promo-card="1"><img src="'+escHtml(imgUrl(p))+'" alt="'+escHtml(p.name||'')+'" loading="lazy" onerror="this.style.opacity=.25"><div class="overlay"><strong>'+escHtml(p.name||'')+'</strong><small>يبدأ من '+escHtml(minPrice(p))+'</small></div></div>';
+  }
+  function data(){
+    return [
+      {key:'bouncies',k:'🏰 النطاطيات والزحلاقيات',t:'نطاطيات وزحلاقيات بتجهيز مرتب',txt:'ثلاث صور مختارة تتبدل كل ساعة، مع تبديل العرض كل 8 ثواني وحركة يمين ويسار بالماوس.',bg:'linear-gradient(135deg,#fff2fb,#fff9ed,#effbff)'},
+      {key:'snacks',k:'🍿 السناك والعربات',t:'سناك وعربات ضيافة بشكل أنيق',txt:'فشار، غزل البنات، بطاطا، ذرة، آيس كريم وسلاش بتنسيق مناسب للحفلات.',bg:'linear-gradient(135deg,#fff8ee,#fff0fb,#eefcff)'},
+      {key:'events',k:'🎀 تجهيز الحفلات',t:'ديكورات وحفلات بتفاصيل راقية',txt:'خلفيات، بالونات وستاندات مختارة بشكل مرتب مع ثلاث صور واضحة لكل إعلان.',bg:'linear-gradient(135deg,#fff0f8,#fffdf5,#f3f7ff)'},
+      {key:'offers',k:'🎁 العروض والبكجات',t:'بكجات جاهزة وسريعة الاختيار',txt:'ثلاث صور فقط لكل إعلان حتى يبقى الشكل نظيف ومتناسق بدون زحمة.',bg:'linear-gradient(135deg,#fff3f7,#fff9e8,#eefcff)'}
+    ];
+  }
+  function buildSlider(){
+    var root=qs('#almHomePromoSlider');
+    if(!root || !qs('#app .hero'))return;
+    var rows=data();
+    var html='<div class="almPromoSlider"><div class="almPromoTimeBadge">يتبدل تلقائيًا كل 8 ثواني</div><button class="almPromoNav prev" type="button" aria-label="السابق">›</button><button class="almPromoNav next" type="button" aria-label="التالي">‹</button><div class="almPromoViewport">';
+    rows.forEach(function(s,idx){
+      var items=sectionItems(s.key,3);
+      while(items.length<3)items.push(null);
+      html+='<article class="almPromoSlide'+(idx===0?' active':'')+'" data-slide-index="'+idx+'" style="--promoBg:'+s.bg+'"><div class="almPromoContent"><span class="almPromoKicker">'+s.k+'</span><h2 class="almPromoTitle">'+s.t+'</h2><p class="almPromoText">'+s.txt+'</p><div class="almPromoFeatures"><span>3 صور فقط</span><span>تبديل 8 ثواني</span><span>تغيير كل ساعة</span><span>تحكم بالماوس</span></div><div class="almPromoActions"><button class="almPromoBtn primary" onclick="showSection(\''+s.key+'\')">استكشف القسم</button><button class="almPromoBtn secondary" onclick="quickWaSection&&quickWaSection(\''+s.key+'\')">واتساب</button></div></div><div class="almPromoMosaic" title="اضغط يمين أو يسار للتنقل">'+items.map(promoCard).join('')+'</div></article>';
+    });
+    html+='</div><div class="almPromoDots">'+rows.map(function(_,i){return '<button class="almPromoDot'+(i===0?' active':'')+'" type="button" data-dot="'+i+'"></button>';}).join('')+'</div></div>';
+    root.innerHTML=html;
+    bindSlider(root);
+    lastBuiltHour=new Date().getHours();
+  }
+  function show(root,i){
+    var slides=qsa('.almPromoSlide',root),dots=qsa('.almPromoDot',root);
+    if(!slides.length)return;
+    i=(i+slides.length)%slides.length;
+    slides.forEach(function(s,n){s.classList.toggle('active',n===i)});
+    dots.forEach(function(d,n){d.classList.toggle('active',n===i)});
+    root.dataset.index=String(i);
+  }
+  function restart(root){
+    if(timer)clearInterval(timer);
+    timer=setInterval(function(){show(root,Number(root.dataset.index||0)+1)},SLIDE_MS);
+  }
+  function bindSlider(root){
+    if(!root)return;
+    boundRoot=root;
+    root.dataset.index=root.dataset.index||'0';
+    root.onclick=function(e){
+      var dot=e.target.closest('.almPromoDot');
+      if(dot){show(root,Number(dot.getAttribute('data-dot')||0));restart(root);return;}
+      if(e.target.closest('.almPromoNav.prev')){show(root,Number(root.dataset.index||0)-1);restart(root);return;}
+      if(e.target.closest('.almPromoNav.next')){show(root,Number(root.dataset.index||0)+1);restart(root);return;}
+      var mosaic=e.target.closest('.almPromoMosaic');
+      if(mosaic){
+        var r=mosaic.getBoundingClientRect();
+        var mid=r.left+r.width/2;
+        if(e.clientX<mid) show(root,Number(root.dataset.index||0)+1); else show(root,Number(root.dataset.index||0)-1);
+        restart(root);
+      }
+    };
+    var downX=null;
+    root.onmousedown=function(e){if(e.target.closest('.almPromoMosaic,.almPromoSlide')) downX=e.clientX;};
+    root.onmouseup=function(e){
+      if(downX==null)return;
+      var dx=e.clientX-downX; downX=null;
+      if(Math.abs(dx)>45){ show(root,Number(root.dataset.index||0)+(dx<0?1:-1)); restart(root); }
+    };
+    root.onmouseenter=function(){if(timer)clearInterval(timer)};
+    root.onmouseleave=function(){restart(root)};
+    show(root,Number(root.dataset.index||0));
+    restart(root);
+  }
+  function cleanBlueBar(){
+    var bar=qs('#almWelcome15Bar');
+    if(bar){
+      bar.innerHTML='<span class="welcomePill">أول طلب فقط</span><span class="welcomeMain"><span class="small">مزايا ترحيبية لأول طلب</span><span class="big">وفر 15%</span><span class="small">الكود:</span><span class="code">WELCOME15</span><span class="small">للتطبيق فقط</span></span><button class="welcomeBtn" type="button" onclick="activateWelcome15&&activateWelcome15()">تفعيل الكود</button>';
+    }
+    qsa('#almPulseTickerBar,#v361TopTickerWrap,.v361TopTickerWrap').forEach(function(x){x.style.display='none';});
+  }
+  function cleanBlackTicker(){
+    /* لا نغيّر شكل الشريط الأسود، فقط نزيل أي نسخة قديمة مكررة ونبقي المعروض الحالي من المنتجات */
+    var track=qs('#almWorkingTicker .almWorkingTickerTrack');
+    if(!track)return;
+    try{
+      var arr=((window.products|| (typeof products!=='undefined'?products:[]))||[]).filter(function(p){return typeof sectionOf==='function' && sectionOf(p)==='offers';}).slice(0,14);
+      if(arr.length){
+        var txt=arr.map(function(p){return '🔥 '+(p.name||'عرض')+' — يبدأ من '+minPrice(p);}).join('  •  ');
+        track.innerHTML='<span>'+escHtml(txt)+'</span><span>'+escHtml(txt)+'</span>';
+      }
+      track.style.animationPlayState='running';
+    }catch(e){}
+  }
+  function refreshTopHeight(){
+    setTimeout(function(){
+      var group=qs('#almTopFixedGroup');
+      if(group){var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0); if(h){document.documentElement.style.setProperty('--almFixedTopHeight',h+'px');document.body.style.paddingTop=h+'px';}}
+    },60);
+  }
+  function run(force){
+    cleanBlueBar(); cleanBlackTicker(); refreshTopHeight();
+    if(qs('#app .hero')){
+      var hour=new Date().getHours();
+      if(force || !qs('#almHomePromoSlider .almPromoMosaic') || hour!==lastBuiltHour) buildSlider(); else bindSlider(qs('#almHomePromoSlider'));
+    }
+  }
+  /* نمنع كود قديم من إعادة بناء السلايدر عند النقر داخله */
+  window.addEventListener('click',function(e){
+    if(e.target && e.target.closest && e.target.closest('#almHomePromoSlider')){
+      e.stopPropagation();
+    }
+  },true);
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(function(){run(true)},120);setTimeout(function(){run(true)},700);setTimeout(function(){run(false)},1800);});
+  window.addEventListener('load',function(){setTimeout(function(){run(true)},250);});
+  window.addEventListener('resize',function(){run(false)});
+  document.addEventListener('click',function(e){
+    if(e.target && e.target.closest && !e.target.closest('#almHomePromoSlider')) setTimeout(function(){run(false)},300);
+  },true);
+  setInterval(function(){run(false)},5000);
+})();
+</script>
