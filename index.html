@@ -13981,8 +13981,8 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 
 
 
-<!-- ===== V406: إعادة حركة شريط آخر العروض مع بقاء الهيدر ثابت ===== -->
-<style id="almalika-v406-moving-offers-ticker">
+<!-- ===== V407: سرعة شريط آخر العروض 20 ثانية ===== -->
+<style id="almalika-v407-moving-offers-ticker">
   #almWorkingTicker,
   #almWorkingTicker .almWorkingTickerWindow{
     overflow:hidden!important;
@@ -13994,7 +13994,7 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
     min-width:max-content!important;
     white-space:nowrap!important;
     will-change:transform!important;
-    animation:almV406TickerMove 38s linear infinite!important;
+    animation:almV406TickerMove 20s linear infinite!important;
     transform:none;
   }
   #almWorkingTicker:hover .almWorkingTickerTrack{
@@ -14005,14 +14005,14 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
     100%{transform:translateX(50%)}
   }
   @media(max-width:700px){
-    .almWorkingTickerTrack{animation-duration:26s!important;}
+    .almWorkingTickerTrack{animation-duration:20s!important;}
   }
 </style>
-<script id="almalika-v406-moving-offers-ticker-script">
+<script id="almalika-v407-moving-offers-ticker-script">
 (function(){
   function keepTickerMoving(){
     document.querySelectorAll('.almWorkingTickerTrack').forEach(function(el){
-      el.style.setProperty('animation','almV406TickerMove 38s linear infinite','important');
+      el.style.setProperty('animation','almV406TickerMove 20s linear infinite','important');
       el.style.setProperty('animation-play-state','running','important');
       el.style.setProperty('will-change','transform','important');
       if(el.style.transform==='none') el.style.removeProperty('transform');
