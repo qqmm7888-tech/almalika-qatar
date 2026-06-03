@@ -13218,156 +13218,6 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   setInterval(verySlowTicker,2000);
 })();
 </script>
-
-<style id="v376-stop-hiding-offers-on-hover-style">
-/* v376: منع اختفاء العروض والباكجات عند المرور فوق بنود أخرى */
-#almTopFixedGroup{z-index:2147482000!important}
-header.header,
-#almTopFixedGroup header.header{
-  overflow:visible!important;
-}
-
-/* الهيدر صف واحد بدون تراكب */
-header.header .headTop{
-  grid-template-columns:1fr auto auto!important;
-  overflow:visible!important;
-}
-header.header .nav{
-  display:flex!important;
-  flex-wrap:nowrap!important;
-  overflow-x:auto!important;
-  overflow-y:hidden!important;
-  white-space:nowrap!important;
-  align-items:center!important;
-  gap:10px!important;
-  position:relative!important;
-  z-index:10!important;
-  scrollbar-width:thin!important;
-}
-header.header .nav button{
-  flex:0 0 auto!important;
-  position:relative!important;
-  z-index:2!important;
-  transform:none!important;
-  white-space:nowrap!important;
-}
-header.header .nav button:hover{
-  transform:none!important;
-}
-
-/* زر العروض والباكجات دائمًا فوق بنود أخرى */
-header.header .nav button.v376OffersBtn{
-  display:inline-flex!important;
-  visibility:visible!important;
-  opacity:1!important;
-  z-index:999!important;
-  order:90!important;
-}
-header.header .nav button.v376OtherBtn{
-  z-index:1!important;
-  order:100!important;
-}
-
-/* إخفاء واتساب فقط من منطقة الأزرار العلوية، وليس العروض */
-header.header a[href*="wa.me"],
-header.header a[href*="whatsapp"],
-header.header button[onclick*="WhatsApp"],
-header.header button[onclick*="whatsapp"],
-header.header button[onclick*="wa.me"],
-header.header .waBtn{
-  display:none!important;
-}
-
-/* السلة والنوافذ فوق الهيدر والشريط */
-.modal,.modal.show,#modal,#cartModal,.cartModal,.cartDrawer,.drawer,.quickModal,.choiceModal,.offerModal,.bookingModal,.detailsModal,[class*="modal"],[class*="Modal"],[class*="cartModal"],[class*="CartModal"]{
-  z-index:2147483646!important;
-}
-.modalBackdrop,.backdrop,.overlay,[class*="backdrop"],[class*="Backdrop"],[class*="overlay"],[class*="Overlay"]{
-  z-index:2147483645!important;
-}
-</style>
-<script id="v376-stop-hiding-offers-on-hover-script">
-(function(){
-  function txt(el){
-    return ((el && el.textContent) || '').replace(/\s+/g,' ').trim();
-  }
-
-  function fixHeader(){
-    try{
-      var header = document.querySelector('header.header');
-      if(!header) return;
-
-      var nav = header.querySelector('#nav,.nav,nav');
-      if(nav){
-        nav.style.setProperty('display','flex','important');
-        nav.style.setProperty('flex-wrap','nowrap','important');
-        nav.style.setProperty('overflow-x','auto','important');
-        nav.style.setProperty('overflow-y','hidden','important');
-        nav.style.setProperty('white-space','nowrap','important');
-        nav.style.setProperty('position','relative','important');
-        nav.style.setProperty('z-index','10','important');
-
-        Array.from(nav.querySelectorAll('button,a')).forEach(function(el){
-          var t = txt(el);
-          var oc = (el.getAttribute && (el.getAttribute('onclick') || '')) || '';
-          var href = (el.getAttribute && (el.getAttribute('href') || '')) || '';
-
-          el.style.setProperty('flex','0 0 auto','important');
-          el.style.setProperty('position','relative','important');
-          el.style.setProperty('white-space','nowrap','important');
-          el.style.setProperty('transform','none','important');
-
-          if(t.indexOf('العروض') > -1 || t.indexOf('الباكجات') > -1 || /offers|packages/i.test(oc + href)){
-            el.classList.add('v376OffersBtn');
-            el.style.setProperty('display','inline-flex','important');
-            el.style.setProperty('visibility','visible','important');
-            el.style.setProperty('opacity','1','important');
-            el.style.setProperty('z-index','999','important');
-            el.style.setProperty('order','90','important');
-          } else if(t.indexOf('بنود أخرى') > -1 || /other/i.test(oc + href)){
-            el.classList.add('v376OtherBtn');
-            el.style.setProperty('z-index','1','important');
-            el.style.setProperty('order','100','important');
-          }
-        });
-      }
-
-      /* نخفي واتساب فقط، ولا نلمس العروض */
-      Array.from(header.querySelectorAll('a,button')).forEach(function(el){
-        var t = txt(el);
-        var href = (el.getAttribute && (el.getAttribute('href') || '')) || '';
-        var oc = (el.getAttribute && (el.getAttribute('onclick') || '')) || '';
-        if(t.indexOf('السلة') > -1) return;
-        if(t.indexOf('العروض') > -1 || t.indexOf('الباكجات') > -1 || /offers|packages/i.test(href + oc)) return;
-        if(t.indexOf('واتساب') > -1 || /wa\.me|whatsapp/i.test(href + oc)){
-          el.style.setProperty('display','none','important');
-        }
-      });
-
-      document.querySelectorAll('.modal,.modal.show,#modal,#cartModal,.cartModal,.cartDrawer,.drawer,.quickModal,.choiceModal,.offerModal,.bookingModal,.detailsModal,[class*="modal"],[class*="Modal"],[class*="cartModal"],[class*="CartModal"]').forEach(function(el){
-        el.style.setProperty('z-index','2147483646','important');
-      });
-      document.querySelectorAll('.modalBackdrop,.backdrop,.overlay,[class*="backdrop"],[class*="Backdrop"],[class*="overlay"],[class*="Overlay"]').forEach(function(el){
-        el.style.setProperty('z-index','2147483645','important');
-      });
-    }catch(e){}
-  }
-
-  document.addEventListener('DOMContentLoaded',function(){
-    fixHeader();
-    setTimeout(fixHeader,100);
-    setTimeout(fixHeader,400);
-    setTimeout(fixHeader,1000);
-  });
-  window.addEventListener('load',fixHeader);
-  window.addEventListener('resize',fixHeader);
-  window.addEventListener('hashchange',fixHeader);
-  document.addEventListener('mouseover',function(){setTimeout(fixHeader,20);},true);
-  document.addEventListener('click',function(){setTimeout(fixHeader,40);},true);
-  setInterval(fixHeader,1200);
-})();
-</script>
-
 </body>
 </html>
 
@@ -16567,3 +16417,240 @@ section.wrap,
   window.shareProduct=window.shareProduct||function(n){const p=findProduct(n);if(!p)return;const img=productUrlFromItem({number:p.number,image:p.image});const msg=[AD_IMG,'','👑 شوف هذا المنتج من شركة الملكة للحفلات','#'+p.number+' - '+p.name,(img?'📸 صورة المنتج: '+img:''),'🔗 الموقع: '+SITE,'للحجز: 33317720 / 33317705'].filter(Boolean).join('\n');window.open('https://wa.me/?text='+enc(msg),'_blank')};
 })();
 </script>
+
+<style id="v377-clean-header-offers-fixed-style">
+/* v377: تنظيف الهيدر ومنع اختفاء العروض والباكجات نهائياً */
+#almTopFixedGroup{z-index:2147482000!important}
+header.header,
+#almTopFixedGroup header.header,
+header.header .headTop,
+header.header .wrap{
+  overflow:visible!important;
+}
+
+/* ترتيب الهيدر ثابت وواضح بدون تراكب */
+header.header .headTop{
+  display:grid!important;
+  grid-template-columns:1fr auto!important;
+  gap:12px!important;
+  align-items:center!important;
+  direction:rtl!important;
+}
+header.header .logo{
+  grid-column:1/-1!important;
+  justify-self:center!important;
+}
+
+/* قائمة الأقسام تلف على سطرين إذا احتاجت بدل ما تختفي تحت زر آخر */
+header.header .nav,
+#almTopFixedGroup header.header .nav{
+  grid-column:1/2!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:8px!important;
+  position:relative!important;
+  z-index:20!important;
+  max-height:none!important;
+  scrollbar-width:none!important;
+}
+header.header .nav::-webkit-scrollbar{display:none!important}
+
+header.header .nav button,
+#almTopFixedGroup header.header .nav button{
+  flex:0 0 auto!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  visibility:visible!important;
+  opacity:1!important;
+  position:relative!important;
+  transform:none!important;
+  white-space:nowrap!important;
+  z-index:5!important;
+  transition:background .15s ease, box-shadow .15s ease!important;
+}
+header.header .nav button:hover,
+#almTopFixedGroup header.header .nav button:hover{
+  transform:none!important;
+}
+
+/* العروض والباكجات ثابتة قبل بنود أخرى، ولا تختفي عند المرور على بنود أخرى */
+header.header .nav button.nav-offers,
+#almTopFixedGroup header.header .nav button.nav-offers,
+header.header .nav button.v377OffersBtn{
+  order:60!important;
+  display:inline-flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+  z-index:9999!important;
+}
+header.header .nav button.nav-other,
+#almTopFixedGroup header.header .nav button.nav-other,
+header.header .nav button.v377OtherBtn{
+  order:70!important;
+  z-index:5!important;
+}
+
+/* زر السلة وحده يمين/يسار حسب المساحة، بدون واتساب أو زر عروض جانبي */
+header.header .headBtns{
+  grid-column:2/3!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:8px!important;
+  overflow:visible!important;
+}
+header.header .headBtns .btn.green,
+header.header .headBtns .btn.red,
+header.header .headBtns a[href*="wa.me"],
+header.header .headBtns a[href*="whatsapp"],
+header.header .headBtns button[onclick*="WhatsApp"],
+header.header .headBtns button[onclick*="whatsapp"],
+header.header .headBtns button[onclick*="wa.me"]{
+  display:none!important;
+}
+header.header .headBtns .cartMini{
+  display:inline-flex!important;
+}
+
+/* السلة والنوافذ فوق الشريط والهيدر */
+.modal,.modal.show,#modal,#cartModal,.cartModal,.cartDrawer,.drawer,.quickModal,.choiceModal,.offerModal,.bookingModal,.detailsModal,[class*="modal"],[class*="Modal"],[class*="cartModal"],[class*="CartModal"]{
+  z-index:2147483646!important;
+}
+.modalBackdrop,.backdrop,.overlay,[class*="backdrop"],[class*="Backdrop"],[class*="overlay"],[class*="Overlay"]{
+  z-index:2147483645!important;
+}
+
+@media(max-width:900px){
+  header.header .headTop{
+    grid-template-columns:1fr!important;
+  }
+  header.header .nav,
+  header.header .headBtns{
+    grid-column:1/-1!important;
+  }
+}
+</style>
+<script id="v377-clean-header-offers-fixed-script">
+(function(){
+  function textOf(el){
+    return ((el && el.textContent) || '').replace(/\s+/g,' ').trim();
+  }
+
+  function isOffers(el){
+    var t=textOf(el);
+    var oc=(el.getAttribute && (el.getAttribute('onclick')||''))||'';
+    var href=(el.getAttribute && (el.getAttribute('href')||''))||'';
+    return t.indexOf('العروض')>-1 || t.indexOf('الباكجات')>-1 || /offers|packages/i.test(oc+href);
+  }
+
+  function isOther(el){
+    var t=textOf(el);
+    var oc=(el.getAttribute && (el.getAttribute('onclick')||''))||'';
+    var href=(el.getAttribute && (el.getAttribute('href')||''))||'';
+    return t.indexOf('بنود أخرى')>-1 || /other/i.test(oc+href);
+  }
+
+  function cleanHeader(){
+    try{
+      var header=document.querySelector('header.header');
+      if(!header) return;
+
+      var nav=header.querySelector('#nav,.nav,nav');
+      if(nav){
+        nav.style.setProperty('display','flex','important');
+        nav.style.setProperty('flex-wrap','wrap','important');
+        nav.style.setProperty('overflow','visible','important');
+        nav.style.setProperty('white-space','normal','important');
+        nav.style.setProperty('justify-content','center','important');
+        nav.style.setProperty('position','relative','important');
+        nav.style.setProperty('z-index','20','important');
+
+        var offerBtn=null, otherBtn=null;
+        Array.from(nav.querySelectorAll('button,a')).forEach(function(el){
+          el.style.setProperty('display','inline-flex','important');
+          el.style.setProperty('visibility','visible','important');
+          el.style.setProperty('opacity','1','important');
+          el.style.setProperty('position','relative','important');
+          el.style.setProperty('transform','none','important');
+          el.style.setProperty('flex','0 0 auto','important');
+          el.style.setProperty('white-space','nowrap','important');
+
+          if(isOffers(el)){
+            offerBtn=el;
+            el.classList.add('v377OffersBtn');
+            el.style.setProperty('order','60','important');
+            el.style.setProperty('z-index','9999','important');
+          }else if(isOther(el)){
+            otherBtn=el;
+            el.classList.add('v377OtherBtn');
+            el.style.setProperty('order','70','important');
+            el.style.setProperty('z-index','5','important');
+          }
+        });
+
+        /* تأكد أن العروض قبل بنود أخرى داخل DOM أيضاً */
+        if(offerBtn && otherBtn && offerBtn.compareDocumentPosition(otherBtn) & Node.DOCUMENT_POSITION_PRECEDING){
+          nav.insertBefore(offerBtn, otherBtn);
+        }
+      }
+
+      /* نخفي واتساب وزر العروض الجانبي فقط من headBtns، وليس زر العروض داخل nav */
+      var hb=header.querySelector('.headBtns');
+      if(hb){
+        Array.from(hb.querySelectorAll('a,button')).forEach(function(el){
+          var t=textOf(el);
+          var href=(el.getAttribute && (el.getAttribute('href')||''))||'';
+          var oc=(el.getAttribute && (el.getAttribute('onclick')||''))||'';
+          if(t.indexOf('السلة')>-1){
+            el.style.setProperty('display','inline-flex','important');
+          }else if(t.indexOf('واتساب')>-1 || t.indexOf('العروض')>-1 || /wa\.me|whatsapp|offers/i.test(href+oc)){
+            el.style.setProperty('display','none','important');
+          }
+        });
+      }
+
+      document.querySelectorAll('.modal,.modal.show,#modal,#cartModal,.cartModal,.cartDrawer,.drawer,.quickModal,.choiceModal,.offerModal,.bookingModal,.detailsModal,[class*="modal"],[class*="Modal"],[class*="cartModal"],[class*="CartModal"]').forEach(function(el){
+        el.style.setProperty('z-index','2147483646','important');
+      });
+    }catch(e){}
+  }
+
+  /* نربط التصليح بعد كل رندر للهيدر */
+  function hookRenderNav(){
+    try{
+      if(window.__v377RenderNavHooked) return;
+      if(typeof window.renderNav === 'function'){
+        var old=window.renderNav;
+        window.renderNav=function(){
+          var r=old.apply(this,arguments);
+          setTimeout(cleanHeader,0);
+          setTimeout(cleanHeader,80);
+          return r;
+        };
+        window.__v377RenderNavHooked=true;
+      }
+    }catch(e){}
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){
+    hookRenderNav();
+    cleanHeader();
+    setTimeout(cleanHeader,100);
+    setTimeout(cleanHeader,400);
+    setTimeout(cleanHeader,1200);
+  });
+  window.addEventListener('load',function(){hookRenderNav(); cleanHeader();});
+  window.addEventListener('resize',cleanHeader);
+  window.addEventListener('hashchange',cleanHeader);
+  document.addEventListener('mouseover',function(e){
+    if(e.target && e.target.closest && e.target.closest('header.header')) cleanHeader();
+  },true);
+  document.addEventListener('click',function(){setTimeout(cleanHeader,30);setTimeout(cleanHeader,160);},true);
+  setInterval(function(){hookRenderNav(); cleanHeader();},1200);
+})();
+</script>
+
