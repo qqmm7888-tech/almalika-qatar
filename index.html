@@ -1,6 +1,43 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+<!-- ===== V433 QA STEP 11: HARD early refresh reset - prevent restored scroll showing random product image ===== -->
+<script id="almalika-v433-early-refresh-hard-reset">
+(function(){
+  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+  try{ document.documentElement.classList.add('alm-v433-booting'); }catch(e){}
+  function resetTop(){
+    try{ window.scrollTo(0,0); }catch(e){}
+    try{ document.documentElement.scrollTop=0; document.body && (document.body.scrollTop=0); }catch(e){}
+  }
+  resetTop();
+  var start=Date.now();
+  function loop(){
+    resetTop();
+    if(Date.now()-start<1700){ requestAnimationFrame(loop); }
+  }
+  requestAnimationFrame(loop);
+  function reveal(){
+    resetTop();
+    setTimeout(resetTop,50);
+    setTimeout(function(){
+      resetTop();
+      try{ document.documentElement.classList.remove('alm-v433-booting'); }catch(e){}
+    },180);
+  }
+  document.addEventListener('DOMContentLoaded',reveal);
+  window.addEventListener('load',function(){ setTimeout(reveal,80); setTimeout(reveal,500); });
+  window.addEventListener('pageshow',function(){ resetTop(); setTimeout(reveal,80); });
+})();
+</script>
+<style id="almalika-v433-early-refresh-style">
+html.alm-v433-booting body{opacity:0!important;overflow:hidden!important;}
+html.alm-v433-booting #almalikaV397ImageViewer,
+html.alm-v433-booting #almalikaGlobalImageZoom,
+html.alm-v433-booting #almalikaImageZoom,
+html.alm-v433-booting #modal{display:none!important;visibility:hidden!important;}
+</style>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>الملكة للحفلات | كتالوج الحجز السريع</title>
@@ -15021,6 +15058,78 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 }
 </style>
 
+
+<!-- ===== V433 QA STEP 11: close accidental modal/zoom on refresh and force top after app render ===== -->
+<script id="almalika-v433-late-refresh-cleanup">
+(function(){
+  var bootUntil=Date.now()+2200;
+  function isBooting(){return Date.now()<bootUntil;}
+  function clean(){
+    try{
+      ['almalikaV397ImageViewer','almalikaGlobalImageZoom','almalikaImageZoom'].forEach(function(id){
+        var el=document.getElementById(id);
+        if(el){ el.classList.remove('show','open','active'); el.style.display='none'; el.style.visibility='hidden'; }
+      });
+      var modal=document.getElementById('modal');
+      if(modal && isBooting()){ modal.classList.remove('show','open','active'); modal.innerHTML=''; modal.style.display='none'; }
+      document.body.classList.remove('modal-open','zoom-open','v397ImageViewerOpen','v395ImageZoomOpen');
+      window.scrollTo(0,0); document.documentElement.scrollTop=0; document.body.scrollTop=0;
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){clean(); setTimeout(clean,100); setTimeout(clean,450); setTimeout(clean,1100); setTimeout(function(){var m=document.getElementById('modal'); if(m) m.style.display='';},2300);});
+  window.addEventListener('load',function(){clean(); setTimeout(clean,300); setTimeout(clean,900); setTimeout(function(){var m=document.getElementById('modal'); if(m) m.style.display='';},2300);});
+  window.addEventListener('pageshow',function(){clean(); setTimeout(clean,250);});
+})();
+</script>
+
+
+<style id="almalika-v434-slider-images-fit-fix">
+/* v434: تثبيت صور السلايدر الثلاثية داخل مربعاتها بدون خروج أو تمدد */
+#almHomePromoSlider .almPromoMosaic{
+  align-items:stretch !important;
+  justify-items:stretch !important;
+}
+#almHomePromoSlider .almPromoCard{
+  position:relative !important;
+  width:100% !important;
+  height:100% !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  display:block !important;
+  background:linear-gradient(135deg,#fffaf2,#fff,#fff4f8) !important;
+}
+#almHomePromoSlider .almPromoCard img{
+  position:absolute !important;
+  inset:0 !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  display:block !important;
+  padding:0 !important;
+  margin:0 !important;
+  transform:none !important;
+}
+#almHomePromoSlider .almPromoCard .overlay{
+  position:absolute !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:0 !important;
+  z-index:3 !important;
+}
+@media(max-width:700px){
+  #almHomePromoSlider .almPromoMosaic{
+    grid-template-rows:180px 120px !important;
+    min-height:310px !important;
+  }
+  #almHomePromoSlider .almPromoCard img{
+    object-fit:contain !important;
+  }
+}
+</style>
 </body>
 </html>
 
