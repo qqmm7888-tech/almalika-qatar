@@ -5809,6 +5809,222 @@ body{
   }
 </style>
 
+
+
+<!-- ===== V404: إصلاح خربطة كروت المنتجات + الصور كاملة داخل المربع مع تجاوب تلقائي ===== -->
+<style id="almalika-v404-fix-product-cards-images-responsive">
+  /* إخفاء خدمة طريقة العرض نهائياً */
+  .viewToolbar,.viewLabel,.viewBtn,[class*="viewToolbar"],[id*="viewToolbar"]{
+    display:none!important;
+    visibility:hidden!important;
+    height:0!important;
+    max-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+
+  /* شبكة ثابتة ومرنة بدون خربطة: كل كرت فوقه صورة كاملة ثم البيانات تحته */
+  #app .products,
+  #app .products.alm-responsive-products,
+  #app .products.view-wide,
+  #app .products.view-cards,
+  #app .products.view-compact,
+  #app .products.view-mini,
+  #app .products.view-list{
+    display:grid!important;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr))!important;
+    gap:18px!important;
+    align-items:stretch!important;
+    width:100%!important;
+  }
+
+  #app .product,
+  #app .products.view-wide .product,
+  #app .products.view-cards .product,
+  #app .products.view-compact .product,
+  #app .products.view-mini .product,
+  #app .products.view-list .product{
+    direction:rtl!important;
+    display:flex!important;
+    flex-direction:column!important;
+    grid-template-columns:none!important;
+    min-height:0!important;
+    height:100%!important;
+    width:100%!important;
+    overflow:hidden!important;
+    border-radius:22px!important;
+  }
+
+  /* الصورة دائماً أعلى الكرت وداخل مربع واضح */
+  #app .product .pic{
+    order:-1!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    aspect-ratio:1 / 1!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:10px!important;
+    overflow:hidden!important;
+    border-left:0!important;
+    border-right:0!important;
+    border-bottom:1px solid rgba(234,220,228,.95)!important;
+    background:linear-gradient(180deg,#fff,#fff9e7)!important;
+  }
+
+  #app .product .pic img{
+    width:100%!important;
+    height:100%!important;
+    max-width:100%!important;
+    max-height:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    padding:0!important;
+    display:block!important;
+    margin:auto!important;
+  }
+
+  #app .product .body{
+    direction:rtl!important;
+    flex:1 1 auto!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:8px!important;
+    min-width:0!important;
+    padding:14px 13px!important;
+  }
+
+  #app .product .body h3{
+    min-height:auto!important;
+    font-size:clamp(16px,1.02vw,20px)!important;
+    line-height:1.25!important;
+    text-align:center!important;
+    display:-webkit-box!important;
+    -webkit-line-clamp:2!important;
+    -webkit-box-orient:vertical!important;
+    overflow:hidden!important;
+  }
+
+  #app .product .desc{
+    min-height:auto!important;
+    font-size:clamp(12px,.82vw,14px)!important;
+    line-height:1.55!important;
+    text-align:center!important;
+    display:-webkit-box!important;
+    -webkit-line-clamp:2!important;
+    -webkit-box-orient:vertical!important;
+    overflow:hidden!important;
+  }
+
+  #app .product .tags{
+    min-height:auto!important;
+    justify-content:center!important;
+    align-content:flex-start!important;
+    gap:5px!important;
+  }
+
+  #app .product .tag{
+    font-size:11px!important;
+    padding:5px 8px!important;
+    line-height:1.25!important;
+  }
+
+  #app .product .bottom{
+    margin-top:auto!important;
+    display:flex!important;
+    flex-direction:column-reverse!important;
+    gap:9px!important;
+    align-items:stretch!important;
+  }
+
+  #app .product .price{
+    width:100%!important;
+    text-align:center!important;
+    padding:8px 10px!important;
+    border-radius:13px!important;
+  }
+
+  #app .product .price strong{
+    font-size:18px!important;
+  }
+
+  #app .product .actions,
+  #app .product .actions.quickActions{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+    width:100%!important;
+  }
+
+  #app .product .actions button{
+    width:100%!important;
+    min-height:38px!important;
+    border-radius:11px!important;
+    font-size:12px!important;
+    padding:8px 10px!important;
+  }
+
+  #app .product .num{
+    z-index:3!important;
+    top:9px!important;
+    left:9px!important;
+    right:auto!important;
+  }
+
+  /* الشاشات الكبيرة */
+  @media (min-width:1500px){
+    #app .products,
+    #app .products.alm-responsive-products,
+    #app .products.view-wide,
+    #app .products.view-cards,
+    #app .products.view-compact,
+    #app .products.view-mini,
+    #app .products.view-list{
+      grid-template-columns:repeat(auto-fit,minmax(245px,1fr))!important;
+    }
+  }
+
+  /* الآيباد واللابتوب الصغير */
+  @media (max-width:1100px){
+    #app .products,
+    #app .products.alm-responsive-products,
+    #app .products.view-wide,
+    #app .products.view-cards,
+    #app .products.view-compact,
+    #app .products.view-mini,
+    #app .products.view-list{
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;
+      gap:14px!important;
+    }
+  }
+
+  /* الجوال: كرت واحد، الصورة كاملة وواضحة */
+  @media (max-width:640px){
+    #app .products,
+    #app .products.alm-responsive-products,
+    #app .products.view-wide,
+    #app .products.view-cards,
+    #app .products.view-compact,
+    #app .products.view-mini,
+    #app .products.view-list{
+      grid-template-columns:1fr!important;
+      gap:12px!important;
+    }
+    #app .product{
+      border-radius:20px!important;
+    }
+    #app .product .pic{
+      aspect-ratio:1.12 / 1!important;
+      padding:9px!important;
+    }
+    #app .product .body{
+      padding:13px 12px!important;
+    }
+  }
+</style>
+
 </head>
 <body>
 
