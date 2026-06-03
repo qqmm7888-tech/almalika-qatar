@@ -14033,6 +14033,91 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 })();
 </script>
 
+
+
+<!-- ===== V409: إبقاء صورة الصفحة الرئيسية ظاهرة عند فتح الموقع والتنقل ===== -->
+<style id="almalika-v409-home-banner-visible-fix">
+/* الصفحة الرئيسية لا تأخذ تثبيت عنوان المنتجات، حتى لا ترتفع صورة البنر وتختفي */
+#app .hero{
+  scroll-margin-top:calc(var(--almFixedTopHeight,176px) + 14px)!important;
+}
+#app .homeHeroFrame{
+  margin-top:12px!important;
+  scroll-margin-top:calc(var(--almFixedTopHeight,176px) + 14px)!important;
+}
+#app .homeHeroImage{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  object-fit:contain!important;
+}
+</style>
+<script id="almalika-v409-home-banner-visible-fix-script">
+(function(){
+  function isHomeVisible(){
+    return !!document.querySelector('#app .homeHeroFrame, #app .homeHeroImage');
+  }
+  function keepHomeBannerVisible(){
+    if(!isHomeVisible()) return false;
+    document.body.classList.remove('almV402ProductsMode');
+    // في الصفحة الرئيسية نبدأ من أعلى البنر، وليس من أول منتجات VIP.
+    window.scrollTo({top:0,behavior:'auto'});
+    return true;
+  }
+
+  // منع أي سكربت قديم من تمرير الصفحة إلى المنتجات عندما نكون في الصفحة الرئيسية.
+  var oldScrollToFirst=window.almalikaScrollToFirstProduct;
+  window.almalikaScrollToFirstProduct=function(){
+    if(keepHomeBannerVisible()) return;
+    if(typeof oldScrollToFirst==='function') return oldScrollToFirst.apply(this,arguments);
+  };
+
+  function scheduleHomeFix(){
+    setTimeout(keepHomeBannerVisible,20);
+    setTimeout(keepHomeBannerVisible,120);
+    setTimeout(keepHomeBannerVisible,360);
+    setTimeout(keepHomeBannerVisible,720);
+  }
+
+  // عند الضغط على الرئيسية من الهيدر، تأكد أن صورة البنر تبقى كاملة وظاهرة.
+  document.addEventListener('click',function(e){
+    var btn=e.target && e.target.closest ? e.target.closest('button,.cat,a') : null;
+    if(!btn) return;
+    var txt=(btn.textContent||'').replace(/\s+/g,' ').trim();
+    if(txt.indexOf('الرئيسية')!==-1){
+      scheduleHomeFix();
+    }
+  },true);
+
+  // إعادة لف دالة الرئيسية إن وُجدت حتى لا تعمل سكرول للمنتجات بعدها.
+  function wrapHome(){
+    if(typeof window.showHome!=='function' || window.showHome.__v409HomeFixed) return;
+    var old=window.showHome;
+    window.showHome=function(){
+      var r=old.apply(this,arguments);
+      scheduleHomeFix();
+      return r;
+    };
+    window.showHome.__v409HomeFixed=true;
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){wrapHome(); scheduleHomeFix();});
+  window.addEventListener('load',function(){wrapHome(); scheduleHomeFix();});
+  window.addEventListener('hashchange',function(){
+    if(String(location.hash||'').indexOf('#home')===0) scheduleHomeFix();
+  });
+
+  var mo=new MutationObserver(function(){
+    if(isHomeVisible()) scheduleHomeFix();
+    wrapHome();
+  });
+  document.addEventListener('DOMContentLoaded',function(){
+    var app=document.getElementById('app');
+    if(app) mo.observe(app,{childList:true,subtree:false});
+  });
+})();
+</script>
+
 </body>
 </html>
 
