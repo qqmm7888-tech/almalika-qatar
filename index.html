@@ -6046,7 +6046,7 @@ function bookingAlertForCatalog(num){
   return `${b.status}\n${b.note}${b.orderId?'\nرقم الطلب: '+b.orderId:''}`;
 }
 
-function render(){if(current==='home'){renderHome();return} renderNav(); fillInternal(); const arr=relevantProducts(); const name=(sections.find(s=>s[0]===current)||[])[1]||'الكتالوج'; app.innerHTML=`<section class="wrap section"><div class="panel"><div><h1>${icon(current)} ${name}</h1><p>عدد البنود المعروضة: ${arr.length} — اضغط على الصورة أو التفاصيل لفتح بيانات المنتج.</p></div></div><div class="chips">${(internalSections[current]||['الجميع']).map(x=>`<button class="chip ${x===internal?'active':''}" onclick="setInternal('${esc(x)}')">${x}</button>`).join('')}</div>${viewToolbar()}<div class="products view-${viewMode}">${arr.length?arr.map(card).join(''):'<div class="empty">لا توجد منتجات مطابقة للبحث أو الفلتر الحالي</div>'}</div></section>`}
+function render(){if(current==='home'){renderHome();return} renderNav(); fillInternal(); const arr=relevantProducts(); const name=(sections.find(s=>s[0]===current)||[])[1]||'الكتالوج'; app.innerHTML=`<section class="wrap section"><div class="almFrozenProductArea"><div class="panel"><div><h1>${icon(current)} ${name}</h1><p>عدد البنود المعروضة: ${arr.length} — اضغط على الصورة أو التفاصيل لفتح بيانات المنتج.</p></div></div><div class="chips">${(internalSections[current]||['الجميع']).map(x=>`<button class="chip ${x===internal?'active':''}" onclick="setInternal('${esc(x)}')">${x}</button>`).join('')}</div></div>${viewToolbar()}<div class="products view-${viewMode}">${arr.length?arr.map(card).join(''):'<div class="empty">لا توجد منتجات مطابقة للبحث أو الفلتر الحالي</div>'}</div></section>`}
 
 function tagIcon(p){
   const k=kindOf(p);
@@ -13514,6 +13514,8 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
     var target=firstProductsBlock();
     if(!target) return;
     var offset=getStickyHeaderHeight()+14;
+    var frozen=document.querySelector('#app .almFrozenProductArea');
+    if(frozen){ offset += Math.ceil(frozen.getBoundingClientRect().height||0) + 10; }
     var y=target.getBoundingClientRect().top + (window.pageYOffset||document.documentElement.scrollTop||0) - offset;
     if(!isFinite(y)) y=0;
     window.scrollTo({top:Math.max(0,Math.round(y)), behavior:'auto'});
@@ -13547,6 +13549,81 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
     if(!btn) return;
     scheduleScrollToFirstProduct();
   },true);
+})();
+</script>
+
+
+<!-- ===== V401: تجميد منطقة الهيدر + عنوان القسم والفلاتر بدون حركة ===== -->
+<style id="almalika-v401-freeze-top-and-section-area">
+/* إيقاف حركة شريط العروض حتى تبقى المنطقة العلوية ثابتة تماماً */
+.almWorkingTickerTrack,
+.v361TickerTrack,
+.v360TickerTrack,
+.v359TickerTrack{
+  animation:none!important;
+  transform:none!important;
+  will-change:auto!important;
+}
+#almWorkingTicker:hover .almWorkingTickerTrack{animation:none!important;}
+
+/* تثبيت عنوان القسم والفلاتر تحت الهيدر مباشرة */
+#app .almFrozenProductArea{
+  position:sticky!important;
+  top:var(--almFixedTopHeight,178px)!important;
+  z-index:2147482500!important;
+  background:linear-gradient(180deg,rgba(255,250,252,.99),rgba(255,247,250,.98))!important;
+  backdrop-filter:blur(12px)!important;
+  -webkit-backdrop-filter:blur(12px)!important;
+  padding:10px 0 10px!important;
+  margin:0 0 12px!important;
+  border-bottom:1px solid rgba(246,216,230,.95)!important;
+  box-shadow:0 12px 28px rgba(106,27,46,.08)!important;
+}
+#app .almFrozenProductArea .panel{
+  margin:0 0 8px!important;
+}
+#app .almFrozenProductArea .chips{
+  margin:0!important;
+  padding:4px 0 2px!important;
+  max-height:84px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  scrollbar-width:thin!important;
+}
+#app .products{
+  scroll-margin-top:calc(var(--almFixedTopHeight,178px) + 150px)!important;
+}
+@media(max-width:700px){
+  #app .almFrozenProductArea{padding:8px 0!important;}
+  #app .almFrozenProductArea .panel{padding:14px!important;border-radius:18px!important;}
+  #app .almFrozenProductArea .panel h1{font-size:22px!important;}
+  #app .almFrozenProductArea .panel p{font-size:12px!important;}
+  #app .almFrozenProductArea .chips{max-height:112px!important;}
+}
+</style>
+<script id="almalika-v401-freeze-top-and-section-area-script">
+(function(){
+  function stopTickerMotion(){
+    document.querySelectorAll('.almWorkingTickerTrack,.v361TickerTrack,.v360TickerTrack,.v359TickerTrack').forEach(function(el){
+      el.style.setProperty('animation','none','important');
+      el.style.setProperty('transform','none','important');
+      el.style.setProperty('will-change','auto','important');
+    });
+  }
+  function refreshFrozenOffset(){
+    var group=document.getElementById('almTopFixedGroup');
+    if(group){
+      var h=Math.ceil(group.getBoundingClientRect().height || group.offsetHeight || 178);
+      document.documentElement.style.setProperty('--almFixedTopHeight', h+'px');
+      document.body.style.paddingTop=h+'px';
+    }
+    stopTickerMotion();
+  }
+  document.addEventListener('DOMContentLoaded',refreshFrozenOffset);
+  window.addEventListener('load',refreshFrozenOffset);
+  window.addEventListener('resize',refreshFrozenOffset);
+  window.addEventListener('hashchange',refreshFrozenOffset);
+  setInterval(refreshFrozenOffset,1200);
 })();
 </script>
 </body>
