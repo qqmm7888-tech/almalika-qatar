@@ -20588,3 +20588,44 @@ body.v444ZoomOpen{overflow:hidden!important;}
   document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeZoom(); });
 })();
 </script>
+
+<!-- v447: remove the problematic 3-image home promo slider completely; keep all other v446 fixes unchanged -->
+<style id="almalika-v447-remove-home-promo-slider">
+  #almHomePromoSlider,
+  .hero #almHomePromoSlider,
+  .almPromoSlider,
+  .almPromoViewport,
+  .almPromoSlide,
+  .almPromoMosaic,
+  .almPromoTimeBadge,
+  .almPromoDots,
+  .almPromoNav{
+    display:none !important;
+    visibility:hidden !important;
+    height:0 !important;
+    min-height:0 !important;
+    max-height:0 !important;
+    margin:0 !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    border:0 !important;
+  }
+</style>
+<script id="almalika-v447-remove-home-promo-slider-script">
+(function(){
+  function removePromo(){
+    try{
+      document.querySelectorAll('#almHomePromoSlider,.almPromoSlider').forEach(function(el){ el.remove(); });
+      document.querySelectorAll('.hero').forEach(function(hero){
+        hero.style.marginTop = hero.style.marginTop || '';
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded', function(){ removePromo(); setTimeout(removePromo,80); setTimeout(removePromo,500); setTimeout(removePromo,1500); });
+  window.addEventListener('load', function(){ removePromo(); setTimeout(removePromo,300); setTimeout(removePromo,1200); });
+  document.addEventListener('click', function(){ setTimeout(removePromo,120); }, true);
+  try{
+    new MutationObserver(function(){ removePromo(); }).observe(document.documentElement,{childList:true,subtree:true});
+  }catch(e){}
+})();
+</script>
