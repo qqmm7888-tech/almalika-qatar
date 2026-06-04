@@ -16064,6 +16064,193 @@ body.v459ZoomOpen{overflow:hidden !important;}
 })();
 </script>
 
+
+
+<!-- v461 compact price boxes: make all prices small like requested reference -->
+<style id="v461-compact-price-boxes">
+/* بطاقة السعر داخل كروت المنتجات - نفس النمط الصغير */
+.product .price,
+.products .product .price,
+.price{
+  background:linear-gradient(180deg,#fffdf3 0%,#fff3cd 100%) !important;
+  border:1px solid #e5c66f !important;
+  border-radius:10px !important;
+  padding:5px 8px !important;
+  min-height:38px !important;
+  height:auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  line-height:1.05 !important;
+  white-space:normal !important;
+  box-shadow:none !important;
+  margin:0 !important;
+}
+.product .price small,
+.products .product .price small,
+.price small{
+  display:block !important;
+  font-size:8px !important;
+  line-height:1 !important;
+  color:#8a6f2d !important;
+  font-weight:800 !important;
+  margin:0 0 1px 0 !important;
+}
+.product .price strong,
+.products .product .price strong,
+.price strong{
+  display:block !important;
+  font-size:15px !important;
+  line-height:1.05 !important;
+  color:#141014 !important;
+  font-weight:900 !important;
+  margin:0 !important;
+}
+.product .bottom{
+  grid-template-columns:76px 1fr !important;
+  gap:8px !important;
+}
+/* خيارات الباقات داخل التفاصيل تصبح صغيرة ولا تأخذ مساحة كبيرة */
+.priceChoiceGrid{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr)) !important;
+  gap:8px !important;
+  align-items:stretch !important;
+}
+.priceChoice{
+  min-height:54px !important;
+  height:auto !important;
+  padding:7px 8px !important;
+  border-radius:12px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  overflow:hidden !important;
+}
+.priceChoice span{
+  font-size:11px !important;
+  line-height:1.15 !important;
+  margin:0 !important;
+}
+.priceChoice b{
+  font-size:16px !important;
+  line-height:1.1 !important;
+  margin:2px 0 0 0 !important;
+}
+.priceChoice small{
+  font-size:9px !important;
+  line-height:1.15 !important;
+  margin:2px 0 0 0 !important;
+}
+.priceChoice:has(input:checked){
+  transform:none !important;
+  box-shadow:0 0 0 2px rgba(225,29,72,.18) !important;
+  animation:none !important;
+}
+.priceChoice:has(input:checked)::before,
+.priceChoice:has(input:checked)::after{
+  display:none !important;
+  animation:none !important;
+}
+@media(max-width:700px){
+  .product .bottom{grid-template-columns:72px 1fr !important;}
+  .product .price{min-height:36px !important;padding:5px 7px !important;}
+  .product .price strong{font-size:14px !important;}
+  .product .price small{font-size:8px !important;}
+  .priceChoiceGrid{grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:7px !important;}
+  .priceChoice{min-height:50px !important;padding:6px 7px !important;}
+  .priceChoice span{font-size:10px !important;}
+  .priceChoice b{font-size:14px !important;}
+  .priceChoice small{font-size:8px !important;}
+}
+</style>
+
+
+<style id="v462-compact-product-actions-final">
+/* V462: ترتيب أزرار المنتج مثل الصورة: السعر كامل ثم ٤ أزرار مضغوطة صفّين */
+.product .bottom{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:8px !important;
+  align-items:stretch !important;
+  margin-top:auto !important;
+}
+.product .price{
+  width:100% !important;
+  box-sizing:border-box !important;
+  background:linear-gradient(180deg,#fffdf1,#fff0c8) !important;
+  border:1px solid #efd28e !important;
+  border-radius:12px !important;
+  text-align:center !important;
+  padding:6px 8px !important;
+  min-height:44px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  white-space:normal !important;
+}
+.product .price small{
+  display:block !important;
+  font-size:10px !important;
+  line-height:1 !important;
+  margin:0 !important;
+  color:#8b7350 !important;
+  font-weight:900 !important;
+}
+.product .price strong{
+  display:block !important;
+  font-size:21px !important;
+  line-height:1.05 !important;
+  margin:1px 0 0 !important;
+  color:#111 !important;
+  font-weight:1000 !important;
+}
+.product .actions,
+.product .actions.quickActions{
+  width:100% !important;
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:0 !important;
+  align-items:stretch !important;
+}
+.product .actions button,
+.product .actions.quickActions button{
+  width:100% !important;
+  min-height:41px !important;
+  height:41px !important;
+  border-radius:0 !important;
+  padding:6px 8px !important;
+  margin:0 !important;
+  font-size:13px !important;
+  line-height:1.05 !important;
+  font-weight:1000 !important;
+  box-shadow:none !important;
+}
+.product .actions .details{border-top-right-radius:0 !important;background:linear-gradient(135deg,#ff2f86,#d91b64)!important;color:#fff!important;}
+.product .actions .shareFriend{background:linear-gradient(135deg,#d65398,#b6387f)!important;color:#fff!important;}
+.product .actions .quickShop{background:linear-gradient(135deg,#93305f,#702246)!important;color:#fff!important;}
+.product .actions .wa{background:linear-gradient(135deg,#22c761,#16a64c)!important;color:#fff!important;}
+.product .actions button:nth-child(1){border-top-right-radius:0 !important;}
+.product .actions button:nth-child(2){border-top-left-radius:0 !important;}
+.product .actions button:nth-child(3){border-bottom-right-radius:0 !important;}
+.product .actions button:nth-child(4){border-bottom-left-radius:0 !important;}
+@media(max-width:700px){
+  .product .actions button,
+  .product .actions.quickActions button{
+    min-height:39px !important;
+    height:39px !important;
+    font-size:12px !important;
+  }
+  .product .price{min-height:42px !important;padding:5px 7px !important;}
+  .product .price strong{font-size:20px !important;}
+}
+</style>
+
 </body>
 </html>
 
