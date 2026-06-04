@@ -21679,3 +21679,122 @@ body.v444ZoomOpen{overflow:hidden!important;}
   },true);
 })();
 </script>
+
+<!-- ===== V464 FIX: force main decor image zoom above all (window capture) ===== -->
+<style id="almalika-v464-force-main-decor-zoom-style">
+#almalikaV464MainImageZoom{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483647!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,0,0,.88)!important;
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+  padding:18px!important;
+  box-sizing:border-box!important;
+}
+#almalikaV464MainImageZoom.show{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;}
+#almalikaV464MainImageZoom img{
+  display:block!important;
+  max-width:96vw!important;
+  max-height:92vh!important;
+  width:auto!important;
+  height:auto!important;
+  object-fit:contain!important;
+  background:#fff!important;
+  border-radius:18px!important;
+  box-shadow:0 24px 90px rgba(0,0,0,.60)!important;
+}
+#almalikaV464MainImageZoom .v464Close{
+  position:fixed!important;
+  top:16px!important;
+  right:18px!important;
+  width:56px!important;
+  height:56px!important;
+  border-radius:999px!important;
+  border:0!important;
+  background:#ef2d78!important;
+  color:#fff!important;
+  font-size:36px!important;
+  font-weight:900!important;
+  line-height:1!important;
+  z-index:2147483647!important;
+  cursor:pointer!important;
+  box-shadow:0 12px 32px rgba(239,45,120,.45)!important;
+}
+body.v464ZoomOpen{overflow:hidden!important;}
+#modal.show .modalPic .v302MainWrap,
+#modal.show .modalPic img.v302MainImg,
+#modal.show .modalPic img.mainDecorImg,
+#modal.show .modalPic img.mainDecorPreview{cursor:zoom-in!important;}
+@media(max-width:640px){
+  #almalikaV464MainImageZoom{padding:10px!important;}
+  #almalikaV464MainImageZoom img{max-width:98vw!important;max-height:88vh!important;border-radius:14px!important;}
+  #almalikaV464MainImageZoom .v464Close{top:10px!important;right:10px!important;width:48px!important;height:48px!important;font-size:30px!important;}
+}
+</style>
+<script id="almalika-v464-force-main-decor-zoom-script">
+(function(){
+  function ensure(){
+    var z=document.getElementById('almalikaV464MainImageZoom');
+    if(!z){
+      z=document.createElement('div');
+      z.id='almalikaV464MainImageZoom';
+      z.innerHTML='<button type="button" class="v464Close" aria-label="إغلاق">×</button><img alt="صورة مكبرة">';
+      document.body.appendChild(z);
+      z.addEventListener('click',function(e){ if(e.target===z || (e.target.classList&&e.target.classList.contains('v464Close'))) close(); },true);
+    }
+    return z;
+  }
+  function srcOf(img){ return img ? (img.currentSrc||img.src||img.getAttribute('src')||img.getAttribute('data-full-src')||img.getAttribute('data-src')||'') : ''; }
+  function open(src){
+    if(!src) return;
+    var z=ensure();
+    var im=z.querySelector('img');
+    if(im) im.src=src;
+    z.classList.add('show');
+    z.style.display='flex';
+    z.style.zIndex='2147483647';
+    document.body.classList.add('v464ZoomOpen');
+  }
+  function close(){
+    var z=document.getElementById('almalikaV464MainImageZoom');
+    if(z){ z.classList.remove('show'); z.style.display='none'; var im=z.querySelector('img'); if(im) im.removeAttribute('src'); }
+    document.body.classList.remove('v464ZoomOpen');
+  }
+  window.almalikaV464OpenMainZoom=open;
+  window.almalikaV464CloseMainZoom=close;
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+
+  function isMainDecorClick(target){
+    if(!target || !target.closest) return null;
+    var modal=document.getElementById('modal');
+    if(!modal || !modal.classList.contains('show')) return null;
+    if(target.closest('#almalikaV464MainImageZoom')) return null;
+    /* صور الاختيارات الصغيرة لا تكبر، فقط تبدل الصورة */
+    if(target.closest('#modal .decorThumb, #modal .decorThumbs, #modal .decorGallery button, #modal .decorGallery .decorThumb')) return null;
+    var img=target.closest('#modal .modalPic img.v302MainImg, #modal .modalPic img.mainDecorImg, #modal .modalPic img.mainDecorPreview, #modal .modalPic .v302MainWrap img');
+    if(img) return img;
+    var wrap=target.closest('#modal .modalPic .v302MainWrap, #modal .modalPic .decorMain, #modal .modalPic .decorPreview');
+    if(wrap) return wrap.querySelector('img');
+    return null;
+  }
+
+  /* Window capture runs before older document capture scripts, so the zoom cannot be blocked by old handlers. */
+  window.addEventListener('click',function(e){
+    try{
+      var img=isMainDecorClick(e.target);
+      if(!img) return;
+      var src=srcOf(img);
+      if(!src) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      open(src);
+      return false;
+    }catch(err){}
+  },true);
+})();
+</script>
