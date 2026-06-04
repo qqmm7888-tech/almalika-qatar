@@ -15558,6 +15558,159 @@ body.v436ImageZoomOpen{overflow:hidden!important;}
 
 
 <!-- index_v439_QA_step17_zoom_strict_events_offers -->
+
+
+<!-- ===== V440 QA STEP 18: stop section title/filter jumping and disappearing ===== -->
+<style id="almalika-v440-stop-section-header-jump">
+/* إلغاء أي تجميد أو حركة لمنطقة عنوان القسم والفلاتر حتى لا تختفي وتطلع وتنزل */
+#app .almFrozenProductArea,
+#app .almFrozenProductArea .panel,
+#app .almFrozenProductArea .chips,
+#app .wrap.section > .almFrozenProductArea,
+body.almV402ProductsMode #app .almFrozenProductArea,
+body.almV402ProductsMode #app .almFrozenProductArea .panel,
+body.almV402ProductsMode #app .almFrozenProductArea .chips,
+body.almAppEntered #app .almFrozenProductArea,
+body.almAppEntered #app .almFrozenProductArea .panel,
+body.almAppEntered #app .almFrozenProductArea .chips{
+  position:relative!important;
+  top:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+  translate:none!important;
+  animation:none!important;
+  transition:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  z-index:5!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  overflow-x:visible!important;
+  overflow-y:visible!important;
+  contain:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+#app .almFrozenProductArea{
+  display:block!important;
+  margin:0 0 12px!important;
+  padding:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  border:0!important;
+}
+#app .almFrozenProductArea .panel{
+  display:flex!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  margin:0 10px 8px!important;
+  padding:14px 16px!important;
+  border-radius:20px!important;
+  background:rgba(255,255,255,.96)!important;
+  border:1px solid #f2d8e4!important;
+  box-shadow:0 8px 20px rgba(106,27,46,.06)!important;
+}
+#app .almFrozenProductArea .panel h1{
+  margin:0!important;
+  line-height:1.25!important;
+}
+#app .almFrozenProductArea .panel p{
+  margin:4px 0 0!important;
+  line-height:1.5!important;
+}
+#app .almFrozenProductArea .chips{
+  display:flex!important;
+  flex-wrap:wrap!important;
+  justify-content:center!important;
+  align-items:center!important;
+  gap:8px!important;
+  padding:8px 10px 12px!important;
+  margin:0!important;
+  white-space:normal!important;
+  background:linear-gradient(180deg,#fff7fb,#fff)!important;
+  border-bottom:1px solid #f6d9e6!important;
+  border-radius:0 0 18px 18px!important;
+}
+#app .almFrozenProductArea .chips .chip,
+#app .chips .chip{
+  flex:0 1 auto!important;
+  white-space:normal!important;
+  max-width:100%!important;
+  text-overflow:clip!important;
+  overflow:visible!important;
+}
+#app .almFrozenProductArea + .products,
+#app .products.alm-responsive-products{
+  margin-top:0!important;
+  padding-top:0!important;
+  transform:none!important;
+  top:auto!important;
+}
+body.almV402ProductsMode #app > section.wrap.section{
+  padding-top:12px!important;
+}
+@media(max-width:768px){
+  #app .almFrozenProductArea .panel{
+    margin:0 8px 8px!important;
+    padding:13px 12px!important;
+    border-radius:18px!important;
+  }
+  #app .almFrozenProductArea .panel h1{font-size:22px!important;line-height:1.25!important;}
+  #app .almFrozenProductArea .panel p{font-size:12px!important;line-height:1.45!important;}
+  #app .almFrozenProductArea .chips{
+    gap:7px!important;
+    padding:7px 8px 10px!important;
+  }
+  #app .almFrozenProductArea .chips .chip,
+  #app .chips .chip{
+    font-size:12px!important;
+    line-height:1.25!important;
+    padding:8px 10px!important;
+  }
+}
+</style>
+<script id="almalika-v440-stop-section-header-jump-script">
+(function(){
+  function stableSectionHeader(){
+    try{
+      document.body.classList.remove('almV402ProductsMode');
+      document.documentElement.style.setProperty('--almFrozenAreaHeight','0px');
+      var els=document.querySelectorAll('#app .almFrozenProductArea,#app .almFrozenProductArea .panel,#app .almFrozenProductArea .chips,#app .chips');
+      els.forEach(function(el){
+        el.style.position='relative';
+        el.style.top='auto';
+        el.style.bottom='auto';
+        el.style.left='auto';
+        el.style.right='auto';
+        el.style.transform='none';
+        el.style.opacity='1';
+        el.style.visibility='visible';
+        el.style.maxHeight='none';
+        el.style.overflow='visible';
+        el.style.animation='none';
+        el.style.transition='none';
+      });
+      document.querySelectorAll('#app .products,#app .products.alm-responsive-products').forEach(function(el){
+        el.style.marginTop='0';
+        el.style.paddingTop='0';
+        el.style.transform='none';
+        el.style.top='auto';
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){stableSectionHeader();setTimeout(stableSectionHeader,150);setTimeout(stableSectionHeader,800);});
+  window.addEventListener('load',function(){stableSectionHeader();setTimeout(stableSectionHeader,300);setTimeout(stableSectionHeader,1200);});
+  document.addEventListener('click',function(){setTimeout(stableSectionHeader,80);setTimeout(stableSectionHeader,450);},true);
+  window.addEventListener('scroll',function(){requestAnimationFrame(stableSectionHeader);},{passive:true});
+  try{new MutationObserver(function(){setTimeout(stableSectionHeader,40);}).observe(document.getElementById('app')||document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});}catch(e){}
+})();
+</script>
+
 </body>
 </html>
 
