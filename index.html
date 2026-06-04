@@ -15130,6 +15130,314 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
   }
 }
 </style>
+
+
+<!-- ===== V435 QA STEP 13: unfreeze all internal subcategory chips in every section ===== -->
+<style id="almalika-v435-unfreeze-subcategory-chips">
+/* فك تجميد أزرار الأقسام الفرعية في كل أقسام الموقع */
+#app .almFrozenProductArea,
+#app .almFrozenProductArea .panel,
+#app .almFrozenProductArea .chips,
+#app .chips,
+body.almV402ProductsMode #app .almFrozenProductArea,
+body.almV402ProductsMode #app .almFrozenProductArea .panel,
+body.almV402ProductsMode #app .almFrozenProductArea .chips{
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  transform:none!important;
+  z-index:auto!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  contain:none!important;
+  backdrop-filter:none!important;
+}
+#app .almFrozenProductArea{
+  margin:0 0 14px!important;
+  padding:0!important;
+  background:transparent!important;
+}
+#app .almFrozenProductArea .panel{
+  margin:0 0 10px!important;
+}
+#app .chips,
+#app .almFrozenProductArea .chips,
+body.almAppEntered .chips,
+body.almV402ProductsMode #app .almFrozenProductArea .chips{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:wrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  padding:8px 10px 12px!important;
+  margin:0!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  overflow-x:visible!important;
+  overflow-y:visible!important;
+  max-height:none!important;
+  scrollbar-width:auto!important;
+  background:linear-gradient(180deg,#fff7fb,#fff)!important;
+  border-radius:0 0 18px 18px!important;
+  box-shadow:none!important;
+}
+#app .chips::-webkit-scrollbar{display:none!important;}
+#app .chips .chip,
+#app .almFrozenProductArea .chips .chip,
+body.almAppEntered .chips .chip,
+body.almV402ProductsMode #app .almFrozenProductArea .chips .chip{
+  flex:0 1 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:100%!important;
+  white-space:normal!important;
+  word-break:normal!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  line-height:1.25!important;
+  padding:9px 13px!important;
+  border-radius:999px!important;
+}
+@media(max-width:768px){
+  #app .wrap.section{padding-top:10px!important;}
+  #app .almFrozenProductArea{margin-bottom:10px!important;}
+  #app .almFrozenProductArea .panel{
+    margin:0 10px 6px!important;
+    padding:13px 14px!important;
+    border-radius:20px!important;
+  }
+  #app .almFrozenProductArea .panel h1{font-size:22px!important;line-height:1.25!important;}
+  #app .almFrozenProductArea .panel p{font-size:12px!important;line-height:1.55!important;}
+  #app .chips,
+  #app .almFrozenProductArea .chips,
+  body.almAppEntered .chips,
+  body.almV402ProductsMode #app .almFrozenProductArea .chips{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    justify-content:center!important;
+    gap:7px!important;
+    padding:7px 10px 11px!important;
+    max-height:none!important;
+    overflow:visible!important;
+    position:relative!important;
+  }
+  #app .chips .chip,
+  #app .almFrozenProductArea .chips .chip{
+    font-size:12px!important;
+    padding:8px 10px!important;
+    max-width:calc(50vw - 22px)!important;
+  }
+  /* منع أول منتج من الصعود خلف أزرار الفلاتر */
+  #app .almFrozenProductArea + .products,
+  #app .products.alm-responsive-products{
+    margin-top:0!important;
+    padding-top:0!important;
+    transform:none!important;
+    top:auto!important;
+  }
+}
+</style>
+<script id="almalika-v435-unfreeze-subcategory-chips-script">
+(function(){
+  function unfreezeChips(){
+    try{
+      document.body.classList.remove('almV402ProductsMode');
+      document.documentElement.style.setProperty('--almFixedTopHeight','0px');
+      document.querySelectorAll('#app .almFrozenProductArea, #app .almFrozenProductArea .panel, #app .chips, #app .chips .chip').forEach(function(el){
+        el.style.position='relative';
+        el.style.top='auto';
+        el.style.left='auto';
+        el.style.right='auto';
+        el.style.bottom='auto';
+        el.style.transform='none';
+        el.style.zIndex='auto';
+        el.style.maxHeight='none';
+        el.style.overflow='visible';
+      });
+      document.querySelectorAll('#app .chips').forEach(function(el){
+        el.style.display='flex';
+        el.style.flexWrap='wrap';
+        el.style.overflowX='visible';
+        el.style.whiteSpace='normal';
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){unfreezeChips();setTimeout(unfreezeChips,100);setTimeout(unfreezeChips,600);});
+  window.addEventListener('load',function(){unfreezeChips();setTimeout(unfreezeChips,300);});
+  document.addEventListener('click',function(){setTimeout(unfreezeChips,50);setTimeout(unfreezeChips,300);},true);
+  try{new MutationObserver(function(){setTimeout(unfreezeChips,30);}).observe(document.getElementById('app')||document.body,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
+
+
+
+<!-- ===== V436 QA STEP 14: make ALL product card images zoom in every section ===== -->
+<style id="almalika-v436-all-card-images-zoom">
+/* كل صور كروت المنتجات في جميع الأقسام تكبّر عند النقر */
+#app .product .pic,
+#app .product .pic img,
+.products .product .pic,
+.products .product .pic img{
+  cursor:zoom-in!important;
+}
+#app .product .pic:hover img{
+  transform:scale(1.018)!important;
+  transition:transform .18s ease!important;
+}
+#almalikaV436ImageViewer{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483647!important;
+  display:none!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:rgba(0,0,0,.88)!important;
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+  padding:18px!important;
+  box-sizing:border-box!important;
+  direction:rtl!important;
+}
+#almalikaV436ImageViewer.show{display:flex!important;}
+#almalikaV436ImageViewer img{
+  display:block!important;
+  max-width:94vw!important;
+  max-height:88vh!important;
+  width:auto!important;
+  height:auto!important;
+  object-fit:contain!important;
+  background:#fff!important;
+  border-radius:22px!important;
+  box-shadow:0 24px 90px rgba(0,0,0,.55)!important;
+}
+#almalikaV436ImageViewer .v436Close,
+#almalikaV436ImageViewer .v436Details{
+  position:fixed!important;
+  z-index:2147483647!important;
+  border:0!important;
+  cursor:pointer!important;
+  font-weight:1000!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.30)!important;
+}
+#almalikaV436ImageViewer .v436Close{
+  top:16px!important;
+  right:18px!important;
+  width:56px!important;
+  height:56px!important;
+  border-radius:50%!important;
+  background:#ec2b7a!important;
+  color:#fff!important;
+  font-size:36px!important;
+  line-height:1!important;
+}
+#almalikaV436ImageViewer .v436Details{
+  top:16px!important;
+  left:18px!important;
+  border-radius:999px!important;
+  background:linear-gradient(135deg,#ff2f86,#7a1734)!important;
+  color:#fff!important;
+  padding:14px 22px!important;
+  font-size:16px!important;
+}
+body.v436ImageZoomOpen{overflow:hidden!important;}
+@media(max-width:640px){
+  #almalikaV436ImageViewer{padding:8px!important;}
+  #almalikaV436ImageViewer img{max-width:98vw!important;max-height:84vh!important;border-radius:16px!important;}
+  #almalikaV436ImageViewer .v436Close{top:10px!important;right:10px!important;width:50px!important;height:50px!important;font-size:32px!important;}
+  #almalikaV436ImageViewer .v436Details{top:10px!important;left:10px!important;padding:12px 16px!important;font-size:14px!important;}
+}
+</style>
+<script id="almalika-v436-all-card-images-zoom">
+(function(){
+  function qs(s,r){return (r||document).querySelector(s)}
+  function ensureViewer(){
+    var z=document.getElementById('almalikaV436ImageViewer');
+    if(z) return z;
+    z=document.createElement('div');
+    z.id='almalikaV436ImageViewer';
+    z.innerHTML='<button type="button" class="v436Close" aria-label="إغلاق">×</button><button type="button" class="v436Details">✨ التفاصيل</button><img alt="صورة المنتج المكبرة">';
+    document.body.appendChild(z);
+    z.addEventListener('click',function(e){if(e.target===z || e.target.classList.contains('v436Close')) closeViewer();});
+    qs('.v436Details',z).addEventListener('click',function(e){
+      e.preventDefault(); e.stopPropagation();
+      var n=z.getAttribute('data-product-number');
+      closeViewer();
+      if(n && typeof window.openProduct==='function') setTimeout(function(){window.openProduct(Number(n));},30);
+    });
+    document.addEventListener('keydown',function(e){if(e.key==='Escape') closeViewer();});
+    return z;
+  }
+  function closeViewer(){
+    var z=document.getElementById('almalikaV436ImageViewer');
+    if(z){z.classList.remove('show'); z.removeAttribute('data-product-number');}
+    document.body.classList.remove('v436ImageZoomOpen');
+  }
+  function getNumFromCard(card){
+    if(!card) return '';
+    var num=card.querySelector('.num');
+    if(num){
+      var m=(num.textContent||'').match(/\d+/);
+      if(m) return m[0];
+    }
+    var btn=card.querySelector('[onclick*="openProduct("],[onclick*="quickShop("],[onclick*="quickWa("]');
+    if(btn){
+      var mm=(btn.getAttribute('onclick')||'').match(/\((\d+)\)/);
+      if(mm) return mm[1];
+    }
+    return '';
+  }
+  function productByNum(n){
+    try{return (((typeof products!=='undefined')?products:window.products)||[]).find(function(p){return Number(p.number)===Number(n)||Number(p.id)===Number(n);});}catch(e){return null;}
+  }
+  function srcFor(n,img){
+    var p=productByNum(n);
+    if(p){
+      try{ if(typeof productImageUrl==='function'){var s=productImageUrl(p); if(s) return s;} }catch(e){}
+      var s=p.selectedDecorImage||p.originalImage||p.image||p.img||p.photo;
+      if(s) return s;
+    }
+    return (img&&(img.currentSrc||img.src||img.getAttribute('src'))) || '';
+  }
+  function openViewer(src,n){
+    if(!src) return;
+    var z=ensureViewer();
+    qs('img',z).src=src;
+    if(n) z.setAttribute('data-product-number',n);
+    z.classList.add('show');
+    document.body.classList.add('v436ImageZoomOpen');
+  }
+  window.almalikaOpenProductCardImageZoom=function(n,src){openViewer(src||srcFor(n,null),n)};
+  window.almalikaCloseProductCardImageZoom=closeViewer;
+
+  /* التقاط الضغط على صورة أي كرت قبل كود فتح التفاصيل القديم */
+  document.addEventListener('click',function(e){
+    var pic=e.target && e.target.closest ? e.target.closest('#app .product .pic, .products .product .pic') : null;
+    if(!pic) return;
+    if(pic.closest('#modal')) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+    var card=pic.closest('.product');
+    var img=pic.querySelector('img') || (e.target && e.target.tagName==='IMG' ? e.target : null);
+    var n=getNumFromCard(card);
+    openViewer(srcFor(n,img),n);
+    return false;
+  },true);
+
+  document.addEventListener('DOMContentLoaded',function(){
+    ensureViewer();
+    document.querySelectorAll('#app .product .pic, .products .product .pic').forEach(function(pic){
+      pic.setAttribute('title','اضغط لتكبير الصورة');
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
 
