@@ -15711,6 +15711,251 @@ body.almV402ProductsMode #app > section.wrap.section{
 })();
 </script>
 
+
+<!-- ===== V441 QA STEP 19: compact cart corner + reliable mobile navigation + remove middle whatsapp/phones ===== -->
+<style id="almalika-v441-compact-cart-nav-fix">
+@media (max-width:768px){
+  /* حذف زر الواتساب المتوسط وأرقام الموظفين من الهيدر فقط */
+  #almTopFixedGroup .headBtns,
+  .headBtns,
+  .almEmployeePhones{
+    display:none!important;
+    visibility:hidden!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:0!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    overflow:hidden!important;
+  }
+
+  /* سلة الحجز مصغرة في الزاوية بدل الشريط الكبير */
+  body .cartBar{
+    position:fixed!important;
+    right:14px!important;
+    left:auto!important;
+    bottom:calc(env(safe-area-inset-bottom,0px) + 14px)!important;
+    width:62px!important;
+    height:62px!important;
+    min-width:62px!important;
+    min-height:62px!important;
+    max-width:62px!important;
+    max-height:62px!important;
+    padding:0!important;
+    margin:0!important;
+    border-radius:50%!important;
+    font-size:0!important;
+    line-height:1!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    z-index:999999!important;
+    background:linear-gradient(135deg,#ff2f86,#781233)!important;
+    color:#fff!important;
+    box-shadow:0 12px 28px rgba(122,18,51,.34)!important;
+    border:2px solid rgba(255,255,255,.88)!important;
+  }
+  body .cartBar::before{
+    content:'🛒';
+    font-size:27px!important;
+    line-height:1!important;
+    display:block!important;
+  }
+  body .cartBar #cartCount{
+    position:absolute!important;
+    top:-7px!important;
+    right:-7px!important;
+    min-width:24px!important;
+    height:24px!important;
+    padding:0 5px!important;
+    border-radius:999px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    background:#fff!important;
+    color:#9a1238!important;
+    font-size:12px!important;
+    font-weight:1000!important;
+    border:2px solid #ff2f86!important;
+    box-shadow:0 6px 12px rgba(122,18,51,.18)!important;
+  }
+  body .cartBar #cartTotalMini{display:none!important;}
+  body{padding-bottom:86px!important;}
+
+  /* شبكة الأقسام الرئيسية: لا يوجد قص، ولا تبقى ثابتة على بند آخر */
+  body #nav.nav{
+    display:grid!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:10px!important;
+    width:calc(100% - 30px)!important;
+    max-width:560px!important;
+    margin:10px auto 14px!important;
+    padding:12px!important;
+    position:relative!important;
+    top:auto!important;
+    overflow:visible!important;
+    z-index:3!important;
+  }
+  body #nav.nav button,
+  body #nav.nav .v329NavBtn,
+  body #nav.nav .navIconBtn{
+    width:100%!important;
+    height:58px!important;
+    min-height:58px!important;
+    max-height:58px!important;
+    border-radius:18px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:8px!important;
+    overflow:hidden!important;
+    white-space:normal!important;
+    text-align:center!important;
+    box-sizing:border-box!important;
+  }
+  body #nav.nav button span,
+  body #nav.nav .v329NavLabel{
+    white-space:normal!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    display:-webkit-box!important;
+    -webkit-line-clamp:2!important;
+    -webkit-box-orient:vertical!important;
+    line-height:1.15!important;
+    font-size:12.5px!important;
+  }
+  body #nav.nav button.active,
+  body #nav.nav .v329NavBtn.active,
+  body #nav.nav .navIconBtn.active{
+    background:linear-gradient(135deg,#ff5fa2,#f7e7ee)!important;
+    border-color:#ff78ad!important;
+    box-shadow:0 10px 24px rgba(233,30,99,.18)!important;
+    color:#6a1b2e!important;
+  }
+
+  /* شريط تنقل صغير واحد فقط، يعمل باللمس ولا يكرر أرقام أو واتساب */
+  #almMobileQuickTabs{
+    display:flex!important;
+    visibility:visible!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    position:relative!important;
+    top:auto!important;
+    z-index:25!important;
+    direction:rtl!important;
+    gap:7px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    flex-wrap:nowrap!important;
+    padding:8px 10px!important;
+    margin:0 auto 10px!important;
+    width:100%!important;
+    box-sizing:border-box!important;
+    background:rgba(255,250,252,.96)!important;
+    border-top:1px solid #f8dbe8!important;
+    border-bottom:1px solid #f1c9da!important;
+    scrollbar-width:none!important;
+  }
+  #almMobileQuickTabs::-webkit-scrollbar{display:none!important;}
+  #almMobileQuickTabs button{
+    flex:0 0 auto!important;
+    height:36px!important;
+    min-width:72px!important;
+    border-radius:999px!important;
+    border:1px solid #efbfd3!important;
+    background:#fff!important;
+    color:#6a1b2e!important;
+    font-size:12px!important;
+    font-weight:1000!important;
+    padding:0 12px!important;
+    white-space:nowrap!important;
+  }
+  #almMobileQuickTabs button.active{
+    background:linear-gradient(135deg,#ff2f86,#8f153b)!important;
+    color:#fff!important;
+    border-color:#ff6fa8!important;
+  }
+}
+</style>
+<script id="almalika-v441-compact-cart-nav-fix-js">
+(function(){
+  function isMobile(){return window.matchMedia && window.matchMedia('(max-width:768px)').matches;}
+  var map={home:'الرئيسية',bouncies:'النطاطيات',snacks:'السناك',events:'الحفلات',rentals:'الطاولات',offers:'العروض',other:'أخرى'};
+  var order=['home','bouncies','snacks','events','offers','rentals','other'];
+  function getCurrent(){try{return (typeof current!=='undefined' && current) ? current : 'home';}catch(e){return 'home';}}
+  function setActive(sec){
+    try{
+      document.querySelectorAll('#nav button').forEach(function(b){
+        var txt=(b.textContent||'').replace(/\s+/g,' ').trim();
+        var key=b.getAttribute('data-sec')||'';
+        if(!key){
+          if(/رئيسية/.test(txt)) key='home';
+          else if(/نطاط/.test(txt)||/زحلاق/.test(txt)) key='bouncies';
+          else if(/سناك/.test(txt)||/عربات/.test(txt)) key='snacks';
+          else if(/تجهيز|حفلات/.test(txt)) key='events';
+          else if(/طاولات|كراسي|شخصيات/.test(txt)) key='rentals';
+          else if(/عروض|بكجات/.test(txt)) key='offers';
+          else if(/أخرى|اخرى|بنود/.test(txt)) key='other';
+          if(key) b.setAttribute('data-sec',key);
+        }
+        b.classList.toggle('active',key===sec);
+      });
+      document.querySelectorAll('#almMobileQuickTabs button').forEach(function(b){
+        b.classList.toggle('active',b.getAttribute('data-sec')===sec);
+      });
+    }catch(e){}
+  }
+  function makeTabs(){
+    if(!isMobile()) return;
+    try{document.querySelectorAll('.almEmployeePhones,#almTopFixedGroup .headBtns,.headBtns').forEach(function(el){el.remove();});}catch(e){}
+    var tabs=document.getElementById('almMobileQuickTabs');
+    if(!tabs){
+      tabs=document.createElement('div');
+      tabs.id='almMobileQuickTabs';
+      tabs.innerHTML=order.map(function(k){return '<button type="button" data-sec="'+k+'">'+map[k]+'</button>';}).join('');
+      var search=document.querySelector('#almTopFixedGroup .searchRow') || document.querySelector('.searchRow') || document.getElementById('nav');
+      if(search && search.parentNode) search.parentNode.insertBefore(tabs, search.nextSibling);
+      else document.body.insertBefore(tabs,document.body.firstChild);
+      tabs.addEventListener('click',function(ev){
+        var b=ev.target.closest('button[data-sec]'); if(!b) return;
+        var sec=b.getAttribute('data-sec');
+        if(sec==='home' && typeof showHome==='function') showHome();
+        else if(typeof showSection==='function') showSection(sec);
+        setTimeout(function(){setActive(sec); var app=document.getElementById('app'); if(app) app.scrollIntoView({behavior:'smooth',block:'start'});},70);
+      });
+    }
+    setActive(getCurrent());
+  }
+  function patchNavClicks(){
+    try{
+      document.querySelectorAll('#nav button').forEach(function(b){
+        if(b.dataset.v441Bound) return;
+        b.dataset.v441Bound='1';
+        b.addEventListener('click',function(){
+          var sec=b.getAttribute('data-sec')||'';
+          if(sec) setTimeout(function(){setActive(sec);},40);
+        },true);
+      });
+    }catch(e){}
+  }
+  var oldShowSection=window.showSection;
+  if(typeof oldShowSection==='function'){
+    window.showSection=function(sec){var r=oldShowSection.apply(this,arguments); setTimeout(function(){makeTabs();setActive(sec);},30); return r;};
+  }
+  var oldShowHome=window.showHome;
+  if(typeof oldShowHome==='function'){
+    window.showHome=function(){var r=oldShowHome.apply(this,arguments); setTimeout(function(){makeTabs();setActive('home');},30); return r;};
+  }
+  function run(){makeTabs();patchNavClicks();setActive(getCurrent());}
+  document.addEventListener('DOMContentLoaded',function(){run();setTimeout(run,200);setTimeout(run,800);});
+  window.addEventListener('load',function(){run();setTimeout(run,400);});
+  document.addEventListener('click',function(){setTimeout(run,80);},true);
+  try{new MutationObserver(function(){setTimeout(run,60);}).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
+
 </body>
 </html>
 
