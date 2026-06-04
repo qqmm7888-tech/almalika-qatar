@@ -15623,6 +15623,139 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 })();
 </script>
 
+
+
+<!-- === V455: decor image no global overlay + remove remaining decor modal gaps === -->
+<style id="almalika-v455-decor-no-overlay-gap-final">
+/* بند ثابت: صور الديكور داخل نافذة التفاصيل لا تفتح طبقة تكبير فوق الصفحة. الصورة المختارة تظهر مكان الصورة الأساسية فقط. */
+#almalikaV454Zoom,
+#almalikaV450Zoom,
+#almalikaV444Zoom,
+#almalikaGlobalImageZoom,
+#almalikaImageZoom,
+#almalikaV397ImageViewer{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+body.v395ImageZoomOpen{overflow:auto!important;}
+
+/* إزالة الفراغ المتبقي داخل نافذة الديكور فقط */
+#modal .modalBox.hasDecorMedia,
+#modal .modalBox.eventDetailed.hasDecorMedia,
+#modal .modalBox.detailed.eventDetailed.hasDecorMedia{
+  align-items:start!important;
+  align-content:start!important;
+}
+#modal .modalPic{
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
+  align-self:start!important;
+  align-content:start!important;
+  justify-content:flex-start!important;
+  margin-top:0!important;
+  padding-top:10px!important;
+}
+#modal .modalPic .v302MainWrap,
+#modal .modalPic .decorMainWrap,
+#modal .modalPic .mainDecorWrap,
+#modal .modalPic .themeFixedPreview,
+#modal .modalPic .themePreview,
+#modal .modalPic .decorPreviewBox{
+  min-height:0!important;
+  height:auto!important;
+  margin-top:0!important;
+  padding-top:0!important;
+}
+#modal .modalPic img.mainDecorImg,
+#modal .modalPic img.v302MainImg,
+#modal .modalPic img.mainDecorPreview,
+#modal .modalPic .v302MainWrap img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  max-height:360px!important;
+  object-fit:contain!important;
+  margin:0 auto 10px!important;
+  cursor:pointer!important;
+}
+@media(max-width:768px){
+  #modal .modalPic img.mainDecorImg,
+  #modal .modalPic img.v302MainImg,
+  #modal .modalPic img.mainDecorPreview,
+  #modal .modalPic .v302MainWrap img{max-height:280px!important;}
+}
+</style>
+<script id="almalika-v455-decor-no-overlay-gap-final-script">
+(function(){
+  function imgSrc(img){return img?(img.currentSrc||img.src||img.getAttribute('src')||img.getAttribute('data-src')||''):'';}
+  function closeAllZooms(){
+    ['almalikaV454Zoom','almalikaV450Zoom','almalikaV444Zoom','almalikaGlobalImageZoom','almalikaImageZoom','almalikaV397ImageViewer'].forEach(function(id){
+      var z=document.getElementById(id);
+      if(z){z.classList.remove('show','open','active');z.style.setProperty('display','none','important');z.style.setProperty('visibility','hidden','important');}
+    });
+    document.body.classList.remove('v395ImageZoomOpen');
+  }
+  function normalizeDecorModal(){
+    var modal=document.getElementById('modal');
+    if(!modal || !modal.classList.contains('show')) return;
+    var box=modal.querySelector('.modalBox.hasDecorMedia,.modalBox.eventDetailed.hasDecorMedia,.modalBox.detailed.eventDetailed.hasDecorMedia');
+    if(!box) return;
+    closeAllZooms();
+    var pic=box.querySelector('.modalPic');
+    if(!pic) return;
+    var main=pic.querySelector('img.mainDecorImg,img.v302MainImg,img.mainDecorPreview,.v302MainWrap img') || pic.querySelector('img');
+    if(main){
+      main.classList.add('mainDecorImg');
+      main.removeAttribute('onclick');
+      main.style.cursor='default';
+    }
+    // أي صورة مصغرة/اختيار ديكور تستبدل الصورة الأساسية فقط ولا تفتح طبقة تكبير.
+    pic.querySelectorAll('img').forEach(function(img){
+      if(img===main) return;
+      img.style.cursor='pointer';
+      img.addEventListener('click',function(ev){
+        var src=imgSrc(img);
+        if(main && src){
+          ev.preventDefault(); ev.stopPropagation(); if(ev.stopImmediatePropagation) ev.stopImmediatePropagation();
+          main.src=src;
+          main.setAttribute('data-full-src',src);
+          closeAllZooms();
+        }
+      },true);
+    });
+  }
+  // أوقف أي محاولة تكبير من داخل نافذة الديكور فقط.
+  document.addEventListener('click',function(e){
+    var modal=document.getElementById('modal');
+    if(!modal || !modal.classList.contains('show')) return;
+    var box=modal.querySelector('.modalBox.hasDecorMedia,.modalBox.eventDetailed.hasDecorMedia,.modalBox.detailed.eventDetailed.hasDecorMedia');
+    if(!box) return;
+    var img=e.target && e.target.closest ? e.target.closest('#modal .modalPic img') : null;
+    if(img && box.contains(img)){
+      normalizeDecorModal();
+      closeAllZooms();
+      // الصورة الأساسية نفسها لا تفتح فوق الصفحة؛ المصغرات تعالجها الدالة أعلاه.
+      if(img.classList.contains('mainDecorImg') || img.classList.contains('v302MainImg') || img.classList.contains('mainDecorPreview')){
+        e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      }
+    }
+  },true);
+  var oldOpen=window.openProduct;
+  if(typeof oldOpen==='function' && !oldOpen.__v455DecorSafe){
+    window.openProduct=function(){
+      var r=oldOpen.apply(this,arguments);
+      setTimeout(normalizeDecorModal,80);
+      setTimeout(normalizeDecorModal,250);
+      return r;
+    };
+    window.openProduct.__v455DecorSafe=true;
+  }
+  document.addEventListener('DOMContentLoaded',normalizeDecorModal);
+  setInterval(normalizeDecorModal,700);
+})();
+</script>
 </body>
 </html>
 
