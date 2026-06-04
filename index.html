@@ -15276,16 +15276,22 @@ body.almV402ProductsMode #app .almFrozenProductArea .chips .chip{
 
 
 
-<!-- ===== V436 QA STEP 14: make ALL product card images zoom in every section ===== -->
-<style id="almalika-v436-all-card-images-zoom">
-/* كل صور كروت المنتجات في جميع الأقسام تكبّر عند النقر */
+<!-- ===== V438 QA STEP 16: image zoom only for events and offers sections ===== -->
+<style id="almalika-v438-events-offers-only-image-zoom">
+/* التكبير فقط في قسم تجهيز الحفلات وقسم العروض والبكجات */
 #app .product .pic,
 #app .product .pic img,
 .products .product .pic,
 .products .product .pic img{
+  cursor:pointer!important;
+}
+#app .product.v438ZoomAllowed .pic,
+#app .product.v438ZoomAllowed .pic img,
+.products .product.v438ZoomAllowed .pic,
+.products .product.v438ZoomAllowed .pic img{
   cursor:zoom-in!important;
 }
-#app .product .pic:hover img{
+#app .product.v438ZoomAllowed .pic:hover img{
   transform:scale(1.018)!important;
   transition:transform .18s ease!important;
 }
@@ -15352,7 +15358,7 @@ body.v436ImageZoomOpen{overflow:hidden!important;}
   #almalikaV436ImageViewer .v436Details{top:10px!important;left:10px!important;padding:12px 16px!important;font-size:14px!important;}
 }
 </style>
-<script id="almalika-v436-all-card-images-zoom">
+<script id="almalika-v438-events-offers-only-image-zoom">
 (function(){
   function qs(s,r){return (r||document).querySelector(s)}
   function ensureViewer(){
@@ -15394,6 +15400,34 @@ body.v436ImageZoomOpen{overflow:hidden!important;}
   function productByNum(n){
     try{return (((typeof products!=='undefined')?products:window.products)||[]).find(function(p){return Number(p.number)===Number(n)||Number(p.id)===Number(n);});}catch(e){return null;}
   }
+  function textOfProduct(p){
+    if(!p) return '';
+    return [p.name,p.category,p.type,p.group,p.section,p.details,p.description,p.rentType].filter(Boolean).join(' ');
+  }
+  function allowedZoomProduct(n,card){
+    var p=productByNum(n);
+    var t=(textOfProduct(p)+' '+(card?(card.textContent||''):'')).replace(/\s+/g,' ');
+    /* مسموح فقط للحفلات/الديكورات والعروض/البكجات */
+    if(/(تجهيز|حفلات|حفلة|ديكور|ديكورات|عيد ميلاد|زواج|خطوبة|تخرج|هيليوم|بالون|بالونات|استاند|ستاند|عرض|عروض|باقة|بكج|بكجات|SPECIAL|Summer)/i.test(t)) return true;
+    /* أرقام الديكورات غالباً 101-299، والعروض غالباً 600+ */
+    var num=Number(n);
+    if((num>=101 && num<300) || num>=600) return true;
+    return false;
+  }
+  function markAllowedZoomCards(root){
+    (root||document).querySelectorAll('#app .product, .products .product').forEach(function(card){
+      var n=getNumFromCard(card);
+      if(allowedZoomProduct(n,card)){
+        card.classList.add('v438ZoomAllowed');
+        var pic=card.querySelector('.pic');
+        if(pic) pic.setAttribute('title','اضغط لتكبير الصورة');
+      }else{
+        card.classList.remove('v438ZoomAllowed');
+        var pic=card.querySelector('.pic');
+        if(pic) pic.removeAttribute('title');
+      }
+    });
+  }
   function srcFor(n,img){
     var p=productByNum(n);
     if(p){
@@ -15419,22 +15453,26 @@ body.v436ImageZoomOpen{overflow:hidden!important;}
     var pic=e.target && e.target.closest ? e.target.closest('#app .product .pic, .products .product .pic') : null;
     if(!pic) return;
     if(pic.closest('#modal')) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if(e.stopImmediatePropagation) e.stopImmediatePropagation();
     var card=pic.closest('.product');
     var img=pic.querySelector('img') || (e.target && e.target.tagName==='IMG' ? e.target : null);
     var n=getNumFromCard(card);
+    if(!allowedZoomProduct(n,card)){
+      /* خارج قسم الحفلات وقسم العروض: لا تكبير، واترك النقر يفتح التفاصيل كالمعتاد */
+      return;
+    }
+    e.preventDefault();
+    e.stopPropagation();
+    if(e.stopImmediatePropagation) e.stopImmediatePropagation();
     openViewer(srcFor(n,img),n);
     return false;
   },true);
 
   document.addEventListener('DOMContentLoaded',function(){
     ensureViewer();
-    document.querySelectorAll('#app .product .pic, .products .product .pic').forEach(function(pic){
-      pic.setAttribute('title','اضغط لتكبير الصورة');
-    });
+    markAllowedZoomCards(document);
+    setTimeout(function(){markAllowedZoomCards(document);},300);
   });
+  try{new MutationObserver(function(){markAllowedZoomCards(document);}).observe(document.getElementById('app')||document.body,{childList:true,subtree:true});}catch(e){}
 })();
 </script>
 
@@ -15518,6 +15556,8 @@ body.v436ImageZoomOpen{overflow:hidden!important;}
 })();
 </script>
 
+
+<!-- index_v438_QA_step16_zoom_only_events_offers -->
 </body>
 </html>
 
