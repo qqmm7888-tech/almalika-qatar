@@ -5699,6 +5699,25 @@ body{
   .almWorkingTickerTrack{height:38px!important;line-height:38px!important;font-size:13px!important;animation-duration:24s!important}
 }
 </style>
+<style id="v451-instant-blue-bar-critical">
+/* V451: إظهار الشريط الأزرق فوراً مع الشريط الأسود بدون انتظار JavaScript */
+#almTopFixedGroup{display:block!important;visibility:visible!important;opacity:1!important;}
+#almWorkingTicker,#almWelcome15Bar{display:flex!important;visibility:visible!important;opacity:1!important;transform:none!important;}
+#almWelcome15Bar{
+  height:50px!important;min-height:50px!important;width:100%!important;direction:rtl!important;
+  align-items:center!important;justify-content:center!important;gap:22px!important;
+  background:linear-gradient(180deg,#19b7ff 0%,#0072d8 48%,#0065c8 100%)!important;
+  color:#fff!important;border-bottom:3px solid #ff2f86!important;box-shadow:0 5px 18px rgba(0,112,205,.22)!important;
+  font-family:inherit!important;overflow:hidden!important;line-height:1!important;
+}
+#almWelcome15Bar .welcomePill{height:28px!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;padding:0 16px!important;border-radius:999px!important;border:1px solid rgba(255,255,255,.55)!important;background:rgba(255,255,255,.12)!important;color:#fff!important;font-size:13px!important;font-weight:1000!important;white-space:nowrap!important;}
+#almWelcome15Bar .welcomeMain{display:flex!important;align-items:center!important;justify-content:center!important;gap:12px!important;white-space:nowrap!important;font-weight:1000!important;}
+#almWelcome15Bar .welcomeMain .small{font-size:16px!important;opacity:.98!important}
+#almWelcome15Bar .welcomeMain .big{font-size:34px!important;line-height:1!important;letter-spacing:-1px!important}
+#almWelcome15Bar .welcomeMain .code{font-size:22px!important;direction:ltr!important;font-weight:1000!important}
+#almWelcome15Bar .welcomeBtn{border:0!important;border-radius:999px!important;background:#fff!important;color:#0069bd!important;height:34px!important;padding:0 20px!important;font-size:14px!important;font-weight:1000!important;cursor:pointer!important;box-shadow:0 8px 20px rgba(0,51,115,.18)!important;}
+@media(max-width:700px){#almWelcome15Bar{height:44px!important;min-height:44px!important;gap:8px!important;padding:0 8px!important}#almWelcome15Bar .welcomePill{height:24px!important;font-size:10px!important;padding:0 8px!important}#almWelcome15Bar .welcomeMain{gap:7px!important}#almWelcome15Bar .welcomeMain .small{font-size:11px!important}#almWelcome15Bar .welcomeMain .big{font-size:22px!important}#almWelcome15Bar .welcomeMain .code{font-size:14px!important}#almWelcome15Bar .welcomeBtn{height:28px!important;font-size:11px!important;padding:0 10px!important}}
+</style>
 
 
 
@@ -6276,6 +6295,7 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
       </div>
     </div>
   </div>
+  <div id="almWelcome15Bar"><span class="welcomePill">أول طلب فقط</span><span class="welcomeMain"><span class="small">مزايا ترحيبية لأول طلب</span><span class="big">وفر 15%</span><span class="small">الكود:</span><span class="code">ALMALIKA15</span><span class="small">للتطبيق فقط</span></span><button class="welcomeBtn" type="button" onclick="activateWelcome15&&activateWelcome15()">تفعيل الكود</button></div>
 <header class="header">
   <div class="wrap headTop">
     <div class="logo" onclick="showHome()">الملكة</div>
@@ -6291,6 +6311,26 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
   </div>
 </header>
 </div>
+
+<script id="v451-instant-blue-bar-script">
+(function(){
+  function fix(){
+    try{
+      var group=document.getElementById('almTopFixedGroup');
+      var bar=document.getElementById('almWelcome15Bar');
+      var ticker=document.getElementById('almWorkingTicker');
+      if(group){group.style.display='block';group.style.visibility='visible';group.style.opacity='1';}
+      if(ticker){ticker.style.display='flex';ticker.style.visibility='visible';ticker.style.opacity='1';}
+      if(bar){bar.style.display='flex';bar.style.visibility='visible';bar.style.opacity='1';}
+      if(group&&document.body){var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0);if(h){document.documentElement.style.setProperty('--almFixedTopHeight',h+'px');document.body.style.paddingTop=h+'px';}}
+    }catch(e){}
+  }
+  fix();
+  document.addEventListener('DOMContentLoaded',fix);
+  window.addEventListener('load',fix);
+  setTimeout(fix,50);setTimeout(fix,200);
+})();
+</script>
 <main id="app"></main>
 <div class="modal" id="modal"></div>
 <footer class="footer"><h2>شركة الملكة للحفلات - قطر</h2><div>نطاطيات • زحلاقيات • سناك • تجهيز حفلات</div></footer>
