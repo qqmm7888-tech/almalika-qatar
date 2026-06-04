@@ -20828,3 +20828,104 @@ body.v444ZoomOpen{overflow:hidden!important;}
   },true);
 })();
 </script>
+
+<!-- ===== V453 QA: complete main hero image + unfloat internal category chips (CSS only) ===== -->
+<style id="almalika-v453-complete-hero-unfloat-chips">
+  /* البانر الرئيسي الجديد: يظهر كامل بدون قص، ويمتد بعرض الصفحة */
+  #almalika-main-hero-v450{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+    line-height:0!important;
+    border-radius:0!important;
+    aspect-ratio:4/1!important;
+    height:auto!important;
+    min-height:0!important;
+  }
+  #almalika-main-hero-v450 img{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    object-position:center center!important;
+    max-width:100%!important;
+    max-height:none!important;
+    border:0!important;
+    border-radius:0!important;
+    margin:0!important;
+    padding:0!important;
+    background:#fff!important;
+  }
+  @media(max-width:768px){
+    #almalika-main-hero-v450{aspect-ratio:4/1!important;}
+    #almalika-main-hero-v450 img{height:100%!important;object-fit:contain!important;}
+  }
+
+  /* قوائم الأقسام الفرعية: ليست عائمة ولا ثابتة فوق المنتجات */
+  body.almV402ProductsMode #app .almFrozenProductArea,
+  body.almV402ProductsMode .almFrozenProductArea,
+  #app .almFrozenProductArea,
+  .almFrozenProductArea{
+    position:relative!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    transform:none!important;
+    z-index:1!important;
+    width:auto!important;
+    max-width:100%!important;
+    margin:0 0 12px 0!important;
+    padding:0!important;
+    height:auto!important;
+    min-height:0!important;
+    overflow:visible!important;
+    background:transparent!important;
+  }
+  body.almV402ProductsMode #app .almFrozenProductArea .panel,
+  #app .almFrozenProductArea .panel,
+  .almFrozenProductArea .panel{
+    position:relative!important;
+    top:auto!important;
+    transform:none!important;
+    z-index:1!important;
+    margin:0!important;
+  }
+  body.almV402ProductsMode #app .almFrozenProductArea .chips,
+  body.almV402ProductsMode #app .almFrozenProductArea .chip,
+  #app .almFrozenProductArea .chips,
+  .almFrozenProductArea .chips,
+  .subcategory-chips,.subcats,.category-filters,.section-filters{
+    position:relative!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    transform:none!important;
+    z-index:1!important;
+    overflow:visible!important;
+    max-height:none!important;
+  }
+  #app .almFrozenProductArea .chips,
+  .almFrozenProductArea .chips,
+  .subcategory-chips,.subcats,.category-filters,.section-filters{
+    display:flex!important;
+    flex-wrap:wrap!important;
+    gap:8px!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    margin:8px 0 12px!important;
+    padding:8px 0!important;
+    background:transparent!important;
+    white-space:normal!important;
+  }
+  #app .almFrozenProductArea + .products,
+  .almFrozenProductArea + .products{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+</style>
