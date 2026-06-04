@@ -16952,6 +16952,64 @@ body.v459ZoomOpen{overflow:hidden !important;}
   }
 }
 </style>
+
+
+<!-- ===== V470: press glow effect for product action buttons only ===== -->
+<style id="v470-action-buttons-press-glow">
+  .product .actions button,
+  .product .actions.quickActions button{
+    position:relative !important;
+    overflow:hidden !important;
+    transition:transform .12s ease, filter .12s ease, box-shadow .12s ease !important;
+    -webkit-tap-highlight-color:transparent !important;
+  }
+  .product .actions button:active,
+  .product .actions.quickActions button:active,
+  .product .actions button.v470-press-glow,
+  .product .actions.quickActions button.v470-press-glow{
+    transform:scale(.96) !important;
+    filter:brightness(1.38) saturate(1.15) !important;
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,.95) inset,
+      0 0 18px rgba(255,255,255,.95),
+      0 0 24px rgba(255,47,134,.45) !important;
+  }
+  .product .actions button.v470-press-glow::before,
+  .product .actions.quickActions button.v470-press-glow::before{
+    content:'' !important;
+    position:absolute !important;
+    inset:-35% !important;
+    background:linear-gradient(120deg, transparent 20%, rgba(255,255,255,.95) 48%, transparent 78%) !important;
+    transform:translateX(-120%) rotate(18deg) !important;
+    animation:v470ButtonSweep .55s ease-out 1 !important;
+    pointer-events:none !important;
+    z-index:2 !important;
+  }
+  @keyframes v470ButtonSweep{
+    0%{transform:translateX(-120%) rotate(18deg);opacity:.2;}
+    35%{opacity:1;}
+    100%{transform:translateX(120%) rotate(18deg);opacity:0;}
+  }
+</style>
+<script id="v470-action-buttons-press-glow-script">
+(function(){
+  if(window.__v470PressGlowInstalled) return;
+  window.__v470PressGlowInstalled=true;
+  function glow(btn){
+    if(!btn || !btn.matches) return;
+    if(!btn.matches('.product .actions button, .product .actions.quickActions button')) return;
+    btn.classList.remove('v470-press-glow');
+    void btn.offsetWidth;
+    btn.classList.add('v470-press-glow');
+    setTimeout(function(){ try{ btn.classList.remove('v470-press-glow'); }catch(e){} }, 620);
+  }
+  document.addEventListener('pointerdown', function(e){ glow(e.target.closest && e.target.closest('.product .actions button, .product .actions.quickActions button')); }, true);
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Enter' || e.key===' '){ glow(e.target.closest && e.target.closest('.product .actions button, .product .actions.quickActions button')); }
+  }, true);
+})();
+</script>
+
 </body>
 </html>
 
