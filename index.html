@@ -16813,6 +16813,145 @@ body.v459ZoomOpen{overflow:hidden !important;}
 })();
 </script>
 
+
+
+<!-- V469: force glossy chrome product action buttons ONLY - based on V467/V468 baseline -->
+<style id="almalika-v469-force-glossy-buttons-only">
+/* Do not touch zoom/modal/cart/nav. Only product-card action buttons. */
+.product .actions,
+.product .actions.quickActions,
+.card .actions,
+.card .actions.quickActions,
+[data-product] .actions,
+[data-product] .actions.quickActions{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:6px !important;
+  width:100% !important;
+  margin-top:6px !important;
+  padding:0 !important;
+  overflow:visible !important;
+  background:transparent !important;
+  border-radius:0 !important;
+}
+.product .actions button,
+.product .actions.quickActions button,
+.card .actions button,
+.card .actions.quickActions button,
+[data-product] .actions button,
+[data-product] .actions.quickActions button{
+  position:relative !important;
+  isolation:isolate !important;
+  width:100% !important;
+  min-width:0 !important;
+  height:34px !important;
+  min-height:34px !important;
+  max-height:34px !important;
+  padding:0 8px !important;
+  margin:0 !important;
+  border-radius:12px !important;
+  border:2px solid rgba(45,45,45,.72) !important;
+  outline:1px solid rgba(255,255,255,.55) !important;
+  color:#fff !important;
+  font-weight:900 !important;
+  font-size:12px !important;
+  line-height:1 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:5px !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  text-shadow:0 1px 2px rgba(0,0,0,.55) !important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.72),
+    inset 0 -8px 14px rgba(0,0,0,.25),
+    0 2px 4px rgba(0,0,0,.18) !important;
+  cursor:pointer !important;
+}
+.product .actions button::before,
+.product .actions.quickActions button::before,
+.card .actions button::before,
+.card .actions.quickActions button::before,
+[data-product] .actions button::before,
+[data-product] .actions.quickActions button::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:2px 4px auto 4px !important;
+  height:42% !important;
+  border-radius:10px 10px 8px 8px !important;
+  background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(255,255,255,.18)) !important;
+  z-index:-1 !important;
+  pointer-events:none !important;
+}
+.product .actions button::after,
+.product .actions.quickActions button::after,
+.card .actions button::after,
+.card .actions.quickActions button::after,
+[data-product] .actions button::after,
+[data-product] .actions.quickActions button::after{
+  content:"" !important;
+  position:absolute !important;
+  inset:0 !important;
+  border-radius:10px !important;
+  border:1px solid rgba(255,255,255,.38) !important;
+  pointer-events:none !important;
+}
+/* color mapping */
+.product .actions button.details,
+.product .actions.quickActions button.details,
+.card .actions button.details,
+[data-product] .actions button.details{
+  background:linear-gradient(180deg,#ff68b4 0%,#f0187c 52%,#a90d52 100%) !important;
+}
+.product .actions button.quickShop,
+.product .actions.quickActions button.quickShop,
+.card .actions button.quickShop,
+[data-product] .actions button.quickShop{
+  background:linear-gradient(180deg,#b86aff 0%,#7b21c5 52%,#4c0b8a 100%) !important;
+}
+.product .actions button.shareFriend,
+.product .actions.quickActions button.shareFriend,
+.card .actions button.shareFriend,
+[data-product] .actions button.shareFriend{
+  background:linear-gradient(180deg,#ff8cc7 0%,#d63b93 52%,#8a1f63 100%) !important;
+}
+.product .actions button.wa,
+.product .actions.quickActions button.wa,
+.card .actions button.wa,
+[data-product] .actions button.wa{
+  background:linear-gradient(180deg,#56f78b 0%,#10bd52 52%,#058739 100%) !important;
+}
+.product .actions button:disabled,
+.product .actions.quickActions button:disabled,
+.card .actions button:disabled,
+[data-product] .actions button:disabled{
+  background:linear-gradient(180deg,#d9d9d9 0%,#8f8f8f 52%,#4f4f4f 100%) !important;
+  opacity:1 !important;
+  color:#fff !important;
+}
+@media(max-width:760px){
+  .product .actions,
+  .product .actions.quickActions,
+  .card .actions,
+  .card .actions.quickActions,
+  [data-product] .actions,
+  [data-product] .actions.quickActions{gap:5px !important;}
+  .product .actions button,
+  .product .actions.quickActions button,
+  .card .actions button,
+  .card .actions.quickActions button,
+  [data-product] .actions button,
+  [data-product] .actions.quickActions button{
+    height:32px !important;
+    min-height:32px !important;
+    max-height:32px !important;
+    font-size:11px !important;
+    border-radius:11px !important;
+  }
+}
+</style>
 </body>
 </html>
 
