@@ -16597,6 +16597,222 @@ body.v459ZoomOpen{overflow:hidden !important;}
 })();
 </script>
 
+
+
+<!-- V468: locked changes from V467 baseline - hide header WhatsApp/offers, unify product cards/images/actions only -->
+<style id="almalika-v468-locked-card-action-uniform">
+/* V468 baseline: DO NOT touch zoom/modal/cart logic. Styling only. */
+/* Hide ONLY top header WhatsApp and Offers buttons; keep cart button untouched */
+.headBtns > button.green,
+.headBtns > button.red{
+  display:none !important;
+}
+.headBtns{
+  gap:6px !important;
+  align-items:center !important;
+}
+.headBtns > button.cartMini{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:38px !important;
+}
+
+/* Product cards: one unified height/layout across all product sections */
+.products .product{
+  display:flex !important;
+  flex-direction:column !important;
+  height:560px !important;
+  min-height:560px !important;
+  max-height:560px !important;
+  overflow:hidden !important;
+  border-radius:18px !important;
+}
+.products .product .pic{
+  order:1 !important;
+  width:100% !important;
+  height:245px !important;
+  min-height:245px !important;
+  max-height:245px !important;
+  flex:0 0 245px !important;
+  padding:0 !important;
+  border:0 !important;
+  border-bottom:1px solid #f1e3e3 !important;
+  display:block !important;
+  overflow:hidden !important;
+  background:#fff7e8 !important;
+}
+.products .product .pic img{
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
+  object-fit:cover !important;
+  object-position:center center !important;
+  padding:0 !important;
+  display:block !important;
+  filter:none !important;
+}
+.products .product .body{
+  order:2 !important;
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  padding:14px 12px 10px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  gap:7px !important;
+  text-align:center !important;
+  direction:rtl !important;
+}
+.products .product .body h3{
+  min-height:54px !important;
+  max-height:54px !important;
+  overflow:hidden !important;
+  display:-webkit-box !important;
+  -webkit-line-clamp:2 !important;
+  -webkit-box-orient:vertical !important;
+  line-height:1.28 !important;
+  font-size:20px !important;
+  margin:0 !important;
+}
+.products .product .desc{
+  min-height:48px !important;
+  max-height:48px !important;
+  overflow:hidden !important;
+  display:-webkit-box !important;
+  -webkit-line-clamp:2 !important;
+  -webkit-box-orient:vertical !important;
+  line-height:1.55 !important;
+  margin:0 !important;
+}
+.products .product .tags{
+  min-height:52px !important;
+  max-height:52px !important;
+  overflow:hidden !important;
+  justify-content:center !important;
+  align-content:flex-start !important;
+}
+.products .product .bottom{
+  margin-top:auto !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:stretch !important;
+  gap:7px !important;
+  width:100% !important;
+}
+.products .product .price{
+  width:100% !important;
+  min-height:46px !important;
+  border-radius:12px !important;
+  padding:5px 8px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:linear-gradient(180deg,#fff9df 0%,#fff1c6 100%) !important;
+  border:1px solid #e6c778 !important;
+  text-align:center !important;
+  white-space:normal !important;
+}
+.products .product .price small{font-size:10px !important;line-height:1 !important;margin:0 !important;}
+.products .product .price strong{font-size:20px !important;line-height:1.05 !important;color:#111 !important;}
+
+/* Compact glossy action buttons: 2 x 2; same size everywhere */
+.products .product .actions.quickActions,
+.products .product .actions{
+  width:100% !important;
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:0 !important;
+  border-radius:0 0 12px 12px !important;
+  overflow:hidden !important;
+  align-self:stretch !important;
+}
+.products .product .actions.quickActions button,
+.products .product .actions button{
+  width:100% !important;
+  min-width:0 !important;
+  height:38px !important;
+  min-height:38px !important;
+  max-height:38px !important;
+  padding:0 6px !important;
+  margin:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  color:#fff !important;
+  font-weight:900 !important;
+  font-size:13px !important;
+  line-height:1 !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:5px !important;
+  text-shadow:0 1px 1px rgba(0,0,0,.25) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55), inset 0 -8px 16px rgba(0,0,0,.12) !important;
+}
+.products .product .actions button.details{
+  background:linear-gradient(180deg,#ff4aa0 0%,#ef1f78 55%,#b9195d 100%) !important;
+}
+.products .product .actions button.quickShop{
+  background:linear-gradient(180deg,#b74682 0%,#962762 55%,#6d1747 100%) !important;
+}
+.products .product .actions button.shareFriend{
+  background:linear-gradient(180deg,#d768a8 0%,#bd438c 55%,#8d2b66 100%) !important;
+}
+.products .product .actions button.wa{
+  background:linear-gradient(180deg,#26d878 0%,#13b957 55%,#079542 100%) !important;
+}
+.products .product .actions button:disabled{
+  background:linear-gradient(180deg,#cfcfcf 0%,#9e9e9e 55%,#6f6f6f 100%) !important;
+  color:#fff !important;
+  opacity:1 !important;
+}
+
+/* Keep unavailable product cards same size */
+.products .product.isUnavailable,
+.products .product.unavailable{
+  height:560px !important;
+  min-height:560px !important;
+  max-height:560px !important;
+}
+
+@media(max-width:760px){
+  .products .product{
+    height:535px !important;
+    min-height:535px !important;
+    max-height:535px !important;
+  }
+  .products .product .pic{
+    height:220px !important;
+    min-height:220px !important;
+    max-height:220px !important;
+    flex-basis:220px !important;
+  }
+  .products .product .body h3{font-size:19px !important;min-height:50px !important;max-height:50px !important;}
+  .products .product .desc{min-height:44px !important;max-height:44px !important;}
+  .products .product .actions button{height:37px !important;min-height:37px !important;max-height:37px !important;font-size:12px !important;}
+}
+</style>
+<script id="almalika-v468-hide-header-buttons-only">
+(function(){
+  function cleanHeaderButtons(){
+    try{
+      document.querySelectorAll('.headBtns button').forEach(function(btn){
+        var t=(btn.textContent||'').trim();
+        if(t==='واتساب' || t==='العروض' || t.indexOf('العروض')===0){
+          btn.style.display='none';
+          btn.setAttribute('aria-hidden','true');
+        }
+      });
+    }catch(e){}
+  }
+  cleanHeaderButtons();
+  document.addEventListener('DOMContentLoaded', cleanHeaderButtons);
+  setTimeout(cleanHeaderButtons, 300);
+  setTimeout(cleanHeaderButtons, 1200);
+})();
+</script>
+
 </body>
 </html>
 
