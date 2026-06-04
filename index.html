@@ -2,34 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <!-- ===== V433 QA STEP 11: HARD early refresh reset - prevent restored scroll showing random product image ===== -->
-<script id="almalika-v433-early-refresh-hard-reset">
-(function(){
-  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
-  try{ document.documentElement.classList.add('alm-v433-booting'); }catch(e){}
-  function resetTop(){
-    try{ window.scrollTo(0,0); }catch(e){}
-    try{ document.documentElement.scrollTop=0; document.body && (document.body.scrollTop=0); }catch(e){}
-  }
-  resetTop();
-  var start=Date.now();
-  function loop(){
-    resetTop();
-    if(Date.now()-start<1700){ requestAnimationFrame(loop); }
-  }
-  requestAnimationFrame(loop);
-  function reveal(){
-    resetTop();
-    setTimeout(resetTop,50);
-    setTimeout(function(){
-      resetTop();
-      try{ document.documentElement.classList.remove('alm-v433-booting'); }catch(e){}
-    },180);
-  }
-  document.addEventListener('DOMContentLoaded',reveal);
-  window.addEventListener('load',function(){ setTimeout(reveal,80); setTimeout(reveal,500); });
-  window.addEventListener('pageshow',function(){ resetTop(); setTimeout(reveal,80); });
-})();
-</script>
+<!-- removed almalika-v433-early-refresh-hard-reset -->
 <style id="almalika-v433-early-refresh-style">
 html.alm-v433-booting body{opacity:1!important;overflow:auto!important;}
 html.alm-v433-booting #almalikaV397ImageViewer,
@@ -6083,15 +6056,8 @@ body{
 
 
 <!-- ===== V425 QA: mobile intro appears before catalog content (no flash) ===== -->
-<script id="almalika-v425-intro-early-guard">
-(function(){try{if(window.matchMedia&&window.matchMedia('(max-width: 768px)').matches){document.documentElement.classList.add('almIntroPending');}}catch(e){}})();
-</script>
-<style id="almalika-v425-intro-early-style">
-@media(max-width:768px){
-  html.almIntroPending body > *:not(#almMobileIntro){visibility:hidden!important;}
-  html.almIntroPending #almMobileIntro, html.almIntroPending #almMobileIntro *{visibility:visible!important;}
-}
-</style>
+<!-- removed almalika-v425-intro-early-guard -->
+<!-- removed almalika-v425-intro-early-style -->
 
 <style id="v448-remove-main-hero-image-clean">
 /* V448: حذف صورة الرئيسية الكبيرة بالكامل وإزالة أي مساحة فارغة تابعة لها */
@@ -6118,6 +6084,135 @@ body{
 .cartBar{display:none !important; height:0 !important; min-height:0 !important; padding:0 !important; margin:0 !important; overflow:hidden !important;}
 body{padding-bottom:0 !important;}
 </style>
+
+<!-- ===== V452 FIX: no floating subcategory chips + instant mobile content ===== -->
+<style id="almalika-v452-unfloat-chips-instant-mobile">
+  /* لا يوجد إخفاء أو انتظار على الجوال */
+  html, body, #app{
+    opacity:1!important;
+    visibility:visible!important;
+    overflow:auto!important;
+  }
+  html.almIntroPending body > *, html.alm-v433-booting body > *{
+    visibility:visible!important;
+  }
+  html.almIntroPending, html.alm-v433-booting{
+    scroll-behavior:auto!important;
+  }
+  #almMobileIntro{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+
+  /* إلغاء تعويم/تثبيت فلاتر الأقسام الفرعية في الكمبيوتر والجوال */
+  .chips,
+  .subcats,
+  .subCats,
+  .internalChips,
+  .categoryChips,
+  .category-chips,
+  .sectionChips,
+  .section-chips,
+  .filterChips,
+  .filter-chips,
+  .panel + .chips,
+  .title + .chips,
+  #app .chips,
+  #app [class*="chip"],
+  #app [class*="Chip"]{
+    position:relative!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    transform:none!important;
+    translate:none!important;
+    z-index:2!important;
+    display:flex!important;
+    flex-wrap:wrap!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    gap:8px!important;
+    overflow:visible!important;
+    max-height:none!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:8px 0 12px!important;
+    padding:6px 8px!important;
+    background:transparent!important;
+  }
+  #app .chip{
+    position:relative!important;
+    top:auto!important;
+    transform:none!important;
+    white-space:nowrap!important;
+  }
+
+  /* عنوان القسم نفسه لا يطفو فوق المنتجات */
+  #app .panel,
+  #app .title,
+  #app .sectionHeader,
+  #app .section-header,
+  #app [class*="sectionHeader"],
+  #app [class*="SectionHeader"]{
+    position:relative!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    transform:none!important;
+    z-index:2!important;
+    margin-top:0!important;
+  }
+  #app .section,
+  #app .wrap.section,
+  #app .products{
+    position:relative!important;
+    top:auto!important;
+    transform:none!important;
+    z-index:1!important;
+  }
+
+  @media(max-width:768px){
+    html,body{padding-top:0!important;margin-top:0!important;scroll-padding-top:0!important;}
+    #app{display:block!important;visibility:visible!important;opacity:1!important;min-height:0!important;margin-top:0!important;padding-top:0!important;}
+    #almTopFixedGroup,#almWorkingTicker,#almWelcome15Bar{visibility:visible!important;opacity:1!important;display:block!important;transform:none!important;}
+    #almWelcome15Bar{display:flex!important;}
+    .chips,#app .chips,#app [class*="chip"],#app [class*="Chip"]{
+      justify-content:flex-start!important;
+      overflow-x:visible!important;
+      white-space:normal!important;
+      width:100%!important;
+    }
+  }
+</style>
+<script id="almalika-v452-unfloat-chips-instant-mobile-js">
+(function(){
+  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+  function instant(){
+    try{document.documentElement.classList.remove('almIntroPending','alm-v433-booting');}catch(e){}
+    try{document.body && document.body.classList.add('almAppEntered');}catch(e){}
+    try{var intro=document.getElementById('almMobileIntro'); if(intro) intro.remove();}catch(e){}
+    try{document.querySelectorAll('.chips,.subcats,.subCats,.internalChips,.categoryChips,.sectionChips,.filterChips,.panel,.title,.sectionHeader,.section-header').forEach(function(el){
+      el.style.setProperty('position','relative','important');
+      el.style.setProperty('top','auto','important');
+      el.style.setProperty('left','auto','important');
+      el.style.setProperty('right','auto','important');
+      el.style.setProperty('bottom','auto','important');
+      el.style.setProperty('transform','none','important');
+      el.style.setProperty('z-index','2','important');
+      if(el.classList && (el.classList.contains('chips')||el.classList.contains('subcats')||el.classList.contains('subCats')||el.classList.contains('internalChips'))){
+        el.style.setProperty('overflow','visible','important');
+        el.style.setProperty('flex-wrap','wrap','important');
+        el.style.setProperty('height','auto','important');
+        el.style.setProperty('max-height','none','important');
+      }
+    });}catch(e){}
+  }
+  instant();
+  document.addEventListener('DOMContentLoaded',function(){instant();setTimeout(instant,50);setTimeout(instant,250);});
+  window.addEventListener('load',function(){instant();setTimeout(instant,80);setTimeout(instant,500);});
+  try{new MutationObserver(function(){instant();}).observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});}catch(e){}
+})();
+</script>
+
 </head>
 <body>
 
