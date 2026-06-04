@@ -16874,6 +16874,147 @@ body .product .actions button:disabled::before{content:""!important;}
 })();
 </script>
 
+
+
+<!-- V472 strict paired glossy rectangular product buttons - based on V467/V471 only -->
+<style id="v472-paired-glossy-buttons-final">
+/* حذف واتساب والعروض من الهيدر فقط مع إبقاء السلة */
+.headBtns > .btn.green,
+.headBtns > .btn.red{
+  display:none !important;
+}
+.headBtns{gap:8px !important;align-items:center !important;}
+.headBtns > .cartMini{display:inline-flex !important;}
+
+/* توحيد منطقة السعر والأزرار بدون لمس وظائفها */
+#app .product .bottom{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:7px !important;
+  align-items:stretch !important;
+  margin-top:auto !important;
+}
+#app .product .price{
+  width:100% !important;
+  min-height:48px !important;
+  padding:6px 8px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
+  align-items:center !important;
+  border-radius:9px !important;
+  border:2px solid #b9b9b9 !important;
+  background:linear-gradient(180deg,#fffdf6 0%,#fff5d7 100%) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95), 0 1px 3px rgba(0,0,0,.12) !important;
+  text-align:center !important;
+  white-space:normal !important;
+  box-sizing:border-box !important;
+}
+#app .product .price small{font-size:10px !important;line-height:1 !important;color:#6f645f !important;font-weight:800 !important;}
+#app .product .price strong{font-size:20px !important;line-height:1.05 !important;color:#111 !important;font-weight:1000 !important;}
+
+/* كل زرين مقابلين لبعض: تفاصيل/تسوق سريع ثم تحويل/واتساب */
+#app .product .actions,
+#app .product .actions.quickActions{
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:6px !important;
+  width:100% !important;
+  align-items:stretch !important;
+  direction:rtl !important;
+}
+#app .product .actions button,
+#app .product .actions.quickActions button{
+  position:relative !important;
+  overflow:hidden !important;
+  min-width:0 !important;
+  width:100% !important;
+  height:44px !important;
+  min-height:44px !important;
+  padding:0 8px !important;
+  border-radius:9px !important;
+  border:2px solid #252525 !important;
+  outline:2px solid #d7d7d7 !important;
+  outline-offset:1px !important;
+  color:#fff !important;
+  font-size:12px !important;
+  line-height:1 !important;
+  font-weight:1000 !important;
+  text-shadow:0 1px 1px rgba(0,0,0,.55) !important;
+  box-shadow:
+    inset 0 3px 2px rgba(255,255,255,.55),
+    inset 0 -7px 0 rgba(0,0,0,.22),
+    0 2px 0 #080808,
+    0 4px 7px rgba(0,0,0,.24) !important;
+  transform:none !important;
+  cursor:pointer !important;
+  white-space:nowrap !important;
+  text-align:center !important;
+}
+#app .product .actions button::before{
+  display:inline-block !important;
+  margin-inline-end:5px !important;
+  font-size:18px !important;
+  line-height:1 !important;
+  vertical-align:-2px !important;
+  filter:drop-shadow(0 1px 0 rgba(0,0,0,.35)) !important;
+}
+#app .product .actions button::after,
+#app .product .actions.quickActions button::after{
+  content:'' !important;
+  position:absolute !important;
+  left:6px !important;
+  right:6px !important;
+  top:4px !important;
+  height:38% !important;
+  border-radius:7px !important;
+  background:linear-gradient(180deg,rgba(255,255,255,.70),rgba(255,255,255,.16)) !important;
+  pointer-events:none !important;
+  animation:none !important;
+}
+#app .product .actions .details{background:linear-gradient(180deg,#ff61a5 0%,#e31672 50%,#a6094c 100%) !important;}
+#app .product .actions .quickShop{background:linear-gradient(180deg,#ff6060 0%,#df1111 50%,#8f0505 100%) !important;}
+#app .product .actions .shareFriend{background:linear-gradient(180deg,#ffc75a 0%,#f39a00 52%,#ab6400 100%) !important;}
+#app .product .actions .wa{background:linear-gradient(180deg,#8fe779 0%,#25b83d 52%,#08741f 100%) !important;}
+#app .product .actions .details::before{content:'✨' !important;}
+#app .product .actions .quickShop::before{content:'🛒' !important;}
+#app .product .actions .shareFriend::before{content:'🎁' !important;}
+#app .product .actions .wa::before{content:'📱' !important;}
+
+/* إضاءة عند الضغط/اللمس بدون تغيير الوظيفة */
+@keyframes almalikaButtonGlowV472{
+  0%{filter:brightness(1);box-shadow:inset 0 3px 2px rgba(255,255,255,.55),inset 0 -7px 0 rgba(0,0,0,.22),0 2px 0 #080808,0 4px 7px rgba(0,0,0,.24)}
+  45%{filter:brightness(1.45);box-shadow:0 0 20px rgba(255,255,255,.95),0 0 18px currentColor,inset 0 3px 2px rgba(255,255,255,.75),inset 0 -7px 0 rgba(0,0,0,.18),0 2px 0 #080808,0 5px 10px rgba(0,0,0,.28)}
+  100%{filter:brightness(1);box-shadow:inset 0 3px 2px rgba(255,255,255,.55),inset 0 -7px 0 rgba(0,0,0,.22),0 2px 0 #080808,0 4px 7px rgba(0,0,0,.24)}
+}
+#app .product .actions button:active,
+#app .product .actions button.is-glowing{
+  animation:almalikaButtonGlowV472 .55s ease !important;
+  transform:scale(.97) !important;
+}
+
+/* تطبيق نفس النمط على الجوال بدون تحويلها لتحت بعض */
+@media(max-width:700px){
+  #app .product .bottom{gap:7px !important;}
+  #app .product .actions,
+  #app .product .actions.quickActions{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:6px !important;}
+  #app .product .actions button{height:42px !important;min-height:42px !important;font-size:11px !important;border-radius:9px !important;}
+  #app .product .actions button::before{font-size:16px !important;margin-inline-end:3px !important;}
+  #app .product .price{min-height:46px !important;}
+  #app .product .price strong{font-size:19px !important;}
+}
+</style>
+<script id="v472-button-press-glow-js">
+document.addEventListener('pointerdown',function(e){
+  var b=e.target.closest&&e.target.closest('#app .product .actions button');
+  if(!b) return;
+  b.classList.remove('is-glowing');
+  void b.offsetWidth;
+  b.classList.add('is-glowing');
+  setTimeout(function(){b.classList.remove('is-glowing')},650);
+},true);
+</script>
+
 </body>
 </html>
 
