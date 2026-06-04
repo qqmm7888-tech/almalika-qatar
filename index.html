@@ -15438,6 +15438,86 @@ body.v436ImageZoomOpen{overflow:hidden!important;}
 })();
 </script>
 
+
+
+<!-- ===== V437 QA STEP 15: remove duplicated mobile menus and WhatsApp buttons from home header ===== -->
+<style id="almalika-v437-remove-duplicates-whatsapp">
+@media (max-width:768px){
+  /* إخفاء شريط الأقسام المكرر أسفل البحث */
+  #almMobileQuickTabs{
+    display:none!important;
+    visibility:hidden!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:0!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    overflow:hidden!important;
+  }
+
+  /* حذف أرقام الموظفين من هذه المنطقة فقط */
+  .almEmployeePhones{
+    display:none!important;
+    visibility:hidden!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:0!important;
+    padding:0!important;
+    margin:0!important;
+    border:0!important;
+    overflow:hidden!important;
+  }
+
+  /* حذف زر واتساب الأخضر الموجود وسط الصفحة الرئيسية */
+  #almTopFixedGroup .headBtns,
+  .headBtns{
+    display:none!important;
+    visibility:hidden!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:0!important;
+    padding:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+
+  /* ترتيب المنطقة بعد حذف العناصر الزائدة */
+  #almTopFixedGroup .searchRow,
+  .searchRow{
+    margin-top:10px!important;
+    padding-top:8px!important;
+  }
+  #nav.nav{
+    margin-bottom:12px!important;
+  }
+}
+</style>
+<script id="almalika-v437-remove-duplicates-whatsapp-js">
+(function(){
+  function isMobile(){return window.matchMedia && window.matchMedia('(max-width:768px)').matches;}
+  function cleanHeaderDuplicates(){
+    if(!isMobile()) return;
+    try{
+      document.querySelectorAll('#almMobileQuickTabs,.almEmployeePhones').forEach(function(el){ el.remove(); });
+      document.querySelectorAll('#almTopFixedGroup .headBtns,.headBtns').forEach(function(el){
+        el.style.setProperty('display','none','important');
+        el.style.setProperty('visibility','hidden','important');
+        el.style.setProperty('height','0','important');
+        el.style.setProperty('margin','0','important');
+        el.style.setProperty('padding','0','important');
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){cleanHeaderDuplicates();setTimeout(cleanHeaderDuplicates,100);setTimeout(cleanHeaderDuplicates,600);});
+  window.addEventListener('load',function(){cleanHeaderDuplicates();setTimeout(cleanHeaderDuplicates,300);setTimeout(cleanHeaderDuplicates,1000);});
+  document.addEventListener('click',function(){setTimeout(cleanHeaderDuplicates,80);setTimeout(cleanHeaderDuplicates,500);},true);
+  window.addEventListener('resize',cleanHeaderDuplicates);
+  try{new MutationObserver(function(){setTimeout(cleanHeaderDuplicates,40);}).observe(document.documentElement,{childList:true,subtree:true,attributes:true});}catch(e){}
+  setInterval(cleanHeaderDuplicates,700);
+})();
+</script>
+
 </body>
 </html>
 
