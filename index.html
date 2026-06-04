@@ -21205,3 +21205,133 @@ body.v444ZoomOpen{overflow:hidden!important;}
     padding-top:0!important;
   }
 </style>
+
+
+<!-- ===== V456 RESCUE STABILIZATION: fixed requirements from Mahmoud ===== -->
+<style id="almalika-v456-rescue-stabilization">
+/* 1) Collapse abandoned/empty home promo containers and prevent hidden blocks from reserving space */
+#almHomePromoSlider,.almPromoSlider,.almPromoViewport,.almPromoSlide,.almPromoMosaic,.almPromoDots,.almPromoNav,
+.homePromoBlock,.homePromoSlider,.homePromo,.almFrozenProductArea,.promoArea,.promoBlock,
+[class*="promoSlider"],[class*="PromoSlider"],[id*="promoSlider"],[id*="PromoSlider"]{
+  display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;
+  height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;border:0!important;
+}
+/* shrink accidental white gaps before section headers */
+.section{padding-top:12px!important;margin-top:0!important;}
+.section .title{margin-top:0!important;margin-bottom:10px!important;position:relative!important;top:auto!important;transform:none!important;}
+.wrap > .section:first-of-type{padding-top:8px!important;}
+
+/* 2) Subcategory chips must never float over products */
+.chips,.subcats,.subcategory-chips,.category-filters,.section-filters,.filterChips,.chipsRow,
+.title + .chips, .section .chips{
+  position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+  transform:none!important;z-index:2!important;float:none!important;
+  display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:flex-end!important;
+  overflow:visible!important;height:auto!important;min-height:0!important;max-height:none!important;
+  margin:8px 0 12px!important;padding:6px 0!important;background:transparent!important;
+}
+.chips .chip,.subcategory-chips .chip,.category-filters .chip,.section-filters .chip{
+  flex:0 0 auto!important;white-space:normal!important;
+}
+
+/* 3) Bottom cart is permanently forbidden; keep only header cart */
+body > .cartBar, #app > .cartBar, .mobileCartBar,.bottomCart,.fixedCart,.floatingCart,.cartFloatingBar,
+[class*="bottom"][class*="cart"],[id*="bottom"][id*="cart"]{
+  display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;
+  height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;border:0!important;
+}
+body{padding-bottom:0!important;}
+
+/* 4) Decor modal image area: no blank gap, selected image replaces main image */
+#modal .modalPic{display:block!important;align-self:start!important;min-height:0!important;height:auto!important;overflow:visible!important;background:transparent!important;}
+#modal .modalPic > img.mainDecorImg,
+#modal img[id^="mainImg_"]{
+  display:block!important;width:100%!important;height:auto!important;max-height:420px!important;object-fit:contain!important;
+  margin:0 auto 10px!important;background:#fff!important;border-radius:16px!important;cursor:zoom-in!important;
+}
+#modal img[id^="mainImg_"].almInlineZoomed{
+  max-height:72vh!important;width:100%!important;object-fit:contain!important;cursor:zoom-out!important;
+  box-shadow:0 18px 50px rgba(0,0,0,.18)!important;border:3px solid #fff!important;
+}
+#modal .decorGallery{margin-top:8px!important;}
+
+/* 5) keep header visible and stable */
+.header,#almTopFixedGroup{position:sticky!important;top:0!important;z-index:1000!important;transform:none!important;}
+
+@media(max-width:768px){
+  html,body{overflow-x:hidden!important;}
+  .section{padding-top:8px!important;}
+  .title{padding:10px 12px!important;}
+  .chips,.subcats,.subcategory-chips,.category-filters,.section-filters,.filterChips,.chipsRow{
+    justify-content:flex-start!important;gap:6px!important;padding:6px 10px!important;margin:4px 0 8px!important;
+  }
+  #modal img[id^="mainImg_"]{max-height:310px!important;}
+}
+</style>
+<script id="almalika-v456-rescue-stabilization-script">
+(function(){
+  if(window.__ALM_V456_RESCUE__) return; window.__ALM_V456_RESCUE__=true;
+  function qsAll(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel));}
+  function srcOf(img){return img && (img.currentSrc || img.src || img.getAttribute('src') || '');}
+  function openOfferZoom(src){
+    if(!src) return;
+    var old=document.getElementById('almOfferZoomV456'); if(old) old.remove();
+    var z=document.createElement('div');
+    z.id='almOfferZoomV456';
+    z.dir='rtl';
+    z.style.cssText='position:fixed;inset:0;z-index:2147483646;background:rgba(0,0,0,.88);display:flex;align-items:center;justify-content:center;padding:18px;box-sizing:border-box;';
+    z.innerHTML='<button type="button" aria-label="إغلاق" style="position:fixed;top:18px;right:18px;width:54px;height:54px;border:0;border-radius:999px;background:#ec2673;color:#fff;font-size:34px;font-weight:900;line-height:1;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.25)">×</button><img alt="" src="'+src.replace(/"/g,'&quot;')+'" style="max-width:min(96vw,1100px);max-height:90vh;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 18px 60px rgba(0,0,0,.35)">';
+    z.addEventListener('click',function(e){ if(e.target===z || e.target.tagName==='BUTTON') z.remove(); });
+    document.body.appendChild(z);
+  }
+  function cardNumber(card){
+    var txt=(card&&card.textContent)||'';
+    var m=txt.match(/#\s*(\d{1,4})/) || txt.match(/رقم\s*(\d{1,4})/);
+    if(m) return parseInt(m[1],10);
+    var badge=card&&card.querySelector('[class*="badge"],[class*="num"],.productNo,.pnum');
+    if(badge){m=(badge.textContent||'').match(/\d+/); if(m) return parseInt(m[0],10);}
+    return 0;
+  }
+  function isOfferCard(card){
+    var n=cardNumber(card);
+    if(n>=600 && n<700) return true;
+    var sec=card&&card.closest('.section,section,[id]');
+    var t=((sec&&sec.textContent)||'').slice(0,500);
+    return /العروض|البكجات|SUMMER|عرض/.test(t);
+  }
+  document.addEventListener('click',function(e){
+    var main=e.target.closest && e.target.closest('#modal img[id^="mainImg_"],#modal .mainDecorImg');
+    if(main){
+      e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+      main.classList.toggle('almInlineZoomed');
+      try{ main.scrollIntoView({block:'center',behavior:'smooth'}); }catch(_){ }
+      return false;
+    }
+    var thumb=e.target.closest && e.target.closest('#modal .decorThumb');
+    if(thumb){
+      setTimeout(function(){
+        var main2=document.querySelector('#modal img[id^="mainImg_"],#modal .mainDecorImg');
+        if(main2) main2.classList.remove('almInlineZoomed');
+      },0);
+      return;
+    }
+    var img=e.target.closest && e.target.closest('.product img,.card img,[class*="product"] img');
+    if(img){
+      var card=img.closest('.product,.card,[class*="product"],[data-number]');
+      if(card && isOfferCard(card)){
+        e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation();
+        openOfferZoom(srcOf(img));
+        return false;
+      }
+    }
+  },true);
+  function cleanup(){
+    qsAll('.cartBar,.mobileCartBar,.bottomCart,.fixedCart,.floatingCart,.cartFloatingBar').forEach(function(el){
+      if(!el.closest('.headBtns') && !el.closest('header') && !el.closest('.header')) el.remove();
+    });
+    qsAll('#almHomePromoSlider,.almPromoSlider,.almPromoViewport,.almPromoSlide,.almPromoMosaic,.almPromoDots,.almPromoNav,.homePromoBlock,.promoArea,.promoBlock').forEach(function(el){el.remove();});
+  }
+  document.addEventListener('DOMContentLoaded',cleanup);
+  window.addEventListener('load',function(){cleanup(); setTimeout(cleanup,300);});
+})();
+</script>
