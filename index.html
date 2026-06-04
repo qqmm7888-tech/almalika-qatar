@@ -15757,234 +15757,166 @@ body.v395ImageZoomOpen{overflow:auto!important;}
 })();
 </script>
 
-
-<!-- ===== V457 RESCUE: no floating section headers, no bottom cart, stable mobile, decor image replace/zoom inside modal ===== -->
-<style id="almalika-v457-rescue-final-css">
-  html,body{margin-top:0!important;padding-top:0!important;scroll-behavior:auto!important;}
+<!-- ===== V458 REAL RESCUE FROM V455: no floating chips, no white gaps, safe modal image handling ===== -->
+<style id="almalika-v458-real-rescue-style">
+  /* 1) منع فراغ الأقسام والقوائم العائمة نهائياً */
+  html,body{margin-top:0!important;padding-top:0!important;scroll-padding-top:0!important;}
+  body{padding-bottom:0!important;opacity:1!important;overflow:auto!important;}
   body.almV402ProductsMode{padding-top:0!important;}
   #app{margin-top:0!important;padding-top:0!important;}
-  #app > section.wrap.section{padding-top:0!important;margin-top:0!important;}
-
-  /* منع الفراغ الأبيض الكبير في كل الأقسام */
-  #app .wrap.section,
-  #app section.wrap.section,
-  #app .products,
-  body.almV402ProductsMode #app .products,
-  body.almV402ProductsMode #app .section,
-  body.almV402ProductsMode #app .wrap.section{
+  #app > section.wrap.section,
+  body.almV402ProductsMode #app > section.wrap.section{
+    padding-top:12px!important;
     margin-top:0!important;
-    padding-top:0!important;
-    transform:none!important;
-    min-height:0!important;
   }
-
-  /* عنوان القسم والفلاتر داخل الصفحة، غير عائمة وغير sticky */
   #app .almFrozenProductArea,
-  body.almV402ProductsMode #app .almFrozenProductArea,
-  .almFrozenProductArea{
-    position:relative!important;
-    top:auto!important; left:auto!important; right:auto!important; bottom:auto!important;
-    transform:none!important;
-    z-index:2!important;
-    width:100%!important;
-    max-width:100%!important;
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
-    margin:0 0 10px!important;
-    padding:0!important;
-    overflow:visible!important;
-    background:transparent!important;
-    box-shadow:none!important;
-    border:0!important;
-    backdrop-filter:none!important;
-    -webkit-backdrop-filter:none!important;
-  }
-  #app .almFrozenProductArea .panel,
-  .almFrozenProductArea .panel{
-    position:relative!important;top:auto!important;transform:none!important;z-index:1!important;
-    margin:0 0 8px!important;
-  }
-  #app .almFrozenProductArea .chips,
-  .almFrozenProductArea .chips,
-  .subcategory-chips,.subcats,.subCats,.category-filters,.section-filters{
+  body.almV402ProductsMode #app .almFrozenProductArea{
     position:relative!important;
     top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
     transform:none!important;
-    z-index:1!important;
-    display:flex!important;
-    flex-wrap:wrap!important;
-    white-space:normal!important;
-    overflow:visible!important;
-    max-height:none!important;
-    gap:8px!important;
-    margin:8px 0 12px!important;
-    padding:6px 0!important;
-    background:transparent!important;
-  }
-  #app .almFrozenProductArea + .products{margin-top:0!important;padding-top:0!important;}
-
-  /* حذف السلة السفلية بشكل نهائي، مع إبقاء سلة الهيدر */
-  body > .cartBar,
-  body > .cartButton,
-  body > .fixedCart,
-  body > .floatingCart,
-  body > .mobileCartBar,
-  body > .bottomCart,
-  body > .cartFloatingBar,
-  #app .cartBar,
-  #app .cartButton,
-  #app .fixedCart,
-  #app .floatingCart,
-  #app .mobileCartBar,
-  #app .bottomCart,
-  #app .cartFloatingBar,
-  [class*="bottom"][class*="cart"],
-  [id*="bottom"][id*="cart"]{
-    display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;
-    height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;
-  }
-  .headBtns .cartMini,.headBtns .btn.cartMini,button.cartMini{
-    display:inline-flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
+    z-index:2!important;
+    width:auto!important;max-width:100%!important;
     height:auto!important;min-height:0!important;max-height:none!important;
+    margin:0 0 10px!important;
+    padding:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    border:0!important;
+    backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+    overflow:visible!important;
+  }
+  #app .almFrozenProductArea .panel,
+  body.almV402ProductsMode #app .almFrozenProductArea .panel{
+    position:relative!important;top:auto!important;transform:none!important;
+    margin:0 0 8px!important;
+    padding:16px 20px!important;
+    z-index:2!important;
+  }
+  #app .almFrozenProductArea .chips,
+  body.almV402ProductsMode #app .almFrozenProductArea .chips,
+  .subcategory-chips,.subcats,.category-filters,.section-filters{
+    position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+    transform:none!important;z-index:2!important;
+    display:flex!important;flex-wrap:wrap!important;align-items:center!important;justify-content:flex-start!important;
+    gap:8px!important;margin:8px 0 12px!important;padding:6px 0!important;
+    max-height:none!important;overflow:visible!important;white-space:normal!important;
+    background:transparent!important;box-shadow:none!important;border:0!important;
+  }
+  #app .almFrozenProductArea .chip,
+  body.almV402ProductsMode #app .almFrozenProductArea .chip{
+    position:relative!important;top:auto!important;transform:none!important;z-index:2!important;
+  }
+  #app .almFrozenProductArea + .products,
+  body.almV402ProductsMode #app .almFrozenProductArea + .products{
+    margin-top:0!important;padding-top:0!important;
   }
 
-  /* البانر الرئيسي: كامل بدون قص، وبدون فراغ فوق */
-  #almalika-main-hero-v450{
-    display:block!important;width:100%!important;max-width:100%!important;aspect-ratio:4/1!important;
-    height:auto!important;min-height:0!important;max-height:none!important;margin:0!important;padding:0!important;line-height:0!important;overflow:hidden!important;background:#fff!important;
+  /* 2) حذف السلة السفلية نهائياً، والإبقاء على سلة الهيدر فقط */
+  body > .cartBar,
+  #app .cartBar,
+  .fixedWhats,
+  .floatingCart,
+  .mobileCartBar,
+  .bottomCart,
+  .cartFloatingBar{
+    display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;
   }
-  #almalika-main-hero-v450 img{
-    display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;
+  .headBtns .cartMini,
+  .headBtns [onclick*="openCart"],
+  .headBtns [onclick*="showCart"]{
+    display:inline-flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;
   }
 
-  /* نافذة الديكور: إزالة فراغ الصورة */
-  #modal .modalPic,
-  #modal .quickShopPic{
-    min-height:0!important;height:auto!important;max-height:none!important;margin-bottom:10px!important;padding:8px!important;overflow:hidden!important;
+  /* 3) صورة الهيرو الجديدة كاملة بدون قص */
+  #almalika-main-hero-v450{display:block!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;overflow:hidden!important;background:#fff!important;line-height:0!important;border-radius:0!important;aspect-ratio:4/1!important;height:auto!important;min-height:0!important;}
+  #almalika-main-hero-v450 img{display:block!important;width:100%!important;height:100%!important;object-fit:contain!important;object-position:center center!important;max-width:100%!important;max-height:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#fff!important;}
+
+  /* 4) نافذة الديكور: بدون فراغات غريبة، والصورة الرئيسية مكانها ثابت */
+  #modal .modalBox.detailed .modalPic,
+  #modal .modalBox.eventDetailed .modalPic,
+  #modal .modalBox.eventDetailed.hasDecorMedia .modalPic{
+    position:relative!important;top:auto!important;align-self:start!important;
+    min-height:0!important;height:auto!important;max-height:none!important;
+    overflow:visible!important;padding:14px!important;
+    display:flex!important;flex-direction:column!important;gap:10px!important;
+    background:linear-gradient(180deg,#fffaf0,#fff7fb)!important;
   }
-  #modal .modalPic img,
-  #modal .mainDecorImg,
-  #modal .mainDecorPreview,
-  #modal .decorPreviewBox img{
-    display:block!important;width:100%!important;height:auto!important;max-height:360px!important;object-fit:contain!important;margin:0 auto!important;cursor:zoom-in!important;
+  #modal .modalPic > img.mainDecorImg,
+  #modal .modalPic > img[id^="mainImg_"]{
+    display:block!important;width:100%!important;height:auto!important;max-height:320px!important;
+    object-fit:contain!important;margin:0 auto!important;padding:0!important;
+    border-radius:16px!important;background:#fff!important;cursor:zoom-in!important;
   }
-  #modal.almDecorImageExpanded .modalPic img,
-  #modal.almDecorImageExpanded .mainDecorImg,
-  #modal.almDecorImageExpanded .mainDecorPreview{
-    max-height:76vh!important;width:100%!important;object-fit:contain!important;background:#fff!important;border-radius:18px!important;
+  #modal .decorGallery{margin-top:8px!important;margin-bottom:0!important;}
+  #modal .decorThumbs{position:relative!important;top:auto!important;max-height:360px!important;overflow:auto!important;}
+  #modal .decorThumb{position:relative!important;top:auto!important;transform:none!important;}
+
+  /* تكبير داخل نافذة التفاصيل وليس فوق كل الموقع */
+  #modal .almInlineImageZoom{
+    position:absolute!important;inset:10px!important;z-index:80!important;
+    display:none!important;align-items:center!important;justify-content:center!important;flex-direction:column!important;
+    background:rgba(0,0,0,.86)!important;border-radius:22px!important;padding:16px!important;box-sizing:border-box!important;
   }
-  #modal .decorThumb img,
-  #modal .decorThumbs img,
-  #modal .decorGallery img{cursor:pointer!important;}
+  #modal .almInlineImageZoom.show{display:flex!important;}
+  #modal .almInlineImageZoom img{max-width:100%!important;max-height:calc(100vh - 160px)!important;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:16px!important;background:#fff!important;box-shadow:0 18px 60px rgba(0,0,0,.4)!important;}
+  #modal .almInlineImageZoom button{margin-top:12px!important;border:0!important;border-radius:999px!important;background:#ef2d78!important;color:#fff!important;font-weight:900!important;padding:12px 26px!important;font-size:16px!important;}
 
   @media(max-width:768px){
-    html,body{margin-top:0!important;padding-top:0!important;overflow-x:hidden!important;}
-    #app .almFrozenProductArea,.almFrozenProductArea{position:relative!important;top:auto!important;margin:0 0 8px!important;padding:0 10px!important;}
-    #app .almFrozenProductArea .panel{padding:12px!important;border-radius:18px!important;}
-    #app .almFrozenProductArea .panel h1{font-size:22px!important;line-height:1.25!important;}
-    #app .almFrozenProductArea .panel p{font-size:12px!important;line-height:1.5!important;}
-    #app .almFrozenProductArea .chips{max-height:none!important;overflow:visible!important;display:flex!important;flex-wrap:wrap!important;gap:7px!important;padding:6px 0!important;}
-    #app .products{padding-top:0!important;margin-top:0!important;}
-    #almalika-main-hero-v450{aspect-ratio:4/1!important;}
-    #modal .modalPic img,#modal .mainDecorImg,#modal .mainDecorPreview{max-height:280px!important;}
-    #modal.almDecorImageExpanded .modalPic img,#modal.almDecorImageExpanded .mainDecorImg,#modal.almDecorImageExpanded .mainDecorPreview{max-height:72vh!important;}
+    #app > section.wrap.section,body.almV402ProductsMode #app > section.wrap.section{padding-top:8px!important;}
+    #app .almFrozenProductArea .panel{padding:12px 14px!important;margin-bottom:6px!important;}
+    #app .almFrozenProductArea .chips{gap:6px!important;margin:6px 0 8px!important;padding:4px 0!important;}
+    #modal .modalPic > img.mainDecorImg,#modal .modalPic > img[id^="mainImg_"]{max-height:260px!important;}
   }
 </style>
-<script id="almalika-v457-rescue-final-js">
+<script id="almalika-v458-real-rescue-script">
 (function(){
-  function safe(fn){try{fn();}catch(e){}}
-  function stopBadLayout(){
-    safe(function(){document.documentElement.style.setProperty('--almFixedTopHeight','0px');});
-    safe(function(){document.body.style.paddingTop='0px';document.body.classList.remove('almV402ProductsMode');});
-    safe(function(){
-      document.querySelectorAll('#app .almFrozenProductArea,.almFrozenProductArea').forEach(function(el){
-        el.style.setProperty('position','relative','important');
-        el.style.setProperty('top','auto','important');
-        el.style.setProperty('transform','none','important');
-        el.style.setProperty('z-index','2','important');
-        el.style.setProperty('margin','0 0 10px','important');
-        el.style.setProperty('padding','0','important');
-        el.style.setProperty('height','auto','important');
-        el.style.setProperty('min-height','0','important');
-        el.style.setProperty('overflow','visible','important');
-      });
-      document.querySelectorAll('#app .almFrozenProductArea .chips,.almFrozenProductArea .chips,.subcategory-chips,.subcats,.subCats,.category-filters,.section-filters').forEach(function(el){
-        el.style.setProperty('position','relative','important');
-        el.style.setProperty('top','auto','important');
-        el.style.setProperty('transform','none','important');
-        el.style.setProperty('overflow','visible','important');
-        el.style.setProperty('max-height','none','important');
-        el.style.setProperty('display','flex','important');
-        el.style.setProperty('flex-wrap','wrap','important');
-        el.style.setProperty('white-space','normal','important');
-      });
-    });
-    safe(function(){
-      document.querySelectorAll('body > .cartBar,body > .cartButton,body > .fixedCart,body > .floatingCart,body > .mobileCartBar,body > .bottomCart,body > .cartFloatingBar,#app .cartBar,#app .cartButton,#app .fixedCart,#app .floatingCart,#app .mobileCartBar,#app .bottomCart,#app .cartFloatingBar').forEach(function(el){
-        if(el.closest && el.closest('.headBtns')) return;
-        el.remove();
-      });
+  function cleanLayout(){
+    try{document.body.classList.remove('almV402ProductsMode');}catch(e){}
+    try{document.body.style.paddingTop='0px';document.documentElement.style.paddingTop='0px';}catch(e){}
+    try{document.documentElement.style.removeProperty('--almFrozenAreaHeight');}catch(e){}
+    document.querySelectorAll('body > .cartBar,#app .cartBar,.fixedWhats,.floatingCart,.mobileCartBar,.bottomCart,.cartFloatingBar').forEach(function(el){
+      if(!(el.closest && el.closest('.headBtns'))) el.remove();
     });
   }
+  document.addEventListener('DOMContentLoaded',function(){cleanLayout();setTimeout(cleanLayout,100);setTimeout(cleanLayout,500);});
+  window.addEventListener('load',function(){cleanLayout();setTimeout(cleanLayout,250);});
+  window.addEventListener('hashchange',function(){setTimeout(cleanLayout,60);});
+  document.addEventListener('click',function(){setTimeout(cleanLayout,80);},true);
 
-  /* إعادة تعريف render حتى لا يضيف منطقة sticky مرة ثانية */
-  function installStableRender(){
-    safe(function(){
-      if(typeof render!=='function' || render.__almV457Stable) return;
-      var stable=function(){
-        if(current==='home'){renderHome(); stopBadLayout(); return;}
-        renderNav(); fillInternal();
-        const arr=relevantProducts();
-        const name=(sections.find(s=>s[0]===current)||[])[1]||'الكتالوج';
-        app.innerHTML=`<section class="wrap section"><div class="almFrozenProductArea almStableSectionHead"><div class="panel"><div><h1>${icon(current)} ${name}</h1><p>عدد البنود المعروضة: ${arr.length} — اضغط على الصورة أو التفاصيل لفتح بيانات المنتج.</p></div></div><div class="chips">${(internalSections[current]||['الجميع']).map(x=>`<button class="chip ${x===internal?'active':''}" onclick="setInternal('${esc(x)}')">${x}</button>`).join('')}</div></div><div class="products alm-responsive-products">${arr.length?arr.map(card).join(''):'<div class="empty">لا توجد منتجات مطابقة للبحث أو الفلتر الحالي</div>'}</div></section>`;
-        stopBadLayout();
-      };
-      stable.__almV457Stable=true;
-      window.render=stable;
-      render=stable;
-    });
+  function ensureInlineZoom(box){
+    var z=box.querySelector('.almInlineImageZoom');
+    if(!z){
+      z=document.createElement('div');
+      z.className='almInlineImageZoom';
+      z.innerHTML='<img alt="صورة مكبرة"><button type="button">إغلاق</button>';
+      box.appendChild(z);
+      z.addEventListener('click',function(e){if(e.target===z || e.target.tagName==='BUTTON'){z.classList.remove('show'); var im=z.querySelector('img'); if(im) im.removeAttribute('src');}});
+    }
+    return z;
   }
-
-  function imgSrc(img){return img?(img.currentSrc||img.src||img.getAttribute('src')||img.getAttribute('data-src')||''):'';}
-  function replaceMainDecorImage(src){
-    if(!src) return;
-    var modal=document.getElementById('modal'); if(!modal) return;
-    var main=modal.querySelector('.modalPic img,.mainDecorImg,.mainDecorPreview,.decorPreviewBox img');
-    if(main){ main.src=src; main.setAttribute('src',src); modal.classList.remove('almDecorImageExpanded'); }
-  }
-  function clickedThumb(el){
-    if(!el || !el.closest) return null;
-    return el.closest('#modal .decorThumb img,#modal .decorThumbs img,#modal .decorGallery img,#modal .themePreview img,#modal .themeFixedPreview img');
-  }
-  function clickedMain(el){
-    if(!el || !el.closest) return null;
-    return el.closest('#modal .modalPic img,#modal .mainDecorImg,#modal .mainDecorPreview,#modal .decorPreviewBox img');
+  function showInlineZoom(img){
+    var box=img.closest('#modal .modalBox'); if(!box) return;
+    var z=ensureInlineZoom(box); var im=z.querySelector('img');
+    if(im) im.src=img.currentSrc||img.src||img.getAttribute('src')||'';
+    z.classList.add('show');
   }
   document.addEventListener('click',function(e){
-    var modal=document.getElementById('modal');
-    if(!modal || !modal.classList.contains('show')) return;
-    var thumb=clickedThumb(e.target);
-    if(thumb && !(thumb.closest('.modalPic'))){
-      e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
-      replaceMainDecorImage(imgSrc(thumb));
-      return false;
+    var thumb=e.target.closest && e.target.closest('#modal .decorThumb');
+    if(thumb){
+      // اترك onclick الأصلي يبدّل الصورة فقط
+      setTimeout(function(){
+        var img=thumb.querySelector('img'); var main=document.querySelector('#modal .modalPic > img.mainDecorImg,#modal .modalPic > img[id^="mainImg_"]');
+        if(img && main){ main.src=img.currentSrc||img.src||img.getAttribute('src')||main.src; }
+      },0);
+      return;
     }
-    var main=clickedMain(e.target);
+    var main=e.target.closest && e.target.closest('#modal .modalPic > img.mainDecorImg,#modal .modalPic > img[id^="mainImg_"]');
     if(main){
-      e.preventDefault();e.stopPropagation();if(e.stopImmediatePropagation)e.stopImmediatePropagation();
-      modal.classList.toggle('almDecorImageExpanded');
+      e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      showInlineZoom(main);
       return false;
     }
   },true);
-
-  function boot(){installStableRender();stopBadLayout();}
-  document.addEventListener('DOMContentLoaded',function(){boot();setTimeout(boot,100);setTimeout(boot,700);});
-  window.addEventListener('load',function(){boot();setTimeout(boot,300);setTimeout(boot,1200);});
-  window.addEventListener('resize',function(){setTimeout(stopBadLayout,80);});
-  window.addEventListener('hashchange',function(){setTimeout(function(){installStableRender();stopBadLayout();},80);});
-  document.addEventListener('click',function(){setTimeout(function(){installStableRender();stopBadLayout();},80);},true);
-  setInterval(stopBadLayout,1500);
 })();
 </script>
 
@@ -19606,125 +19538,8 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
 </script>
 
 <!-- ===== V402: تثبيت منطقة المنتجات بالكامل بدون فراغ أبيض أو تحرك ===== -->
-<style id="almalika-v402-freeze-products-area-no-gap">
-/* تثبيت منطقة عنوان القسم والفلاتر كقطعة واحدة أسفل الهيدر */
-body.almV402ProductsMode #app .almFrozenProductArea{
-  position:fixed!important;
-  top:var(--almFixedTopHeight,176px)!important;
-  left:50%!important;
-  right:auto!important;
-  transform:translateX(-50%)!important;
-  width:min(100% - 36px,var(--site-max,1440px))!important;
-  z-index:2147482600!important;
-  margin:0!important;
-  padding:8px 0 8px!important;
-  background:linear-gradient(180deg,rgba(255,250,252,.995),rgba(255,247,250,.99))!important;
-  backdrop-filter:blur(14px)!important;
-  -webkit-backdrop-filter:blur(14px)!important;
-  border-bottom:1px solid rgba(246,216,230,.95)!important;
-  box-shadow:0 12px 28px rgba(106,27,46,.08)!important;
-}
-body.almV402ProductsMode #app .almFrozenProductArea .panel{
-  margin:0 0 8px!important;
-  padding:16px 20px!important;
-}
-body.almV402ProductsMode #app .almFrozenProductArea .chips{
-  margin:0!important;
-  padding:3px 0 2px!important;
-  max-height:58px!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  scrollbar-width:thin!important;
-  justify-content:flex-start!important;
-}
-/* تعويض ارتفاع المنطقة المثبتة حتى لا تختفي المنتجات تحتها */
-body.almV402ProductsMode #app > section.wrap.section{
-  padding-top:calc(var(--almFrozenAreaHeight,132px) + 14px)!important;
-}
-body.almV402ProductsMode #app .products{
-  scroll-margin-top:calc(var(--almFixedTopHeight,176px) + var(--almFrozenAreaHeight,132px) + 18px)!important;
-}
-@media(max-width:700px){
-  body.almV402ProductsMode #app .almFrozenProductArea{
-    width:min(100% - 16px,640px)!important;
-    padding:7px 0!important;
-  }
-  body.almV402ProductsMode #app .almFrozenProductArea .panel{
-    padding:12px 14px!important;
-    border-radius:18px!important;
-  }
-  body.almV402ProductsMode #app .almFrozenProductArea .panel h1{font-size:21px!important;}
-  body.almV402ProductsMode #app .almFrozenProductArea .panel p{font-size:12px!important;}
-  body.almV402ProductsMode #app .almFrozenProductArea .chips{max-height:96px!important;}
-}
-</style>
-<script id="almalika-v402-freeze-products-area-no-gap-script">
-(function(){
-  function topFixedHeight(){
-    var group=document.getElementById('almTopFixedGroup');
-    if(group) return Math.ceil(group.getBoundingClientRect().height || group.offsetHeight || 0);
-    var h=0;
-    var ticker=document.getElementById('v361TopTickerWrap') || document.querySelector('.almWorkingTickerWrap,.v361TopTickerWrap');
-    var header=document.querySelector('.header,header.header');
-    if(ticker) h += Math.ceil(ticker.getBoundingClientRect().height || ticker.offsetHeight || 0);
-    if(header) h += Math.ceil(header.getBoundingClientRect().height || header.offsetHeight || 0);
-    return h || 176;
-  }
-  function stopTicker(){
-    document.querySelectorAll('.almWorkingTickerTrack,.v361TickerTrack,.v360TickerTrack,.v359TickerTrack').forEach(function(el){
-      /* ticker motion kept active */
-    });
-  }
-  function refresh(){
-    var frozen=document.querySelector('#app .almFrozenProductArea');
-    if(!frozen){
-      document.body.classList.remove('almV402ProductsMode');
-      return;
-    }
-    document.body.classList.add('almV402ProductsMode');
-    var top=topFixedHeight();
-    document.documentElement.style.setProperty('--almFixedTopHeight', top+'px');
-    document.body.style.paddingTop=top+'px';
-    // نقرأ ارتفاع العنوان والفلاتر بعد تثبيتها ثم نعوض المنتجات تحته
-    var fh=Math.ceil(frozen.getBoundingClientRect().height || frozen.offsetHeight || 132);
-    document.documentElement.style.setProperty('--almFrozenAreaHeight', fh+'px');
-  }
-  function schedule(){
-    refresh();
-    requestAnimationFrame(function(){refresh(); setTimeout(refresh,80); setTimeout(refresh,260);});
-  }
-  var oldScroll=window.almalikaScrollToFirstProduct;
-  window.almalikaScrollToFirstProduct=function(){
-    schedule();
-    setTimeout(function(){
-      var products=document.querySelector('#app .products');
-      if(!products) return;
-      var top=topFixedHeight();
-      var frozen=document.querySelector('#app .almFrozenProductArea');
-      var fh=frozen ? Math.ceil(frozen.getBoundingClientRect().height||0) : 0;
-      var y=products.getBoundingClientRect().top + (window.pageYOffset||document.documentElement.scrollTop||0) - top - fh - 14;
-      window.scrollTo({top:Math.max(0,Math.round(y)),behavior:'auto'});
-    },120);
-    if(typeof oldScroll==='function') setTimeout(oldScroll,220);
-  };
-  document.addEventListener('DOMContentLoaded',schedule);
-  window.addEventListener('load',schedule);
-  window.addEventListener('resize',schedule);
-  window.addEventListener('hashchange',schedule);
-  document.addEventListener('click',function(e){
-    if(e.target && e.target.closest && e.target.closest('#nav button,.nav button,.mainCats .cat,.chip')){
-      setTimeout(schedule,30);
-      setTimeout(schedule,220);
-    }
-  },true);
-  var mo=new MutationObserver(function(){schedule();});
-  document.addEventListener('DOMContentLoaded',function(){
-    var app=document.getElementById('app');
-    if(app) mo.observe(app,{childList:true,subtree:false});
-  });
-  setInterval(schedule,1200);
-})();
-</script>
+<style id="almalika-v402-freeze-products-area-no-gap">/* disabled: no floating frozen product area */</style>
+<script id="almalika-v402-freeze-products-area-no-gap-script">/* disabled: prevents floating category filters and white gaps */</script>
 
 
 <!-- ===== V412 MOBILE APP INTRO + RAFEEQ-STYLE EXPERIENCE FOR ALMALIKA ===== -->
@@ -21277,65 +21092,7 @@ body.v444ZoomOpen{overflow:hidden!important;}
   body.v450ZoomOpen{overflow:hidden!important;}
   @media(max-width:640px){#almalikaV450Zoom{padding:10px!important;}#almalikaV450Zoom img{max-width:98vw!important;max-height:88vh!important;border-radius:14px!important;}#almalikaV450Zoom button{top:10px!important;right:10px!important;width:48px!important;height:48px!important;font-size:30px!important;}}
 </style>
-<script id="almalika-v450-stable-repair-js">
-(function(){
-  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
-
-  function removeOldHomeBlocks(){
-    try{
-      document.querySelectorAll('#almHomePromoSlider,.almPromoSlider,.almPromoViewport,.almPromoSlide,.almPromoMosaic,.almPromoDots,.almPromoNav').forEach(function(el){el.remove();});
-      document.querySelectorAll('.cartBar,.cartButton,.fixedCart,.floatingCart,.mobileCartBar,.bottomCart,.cartFloatingBar').forEach(function(el){
-        var inHead=el.closest && el.closest('.headBtns');
-        if(!inHead) el.remove();
-      });
-    }catch(e){}
-  }
-  function forceNoRandomScroll(){
-    try{
-      document.body.classList.remove('modal-open','zoom-open','v397ImageViewerOpen','v395ImageZoomOpen');
-      var bad=document.getElementById('almalikaGlobalImageZoom'); if(bad) bad.classList.remove('show');
-      var bad2=document.getElementById('almalikaImageZoom'); if(bad2) bad2.classList.remove('show');
-    }catch(e){}
-  }
-  function boot(){removeOldHomeBlocks(); forceNoRandomScroll();}
-  document.addEventListener('DOMContentLoaded',function(){boot();setTimeout(boot,100);setTimeout(boot,600);});
-  window.addEventListener('load',function(){boot();setTimeout(boot,250);setTimeout(boot,1200);});
-  try{ new MutationObserver(function(){removeOldHomeBlocks();}).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
-
-  function imgSrc(img){return img ? (img.currentSrc||img.src||img.getAttribute('src')||img.getAttribute('data-src')||'') : '';}
-  function openZoom(src){
-    if(!src) return;
-    var z=document.getElementById('almalikaV450Zoom');
-    if(!z){
-      z=document.createElement('div');z.id='almalikaV450Zoom';
-      z.innerHTML='<button type="button" aria-label="إغلاق">×</button><img alt="صورة مكبرة">';
-      document.body.appendChild(z);
-      z.addEventListener('click',function(e){if(e.target===z||e.target.tagName==='BUTTON') closeZoom();});
-    }
-    var im=z.querySelector('img'); if(im) im.src=src;
-    z.classList.add('show'); document.body.classList.add('v450ZoomOpen');
-  }
-  function closeZoom(){var z=document.getElementById('almalikaV450Zoom'); if(z){z.classList.remove('show'); var im=z.querySelector('img'); if(im) im.removeAttribute('src');} document.body.classList.remove('v450ZoomOpen');}
-  window.almalikaV450OpenZoom=openZoom; window.almalikaV450CloseZoom=closeZoom;
-  document.addEventListener('keydown',function(e){if(e.key==='Escape') closeZoom();});
-
-  function modalIsEventOrOffer(){
-    var modal=document.getElementById('modal'); if(!modal) return false;
-    var t=(modal.textContent||'');
-    if(/تجهيز حفلات|ديكور|حفلات|العروض|عرض|باقة|بكج|SUMMER|SPECIAL/i.test(t)) return true;
-    var num=(t.match(/#\s*(\d+)/)||[])[1];
-    if(num){num=Number(num); if((num>=200&&num<300)||(num>=600&&num<700)) return true;}
-    return false;
-  }
-  document.addEventListener('click',function(e){
-    var img=e.target && e.target.closest ? e.target.closest('#modal .modalPic img,#modal .mainDecorImg,#modal .mainDecorPreview') : null;
-    if(!img) return;
-    if(!modalIsEventOrOffer()) return;
-    e.preventDefault(); e.stopPropagation(); if(e.stopImmediatePropagation) e.stopImmediatePropagation();
-    openZoom(imgSrc(img));
-  },true);
-})();
-</script>
+<script id="almalika-v450-stable-repair-js">/* disabled global zoom; replaced by v458 safe repair */</script>
 
 <!-- ===== V453 QA: complete main hero image + unfloat internal category chips (CSS only) ===== -->
 <style id="almalika-v453-complete-hero-unfloat-chips">
