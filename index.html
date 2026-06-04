@@ -16392,6 +16392,154 @@ body.v459ZoomOpen{overflow:hidden !important;}
 }
 </style>
 
+
+
+<!-- ===== V466 FORCE: compact product action buttons exactly like reference ===== -->
+<style id="v466-force-compact-product-buttons-final">
+  /* تطبيق قاطع على كروت المنتجات: السعر فوق، والأزرار صفّين/عمودين مثل المرجع */
+  body #app .products .product .bottom,
+  body .products .product .bottom,
+  body .product .bottom{
+    display:block!important;
+    grid-template-columns:none!important;
+    gap:0!important;
+    margin-top:8px!important;
+    width:100%!important;
+  }
+  body #app .products .product .price,
+  body .products .product .price,
+  body .product .price{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    min-height:42px!important;
+    height:auto!important;
+    box-sizing:border-box!important;
+    margin:0 0 0!important;
+    padding:6px 8px!important;
+    border-radius:11px!important;
+    background:linear-gradient(180deg,#fff9df,#fff0c7)!important;
+    border:1px solid rgba(212,175,55,.60)!important;
+    text-align:center!important;
+  }
+  body #app .products .product .price small,
+  body .product .price small{
+    display:block!important;font-size:9px!important;line-height:1!important;margin:0!important;color:#8c7651!important;font-weight:900!important;
+  }
+  body #app .products .product .price strong,
+  body .product .price strong{
+    display:block!important;font-size:18px!important;line-height:1.05!important;margin:1px 0 0!important;color:#111!important;font-weight:1000!important;
+  }
+  body #app .products .product .actions,
+  body #app .products .product .actions.quickActions,
+  body .products .product .actions,
+  body .products .product .actions.quickActions,
+  body .product .actions,
+  body .product .actions.quickActions{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    grid-auto-rows:38px!important;
+    gap:0!important;
+    width:100%!important;
+    max-width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    border-radius:0!important;
+    box-sizing:border-box!important;
+  }
+  body #app .products .product .actions button,
+  body #app .products .product .actions.quickActions button,
+  body .products .product .actions button,
+  body .product .actions button{
+    width:100%!important;
+    min-width:0!important;
+    min-height:38px!important;
+    height:38px!important;
+    max-height:38px!important;
+    padding:6px 5px!important;
+    margin:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    font-size:12px!important;
+    line-height:1!important;
+    font-weight:1000!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    white-space:nowrap!important;
+    box-sizing:border-box!important;
+  }
+  body .product .actions .details{background:linear-gradient(135deg,#ff2f86,#d91b63)!important;color:#fff!important;}
+  body .product .actions .shareFriend{background:linear-gradient(135deg,#ce5a9b,#b83f7e)!important;color:#fff!important;}
+  body .product .actions .quickShop{background:linear-gradient(135deg,#8b2d5b,#702246)!important;color:#fff!important;}
+  body .product .actions .wa{background:linear-gradient(135deg,#22c761,#16a64c)!important;color:#fff!important;}
+  @media(max-width:700px){
+    body #app .products .product .actions,
+    body #app .products .product .actions.quickActions,
+    body .product .actions{grid-template-columns:1fr 1fr!important;grid-auto-rows:40px!important;}
+    body #app .products .product .actions button,
+    body .product .actions button{height:40px!important;max-height:40px!important;min-height:40px!important;font-size:12px!important;}
+  }
+</style>
+<script id="v466-force-compact-product-buttons-script">
+(function(){
+  function apply(){
+    document.querySelectorAll('.product').forEach(function(card){
+      var bottom=card.querySelector('.bottom');
+      var price=card.querySelector('.price');
+      var actions=card.querySelector('.actions');
+      if(bottom){
+        bottom.style.setProperty('display','block','important');
+        bottom.style.setProperty('grid-template-columns','none','important');
+        bottom.style.setProperty('gap','0','important');
+        bottom.style.setProperty('width','100%','important');
+        bottom.style.setProperty('margin-top','8px','important');
+      }
+      if(price){
+        price.style.setProperty('width','100%','important');
+        price.style.setProperty('min-height','42px','important');
+        price.style.setProperty('margin','0','important');
+        price.style.setProperty('padding','6px 8px','important');
+        price.style.setProperty('border-radius','11px','important');
+        price.style.setProperty('display','flex','important');
+        price.style.setProperty('flex-direction','column','important');
+        price.style.setProperty('align-items','center','important');
+        price.style.setProperty('justify-content','center','important');
+      }
+      if(actions){
+        actions.classList.add('quickActions');
+        actions.style.setProperty('display','grid','important');
+        actions.style.setProperty('grid-template-columns','1fr 1fr','important');
+        actions.style.setProperty('grid-auto-rows','38px','important');
+        actions.style.setProperty('gap','0','important');
+        actions.style.setProperty('width','100%','important');
+        actions.style.setProperty('margin','0','important');
+        actions.style.setProperty('padding','0','important');
+        actions.querySelectorAll('button').forEach(function(btn){
+          btn.style.setProperty('width','100%','important');
+          btn.style.setProperty('height','38px','important');
+          btn.style.setProperty('min-height','38px','important');
+          btn.style.setProperty('max-height','38px','important');
+          btn.style.setProperty('border-radius','0','important');
+          btn.style.setProperty('margin','0','important');
+          btn.style.setProperty('padding','6px 5px','important');
+          btn.style.setProperty('font-size','12px','important');
+          btn.style.setProperty('line-height','1','important');
+          btn.style.setProperty('box-shadow','none','important');
+        });
+      }
+    });
+  }
+  document.addEventListener('DOMContentLoaded',function(){apply();setTimeout(apply,100);setTimeout(apply,600);});
+  window.addEventListener('load',function(){apply();setTimeout(apply,300);});
+  document.addEventListener('click',function(){setTimeout(apply,80);setTimeout(apply,300);},true);
+  try{new MutationObserver(function(){setTimeout(apply,50);}).observe(document.body||document.documentElement,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
+
 </body>
 </html>
 
