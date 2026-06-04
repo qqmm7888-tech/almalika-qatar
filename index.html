@@ -15405,11 +15405,11 @@ body.v436ImageZoomOpen{overflow:hidden!important;}
     return [p.name,p.category,p.type,p.group,p.section,p.details,p.description,p.rentType].filter(Boolean).join(' ');
   }
   function allowedZoomProduct(n,card){
-    var p=productByNum(n);
-    var t=(textOfProduct(p)+' '+(card?(card.textContent||''):'')).replace(/\s+/g,' ');
-    /* مسموح فقط للحفلات/الديكورات والعروض/البكجات */
-    if(/(تجهيز|حفلات|حفلة|ديكور|ديكورات|عيد ميلاد|زواج|خطوبة|تخرج|هيليوم|بالون|بالونات|استاند|ستاند|عرض|عروض|باقة|بكج|بكجات|SPECIAL|Summer)/i.test(t)) return true;
-    /* أرقام الديكورات غالباً 101-299، والعروض غالباً 600+ */
+    /* V439: تكبير الصورة فقط لقسم تجهيز الحفلات وقسم العروض.
+       لا نعتمد على النص لأن أغلب المنتجات تحتوي كلمة "حفلات" في الوصف.
+       لذلك نعتمد على أرقام الأقسام:
+       101-299 = تجهيز حفلات/ديكورات
+       600 فما فوق = العروض والبكجات */
     var num=Number(n);
     if((num>=101 && num<300) || num>=600) return true;
     return false;
@@ -15557,7 +15557,7 @@ body.v436ImageZoomOpen{overflow:hidden!important;}
 </script>
 
 
-<!-- index_v438_QA_step16_zoom_only_events_offers -->
+<!-- index_v439_QA_step17_zoom_strict_events_offers -->
 </body>
 </html>
 
@@ -20540,3 +20540,5 @@ body.almV402ProductsMode #app .products{
   window.addEventListener('load',function(){setTimeout(bootClean,0);setTimeout(bootClean,250);setTimeout(bootClean,900);});
 })();
 </script>
+
+<!-- index_v439_QA_step17_zoom_strict_events_offers -->
