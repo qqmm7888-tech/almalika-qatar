@@ -21338,3 +21338,72 @@ body.v444ZoomOpen{overflow:hidden!important;}
     padding-top:0!important;
   }
 </style>
+
+<!-- ===== V460: تكبير صورة الديكور داخل نافذة التفاصيل فوق كل شيء ===== -->
+<style id="almalika-v460-decor-modal-zoom-top-style">
+#modal.show .modalPic img,
+#modal.show .decorMain img,
+#modal.show .decorPreview img,
+#modal.show [data-main-decor-image] img,
+#modal.show img.decorMainImage{
+  cursor: zoom-in !important;
+}
+#almalikaV459TopZoom{
+  z-index:2147483647 !important;
+}
+#almalikaV459TopZoom.show{
+  display:flex !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+}
+</style>
+<script id="almalika-v460-decor-modal-zoom-top-script">
+(function(){
+  function srcOf(img){return img ? (img.currentSrc||img.src||img.getAttribute('src')||img.getAttribute('data-src')||'') : '';}
+  function ensureViewer(){
+    var z=document.getElementById('almalikaV459TopZoom');
+    if(!z){
+      z=document.createElement('div');
+      z.id='almalikaV459TopZoom';
+      z.innerHTML='<button type="button" aria-label="إغلاق">×</button><img alt="صورة مكبرة">';
+      document.body.appendChild(z);
+      z.addEventListener('click',function(e){if(e.target===z || e.target.tagName==='BUTTON') closeZoom();},true);
+    }
+    return z;
+  }
+  function openZoom(src){
+    if(!src) return;
+    var z=ensureViewer();
+    var img=z.querySelector('img');
+    if(img) img.src=src;
+    z.classList.add('show');
+    z.style.display='flex';
+    z.style.zIndex='2147483647';
+    document.body.classList.add('v459ZoomOpen');
+  }
+  function closeZoom(){
+    var z=document.getElementById('almalikaV459TopZoom');
+    if(z){z.classList.remove('show');z.style.display='none';var img=z.querySelector('img');if(img) img.removeAttribute('src');}
+    document.body.classList.remove('v459ZoomOpen');
+  }
+  window.almalikaV460OpenDecorZoom=openZoom;
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') closeZoom();});
+  document.addEventListener('click',function(e){
+    try{
+      var modal=document.getElementById('modal');
+      if(!modal || !modal.classList.contains('show')) return;
+      var img=e.target && e.target.closest ? e.target.closest('#modal .modalPic img, #modal .decorMain img, #modal .decorPreview img, #modal [data-main-decor-image] img, #modal img.decorMainImage') : null;
+      if(!img) return;
+      /* لا نفتح التكبير عند الضغط على صور الخيارات الصغيرة، حتى تبقى وظيفتها تبديل الصورة الأساسية */
+      if(img.closest('.decorThumb,.decorThumbs')) return;
+      var src=srcOf(img);
+      if(!src) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      openZoom(src);
+    }catch(err){}
+  },true);
+})();
+</script>
