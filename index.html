@@ -15920,6 +15920,150 @@ body.v395ImageZoomOpen{overflow:auto!important;}
 })();
 </script>
 
+
+
+<!-- ===== V459: تكبير صور العروض وإظهارها فوق كل العناصر ===== -->
+<style id="almalika-v459-offer-zoom-top-style">
+/* تكبير بصري بسيط لصور كروت العروض حتى تكون أوضح */
+.product[data-section="offers"] .pic,
+.product.v459OfferCard .pic,
+.product.v459OfferCard .pic img{
+  cursor: zoom-in !important;
+}
+.product.v459OfferCard .pic{
+  min-height: 300px !important;
+}
+.product.v459OfferCard .pic img{
+  width:100% !important;
+  height:100% !important;
+  object-fit: contain !important;
+  padding:6px !important;
+}
+/* عارض التكبير فوق كل شيء */
+#almalikaV459TopZoom{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:2147483647 !important;
+  display:none !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:rgba(0,0,0,.90) !important;
+  backdrop-filter:blur(8px) !important;
+  -webkit-backdrop-filter:blur(8px) !important;
+  padding:16px !important;
+  box-sizing:border-box !important;
+}
+#almalikaV459TopZoom.show{display:flex !important;}
+#almalikaV459TopZoom img{
+  display:block !important;
+  max-width:96vw !important;
+  max-height:92vh !important;
+  width:auto !important;
+  height:auto !important;
+  object-fit:contain !important;
+  background:#fff !important;
+  border-radius:18px !important;
+  box-shadow:0 30px 100px rgba(0,0,0,.70) !important;
+}
+#almalikaV459TopZoom button{
+  position:fixed !important;
+  top:16px !important;
+  right:18px !important;
+  width:58px !important;
+  height:58px !important;
+  border-radius:999px !important;
+  border:0 !important;
+  background:#ef2d78 !important;
+  color:#fff !important;
+  font-size:36px !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  box-shadow:0 14px 34px rgba(239,45,120,.50) !important;
+  cursor:pointer !important;
+}
+body.v459ZoomOpen{overflow:hidden !important;}
+@media(max-width:700px){
+  .product.v459OfferCard .pic{min-height:230px !important;}
+  #almalikaV459TopZoom{padding:10px !important;}
+  #almalikaV459TopZoom img{max-width:98vw !important;max-height:88vh !important;border-radius:14px !important;}
+  #almalikaV459TopZoom button{top:10px !important;right:10px !important;width:50px !important;height:50px !important;font-size:32px !important;}
+}
+</style>
+<script id="almalika-v459-offer-zoom-top-script">
+(function(){
+  function getNum(card){
+    try{var t=(card.querySelector('.num')||{}).textContent||'';var m=t.match(/\d+/);return m?Number(m[0]):0;}catch(e){return 0;}
+  }
+  function getProduct(n){
+    try{return (window.products||products||[]).find(function(p){return Number(p.number||p.id)===Number(n);});}catch(e){return null;}
+  }
+  function isOfferProduct(p,n){
+    try{
+      var c=String((p&&p.category)||'')+' '+String((p&&p.section)||'')+' '+String((p&&p.sub)||'')+' '+String((p&&p.name)||'');
+      if(n>=600 && n<=699) return true;
+      if(/عروض|بكجات|عرض/i.test(c)) return true;
+    }catch(e){}
+    return false;
+  }
+  function srcOf(img){return img ? (img.currentSrc||img.src||img.getAttribute('src')||img.getAttribute('data-src')||'') : '';}
+  function ensureViewer(){
+    var z=document.getElementById('almalikaV459TopZoom');
+    if(!z){
+      z=document.createElement('div');
+      z.id='almalikaV459TopZoom';
+      z.innerHTML='<button type="button" aria-label="إغلاق">×</button><img alt="صورة مكبرة">';
+      document.body.appendChild(z);
+      z.addEventListener('click',function(e){if(e.target===z || e.target.tagName==='BUTTON') closeZoom();},true);
+    }
+    return z;
+  }
+  function openZoom(src){
+    if(!src) return;
+    var z=ensureViewer();
+    var img=z.querySelector('img');
+    img.src=src;
+    z.classList.add('show');
+    document.body.classList.add('v459ZoomOpen');
+  }
+  function closeZoom(){
+    var z=document.getElementById('almalikaV459TopZoom');
+    if(z){z.classList.remove('show');var img=z.querySelector('img');if(img) img.removeAttribute('src');}
+    document.body.classList.remove('v459ZoomOpen');
+  }
+  window.almalikaV459OpenZoom=openZoom;
+  window.almalikaV459CloseZoom=closeZoom;
+  function markOffers(){
+    document.querySelectorAll('.product').forEach(function(card){
+      var n=getNum(card), p=getProduct(n);
+      if(isOfferProduct(p,n)) card.classList.add('v459OfferCard'); else card.classList.remove('v459OfferCard');
+    });
+  }
+  document.addEventListener('click',function(e){
+    var pic=e.target && e.target.closest ? e.target.closest('.product .pic') : null;
+    if(!pic) return;
+    var card=pic.closest('.product');
+    var n=getNum(card), p=getProduct(n);
+    if(!isOfferProduct(p,n)) return;
+    var img=pic.querySelector('img');
+    var src=srcOf(img);
+    if(src){
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      openZoom(src);
+    }
+  },true);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') closeZoom();});
+  document.addEventListener('DOMContentLoaded',function(){markOffers();setTimeout(markOffers,250);setTimeout(markOffers,1000);});
+  window.addEventListener('load',function(){markOffers();setTimeout(markOffers,500);setTimeout(markOffers,1500);});
+  var oldRender=window.render;
+  if(typeof oldRender==='function' && !oldRender.__v459Wrapped){
+    window.render=function(){var r=oldRender.apply(this,arguments);setTimeout(markOffers,0);setTimeout(markOffers,300);return r;};
+    window.render.__v459Wrapped=true;
+  }
+})();
+</script>
+
 </body>
 </html>
 
