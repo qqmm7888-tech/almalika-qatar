@@ -15480,6 +15480,149 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 })();
 </script>
 
+
+
+<!-- === V454: fix decor modal empty gap + main image click zoom + thumbnails replace main image === -->
+<style id="almalika-v454-decor-modal-zoom-gap-fix">
+/* لا نغير باقي الموقع: فقط نافذة تفاصيل الديكور */
+#modal .modalBox.detailed.eventDetailed,
+#modal .modalBox.detailed{
+  align-items:start !important;
+}
+#modal .modalPic{
+  align-self:start !important;
+  align-content:start !important;
+  justify-content:center !important;
+  gap:10px !important;
+  min-height:0 !important;
+  height:auto !important;
+  padding-top:14px !important;
+  padding-bottom:14px !important;
+  overflow:visible !important;
+}
+#modal .modalPic > img.mainDecorImg,
+#modal img.mainDecorImg{
+  display:block !important;
+  width:100% !important;
+  max-width:330px !important;
+  height:auto !important;
+  max-height:330px !important;
+  object-fit:contain !important;
+  background:#fffdf8 !important;
+  border-radius:18px !important;
+  border:1px solid rgba(212,175,55,.45) !important;
+  cursor:zoom-in !important;
+}
+#modal .decorGallery,
+#modal .decorThumbGrid,
+#modal .decorGalleryGrid{
+  position:relative !important;
+  top:auto !important;
+  left:auto !important;
+  right:auto !important;
+  transform:none !important;
+  display:grid !important;
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  gap:10px !important;
+  width:100% !important;
+  max-width:360px !important;
+  margin:10px auto 0 !important;
+  overflow:visible !important;
+}
+#modal .decorThumb{
+  cursor:pointer !important;
+}
+#modal .decorThumb img{
+  width:100% !important;
+  height:92px !important;
+  object-fit:cover !important;
+  border-radius:12px !important;
+}
+@media(max-width:768px){
+  #modal .modalBox.detailed,
+  #modal .modalBox.detailed.eventDetailed{
+    display:block !important;
+    width:100vw !important;
+    max-width:100vw !important;
+  }
+  #modal .modalPic{
+    padding:12px 12px 6px !important;
+  }
+  #modal .modalPic > img.mainDecorImg,
+  #modal img.mainDecorImg{
+    max-width:100% !important;
+    max-height:260px !important;
+  }
+}
+</style>
+<script id="almalika-v454-decor-modal-zoom-gap-fix-script">
+(function(){
+  function imgSrc(img){return img ? (img.currentSrc || img.src || img.getAttribute('src') || img.getAttribute('data-src') || '') : '';}
+  function ensureZoom(){
+    var z=document.getElementById('almalikaV454Zoom');
+    if(!z){
+      z=document.createElement('div');
+      z.id='almalikaV454Zoom';
+      z.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999999;display:none;align-items:center;justify-content:center;padding:18px;';
+      z.innerHTML='<button type="button" aria-label="إغلاق" style="position:fixed;top:18px;right:18px;width:54px;height:54px;border:0;border-radius:999px;background:#ec2b7a;color:#fff;font-size:34px;font-weight:900;box-shadow:0 12px 32px rgba(0,0,0,.25);">×</button><img alt="" style="max-width:96vw;max-height:92vh;object-fit:contain;border-radius:18px;background:#fff;box-shadow:0 22px 90px rgba(0,0,0,.45);">';
+      document.body.appendChild(z);
+      z.addEventListener('click',function(e){ if(e.target===z || e.target.tagName==='BUTTON') z.style.display='none'; });
+      document.addEventListener('keydown',function(e){ if(e.key==='Escape') z.style.display='none'; });
+    }
+    return z;
+  }
+  function openZoom(src){
+    if(!src) return;
+    var z=ensureZoom();
+    z.querySelector('img').src=src;
+    z.style.display='flex';
+  }
+  window.almalikaV454OpenZoom=openZoom;
+
+  /* أي صورة مصغرة داخل تفاصيل الديكور: تضغط عليها تصبح الصورة الأساسية */
+  document.addEventListener('click',function(e){
+    var thumb=e.target.closest('#modal .decorThumb');
+    if(thumb){
+      var modal=document.getElementById('modal');
+      var main=modal && modal.querySelector('img.mainDecorImg');
+      var thumbImg=thumb.querySelector('img');
+      var src=thumb.getAttribute('data-decor-img') || imgSrc(thumbImg);
+      if(main && src){
+        main.src=src;
+        main.setAttribute('data-zoom-src',src);
+        modal.querySelectorAll('.decorThumb').forEach(function(b){b.classList.remove('active');});
+        thumb.classList.add('active');
+      }
+      return;
+    }
+    var mainImg=e.target.closest('#modal img.mainDecorImg');
+    if(mainImg){
+      e.preventDefault();
+      e.stopPropagation();
+      openZoom(mainImg.getAttribute('data-zoom-src') || imgSrc(mainImg));
+    }
+  }, true);
+
+  /* بعد فتح التفاصيل: اجعل الصورة الأساسية قابلة للتكبير دائماً */
+  var oldOpenProduct=window.openProduct;
+  if(typeof oldOpenProduct==='function' && !oldOpenProduct.__v454){
+    window.openProduct=function(n){
+      oldOpenProduct.apply(this,arguments);
+      setTimeout(function(){
+        var modal=document.getElementById('modal');
+        if(!modal) return;
+        var main=modal.querySelector('img.mainDecorImg');
+        if(main){
+          main.setAttribute('data-zoom-src',imgSrc(main));
+          main.setAttribute('title','اضغط لتكبير الصورة');
+        }
+      },80);
+    };
+    window.openProduct.__v454=true;
+  }
+})();
+</script>
+
 </body>
 </html>
 
