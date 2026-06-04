@@ -1,6 +1,48 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+<!-- ===== V467: STOP AUTOMATIC SELF-SCROLL / screen jumping guard ===== -->
+<script id="almalika-v467-stop-auto-scroll-guard">
+(function(){
+  if(window.__almV467ScrollGuard) return;
+  window.__almV467ScrollGuard=true;
+  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+  var start=Date.now();
+  var lastUserAction=0;
+  var allowUntil=Date.now()+250;
+  function markUser(){ lastUserAction=Date.now(); allowUntil=Date.now()+1200; }
+  ['click','touchstart','touchmove','wheel','keydown','pointerdown','mousedown'].forEach(function(ev){
+    window.addEventListener(ev, markUser, {capture:true, passive:true});
+  });
+  function isAllowed(){
+    var now=Date.now();
+    if(now < allowUntil) return true;
+    if(now - lastUserAction < 1300) return true;
+    return false;
+  }
+  var nativeScrollTo=window.scrollTo;
+  var nativeScrollBy=window.scrollBy;
+  window.scrollTo=function(){
+    if(!isAllowed()){ return; }
+    return nativeScrollTo.apply(window, arguments);
+  };
+  window.scrollBy=function(){
+    if(!isAllowed()){ return; }
+    return nativeScrollBy.apply(window, arguments);
+  };
+  var nativeSIV=Element.prototype.scrollIntoView;
+  Element.prototype.scrollIntoView=function(){
+    if(!isAllowed()){ return; }
+    return nativeSIV.apply(this, arguments);
+  };
+  window.almAllowScrollFor=function(ms){ allowUntil=Date.now()+(ms||1200); };
+  document.documentElement.classList.add('alm-no-self-scroll');
+})();
+</script>
+<style id="almalika-v467-stop-auto-scroll-style">
+html.alm-no-self-scroll, html.alm-no-self-scroll *{scroll-behavior:auto!important;}
+</style>
+
 <!-- ===== V433 QA STEP 11: HARD early refresh reset - prevent restored scroll showing random product image ===== -->
 <script id="almalika-v433-early-refresh-hard-reset">
 (function(){
@@ -16537,6 +16579,21 @@ body.v459ZoomOpen{overflow:hidden !important;}
   window.addEventListener('load',function(){apply();setTimeout(apply,300);});
   document.addEventListener('click',function(){setTimeout(apply,80);setTimeout(apply,300);},true);
   try{new MutationObserver(function(){setTimeout(apply,50);}).observe(document.body||document.documentElement,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
+
+
+<!-- ===== V467 late cleanup: neutralize old auto-scroll functions ===== -->
+<script id="almalika-v467-late-auto-scroll-neutralizer">
+(function(){
+  function neutralize(){
+    try{ window.almalikaScrollToFirstProduct=function(){}; }catch(e){}
+    try{ document.body.classList.remove('almV402ProductsMode','almV425MobileMode','almV428MobileMode','almV429MobileMode'); }catch(e){}
+  }
+  neutralize();
+  document.addEventListener('DOMContentLoaded',neutralize);
+  window.addEventListener('load',neutralize);
+  window.addEventListener('hashchange',function(){ try{ window.almAllowScrollFor&&window.almAllowScrollFor(1000); }catch(e){} setTimeout(neutralize,30); });
 })();
 </script>
 
