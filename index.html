@@ -16251,6 +16251,91 @@ body.v459ZoomOpen{overflow:hidden !important;}
 }
 </style>
 
+
+
+<!-- ===== V463 FIX: force decor main image zoom above everything ===== -->
+<style id="almalika-v463-force-decor-zoom-css">
+  #almalikaV463DecorZoom{
+    position:fixed!important;inset:0!important;z-index:2147483647!important;
+    display:none!important;align-items:center!important;justify-content:center!important;
+    background:rgba(0,0,0,.90)!important;padding:18px!important;box-sizing:border-box!important;
+    backdrop-filter:blur(8px)!important;-webkit-backdrop-filter:blur(8px)!important;
+  }
+  #almalikaV463DecorZoom.show{display:flex!important;opacity:1!important;visibility:visible!important;pointer-events:auto!important;}
+  #almalikaV463DecorZoom img{max-width:96vw!important;max-height:92vh!important;width:auto!important;height:auto!important;object-fit:contain!important;border-radius:18px!important;background:#fff!important;box-shadow:0 28px 100px rgba(0,0,0,.7)!important;display:block!important;}
+  #almalikaV463DecorZoom button{position:fixed!important;top:18px!important;right:22px!important;width:56px!important;height:56px!important;border-radius:999px!important;border:0!important;background:#ef2d78!important;color:#fff!important;font-size:34px!important;font-weight:900!important;line-height:1!important;box-shadow:0 12px 34px rgba(239,45,120,.55)!important;z-index:2147483647!important;}
+  #modal.show .modalPic > img,
+  #modal.show .modalPic img.mainDecorImg,
+  #modal.show .modalPic img.mainDecorPreview,
+  #modal.show .modalPic img.decorMainImage{
+    cursor:zoom-in!important;
+  }
+  body.v463DecorZoomOpen{overflow:hidden!important;}
+  @media(max-width:640px){
+    #almalikaV463DecorZoom{padding:8px!important;}
+    #almalikaV463DecorZoom img{max-width:98vw!important;max-height:88vh!important;border-radius:14px!important;}
+    #almalikaV463DecorZoom button{top:10px!important;right:10px!important;width:50px!important;height:50px!important;font-size:32px!important;}
+  }
+</style>
+<script id="almalika-v463-force-decor-zoom-js">
+(function(){
+  function getSrc(img){ return img ? (img.currentSrc || img.src || img.getAttribute('src') || img.getAttribute('data-src') || '') : ''; }
+  function ensure(){
+    var z=document.getElementById('almalikaV463DecorZoom');
+    if(!z){
+      z=document.createElement('div');
+      z.id='almalikaV463DecorZoom';
+      z.innerHTML='<button type="button" aria-label="إغلاق">×</button><img alt="صورة مكبرة">';
+      document.body.appendChild(z);
+      z.addEventListener('click',function(e){ if(e.target===z || e.target.tagName==='BUTTON') close(); },true);
+    }
+    return z;
+  }
+  function open(src){
+    if(!src) return;
+    var z=ensure();
+    var im=z.querySelector('img');
+    im.src=src;
+    z.classList.add('show');
+    z.style.display='flex';
+    z.style.zIndex='2147483647';
+    document.body.classList.add('v463DecorZoomOpen');
+  }
+  function close(){
+    var z=document.getElementById('almalikaV463DecorZoom');
+    if(z){ z.classList.remove('show'); z.style.display='none'; var im=z.querySelector('img'); if(im) im.removeAttribute('src'); }
+    document.body.classList.remove('v463DecorZoomOpen');
+  }
+  window.almalikaDecorZoomTopV463=open;
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); },true);
+
+  function shouldZoomTarget(target){
+    var modal=document.getElementById('modal');
+    if(!modal || !modal.classList.contains('show')) return null;
+    if(!target || !target.closest) return null;
+    if(target.closest('.decorThumbs,.decorThumb')) return null; // صور الاختيارات وظيفتها تبديل الصورة فقط
+    var pic=target.closest('#modal .modalPic');
+    if(!pic) return null;
+    var img=target.closest('img');
+    if(!img) img=pic.querySelector(':scope > img, img.mainDecorImg, img.mainDecorPreview, img.decorMainImage');
+    if(!img || img.closest('.decorThumbs,.decorThumb')) return null;
+    return img;
+  }
+  ['pointerdown','click'].forEach(function(ev){
+    document.addEventListener(ev,function(e){
+      var img=shouldZoomTarget(e.target);
+      if(!img) return;
+      var src=getSrc(img);
+      if(!src) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+      if(ev==='click') open(src);
+    },true);
+  });
+})();
+</script>
+
 </body>
 </html>
 
