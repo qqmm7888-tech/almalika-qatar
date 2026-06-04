@@ -15130,6 +15130,190 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
   }
 }
 </style>
+
+
+<!-- ===== V442 QA: precise home screen cleanup from stable v434 only ===== -->
+<style id="almalika-v442-home-qa-cleanup">
+/* Desktop: keep original layout, only remove accidental helper rows */
+.almEmployeePhones,
+#almMobileQuickTabs{display:none!important;}
+.fixedWhats{display:none!important;}
+
+/* Make top/search/category areas normal, not frozen */
+#almTopFixedGroup,
+#almTopFixedGroup .header,
+.header,
+.headTop,
+.searchRow,
+.nav,
+.chips,
+.panel,
+.title{
+  position:relative!important;
+  top:auto!important;left:auto!important;right:auto!important;
+  transform:none!important;
+}
+
+@media(max-width:700px){
+  html,body{overflow-x:hidden!important;}
+  body{padding-bottom:82px!important;background:#fff8fb!important;}
+
+  /* clean top without duplicate green WhatsApp or employee phones */
+  .headBtns .green,
+  .almEmployeePhones,
+  .fixedWhats,
+  #almMobileQuickTabs{display:none!important;}
+
+  #almTopFixedGroup{background:#fff!important;border-radius:0 0 24px 24px!important;box-shadow:0 8px 22px rgba(122,23,52,.06)!important;overflow:visible!important;}
+  #almTopFixedGroup .wrap{width:calc(100% - 22px)!important;margin-inline:auto!important;}
+  .logo{font-size:30px!important;line-height:1.2!important;text-align:center!important;margin:8px 0 10px!important;color:#9b123f!important;font-weight:900!important;}
+
+  /* one clear category menu only */
+  .headTop{display:block!important;padding:8px 8px 10px!important;}
+  .nav{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:10px!important;
+    width:100%!important;
+    margin:0 auto!important;
+    padding:12px!important;
+    border:1px solid #f0c5d7!important;
+    border-radius:24px!important;
+    background:linear-gradient(135deg,#fff7fb,#f8ffff,#fff4f8)!important;
+    overflow:visible!important;
+    box-shadow:none!important;
+  }
+  .nav button,
+  .nav button.navIconBtn{
+    width:100%!important;
+    min-width:0!important;
+    height:58px!important;
+    min-height:58px!important;
+    max-height:58px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:7px!important;
+    padding:6px 8px!important;
+    border-radius:18px!important;
+    border:1px solid #efc4d7!important;
+    background:#fff!important;
+    color:#5d1837!important;
+    font-size:15px!important;
+    font-weight:900!important;
+    line-height:1.15!important;
+    white-space:normal!important;
+    text-align:center!important;
+    overflow:hidden!important;
+    animation:none!important;
+    transform:none!important;
+    box-shadow:0 5px 14px rgba(122,23,52,.055)!important;
+  }
+  .nav button.active,
+  .nav button.navIconBtn.active{
+    background:linear-gradient(135deg,#ff5fa2,#ef2c83)!important;
+    color:#fff!important;
+    border-color:transparent!important;
+  }
+  .nav button::before,.nav button::after{display:none!important;animation:none!important;}
+  .navIconWrap,.nav button .navIconWrap{
+    position:static!important;
+    flex:0 0 26px!important;
+    width:26px!important;height:26px!important;
+    margin:0!important;
+    transform:none!important;
+    display:grid!important;place-items:center!important;
+  }
+
+  /* search only; no employee phone row here */
+  .searchRow{display:block!important;padding:8px 8px 12px!important;}
+  .search{height:54px!important;border-radius:25px!important;background:#f3f4f7!important;border:0!important;box-shadow:none!important;}
+  .search input{font-size:15px!important;text-align:right!important;}
+  .searchRow select{display:none!important;}
+  .eventDateBox{display:none!important;}
+
+  /* home banner and promo clean */
+  .hero{padding:10px 10px 6px!important;margin:0!important;background:transparent!important;}
+  .homeHeroFrame{border-radius:22px!important;overflow:hidden!important;margin:0 auto 12px!important;box-shadow:0 10px 24px rgba(122,23,52,.08)!important;border:1px solid #f2d7e3!important;}
+  .homeHeroImage{display:block!important;width:100%!important;height:auto!important;object-fit:contain!important;}
+  #almHomePromoSlider{margin-top:10px!important;}
+  .almPromoSlider{border-radius:24px!important;overflow:hidden!important;}
+  .almPromoViewport,.almPromoSlide{min-height:0!important;}
+  .almPromoCard img,.almPromoMosaic img,.almPromoImage img{width:100%!important;height:100%!important;object-fit:contain!important;}
+
+  /* sections and subcategories should scroll naturally */
+  #app>.wrap.section,.section{padding-top:10px!important;margin-top:0!important;}
+  .panel{margin:8px 8px 10px!important;padding:16px 14px!important;border-radius:22px!important;background:#fff!important;}
+  .panel h1{font-size:24px!important;line-height:1.25!important;}
+  .panel p{font-size:13px!important;line-height:1.65!important;}
+  .chips{display:flex!important;flex-wrap:wrap!important;overflow:visible!important;gap:8px!important;padding:8px!important;white-space:normal!important;}
+  .chip{flex:0 0 auto!important;font-size:12px!important;padding:8px 11px!important;}
+
+  /* product cards on mobile: stable, not hidden behind header */
+  .products{display:grid!important;grid-template-columns:1fr!important;gap:14px!important;padding:0 10px 90px!important;}
+  .product{display:block!important;border-radius:24px!important;overflow:hidden!important;min-height:0!important;}
+  .product .pic{height:auto!important;min-height:0!important;aspect-ratio:1.18/1!important;display:flex!important;align-items:center!important;justify-content:center!important;background:#fff8ef!important;}
+  .product .pic img{width:100%!important;height:100%!important;object-fit:contain!important;padding:8px!important;}
+  .product .body{padding:14px 13px 16px!important;}
+  .product .body h3{font-size:21px!important;line-height:1.35!important;min-height:0!important;}
+  .product .desc{font-size:13px!important;line-height:1.6!important;min-height:0!important;}
+  .product .actions{display:grid!important;grid-template-columns:1fr!important;gap:7px!important;}
+  .product .actions button{min-height:42px!important;border-radius:14px!important;}
+
+  /* cart: small corner button, not a wide bar */
+  .cartBar{
+    position:fixed!important;
+    right:12px!important;
+    left:auto!important;
+    bottom:14px!important;
+    transform:none!important;
+    width:74px!important;
+    min-width:74px!important;
+    max-width:74px!important;
+    height:54px!important;
+    padding:0!important;
+    border-radius:999px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:3px!important;
+    font-size:0!important;
+    z-index:9999!important;
+    background:linear-gradient(135deg,#7a1734,#ff2f86)!important;
+    color:#fff!important;
+    box-shadow:0 14px 30px rgba(122,23,52,.28)!important;
+  }
+  .cartBar:before{content:'🛒';font-size:23px!important;line-height:1!important;}
+  .cartBar #cartCount{display:inline-block!important;font-size:13px!important;font-weight:900!important;background:#fff!important;color:#7a1734!important;border-radius:999px!important;min-width:20px!important;height:20px!important;line-height:20px!important;text-align:center!important;}
+  .cartBar #cartTotalMini{display:none!important;}
+
+  /* no loader/blank-image after refresh */
+  html.alm-v433-booting body{opacity:1!important;overflow:auto!important;}
+}
+</style>
+<script id="almalika-v442-home-qa-script">
+(function(){
+  function topClean(){
+    try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
+    try{ document.documentElement.classList.remove('alm-v433-booting'); }catch(e){}
+    try{ document.body && document.body.classList.add('almAppEntered'); }catch(e){}
+    try{ window.scrollTo(0,0); document.documentElement.scrollTop=0; document.body.scrollTop=0; }catch(e){}
+    ['almalikaV397ImageViewer','almalikaGlobalImageZoom','almalikaImageZoom'].forEach(function(id){
+      var el=document.getElementById(id); if(el){ el.style.display='none'; el.classList.remove('show','active','open'); }
+    });
+    var modal=document.getElementById('modal');
+    if(modal && !modal.querySelector('.modalBox')){ modal.classList.remove('show','active','open'); modal.style.display=''; }
+  }
+  function removeHelpers(){
+    document.querySelectorAll('.almEmployeePhones,#almMobileQuickTabs,.fixedWhats').forEach(function(el){el.remove();});
+  }
+  document.addEventListener('DOMContentLoaded',function(){topClean();removeHelpers();setTimeout(removeHelpers,300);setTimeout(removeHelpers,1000);});
+  window.addEventListener('load',function(){topClean();removeHelpers();setTimeout(function(){try{window.scrollTo(0,0)}catch(e){}},80);});
+  document.addEventListener('click',function(){setTimeout(removeHelpers,80);},true);
+})();
+</script>
+
 </body>
 </html>
 
