@@ -17015,6 +17015,285 @@ document.addEventListener('pointerdown',function(e){
 },true);
 </script>
 
+
+
+<!-- === V475 REAL FIX: glossy paired product buttons + search always across ALL products === -->
+<style id="almalika-v475-real-buttons-search-css">
+/* حذف واتساب والعروض من الهيدر فقط بدون لمس السلة */
+.headBtns > .green,
+.headBtns > .red{
+  display:none!important;
+}
+
+/* منع قص النصوص داخل كروت المنتجات */
+#app .product,
+.product{
+  overflow:hidden!important;
+  height:auto!important;
+}
+#app .product .body h3,
+.product .body h3{
+  display:block!important;
+  -webkit-line-clamp:unset!important;
+  -webkit-box-orient:unset!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  min-height:58px!important;
+  max-height:none!important;
+  line-height:1.22!important;
+  font-size:clamp(16px,1.05vw,20px)!important;
+  text-align:center!important;
+}
+#app .product .desc,
+.product .desc{
+  display:block!important;
+  -webkit-line-clamp:unset!important;
+  -webkit-box-orient:unset!important;
+  overflow:visible!important;
+  white-space:normal!important;
+  min-height:42px!important;
+  max-height:none!important;
+  line-height:1.45!important;
+  font-size:clamp(12px,.8vw,14px)!important;
+  text-align:center!important;
+}
+
+/* ترتيب السعر فوق والأزرار تحته */
+#app .product .bottom,
+.product .bottom{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+  margin-top:auto!important;
+  width:100%!important;
+}
+#app .product .price,
+.product .price{
+  width:100%!important;
+  min-height:48px!important;
+  padding:7px 8px!important;
+  border-radius:14px!important;
+  background:linear-gradient(180deg,#fffdf4 0%,#fff4cf 100%)!important;
+  border:1px solid #e8c972!important;
+  text-align:center!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), 0 3px 8px rgba(0,0,0,.05)!important;
+}
+#app .product .price small,
+.product .price small{font-size:10px!important;line-height:1.05!important;color:#8b7554!important;font-weight:900!important;}
+#app .product .price strong,
+.product .price strong{display:block!important;font-size:19px!important;line-height:1.05!important;color:#111!important;font-weight:1000!important;}
+
+/* المرجع النهائي للأزرار: صفّين وكل زرين مقابل بعض */
+#app .product .actions,
+#app .product .actions.quickActions,
+.product .actions,
+.product .actions.quickActions{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px!important;
+  width:100%!important;
+  align-items:stretch!important;
+  direction:rtl!important;
+}
+
+/* الشكل اللامع الزجاجي الحقيقي */
+#app .product .actions button,
+#app .product .actions.quickActions button,
+.product .actions button,
+.product .actions.quickActions button{
+  position:relative!important;
+  isolation:isolate!important;
+  width:100%!important;
+  min-width:0!important;
+  height:64px!important;
+  min-height:64px!important;
+  padding:6px 5px 6px!important;
+  border-radius:13px!important;
+  border:2px solid #111!important;
+  outline:2px solid #d7d7d7!important;
+  outline-offset:2px!important;
+  color:#fff!important;
+  font-weight:1000!important;
+  font-size:14px!important;
+  line-height:1.05!important;
+  text-align:center!important;
+  text-shadow:0 1px 2px rgba(0,0,0,.42)!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.82),
+    inset 0 -8px 10px rgba(0,0,0,.34),
+    0 4px 0 #0b0b0b,
+    0 8px 12px rgba(0,0,0,.22)!important;
+  overflow:hidden!important;
+  cursor:pointer!important;
+  transform:none!important;
+  transition:transform .12s ease, filter .12s ease, box-shadow .12s ease!important;
+}
+#app .product .actions button::before,
+.product .actions button::before{
+  display:block!important;
+  font-size:22px!important;
+  line-height:1!important;
+  margin:0 0 5px!important;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.25))!important;
+}
+#app .product .actions button::after,
+.product .actions button::after{
+  content:''!important;
+  position:absolute!important;
+  z-index:-1!important;
+  inset:4px 5px auto 5px!important;
+  height:42%!important;
+  border-radius:10px 10px 14px 14px!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.16))!important;
+  pointer-events:none!important;
+  opacity:.92!important;
+  animation:none!important;
+  transform:none!important;
+}
+#app .product .actions .details,
+.product .actions .details{
+  order:1!important;
+  background:linear-gradient(180deg,#ff65ad 0%,#e51575 48%,#9e003e 100%)!important;
+}
+#app .product .actions .details::before,
+.product .actions .details::before{content:'✨'!important;}
+#app .product .actions .quickShop,
+.product .actions .quickShop,
+#app .product .actions .shop,
+.product .actions .shop,
+#app .product .actions .book,
+.product .actions .book{
+  order:2!important;
+  background:linear-gradient(180deg,#ff6b6b 0%,#e60000 47%,#8b0000 100%)!important;
+}
+#app .product .actions .quickShop::before,
+.product .actions .quickShop::before,
+#app .product .actions .shop::before,
+.product .actions .shop::before,
+#app .product .actions .book::before,
+.product .actions .book::before{content:'🛒'!important;}
+#app .product .actions .shareFriend,
+.product .actions .shareFriend{
+  order:3!important;
+  background:linear-gradient(180deg,#ffc34d 0%,#f49a00 48%,#a85d00 100%)!important;
+}
+#app .product .actions .shareFriend::before,
+.product .actions .shareFriend::before{content:'🎁'!important;}
+#app .product .actions .wa,
+.product .actions .wa{
+  order:4!important;
+  background:linear-gradient(180deg,#7fe36a 0%,#18b22f 48%,#087818 100%)!important;
+}
+#app .product .actions .wa::before,
+.product .actions .wa::before{content:'📱'!important;}
+#app .product .actions button:hover,
+.product .actions button:hover{
+  filter:brightness(1.14)!important;
+  transform:translateY(-1px)!important;
+}
+#app .product .actions button:active,
+.product .actions button:active,
+#app .product .actions button.v475Glow,
+.product .actions button.v475Glow{
+  filter:brightness(1.55)!important;
+  transform:scale(.96)!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.9),
+    inset 0 -8px 10px rgba(0,0,0,.34),
+    0 0 0 3px rgba(255,255,255,.85),
+    0 0 22px rgba(255,255,255,.95),
+    0 4px 0 #0b0b0b,
+    0 8px 12px rgba(0,0,0,.22)!important;
+}
+#app .product .actions button:disabled,
+.product .actions button:disabled{
+  filter:grayscale(.2) brightness(.86)!important;
+  opacity:.8!important;
+  cursor:not-allowed!important;
+}
+
+@media(max-width:640px){
+  #app .product .actions,
+  #app .product .actions.quickActions,
+  .product .actions,
+  .product .actions.quickActions{gap:8px!important;}
+  #app .product .actions button,
+  .product .actions button{
+    height:62px!important;
+    min-height:62px!important;
+    font-size:13px!important;
+    border-radius:13px!important;
+  }
+  #app .product .actions button::before,
+  .product .actions button::before{font-size:21px!important;margin-bottom:4px!important;}
+}
+</style>
+<script id="almalika-v475-search-all-and-button-glow-js">
+(function(){
+  /* البحث دائماً على الكل: عند الكتابة يتم البحث في كل المنتجات وليس داخل القسم الحالي */
+  function v475Text(p){
+    return String([
+      p.number,p.name,p.category,p.type,p.age,p.details,p.offerIncludes,p.durationOneDay,p.durationTwoDays,p.length,p.width,p.height
+    ].filter(Boolean).join(' ')).toLowerCase();
+  }
+  function v475AllSearchProducts(){
+    var input=document.getElementById('q');
+    var term=String(input&&input.value||'').trim().toLowerCase();
+    if(!term) return null;
+    var arr=(window.products||products||[]).filter(function(p){ return v475Text(p).indexOf(term)>-1; });
+    var sortSel=document.getElementById('sortSelect');
+    var sort=sortSel&&sortSel.value||'number';
+    try{ arr.sort(function(a,b){ return sort==='priceAsc'?price(a)-price(b):sort==='priceDesc'?price(b)-price(a):Number(a.number)-Number(b.number); }); }catch(e){}
+    return arr;
+  }
+  try{
+    var oldRelevant = (typeof relevantProducts==='function') ? relevantProducts : null;
+    window.v475OldRelevantProducts = oldRelevant;
+    relevantProducts = function(){
+      var all=v475AllSearchProducts();
+      if(all) return all;
+      return oldRelevant ? oldRelevant.apply(this,arguments) : [];
+    };
+  }catch(e){}
+
+  function forceSearchAllUI(){
+    var input=document.getElementById('q');
+    if(input){
+      input.setAttribute('placeholder','ابحث بالرقم أو الاسم في كل الأقسام...');
+      if(!input.dataset.v475){
+        input.dataset.v475='1';
+        input.addEventListener('input',function(){
+          try{
+            /* لا نغير القسم، لكن النتائج تكون من الكل */
+            if(typeof render==='function') render();
+          }catch(e){}
+        });
+      }
+    }
+    var cat=document.getElementById('catSelect');
+    if(cat && cat.value && String((input&&input.value)||'').trim()){
+      /* وقت البحث فقط: لا يخنق النتائج بفلتر القسم */
+      cat.title='البحث يعمل على كل الأقسام';
+    }
+  }
+  document.addEventListener('DOMContentLoaded',forceSearchAllUI);
+  setTimeout(forceSearchAllUI,200);
+  setTimeout(forceSearchAllUI,1000);
+
+  /* لمعة عند الضغط بدون تغيير الوظائف */
+  document.addEventListener('click',function(e){
+    var b=e.target&&e.target.closest&&e.target.closest('.product .actions button');
+    if(!b) return;
+    b.classList.remove('v475Glow');
+    void b.offsetWidth;
+    b.classList.add('v475Glow');
+    setTimeout(function(){b.classList.remove('v475Glow');},450);
+  },true);
+})();
+</script>
+
 </body>
 </html>
 
@@ -22477,200 +22756,3 @@ body.v464ZoomOpen{overflow:hidden!important;}
   },true);
 })();
 </script>
-
-<style id="v474-final-correct-glossy-paired-buttons-and-text-fix">
-/* V474 - إصلاح شكل أزرار المنتج حسب المرجع + إظهار النص بدون قص
-   الأساس: V472. لا يلمس التكبير أو النوافذ أو وظائف الأزرار. */
-
-/* إلغاء قص النص داخل كروت المنتجات */
-#app .product h3,
-#app .product .title,
-#app .product .productTitle{
-  display:block!important;
-  -webkit-line-clamp:unset!important;
-  -webkit-box-orient:initial!important;
-  overflow:visible!important;
-  text-overflow:clip!important;
-  white-space:normal!important;
-  min-height:50px!important;
-  height:auto!important;
-  line-height:1.28!important;
-  margin:10px 8px 7px!important;
-  font-size:clamp(17px,1.08vw,22px)!important;
-  font-weight:900!important;
-  color:#1c1517!important;
-  text-align:center!important;
-}
-#app .product .desc,
-#app .product p.desc,
-#app .product .productDesc{
-  display:block!important;
-  -webkit-line-clamp:unset!important;
-  -webkit-box-orient:initial!important;
-  overflow:visible!important;
-  text-overflow:clip!important;
-  white-space:normal!important;
-  min-height:48px!important;
-  height:auto!important;
-  line-height:1.45!important;
-  font-size:clamp(12px,.86vw,14px)!important;
-  text-align:center!important;
-}
-
-/* تثبيت منطقة السعر قبل الأزرار */
-#app .product .price{
-  width:calc(100% - 12px)!important;
-  margin:8px auto 7px!important;
-  padding:7px 8px!important;
-  min-height:48px!important;
-  border-radius:10px!important;
-  background:linear-gradient(180deg,#fffdf6 0%,#fff3c7 100%)!important;
-  border:1px solid #e4c875!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 2px 6px rgba(0,0,0,.04)!important;
-}
-#app .product .price small{font-size:10px!important;line-height:1!important;display:block!important;color:#8a6b2b!important}
-#app .product .price strong{font-size:20px!important;line-height:1.05!important;font-weight:900!important;color:#111!important}
-
-/* الأزرار: صفين، كل زرين مقابل بعض */
-#app .product .actions,
-#app .product .actions.quickActions,
-.product .actions,
-.product .actions.quickActions{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:7px!important;
-  width:calc(100% - 12px)!important;
-  margin:7px auto 10px!important;
-  padding:0!important;
-  align-items:stretch!important;
-  direction:rtl!important;
-}
-
-/* الشكل اللامع المستطيل مع إطار كروم */
-#app .product .actions button,
-#app .product .actions.quickActions button,
-.product .actions button,
-.product .actions.quickActions button{
-  position:relative!important;
-  isolation:isolate!important;
-  width:100%!important;
-  min-width:0!important;
-  height:58px!important;
-  min-height:58px!important;
-  max-height:58px!important;
-  padding:5px 7px!important;
-  border-radius:11px!important;
-  border:3px solid #1e1e1e!important;
-  outline:2px solid rgba(255,255,255,.78)!important;
-  outline-offset:-6px!important;
-  color:#fff!important;
-  font-size:15px!important;
-  font-weight:900!important;
-  line-height:1.05!important;
-  text-align:center!important;
-  white-space:normal!important;
-  overflow:hidden!important;
-  text-shadow:0 2px 2px rgba(0,0,0,.42)!important;
-  box-shadow:
-    0 3px 0 #000,
-    0 6px 10px rgba(0,0,0,.18),
-    inset 0 2px 1px rgba(255,255,255,.85),
-    inset 0 -9px 12px rgba(0,0,0,.35)!important;
-  transform:none!important;
-  transition:filter .18s ease, transform .12s ease, box-shadow .18s ease!important;
-}
-#app .product .actions button::before,
-#app .product .actions.quickActions button::before,
-.product .actions button::before,
-.product .actions.quickActions button::before{
-  display:inline-block!important;
-  margin-inline-end:5px!important;
-  font-size:21px!important;
-  line-height:1!important;
-  vertical-align:middle!important;
-  filter:drop-shadow(0 2px 1px rgba(0,0,0,.25))!important;
-}
-#app .product .actions button::after,
-#app .product .actions.quickActions button::after,
-.product .actions button::after,
-.product .actions.quickActions button::after{
-  content:""!important;
-  position:absolute!important;
-  left:7px!important;right:7px!important;top:5px!important;
-  height:38%!important;
-  border-radius:8px 8px 12px 12px!important;
-  background:linear-gradient(180deg,rgba(255,255,255,.72),rgba(255,255,255,.16))!important;
-  pointer-events:none!important;
-  z-index:-1!important;
-}
-
-/* ترتيب وألوان الأزرار حسب المرجع */
-#app .product .actions .details,
-.product .actions .details{
-  order:1!important;
-  background:linear-gradient(180deg,#ff6ca7 0%,#e51d73 48%,#a50043 100%)!important;
-}
-#app .product .actions .quickShop,
-.product .actions .quickShop{
-  order:2!important;
-  background:linear-gradient(180deg,#ff6d68 0%,#e01010 50%,#820000 100%)!important;
-}
-#app .product .actions .shareFriend,
-.product .actions .shareFriend{
-  order:3!important;
-  background:linear-gradient(180deg,#ffd36a 0%,#ff9800 47%,#b35e00 100%)!important;
-}
-#app .product .actions .wa,
-.product .actions .wa{
-  order:4!important;
-  background:linear-gradient(180deg,#9be875 0%,#18b832 46%,#00701f 100%)!important;
-}
-
-/* إضاءة عند الضغط بدون تعطيل الوظيفة */
-#app .product .actions button:hover,
-.product .actions button:hover{
-  filter:brightness(1.16) saturate(1.12)!important;
-  box-shadow:
-    0 3px 0 #000,
-    0 0 12px rgba(255,255,255,.72),
-    0 7px 14px rgba(0,0,0,.20),
-    inset 0 2px 1px rgba(255,255,255,.92),
-    inset 0 -9px 12px rgba(0,0,0,.33)!important;
-}
-#app .product .actions button:active,
-.product .actions button:active{
-  transform:scale(.965)!important;
-  filter:brightness(1.45) saturate(1.25)!important;
-  box-shadow:
-    0 2px 0 #000,
-    0 0 22px rgba(255,255,255,.95),
-    0 0 18px currentColor,
-    inset 0 2px 1px rgba(255,255,255,1),
-    inset 0 -7px 10px rgba(0,0,0,.28)!important;
-}
-
-/* الكرت يفتح مساحة كافية للنص والأزرار بدون قص */
-#app .product{
-  overflow:visible!important;
-}
-#app .product .bottom{
-  gap:4px!important;
-  overflow:visible!important;
-}
-
-/* الجوال: نفس النمط لكن أصغر قليلاً بدون تخريب */
-@media(max-width:640px){
-  #app .product h3{font-size:20px!important;min-height:auto!important;margin:10px 7px 7px!important;}
-  #app .product .desc{font-size:13px!important;min-height:auto!important;line-height:1.45!important;}
-  #app .product .actions,
-  #app .product .actions.quickActions,
-  .product .actions,
-  .product .actions.quickActions{gap:7px!important;width:calc(100% - 14px)!important;margin:7px auto 10px!important;}
-  #app .product .actions button,
-  #app .product .actions.quickActions button,
-  .product .actions button,
-  .product .actions.quickActions button{height:54px!important;min-height:54px!important;max-height:54px!important;font-size:14px!important;border-radius:10px!important;}
-  #app .product .actions button::before,
-  .product .actions button::before{font-size:20px!important;margin-inline-end:4px!important;}
-}
-</style>
