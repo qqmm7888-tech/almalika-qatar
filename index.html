@@ -22417,3 +22417,93 @@ body.v464ZoomOpen{overflow:hidden!important;}
   },true);
 })();
 </script>
+
+
+<!-- ===== V481: remove black outlines from product action buttons only ===== -->
+<style id="almalika-v481-remove-black-action-borders">
+/* تعديل محدود جداً: إزالة الخط/الإطار الأسود حول أزرار المنتج فقط */
+.product .actions,
+.product .quickActions,
+.product .cleanActions,
+.product .almProductActions,
+.product .alm-clean-actions{
+  gap:7px!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+.product .actions button,
+.product .quickActions button,
+.product .cleanActions button,
+.product .almProductActions button,
+.product .alm-clean-actions button,
+.product button.details,
+.product button.quickShop,
+.product button.shareFriend,
+.product button.wa{
+  border:0!important;
+  outline:0!important;
+  -webkit-outline:0!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.75),
+    inset 0 -10px 18px rgba(0,0,0,.16),
+    0 4px 10px rgba(0,0,0,.12)!important;
+  border-radius:13px!important;
+  overflow:hidden!important;
+  text-shadow:0 1px 1px rgba(0,0,0,.22)!important;
+}
+.product .actions button::before,
+.product .quickActions button::before,
+.product .cleanActions button::before,
+.product .almProductActions button::before,
+.product .alm-clean-actions button::before,
+.product button.details::before,
+.product button.quickShop::before,
+.product button.shareFriend::before,
+.product button.wa::before{
+  filter:none!important;
+  text-shadow:none!important;
+  -webkit-text-stroke:0!important;
+}
+.product .actions button::after,
+.product .quickActions button::after,
+.product .cleanActions button::after,
+.product .almProductActions button::after,
+.product .alm-clean-actions button::after{
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+}
+.product .actions .details,
+.product button.details{
+  background:linear-gradient(180deg,#ff69b0 0%,#f21f7e 48%,#c90d55 100%)!important;
+  color:#fff!important;
+}
+.product .actions .quickShop,
+.product button.quickShop{
+  background:linear-gradient(180deg,#ff6b6b 0%,#e7191f 48%,#ad070d 100%)!important;
+  color:#fff!important;
+}
+.product .actions .shareFriend,
+.product button.shareFriend{
+  background:linear-gradient(180deg,#ffd05c 0%,#f4a400 52%,#cf7b00 100%)!important;
+  color:#fff!important;
+}
+.product .actions .wa,
+.product button.wa{
+  background:linear-gradient(180deg,#75e37a 0%,#1db643 52%,#087d23 100%)!important;
+  color:#fff!important;
+}
+.product .actions button:active,
+.product .quickActions button:active,
+.product .cleanActions button:active,
+.product .almProductActions button:active,
+.product .alm-clean-actions button:active{
+  transform:scale(.97)!important;
+  filter:brightness(1.18)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 0 16px rgba(255,255,255,.75),
+    0 4px 10px rgba(0,0,0,.10)!important;
+}
+</style>
