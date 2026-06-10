@@ -22501,3 +22501,78 @@ html body .product .almActionGrid .almAct:active{
   html body .product .almActionGrid .almActIcon{font-size:16px !important;}
 }
 </style>
+
+<!-- ===== V483: taller product cards to show all text/info ===== -->
+<style id="v483-taller-cards-show-all-info">
+/* زيادة ارتفاع الكرت ومساحة النص حتى لا ينقص الكلام من الداخل */
+html body .products .product{
+  min-height:560px !important;
+  height:auto !important;
+  align-self:stretch !important;
+  overflow:visible !important;
+}
+html body .products .product .body{
+  height:auto !important;
+  min-height:330px !important;
+  overflow:visible !important;
+  display:flex !important;
+  flex-direction:column !important;
+}
+html body .products .product .body h3,
+html body .products .product h3,
+html body .products .product .product-title,
+html body .products .product .title{
+  height:auto !important;
+  min-height:72px !important;
+  max-height:none !important;
+  overflow:visible !important;
+  white-space:normal !important;
+  text-overflow:clip !important;
+  display:block !important;
+  -webkit-line-clamp:unset !important;
+  -webkit-box-orient:unset !important;
+  line-height:1.35 !important;
+  padding-bottom:2px !important;
+}
+html body .products .product .desc,
+html body .products .product .product-desc,
+html body .products .product p.desc{
+  height:auto !important;
+  min-height:70px !important;
+  max-height:none !important;
+  overflow:visible !important;
+  white-space:normal !important;
+  text-overflow:clip !important;
+  display:block !important;
+  -webkit-line-clamp:unset !important;
+  -webkit-box-orient:unset !important;
+  line-height:1.55 !important;
+}
+html body .products .product .tags{
+  height:auto !important;
+  min-height:78px !important;
+  max-height:none !important;
+  overflow:visible !important;
+  align-content:flex-start !important;
+}
+html body .products .product .bottom{
+  margin-top:auto !important;
+  padding-top:10px !important;
+}
+html body .products .product .price{
+  margin-top:4px !important;
+}
+/* في الجوال: زيادة أقل حتى لا يصبح الكرت طويل جداً */
+@media(max-width:700px){
+  html body .products .product{min-height:520px !important;}
+  html body .products .product .body{min-height:310px !important;}
+  html body .products .product .body h3,
+  html body .products .product h3,
+  html body .products .product .product-title,
+  html body .products .product .title{min-height:64px !important;}
+  html body .products .product .desc,
+  html body .products .product .product-desc,
+  html body .products .product p.desc{min-height:64px !important;}
+  html body .products .product .tags{min-height:70px !important;}
+}
+</style>
