@@ -6475,7 +6475,7 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
   <div class="wrap headTop">
     <div class="logo" onclick="showHome()">الملكة</div>
     <nav class="nav" id="nav"></nav>
-    <div class="headBtns"><button class="btn green" onclick="generalWa()">واتساب</button><button class="btn red" onclick="showSection('offers')">العروض</button><button class="btn cartMini" onclick="openCart()">السلة <span id="cartCountTop">0</span></button></div>
+    <div class="headBtns"><button class="btn cartMini" onclick="openCart()">السلة <span id="cartCountTop">0</span></button></div>
   </div>
   <div class="wrap searchRow">
     <div class="search"><span>🔎</span><input id="q" placeholder="ابحث بالرقم أو الاسم أو القسم..." oninput="render()"></div>
@@ -16952,6 +16952,195 @@ body.v459ZoomOpen{overflow:hidden !important;}
   document.addEventListener('DOMContentLoaded', cleanHeaderButtons);
   setTimeout(cleanHeaderButtons, 300);
   setTimeout(cleanHeaderButtons, 1200);
+})();
+</script>
+
+
+<!-- ===== V485 MOBILE CLEANUP FROM V483: one nav row, no floating WhatsApp, search all ===== -->
+<style id="v485-mobile-final-source-cleanup">
+/* حذف واتساب العائم الأخضر نهائياً */
+.fixedWhats,
+a.fixedWhats,
+button.fixedWhats,
+[class*="fixedWhats"],
+#fixedWhats,
+#floatingWhats,
+.floatingWhats,
+.whatsapp-float,
+.waFloat,
+#waFloat{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  width:0!important;
+  height:0!important;
+  min-width:0!important;
+  min-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+
+/* سطح المكتب: إبقاء سلة الهيدر فقط بدون واتساب/عروض */
+.headBtns .btn.green,
+.headBtns .btn.red{
+  display:none!important;
+}
+.headBtns{justify-content:flex-start!important}
+
+/* الجوال: صف واحد فقط للأقسام */
+@media(max-width:768px){
+  body{padding-bottom:86px!important;}
+  .header{position:sticky!important;top:0!important;z-index:9999!important;background:#fff!important;}
+  .headTop{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:6px!important;
+    padding:8px 0 6px!important;
+  }
+  .logo{
+    width:100%!important;
+    justify-content:center!important;
+    text-align:center!important;
+    font-size:30px!important;
+    margin:2px 0!important;
+  }
+
+  body #nav.nav,
+  html body #nav.nav,
+  .header #nav.nav{
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    align-items:center!important;
+    gap:8px!important;
+    width:calc(100vw - 18px)!important;
+    max-width:none!important;
+    margin:4px auto 6px!important;
+    padding:8px!important;
+    border-radius:18px!important;
+    background:#fff7fb!important;
+    border:1px solid #f3d8e6!important;
+    box-shadow:0 4px 14px rgba(0,0,0,.04)!important;
+    direction:rtl!important;
+    scrollbar-width:none!important;
+    transform:none!important;
+  }
+  body #nav.nav::-webkit-scrollbar{display:none!important;}
+  body #nav.nav button,
+  html body #nav.nav button,
+  body #nav.nav .navIconBtn{
+    all:unset!important;
+    box-sizing:border-box!important;
+    flex:0 0 auto!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:5px!important;
+    min-width:86px!important;
+    width:auto!important;
+    height:42px!important;
+    min-height:42px!important;
+    max-height:42px!important;
+    padding:0 12px!important;
+    border-radius:14px!important;
+    background:linear-gradient(180deg,#fff,#fff3f8)!important;
+    border:1px solid #efc7da!important;
+    color:#641f3d!important;
+    font-size:12px!important;
+    font-weight:900!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    text-align:center!important;
+    box-shadow:0 3px 10px rgba(122,23,52,.06)!important;
+    cursor:pointer!important;
+    overflow:hidden!important;
+  }
+  body #nav.nav button.active,
+  html body #nav.nav button.active{
+    background:linear-gradient(135deg,#ef4f95,#b33971)!important;
+    color:#fff!important;
+    border-color:#ef4f95!important;
+  }
+  body #nav.nav .navIconWrap,
+  body #nav.nav .navIconText,
+  body #nav.nav .navIcon{
+    position:static!important;
+    transform:none!important;
+    inset:auto!important;
+    width:auto!important;
+    height:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    display:inline!important;
+    font-size:14px!important;
+    line-height:1!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  /* إلغاء الصفوف المكررة داخل الأقسام على الجوال */
+  #app .chips,
+  body .chips,
+  .almFrozenProductArea .chips{
+    display:none!important;
+    visibility:hidden!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:0!important;
+    padding:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+
+  /* البحث مباشرة تحت صف الأقسام */
+  .searchRow{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+    width:calc(100vw - 18px)!important;
+    max-width:none!important;
+    margin:0 auto 8px!important;
+    padding:0 0 8px!important;
+  }
+  .searchRow .search{
+    height:46px!important;
+    border-radius:15px!important;
+  }
+  .searchRow select{
+    height:42px!important;
+    border-radius:14px!important;
+  }
+  .searchRow select#catSelect{
+    display:none!important; /* البحث دائماً على الكل */
+  }
+}
+</style>
+<script id="v485-search-all-final">
+(function(){
+  function forceSearchAll(){
+    try{
+      var sel=document.getElementById('catSelect');
+      if(sel){
+        var allOpt=[].slice.call(sel.options).find(function(o){return /الجميع|الكل/.test(o.textContent||o.value||'');});
+        if(allOpt) sel.value=allOpt.value; else sel.selectedIndex=0;
+      }
+    }catch(e){}
+  }
+  window.addEventListener('DOMContentLoaded',function(){
+    forceSearchAll();
+    var q=document.getElementById('q');
+    if(q){
+      q.addEventListener('input',function(){
+        forceSearchAll();
+        try{ if(typeof render==='function') render(); }catch(e){}
+      },true);
+    }
+  });
 })();
 </script>
 
