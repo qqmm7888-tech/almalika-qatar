@@ -22576,3 +22576,17 @@ html body .products .product .price{
   html body .products .product .tags{min-height:70px !important;}
 }
 </style>
+
+<style id="v484-mobile-cleanup">
+@media (max-width:768px){
+.fixedWhats{display:none!important;}
+.nav{flex-wrap:nowrap!important;overflow-x:auto!important;justify-content:flex-start!important}
+.chips{display:none!important;}
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var sel=document.querySelector('.searchRow select');
+  if(sel){ sel.selectedIndex=0; }
+});
+</script>
