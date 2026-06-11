@@ -6475,7 +6475,7 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
   <div class="wrap headTop">
     <div class="logo" onclick="showHome()">الملكة</div>
     <nav class="nav" id="nav"></nav>
-    <div class="headBtns"><button class="btn green" onclick="generalWa()">واتساب</button><button class="btn red" onclick="showSection('offers')">العروض</button><button class="btn cartMini" onclick="openCart()">السلة <span id="cartCountTop">0</span></button></div>
+    <div class="headBtns"><button class="btn cartMini" onclick="openCart()">السلة <span id="cartCountTop">0</span></button></div>
   </div>
   <div class="wrap searchRow">
     <div class="search"><span>🔎</span><input id="q" placeholder="ابحث بالرقم أو الاسم أو القسم..." oninput="render()"></div>
@@ -16956,69 +16956,191 @@ body.v459ZoomOpen{overflow:hidden !important;}
 </script>
 
 
-<!-- V486 mobile popup real fix -->
-<style id="almalika-v486-mobile-popup-real-fix">
-.fixedWhats,.floatingWhats,.whatsappFloat,.mobileWhats,#fixedWhats,#floatingWhats{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
-.product,.product-card,.card,.item-card{overflow:visible!important;height:auto!important}
-.product h3,.product .body h3,.product-title,.card-title{height:auto!important;min-height:unset!important;max-height:none!important;overflow:visible!important;text-overflow:clip!important;white-space:normal!important;-webkit-line-clamp:unset!important;line-clamp:unset!important;line-height:1.35!important}
-.product .desc,.product-desc,.card-desc{height:auto!important;min-height:unset!important;max-height:none!important;overflow:visible!important;text-overflow:clip!important;white-space:normal!important;-webkit-line-clamp:unset!important;line-clamp:unset!important;line-height:1.55!important}
-.product .actions,.product .quickActions,.actions.quickActions,.v479Actions,.alm-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:7px!important;width:100%!important}
-.product .actions button,.product .quickActions button,.actions.quickActions button,.v479Actions button,.alm-actions button{height:40px!important;min-height:40px!important;padding:5px 8px!important;font-size:13px!important;line-height:1.1!important;border-radius:11px!important;border:1px solid rgba(255,255,255,.65)!important;box-shadow:0 3px 7px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.45)!important;outline:none!important}
-.modal.show .modalActions a[href*="wa.me"],.modal.show .modalActions a[href*="whatsapp"],.modal.show a.wa,.modal.show a.whatsapp,.modal.show .waBig,.modal.show button.wa,.modal.show button.whatsapp,.modal.show [onclick*="WhatsApp"],.modal.show [onclick*="whatsapp"],.modal.show [onclick*="wa.me"]{display:none!important;visibility:hidden!important;pointer-events:none!important}
-.modal,#modal,#productModal,#detailModal{overflow-y:auto!important;align-items:flex-start!important;padding:12px!important}
-.modalBox,.modalBox.detailed,.modal.show .modalBox{max-height:none!important;height:auto!important;overflow:visible!important}
-.modalInfo,.modal.show .modalInfo{max-height:none!important;height:auto!important;overflow:visible!important}
-.priceChoice,.option,.theme-card,.decor-card,.snack-card,.choiceCard,.modalInfo label{height:auto!important;min-height:auto!important;overflow:visible!important}
-.priceChoice *,.option *,.theme-card *,.decor-card *,.snack-card *,.choiceCard *{max-height:none!important;overflow:visible!important;text-overflow:clip!important;white-space:normal!important}
+<!-- ===== V485 MOBILE CLEANUP FROM V483: one nav row, no floating WhatsApp, search all ===== -->
+<style id="v485-mobile-final-source-cleanup">
+/* حذف واتساب العائم الأخضر نهائياً */
+.fixedWhats,
+a.fixedWhats,
+button.fixedWhats,
+[class*="fixedWhats"],
+#fixedWhats,
+#floatingWhats,
+.floatingWhats,
+.whatsapp-float,
+.waFloat,
+#waFloat{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  width:0!important;
+  height:0!important;
+  min-width:0!important;
+  min-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+
+/* سطح المكتب: إبقاء سلة الهيدر فقط بدون واتساب/عروض */
+.headBtns .btn.green,
+.headBtns .btn.red{
+  display:none!important;
+}
+.headBtns{justify-content:flex-start!important}
+
+/* الجوال: صف واحد فقط للأقسام */
 @media(max-width:768px){
-  body{overflow-x:hidden!important}
-  .headBtns .btn.green,.headBtns .btn.red,.fixedWhats{display:none!important}
-  .nav{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;overflow-y:hidden!important;justify-content:flex-start!important;gap:8px!important;padding:8px 16px!important;margin:0 auto!important;-webkit-overflow-scrolling:touch!important}
-  .nav button{flex:0 0 auto!important;min-width:max-content!important;white-space:nowrap!important}
-  .chips{display:none!important;visibility:hidden!important;height:0!important;padding:0!important;margin:0!important;overflow:hidden!important}
-  .searchRow{display:grid!important;grid-template-columns:1fr!important;padding:10px 12px 14px!important;gap:8px!important}
-  .searchRow select{display:none!important}
-  .search{height:54px!important;border-radius:28px!important}
-  .product .pic{min-height:220px!important;height:220px!important}
-  .modalBox,.modalBox.detailed,.modal.show .modalBox{width:calc(100vw - 20px)!important;max-width:calc(100vw - 20px)!important;display:block!important;margin:0 auto 16px!important;border-radius:20px!important}
-  .modalPic{position:relative!important;top:auto!important;min-height:180px!important;padding:10px!important}
-  .modalPic img{max-height:260px!important;object-fit:contain!important}
-  .modalInfo{padding:14px!important}
-  .modalInfo h2{font-size:22px!important;line-height:1.35!important}
-  .modalInfo h3{font-size:20px!important;line-height:1.35!important}
-  .infoGrid,.priceChoiceGrid,.bookingSimple,.modalActions,.modalActions.three{grid-template-columns:1fr!important;gap:10px!important}
-  .priceChoiceGrid.decor-grid,.decorGrid,.themeGrid{grid-template-columns:1fr 1fr!important}
+  body{padding-bottom:86px!important;}
+  .header{position:sticky!important;top:0!important;z-index:9999!important;background:#fff!important;}
+  .headTop{
+    display:flex!important;
+    flex-direction:column!important;
+    gap:6px!important;
+    padding:8px 0 6px!important;
+  }
+  .logo{
+    width:100%!important;
+    justify-content:center!important;
+    text-align:center!important;
+    font-size:30px!important;
+    margin:2px 0!important;
+  }
+
+  body #nav.nav,
+  html body #nav.nav,
+  .header #nav.nav{
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    align-items:center!important;
+    gap:8px!important;
+    width:calc(100vw - 18px)!important;
+    max-width:none!important;
+    margin:4px auto 6px!important;
+    padding:8px!important;
+    border-radius:18px!important;
+    background:#fff7fb!important;
+    border:1px solid #f3d8e6!important;
+    box-shadow:0 4px 14px rgba(0,0,0,.04)!important;
+    direction:rtl!important;
+    scrollbar-width:none!important;
+    transform:none!important;
+  }
+  body #nav.nav::-webkit-scrollbar{display:none!important;}
+  body #nav.nav button,
+  html body #nav.nav button,
+  body #nav.nav .navIconBtn{
+    all:unset!important;
+    box-sizing:border-box!important;
+    flex:0 0 auto!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:5px!important;
+    min-width:86px!important;
+    width:auto!important;
+    height:42px!important;
+    min-height:42px!important;
+    max-height:42px!important;
+    padding:0 12px!important;
+    border-radius:14px!important;
+    background:linear-gradient(180deg,#fff,#fff3f8)!important;
+    border:1px solid #efc7da!important;
+    color:#641f3d!important;
+    font-size:12px!important;
+    font-weight:900!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+    text-align:center!important;
+    box-shadow:0 3px 10px rgba(122,23,52,.06)!important;
+    cursor:pointer!important;
+    overflow:hidden!important;
+  }
+  body #nav.nav button.active,
+  html body #nav.nav button.active{
+    background:linear-gradient(135deg,#ef4f95,#b33971)!important;
+    color:#fff!important;
+    border-color:#ef4f95!important;
+  }
+  body #nav.nav .navIconWrap,
+  body #nav.nav .navIconText,
+  body #nav.nav .navIcon{
+    position:static!important;
+    transform:none!important;
+    inset:auto!important;
+    width:auto!important;
+    height:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    display:inline!important;
+    font-size:14px!important;
+    line-height:1!important;
+    margin:0!important;
+    padding:0!important;
+  }
+
+  /* إلغاء الصفوف المكررة داخل الأقسام على الجوال */
+  #app .chips,
+  body .chips,
+  .almFrozenProductArea .chips{
+    display:none!important;
+    visibility:hidden!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:0!important;
+    padding:0!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+
+  /* البحث مباشرة تحت صف الأقسام */
+  .searchRow{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+    width:calc(100vw - 18px)!important;
+    max-width:none!important;
+    margin:0 auto 8px!important;
+    padding:0 0 8px!important;
+  }
+  .searchRow .search{
+    height:46px!important;
+    border-radius:15px!important;
+  }
+  .searchRow select{
+    height:42px!important;
+    border-radius:14px!important;
+  }
+  .searchRow select#catSelect{
+    display:none!important; /* البحث دائماً على الكل */
+  }
 }
 </style>
-<script id="almalika-v486-mobile-popup-real-js">
+<script id="v485-search-all-final">
 (function(){
-  function text(el){return (el.textContent||'').replace(/\s+/g,' ').trim();}
-  function cleanWhats(){
-    document.querySelectorAll('.modal a,.modal button,#modal a,#modal button').forEach(function(el){
-      var t=text(el), h=el.getAttribute('href')||'', oc=el.getAttribute('onclick')||'';
-      if((/استفسار\s*واتساب|واتساب/i.test(t)) && (/wa\.me|whatsapp|WhatsApp|sendWhats|openWhats/i.test(h+oc))){
-        el.style.setProperty('display','none','important');
-        el.style.setProperty('visibility','hidden','important');
+  function forceSearchAll(){
+    try{
+      var sel=document.getElementById('catSelect');
+      if(sel){
+        var allOpt=[].slice.call(sel.options).find(function(o){return /الجميع|الكل/.test(o.textContent||o.value||'');});
+        if(allOpt) sel.value=allOpt.value; else sel.selectedIndex=0;
       }
-    });
-    document.querySelectorAll('.fixedWhats,.floatingWhats,.whatsappFloat,.mobileWhats,#fixedWhats,#floatingWhats').forEach(function(el){
-      el.style.setProperty('display','none','important');
-    });
+    }catch(e){}
   }
-  function forceAllSearch(){
-    document.querySelectorAll('.searchRow select').forEach(function(s){
-      for(var i=0;i<s.options.length;i++){
-        var v=(s.options[i].value||'').toLowerCase(), t=s.options[i].textContent||'';
-        if(v==='all'||/الجميع|الكل/.test(t)){s.selectedIndex=i;break;}
-      }
-    });
-    try{window.currentCategory='all'}catch(e){}
-  }
-  function run(){cleanWhats();forceAllSearch();}
-  document.addEventListener('DOMContentLoaded',run);
-  window.addEventListener('load',run);
-  document.addEventListener('click',function(){setTimeout(run,80);setTimeout(run,300)},true);
-  new MutationObserver(run).observe(document.documentElement,{childList:true,subtree:true});
+  window.addEventListener('DOMContentLoaded',function(){
+    forceSearchAll();
+    var q=document.getElementById('q');
+    if(q){
+      q.addEventListener('input',function(){
+        forceSearchAll();
+        try{ if(typeof render==='function') render(); }catch(e){}
+      },true);
+    }
+  });
 })();
 </script>
 
@@ -22643,3 +22765,17 @@ html body .products .product .price{
   html body .products .product .tags{min-height:70px !important;}
 }
 </style>
+
+<style id="v484-mobile-cleanup">
+@media (max-width:768px){
+.fixedWhats{display:none!important;}
+.nav{flex-wrap:nowrap!important;overflow-x:auto!important;justify-content:flex-start!important}
+.chips{display:none!important;}
+}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  var sel=document.querySelector('.searchRow select');
+  if(sel){ sel.selectedIndex=0; }
+});
+</script>
