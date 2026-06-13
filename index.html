@@ -6217,23 +6217,38 @@ async function sendCartWa(){if(!cart.length){alert('السلة فارغة');retu
 
 
 
-/* ===== V501 quick shopping visibility rules =====
-   حسب طلب المستخدم:
-   - حذف زر/عداد التسوق السريع من النطاطيات بالكامل.
-   - حذف زر/عداد التسوق السريع من العروض بالكامل.
-   - حذف زر/عداد التسوق السريع من تجهيز الحفلات والبكجات، مع إبقائه فقط للمنتجين 210 و 250.
-   - باقي الأقسام مثل السناك والعربات والطاولات وبنود أخرى تبقى كما هي.
+/* ===== V503 quick shopping correction =====
+   المطلوب الصحيح: إبقاء زر التسوق السريع، وحذف/إخفاء تعدادات الاختيارات داخله فقط
+   من النطاطيات، والعروض، وتجهيز الحفلات والبكجات، مع استثناء المنتجين 210 و250.
 */
 function almalikaCanQuickShop(p){
-  const num = Number((p && (p.number || p.id)) || 0);
-  const sec = (typeof sectionOf === 'function') ? sectionOf(p) : '';
-  if(sec === 'bouncies') return false;
-  if(sec === 'offers') return false;
-  if(sec === 'events' && num !== 210 && num !== 250) return false;
   return true;
 }
 
+function almalikaHideQuickCounts(p){
+  const num = Number((p && (p.number || p.id)) || 0);
+  const sec = (typeof sectionOf === 'function') ? sectionOf(p) : '';
+  if(sec === 'bouncies') return true;
+  if(sec === 'offers') return true;
+  if(sec === 'events' && num !== 210 && num !== 250) return true;
+  return false;
+}
+
+function quickBaseOption(p){
+  const base = (typeof price === 'function') ? Number(price(p)||0) : Number((p && (p.price || p.basePrice || p.rentPrice)) || 0);
+  return [{
+    id: 'base',
+    idx: 0,
+    label: 'الخيار الأساسي',
+    price: base,
+    note: 'بدون عرض تعدادات داخل التسوق السريع'
+  }];
+}
+
 function quickOptionsFor(p){
+  if(almalikaHideQuickCounts(p)){
+    return quickBaseOption(p);
+  }
   if(p && Array.isArray(p.snackPackages) && p.snackPackages.length){
     return p.snackPackages.map((pack,i)=>{
       const kids = pack.kids || pack.children || '';
