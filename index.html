@@ -5689,7 +5689,7 @@ ${booked?`<div class="availabilityMini">${booked.note}</div>`:''}
 </div>
 <div class="actions quickActions">
 <button class="details" ${forced?'disabled':''} onclick="openProduct(${p.number})">${forced?'غير متاح':'تفاصيل'}</button>
-${almalikaCanQuickShop(p)?`<button class="quickShop" ${disabled} onclick="quickShop(${p.number})">${forced?'غير متاح':(booked?'محجوزة':'التسوق السريع')}</button>`:''}
+<button class="quickShop" ${disabled} onclick="quickShop(${p.number})">${forced?'غير متاح':(booked?'محجوزة':'التسوق السريع')}</button>
 <button class="shareFriend" ${forced?'disabled':''} onclick="shareToFriend(${p.number})">${forced?'غير متاح':'تحويل لصديق'}</button>
 <button class="wa" ${disabled} onclick="quickWa(${p.number})">${forced?'غير متاح':'واتساب'}</button>
 </div>
@@ -6216,39 +6216,7 @@ async function saveOrderToAdmin(){
 async function sendCartWa(){if(!cart.length){alert('السلة فارغة');return} if(!validateCustomerData(true))return; await saveOrderToAdmin(); window.open('https://wa.me/97433317720?text='+encodeURIComponent(cartMessage()),'_blank')}
 
 
-
-/* ===== V503 quick shopping correction =====
-   المطلوب الصحيح: إبقاء زر التسوق السريع، وحذف/إخفاء تعدادات الاختيارات داخله فقط
-   من النطاطيات، والعروض، وتجهيز الحفلات والبكجات، مع استثناء المنتجين 210 و250.
-*/
-function almalikaCanQuickShop(p){
-  return true;
-}
-
-function almalikaHideQuickCounts(p){
-  const num = Number((p && (p.number || p.id)) || 0);
-  const sec = (typeof sectionOf === 'function') ? sectionOf(p) : '';
-  if(sec === 'bouncies') return true;
-  if(sec === 'offers') return true;
-  if(sec === 'events' && num !== 210 && num !== 250) return true;
-  return false;
-}
-
-function quickBaseOption(p){
-  const base = (typeof price === 'function') ? Number(price(p)||0) : Number((p && (p.price || p.basePrice || p.rentPrice)) || 0);
-  return [{
-    id: 'base',
-    idx: 0,
-    label: 'الخيار الأساسي',
-    price: base,
-    note: 'بدون عرض تعدادات داخل التسوق السريع'
-  }];
-}
-
 function quickOptionsFor(p){
-  if(almalikaHideQuickCounts(p)){
-    return quickBaseOption(p);
-  }
   if(p && Array.isArray(p.snackPackages) && p.snackPackages.length){
     return p.snackPackages.map((pack,i)=>{
       const kids = pack.kids || pack.children || '';
@@ -6309,10 +6277,6 @@ function showToast(msg){
 function addQuickToCart(n,closeAfter=true){
   const p=products.find(x=>Number(x.number)===Number(n));
   if(!p)return;
-  if(typeof almalikaCanQuickShop === 'function' && !almalikaCanQuickShop(p)){
-    alert('التسوق السريع غير متاح لهذا القسم.');
-    return;
-  }
   if(forcedUnavailableCatalog(n)){
     alert('هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.');
     return;
@@ -6346,10 +6310,6 @@ function addQuickToCart(n,closeAfter=true){
 function quickOrderWa(n){
   const p=products.find(x=>Number(x.number)===Number(n));
   if(!p)return;
-  if(typeof almalikaCanQuickShop === 'function' && !almalikaCanQuickShop(p)){
-    alert('التسوق السريع غير متاح لهذا القسم.');
-    return;
-  }
   if(forcedUnavailableCatalog(n)){
     alert('هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.');
     return;
@@ -6366,10 +6326,6 @@ function quickOrderWa(n){
 function quickShop(n){
   const p=products.find(x=>Number(x.number)===Number(n));
   if(!p)return;
-  if(typeof almalikaCanQuickShop === 'function' && !almalikaCanQuickShop(p)){
-    alert('التسوق السريع غير متاح لهذا القسم. يرجى استخدام زر التفاصيل أو واتساب.');
-    return;
-  }
   if(forcedUnavailableCatalog(n)){
     alert('هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.');
     return;
@@ -12648,57 +12604,6 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 
 
 <!-- almalika-v499-data-prices-400-422-updated-from-user-table -->
-
-
-<!-- ===== V502: move product view toolbar to right side only ===== -->
-<style id="almalika-v502-view-toolbar-right-side">
-  /* وضع خيارات طريقة العرض في الجهة اليمنى بدون تغيير القالب أو البيانات */
-  .viewToolbar{
-    direction: rtl !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    text-align: right !important;
-    width: 100% !important;
-    margin-inline-start: 0 !important;
-    margin-inline-end: auto !important;
-  }
-  .viewToolbar .viewLabel,
-  .viewLabel{
-    width: auto !important;
-    margin-inline-start: 0 !important;
-    margin-inline-end: 8px !important;
-    text-align: right !important;
-    order: 0 !important;
-    flex: 0 0 auto !important;
-  }
-  .viewToolbar .viewBtn,
-  .viewBtn{
-    order: 1 !important;
-    flex: 0 0 auto !important;
-  }
-  @media(max-width:700px){
-    .viewToolbar{
-      justify-content: flex-start !important;
-      flex-wrap: nowrap !important;
-      overflow-x: auto !important;
-      overflow-y: hidden !important;
-      -webkit-overflow-scrolling: touch !important;
-      padding-inline: 4px !important;
-      scrollbar-width: none !important;
-    }
-    .viewToolbar::-webkit-scrollbar{display:none !important;}
-    .viewToolbar .viewLabel,
-    .viewLabel{
-      width: auto !important;
-      min-width: max-content !important;
-      white-space: nowrap !important;
-      margin-inline-start: 0 !important;
-      margin-inline-end: 8px !important;
-      text-align: right !important;
-    }
-  }
-</style>
-
 </body>
 </html>
 
