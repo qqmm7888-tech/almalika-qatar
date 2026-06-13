@@ -1,14 +1,6 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<!-- ===== V467: STOP AUTOMATIC SELF-SCROLL / screen jumping guard ===== -->
-
-
-
-<!-- ===== V433 QA STEP 11: HARD early refresh reset - prevent restored scroll showing random product image ===== -->
-
-
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>الملكة للحفلات | كتالوج الحجز السريع</title>
@@ -14916,17 +14908,349 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 
 
 <!-- ===== V430 QA STEP 8: unfreeze big mobile header + add small easy section tabs + 2 employee phones ===== -->
+<style id="almalika-v430-mobile-tabs-unfreeze">
+@media (max-width:768px){
+  /* فك تجميد المنطقة الكبيرة بالكامل: الشعار + الأقسام + البحث يتحركوا مع الصفحة */
+  #almTopFixedGroup{
+    position:relative!important;
+    top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+    z-index:20!important;
+    box-shadow:none!important;
+    transform:none!important;
+  }
+  #almTopFixedGroup .header,
+  body .header{
+    position:relative!important;
+    top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
+    z-index:20!important;
+    transform:none!important;
+  }
+  html,body{
+    padding-top:0!important;
+    scroll-padding-top:54px!important;
+  }
+  body{padding-bottom:82px!important;}
 
+  /* ترتيب البلوك الكبير كواجهة دخول فقط، وليس كتثبيت */
+  body #nav.nav{
+    position:relative!important;
+    top:auto!important;
+    z-index:1!important;
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+    gap:8px!important;
+    margin:8px auto 10px!important;
+    padding:9px!important;
+    width:calc(100% - 28px)!important;
+    max-width:540px!important;
+    overflow:visible!important;
+    border-radius:22px!important;
+  }
+  body #nav.nav button,
+  body #nav.nav button.navIconBtn{
+    height:54px!important;
+    min-height:54px!important;
+    max-height:54px!important;
+    border-radius:16px!important;
+    overflow:hidden!important;
+  }
+  body #nav.nav button span:not(.navIconWrap){
+    font-size:12px!important;
+    line-height:1.15!important;
+    -webkit-line-clamp:2!important;
+  }
+  body .searchRow{
+    position:relative!important;
+    top:auto!important;
+    z-index:1!important;
+    padding:6px 14px 8px!important;
+  }
 
+  /* شريط أقسام صغير وسهل، هو الوحيد الذي يثبت عند النزول */
+  #almMobileQuickTabs{
+    display:flex!important;
+    position:sticky!important;
+    top:0!important;
+    z-index:8000!important;
+    direction:rtl!important;
+    gap:7px!important;
+    overflow-x:auto!important;
+    overscroll-behavior-x:contain!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:none!important;
+    background:rgba(255,250,252,.96)!important;
+    backdrop-filter:blur(12px)!important;
+    border-top:1px solid #f6dbe7!important;
+    border-bottom:1px solid #f0c9dc!important;
+    box-shadow:0 8px 22px rgba(122,23,52,.10)!important;
+    padding:7px 10px!important;
+    margin:0!important;
+    width:100%!important;
+    box-sizing:border-box!important;
+  }
+  #almMobileQuickTabs::-webkit-scrollbar{display:none!important;}
+  #almMobileQuickTabs button{
+    flex:0 0 auto!important;
+    border:1px solid #f0bfd5!important;
+    background:#fff!important;
+    color:#6f1838!important;
+    min-width:auto!important;
+    height:38px!important;
+    padding:0 12px!important;
+    border-radius:999px!important;
+    font-family:inherit!important;
+    font-weight:1000!important;
+    font-size:12px!important;
+    white-space:nowrap!important;
+    box-shadow:0 4px 12px rgba(122,23,52,.06)!important;
+  }
+  #almMobileQuickTabs button.active{
+    color:#fff!important;
+    background:linear-gradient(135deg,#ff2f86,#a20f3b)!important;
+    border-color:#ff6fa8!important;
+  }
+
+  /* رقمين الموظفين واضحين بدون ما يزحموا الهيدر */
+  .almEmployeePhones{
+    display:flex!important;
+    width:calc(100% - 28px)!important;
+    max-width:540px!important;
+    margin:4px auto 8px!important;
+    gap:8px!important;
+    direction:rtl!important;
+  }
+  .almEmployeePhones a{
+    flex:1 1 0!important;
+    min-width:0!important;
+    height:38px!important;
+    border-radius:16px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-decoration:none!important;
+    font-family:inherit!important;
+    font-weight:1000!important;
+    font-size:12px!important;
+    color:#fff!important;
+    background:linear-gradient(135deg,#18bf5b,#0ba84e)!important;
+    box-shadow:0 8px 18px rgba(13,160,76,.18)!important;
+  }
+
+  /* ضمان عدم تغطية أول منتج تحت الهيدر */
+  #app,
+  #app .section,
+  #app .products{
+    margin-top:0!important;
+    padding-top:0!important;
+    transform:none!important;
+    top:auto!important;
+  }
+  #app .homeHeroFrame,
+  #app .almPromoSlider,
+  #app .products{
+    position:relative!important;
+    z-index:1!important;
+  }
+
+  /* تصغير شريط السلة حتى لا يخنق الشاشة */
+  body .cartBar{
+    height:54px!important;
+    min-height:54px!important;
+    bottom:8px!important;
+    border-radius:20px!important;
+    font-size:15px!important;
+    width:calc(100% - 24px)!important;
+  }
+}
+@media (min-width:769px){
+  #almMobileQuickTabs,.almEmployeePhones{display:none!important;}
+}
+</style>
+<script id="almalika-v430-mobile-tabs-unfreeze-js">
+(function(){
+  function isMobile(){return window.matchMedia&&window.matchMedia('(max-width:768px)').matches;}
+  var tabLabels={home:'الرئيسية',bouncies:'النطاطيات',snacks:'السناك',events:'الحفلات',offers:'العروض',rentals:'الطاولات',other:'أخرى'};
+  function currentKey(){try{return window.current||'home';}catch(e){return 'home';}}
+  function installTabs(){
+    if(!isMobile()) return;
+    try{
+      var top=document.getElementById('almTopFixedGroup');
+      if(top){
+        top.style.position='relative';
+        top.style.top='auto';
+      }
+      document.body.style.paddingTop='0px';
+      document.documentElement.classList.remove('almIntroPending');
+      document.body.classList.add('almAppEntered');
+    }catch(e){}
+    var tabs=document.getElementById('almMobileQuickTabs');
+    if(!tabs){
+      tabs=document.createElement('div');
+      tabs.id='almMobileQuickTabs';
+      tabs.innerHTML=['home','bouncies','snacks','events','offers','rentals','other'].map(function(k){return '<button type="button" data-sec="'+k+'">'+tabLabels[k]+'</button>';}).join('');
+      var anchor=document.getElementById('almTopFixedGroup');
+      if(anchor && anchor.parentNode){ anchor.parentNode.insertBefore(tabs, anchor.nextSibling); }
+      else { document.body.insertBefore(tabs, document.body.firstChild); }
+      tabs.addEventListener('click',function(ev){
+        var b=ev.target.closest('button[data-sec]');
+        if(!b) return;
+        var sec=b.getAttribute('data-sec');
+        if(typeof window.showSection==='function'){
+          if(sec==='home' && typeof window.showHome==='function') window.showHome();
+          else window.showSection(sec);
+        }
+        setTimeout(function(){
+          var app=document.getElementById('app');
+          if(app) app.scrollIntoView({behavior:'smooth',block:'start'});
+        },80);
+      });
+    }
+    tabs.querySelectorAll('button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-sec')===currentKey());});
+  }
+  function installPhones(){
+    if(!isMobile()) return;
+    var row=document.querySelector('.almEmployeePhones');
+    if(row) return;
+    var search=document.querySelector('#almTopFixedGroup .searchRow') || document.querySelector('.searchRow');
+    row=document.createElement('div');
+    row.className='almEmployeePhones';
+    row.innerHTML='<a href="https://wa.me/97433317720" target="_blank" rel="noopener">موظف 1: 33317720</a><a href="https://wa.me/97433317721" target="_blank" rel="noopener">موظف 2: 33317721</a>';
+    if(search && search.parentNode) search.parentNode.insertBefore(row, search.nextSibling);
+  }
+  function run(){installTabs();installPhones();}
+  document.addEventListener('DOMContentLoaded',function(){run();setTimeout(run,200);setTimeout(run,800);});
+  window.addEventListener('load',function(){run();setTimeout(run,500);});
+  document.addEventListener('click',function(){setTimeout(run,80);},true);
+  window.addEventListener('resize',run);
+  try{new MutationObserver(function(){setTimeout(run,60);}).observe(document.documentElement,{childList:true,subtree:true,attributes:true});}catch(e){}
+  setInterval(run,1200);
+})();
+</script>
 
 
 
 <!-- v432: mobile product modal fixed bottom actions - keep all details visible -->
-
+<style id="v432-mobile-modal-actions-fixed">
+@media (max-width: 700px){
+  /* نافذة المنتج تتحول لصفحة كاملة قابلة للتمرير */
+  #modal.show{
+    align-items:stretch !important;
+    justify-content:flex-start !important;
+    padding:0 !important;
+    overflow:hidden !important;
+    background:rgba(0,0,0,.45) !important;
+  }
+  #modal.show .modalBox:not(.cartModal){
+    width:100vw !important;
+    height:100dvh !important;
+    max-height:100dvh !important;
+    min-height:100dvh !important;
+    border-radius:0 !important;
+    display:block !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    -webkit-overflow-scrolling:touch !important;
+    padding-bottom:190px !important;
+    box-sizing:border-box !important;
+    background:#fffdf8 !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalPic{
+    min-height:0 !important;
+    padding:14px 14px 8px !important;
+    border-radius:0 !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalPic img{
+    width:100% !important;
+    max-height:38dvh !important;
+    object-fit:contain !important;
+    border-radius:18px !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalInfo{
+    padding:14px 18px 210px !important;
+    box-sizing:border-box !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalInfo h2{
+    font-size:30px !important;
+    line-height:1.25 !important;
+    text-align:center !important;
+    margin:12px 0 10px !important;
+  }
+  /* زر الإغلاق الدائري العلوي فقط للرجوع السريع، لا يغطي المحتوى */
+  #modal.show .modalBox:not(.cartModal) .close{
+    position:fixed !important;
+    top:calc(env(safe-area-inset-top,0px) + 14px) !important;
+    left:16px !important;
+    width:54px !important;
+    height:54px !important;
+    z-index:1000000 !important;
+    box-shadow:0 12px 30px rgba(233,30,99,.35) !important;
+  }
+  /* الأزرار الثلاثة مثبتة دائماً بأسفل الشاشة */
+  #modal.show .modalBox:not(.cartModal) .modalActions.three{
+    position:fixed !important;
+    left:12px !important;
+    right:12px !important;
+    bottom:calc(env(safe-area-inset-bottom,0px) + 10px) !important;
+    z-index:999999 !important;
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+    margin:0 !important;
+    padding:10px !important;
+    background:rgba(255,255,255,.97) !important;
+    border:1px solid rgba(120,0,55,.08) !important;
+    border-radius:22px !important;
+    box-shadow:0 -10px 35px rgba(0,0,0,.18) !important;
+    backdrop-filter:blur(8px) !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalActions.three button,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three a{
+    width:100% !important;
+    min-height:54px !important;
+    border-radius:16px !important;
+    font-size:18px !important;
+    font-weight:900 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:12px !important;
+  }
+  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(1)::before,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(1)::before{content:'💬 ';}
+  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(2)::before,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(2)::before{content:'🛒 ';}
+  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(3)::before,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(3)::before{content:'✕ ';}
+  /* منع أي قواعد قديمة من جعل الأزرار عالقة داخل النص */
+  #modal.show .modalBox:not(.cartModal) .modalActions.three + *,
+  #modal.show .modalBox:not(.cartModal) .modalActions.three ~ *{
+    margin-bottom:0 !important;
+  }
+}
+</style>
 
 
 <!-- ===== V433 QA STEP 11: close accidental modal/zoom on refresh and force top after app render ===== -->
-
+<script id="almalika-v433-late-refresh-cleanup">
+(function(){
+  var bootUntil=Date.now()+2200;
+  function isBooting(){return Date.now()<bootUntil;}
+  function clean(){
+    try{
+      ['almalikaV397ImageViewer','almalikaGlobalImageZoom','almalikaImageZoom'].forEach(function(id){
+        var el=document.getElementById(id);
+        if(el){ el.classList.remove('show','open','active'); el.style.display='none'; el.style.visibility='hidden'; }
+      });
+      var modal=document.getElementById('modal');
+      if(modal && isBooting()){ modal.classList.remove('show','open','active'); modal.innerHTML=''; modal.style.display='none'; }
+      document.body.classList.remove('modal-open','zoom-open','v397ImageViewerOpen','v395ImageZoomOpen');
+      window.scrollTo(0,0); document.documentElement.scrollTop=0; document.body.scrollTop=0;
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){clean(); setTimeout(clean,100); setTimeout(clean,450); setTimeout(clean,1100); setTimeout(function(){var m=document.getElementById('modal'); if(m) m.style.display='';},2300);});
+  window.addEventListener('load',function(){clean(); setTimeout(clean,300); setTimeout(clean,900); setTimeout(function(){var m=document.getElementById('modal'); if(m) m.style.display='';},2300);});
+  window.addEventListener('pageshow',function(){clean(); setTimeout(clean,250);});
+})();
+</script>
 
 
 <style id="almalika-v434-slider-images-fit-fix">
@@ -16553,246 +16877,410 @@ body.v459ZoomOpen{overflow:hidden !important;}
 </script>
 
 
-
-<!-- ===== V492 SAFE FIX: scroll, front WhatsApp modal, horizontal menus - NO DATA DELETION ===== -->
-<style id="almalika-v492-safe-layout-fix">
-/* 1) رجوع حركة الصفحة طبيعية بالماوس والجوال */
+<!-- ===== V493 SAFE PROFESSIONAL MOBILE TEMPLATE PATCH - from V483, no data removed ===== -->
+<style id="almalika-v493-safe-professional-mobile-template">
+/* V493: هذا البلوك لا يحذف أي بيانات. فقط يرتب الطبقات والحركة والقوائم. */
 html,body{
-  overflow-x:hidden!important;
-  overflow-y:auto!important;
   height:auto!important;
   min-height:100%!important;
-  max-height:none!important;
-  touch-action:pan-y!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
   overscroll-behavior-y:auto!important;
+  touch-action:pan-y pinch-zoom!important;
   scroll-behavior:auto!important;
 }
-body{position:relative!important;}
-body.modal-open,html.modal-open{overflow:auto!important;height:auto!important;}
+body{
+  position:relative!important;
+  -webkit-overflow-scrolling:touch!important;
+}
 
-/* 2) نافذة المنتج تتحرك طبيعي، ولا ترجع تحت لوحدها */
-#modal.show,.modal.show{
-  position:fixed!important;
-  inset:0!important;
-  display:block!important;
-  overflow-y:auto!important;
+/* 1) القوائم المطلوبة: صف واحد مستطيل يسحب يدويًا يمين/يسار بدون حركة تلقائية */
+.header .nav,
+.nav,
+.mainCats,
+.chips{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  justify-content:flex-start!important;
+  align-items:stretch!important;
+  gap:10px!important;
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  scroll-snap-type:x proximity!important;
+  scroll-behavior:auto!important;
+  scrollbar-width:thin!important;
+  white-space:nowrap!important;
+  direction:rtl!important;
+  padding:8px 8px 12px!important;
+}
+.header .nav::-webkit-scrollbar,
+.nav::-webkit-scrollbar,
+.mainCats::-webkit-scrollbar,
+.chips::-webkit-scrollbar{height:5px!important}
+.header .nav::-webkit-scrollbar-thumb,
+.nav::-webkit-scrollbar-thumb,
+.mainCats::-webkit-scrollbar-thumb,
+.chips::-webkit-scrollbar-thumb{background:#e8b9cf!important;border-radius:999px!important}
+
+/* شكل القائمة الرئيسية في الصفحة: مستطيلات أفقية مع بقاء الرموز بجانب النص */
+.mainCats{
+  background:linear-gradient(180deg,#fff,#fff8fb)!important;
+  border:1px solid #f3c8dc!important;
+  border-radius:22px!important;
+  box-shadow:0 10px 28px rgba(106,27,46,.06)!important;
+}
+.mainCats .cat,
+.cat{
+  flex:0 0 235px!important;
+  min-width:235px!important;
+  max-width:235px!important;
+  min-height:74px!important;
+  display:flex!important;
+  flex-direction:row-reverse!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  text-align:right!important;
+  padding:14px 16px!important;
+  border-radius:18px!important;
+  scroll-snap-align:start!important;
+  white-space:normal!important;
+}
+.cat .icon{
+  flex:0 0 44px!important;
+  width:44px!important;
+  height:44px!important;
+  border-radius:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  font-size:22px!important;
+  background:linear-gradient(135deg,#fff3c9,#fff)!important;
+  box-shadow:0 8px 18px rgba(106,27,46,.08)!important;
+}
+.cat h3{margin:0!important;font-size:16px!important;line-height:1.35!important}
+.cat p,.cat b{display:none!important}
+
+/* أزرار الهيدر والفلاتر: صف واحد لا يلتف */
+.header .nav button,
+.nav button,
+.chips .chip,
+.chip{
+  flex:0 0 auto!important;
+  min-width:max-content!important;
+  border-radius:14px!important;
+  padding:10px 16px!important;
+  scroll-snap-align:start!important;
+  white-space:nowrap!important;
+}
+
+/* 2) المودال: لا يتجمد ولا يدفع الشاشة للأسفل، كل المحتوى يتحرك طبيعي */
+.modal,
+#modal{
+  z-index:200000!important;
   overflow-x:hidden!important;
+  overflow-y:auto!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
   -webkit-overflow-scrolling:touch!important;
   overscroll-behavior:contain!important;
-  align-items:initial!important;
-  justify-content:initial!important;
-  padding:18px!important;
-  z-index:100000!important;
+  padding:18px 12px!important;
+  touch-action:pan-y pinch-zoom!important;
 }
-#modal.show .modalBox,.modal.show .modalBox{
-  margin:0 auto 32px!important;
+.modal.show,#modal.show{display:flex!important}
+
+.modalBox,
+.modalBox.detailed,
+#modal .modalBox,
+#modal .modalBox.detailed{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  width:min(1080px,96vw)!important;
+  max-width:1080px!important;
   height:auto!important;
   min-height:0!important;
   max-height:none!important;
   overflow:visible!important;
-  transform:none!important;
+  margin:18px auto 110px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 340px!important;
+  align-items:start!important;
+  border-radius:28px!important;
 }
-#modal.show .modalInfo,.modal.show .modalInfo{
+
+#modal .modalPic,
+.modalPic{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  order:2!important;
+  align-self:start!important;
+  min-height:0!important;
   height:auto!important;
   max-height:none!important;
   overflow:visible!important;
+  z-index:1!important;
 }
-#modal.show .modalActions,#modal.show .modalActions.three,
-.modal.show .modalActions,.modal.show .modalActions.three{
-  position:static!important;
+
+#modal .modalInfo,
+.modalInfo{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  order:1!important;
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+  z-index:2!important;
+  background:#fffdf8!important;
+}
+
+/* منع عنوان/بيانات الحفلات من الطفو فوق الصورة */
+#modal .modalHead,
+#modal .modalInfo h1,
+#modal .modalInfo h2,
+#modal .modalInfo h3,
+#modal .detailIntro,
+#modal .infoGrid,
+#modal .priceChoiceGrid,
+#modal .bookingSimple,
+#modal .workNotice,
+#modal .decorGallery,
+#modal .decorGalleryTitle,
+#modal .decorThumbs{
+  position:relative!important;
+  inset:auto!important;
+  transform:none!important;
+  z-index:auto!important;
+}
+
+/* أزرار الأسفل تتحرك مع المحتوى وليست ثابتة */
+#modal .modalActions,
+#modal .modalActions.three,
+.modalActions,
+.modalActions.three{
+  position:relative!important;
   bottom:auto!important;
   left:auto!important;
   right:auto!important;
-  z-index:auto!important;
+  top:auto!important;
+  z-index:5!important;
+  transform:none!important;
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:10px!important;
+  width:100%!important;
   background:transparent!important;
+  padding:12px 0 0!important;
+  margin:14px 0 0!important;
   box-shadow:none!important;
-  backdrop-filter:none!important;
+}
+#modal .modalActions a,
+#modal .modalActions button,
+.modalActions a,
+.modalActions button{
+  min-height:48px!important;
+  border-radius:14px!important;
 }
 
-/* 3) في الجوال: ترتيب نافذة التفاصيل بدون تثبيت أزرار في الأسفل */
-@media(max-width:700px){
-  #modal.show,.modal.show{padding:0!important;background:rgba(0,0,0,.50)!important;}
-  #modal.show .modalBox:not(.cartModal),.modal.show .modalBox:not(.cartModal){
-    width:100%!important;
-    min-height:100dvh!important;
-    margin:0!important;
-    border-radius:0!important;
-    display:block!important;
-    background:#fffaf6!important;
-    padding-bottom:22px!important;
-  }
-  #modal.show .modalPic,.modal.show .modalPic{
-    position:relative!important;
-    top:auto!important;
-    order:0!important;
-    height:auto!important;
-    min-height:0!important;
-    max-height:none!important;
-    padding:12px!important;
-  }
-  #modal.show .modalPic img,.modal.show .modalPic img{
-    width:100%!important;
-    height:auto!important;
-    max-height:42dvh!important;
-    object-fit:contain!important;
-  }
-  #modal.show .modalInfo,.modal.show .modalInfo{padding:14px 14px 24px!important;}
-  #modal.show .modalHead,.modal.show .modalHead{position:static!important;background:transparent!important;padding:0!important;}
-  #modal.show .close,.modal.show .close{
-    position:fixed!important;
-    top:calc(env(safe-area-inset-top,0px) + 12px)!important;
-    left:12px!important;
-    width:52px!important;
-    height:52px!important;
-    z-index:100003!important;
-  }
-  #modal.show .modalActions.three,.modal.show .modalActions.three{
-    display:grid!important;
-    grid-template-columns:1fr!important;
-    gap:8px!important;
-    margin:14px 0 0!important;
-    padding:0!important;
-  }
-  #modal.show .modalActions.three button,#modal.show .modalActions.three a,
-  .modal.show .modalActions.three button,.modal.show .modalActions.three a{
-    width:100%!important;
-    min-height:52px!important;
-    border-radius:16px!important;
-    font-size:16px!important;
-  }
+/* صور الديكور والاختيارات */
+#modal .modalPic img,
+#modal .mainDecorImg,
+.mainDecorImg{
+  width:100%!important;
+  height:auto!important;
+  max-height:420px!important;
+  object-fit:contain!important;
+  position:relative!important;
+  z-index:1!important;
 }
+.decorGallery{width:100%!important;margin-top:14px!important}
+.decorThumbs{
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:10px!important;
+  overflow:visible!important;
+}
+.decorThumb{min-width:0!important}
 
-/* 4) نافذة تواصل الإدارة فوق كل شيء */
-#v336InfoModal.v336ModalOverlay.show,
+/* 3) نافذة الواتساب/تواصل الإدارة دائمًا أمام تفاصيل المنتج */
+#v336InfoModal,
+#v338OrderContactModal,
+#v339WhatsappModal,
+.v336ModalOverlay{
+  z-index:2147483000!important;
+  position:fixed!important;
+  inset:0!important;
+}
+#v336InfoModal.show,
 #v338OrderContactModal.show,
 #v339WhatsappModal.show,
 .v336ModalOverlay.show{
-  z-index:2147483647!important;
-  position:fixed!important;
-  inset:0!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
-  padding:18px!important;
-  pointer-events:auto!important;
 }
-#v336InfoModal .v336ModalBox,#v338OrderContactModal .v338ContactBox,#v339WhatsappModal .v339Box{
+.v336ModalBox,
+.v338ContactBox,
+.v339Box{
   position:relative!important;
-  z-index:2147483647!important;
-  pointer-events:auto!important;
+  z-index:2147483001!important;
 }
 
-/* 5) القوائم صف واحد مستطيل وتسحب يمين/يسار فقط، بدون حركة تلقائية */
-.nav,.chips,.mainCats,#almMobileQuickTabs{
-  display:flex!important;
-  flex-wrap:nowrap!important;
-  overflow-x:auto!important;
-  overflow-y:hidden!important;
-  justify-content:flex-start!important;
-  align-items:center!important;
-  gap:8px!important;
-  max-width:100%!important;
-  scrollbar-width:thin!important;
-  scroll-behavior:auto!important;
-  -webkit-overflow-scrolling:touch!important;
-  direction:rtl!important;
-  white-space:nowrap!important;
-}
-.nav button,.chip,.mainCats .cat,#almMobileQuickTabs button{
-  flex:0 0 auto!important;
-  white-space:nowrap!important;
-  border-radius:14px!important;
-}
-.nav{border-radius:16px!important;padding:8px!important;background:#fff7fb!important;border:1px solid #f0c7da!important;}
-.nav button{min-height:44px!important;padding:10px 15px!important;display:inline-flex!important;align-items:center!important;gap:8px!important;}
-.navIconWrap{flex:0 0 auto!important;display:inline-grid!important;place-items:center!important;}
-.mainCats{padding:8px 2px 14px!important;}
-.mainCats .cat{width:210px!important;min-width:210px!important;max-width:210px!important;min-height:96px!important;border-radius:18px!important;}
-.chips{padding:8px 2px 14px!important;}
-
-/* منع أي تبويب قديم مكرر من الحركة التلقائية */
-#almMobileQuickTabs{display:none!important;}
-.almEmployeePhones{display:none!important;}
-</style>
-<script id="almalika-v492-safe-layout-fix-js">
-(function(){
-  if(window.__almV492SafeFix) return;
-  window.__almV492SafeFix=true;
-
-  function allowNaturalScroll(){
-    try{
-      document.documentElement.style.overflowY='auto';
-      document.body.style.overflowY='auto';
-      document.documentElement.style.height='auto';
-      document.body.style.height='auto';
-      document.body.style.position='relative';
-      document.body.classList.remove('modal-open','almV402ProductsMode');
-      document.documentElement.classList.remove('almIntroPending','alm-no-self-scroll','alm-v433-booting');
-    }catch(e){}
+/* جوال: قالب أكثر نظافة بدون فقد بيانات */
+@media(max-width:760px){
+  body{padding-bottom:22px!important}
+  .wrap{width:min(100% - 18px,680px)!important}
+  .header .wrap{width:min(100% - 18px,680px)!important}
+  .logo{font-size:32px!important}
+  .mainCats{border-radius:20px!important;padding:10px!important}
+  .mainCats .cat,.cat{
+    flex-basis:185px!important;
+    min-width:185px!important;
+    max-width:185px!important;
+    min-height:68px!important;
+    padding:12px 13px!important;
+  }
+  .cat h3{font-size:14.5px!important}
+  .cat .icon{width:38px!important;height:38px!important;flex-basis:38px!important;font-size:19px!important}
+  .header .nav button,.nav button,.chips .chip,.chip{
+    min-height:42px!important;
+    padding:9px 13px!important;
+    border-radius:13px!important;
+    font-size:13px!important;
   }
 
-  function bringContactFront(){
+  .modal,#modal{
+    padding:0!important;
+    background:rgba(25,18,23,.68)!important;
+  }
+  .modalBox,
+  .modalBox.detailed,
+  #modal .modalBox,
+  #modal .modalBox.detailed{
+    width:100vw!important;
+    max-width:100vw!important;
+    margin:0 0 70px!important;
+    border-radius:0!important;
+    display:flex!important;
+    flex-direction:column!important;
+    overflow:visible!important;
+    background:#fffdf8!important;
+  }
+  #modal .modalPic,.modalPic{
+    order:1!important;
+    width:100%!important;
+    padding:18px 16px 10px!important;
+    background:#fffaf0!important;
+  }
+  #modal .modalInfo,.modalInfo{
+    order:2!important;
+    width:100%!important;
+    padding:14px 16px 22px!important;
+  }
+  #modal .modalPic img,
+  #modal .mainDecorImg,
+  .mainDecorImg{
+    max-height:none!important;
+    width:100%!important;
+    object-fit:contain!important;
+    border-radius:18px!important;
+  }
+  #modal .modalInfo h2{
+    font-size:24px!important;
+    line-height:1.45!important;
+    margin:8px 0 12px!important;
+    text-align:center!important;
+  }
+  #modal .infoGrid,
+  #modal .priceChoiceGrid,
+  #modal .bookingSimple{
+    grid-template-columns:1fr!important;
+  }
+  #modal .modalActions,
+  #modal .modalActions.three,
+  .modalActions,
+  .modalActions.three{
+    grid-template-columns:1fr!important;
+    position:relative!important;
+    bottom:auto!important;
+    background:transparent!important;
+  }
+  .decorThumbs{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    gap:10px!important;
+    padding-bottom:8px!important;
+  }
+  .decorThumb{
+    flex:0 0 155px!important;
+    min-width:155px!important;
+  }
+  .v336ModalBox,.v338ContactBox,.v339Box{
+    width:calc(100vw - 24px)!important;
+    max-height:88vh!important;
+    overflow:auto!important;
+  }
+}
+
+/* كمبيوتر: لا نلمس البيانات، فقط نمنع التجميد ونظهر الواتساب فوق */
+@media(min-width:761px){
+  #modal .modalActions,
+  #modal .modalActions.three{
+    position:relative!important;
+  }
+}
+</style>
+<script id="almalika-v493-safe-professional-mobile-template-js">
+(function(){
+  /* بدون مراقبة مستمرة وبدون لوب: فقط إلغاء أثر أكواد التمرير القديمة إن وجدت */
+  try{
+    document.documentElement.classList.remove('alm-no-self-scroll','alm-v433-booting');
+    document.documentElement.style.overflowY='auto';
+    document.body && (document.body.style.overflowY='auto');
+    if('scrollRestoration' in history) history.scrollRestoration='auto';
+  }catch(e){}
+
+  function bringContactToFront(){
+    var ids=['v336InfoModal','v338OrderContactModal','v339WhatsappModal'];
+    ids.forEach(function(id){
+      var el=document.getElementById(id);
+      if(el && el.classList.contains('show')){
+        el.style.zIndex='2147483000';
+        el.style.position='fixed';
+        el.style.inset='0';
+      }
+    });
+  }
+
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    if(!t) return;
+    var text=(t.textContent||'').replace(/\s+/g,' ');
+    if(/واتساب|استفسار|تواصل|إرسال الطلب/.test(text)){
+      setTimeout(bringContactToFront,30);
+      setTimeout(bringContactToFront,160);
+    }
+  },true);
+
+  window.addEventListener('load',function(){
     try{
-      ['v336InfoModal','v338OrderContactModal','v339WhatsappModal'].forEach(function(id){
-        var el=document.getElementById(id);
-        if(el){
-          el.style.zIndex='2147483647';
-          el.style.position='fixed';
-          if(el.classList.contains('show')) document.body.appendChild(el);
-        }
+      document.querySelectorAll('.mainCats,.nav,.chips').forEach(function(el){
+        el.style.scrollBehavior='auto';
       });
     }catch(e){}
-  }
-
-  function wrapContact(fnName){
-    var old=window[fnName];
-    if(typeof old!=='function' || old.__v492Wrapped) return;
-    function wrapped(){
-      allowNaturalScroll();
-      var r=old.apply(this,arguments);
-      setTimeout(bringContactFront,0);
-      setTimeout(bringContactFront,60);
-      return r;
-    }
-    wrapped.__v492Wrapped=true;
-    window[fnName]=wrapped;
-    try{ if(fnName==='productInquiryWa') productInquiryWa=wrapped; if(fnName==='generalWa') generalWa=wrapped; }catch(e){}
-  }
-
-  function install(){
-    allowNaturalScroll();
-    bringContactFront();
-    wrapContact('productInquiryWa');
-    wrapContact('generalWa');
-    wrapContact('quickWa');
-    wrapContact('sendCartWa');
-    try{
-      var tabs=document.getElementById('almMobileQuickTabs');
-      if(tabs) tabs.remove();
-      document.querySelectorAll('.almEmployeePhones').forEach(function(el){el.remove();});
-    }catch(e){}
-  }
-
-  // افتح الموقع على الرئيسية فقط عند الدخول لأول مرة بدون رابط طلب إدارة
-  function forceHomeOnce(){
-    try{
-      if(String(location.hash||'').indexOf('admin-order=')>=0) return;
-      if(!sessionStorage.getItem('almV492HomeDone')){
-        sessionStorage.setItem('almV492HomeDone','1');
-        history.replaceState({almalika:true},'', '/home#home/الجميع');
-        if(typeof window.showHome==='function') window.showHome();
-      }
-    }catch(e){}
-  }
-
-  document.addEventListener('DOMContentLoaded',function(){install();setTimeout(install,150);setTimeout(forceHomeOnce,220);});
-  window.addEventListener('load',function(){install();setTimeout(install,300);});
-  document.addEventListener('click',function(){setTimeout(install,30);setTimeout(bringContactFront,50);},true);
-  window.addEventListener('resize',install);
-  install();
+  });
 })();
 </script>
-<!-- ===== END V492 SAFE FIX ===== -->
+
 </body>
 </html>
 
@@ -21379,7 +21867,32 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
   .cartBar{position:fixed!important;bottom:10px!important;left:50%!important;transform:translateX(-50%)!important;width:calc(100% - 24px)!important;z-index:9000!important;}
 }
 </style>
-
+<script id="almalika-v428-mobile-rebuild-script">
+(function(){
+  function mobile(){return window.matchMedia&&window.matchMedia('(max-width:768px)').matches;}
+  function fix(){
+    if(!mobile()) return;
+    try{document.documentElement.classList.remove('almIntroPending');document.body.classList.add('almAppEntered');}catch(e){}
+    try{var i=document.getElementById('almMobileIntro'); if(i) i.remove();}catch(e){}
+    /* منع نمط تثبيت منطقة المنتجات من توليد فراغ أبيض طويل */
+    try{document.body.classList.remove('almV402ProductsMode');document.documentElement.style.setProperty('--almFixedTopHeight','0px');}catch(e){}
+    /* عند فتح تفاصيل المنتج: انقل الأزرار بعد كل البيانات حتى لا تغطي الباقات */
+    try{
+      var m=document.getElementById('modal');
+      if(m&&m.classList.contains('show')){
+        var info=m.querySelector('.modalInfo,.quickShopInfo');
+        var act=m.querySelector('.modalActions');
+        if(info&&act&&act.parentNode!==info){info.appendChild(act);}
+      }
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(fix,0);setTimeout(fix,120);setTimeout(fix,600);});
+  window.addEventListener('load',function(){setTimeout(fix,50);setTimeout(fix,500);});
+  document.addEventListener('click',function(){setTimeout(fix,20);setTimeout(fix,180);setTimeout(fix,700);},true);
+  try{new MutationObserver(function(){setTimeout(fix,30);}).observe(document.documentElement,{childList:true,subtree:true,attributes:true});}catch(e){}
+  setInterval(fix,900);
+})();
+</script>
 
 
 <!-- ===== V429 QA STEP 7: HARD MOBILE RESET - fix nav overlap, modal buttons order, image blank gaps ===== -->
