@@ -1,6 +1,22 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+<!-- ===== V467: STOP AUTOMATIC SELF-SCROLL / screen jumping guard ===== -->
+
+<!-- removed almalika-v467-stop-auto-scroll-guard -->
+
+
+<!-- removed almalika-v467-stop-auto-scroll-style -->
+
+
+<!-- ===== V433 QA STEP 11: HARD early refresh reset - prevent restored scroll showing random product image ===== -->
+
+<!-- removed almalika-v433-early-refresh-hard-reset -->
+
+
+<!-- removed almalika-v433-early-refresh-style -->
+
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>الملكة للحفلات | كتالوج الحجز السريع</title>
@@ -14057,129 +14073,18 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
 
 
 <!-- ===== V400: عند الضغط على أي قسم في الهيدر يبدأ العرض من أول منتج ===== -->
-<script id="almalika-v400-header-click-scroll-first-product">
-(function(){
-  function getStickyHeaderHeight(){
-    var h=0;
-    var header=document.querySelector('.header, header.header, #header');
-    if(header){
-      var r=header.getBoundingClientRect();
-      h=Math.max(h, r.height||0);
-    }
-    var ticker=document.getElementById('v361TopTickerWrap');
-    if(ticker){
-      var tr=ticker.getBoundingClientRect();
-      if(getComputedStyle(ticker).position==='fixed' || ticker.getBoundingClientRect().top<=2){
-        h+=Math.max(0,tr.height||0);
-      }
-    }
-    return h;
-  }
-  function firstProductsBlock(){
-    return document.querySelector('#app .products') || document.querySelector('.products');
-  }
-  function scrollToFirstProductNow(){
-    var target=firstProductsBlock();
-    if(!target) return;
-    var offset=getStickyHeaderHeight()+14;
-    var frozen=document.querySelector('#app .almFrozenProductArea');
-    if(frozen){ offset += Math.ceil(frozen.getBoundingClientRect().height||0) + 10; }
-    var y=target.getBoundingClientRect().top + (window.pageYOffset||document.documentElement.scrollTop||0) - offset;
-    if(!isFinite(y)) y=0;
-    window.scrollTo({top:Math.max(0,Math.round(y)), behavior:'auto'});
-  }
-  function scheduleScrollToFirstProduct(){
-    requestAnimationFrame(function(){
-      setTimeout(scrollToFirstProductNow,30);
-      setTimeout(scrollToFirstProductNow,140);
-      setTimeout(scrollToFirstProductNow,320);
-    });
-  }
-  window.almalikaScrollToFirstProduct=scheduleScrollToFirstProduct;
 
-  function wrapNavigationFunction(name){
-    var fn=window[name];
-    if(typeof fn!=='function' || fn.__v400Wrapped) return;
-    var wrapped=function(){
-      var r=fn.apply(this,arguments);
-      scheduleScrollToFirstProduct();
-      return r;
-    };
-    wrapped.__v400Wrapped=true;
-    window[name]=wrapped;
-  }
+<!-- removed almalika-v400-header-click-scroll-first-product -->
 
-  wrapNavigationFunction('showSection');
-  wrapNavigationFunction('showHome');
-
-  document.addEventListener('click',function(e){
-    var btn=e.target && e.target.closest ? e.target.closest('#nav button, .nav button.navIconBtn, .mainCats .cat.richCat') : null;
-    if(!btn) return;
-    scheduleScrollToFirstProduct();
-  },true);
-})();
-</script>
 
 
 <!-- ===== V401: تجميد منطقة الهيدر + عنوان القسم والفلاتر بدون حركة ===== -->
-<style id="almalika-v401-freeze-top-and-section-area">
-/* تثبيت عنوان القسم والفلاتر تحت الهيدر مباشرة */
-#app .almFrozenProductArea{
-  position:sticky!important;
-  top:var(--almFixedTopHeight,178px)!important;
-  z-index:2147482500!important;
-  background:linear-gradient(180deg,rgba(255,250,252,.99),rgba(255,247,250,.98))!important;
-  backdrop-filter:blur(12px)!important;
-  -webkit-backdrop-filter:blur(12px)!important;
-  padding:10px 0 10px!important;
-  margin:0 0 12px!important;
-  border-bottom:1px solid rgba(246,216,230,.95)!important;
-  box-shadow:0 12px 28px rgba(106,27,46,.08)!important;
-}
-#app .almFrozenProductArea .panel{
-  margin:0 0 8px!important;
-}
-#app .almFrozenProductArea .chips{
-  margin:0!important;
-  padding:4px 0 2px!important;
-  max-height:84px!important;
-  overflow-y:auto!important;
-  overflow-x:hidden!important;
-  scrollbar-width:thin!important;
-}
-#app .products{
-  scroll-margin-top:calc(var(--almFixedTopHeight,178px) + 150px)!important;
-}
-@media(max-width:700px){
-  #app .almFrozenProductArea{padding:8px 0!important;}
-  #app .almFrozenProductArea .panel{padding:14px!important;border-radius:18px!important;}
-  #app .almFrozenProductArea .panel h1{font-size:22px!important;}
-  #app .almFrozenProductArea .panel p{font-size:12px!important;}
-  #app .almFrozenProductArea .chips{max-height:112px!important;}
-}
-</style>
-<script id="almalika-v401-freeze-top-and-section-area-script">
-(function(){
-  function stopTickerMotion(){
-    document.querySelectorAll('.almWorkingTickerTrack,.v361TickerTrack,.v360TickerTrack,.v359TickerTrack').forEach(function(el){
-      /* ticker motion kept active */
-    });
-  }
-  function refreshFrozenOffset(){
-    var group=document.getElementById('almTopFixedGroup');
-    if(group){
-      var h=Math.ceil(group.getBoundingClientRect().height || group.offsetHeight || 178);
-      document.documentElement.style.setProperty('--almFixedTopHeight', h+'px');
-      document.body.style.paddingTop=h+'px';
-    }
-  }
-  document.addEventListener('DOMContentLoaded',refreshFrozenOffset);
-  window.addEventListener('load',refreshFrozenOffset);
-  window.addEventListener('resize',refreshFrozenOffset);
-  window.addEventListener('hashchange',refreshFrozenOffset);
-  setInterval(refreshFrozenOffset,1200);
-})();
-</script>
+
+<!-- removed almalika-v401-freeze-top-and-section-area -->
+
+
+<!-- removed almalika-v401-freeze-top-and-section-area-script -->
+
 
 <script id="almalika-v403-view-mode-cleanup">
 try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
@@ -15129,128 +15034,15 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 
 
 <!-- v432: mobile product modal fixed bottom actions - keep all details visible -->
-<style id="v432-mobile-modal-actions-fixed">
-@media (max-width: 700px){
-  /* نافذة المنتج تتحول لصفحة كاملة قابلة للتمرير */
-  #modal.show{
-    align-items:stretch !important;
-    justify-content:flex-start !important;
-    padding:0 !important;
-    overflow:hidden !important;
-    background:rgba(0,0,0,.45) !important;
-  }
-  #modal.show .modalBox:not(.cartModal){
-    width:100vw !important;
-    height:100dvh !important;
-    max-height:100dvh !important;
-    min-height:100dvh !important;
-    border-radius:0 !important;
-    display:block !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    -webkit-overflow-scrolling:touch !important;
-    padding-bottom:190px !important;
-    box-sizing:border-box !important;
-    background:#fffdf8 !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalPic{
-    min-height:0 !important;
-    padding:14px 14px 8px !important;
-    border-radius:0 !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalPic img{
-    width:100% !important;
-    max-height:38dvh !important;
-    object-fit:contain !important;
-    border-radius:18px !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalInfo{
-    padding:14px 18px 210px !important;
-    box-sizing:border-box !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalInfo h2{
-    font-size:30px !important;
-    line-height:1.25 !important;
-    text-align:center !important;
-    margin:12px 0 10px !important;
-  }
-  /* زر الإغلاق الدائري العلوي فقط للرجوع السريع، لا يغطي المحتوى */
-  #modal.show .modalBox:not(.cartModal) .close{
-    position:fixed !important;
-    top:calc(env(safe-area-inset-top,0px) + 14px) !important;
-    left:16px !important;
-    width:54px !important;
-    height:54px !important;
-    z-index:1000000 !important;
-    box-shadow:0 12px 30px rgba(233,30,99,.35) !important;
-  }
-  /* الأزرار الثلاثة مثبتة دائماً بأسفل الشاشة */
-  #modal.show .modalBox:not(.cartModal) .modalActions.three{
-    position:fixed !important;
-    left:12px !important;
-    right:12px !important;
-    bottom:calc(env(safe-area-inset-bottom,0px) + 10px) !important;
-    z-index:999999 !important;
-    display:grid !important;
-    grid-template-columns:1fr !important;
-    gap:8px !important;
-    margin:0 !important;
-    padding:10px !important;
-    background:rgba(255,255,255,.97) !important;
-    border:1px solid rgba(120,0,55,.08) !important;
-    border-radius:22px !important;
-    box-shadow:0 -10px 35px rgba(0,0,0,.18) !important;
-    backdrop-filter:blur(8px) !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalActions.three button,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three a{
-    width:100% !important;
-    min-height:54px !important;
-    border-radius:16px !important;
-    font-size:18px !important;
-    font-weight:900 !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    padding:12px !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(1)::before,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(1)::before{content:'💬 ';}
-  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(2)::before,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(2)::before{content:'🛒 ';}
-  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(3)::before,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(3)::before{content:'✕ ';}
-  /* منع أي قواعد قديمة من جعل الأزرار عالقة داخل النص */
-  #modal.show .modalBox:not(.cartModal) .modalActions.three + *,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three ~ *{
-    margin-bottom:0 !important;
-  }
-}
-</style>
+
+<!-- removed v432-mobile-modal-actions-fixed -->
+
 
 
 <!-- ===== V433 QA STEP 11: close accidental modal/zoom on refresh and force top after app render ===== -->
-<script id="almalika-v433-late-refresh-cleanup">
-(function(){
-  var bootUntil=Date.now()+2200;
-  function isBooting(){return Date.now()<bootUntil;}
-  function clean(){
-    try{
-      ['almalikaV397ImageViewer','almalikaGlobalImageZoom','almalikaImageZoom'].forEach(function(id){
-        var el=document.getElementById(id);
-        if(el){ el.classList.remove('show','open','active'); el.style.display='none'; el.style.visibility='hidden'; }
-      });
-      var modal=document.getElementById('modal');
-      if(modal && isBooting()){ modal.classList.remove('show','open','active'); modal.innerHTML=''; modal.style.display='none'; }
-      document.body.classList.remove('modal-open','zoom-open','v397ImageViewerOpen','v395ImageZoomOpen');
-      window.scrollTo(0,0); document.documentElement.scrollTop=0; document.body.scrollTop=0;
-    }catch(e){}
-  }
-  document.addEventListener('DOMContentLoaded',function(){clean(); setTimeout(clean,100); setTimeout(clean,450); setTimeout(clean,1100); setTimeout(function(){var m=document.getElementById('modal'); if(m) m.style.display='';},2300);});
-  window.addEventListener('load',function(){clean(); setTimeout(clean,300); setTimeout(clean,900); setTimeout(function(){var m=document.getElementById('modal'); if(m) m.style.display='';},2300);});
-  window.addEventListener('pageshow',function(){clean(); setTimeout(clean,250);});
-})();
-</script>
+
+<!-- removed almalika-v433-late-refresh-cleanup -->
+
 
 
 <style id="almalika-v434-slider-images-fit-fix">
@@ -16647,18 +16439,9 @@ body.v459ZoomOpen{overflow:hidden !important;}
 
 
 <!-- ===== V467 late cleanup: neutralize old auto-scroll functions ===== -->
-<script id="almalika-v467-late-auto-scroll-neutralizer">
-(function(){
-  function neutralize(){
-    try{ window.almalikaScrollToFirstProduct=function(){}; }catch(e){}
-    try{ document.body.classList.remove('almV402ProductsMode','almV425MobileMode','almV428MobileMode','almV429MobileMode'); }catch(e){}
-  }
-  neutralize();
-  document.addEventListener('DOMContentLoaded',neutralize);
-  window.addEventListener('load',neutralize);
-  window.addEventListener('hashchange',function(){ try{ window.almAllowScrollFor&&window.almAllowScrollFor(1000); }catch(e){} setTimeout(neutralize,30); });
-})();
-</script>
+
+<!-- removed almalika-v467-late-auto-scroll-neutralizer -->
+
 
 
 
@@ -16877,7 +16660,9 @@ body.v459ZoomOpen{overflow:hidden !important;}
 </script>
 
 
-<!-- ===== moved legacy patches from after </html> into body (V495 clean merge) ===== -->
+<!-- appended legacy blocks moved inside body -->
+
+
 <!-- ===== V295 FIX: استخدام الصور الحقيقية المرفوعة لبند #250 ===== -->
 <style id="almalika-v295-decor250-real-images">
 #modal .modalBox.hasDecor250{grid-template-columns:minmax(0,1fr) 360px!important;max-width:1180px!important}
@@ -20493,8 +20278,12 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
 </script>
 
 <!-- ===== V402: تثبيت منطقة المنتجات بالكامل بدون فراغ أبيض أو تحرك ===== -->
-<style id="almalika-v402-freeze-products-area-no-gap">/* disabled: no floating frozen product area */</style>
-<script id="almalika-v402-freeze-products-area-no-gap-script">/* disabled: prevents floating category filters and white gaps */</script>
+
+<!-- removed almalika-v402-freeze-products-area-no-gap -->
+
+
+<!-- removed almalika-v402-freeze-products-area-no-gap-script -->
+
 
 
 <!-- ===== V412 MOBILE APP INTRO + RAFEEQ-STYLE EXPERIENCE FOR ALMALIKA ===== -->
@@ -21693,53 +21482,9 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
 </script>
 
 <!-- ===== V431 QA STEP 9: prevent refresh from reopening/scrolled-to image or old zoom state ===== -->
-<script id="almalika-v431-refresh-start-fix">
-(function(){
-  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
-  var userOpenedZoom=false;
-  document.addEventListener('click',function(e){
-    try{
-      if(e.target && (e.target.closest('.pic') || e.target.closest('.offerZoomPic') || e.target.closest('.decorThumb') || e.target.closest('[data-zoom]'))){
-        userOpenedZoom=true;
-      }
-    }catch(_){ }
-  },true);
-  function closeAllImageViewers(){
-    try{
-      ['almalikaV397ImageViewer','almalikaGlobalImageZoom','almalikaImageZoom'].forEach(function(id){
-        var z=document.getElementById(id);
-        if(!z) return;
-        z.classList.remove('show','open','active');
-        z.style.display='none';
-        z.style.alignItems='center';
-        z.style.justifyContent='center';
-      });
-      document.querySelectorAll('.offerImageViewer').forEach(function(v){
-        var m=v.closest('.modal');
-        if(m && m.id==='modal') return;
-      });
-      document.body.classList.remove('v397ImageViewerOpen','v395ImageZoomOpen','modal-open','zoom-open');
-    }catch(e){}
-  }
-  function forceStartAtTop(){
-    try{
-      if(location.hash && /image|zoom|photo|pic/i.test(location.hash)){
-        history.replaceState(null,document.title,location.pathname+location.search);
-      }
-    }catch(e){}
-    try{ window.scrollTo({top:0,left:0,behavior:'auto'}); }catch(e){ try{window.scrollTo(0,0);}catch(_){} }
-    try{ document.documentElement.scrollTop=0; document.body.scrollTop=0; }catch(e){}
-  }
-  function bootClean(){
-    if(!userOpenedZoom) closeAllImageViewers();
-    forceStartAtTop();
-  }
-  window.addEventListener('beforeunload',function(){closeAllImageViewers();});
-  window.addEventListener('pageshow',function(){setTimeout(bootClean,0);setTimeout(bootClean,80);setTimeout(bootClean,350);});
-  document.addEventListener('DOMContentLoaded',function(){setTimeout(bootClean,0);setTimeout(bootClean,120);setTimeout(bootClean,600);});
-  window.addEventListener('load',function(){setTimeout(bootClean,0);setTimeout(bootClean,250);setTimeout(bootClean,900);});
-})();
-</script>
+
+<!-- removed almalika-v431-refresh-start-fix -->
+
 
 
 <!-- ===== V445: تكبير خارجي للعروض فقط + تكبير داخلي للصورة الأساسية في الحفلات/العروض ===== -->
@@ -22498,147 +22243,295 @@ html body .products .product .price{
 </style>
 
 
-<!-- ===== V495 CLEAN MOBILE LAYOUT: valid merged file, no duplicated outside-html patches ===== -->
-<style id="almalika-v495-clean-mobile-layout">
-/* أساس الحركة: لا تثبيت ولا رجوع تلقائي */
-html,body{height:auto!important;min-height:100%!important;overflow-x:hidden!important;overflow-y:auto!important;position:static!important;scroll-behavior:auto!important;touch-action:pan-y!important;overscroll-behavior-y:auto!important;-webkit-overflow-scrolling:touch!important}
-body{padding-bottom:96px!important}
-#app{height:auto!important;min-height:0!important;overflow:visible!important;position:relative!important}
-body.alm-lock,body.modal-open,html.alm-lock,html.modal-open{overflow-y:auto!important;height:auto!important;position:static!important}
-
-/* تواصل الإدارة فوق كل شيء */
-#v336InfoModal,#v336InfoModal.show,.v336ModalOverlay.show,.v336ModalOverlay{z-index:2147483647!important;position:fixed!important;inset:0!important}
-#v336InfoModal .v336ModalBox,.v336ModalOverlay .v336ModalBox{position:relative!important;z-index:2147483647!important}
-#modal{z-index:2147483000!important}
-
-/* قوائم مستطيلة صف واحد مع سحب يمين/يسار - بدون حركة تلقائية */
-.nav,.mainCats,.chips,.almMobileMenu,.almTopCats,.categoryTabs,.filterTabs{
-  display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;
-  overflow-x:auto!important;overflow-y:hidden!important;white-space:nowrap!important;scroll-snap-type:x proximity!important;scroll-behavior:auto!important;
-  -webkit-overflow-scrolling:touch!important;max-width:100%!important;width:100%!important;padding:8px 10px!important;border-radius:18px!important;
+<!-- ===== V496 REAL STRUCTURE FIX: mobile/menu/modal/scroll - from V483, no data deletion ===== -->
+<style id="almalika-v496-real-mobile-template-fix">
+html, body{
+  overflow-x:hidden !important;
+  overflow-y:auto !important;
+  height:auto !important;
+  min-height:100% !important;
+  scroll-behavior:auto !important;
+  overscroll-behavior-y:auto !important;
+  touch-action:auto !important;
 }
-.nav::-webkit-scrollbar,.mainCats::-webkit-scrollbar,.chips::-webkit-scrollbar{height:0!important;display:none!important}
-.nav button,.mainCats .cat,.mainCats button,.chips .chip,.almMobileMenu button,.categoryTabs button,.filterTabs button{
-  flex:0 0 auto!important;min-width:142px!important;max-width:none!important;height:58px!important;border-radius:16px!important;
-  display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;padding:10px 14px!important;text-align:center!important;
-  scroll-snap-align:start!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;
+body.modal-open, body.v397ImageViewerOpen, body.v395ImageZoomOpen{
+  overflow:auto !important;
+  height:auto !important;
 }
-.nav button .navIconWrap,.nav button svg,.mainCats .richIcon,.mainCats .icon{flex:0 0 auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;margin:0!important}
-.mainCats .cat h3,.mainCats .cat p,.mainCats .cat b{margin:0!important;display:inline!important;white-space:nowrap!important}
-.mainCats .cat p,.mainCats .cat b{display:none!important}
-
-@media(max-width:768px){
-  body{padding-bottom:82px!important;background:#fff!important}
-  .wrap{width:min(100% - 20px,720px)!important;margin-inline:auto!important}
-  .header{position:relative!important;top:auto!important}
-  .headTop{display:block!important;padding:10px 0!important}
-  .logo{font-size:32px!important;justify-content:center!important;text-align:center!important;margin:8px 0 12px!important}
-  .headBtns{display:flex!important;overflow-x:auto!important;flex-wrap:nowrap!important;justify-content:flex-start!important;padding:6px 0!important}
-  .searchRow{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;padding:10px 0 12px!important}
-  .search,.searchRow select{height:48px!important;border-radius:16px!important}
-
-  /* الأقسام الرئيسية تتحول لشريط مستطيل واحد */
-  .mainCats{background:#fff7fb!important;border:1px solid #f2c4d9!important;box-shadow:none!important;margin:8px 0 16px!important}
-  .mainCats .cat{background:#fff!important;border:2px solid #efb8d0!important;color:#5b1931!important;box-shadow:none!important;min-width:164px!important;height:62px!important}
-  .mainCats .cat.active,.mainCats .cat:hover{background:linear-gradient(135deg,#ff4f9a,#e7327d)!important;color:#fff!important}
-  .nav{background:#fff7fb!important;border:1px solid #f2c4d9!important;margin:4px 0 8px!important}
-  .nav button{background:#fff!important;border:1px solid #efb8d0!important;min-width:150px!important;height:54px!important;color:#5b1931!important;box-shadow:none!important}
-  .nav button.active{background:linear-gradient(135deg,#ff4f9a,#e7327d)!important;color:#fff!important;border-color:#e7327d!important}
-  .chips{background:#fff!important;border:0!important;margin:0 0 10px!important;padding:6px 0!important}
-  .chips .chip{height:44px!important;min-width:118px!important;border-radius:14px!important;background:#fff!important;border:1px solid #efb8d0!important;color:#5b1931!important}
-
-  /* بطاقات المنتجات: بيانات كاملة بدون قص */
-  .products{display:grid!important;grid-template-columns:1fr!important;gap:16px!important;width:100%!important}
-  .product{display:flex!important;flex-direction:column!important;min-height:0!important;height:auto!important;border-radius:22px!important;overflow:hidden!important}
-  .product .pic{order:1!important;width:100%!important;height:auto!important;min-height:0!important;padding:10px!important;border:0!important;background:#fffdf7!important}
-  .product .pic img{width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;padding:0!important}
-  .product .body{order:2!important;padding:16px!important;height:auto!important;min-height:0!important;overflow:visible!important}
-  .product .body h3,.product .desc{display:block!important;-webkit-line-clamp:unset!important;overflow:visible!important;min-height:0!important;height:auto!important;white-space:normal!important}
-  .product .tags{min-height:0!important;height:auto!important;overflow:visible!important}
-  .product .bottom{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}
-  .product .actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
-
-  /* نافذة التفاصيل: كل المحتوى يتحرك طبيعي، الأزرار ليست مثبتة */
-  #modal.show{display:block!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;touch-action:pan-y!important;padding:10px!important;background:rgba(0,0,0,.58)!important}
-  #modal .modalBox,#modal .modalBox.detailed,#modal .modalBox.eventDetailed{
-    display:flex!important;flex-direction:column!important;width:100%!important;max-width:720px!important;height:auto!important;min-height:0!important;max-height:none!important;
-    overflow:visible!important;margin:0 auto 26px!important;border-radius:24px!important;background:#fff!important;position:relative!important;transform:none!important;
+/* remove any frozen section behavior */
+.almFrozenProductArea,
+#app .almFrozenProductArea{
+  position:relative !important;
+  top:auto !important;
+  z-index:auto !important;
+  transform:none !important;
+}
+/* horizontal rectangular category/menu rows */
+.nav,
+#nav,
+.chips,
+#app .chips,
+.mainCats{
+  display:flex !important;
+  flex-direction:row !important;
+  flex-wrap:nowrap !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  justify-content:flex-start !important;
+  align-items:center !important;
+  gap:10px !important;
+  direction:rtl !important;
+  -webkit-overflow-scrolling:touch !important;
+  scroll-snap-type:x proximity !important;
+  scrollbar-width:thin !important;
+  animation:none !important;
+}
+.nav button,
+#nav button,
+.chips .chip,
+.mainCats .cat{
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+  scroll-snap-align:start !important;
+  transform:none !important;
+  animation:none !important;
+}
+.mainCats .cat{
+  width:auto !important;
+  min-width:210px !important;
+  max-width:260px !important;
+  min-height:64px !important;
+  border-radius:18px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:10px !important;
+  padding:12px 16px !important;
+  text-align:right !important;
+}
+.mainCats .cat .icon{font-size:22px !important; margin:0 !important; flex:0 0 auto !important;}
+.mainCats .cat h3{margin:0 !important; font-size:16px !important; line-height:1.35 !important;}
+.mainCats .cat p{display:none !important;}
+/* Modal layer order */
+#v336InfoModal,
+#v338OrderContactModal,
+#v338AdminOrderViewer,
+.v336ModalOverlay{
+  z-index:2147483647 !important;
+  position:fixed !important;
+}
+#v336InfoModal .v336ModalBox,
+#v338OrderContactModal .v338ContactBox{
+  z-index:2147483647 !important;
+  position:relative !important;
+}
+#modal{z-index:100000 !important;}
+#modal.show{display:flex !important;}
+/* Product/detail modal must scroll normally; buttons are not fixed */
+#modal .modalBox,
+#modal .modalBox.detailed{
+  max-height:92vh !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  align-items:start !important;
+}
+#modal .modalActions,
+#modal .modalActions.three,
+#modal [class*="Action"],
+#modal [class*="action"]{
+  position:static !important;
+  bottom:auto !important;
+  top:auto !important;
+  left:auto !important;
+  right:auto !important;
+  transform:none !important;
+}
+#modal .modalActions,
+#modal .modalActions.three{
+  display:grid !important;
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+  gap:10px !important;
+  margin-top:18px !important;
+  padding:0 !important;
+  background:transparent !important;
+}
+#modal .modalActions button,
+#modal .modalActions a{
+  min-height:48px !important;
+  border-radius:14px !important;
+}
+#modal .modalPic,
+#modal .modalInfo,
+#modal .modalHead,
+#modal .modalInfo h2{
+  transform:none !important;
+}
+@media(max-width:760px){
+  .header{position:relative !important; top:auto !important;}
+  .wrap{width:min(100% - 18px, 760px) !important;}
+  .headTop{display:block !important; padding:12px 0 8px !important;}
+  .logo{font-size:34px !important; justify-content:center !important; text-align:center !important; margin:0 auto 12px !important;}
+  .nav,#nav{
+    width:100% !important;
+    border-radius:16px !important;
+    padding:8px !important;
+    background:#fff7fb !important;
+    border:1px solid #f2c4d8 !important;
   }
-  #modal .modalPic{order:1!important;position:relative!important;top:auto!important;left:auto!important;right:auto!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;padding:12px!important;border:0!important;background:#fffdf7!important;display:block!important}
-  #modal .modalPic>img,#modal .modalPic img.mainDecorImg{display:block!important;width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;border-radius:18px!important;margin:0 auto 12px!important;position:relative!important;z-index:1!important;opacity:1!important}
-  #modal .decorGallery{position:relative!important;z-index:2!important;width:100%!important;margin:10px 0 0!important;background:#fff!important;clear:both!important;display:block!important}
-  #modal .decorThumbs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;max-height:none!important;overflow:visible!important}
-  #modal .decorThumb{min-height:0!important;height:auto!important;display:block!important;padding:8px!important;border-radius:16px!important}
-  #modal .decorThumb img{width:100%!important;height:auto!important;max-height:130px!important;object-fit:contain!important;display:block!important}
-  #modal .modalInfo{order:2!important;position:relative!important;z-index:3!important;width:100%!important;height:auto!important;max-height:none!important;overflow:visible!important;padding:16px!important;background:#fff!important;display:block!important;clear:both!important}
-  #modal .modalInfo h2,#modal .modalInfo h3,#modal .modalInfo p,#modal .modalInfo div{position:relative!important;z-index:auto!important}
-  #modal .modalHead{position:relative!important;top:auto!important;background:#fff!important;margin-bottom:10px!important;padding:0!important}
-  #modal .modalActions,#modal .modalActions.three{position:static!important;bottom:auto!important;left:auto!important;right:auto!important;z-index:auto!important;background:#fff!important;padding:0!important;margin:14px 0 0!important;display:grid!important;grid-template-columns:1fr!important;gap:9px!important;width:100%!important;transform:none!important}
-  #modal .modalActions a,#modal .modalActions button{width:100%!important;min-height:54px!important;border-radius:14px!important;font-size:18px!important}
-  #modal .close{position:absolute!important;top:10px!important;left:10px!important;z-index:10!important;width:58px!important;height:58px!important;border-radius:999px!important}
-
-  /* خيارات الباقات/الألوان لا تقص ولا تتجمد */
-  #modal .priceChoiceGrid,#modal .bookingSimple,#modal .infoGrid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:10px!important;overflow:visible!important}
-  #modal .priceChoice{height:auto!important;min-height:0!important;overflow:visible!important;padding:12px!important}
-  #modal .colorGrid,#modal [class*="Color"],#modal [class*="color"]{max-height:none!important;overflow:visible!important}
-}
-
-@media(max-width:460px){
-  .nav button,.mainCats .cat{min-width:146px!important;height:56px!important;font-size:14px!important}
-  #modal .priceChoiceGrid,#modal .bookingSimple,#modal .infoGrid{grid-template-columns:1fr!important}
-  #modal .decorThumbs{grid-template-columns:1fr 1fr!important}
+  .nav button,#nav button,.chips .chip{
+    min-width:150px !important;
+    min-height:46px !important;
+    border-radius:14px !important;
+    padding:10px 14px !important;
+    font-size:14px !important;
+    text-align:center !important;
+  }
+  .mainCats{
+    width:100% !important;
+    margin:8px 0 14px !important;
+    padding:8px !important;
+    border-radius:18px !important;
+    background:#fff7fb !important;
+    border:1px solid #f2c4d8 !important;
+  }
+  .mainCats .cat{
+    min-width:210px !important;
+    height:58px !important;
+    min-height:58px !important;
+    background:#fff !important;
+    border:1px solid #f0bdd5 !important;
+    box-shadow:none !important;
+  }
+  .searchRow{grid-template-columns:1fr !important; gap:8px !important;}
+  #app .panel{position:relative !important; top:auto !important;}
+  #app .products{grid-template-columns:1fr !important; gap:16px !important;}
+  #app .products .product{height:auto !important; min-height:0 !important; max-height:none !important; overflow:visible !important;}
+  #app .products .product .body{height:auto !important; min-height:0 !important; max-height:none !important; overflow:visible !important;}
+  #app .products .product .body h3,
+  #app .products .product .desc,
+  #app .products .product .tags{display:block !important; -webkit-line-clamp:unset !important; overflow:visible !important; min-height:0 !important; max-height:none !important;}
+  #modal{
+    align-items:flex-start !important;
+    justify-content:center !important;
+    padding:10px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+  #modal .modalBox,
+  #modal .modalBox.detailed{
+    width:100% !important;
+    max-width:680px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    max-height:none !important;
+    overflow:visible !important;
+    border-radius:22px !important;
+    margin:0 auto 18px !important;
+  }
+  #modal .modalPic{
+    order:1 !important;
+    position:relative !important;
+    top:auto !important;
+    min-height:0 !important;
+    height:auto !important;
+    padding:12px !important;
+    display:block !important;
+  }
+  #modal .modalPic img{
+    display:block !important;
+    width:100% !important;
+    height:auto !important;
+    max-height:none !important;
+    object-fit:contain !important;
+  }
+  #modal .modalInfo{
+    order:2 !important;
+    position:relative !important;
+    padding:14px !important;
+    max-height:none !important;
+    overflow:visible !important;
+    background:#fff !important;
+  }
+  #modal .modalHead,
+  #modal .modalInfo h2{
+    position:static !important;
+    top:auto !important;
+    left:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    z-index:auto !important;
+    margin:0 0 12px !important;
+    padding:0 !important;
+    background:transparent !important;
+    color:#5f2145 !important;
+    text-shadow:none !important;
+    font-size:24px !important;
+    line-height:1.35 !important;
+  }
+  #modal .modalActions,
+  #modal .modalActions.three{
+    grid-template-columns:1fr !important;
+    position:static !important;
+    bottom:auto !important;
+    margin:16px 0 0 !important;
+  }
+  #modal .modalActions button,
+  #modal .modalActions a{
+    width:100% !important;
+    min-height:54px !important;
+    font-size:16px !important;
+  }
+  #v336InfoModal,
+  #v338OrderContactModal{
+    align-items:flex-start !important;
+    padding-top:18px !important;
+    overflow-y:auto !important;
+  }
+  #v336InfoModal .v336ModalBox,
+  #v338OrderContactModal .v338ContactBox{
+    width:calc(100vw - 24px) !important;
+    max-width:720px !important;
+    margin:0 auto !important;
+  }
 }
 </style>
-<script id="almalika-v495-clean-mobile-script">
+<script id="almalika-v496-real-mobile-template-js">
 (function(){
-  if(window.__almV495CleanMobile) return; window.__almV495CleanMobile=true;
-  function safe(fn){try{fn()}catch(e){}}
-  function isMobile(){return window.matchMedia && window.matchMedia('(max-width:768px)').matches;}
-  function stopAutoHorizontal(){
-    document.querySelectorAll('.nav,.mainCats,.chips,.almMobileMenu,.categoryTabs,.filterTabs').forEach(function(el){
-      safe(function(){el.style.scrollBehavior='auto';});
-      if(!el.dataset.almV495Manual){
-        el.dataset.almV495Manual='1';
-        el.addEventListener('mouseenter',function(){el.dataset.userHover='1'},{passive:true});
-        el.addEventListener('touchstart',function(){el.dataset.userTouch='1'},{passive:true});
+  // Restore native scrolling if old code overwrote it
+  try{ if('scrollRestoration' in history) history.scrollRestoration='auto'; }catch(e){}
+  document.documentElement.classList.remove('alm-no-self-scroll','alm-v433-booting');
+  document.body && document.body.classList.remove('almV402ProductsMode','almV425MobileMode','almV428MobileMode','almV429MobileMode');
+  window.almalikaScrollToFirstProduct=function(){};
+
+  function fixHomeOnFirstLoad(){
+    try{
+      var h=(location.hash||'').toLowerCase();
+      var p=(location.pathname||'').toLowerCase();
+      // If no clear user section is requested, force the public start to home.
+      if(!h || h==='#' || p==='/' || p==='/home'){
+        if(typeof current!=='undefined') current='home';
+        if(typeof internal!=='undefined') internal='الجميع';
+        if(typeof renderNav==='function') renderNav();
+        if(typeof renderHome==='function') renderHome();
+        history.replaceState({almalika:true},'', '/home#home/الجميع');
       }
+    }catch(e){}
+  }
+  function bringContactToFront(){
+    ['v336InfoModal','v338OrderContactModal','v338AdminOrderViewer'].forEach(function(id){
+      var el=document.getElementById(id);
+      if(el){ el.style.zIndex='2147483647'; el.style.position='fixed'; }
     });
   }
-  function unlockScroll(){
-    safe(function(){document.documentElement.style.overflowY='auto';document.body.style.overflowY='auto';document.body.style.position='static';document.documentElement.style.height='auto';document.body.style.height='auto';});
-  }
-  function liftContact(){
-    var m=document.getElementById('v336InfoModal') || document.querySelector('.v336ModalOverlay.show');
-    if(m){m.style.zIndex='2147483647'; if(m.parentNode!==document.body) document.body.appendChild(m);}
-  }
-  function fixModal(){
-    unlockScroll();
-    var modal=document.getElementById('modal');
-    if(!modal || !modal.classList.contains('show')) return;
-    modal.style.overflowY='auto'; modal.style.zIndex='2147483000';
-    var box=modal.querySelector('.modalBox'); if(box){box.style.maxHeight='none';box.style.overflow='visible';}
-    modal.querySelectorAll('.modalActions,.modalActions.three').forEach(function(a){a.style.position='static';a.style.bottom='auto';});
-  }
-  function forceHomeOnce(){
-    if(sessionStorage.getItem('almV495HomeDone')==='1') return;
-    sessionStorage.setItem('almV495HomeDone','1');
-    var h=(location.hash||'').toLowerCase();
-    if(!h || h==='#' || h.indexOf('rentals')>-1 || h.indexOf('%d8%b7%d8%a7%d9%88')>-1 || h.indexOf('طاول')>-1){
-      safe(function(){history.replaceState({almalika:true},'', '/home#home/الجميع');});
-      safe(function(){ if(typeof current!=='undefined') current='home'; if(typeof internal!=='undefined') internal='الجميع'; if(typeof renderNav==='function') renderNav(); if(typeof renderHome==='function') renderHome(); });
-    }
-  }
-  document.addEventListener('click',function(e){
-    var t=e.target.closest('button,a'); if(!t) return;
+  document.addEventListener('click', function(e){
+    var t=e.target && e.target.closest ? e.target.closest('button,a') : null;
+    if(!t) return;
     var txt=(t.textContent||'').trim();
-    if(/واتساب|استفسار/.test(txt)){setTimeout(liftContact,20);setTimeout(liftContact,120);}
-    setTimeout(function(){unlockScroll();fixModal();stopAutoHorizontal();},80);
-  },true);
-  document.addEventListener('DOMContentLoaded',function(){unlockScroll();stopAutoHorizontal();forceHomeOnce();setTimeout(function(){stopAutoHorizontal();fixModal();},200);});
-  window.addEventListener('load',function(){unlockScroll();stopAutoHorizontal();forceHomeOnce();setTimeout(function(){stopAutoHorizontal();fixModal();},400);});
+    if(/واتساب|استفسار|تواصل/.test(txt)) setTimeout(bringContactToFront,0), setTimeout(bringContactToFront,80);
+  }, true);
+  document.addEventListener('DOMContentLoaded', function(){fixHomeOnFirstLoad(); bringContactToFront();});
+  window.addEventListener('load', function(){setTimeout(fixHomeOnFirstLoad,80); bringContactToFront();});
 })();
 </script>
-<!-- ===== /V495 ===== -->
-
 </body>
 </html>
