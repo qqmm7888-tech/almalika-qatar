@@ -12633,6 +12633,57 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 
 
 <!-- almalika-v499-data-prices-400-422-updated-from-user-table -->
+
+
+<!-- ===== V502: move product view toolbar to right side only ===== -->
+<style id="almalika-v502-view-toolbar-right-side">
+  /* وضع خيارات طريقة العرض في الجهة اليمنى بدون تغيير القالب أو البيانات */
+  .viewToolbar{
+    direction: rtl !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    text-align: right !important;
+    width: 100% !important;
+    margin-inline-start: 0 !important;
+    margin-inline-end: auto !important;
+  }
+  .viewToolbar .viewLabel,
+  .viewLabel{
+    width: auto !important;
+    margin-inline-start: 0 !important;
+    margin-inline-end: 8px !important;
+    text-align: right !important;
+    order: 0 !important;
+    flex: 0 0 auto !important;
+  }
+  .viewToolbar .viewBtn,
+  .viewBtn{
+    order: 1 !important;
+    flex: 0 0 auto !important;
+  }
+  @media(max-width:700px){
+    .viewToolbar{
+      justify-content: flex-start !important;
+      flex-wrap: nowrap !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+      padding-inline: 4px !important;
+      scrollbar-width: none !important;
+    }
+    .viewToolbar::-webkit-scrollbar{display:none !important;}
+    .viewToolbar .viewLabel,
+    .viewLabel{
+      width: auto !important;
+      min-width: max-content !important;
+      white-space: nowrap !important;
+      margin-inline-start: 0 !important;
+      margin-inline-end: 8px !important;
+      text-align: right !important;
+    }
+  }
+</style>
+
 </body>
 </html>
 
