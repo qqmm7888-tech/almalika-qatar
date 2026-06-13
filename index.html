@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+<!-- ===== V467: STOP AUTOMATIC SELF-SCROLL / screen jumping guard ===== -->
+<!-- ===== V433 QA STEP 11: HARD early refresh reset - prevent restored scroll showing random product image ===== -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>الملكة للحفلات | كتالوج الحجز السريع</title>
@@ -16877,410 +16879,443 @@ body.v459ZoomOpen{overflow:hidden !important;}
 </script>
 
 
-<!-- ===== V493 SAFE PROFESSIONAL MOBILE TEMPLATE PATCH - from V483, no data removed ===== -->
-<style id="almalika-v493-safe-professional-mobile-template">
-/* V493: هذا البلوك لا يحذف أي بيانات. فقط يرتب الطبقات والحركة والقوائم. */
+<!-- ===== V494: rebuild mobile template from V483 / keep all data ===== -->
+<style id="almalika-v494-mobile-template-no-data-loss">
+/* V494 لا يحذف أي بيانات: فقط يعيد ترتيب الجوال والقوائم والنوافذ */
 html,body{
-  height:auto!important;
-  min-height:100%!important;
-  overflow-x:hidden!important;
-  overflow-y:auto!important;
-  overscroll-behavior-y:auto!important;
-  touch-action:pan-y pinch-zoom!important;
-  scroll-behavior:auto!important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  height:auto !important;
+  min-height:100% !important;
+  touch-action:pan-y pinch-zoom !important;
+  overscroll-behavior-y:auto !important;
 }
-body{
-  position:relative!important;
-  -webkit-overflow-scrolling:touch!important;
-}
+body{position:relative !important;}
+body.modal-open, body:has(#modal.show){overflow:hidden !important;}
+#app{min-height:100vh !important;overflow:visible !important;}
 
-/* 1) القوائم المطلوبة: صف واحد مستطيل يسحب يدويًا يمين/يسار بدون حركة تلقائية */
-.header .nav,
+/* القوائم: صف واحد مستطيل، سحب يدوي فقط يمين/يسار */
 .nav,
+.chips,
 .mainCats,
-.chips{
-  display:flex!important;
-  flex-direction:row!important;
-  flex-wrap:nowrap!important;
-  justify-content:flex-start!important;
-  align-items:stretch!important;
-  gap:10px!important;
-  width:100%!important;
-  max-width:100%!important;
-  overflow-x:auto!important;
-  overflow-y:hidden!important;
-  -webkit-overflow-scrolling:touch!important;
-  scroll-snap-type:x proximity!important;
-  scroll-behavior:auto!important;
-  scrollbar-width:thin!important;
-  white-space:nowrap!important;
-  direction:rtl!important;
-  padding:8px 8px 12px!important;
+#almMobileQuickTabs,
+.almMobileQuickTabs,
+.almQuickTabs,
+.almTabs,
+.almCategoryTabs{
+  direction:rtl !important;
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  justify-content:flex-start !important;
+  align-items:center !important;
+  gap:10px !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  scroll-snap-type:x proximity !important;
+  -webkit-overflow-scrolling:touch !important;
+  scrollbar-width:none !important;
+  white-space:nowrap !important;
+  animation:none !important;
+  transform:none !important;
 }
-.header .nav::-webkit-scrollbar,
-.nav::-webkit-scrollbar,
-.mainCats::-webkit-scrollbar,
-.chips::-webkit-scrollbar{height:5px!important}
-.header .nav::-webkit-scrollbar-thumb,
-.nav::-webkit-scrollbar-thumb,
-.mainCats::-webkit-scrollbar-thumb,
-.chips::-webkit-scrollbar-thumb{background:#e8b9cf!important;border-radius:999px!important}
-
-/* شكل القائمة الرئيسية في الصفحة: مستطيلات أفقية مع بقاء الرموز بجانب النص */
-.mainCats{
-  background:linear-gradient(180deg,#fff,#fff8fb)!important;
-  border:1px solid #f3c8dc!important;
-  border-radius:22px!important;
-  box-shadow:0 10px 28px rgba(106,27,46,.06)!important;
-}
-.mainCats .cat,
-.cat{
-  flex:0 0 235px!important;
-  min-width:235px!important;
-  max-width:235px!important;
-  min-height:74px!important;
-  display:flex!important;
-  flex-direction:row-reverse!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:12px!important;
-  text-align:right!important;
-  padding:14px 16px!important;
-  border-radius:18px!important;
-  scroll-snap-align:start!important;
-  white-space:normal!important;
-}
-.cat .icon{
-  flex:0 0 44px!important;
-  width:44px!important;
-  height:44px!important;
-  border-radius:50%!important;
-  display:grid!important;
-  place-items:center!important;
-  font-size:22px!important;
-  background:linear-gradient(135deg,#fff3c9,#fff)!important;
-  box-shadow:0 8px 18px rgba(106,27,46,.08)!important;
-}
-.cat h3{margin:0!important;font-size:16px!important;line-height:1.35!important}
-.cat p,.cat b{display:none!important}
-
-/* أزرار الهيدر والفلاتر: صف واحد لا يلتف */
-.header .nav button,
+.nav::-webkit-scrollbar,.chips::-webkit-scrollbar,.mainCats::-webkit-scrollbar,#almMobileQuickTabs::-webkit-scrollbar{display:none !important;}
 .nav button,
 .chips .chip,
-.chip{
-  flex:0 0 auto!important;
-  min-width:max-content!important;
-  border-radius:14px!important;
-  padding:10px 16px!important;
-  scroll-snap-align:start!important;
-  white-space:nowrap!important;
+.mainCats .cat,
+#almMobileQuickTabs button,
+.almQuickTabs button,
+.almTabs button,
+.almCategoryTabs button{
+  flex:0 0 auto !important;
+  scroll-snap-align:start !important;
+  white-space:nowrap !important;
+  animation:none !important;
+  transform:none !important;
 }
 
-/* 2) المودال: لا يتجمد ولا يدفع الشاشة للأسفل، كل المحتوى يتحرك طبيعي */
-.modal,
-#modal{
-  z-index:200000!important;
-  overflow-x:hidden!important;
-  overflow-y:auto!important;
-  align-items:flex-start!important;
-  justify-content:center!important;
-  -webkit-overflow-scrolling:touch!important;
-  overscroll-behavior:contain!important;
-  padding:18px 12px!important;
-  touch-action:pan-y pinch-zoom!important;
-}
-.modal.show,#modal.show{display:flex!important}
-
-.modalBox,
-.modalBox.detailed,
-#modal .modalBox,
-#modal .modalBox.detailed{
-  position:relative!important;
-  inset:auto!important;
-  transform:none!important;
-  width:min(1080px,96vw)!important;
-  max-width:1080px!important;
-  height:auto!important;
-  min-height:0!important;
-  max-height:none!important;
-  overflow:visible!important;
-  margin:18px auto 110px!important;
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) 340px!important;
-  align-items:start!important;
-  border-radius:28px!important;
-}
-
-#modal .modalPic,
-.modalPic{
-  position:relative!important;
-  inset:auto!important;
-  transform:none!important;
-  order:2!important;
-  align-self:start!important;
-  min-height:0!important;
-  height:auto!important;
-  max-height:none!important;
-  overflow:visible!important;
-  z-index:1!important;
-}
-
-#modal .modalInfo,
-.modalInfo{
-  position:relative!important;
-  inset:auto!important;
-  transform:none!important;
-  order:1!important;
-  min-height:0!important;
-  height:auto!important;
-  max-height:none!important;
-  overflow:visible!important;
-  z-index:2!important;
-  background:#fffdf8!important;
-}
-
-/* منع عنوان/بيانات الحفلات من الطفو فوق الصورة */
-#modal .modalHead,
-#modal .modalInfo h1,
-#modal .modalInfo h2,
-#modal .modalInfo h3,
-#modal .detailIntro,
-#modal .infoGrid,
-#modal .priceChoiceGrid,
-#modal .bookingSimple,
-#modal .workNotice,
-#modal .decorGallery,
-#modal .decorGalleryTitle,
-#modal .decorThumbs{
-  position:relative!important;
-  inset:auto!important;
-  transform:none!important;
-  z-index:auto!important;
-}
-
-/* أزرار الأسفل تتحرك مع المحتوى وليست ثابتة */
-#modal .modalActions,
-#modal .modalActions.three,
-.modalActions,
-.modalActions.three{
-  position:relative!important;
-  bottom:auto!important;
-  left:auto!important;
-  right:auto!important;
-  top:auto!important;
-  z-index:5!important;
-  transform:none!important;
-  display:grid!important;
-  grid-template-columns:repeat(3,minmax(0,1fr))!important;
-  gap:10px!important;
-  width:100%!important;
-  background:transparent!important;
-  padding:12px 0 0!important;
-  margin:14px 0 0!important;
-  box-shadow:none!important;
-}
-#modal .modalActions a,
-#modal .modalActions button,
-.modalActions a,
-.modalActions button{
-  min-height:48px!important;
-  border-radius:14px!important;
-}
-
-/* صور الديكور والاختيارات */
-#modal .modalPic img,
-#modal .mainDecorImg,
-.mainDecorImg{
-  width:100%!important;
-  height:auto!important;
-  max-height:420px!important;
-  object-fit:contain!important;
-  position:relative!important;
-  z-index:1!important;
-}
-.decorGallery{width:100%!important;margin-top:14px!important}
-.decorThumbs{
-  display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
-  gap:10px!important;
-  overflow:visible!important;
-}
-.decorThumb{min-width:0!important}
-
-/* 3) نافذة الواتساب/تواصل الإدارة دائمًا أمام تفاصيل المنتج */
-#v336InfoModal,
-#v338OrderContactModal,
-#v339WhatsappModal,
-.v336ModalOverlay{
-  z-index:2147483000!important;
-  position:fixed!important;
-  inset:0!important;
-}
-#v336InfoModal.show,
-#v338OrderContactModal.show,
-#v339WhatsappModal.show,
-.v336ModalOverlay.show{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-.v336ModalBox,
-.v338ContactBox,
-.v339Box{
-  position:relative!important;
-  z-index:2147483001!important;
-}
-
-/* جوال: قالب أكثر نظافة بدون فقد بيانات */
 @media(max-width:760px){
-  body{padding-bottom:22px!important}
-  .wrap{width:min(100% - 18px,680px)!important}
-  .header .wrap{width:min(100% - 18px,680px)!important}
-  .logo{font-size:32px!important}
-  .mainCats{border-radius:20px!important;padding:10px!important}
-  .mainCats .cat,.cat{
-    flex-basis:185px!important;
-    min-width:185px!important;
-    max-width:185px!important;
-    min-height:68px!important;
-    padding:12px 13px!important;
+  body{padding-bottom:86px !important;background:#fffafc !important;}
+  .wrap{width:calc(100% - 18px) !important;max-width:none !important;margin-inline:auto !important;}
+  .header{position:relative !important;top:auto !important;z-index:30 !important;box-shadow:none !important;background:#fff !important;}
+  .headTop{display:block !important;padding:10px 0 8px !important;}
+  .logo{text-align:center !important;justify-content:center !important;font-size:32px !important;margin:6px 0 12px !important;color:#7a1734 !important;}
+
+  /* القائمة الرئيسية العليا */
+  .nav{
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 auto 10px !important;
+    padding:8px !important;
+    border-radius:18px !important;
+    background:#fff7fb !important;
+    border:1px solid #f0bfd6 !important;
+    box-shadow:0 8px 18px rgba(122,23,52,.06) !important;
   }
-  .cat h3{font-size:14.5px!important}
-  .cat .icon{width:38px!important;height:38px!important;flex-basis:38px!important;font-size:19px!important}
-  .header .nav button,.nav button,.chips .chip,.chip{
-    min-height:42px!important;
-    padding:9px 13px!important;
-    border-radius:13px!important;
-    font-size:13px!important;
+  .nav button{
+    min-width:154px !important;
+    height:52px !important;
+    padding:0 14px !important;
+    border-radius:14px !important;
+    background:#fff !important;
+    border:1px solid #efc4d7 !important;
+    color:#5b1d36 !important;
+    font-size:15px !important;
+    font-weight:900 !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:7px !important;
+    box-shadow:0 5px 14px rgba(122,23,52,.04) !important;
+  }
+  .nav button.active,.nav button:hover{
+    background:linear-gradient(135deg,#ef2f7f,#ff6aa9) !important;
+    color:#fff !important;
+    border-color:transparent !important;
   }
 
-  .modal,#modal{
-    padding:0!important;
-    background:rgba(25,18,23,.68)!important;
+  /* كروت أقسام الرئيسية تصبح شريط أفقي واحد */
+  .mainCats{
+    width:100% !important;
+    padding:8px 6px 12px !important;
+    margin:0 !important;
+    border-radius:18px !important;
+    background:#fff7fb !important;
+    border:1px solid #f2c7da !important;
   }
-  .modalBox,
-  .modalBox.detailed,
+  .mainCats .cat{
+    min-width:185px !important;
+    max-width:185px !important;
+    height:64px !important;
+    padding:8px 12px !important;
+    border-radius:14px !important;
+    background:#fff !important;
+    border:1px solid #efc4d7 !important;
+    box-shadow:none !important;
+    display:flex !important;
+    flex-direction:row-reverse !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    text-align:right !important;
+    gap:8px !important;
+  }
+  .mainCats .cat .icon{font-size:22px !important;margin:0 !important;flex:0 0 auto !important;}
+  .mainCats .cat h3{font-size:15px !important;line-height:1.25 !important;margin:0 !important;color:#5b1d36 !important;}
+  .mainCats .cat p{display:none !important;}
+
+  .chips{
+    width:100% !important;
+    padding:8px 6px !important;
+    margin:4px 0 10px !important;
+    border-radius:16px !important;
+    background:#fff7fb !important;
+    border:1px solid #f2c7da !important;
+  }
+  .chips .chip{
+    min-width:132px !important;
+    height:44px !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:0 12px !important;
+    border-radius:12px !important;
+    background:#fff !important;
+    border:1px solid #efc4d7 !important;
+    color:#5b1d36 !important;
+    font-size:13px !important;
+    font-weight:900 !important;
+  }
+  .chips .chip.active{background:#111 !important;color:#fff !important;border-color:#111 !important;}
+
+  .searchRow{grid-template-columns:1fr !important;gap:8px !important;padding-bottom:10px !important;}
+  .search,.searchRow select{height:48px !important;border-radius:16px !important;}
+
+  /* نافذة تفاصيل المنتج: ترتيب طبيعي بدون نص فوق الصورة وبدون أزرار ثابتة */
+  #modal{
+    position:fixed !important;
+    inset:0 !important;
+    z-index:2147483000 !important;
+    padding:0 !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+    background:rgba(0,0,0,.60) !important;
+    -webkit-overflow-scrolling:touch !important;
+  }
+  #modal.show{display:flex !important;}
   #modal .modalBox,
-  #modal .modalBox.detailed{
-    width:100vw!important;
-    max-width:100vw!important;
-    margin:0 0 70px!important;
-    border-radius:0!important;
-    display:flex!important;
-    flex-direction:column!important;
-    overflow:visible!important;
-    background:#fffdf8!important;
+  #modal .modalBox.detailed,
+  #modal .eventDetailed{
+    width:100% !important;
+    min-height:100dvh !important;
+    max-width:none !important;
+    max-height:none !important;
+    height:auto !important;
+    margin:0 !important;
+    border-radius:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    overflow:visible !important;
+    background:#fffaf7 !important;
+    position:relative !important;
+    transform:none !important;
   }
-  #modal .modalPic,.modalPic{
-    order:1!important;
-    width:100%!important;
-    padding:18px 16px 10px!important;
-    background:#fffaf0!important;
+  #modal .modalPic{
+    order:1 !important;
+    position:relative !important;
+    top:auto !important;left:auto !important;right:auto !important;bottom:auto !important;
+    min-height:0 !important;
+    height:auto !important;
+    width:100% !important;
+    padding:16px 14px 10px !important;
+    margin:0 !important;
+    background:#fffaf7 !important;
+    display:block !important;
+    overflow:visible !important;
+    transform:none !important;
   }
-  #modal .modalInfo,.modalInfo{
-    order:2!important;
-    width:100%!important;
-    padding:14px 16px 22px!important;
+  #modal .modalPic > img,
+  #modal .modalPic img.mainDecorImg,
+  #modal .mainDecorImg{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:auto !important;
+    max-height:none !important;
+    min-height:0 !important;
+    object-fit:contain !important;
+    border-radius:18px !important;
+    background:#fff !important;
+    margin:0 auto !important;
+    position:relative !important;
+    top:auto !important;left:auto !important;right:auto !important;bottom:auto !important;
+    transform:none !important;
+    z-index:1 !important;
   }
-  #modal .modalPic img,
-  #modal .mainDecorImg,
-  .mainDecorImg{
-    max-height:none!important;
-    width:100%!important;
-    object-fit:contain!important;
-    border-radius:18px!important;
+  #modal .modalInfo{
+    order:2 !important;
+    position:relative !important;
+    top:auto !important;left:auto !important;right:auto !important;bottom:auto !important;
+    width:100% !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+    padding:12px 14px 24px !important;
+    margin:0 !important;
+    background:#fffaf7 !important;
+    transform:none !important;
+    z-index:2 !important;
   }
-  #modal .modalInfo h2{
-    font-size:24px!important;
-    line-height:1.45!important;
-    margin:8px 0 12px!important;
-    text-align:center!important;
+  #modal .modalHead{
+    position:relative !important;
+    top:auto !important;left:auto !important;right:auto !important;bottom:auto !important;
+    transform:none !important;
+    display:flex !important;
+    align-items:flex-start !important;
+    justify-content:space-between !important;
+    gap:8px !important;
+    margin:0 0 10px !important;
+    padding:0 !important;
+    background:transparent !important;
+    z-index:3 !important;
   }
-  #modal .infoGrid,
-  #modal .priceChoiceGrid,
-  #modal .bookingSimple{
-    grid-template-columns:1fr!important;
+  #modal .modalInfo h2,
+  #modal .modalHead h2{
+    position:relative !important;
+    top:auto !important;left:auto !important;right:auto !important;bottom:auto !important;
+    transform:none !important;
+    margin:0 !important;
+    padding:0 !important;
+    color:#5b1d36 !important;
+    background:transparent !important;
+    text-align:right !important;
+    line-height:1.35 !important;
+    font-size:24px !important;
+    z-index:3 !important;
   }
+  #modal .close{
+    position:fixed !important;
+    top:calc(env(safe-area-inset-top,0px) + 16px) !important;
+    left:18px !important;
+    right:auto !important;
+    z-index:2147483100 !important;
+    width:54px !important;height:54px !important;
+    border-radius:999px !important;
+    background:#ef2f7f !important;color:#fff !important;
+    box-shadow:0 14px 28px rgba(239,47,127,.30) !important;
+  }
+  #modal .decorGallery,
+  #modal .v230Decor110Gallery,
+  #modal .v271Uploaded{
+    position:relative !important;
+    top:auto !important;left:auto !important;right:auto !important;bottom:auto !important;
+    transform:none !important;
+    order:3 !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:14px 0 0 !important;
+    padding:0 !important;
+    overflow:visible !important;
+    background:transparent !important;
+  }
+  #modal .decorGalleryTitle{font-size:20px !important;text-align:center !important;margin:8px 0 12px !important;color:#6A1B2E !important;}
+  #modal .decorThumbs{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:10px !important;
+    max-height:none !important;
+    overflow:visible !important;
+    position:relative !important;
+    top:auto !important;
+  }
+  #modal .decorThumb{
+    position:relative !important;
+    top:auto !important;
+    transform:none !important;
+    min-height:0 !important;
+    padding:8px !important;
+    border-radius:16px !important;
+  }
+  #modal .decorThumb img{width:100% !important;height:120px !important;object-fit:cover !important;border-radius:12px !important;}
   #modal .modalActions,
   #modal .modalActions.three,
-  .modalActions,
-  .modalActions.three{
-    grid-template-columns:1fr!important;
-    position:relative!important;
-    bottom:auto!important;
-    background:transparent!important;
+  #modal .eventDetailed .modalActions,
+  #modal .eventDetailed .modalActions.three{
+    position:relative !important;
+    top:auto !important;left:auto !important;right:auto !important;bottom:auto !important;
+    transform:none !important;
+    z-index:4 !important;
+    width:100% !important;
+    margin:16px 0 0 !important;
+    padding:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:10px !important;
   }
-  .decorThumbs{
-    display:flex!important;
-    flex-wrap:nowrap!important;
-    overflow-x:auto!important;
-    overflow-y:hidden!important;
-    -webkit-overflow-scrolling:touch!important;
-    gap:10px!important;
-    padding-bottom:8px!important;
+  #modal .modalActions a,
+  #modal .modalActions button,
+  #modal .modalActions.three a,
+  #modal .modalActions.three button{
+    width:100% !important;
+    min-height:56px !important;
+    border-radius:14px !important;
+    font-size:18px !important;
+    font-weight:900 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    position:relative !important;
+    transform:none !important;
   }
-  .decorThumb{
-    flex:0 0 155px!important;
-    min-width:155px!important;
+
+  /* كروت المنتجات على الجوال: كل البيانات تظهر بدون قص */
+  .products{grid-template-columns:1fr !important;gap:14px !important;}
+  .products .product{
+    grid-template-columns:1fr !important;
+    min-height:0 !important;
+    height:auto !important;
+    overflow:visible !important;
+    border-radius:20px !important;
+    background:#fff !important;
   }
-  .v336ModalBox,.v338ContactBox,.v339Box{
-    width:calc(100vw - 24px)!important;
-    max-height:88vh!important;
-    overflow:auto!important;
-  }
+  .products .product .pic{order:1 !important;width:100% !important;height:auto !important;min-height:0 !important;padding:10px !important;border:0 !important;}
+  .products .product .pic img{width:100% !important;height:auto !important;max-height:none !important;object-fit:contain !important;padding:0 !important;}
+  .products .product .body{order:2 !important;height:auto !important;min-height:0 !important;overflow:visible !important;padding:14px !important;}
+  .products .product .body h3,
+  .products .product .desc,
+  .products .product .tags{height:auto !important;min-height:0 !important;max-height:none !important;overflow:visible !important;display:block !important;-webkit-line-clamp:unset !important;white-space:normal !important;}
+  .products .product .tags{display:flex !important;flex-wrap:wrap !important;}
 }
 
-/* كمبيوتر: لا نلمس البيانات، فقط نمنع التجميد ونظهر الواتساب فوق */
-@media(min-width:761px){
-  #modal .modalActions,
-  #modal .modalActions.three{
-    position:relative!important;
-  }
+/* نوافذ التواصل/الواتساب فوق كل شيء */
+.almV494ContactLayer,
+.almV494ContactLayer *{box-sizing:border-box !important;}
+.almV494ContactLayer{
+  position:fixed !important;
+  inset:0 !important;
+  z-index:2147483647 !important;
+  display:none !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:18px !important;
+  background:rgba(0,0,0,.62) !important;
+  backdrop-filter:blur(7px) !important;
 }
+.almV494ContactLayer.show{display:flex !important;}
+.almV494ContactBox{width:min(720px,96vw) !important;background:#fff !important;border-radius:28px !important;padding:24px !important;border:1px solid #f0bfd6 !important;box-shadow:0 34px 90px rgba(0,0,0,.28) !important;direction:rtl !important;text-align:center !important;position:relative !important;}
+.almV494ContactClose{position:absolute !important;top:14px !important;left:14px !important;width:44px !important;height:44px !important;border-radius:999px !important;background:#ef2f7f !important;color:#fff !important;font-size:28px !important;font-weight:900 !important;}
+.almV494ContactBox h2{margin:4px 0 8px !important;color:#5b1d36 !important;font-size:30px !important;}
+.almV494ContactBox p{margin:0 0 16px !important;color:#806477 !important;font-weight:900 !important;}
+.almV494ContactCards{display:grid !important;grid-template-columns:1fr 1fr !important;gap:12px !important;}
+.almV494ContactCard{border:1px solid #f0bfd6 !important;border-radius:18px !important;padding:14px !important;background:#fffafd !important;}
+.almV494ContactCard b{display:block !important;color:#5b1d36 !important;font-size:18px !important;margin-bottom:4px !important;}
+.almV494ContactCard small{display:block !important;color:#806477 !important;font-weight:900 !important;margin-bottom:12px !important;}
+.almV494ContactBtns{display:grid !important;grid-template-columns:1fr 1fr !important;gap:8px !important;}
+.almV494ContactBtns a{min-height:44px !important;border-radius:999px !important;display:flex !important;align-items:center !important;justify-content:center !important;color:#fff !important;font-weight:900 !important;}
+.almV494ContactBtns a:first-child{background:#20c76a !important;}.almV494ContactBtns a:last-child{background:#ef2f7f !important;}
+@media(max-width:640px){.almV494ContactCards{grid-template-columns:1fr !important}.almV494ContactBox{padding:22px 14px 18px !important}.almV494ContactBox h2{font-size:25px !important}}
 </style>
-<script id="almalika-v493-safe-professional-mobile-template-js">
+<script id="almalika-v494-mobile-template-script">
 (function(){
-  /* بدون مراقبة مستمرة وبدون لوب: فقط إلغاء أثر أكواد التمرير القديمة إن وجدت */
-  try{
-    document.documentElement.classList.remove('alm-no-self-scroll','alm-v433-booting');
-    document.documentElement.style.overflowY='auto';
-    document.body && (document.body.style.overflowY='auto');
-    if('scrollRestoration' in history) history.scrollRestoration='auto';
-  }catch(e){}
-
-  function bringContactToFront(){
-    var ids=['v336InfoModal','v338OrderContactModal','v339WhatsappModal'];
-    ids.forEach(function(id){
-      var el=document.getElementById(id);
-      if(el && el.classList.contains('show')){
-        el.style.zIndex='2147483000';
-        el.style.position='fixed';
-        el.style.inset='0';
-      }
-    });
+  if(window.__almV494MobileTemplate) return; window.__almV494MobileTemplate=true;
+  function qsa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel));}
+  function makeManualScroller(el){
+    if(!el || el.dataset.almV494Manual==='1') return;
+    el.dataset.almV494Manual='1';
+    el.style.animation='none'; el.style.transform='none';
+    el.addEventListener('wheel',function(e){
+      if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){ el.scrollLeft += e.deltaY; e.preventDefault(); }
+    },{passive:false});
   }
-
-  document.addEventListener('click',function(e){
-    var t=e.target;
-    if(!t) return;
-    var text=(t.textContent||'').replace(/\s+/g,' ');
-    if(/واتساب|استفسار|تواصل|إرسال الطلب/.test(text)){
-      setTimeout(bringContactToFront,30);
-      setTimeout(bringContactToFront,160);
-    }
-  },true);
-
-  window.addEventListener('load',function(){
+  function applyMenus(){qsa('.nav,.chips,.mainCats,#almMobileQuickTabs,.almQuickTabs,.almTabs,.almCategoryTabs').forEach(makeManualScroller);}
+  function forceHomeOnce(){
     try{
-      document.querySelectorAll('.mainCats,.nav,.chips').forEach(function(el){
-        el.style.scrollBehavior='auto';
-      });
+      if(sessionStorage.getItem('almV494HomeDone')==='1') return;
+      sessionStorage.setItem('almV494HomeDone','1');
+      var bad = !location.hash || /tables|chairs|طاول|كراسي/i.test(decodeURIComponent(location.hash));
+      if(bad){
+        if(history && history.replaceState) history.replaceState({almalika:true},'', '/home#home/الجميع');
+        if(typeof window.showHome==='function') window.showHome();
+      }
     }catch(e){}
-  });
+  }
+  function fixVisibleModal(){
+    var m=document.getElementById('modal');
+    if(!m) return;
+    if(m.classList.contains('show')){document.body.classList.add('modal-open');}
+    else{document.body.classList.remove('modal-open');}
+    qsa('.modalActions,.modalActions.three',m).forEach(function(a){a.style.position='relative';a.style.bottom='auto';a.style.top='auto';a.style.transform='none';});
+  }
+  function ensureContactLayer(){
+    var layer=document.getElementById('almV494ContactLayer');
+    if(layer) return layer;
+    layer=document.createElement('div'); layer.id='almV494ContactLayer'; layer.className='almV494ContactLayer';
+    layer.innerHTML='<div class="almV494ContactBox" role="dialog" aria-modal="true"><button type="button" class="almV494ContactClose" aria-label="إغلاق">×</button><h2>📞 تواصل مع الإدارة</h2><p>للحجز أو الاستفسار يرجى التواصل مع أحد الرقمين التاليين فقط</p><div class="almV494ContactCards"><div class="almV494ContactCard"><b>الإدارة 1</b><small>33317720 — للحجز وتأكيد الطلبات</small><div class="almV494ContactBtns"><a href="https://wa.me/97433317720" target="_blank" rel="noopener">واتساب</a><a href="tel:33317720">اتصال</a></div></div><div class="almV494ContactCard"><b>الإدارة 2</b><small>33317705 — للمتابعة والاستفسارات</small><div class="almV494ContactBtns"><a href="https://wa.me/97433317705" target="_blank" rel="noopener">واتساب</a><a href="tel:33317705">اتصال</a></div></div></div></div>';
+    document.body.appendChild(layer);
+    layer.addEventListener('click',function(e){if(e.target===layer || e.target.closest('.almV494ContactClose')) layer.classList.remove('show');});
+    return layer;
+  }
+  window.almV494OpenContact=function(){ensureContactLayer().classList.add('show');};
+  function interceptInquiryButtons(){
+    document.addEventListener('click',function(e){
+      var t=e.target.closest('button,a'); if(!t) return;
+      var txt=(t.textContent||'').replace(/\s+/g,' ').trim();
+      if(/استفسار\s*واتساب|واتساب/.test(txt) && !t.closest('.almV494ContactLayer')){
+        var inModal=!!t.closest('#modal');
+        if(inModal){ e.preventDefault(); e.stopPropagation(); ensureContactLayer().classList.add('show'); return false; }
+      }
+    },true);
+  }
+  function run(){applyMenus();fixVisibleModal();}
+  document.addEventListener('DOMContentLoaded',function(){ensureContactLayer();forceHomeOnce();run();setTimeout(run,150);setTimeout(run,600);});
+  window.addEventListener('load',function(){forceHomeOnce();run();});
+  document.addEventListener('click',function(){setTimeout(run,30);setTimeout(run,200);},true);
+  interceptInquiryButtons();
 })();
 </script>
-
+<!-- ===== /V494 ===== -->
 </body>
 </html>
 
