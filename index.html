@@ -5689,7 +5689,7 @@ ${booked?`<div class="availabilityMini">${booked.note}</div>`:''}
 </div>
 <div class="actions quickActions">
 <button class="details" ${forced?'disabled':''} onclick="openProduct(${p.number})">${forced?'غير متاح':'تفاصيل'}</button>
-<button class="quickShop" ${disabled} onclick="quickShop(${p.number})">${forced?'غير متاح':(booked?'محجوزة':'التسوق السريع')}</button>
+${almalikaCanQuickShop(p)?`<button class="quickShop" ${disabled} onclick="quickShop(${p.number})">${forced?'غير متاح':(booked?'محجوزة':'التسوق السريع')}</button>`:''}
 <button class="shareFriend" ${forced?'disabled':''} onclick="shareToFriend(${p.number})">${forced?'غير متاح':'تحويل لصديق'}</button>
 <button class="wa" ${disabled} onclick="quickWa(${p.number})">${forced?'غير متاح':'واتساب'}</button>
 </div>
@@ -6216,6 +6216,23 @@ async function saveOrderToAdmin(){
 async function sendCartWa(){if(!cart.length){alert('السلة فارغة');return} if(!validateCustomerData(true))return; await saveOrderToAdmin(); window.open('https://wa.me/97433317720?text='+encodeURIComponent(cartMessage()),'_blank')}
 
 
+
+/* ===== V501 quick shopping visibility rules =====
+   حسب طلب المستخدم:
+   - حذف زر/عداد التسوق السريع من النطاطيات بالكامل.
+   - حذف زر/عداد التسوق السريع من العروض بالكامل.
+   - حذف زر/عداد التسوق السريع من تجهيز الحفلات والبكجات، مع إبقائه فقط للمنتجين 210 و 250.
+   - باقي الأقسام مثل السناك والعربات والطاولات وبنود أخرى تبقى كما هي.
+*/
+function almalikaCanQuickShop(p){
+  const num = Number((p && (p.number || p.id)) || 0);
+  const sec = (typeof sectionOf === 'function') ? sectionOf(p) : '';
+  if(sec === 'bouncies') return false;
+  if(sec === 'offers') return false;
+  if(sec === 'events' && num !== 210 && num !== 250) return false;
+  return true;
+}
+
 function quickOptionsFor(p){
   if(p && Array.isArray(p.snackPackages) && p.snackPackages.length){
     return p.snackPackages.map((pack,i)=>{
@@ -6277,6 +6294,10 @@ function showToast(msg){
 function addQuickToCart(n,closeAfter=true){
   const p=products.find(x=>Number(x.number)===Number(n));
   if(!p)return;
+  if(typeof almalikaCanQuickShop === 'function' && !almalikaCanQuickShop(p)){
+    alert('التسوق السريع غير متاح لهذا القسم.');
+    return;
+  }
   if(forcedUnavailableCatalog(n)){
     alert('هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.');
     return;
@@ -6310,6 +6331,10 @@ function addQuickToCart(n,closeAfter=true){
 function quickOrderWa(n){
   const p=products.find(x=>Number(x.number)===Number(n));
   if(!p)return;
+  if(typeof almalikaCanQuickShop === 'function' && !almalikaCanQuickShop(p)){
+    alert('التسوق السريع غير متاح لهذا القسم.');
+    return;
+  }
   if(forcedUnavailableCatalog(n)){
     alert('هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.');
     return;
@@ -6326,6 +6351,10 @@ function quickOrderWa(n){
 function quickShop(n){
   const p=products.find(x=>Number(x.number)===Number(n));
   if(!p)return;
+  if(typeof almalikaCanQuickShop === 'function' && !almalikaCanQuickShop(p)){
+    alert('التسوق السريع غير متاح لهذا القسم. يرجى استخدام زر التفاصيل أو واتساب.');
+    return;
+  }
   if(forcedUnavailableCatalog(n)){
     alert('هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.');
     return;
