@@ -16955,8 +16955,7 @@ body.v459ZoomOpen{overflow:hidden !important;}
 })();
 </script>
 
-</body>
-</html>
+
 
 <!-- ===== V295 FIX: استخدام الصور الحقيقية المرفوعة لبند #250 ===== -->
 <style id="almalika-v295-decor250-real-images">
@@ -22576,3 +22575,422 @@ html body .products .product .price{
   html body .products .product .tags{min-height:70px !important;}
 }
 </style>
+
+
+<!-- ===== V487 SAFE MOBILE ONLY FIX - مبني على V483 بدون حذف أي معلومة ===== -->
+<style id="almalika-v487-mobile-only-no-delete">
+/*
+  V487 rules:
+  - لا يغير محتوى المنتجات ولا يحذف أي نص.
+  - لا يصغّر نسخة الكمبيوتر.
+  - يشتغل فقط على الجوال/التابلت الصغير.
+  - يلغي القصّ والإخفاء داخل الكروت حتى تظهر كل بيانات الزبون.
+*/
+@media (max-width: 760px){
+  html, body{
+    width:100% !important;
+    max-width:100% !important;
+    overflow-x:hidden !important;
+  }
+  body{
+    padding-bottom:110px !important;
+  }
+
+  .wrap,
+  .header .wrap{
+    width:calc(100% - 14px) !important;
+    max-width:none !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+
+  .header{
+    position:sticky !important;
+    top:0 !important;
+    z-index:999 !important;
+  }
+  .headTop{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+    padding:8px 0 !important;
+  }
+  .logo{
+    justify-self:center !important;
+    font-size:30px !important;
+    line-height:1.15 !important;
+    white-space:nowrap !important;
+  }
+  .headBtns{
+    width:100% !important;
+    display:flex !important;
+    justify-content:center !important;
+    flex-wrap:wrap !important;
+    gap:7px !important;
+  }
+  .headBtns .btn,
+  .btn{
+    min-height:40px !important;
+    padding:9px 12px !important;
+    font-size:12px !important;
+  }
+
+  /* الهيدر: لا نخفي أي قسم، لكن نسمح بسطرين/أكثر حسب الحاجة بدون كسر الصفحة */
+  .nav{
+    width:100% !important;
+    max-width:100% !important;
+    display:flex !important;
+    flex-wrap:wrap !important;
+    justify-content:center !important;
+    gap:5px !important;
+    overflow:visible !important;
+    padding:6px !important;
+    border-radius:18px !important;
+  }
+  .nav button{
+    flex:0 0 auto !important;
+    min-height:36px !important;
+    padding:8px 10px !important;
+    font-size:11.5px !important;
+    line-height:1.2 !important;
+    white-space:nowrap !important;
+  }
+
+  .searchRow{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+    padding-bottom:10px !important;
+  }
+  .search,
+  .searchRow select{
+    width:100% !important;
+    height:46px !important;
+    border-radius:14px !important;
+    font-size:13px !important;
+  }
+
+  .hero{
+    width:calc(100% - 10px) !important;
+    max-width:none !important;
+    padding:22px 12px 20px !important;
+    border-radius:0 0 24px 24px !important;
+  }
+  .hero h1{
+    font-size:24px !important;
+    line-height:1.35 !important;
+    margin:10px 0 8px !important;
+  }
+  .hero p{
+    font-size:13px !important;
+    line-height:1.8 !important;
+    max-width:100% !important;
+  }
+
+  .section{
+    padding:20px 0 !important;
+  }
+  .title{
+    display:block !important;
+    margin-bottom:12px !important;
+  }
+  .title h2,
+  .panel h1{
+    font-size:24px !important;
+    line-height:1.35 !important;
+  }
+  .title p,
+  .panel p{
+    font-size:13px !important;
+    line-height:1.8 !important;
+  }
+  .mainCats{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:9px !important;
+    overflow:visible !important;
+  }
+  .cat{
+    min-width:0 !important;
+    padding:13px 10px !important;
+    border-radius:18px !important;
+  }
+  .cat h3{font-size:14px !important;}
+  .cat p{font-size:11px !important;}
+
+  .chips{
+    display:flex !important;
+    flex-wrap:wrap !important;
+    justify-content:flex-start !important;
+    gap:6px !important;
+    overflow:visible !important;
+  }
+  .chip{
+    padding:8px 10px !important;
+    font-size:11.5px !important;
+    min-height:34px !important;
+  }
+
+  /* أهم إصلاح: كروت الجوال لا تقص ولا تخفي أي معلومة */
+  .products{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:14px !important;
+    width:100% !important;
+  }
+  .product,
+  .products .product{
+    width:100% !important;
+    max-width:100% !important;
+    display:grid !important;
+    grid-template-columns:132px minmax(0,1fr) !important;
+    direction:rtl !important;
+    min-height:0 !important;
+    height:auto !important;
+    overflow:visible !important;
+    border-radius:22px !important;
+  }
+  .product .pic,
+  .products .product .pic{
+    order:0 !important;
+    min-height:190px !important;
+    height:auto !important;
+    padding:6px !important;
+    border-left:1px solid var(--line, #eadce4) !important;
+    border-right:0 !important;
+    border-bottom:0 !important;
+    overflow:hidden !important;
+  }
+  .product .pic img,
+  .products .product .pic img{
+    width:100% !important;
+    height:100% !important;
+    max-height:none !important;
+    object-fit:contain !important;
+    padding:3px !important;
+  }
+  .product .body,
+  .products .product .body{
+    direction:rtl !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    height:auto !important;
+    padding:13px 12px !important;
+    gap:7px !important;
+    overflow:visible !important;
+  }
+  .product .body h3,
+  .products .product .body h3,
+  .product h3,
+  .product .product-title,
+  .products .product .product-title{
+    display:block !important;
+    -webkit-line-clamp:unset !important;
+    -webkit-box-orient:unset !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    white-space:normal !important;
+    min-height:0 !important;
+    max-height:none !important;
+    font-size:16px !important;
+    line-height:1.5 !important;
+    margin:0 !important;
+  }
+  .product .desc,
+  .products .product .desc,
+  .product .product-desc,
+  .products .product .product-desc,
+  .product p.desc{
+    display:block !important;
+    -webkit-line-clamp:unset !important;
+    -webkit-box-orient:unset !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    white-space:normal !important;
+    min-height:0 !important;
+    max-height:none !important;
+    font-size:12.5px !important;
+    line-height:1.75 !important;
+  }
+  .product .tags,
+  .products .product .tags{
+    display:flex !important;
+    flex-wrap:wrap !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    gap:5px !important;
+  }
+  .product .tag,
+  .products .product .tag{
+    font-size:10.8px !important;
+    line-height:1.4 !important;
+    padding:5px 7px !important;
+    white-space:normal !important;
+  }
+  .product .bottom,
+  .products .product .bottom{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:7px !important;
+    min-height:0 !important;
+    margin-top:4px !important;
+  }
+  .product .price,
+  .products .product .price{
+    width:100% !important;
+    text-align:center !important;
+    white-space:normal !important;
+    padding:7px !important;
+  }
+  .product .price strong,
+  .products .product .price strong{
+    font-size:17px !important;
+  }
+  .product .actions,
+  .products .product .actions{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:6px !important;
+    width:100% !important;
+  }
+  .product .actions button,
+  .products .product .actions button{
+    width:100% !important;
+    min-height:38px !important;
+    padding:8px 6px !important;
+    font-size:11.5px !important;
+    line-height:1.25 !important;
+  }
+  .product .num,
+  .products .product .num{
+    top:8px !important;
+    left:8px !important;
+    right:auto !important;
+    font-size:10px !important;
+    padding:4px 7px !important;
+  }
+
+  /* السلة والتفاصيل على الجوال: تظهر كاملة مع تمرير داخلي آمن */
+  .modal{
+    align-items:flex-start !important;
+    justify-content:center !important;
+    overflow-y:auto !important;
+    padding:10px 7px !important;
+  }
+  .modalBox,
+  .modalBox.detailed{
+    width:100% !important;
+    max-width:100% !important;
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    max-height:none !important;
+    height:auto !important;
+    overflow:visible !important;
+    border-radius:20px !important;
+  }
+  .modalPic{
+    order:1 !important;
+    position:relative !important;
+    min-height:190px !important;
+    padding:12px !important;
+  }
+  .modalPic img{
+    max-height:210px !important;
+    object-fit:contain !important;
+  }
+  .modalInfo{
+    order:2 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    padding:14px 12px 18px !important;
+  }
+  .modalInfo h2{
+    font-size:22px !important;
+    line-height:1.45 !important;
+  }
+  .infoGrid,
+  .priceChoiceGrid,
+  .bookingSimple,
+  .modalActions,
+  .modalActions.three,
+  .cartForm{
+    grid-template-columns:1fr !important;
+  }
+  .cartItem{
+    display:grid !important;
+    grid-template-columns:70px minmax(0,1fr) !important;
+    gap:10px !important;
+    padding:12px !important;
+  }
+  .cartItem img{
+    width:70px !important;
+    height:70px !important;
+    object-fit:contain !important;
+  }
+  .qtyBox{
+    grid-column:1 / -1 !important;
+    flex-direction:row !important;
+    justify-content:center !important;
+    padding-top:4px !important;
+  }
+
+  .fixedWhats,
+  .cartBar,
+  .cartButton{
+    width:calc(100vw - 16px) !important;
+    min-width:0 !important;
+    max-width:none !important;
+    left:50% !important;
+    right:auto !important;
+    transform:translateX(-50%) !important;
+  }
+}
+
+@media (max-width: 390px){
+  .product,
+  .products .product{
+    grid-template-columns:118px minmax(0,1fr) !important;
+  }
+  .product .pic,
+  .products .product .pic{
+    min-height:178px !important;
+  }
+  .product .actions,
+  .products .product .actions{
+    grid-template-columns:1fr !important;
+  }
+  .mainCats{
+    grid-template-columns:1fr !important;
+  }
+}
+</style>
+
+<script id="almalika-v487-safe-scroll-to-products">
+(function(){
+  if(window.__almV487SafeScroll) return;
+  window.__almV487SafeScroll = true;
+  function allowScroll(ms){
+    try{ if(typeof window.almAllowScrollFor === 'function') window.almAllowScrollFor(ms || 1500); }catch(e){}
+  }
+  function scrollProductsTop(){
+    allowScroll(1600);
+    setTimeout(function(){
+      try{
+        var target = document.querySelector('.products') || document.querySelector('#products') || document.querySelector('[data-products]');
+        if(!target) return;
+        var top = target.getBoundingClientRect().top + window.pageYOffset - 130;
+        window.scrollTo({top:Math.max(0, top), behavior:'smooth'});
+      }catch(e){}
+    }, 80);
+  }
+  document.addEventListener('click', function(ev){
+    var el = ev.target && ev.target.closest ? ev.target.closest('.nav button,.chip,.cat,[data-cat],[data-category]') : null;
+    if(!el) return;
+    scrollProductsTop();
+  }, true);
+})();
+</script>
+
+</body>
+</html>
