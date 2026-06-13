@@ -2,83 +2,12 @@
 <html lang="ar" dir="rtl">
 <head>
 <!-- ===== V467: STOP AUTOMATIC SELF-SCROLL / screen jumping guard ===== -->
-<script id="almalika-v467-stop-auto-scroll-guard">
-(function(){
-  if(window.__almV467ScrollGuard) return;
-  window.__almV467ScrollGuard=true;
-  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
-  var start=Date.now();
-  var lastUserAction=0;
-  var allowUntil=Date.now()+250;
-  function markUser(){ lastUserAction=Date.now(); allowUntil=Date.now()+1200; }
-  ['click','touchstart','touchmove','wheel','keydown','pointerdown','mousedown'].forEach(function(ev){
-    window.addEventListener(ev, markUser, {capture:true, passive:true});
-  });
-  function isAllowed(){
-    var now=Date.now();
-    if(now < allowUntil) return true;
-    if(now - lastUserAction < 1300) return true;
-    return false;
-  }
-  var nativeScrollTo=window.scrollTo;
-  var nativeScrollBy=window.scrollBy;
-  window.scrollTo=function(){
-    if(!isAllowed()){ return; }
-    return nativeScrollTo.apply(window, arguments);
-  };
-  window.scrollBy=function(){
-    if(!isAllowed()){ return; }
-    return nativeScrollBy.apply(window, arguments);
-  };
-  var nativeSIV=Element.prototype.scrollIntoView;
-  Element.prototype.scrollIntoView=function(){
-    if(!isAllowed()){ return; }
-    return nativeSIV.apply(this, arguments);
-  };
-  window.almAllowScrollFor=function(ms){ allowUntil=Date.now()+(ms||1200); };
-  document.documentElement.classList.add('alm-no-self-scroll');
-})();
-</script>
-<style id="almalika-v467-stop-auto-scroll-style">
-html.alm-no-self-scroll, html.alm-no-self-scroll *{scroll-behavior:auto!important;}
-</style>
+
+
 
 <!-- ===== V433 QA STEP 11: HARD early refresh reset - prevent restored scroll showing random product image ===== -->
-<script id="almalika-v433-early-refresh-hard-reset">
-(function(){
-  try{ if('scrollRestoration' in history) history.scrollRestoration='manual'; }catch(e){}
-  try{ document.documentElement.classList.add('alm-v433-booting'); }catch(e){}
-  function resetTop(){
-    try{ window.scrollTo(0,0); }catch(e){}
-    try{ document.documentElement.scrollTop=0; document.body && (document.body.scrollTop=0); }catch(e){}
-  }
-  resetTop();
-  var start=Date.now();
-  function loop(){
-    resetTop();
-    if(Date.now()-start<1700){ requestAnimationFrame(loop); }
-  }
-  requestAnimationFrame(loop);
-  function reveal(){
-    resetTop();
-    setTimeout(resetTop,50);
-    setTimeout(function(){
-      resetTop();
-      try{ document.documentElement.classList.remove('alm-v433-booting'); }catch(e){}
-    },180);
-  }
-  document.addEventListener('DOMContentLoaded',reveal);
-  window.addEventListener('load',function(){ setTimeout(reveal,80); setTimeout(reveal,500); });
-  window.addEventListener('pageshow',function(){ resetTop(); setTimeout(reveal,80); });
-})();
-</script>
-<style id="almalika-v433-early-refresh-style">
-html.alm-v433-booting body{opacity:1!important;overflow:auto!important;}
-html.alm-v433-booting #almalikaV397ImageViewer,
-html.alm-v433-booting #almalikaGlobalImageZoom,
-html.alm-v433-booting #almalikaImageZoom,
-html.alm-v433-booting #modal{display:none!important;visibility:hidden!important;}
-</style>
+
+
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -14987,349 +14916,17 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 
 
 <!-- ===== V430 QA STEP 8: unfreeze big mobile header + add small easy section tabs + 2 employee phones ===== -->
-<style id="almalika-v430-mobile-tabs-unfreeze">
-@media (max-width:768px){
-  /* فك تجميد المنطقة الكبيرة بالكامل: الشعار + الأقسام + البحث يتحركوا مع الصفحة */
-  #almTopFixedGroup{
-    position:relative!important;
-    top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
-    z-index:20!important;
-    box-shadow:none!important;
-    transform:none!important;
-  }
-  #almTopFixedGroup .header,
-  body .header{
-    position:relative!important;
-    top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;
-    z-index:20!important;
-    transform:none!important;
-  }
-  html,body{
-    padding-top:0!important;
-    scroll-padding-top:54px!important;
-  }
-  body{padding-bottom:82px!important;}
 
-  /* ترتيب البلوك الكبير كواجهة دخول فقط، وليس كتثبيت */
-  body #nav.nav{
-    position:relative!important;
-    top:auto!important;
-    z-index:1!important;
-    grid-template-columns:repeat(2,minmax(0,1fr))!important;
-    gap:8px!important;
-    margin:8px auto 10px!important;
-    padding:9px!important;
-    width:calc(100% - 28px)!important;
-    max-width:540px!important;
-    overflow:visible!important;
-    border-radius:22px!important;
-  }
-  body #nav.nav button,
-  body #nav.nav button.navIconBtn{
-    height:54px!important;
-    min-height:54px!important;
-    max-height:54px!important;
-    border-radius:16px!important;
-    overflow:hidden!important;
-  }
-  body #nav.nav button span:not(.navIconWrap){
-    font-size:12px!important;
-    line-height:1.15!important;
-    -webkit-line-clamp:2!important;
-  }
-  body .searchRow{
-    position:relative!important;
-    top:auto!important;
-    z-index:1!important;
-    padding:6px 14px 8px!important;
-  }
 
-  /* شريط أقسام صغير وسهل، هو الوحيد الذي يثبت عند النزول */
-  #almMobileQuickTabs{
-    display:flex!important;
-    position:sticky!important;
-    top:0!important;
-    z-index:8000!important;
-    direction:rtl!important;
-    gap:7px!important;
-    overflow-x:auto!important;
-    overscroll-behavior-x:contain!important;
-    -webkit-overflow-scrolling:touch!important;
-    scrollbar-width:none!important;
-    background:rgba(255,250,252,.96)!important;
-    backdrop-filter:blur(12px)!important;
-    border-top:1px solid #f6dbe7!important;
-    border-bottom:1px solid #f0c9dc!important;
-    box-shadow:0 8px 22px rgba(122,23,52,.10)!important;
-    padding:7px 10px!important;
-    margin:0!important;
-    width:100%!important;
-    box-sizing:border-box!important;
-  }
-  #almMobileQuickTabs::-webkit-scrollbar{display:none!important;}
-  #almMobileQuickTabs button{
-    flex:0 0 auto!important;
-    border:1px solid #f0bfd5!important;
-    background:#fff!important;
-    color:#6f1838!important;
-    min-width:auto!important;
-    height:38px!important;
-    padding:0 12px!important;
-    border-radius:999px!important;
-    font-family:inherit!important;
-    font-weight:1000!important;
-    font-size:12px!important;
-    white-space:nowrap!important;
-    box-shadow:0 4px 12px rgba(122,23,52,.06)!important;
-  }
-  #almMobileQuickTabs button.active{
-    color:#fff!important;
-    background:linear-gradient(135deg,#ff2f86,#a20f3b)!important;
-    border-color:#ff6fa8!important;
-  }
-
-  /* رقمين الموظفين واضحين بدون ما يزحموا الهيدر */
-  .almEmployeePhones{
-    display:flex!important;
-    width:calc(100% - 28px)!important;
-    max-width:540px!important;
-    margin:4px auto 8px!important;
-    gap:8px!important;
-    direction:rtl!important;
-  }
-  .almEmployeePhones a{
-    flex:1 1 0!important;
-    min-width:0!important;
-    height:38px!important;
-    border-radius:16px!important;
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    text-decoration:none!important;
-    font-family:inherit!important;
-    font-weight:1000!important;
-    font-size:12px!important;
-    color:#fff!important;
-    background:linear-gradient(135deg,#18bf5b,#0ba84e)!important;
-    box-shadow:0 8px 18px rgba(13,160,76,.18)!important;
-  }
-
-  /* ضمان عدم تغطية أول منتج تحت الهيدر */
-  #app,
-  #app .section,
-  #app .products{
-    margin-top:0!important;
-    padding-top:0!important;
-    transform:none!important;
-    top:auto!important;
-  }
-  #app .homeHeroFrame,
-  #app .almPromoSlider,
-  #app .products{
-    position:relative!important;
-    z-index:1!important;
-  }
-
-  /* تصغير شريط السلة حتى لا يخنق الشاشة */
-  body .cartBar{
-    height:54px!important;
-    min-height:54px!important;
-    bottom:8px!important;
-    border-radius:20px!important;
-    font-size:15px!important;
-    width:calc(100% - 24px)!important;
-  }
-}
-@media (min-width:769px){
-  #almMobileQuickTabs,.almEmployeePhones{display:none!important;}
-}
-</style>
-<script id="almalika-v430-mobile-tabs-unfreeze-js">
-(function(){
-  function isMobile(){return window.matchMedia&&window.matchMedia('(max-width:768px)').matches;}
-  var tabLabels={home:'الرئيسية',bouncies:'النطاطيات',snacks:'السناك',events:'الحفلات',offers:'العروض',rentals:'الطاولات',other:'أخرى'};
-  function currentKey(){try{return window.current||'home';}catch(e){return 'home';}}
-  function installTabs(){
-    if(!isMobile()) return;
-    try{
-      var top=document.getElementById('almTopFixedGroup');
-      if(top){
-        top.style.position='relative';
-        top.style.top='auto';
-      }
-      document.body.style.paddingTop='0px';
-      document.documentElement.classList.remove('almIntroPending');
-      document.body.classList.add('almAppEntered');
-    }catch(e){}
-    var tabs=document.getElementById('almMobileQuickTabs');
-    if(!tabs){
-      tabs=document.createElement('div');
-      tabs.id='almMobileQuickTabs';
-      tabs.innerHTML=['home','bouncies','snacks','events','offers','rentals','other'].map(function(k){return '<button type="button" data-sec="'+k+'">'+tabLabels[k]+'</button>';}).join('');
-      var anchor=document.getElementById('almTopFixedGroup');
-      if(anchor && anchor.parentNode){ anchor.parentNode.insertBefore(tabs, anchor.nextSibling); }
-      else { document.body.insertBefore(tabs, document.body.firstChild); }
-      tabs.addEventListener('click',function(ev){
-        var b=ev.target.closest('button[data-sec]');
-        if(!b) return;
-        var sec=b.getAttribute('data-sec');
-        if(typeof window.showSection==='function'){
-          if(sec==='home' && typeof window.showHome==='function') window.showHome();
-          else window.showSection(sec);
-        }
-        setTimeout(function(){
-          var app=document.getElementById('app');
-          if(app) app.scrollIntoView({behavior:'smooth',block:'start'});
-        },80);
-      });
-    }
-    tabs.querySelectorAll('button').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-sec')===currentKey());});
-  }
-  function installPhones(){
-    if(!isMobile()) return;
-    var row=document.querySelector('.almEmployeePhones');
-    if(row) return;
-    var search=document.querySelector('#almTopFixedGroup .searchRow') || document.querySelector('.searchRow');
-    row=document.createElement('div');
-    row.className='almEmployeePhones';
-    row.innerHTML='<a href="https://wa.me/97433317720" target="_blank" rel="noopener">موظف 1: 33317720</a><a href="https://wa.me/97433317721" target="_blank" rel="noopener">موظف 2: 33317721</a>';
-    if(search && search.parentNode) search.parentNode.insertBefore(row, search.nextSibling);
-  }
-  function run(){installTabs();installPhones();}
-  document.addEventListener('DOMContentLoaded',function(){run();setTimeout(run,200);setTimeout(run,800);});
-  window.addEventListener('load',function(){run();setTimeout(run,500);});
-  document.addEventListener('click',function(){setTimeout(run,80);},true);
-  window.addEventListener('resize',run);
-  try{new MutationObserver(function(){setTimeout(run,60);}).observe(document.documentElement,{childList:true,subtree:true,attributes:true});}catch(e){}
-  setInterval(run,1200);
-})();
-</script>
 
 
 
 <!-- v432: mobile product modal fixed bottom actions - keep all details visible -->
-<style id="v432-mobile-modal-actions-fixed">
-@media (max-width: 700px){
-  /* نافذة المنتج تتحول لصفحة كاملة قابلة للتمرير */
-  #modal.show{
-    align-items:stretch !important;
-    justify-content:flex-start !important;
-    padding:0 !important;
-    overflow:hidden !important;
-    background:rgba(0,0,0,.45) !important;
-  }
-  #modal.show .modalBox:not(.cartModal){
-    width:100vw !important;
-    height:100dvh !important;
-    max-height:100dvh !important;
-    min-height:100dvh !important;
-    border-radius:0 !important;
-    display:block !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    -webkit-overflow-scrolling:touch !important;
-    padding-bottom:190px !important;
-    box-sizing:border-box !important;
-    background:#fffdf8 !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalPic{
-    min-height:0 !important;
-    padding:14px 14px 8px !important;
-    border-radius:0 !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalPic img{
-    width:100% !important;
-    max-height:38dvh !important;
-    object-fit:contain !important;
-    border-radius:18px !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalInfo{
-    padding:14px 18px 210px !important;
-    box-sizing:border-box !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalInfo h2{
-    font-size:30px !important;
-    line-height:1.25 !important;
-    text-align:center !important;
-    margin:12px 0 10px !important;
-  }
-  /* زر الإغلاق الدائري العلوي فقط للرجوع السريع، لا يغطي المحتوى */
-  #modal.show .modalBox:not(.cartModal) .close{
-    position:fixed !important;
-    top:calc(env(safe-area-inset-top,0px) + 14px) !important;
-    left:16px !important;
-    width:54px !important;
-    height:54px !important;
-    z-index:1000000 !important;
-    box-shadow:0 12px 30px rgba(233,30,99,.35) !important;
-  }
-  /* الأزرار الثلاثة مثبتة دائماً بأسفل الشاشة */
-  #modal.show .modalBox:not(.cartModal) .modalActions.three{
-    position:fixed !important;
-    left:12px !important;
-    right:12px !important;
-    bottom:calc(env(safe-area-inset-bottom,0px) + 10px) !important;
-    z-index:999999 !important;
-    display:grid !important;
-    grid-template-columns:1fr !important;
-    gap:8px !important;
-    margin:0 !important;
-    padding:10px !important;
-    background:rgba(255,255,255,.97) !important;
-    border:1px solid rgba(120,0,55,.08) !important;
-    border-radius:22px !important;
-    box-shadow:0 -10px 35px rgba(0,0,0,.18) !important;
-    backdrop-filter:blur(8px) !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalActions.three button,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three a{
-    width:100% !important;
-    min-height:54px !important;
-    border-radius:16px !important;
-    font-size:18px !important;
-    font-weight:900 !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    padding:12px !important;
-  }
-  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(1)::before,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(1)::before{content:'💬 ';}
-  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(2)::before,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(2)::before{content:'🛒 ';}
-  #modal.show .modalBox:not(.cartModal) .modalActions.three button:nth-child(3)::before,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three a:nth-child(3)::before{content:'✕ ';}
-  /* منع أي قواعد قديمة من جعل الأزرار عالقة داخل النص */
-  #modal.show .modalBox:not(.cartModal) .modalActions.three + *,
-  #modal.show .modalBox:not(.cartModal) .modalActions.three ~ *{
-    margin-bottom:0 !important;
-  }
-}
-</style>
+
 
 
 <!-- ===== V433 QA STEP 11: close accidental modal/zoom on refresh and force top after app render ===== -->
-<script id="almalika-v433-late-refresh-cleanup">
-(function(){
-  var bootUntil=Date.now()+2200;
-  function isBooting(){return Date.now()<bootUntil;}
-  function clean(){
-    try{
-      ['almalikaV397ImageViewer','almalikaGlobalImageZoom','almalikaImageZoom'].forEach(function(id){
-        var el=document.getElementById(id);
-        if(el){ el.classList.remove('show','open','active'); el.style.display='none'; el.style.visibility='hidden'; }
-      });
-      var modal=document.getElementById('modal');
-      if(modal && isBooting()){ modal.classList.remove('show','open','active'); modal.innerHTML=''; modal.style.display='none'; }
-      document.body.classList.remove('modal-open','zoom-open','v397ImageViewerOpen','v395ImageZoomOpen');
-      window.scrollTo(0,0); document.documentElement.scrollTop=0; document.body.scrollTop=0;
-    }catch(e){}
-  }
-  document.addEventListener('DOMContentLoaded',function(){clean(); setTimeout(clean,100); setTimeout(clean,450); setTimeout(clean,1100); setTimeout(function(){var m=document.getElementById('modal'); if(m) m.style.display='';},2300);});
-  window.addEventListener('load',function(){clean(); setTimeout(clean,300); setTimeout(clean,900); setTimeout(function(){var m=document.getElementById('modal'); if(m) m.style.display='';},2300);});
-  window.addEventListener('pageshow',function(){clean(); setTimeout(clean,250);});
-})();
-</script>
+
 
 
 <style id="almalika-v434-slider-images-fit-fix">
@@ -16957,193 +16554,245 @@ body.v459ZoomOpen{overflow:hidden !important;}
 
 
 
-<!-- ===== V491 SAFE PATCH: stable scroll + mobile horizontal menus + professional modal (NO DATA DELETE) ===== -->
-<style id="almalika-v491-stable-mobile-menu-modal">
-/* الأساس: لا نحذف أي بيانات، فقط نرتب العرض والطبقات */
-html,body{overflow-x:hidden!important;overscroll-behavior-y:none!important;scroll-behavior:auto!important;}
-#modal,.modal{z-index:2147483000!important;}
-.modal.show{display:flex!important;}
-.modalBox,.modalBox.detailed{z-index:2147483001!important;position:relative!important;}
-.modalPic{position:relative!important;z-index:1!important;overflow:hidden!important;}
-.modalInfo{position:relative!important;z-index:2!important;background:#fffdfd!important;}
-.modalHead,.modalInfo h2{position:relative!important;z-index:5!important;}
+<!-- ===== V492 SAFE FIX: scroll, front WhatsApp modal, horizontal menus - NO DATA DELETION ===== -->
+<style id="almalika-v492-safe-layout-fix">
+/* 1) رجوع حركة الصفحة طبيعية بالماوس والجوال */
+html,body{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  height:auto!important;
+  min-height:100%!important;
+  max-height:none!important;
+  touch-action:pan-y!important;
+  overscroll-behavior-y:auto!important;
+  scroll-behavior:auto!important;
+}
+body{position:relative!important;}
+body.modal-open,html.modal-open{overflow:auto!important;height:auto!important;}
 
-/* القوائم الرئيسية والداخلية: صف أفقي واحد يسحب يدويًا يمين/يسار، بدون حركة تلقائية */
-.nav,.chips,.mainCats{
+/* 2) نافذة المنتج تتحرك طبيعي، ولا ترجع تحت لوحدها */
+#modal.show,.modal.show{
+  position:fixed!important;
+  inset:0!important;
+  display:block!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+  align-items:initial!important;
+  justify-content:initial!important;
+  padding:18px!important;
+  z-index:100000!important;
+}
+#modal.show .modalBox,.modal.show .modalBox{
+  margin:0 auto 32px!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+  transform:none!important;
+}
+#modal.show .modalInfo,.modal.show .modalInfo{
+  height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+#modal.show .modalActions,#modal.show .modalActions.three,
+.modal.show .modalActions,.modal.show .modalActions.three{
+  position:static!important;
+  bottom:auto!important;
+  left:auto!important;
+  right:auto!important;
+  z-index:auto!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+}
+
+/* 3) في الجوال: ترتيب نافذة التفاصيل بدون تثبيت أزرار في الأسفل */
+@media(max-width:700px){
+  #modal.show,.modal.show{padding:0!important;background:rgba(0,0,0,.50)!important;}
+  #modal.show .modalBox:not(.cartModal),.modal.show .modalBox:not(.cartModal){
+    width:100%!important;
+    min-height:100dvh!important;
+    margin:0!important;
+    border-radius:0!important;
+    display:block!important;
+    background:#fffaf6!important;
+    padding-bottom:22px!important;
+  }
+  #modal.show .modalPic,.modal.show .modalPic{
+    position:relative!important;
+    top:auto!important;
+    order:0!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    padding:12px!important;
+  }
+  #modal.show .modalPic img,.modal.show .modalPic img{
+    width:100%!important;
+    height:auto!important;
+    max-height:42dvh!important;
+    object-fit:contain!important;
+  }
+  #modal.show .modalInfo,.modal.show .modalInfo{padding:14px 14px 24px!important;}
+  #modal.show .modalHead,.modal.show .modalHead{position:static!important;background:transparent!important;padding:0!important;}
+  #modal.show .close,.modal.show .close{
+    position:fixed!important;
+    top:calc(env(safe-area-inset-top,0px) + 12px)!important;
+    left:12px!important;
+    width:52px!important;
+    height:52px!important;
+    z-index:100003!important;
+  }
+  #modal.show .modalActions.three,.modal.show .modalActions.three{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+    margin:14px 0 0!important;
+    padding:0!important;
+  }
+  #modal.show .modalActions.three button,#modal.show .modalActions.three a,
+  .modal.show .modalActions.three button,.modal.show .modalActions.three a{
+    width:100%!important;
+    min-height:52px!important;
+    border-radius:16px!important;
+    font-size:16px!important;
+  }
+}
+
+/* 4) نافذة تواصل الإدارة فوق كل شيء */
+#v336InfoModal.v336ModalOverlay.show,
+#v338OrderContactModal.show,
+#v339WhatsappModal.show,
+.v336ModalOverlay.show{
+  z-index:2147483647!important;
+  position:fixed!important;
+  inset:0!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:18px!important;
+  pointer-events:auto!important;
+}
+#v336InfoModal .v336ModalBox,#v338OrderContactModal .v338ContactBox,#v339WhatsappModal .v339Box{
+  position:relative!important;
+  z-index:2147483647!important;
+  pointer-events:auto!important;
+}
+
+/* 5) القوائم صف واحد مستطيل وتسحب يمين/يسار فقط، بدون حركة تلقائية */
+.nav,.chips,.mainCats,#almMobileQuickTabs{
   display:flex!important;
   flex-wrap:nowrap!important;
   overflow-x:auto!important;
   overflow-y:hidden!important;
   justify-content:flex-start!important;
   align-items:center!important;
-  gap:10px!important;
-  direction:rtl!important;
-  scroll-snap-type:x proximity!important;
-  -webkit-overflow-scrolling:touch!important;
-  scrollbar-width:none!important;
+  gap:8px!important;
   max-width:100%!important;
-  animation:none!important;
+  scrollbar-width:thin!important;
+  scroll-behavior:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  direction:rtl!important;
+  white-space:nowrap!important;
 }
-.nav::-webkit-scrollbar,.chips::-webkit-scrollbar,.mainCats::-webkit-scrollbar{display:none!important;}
-.nav button,.chip,.cat{
+.nav button,.chip,.mainCats .cat,#almMobileQuickTabs button{
   flex:0 0 auto!important;
   white-space:nowrap!important;
-  scroll-snap-align:start!important;
-  animation:none!important;
+  border-radius:14px!important;
 }
-.nav *,.chips *,.mainCats *{animation:none!important;}
-.cat{
-  min-width:180px!important;
-  max-width:220px!important;
-  min-height:74px!important;
-  display:flex!important;
-  flex-direction:row!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:10px!important;
-  text-align:right!important;
-  padding:14px 16px!important;
-}
-.cat .icon{order:2!important;flex:0 0 auto!important;margin:0!important;}
-.cat h3,.cat p{min-width:0!important;}
-.cat h3{font-size:15px!important;line-height:1.35!important;margin:0!important;white-space:normal!important;}
-.cat p{display:none!important;}
+.nav{border-radius:16px!important;padding:8px!important;background:#fff7fb!important;border:1px solid #f0c7da!important;}
+.nav button{min-height:44px!important;padding:10px 15px!important;display:inline-flex!important;align-items:center!important;gap:8px!important;}
+.navIconWrap{flex:0 0 auto!important;display:inline-grid!important;place-items:center!important;}
+.mainCats{padding:8px 2px 14px!important;}
+.mainCats .cat{width:210px!important;min-width:210px!important;max-width:210px!important;min-height:96px!important;border-radius:18px!important;}
+.chips{padding:8px 2px 14px!important;}
 
-/* صورة المنتج والكرت: لا قص للنصوص */
-.product .body h3,.product .desc{
-  display:block!important;
-  -webkit-line-clamp:unset!important;
-  -webkit-box-orient:unset!important;
-  overflow:visible!important;
-  min-height:0!important;
-}
-.product .tags{min-height:0!important;overflow:visible!important;}
-.product{height:auto!important;}
-.product .pic img{object-fit:contain!important;}
-
-/* الجوال: نافذة التفاصيل تتحرك كلها بشكل طبيعي ولا ترجع لتحت */
-@media(max-width:780px){
-  body{padding-bottom:82px!important;}
-  .wrap{width:100%!important;padding-inline:12px!important;}
-  .header .wrap{width:100%!important;padding-inline:10px!important;}
-  .logo{font-size:31px!important;}
-  .headTop{display:block!important;padding:10px 0!important;}
-  .nav{border-radius:18px!important;padding:8px!important;margin-top:8px!important;}
-  .nav button{min-height:42px!important;padding:9px 14px!important;border-radius:14px!important;font-size:13px!important;display:inline-flex!important;align-items:center!important;gap:6px!important;}
-  .mainCats{padding:8px 0 10px!important;margin:0!important;}
-  .chips{padding:8px 0 12px!important;margin:0!important;}
-  .chip{min-height:38px!important;padding:9px 14px!important;border-radius:14px!important;font-size:13px!important;}
-
-  .products{grid-template-columns:1fr!important;gap:14px!important;}
-  .product{grid-template-columns:1fr!important;border-radius:22px!important;min-height:0!important;overflow:hidden!important;}
-  .product .pic{order:0!important;width:100%!important;min-height:230px!important;height:auto!important;border:0!important;border-bottom:1px solid #f1d7e3!important;}
-  .product .pic img{width:100%!important;height:230px!important;max-height:230px!important;object-fit:contain!important;padding:8px!important;}
-  .product .body{order:1!important;padding:16px!important;gap:10px!important;}
-  .product .bottom{display:grid!important;grid-template-columns:1fr!important;gap:10px!important;}
-  .product .price{text-align:center!important;margin:0!important;}
-  .product .actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;}
-
-  .modal{align-items:flex-start!important;justify-content:center!important;overflow-y:auto!important;overflow-x:hidden!important;padding:0!important;background:rgba(0,0,0,.66)!important;overscroll-behavior:contain!important;}
-  .modalBox,.modalBox.detailed,.modalBox.detailed.eventDetailed{
-    width:100vw!important;max-width:100vw!important;min-height:100dvh!important;height:auto!important;max-height:none!important;
-    margin:0!important;border-radius:0!important;display:flex!important;flex-direction:column!important;overflow:visible!important;background:#fffdfd!important;
-  }
-  .modalPic{
-    order:1!important;position:relative!important;top:auto!important;min-height:0!important;height:auto!important;width:100%!important;
-    padding:14px 14px 8px!important;background:#fffaf3!important;overflow:visible!important;
-  }
-  .modalPic img.mainDecorImg,.modalPic>img{
-    width:100%!important;height:auto!important;max-height:56vh!important;object-fit:contain!important;border-radius:18px!important;display:block!important;margin:0 auto!important;
-  }
-  .modalInfo{order:2!important;width:100%!important;max-height:none!important;overflow:visible!important;padding:14px 14px 18px!important;background:#fffdfd!important;}
-  .modalHead{position:static!important;background:transparent!important;padding:0!important;margin:0 0 10px!important;display:flex!important;align-items:flex-start!important;gap:10px!important;}
-  .modalInfo h2{font-size:22px!important;line-height:1.45!important;text-align:center!important;margin:0 auto!important;color:#5f1730!important;}
-  .close{position:fixed!important;top:16px!important;left:16px!important;z-index:2147483005!important;width:56px!important;height:56px!important;border-radius:50%!important;font-size:36px!important;box-shadow:0 10px 28px rgba(0,0,0,.20)!important;}
-
-  .decorGallery{margin-top:12px!important;padding:10px!important;border-radius:18px!important;}
-  .decorGalleryTitle{font-size:20px!important;text-align:center!important;margin-bottom:10px!important;}
-  .decorThumbs{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;max-height:none!important;overflow:visible!important;}
-  .decorThumb{min-height:142px!important;border-radius:18px!important;padding:7px!important;}
-  .decorThumb img{height:96px!important;width:100%!important;object-fit:cover!important;border-radius:13px!important;}
-  .decorThumb small{font-size:12px!important;line-height:1.4!important;}
-
-  .priceChoiceGrid,.bookingSimple,.infoGrid,.decorSelectGrid,.payChoices{grid-template-columns:1fr!important;gap:10px!important;}
-  .priceChoice{min-height:auto!important;padding:13px!important;border-radius:16px!important;}
-  .modalActions,.modalActions.three{
-    position:static!important;bottom:auto!important;z-index:3!important;background:#fff!important;display:flex!important;flex-direction:column!important;
-    gap:10px!important;padding:12px 0 4px!important;margin:14px 0 0!important;box-shadow:none!important;
-  }
-  .modalActions a,.modalActions button,.modalActions.three a,.modalActions.three button{
-    width:100%!important;min-height:58px!important;border-radius:16px!important;font-size:20px!important;font-weight:900!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;
-  }
-}
+/* منع أي تبويب قديم مكرر من الحركة التلقائية */
+#almMobileQuickTabs{display:none!important;}
+.almEmployeePhones{display:none!important;}
 </style>
-<script id="almalika-v491-stable-scroll-and-home">
+<script id="almalika-v492-safe-layout-fix-js">
 (function(){
-  if(window.__almV491StablePatch) return;
-  window.__almV491StablePatch=true;
+  if(window.__almV492SafeFix) return;
+  window.__almV492SafeFix=true;
 
-  /* افتح الصفحة الرئيسية عند الدخول العادي بدون هاش، بدون تغيير اختيارات الزبون داخل التفاصيل */
-  function forceHomeOnlyOnPlainEntry(){
+  function allowNaturalScroll(){
     try{
-      var noHash=!location.hash || location.hash==='#';
-      if(noHash && (location.pathname==='/' || location.pathname==='/home' || location.pathname==='/index.html')){
-        history.replaceState({almalika:true},'', '/home#home/%D8%A7%D9%84%D8%AC%D9%85%D9%8A%D8%B9');
-        if(typeof current!=='undefined') current='home';
-        if(typeof internal!=='undefined') internal='الجميع';
-        setTimeout(function(){
-          try{ if(typeof renderHome==='function') renderHome(); else if(typeof render==='function') render(); }catch(e){}
-          try{ window.__almPermitProgrammaticScroll=true; window.scrollTo(0,0); setTimeout(function(){window.__almPermitProgrammaticScroll=false;},120); }catch(e){}
-        },120);
-      }
+      document.documentElement.style.overflowY='auto';
+      document.body.style.overflowY='auto';
+      document.documentElement.style.height='auto';
+      document.body.style.height='auto';
+      document.body.style.position='relative';
+      document.body.classList.remove('modal-open','almV402ProductsMode');
+      document.documentElement.classList.remove('almIntroPending','alm-no-self-scroll','alm-v433-booting');
     }catch(e){}
   }
 
-  /* منع رجوع الشاشة لتحت بسبب سكربتات قديمة بعد ما المستخدم يسحب الصفحة */
-  var userScrollingUntil=0;
-  function markUserScroll(){ userScrollingUntil=Date.now()+1800; }
-  ['touchmove','wheel','scroll','pointermove'].forEach(function(ev){
-    window.addEventListener(ev, markUserScroll, {capture:true, passive:true});
-  });
-  ['click','touchstart','pointerdown'].forEach(function(ev){
-    document.addEventListener(ev,function(e){
-      var t=e.target;
-      if(t && t.closest && (t.closest('.nav') || t.closest('.mainCats') || t.closest('.chips'))){
-        window.__almPermitProgrammaticScroll=true;
-        setTimeout(function(){window.__almPermitProgrammaticScroll=false;},900);
-      }
-    },true);
-  });
-  var oldTo=window.scrollTo, oldBy=window.scrollBy, oldSiv=Element.prototype.scrollIntoView;
-  window.scrollTo=function(){
-    if(!window.__almPermitProgrammaticScroll && Date.now()<userScrollingUntil) return;
-    return oldTo.apply(window,arguments);
-  };
-  window.scrollBy=function(){
-    if(!window.__almPermitProgrammaticScroll && Date.now()<userScrollingUntil) return;
-    return oldBy.apply(window,arguments);
-  };
-  Element.prototype.scrollIntoView=function(){
-    if(!window.__almPermitProgrammaticScroll && Date.now()<userScrollingUntil) return;
-    return oldSiv.apply(this,arguments);
-  };
-
-  /* إلغاء أي حركة تلقائية على قوائم التصنيفات فقط، مع إبقاء السحب اليدوي */
-  function stopMenuAutoMotion(){
+  function bringContactFront(){
     try{
-      document.querySelectorAll('.nav,.nav *,.chips,.chips *,.mainCats,.mainCats *').forEach(function(el){
-        el.style.animation='none';
-        el.style.animationPlayState='paused';
+      ['v336InfoModal','v338OrderContactModal','v339WhatsappModal'].forEach(function(id){
+        var el=document.getElementById(id);
+        if(el){
+          el.style.zIndex='2147483647';
+          el.style.position='fixed';
+          if(el.classList.contains('show')) document.body.appendChild(el);
+        }
       });
     }catch(e){}
   }
-  document.addEventListener('DOMContentLoaded',function(){forceHomeOnlyOnPlainEntry();stopMenuAutoMotion();setTimeout(stopMenuAutoMotion,500);});
-  window.addEventListener('load',function(){forceHomeOnlyOnPlainEntry();stopMenuAutoMotion();});
-  window.addEventListener('hashchange',function(){setTimeout(stopMenuAutoMotion,80);});
+
+  function wrapContact(fnName){
+    var old=window[fnName];
+    if(typeof old!=='function' || old.__v492Wrapped) return;
+    function wrapped(){
+      allowNaturalScroll();
+      var r=old.apply(this,arguments);
+      setTimeout(bringContactFront,0);
+      setTimeout(bringContactFront,60);
+      return r;
+    }
+    wrapped.__v492Wrapped=true;
+    window[fnName]=wrapped;
+    try{ if(fnName==='productInquiryWa') productInquiryWa=wrapped; if(fnName==='generalWa') generalWa=wrapped; }catch(e){}
+  }
+
+  function install(){
+    allowNaturalScroll();
+    bringContactFront();
+    wrapContact('productInquiryWa');
+    wrapContact('generalWa');
+    wrapContact('quickWa');
+    wrapContact('sendCartWa');
+    try{
+      var tabs=document.getElementById('almMobileQuickTabs');
+      if(tabs) tabs.remove();
+      document.querySelectorAll('.almEmployeePhones').forEach(function(el){el.remove();});
+    }catch(e){}
+  }
+
+  // افتح الموقع على الرئيسية فقط عند الدخول لأول مرة بدون رابط طلب إدارة
+  function forceHomeOnce(){
+    try{
+      if(String(location.hash||'').indexOf('admin-order=')>=0) return;
+      if(!sessionStorage.getItem('almV492HomeDone')){
+        sessionStorage.setItem('almV492HomeDone','1');
+        history.replaceState({almalika:true},'', '/home#home/الجميع');
+        if(typeof window.showHome==='function') window.showHome();
+      }
+    }catch(e){}
+  }
+
+  document.addEventListener('DOMContentLoaded',function(){install();setTimeout(install,150);setTimeout(forceHomeOnce,220);});
+  window.addEventListener('load',function(){install();setTimeout(install,300);});
+  document.addEventListener('click',function(){setTimeout(install,30);setTimeout(bringContactFront,50);},true);
+  window.addEventListener('resize',install);
+  install();
 })();
 </script>
-<!-- ===== /V491 SAFE PATCH ===== -->
-
+<!-- ===== END V492 SAFE FIX ===== -->
 </body>
 </html>
 
@@ -21730,32 +21379,7 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
   .cartBar{position:fixed!important;bottom:10px!important;left:50%!important;transform:translateX(-50%)!important;width:calc(100% - 24px)!important;z-index:9000!important;}
 }
 </style>
-<script id="almalika-v428-mobile-rebuild-script">
-(function(){
-  function mobile(){return window.matchMedia&&window.matchMedia('(max-width:768px)').matches;}
-  function fix(){
-    if(!mobile()) return;
-    try{document.documentElement.classList.remove('almIntroPending');document.body.classList.add('almAppEntered');}catch(e){}
-    try{var i=document.getElementById('almMobileIntro'); if(i) i.remove();}catch(e){}
-    /* منع نمط تثبيت منطقة المنتجات من توليد فراغ أبيض طويل */
-    try{document.body.classList.remove('almV402ProductsMode');document.documentElement.style.setProperty('--almFixedTopHeight','0px');}catch(e){}
-    /* عند فتح تفاصيل المنتج: انقل الأزرار بعد كل البيانات حتى لا تغطي الباقات */
-    try{
-      var m=document.getElementById('modal');
-      if(m&&m.classList.contains('show')){
-        var info=m.querySelector('.modalInfo,.quickShopInfo');
-        var act=m.querySelector('.modalActions');
-        if(info&&act&&act.parentNode!==info){info.appendChild(act);}
-      }
-    }catch(e){}
-  }
-  document.addEventListener('DOMContentLoaded',function(){setTimeout(fix,0);setTimeout(fix,120);setTimeout(fix,600);});
-  window.addEventListener('load',function(){setTimeout(fix,50);setTimeout(fix,500);});
-  document.addEventListener('click',function(){setTimeout(fix,20);setTimeout(fix,180);setTimeout(fix,700);},true);
-  try{new MutationObserver(function(){setTimeout(fix,30);}).observe(document.documentElement,{childList:true,subtree:true,attributes:true});}catch(e){}
-  setInterval(fix,900);
-})();
-</script>
+
 
 
 <!-- ===== V429 QA STEP 7: HARD MOBILE RESET - fix nav overlap, modal buttons order, image blank gaps ===== -->
