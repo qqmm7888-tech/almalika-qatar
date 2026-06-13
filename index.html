@@ -22992,5 +22992,89 @@ html body .products .product .price{
 })();
 </script>
 
+
+
+<!-- ===== V488 FIX: WhatsApp/contact modal must always appear in front ===== -->
+<style id="almalika-v488-contact-modal-front-fix">
+  /* رفع نافذة التواصل فوق كل نوافذ التفاصيل والسلة بدون حذف أو تغيير أي بيانات */
+  #v336InfoModal.v336ModalOverlay,
+  #v336InfoModal{
+    position:fixed!important;
+    inset:0!important;
+    z-index:2147483647!important;
+    display:none;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:18px!important;
+    isolation:isolate!important;
+  }
+  #v336InfoModal.v336ModalOverlay.show,
+  #v336InfoModal.show{
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    pointer-events:auto!important;
+  }
+  #v336InfoModal .v336ModalBox{
+    position:relative!important;
+    z-index:2147483647!important;
+    pointer-events:auto!important;
+  }
+  body.alm-v488-contact-open .modal.show:not(#v336InfoModal),
+  body.alm-v488-contact-open #modal.show,
+  body.alm-v488-contact-open #cartModal.show{
+    z-index:1000!important;
+  }
+  body.alm-v488-contact-open .fixedWhats,
+  body.alm-v488-contact-open .cartBar,
+  body.alm-v488-contact-open .cartButton{
+    z-index:900!important;
+  }
+  @media(max-width:700px){
+    #v336InfoModal.v336ModalOverlay,
+    #v336InfoModal{padding:12px!important;align-items:center!important;}
+    #v336InfoModal .v336ModalBox{width:min(94vw,720px)!important;max-height:90vh!important;overflow:auto!important;}
+  }
+</style>
+<script id="almalika-v488-contact-modal-front-fix-js">
+(function(){
+  if(window.__almV488ContactFrontFix) return;
+  window.__almV488ContactFrontFix=true;
+  function forceFront(){
+    var m=document.getElementById('v336InfoModal');
+    if(!m) return;
+    try{
+      if(m.parentNode!==document.body) document.body.appendChild(m);
+      else document.body.appendChild(m); /* يجعله آخر عنصر في الصفحة */
+      m.style.setProperty('z-index','2147483647','important');
+      m.style.setProperty('position','fixed','important');
+      m.style.setProperty('inset','0','important');
+      m.style.setProperty('pointer-events','auto','important');
+      var box=m.querySelector('.v336ModalBox');
+      if(box){
+        box.style.setProperty('z-index','2147483647','important');
+        box.style.setProperty('position','relative','important');
+      }
+      if(m.classList.contains('show')) document.body.classList.add('alm-v488-contact-open');
+      else document.body.classList.remove('alm-v488-contact-open');
+    }catch(e){}
+  }
+  document.addEventListener('click',function(){setTimeout(forceFront,0);setTimeout(forceFront,40);setTimeout(forceFront,160);},true);
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(forceFront,80);});
+  try{
+    new MutationObserver(forceFront).observe(document.documentElement,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
+  }catch(e){}
+  var oldOpenInfo=window.v331OpenInfo;
+  if(typeof oldOpenInfo==='function'){
+    window.v331OpenInfo=function(){var r=oldOpenInfo.apply(this,arguments);setTimeout(forceFront,0);setTimeout(forceFront,80);return r;};
+  }
+  ['generalWa','v331ShowContactModal','v331OpenBothWhatsApp','quickWa','productInquiryWa','sendCartWa'].forEach(function(name){
+    var old=window[name];
+    if(typeof old==='function'){
+      window[name]=function(){var r=old.apply(this,arguments);setTimeout(forceFront,0);setTimeout(forceFront,80);setTimeout(forceFront,200);return r;};
+    }
+  });
+})();
+</script>
 </body>
 </html>
