@@ -2,6 +2,173 @@
 <html lang="ar" dir="rtl">
 <head>
 
+<!-- ===== ALMALIKA MOBILE V13 NO SWITCH + HEADER BUTTONS - CSS SAFE ===== -->
+<style id="almalika-mobile-v13-no-switch-header">
+/*
+  V13:
+  - يمنع ظهور شكل أول ثم التحول لشكل آخر.
+  - يحافظ على أزرار واتساب / العروض / السلة ظاهرة ومنظمة.
+  - لا يغير البيانات ولا الصور ولا التفاصيل ولا اختيارات الزبون.
+*/
+html.alm-v13-loading body{
+  visibility:hidden!important;
+  opacity:0!important;
+}
+html.alm-v13-loading:before{
+  content:"الملكة 👑\A جاري تجهيز نسخة الجوال...";
+  white-space:pre-line;
+  position:fixed;
+  inset:0;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  background:#fff7fb;
+  color:#7b1230;
+  font:900 22px/1.8 Tahoma,Arial,sans-serif;
+  z-index:2147483647;
+}
+html.alm-v13-ready body{
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+@media (min-width:761px){
+  /* تثبيت معاينة الجوال على الكمبيوتر */
+  body{
+    width:430px!important;
+    max-width:430px!important;
+    min-width:430px!important;
+    margin:0 auto!important;
+    overflow-x:hidden!important;
+    background:#fff7fb!important;
+  }
+
+  /* إظهار أزرار الهيدر وعدم اختفائها بعد التحميل */
+  .headBtns,
+  .headBtns *,
+  .topActions,
+  .headerActions{
+    visibility:visible!important;
+    opacity:1!important;
+  }
+
+  .headBtns{
+    width:100%!important;
+    max-width:430px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    align-items:center!important;
+    gap:8px!important;
+    padding:8px 10px!important;
+    margin:0!important;
+    position:relative!important;
+    left:auto!important;
+    right:auto!important;
+    top:auto!important;
+    bottom:auto!important;
+    transform:none!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    z-index:1000!important;
+    box-sizing:border-box!important;
+  }
+
+  .headBtns::-webkit-scrollbar{display:none!important;}
+
+  .headBtns .btn,
+  .headBtns button,
+  .headBtns a{
+    display:inline-flex!important;
+    flex:0 0 auto!important;
+    visibility:visible!important;
+    opacity:1!important;
+    min-height:38px!important;
+    border-radius:999px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    white-space:nowrap!important;
+  }
+
+  .headBtns .green,
+  .headBtns .whatsapp,
+  .headBtns .wa{
+    background:#22c55e!important;
+    color:#fff!important;
+  }
+
+  .headBtns .cartMini,
+  .headBtns .cart,
+  .headBtns .cartBtn{
+    background:#fff!important;
+    color:#7b1230!important;
+    border:1px solid #f0c9dc!important;
+  }
+
+  /* القائمة لا تتكدس فوق الشعار */
+  .headTop{
+    display:block!important;
+    width:100%!important;
+    max-width:430px!important;
+    padding:8px 10px!important;
+    overflow:hidden!important;
+  }
+
+  .logo{
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    width:100%!important;
+    text-align:center!important;
+    margin:4px 0 6px!important;
+    font-size:25px!important;
+  }
+
+  .nav{
+    max-height:140px!important;
+    align-items:center!important;
+  }
+
+  .searchRow{
+    margin-top:0!important;
+  }
+}
+
+@media (max-width:760px){
+  .headBtns{
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    gap:7px!important;
+    overflow-x:auto!important;
+  }
+  .headBtns .btn,
+  .headBtns button,
+  .headBtns a{
+    display:inline-flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+  }
+}
+</style>
+<script id="almalika-mobile-v13-ready">
+(function(){
+  try{document.documentElement.classList.add('alm-v13-loading');}catch(e){}
+  function show(){
+    try{
+      document.documentElement.classList.remove('alm-v13-loading');
+      document.documentElement.classList.add('alm-v13-ready');
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(show, 900); });
+  window.addEventListener('load', function(){ setTimeout(show, 150); });
+  setTimeout(show, 1800);
+})();
+</script>
+
+
+
 <!-- ===== ALMALIKA MOBILE DESKTOP STABLE V12 - HEAD + LAST / CSS ONLY ===== -->
 <style id="almalika-mobile-desktop-stable-v12">
 /*
@@ -16588,3 +16755,153 @@ section.wrap,
 }
 </style>
 
+
+<style id="almalika-mobile-v13-no-switch-header-last">
+/*
+  V13:
+  - يمنع ظهور شكل أول ثم التحول لشكل آخر.
+  - يحافظ على أزرار واتساب / العروض / السلة ظاهرة ومنظمة.
+  - لا يغير البيانات ولا الصور ولا التفاصيل ولا اختيارات الزبون.
+*/
+html.alm-v13-loading body{
+  visibility:hidden!important;
+  opacity:0!important;
+}
+html.alm-v13-loading:before{
+  content:"الملكة 👑\A جاري تجهيز نسخة الجوال...";
+  white-space:pre-line;
+  position:fixed;
+  inset:0;
+  display:grid;
+  place-items:center;
+  text-align:center;
+  background:#fff7fb;
+  color:#7b1230;
+  font:900 22px/1.8 Tahoma,Arial,sans-serif;
+  z-index:2147483647;
+}
+html.alm-v13-ready body{
+  visibility:visible!important;
+  opacity:1!important;
+}
+
+@media (min-width:761px){
+  /* تثبيت معاينة الجوال على الكمبيوتر */
+  body{
+    width:430px!important;
+    max-width:430px!important;
+    min-width:430px!important;
+    margin:0 auto!important;
+    overflow-x:hidden!important;
+    background:#fff7fb!important;
+  }
+
+  /* إظهار أزرار الهيدر وعدم اختفائها بعد التحميل */
+  .headBtns,
+  .headBtns *,
+  .topActions,
+  .headerActions{
+    visibility:visible!important;
+    opacity:1!important;
+  }
+
+  .headBtns{
+    width:100%!important;
+    max-width:430px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    justify-content:flex-start!important;
+    align-items:center!important;
+    gap:8px!important;
+    padding:8px 10px!important;
+    margin:0!important;
+    position:relative!important;
+    left:auto!important;
+    right:auto!important;
+    top:auto!important;
+    bottom:auto!important;
+    transform:none!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    z-index:1000!important;
+    box-sizing:border-box!important;
+  }
+
+  .headBtns::-webkit-scrollbar{display:none!important;}
+
+  .headBtns .btn,
+  .headBtns button,
+  .headBtns a{
+    display:inline-flex!important;
+    flex:0 0 auto!important;
+    visibility:visible!important;
+    opacity:1!important;
+    min-height:38px!important;
+    border-radius:999px!important;
+    align-items:center!important;
+    justify-content:center!important;
+    white-space:nowrap!important;
+  }
+
+  .headBtns .green,
+  .headBtns .whatsapp,
+  .headBtns .wa{
+    background:#22c55e!important;
+    color:#fff!important;
+  }
+
+  .headBtns .cartMini,
+  .headBtns .cart,
+  .headBtns .cartBtn{
+    background:#fff!important;
+    color:#7b1230!important;
+    border:1px solid #f0c9dc!important;
+  }
+
+  /* القائمة لا تتكدس فوق الشعار */
+  .headTop{
+    display:block!important;
+    width:100%!important;
+    max-width:430px!important;
+    padding:8px 10px!important;
+    overflow:hidden!important;
+  }
+
+  .logo{
+    display:flex!important;
+    justify-content:center!important;
+    align-items:center!important;
+    width:100%!important;
+    text-align:center!important;
+    margin:4px 0 6px!important;
+    font-size:25px!important;
+  }
+
+  .nav{
+    max-height:140px!important;
+    align-items:center!important;
+  }
+
+  .searchRow{
+    margin-top:0!important;
+  }
+}
+
+@media (max-width:760px){
+  .headBtns{
+    display:flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+    gap:7px!important;
+    overflow-x:auto!important;
+  }
+  .headBtns .btn,
+  .headBtns button,
+  .headBtns a{
+    display:inline-flex!important;
+    visibility:visible!important;
+    opacity:1!important;
+  }
+}
+</style>
