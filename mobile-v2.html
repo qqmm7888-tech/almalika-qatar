@@ -1,6 +1,229 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+
+<!-- ===== ALMALIKA MOBILE DESKTOP STABLE V12 - HEAD + LAST / CSS ONLY ===== -->
+<style id="almalika-mobile-desktop-stable-v12">
+/*
+  V12: تثبيت عرض نسخة الجوال عند فتحها من الكمبيوتر.
+  CSS فقط — لا تغيير بيانات، لا تغيير تفاصيل، لا تغيير اختيارات، لا تغيير سلة.
+*/
+
+/* على الكمبيوتر فقط: اجعل mobile-v2 يظهر دائمًا كجوال ثابت، سواء أول فتح أو بعد Refresh */
+@media (min-width: 761px){
+  html{
+    background:#f7eef3!important;
+    overflow-x:hidden!important;
+  }
+
+  body{
+    width:430px!important;
+    max-width:430px!important;
+    min-width:430px!important;
+    margin:0 auto!important;
+    overflow-x:hidden!important;
+    background:#fff7fb!important;
+    border-left:1px solid #f0c9dc!important;
+    border-right:1px solid #f0c9dc!important;
+    box-shadow:0 0 70px rgba(123,18,48,.13)!important;
+  }
+
+  body *{
+    box-sizing:border-box!important;
+  }
+
+  .wrap,
+  .container,
+  main,
+  .main,
+  .section,
+  .header,
+  header,
+  .topbar,
+  .headTop,
+  .searchRow,
+  .hero,
+  .mainCats,
+  .chips,
+  .stats,
+  .products,
+  .footer{
+    width:100%!important;
+    max-width:430px!important;
+    min-width:0!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    box-sizing:border-box!important;
+  }
+
+  .wrap,.container,main,.main{
+    padding-left:10px!important;
+    padding-right:10px!important;
+    overflow-x:hidden!important;
+  }
+
+  .header,header,.topbar{
+    position:sticky!important;
+    top:0!important;
+    left:auto!important;
+    right:auto!important;
+    z-index:999!important;
+    overflow:hidden!important;
+    background:rgba(255,255,255,.96)!important;
+  }
+
+  .headTop{
+    padding-left:10px!important;
+    padding-right:10px!important;
+    overflow:hidden!important;
+  }
+
+  .logo{
+    max-width:100%!important;
+    white-space:nowrap!important;
+  }
+
+  .nav{
+    width:100%!important;
+    max-width:430px!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    box-sizing:border-box!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+
+  .nav::-webkit-scrollbar,
+  .mainCats::-webkit-scrollbar,
+  .chips::-webkit-scrollbar,
+  .stats::-webkit-scrollbar{
+    display:none!important;
+  }
+
+  .nav button{
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:max-content!important;
+    max-width:none!important;
+  }
+
+  .searchRow{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    overflow:hidden!important;
+  }
+
+  .search,
+  .searchRow input,
+  .searchRow select{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .hero{
+    padding:10px!important;
+    overflow:hidden!important;
+  }
+
+  .hero img,
+  .hero picture,
+  .hero picture img,
+  .hero .banner,
+  .hero .banner img{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    height:auto!important;
+    max-height:230px!important;
+    object-fit:cover!important;
+    object-position:center!important;
+    display:block!important;
+    border-radius:20px!important;
+    box-sizing:border-box!important;
+  }
+
+  .mainCats,.chips,.stats{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    box-sizing:border-box!important;
+  }
+
+  .cat,.chip,.stat{
+    flex:0 0 auto!important;
+  }
+
+  .products{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:12px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    padding-bottom:95px!important;
+    overflow:hidden!important;
+  }
+
+  .product{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .product img,
+  .product .pic{
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+
+  .modalBox,.modalBox.detailed{
+    width:430px!important;
+    max-width:430px!important;
+    min-width:0!important;
+    margin:0 auto!important;
+    box-sizing:border-box!important;
+  }
+
+  .cartBar,.fixedWhats{
+    width:calc(430px - 18px)!important;
+    max-width:412px!important;
+    min-width:0!important;
+    left:50%!important;
+    right:auto!important;
+    transform:translateX(-50%)!important;
+    box-sizing:border-box!important;
+  }
+}
+
+/* على الجوال الحقيقي: عرض طبيعي كامل */
+@media (max-width: 760px){
+  html,body{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    overflow-x:hidden!important;
+  }
+}
+</style>
+
+
 <!-- catalog-test-route-fix-from-v506 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -16138,6 +16361,229 @@ section.wrap,
     bottom:10px!important;
     z-index:4500!important;
     border-radius:18px!important;
+  }
+}
+</style>
+
+
+
+<!-- ===== ALMALIKA MOBILE DESKTOP STABLE V12 LAST ===== -->
+<style id="almalika-mobile-desktop-stable-v12-last">
+/*
+  V12: تثبيت عرض نسخة الجوال عند فتحها من الكمبيوتر.
+  CSS فقط — لا تغيير بيانات، لا تغيير تفاصيل، لا تغيير اختيارات، لا تغيير سلة.
+*/
+
+/* على الكمبيوتر فقط: اجعل mobile-v2 يظهر دائمًا كجوال ثابت، سواء أول فتح أو بعد Refresh */
+@media (min-width: 761px){
+  html{
+    background:#f7eef3!important;
+    overflow-x:hidden!important;
+  }
+
+  body{
+    width:430px!important;
+    max-width:430px!important;
+    min-width:430px!important;
+    margin:0 auto!important;
+    overflow-x:hidden!important;
+    background:#fff7fb!important;
+    border-left:1px solid #f0c9dc!important;
+    border-right:1px solid #f0c9dc!important;
+    box-shadow:0 0 70px rgba(123,18,48,.13)!important;
+  }
+
+  body *{
+    box-sizing:border-box!important;
+  }
+
+  .wrap,
+  .container,
+  main,
+  .main,
+  .section,
+  .header,
+  header,
+  .topbar,
+  .headTop,
+  .searchRow,
+  .hero,
+  .mainCats,
+  .chips,
+  .stats,
+  .products,
+  .footer{
+    width:100%!important;
+    max-width:430px!important;
+    min-width:0!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    box-sizing:border-box!important;
+  }
+
+  .wrap,.container,main,.main{
+    padding-left:10px!important;
+    padding-right:10px!important;
+    overflow-x:hidden!important;
+  }
+
+  .header,header,.topbar{
+    position:sticky!important;
+    top:0!important;
+    left:auto!important;
+    right:auto!important;
+    z-index:999!important;
+    overflow:hidden!important;
+    background:rgba(255,255,255,.96)!important;
+  }
+
+  .headTop{
+    padding-left:10px!important;
+    padding-right:10px!important;
+    overflow:hidden!important;
+  }
+
+  .logo{
+    max-width:100%!important;
+    white-space:nowrap!important;
+  }
+
+  .nav{
+    width:100%!important;
+    max-width:430px!important;
+    min-width:0!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    box-sizing:border-box!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+
+  .nav::-webkit-scrollbar,
+  .mainCats::-webkit-scrollbar,
+  .chips::-webkit-scrollbar,
+  .stats::-webkit-scrollbar{
+    display:none!important;
+  }
+
+  .nav button{
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:max-content!important;
+    max-width:none!important;
+  }
+
+  .searchRow{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:8px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    overflow:hidden!important;
+  }
+
+  .search,
+  .searchRow input,
+  .searchRow select{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .hero{
+    padding:10px!important;
+    overflow:hidden!important;
+  }
+
+  .hero img,
+  .hero picture,
+  .hero picture img,
+  .hero .banner,
+  .hero .banner img{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    height:auto!important;
+    max-height:230px!important;
+    object-fit:cover!important;
+    object-position:center!important;
+    display:block!important;
+    border-radius:20px!important;
+    box-sizing:border-box!important;
+  }
+
+  .mainCats,.chips,.stats{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    box-sizing:border-box!important;
+  }
+
+  .cat,.chip,.stat{
+    flex:0 0 auto!important;
+  }
+
+  .products{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    gap:12px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    padding-bottom:95px!important;
+    overflow:hidden!important;
+  }
+
+  .product{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+  }
+
+  .product img,
+  .product .pic{
+    max-width:100%!important;
+    box-sizing:border-box!important;
+  }
+
+  .modalBox,.modalBox.detailed{
+    width:430px!important;
+    max-width:430px!important;
+    min-width:0!important;
+    margin:0 auto!important;
+    box-sizing:border-box!important;
+  }
+
+  .cartBar,.fixedWhats{
+    width:calc(430px - 18px)!important;
+    max-width:412px!important;
+    min-width:0!important;
+    left:50%!important;
+    right:auto!important;
+    transform:translateX(-50%)!important;
+    box-sizing:border-box!important;
+  }
+}
+
+/* على الجوال الحقيقي: عرض طبيعي كامل */
+@media (max-width: 760px){
+  html,body{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin:0!important;
+    overflow-x:hidden!important;
   }
 }
 </style>
