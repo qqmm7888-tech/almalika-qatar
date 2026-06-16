@@ -6454,7 +6454,11 @@ function openProduct(n){const p=products.find(x=>Number(x.number)===Number(n)); 
 function closeModal(){modal.classList.remove('show')}modal.addEventListener('click',e=>{if(e.target===modal)closeModal()})
 function setHash(){
   const h = `#${current}/${encodeURIComponent(internal||allLabel(current))}`;
+<<<<<<< HEAD
   const url = '/catalog-test-desktop.html' + h;
+=======
+  const url = '/catalog-test.html' + h;
+>>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
   if(window.__almalikaLoadingHash){
     history.replaceState({almalika:true},'',url);
     return;
@@ -6478,8 +6482,13 @@ function normalizeSectionToken(x){
 function initFromHash(){
   window.__almalikaLoadingHash=true;
   try{
+<<<<<<< HEAD
     if(location.pathname !== '/catalog-test-desktop.html'){
       history.replaceState({almalika:true},'', '/catalog-test-desktop.html' + (location.hash || '#home/الجميع'));
+=======
+    if(location.pathname !== '/catalog-test.html'){
+      history.replaceState({almalika:true},'', '/catalog-test.html' + (location.hash || '#home/الجميع'));
+>>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
     }
     const h=(location.hash||'#home/الجميع').replace('#','');
     const parts=h.split('/').map(normalizeArabic).filter(Boolean);
@@ -6495,7 +6504,11 @@ function initFromHash(){
 window.addEventListener('hashchange', initFromHash);
 window.addEventListener('popstate', initFromHash);
 if(!history.state || !history.state.almalika){
+<<<<<<< HEAD
   history.replaceState({almalika:true},'', '/catalog-test-desktop.html' + (location.hash || '#home/الجميع'));
+=======
+  history.replaceState({almalika:true},'', '/catalog-test.html' + (location.hash || '#home/الجميع'));
+>>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
 }
 
 initFromHash();
@@ -11529,7 +11542,11 @@ function openOfferImage(n){
         if(!box) box = document.body;
         box.querySelectorAll('.card,.product-card,.productCard,[data-product],[data-id]').forEach(function(card){ if(isBad(card)) card.remove(); });
       });
+<<<<<<< HEAD
       if(/catalog-test-desktop.html|#home|الجميع/.test(location.href) && /مختارات\s*VIP\s*عامة/.test(document.body.textContent||'')){
+=======
+      if(/catalog-test.html|#home|الجميع/.test(location.href) && /مختارات\s*VIP\s*عامة/.test(document.body.textContent||'')){
+>>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
         document.querySelectorAll('.card,.product-card,.productCard,[data-product],[data-id]').forEach(function(card){
           const nearTitle = card.closest('section,.section,.panel,.wrap,.container,main,body');
           if(isBad(card) && nearTitle && /مختارات\s*VIP\s*عامة|مختارات\s*خاصة|VIP/.test(nearTitle.textContent||'')) card.remove();
@@ -12606,6 +12623,7 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 
 
 <!-- almalika-v499-data-prices-400-422-updated-from-user-table -->
+<<<<<<< HEAD
 
 <script id="almalika-route-guard-catalog-test-desktop-html">
 (function(){
@@ -12617,6 +12635,8 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   } catch(e) {}
 })();
 </script>
+=======
+>>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
 </body>
 </html>
 
