@@ -16184,3 +16184,47 @@ body.alm-mobile-ready{visibility:visible!important;opacity:1!important;}
 }
 </style>
 
+
+
+<!-- ===== ALMALIKA MOVE TOP BUTTONS RIGHT V14 - CSS ONLY ===== -->
+<style id="almalika-move-top-buttons-right-v14">
+/*
+  نقل أزرار أعلى الصفحة إلى اليمين فقط.
+  CSS فقط — لا تغيير بيانات، لا صور، لا تفاصيل، لا اختيارات، لا سلة.
+*/
+@media (min-width: 900px){
+  .headBtns,
+  .topActions,
+  .headerActions{
+    justify-content:flex-end!important;
+    margin-right:0!important;
+    margin-left:auto!important;
+    direction:rtl!important;
+  }
+
+  .headBtns{
+    padding-right:10px!important;
+    padding-left:10px!important;
+    text-align:right!important;
+  }
+
+  .headBtns .btn,
+  .headBtns button,
+  .headBtns a,
+  .topActions .btn,
+  .topActions button,
+  .topActions a{
+    flex:0 0 auto!important;
+  }
+}
+
+@media (max-width: 899px){
+  .headBtns,
+  .topActions,
+  .headerActions{
+    justify-content:flex-end!important;
+    direction:rtl!important;
+  }
+}
+</style>
+
