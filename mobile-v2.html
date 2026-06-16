@@ -5555,6 +5555,77 @@ body .cartItem .qtyBox b{
   body:before{content:"نسخة الجوال التجريبية — افتحها من الهاتف";position:fixed;left:14px;bottom:14px;background:#6A1B2E;color:#fff;padding:10px 14px;border-radius:999px;z-index:99999;font-family:Cairo,Tahoma,Arial,sans-serif;font-weight:900;}
 }
 </style>
+
+<style id="almalika-mobile-remove-gold-shine-v3">
+/* V3: إزالة الخلفية اللامعة الذهبية من نسخة الجوال فقط */
+@media (max-width: 900px){
+  html, body{
+    background:#fff8fb !important;
+    background-image:none !important;
+  }
+
+  body::before,
+  body:before,
+  body::after,
+  body:after{
+    display:none !important;
+    content:none !important;
+    opacity:0 !important;
+    background:none !important;
+  }
+
+  .modal::before,
+  .modal:before,
+  .modal::after,
+  .modal:after,
+  .modalBox::before,
+  .modalBox:before,
+  .modalBox::after,
+  .modalBox:after,
+  .product::before,
+  .product:before,
+  .product::after,
+  .product:after,
+  .section::before,
+  .section:before,
+  .section::after,
+  .section:after,
+  .wrap::before,
+  .wrap:before,
+  .wrap::after,
+  .wrap:after{
+    display:none !important;
+    content:none !important;
+    opacity:0 !important;
+    background:none !important;
+    animation:none !important;
+  }
+
+  .product,
+  .modalBox,
+  .modalInfo,
+  .modalPic,
+  .panel,
+  .hero,
+  .cartItem{
+    background-image:none !important;
+  }
+
+  .product{
+    background:#ffffff !important;
+  }
+
+  .modalBox,
+  .modalInfo{
+    background:#fffdfd !important;
+  }
+
+  .modalPic{
+    background:#fff8fb !important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="siteMagic" aria-hidden="true">
@@ -12744,6 +12815,20 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   } catch(e) {}
 })();
 </script>
+
+<style id="almalika-mobile-remove-gold-shine-v3-last">
+@media (max-width: 900px){
+  html,body{background:#fff8fb!important;background-image:none!important;}
+  body:before,body::before,body:after,body::after{display:none!important;content:none!important;background:none!important;opacity:0!important;}
+  .modal:before,.modal::before,.modal:after,.modal::after,
+  .modalBox:before,.modalBox::before,.modalBox:after,.modalBox::after,
+  .product:before,.product::before,.product:after,.product::after{
+    display:none!important;content:none!important;background:none!important;opacity:0!important;
+  }
+  .product,.modalBox,.modalInfo,.modalPic,.panel,.hero{background-image:none!important;}
+}
+</style>
+
 </body>
 </html>
 
