@@ -5438,7 +5438,7 @@ body .cartItem .qtyBox b{
 #v342WaChoice .v342Ad small{display:none!important}
 #v342WaChoice .v342Ad span{display:block!important;font-size:14px!important;color:#7a2946!important;margin-top:6px!important}
 </style>
-<script src="catalog-data.js"></script>
+<script src="almalika-data-v2.js"></script>
 </head>
 <body>
 <div class="siteMagic" aria-hidden="true">
@@ -6454,11 +6454,7 @@ function openProduct(n){const p=products.find(x=>Number(x.number)===Number(n)); 
 function closeModal(){modal.classList.remove('show')}modal.addEventListener('click',e=>{if(e.target===modal)closeModal()})
 function setHash(){
   const h = `#${current}/${encodeURIComponent(internal||allLabel(current))}`;
-<<<<<<< HEAD
-  const url = '/catalog-test-desktop.html' + h;
-=======
-  const url = '/catalog-test.html' + h;
->>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
+  const url = '/desktop-v2.html' + h;
   if(window.__almalikaLoadingHash){
     history.replaceState({almalika:true},'',url);
     return;
@@ -6482,13 +6478,8 @@ function normalizeSectionToken(x){
 function initFromHash(){
   window.__almalikaLoadingHash=true;
   try{
-<<<<<<< HEAD
-    if(location.pathname !== '/catalog-test-desktop.html'){
-      history.replaceState({almalika:true},'', '/catalog-test-desktop.html' + (location.hash || '#home/الجميع'));
-=======
-    if(location.pathname !== '/catalog-test.html'){
-      history.replaceState({almalika:true},'', '/catalog-test.html' + (location.hash || '#home/الجميع'));
->>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
+    if(location.pathname !== '/desktop-v2.html'){
+      history.replaceState({almalika:true},'', '/desktop-v2.html' + (location.hash || '#home/الجميع'));
     }
     const h=(location.hash||'#home/الجميع').replace('#','');
     const parts=h.split('/').map(normalizeArabic).filter(Boolean);
@@ -6504,11 +6495,7 @@ function initFromHash(){
 window.addEventListener('hashchange', initFromHash);
 window.addEventListener('popstate', initFromHash);
 if(!history.state || !history.state.almalika){
-<<<<<<< HEAD
-  history.replaceState({almalika:true},'', '/catalog-test-desktop.html' + (location.hash || '#home/الجميع'));
-=======
-  history.replaceState({almalika:true},'', '/catalog-test.html' + (location.hash || '#home/الجميع'));
->>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
+  history.replaceState({almalika:true},'', '/desktop-v2.html' + (location.hash || '#home/الجميع'));
 }
 
 initFromHash();
@@ -11542,11 +11529,7 @@ function openOfferImage(n){
         if(!box) box = document.body;
         box.querySelectorAll('.card,.product-card,.productCard,[data-product],[data-id]').forEach(function(card){ if(isBad(card)) card.remove(); });
       });
-<<<<<<< HEAD
-      if(/catalog-test-desktop.html|#home|الجميع/.test(location.href) && /مختارات\s*VIP\s*عامة/.test(document.body.textContent||'')){
-=======
-      if(/catalog-test.html|#home|الجميع/.test(location.href) && /مختارات\s*VIP\s*عامة/.test(document.body.textContent||'')){
->>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
+      if(/desktop-v2.html|#home|الجميع/.test(location.href) && /مختارات\s*VIP\s*عامة/.test(document.body.textContent||'')){
         document.querySelectorAll('.card,.product-card,.productCard,[data-product],[data-id]').forEach(function(card){
           const nearTitle = card.closest('section,.section,.panel,.wrap,.container,main,body');
           if(isBad(card) && nearTitle && /مختارات\s*VIP\s*عامة|مختارات\s*خاصة|VIP/.test(nearTitle.textContent||'')) card.remove();
@@ -12623,11 +12606,10 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 
 
 <!-- almalika-v499-data-prices-400-422-updated-from-user-table -->
-<<<<<<< HEAD
 
 <script id="almalika-route-guard-catalog-test-desktop-html">
 (function(){
-  var expected = "/catalog-test-desktop.html";
+  var expected = "/desktop-v2.html";
   try {
     if (location.pathname !== expected) {
       history.replaceState({almalika:true}, "", expected + (location.hash || "#home/الجميع"));
@@ -12635,8 +12617,17 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   } catch(e) {}
 })();
 </script>
-=======
->>>>>>> 7db3cb5530e6d43b7baf51eb4528f49e767c3a25
+
+<script id="almalika-route-guard-desktop-v2-html">
+(function(){
+  var expected = "/desktop-v2.html";
+  try {
+    if (location.pathname !== expected) {
+      history.replaceState({almalika:true}, "", expected + (location.hash || "#home/الجميع"));
+    }
+  } catch(e) {}
+})();
+</script>
 </body>
 </html>
 

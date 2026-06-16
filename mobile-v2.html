@@ -5438,7 +5438,7 @@ body .cartItem .qtyBox b{
 #v342WaChoice .v342Ad small{display:none!important}
 #v342WaChoice .v342Ad span{display:block!important;font-size:14px!important;color:#7a2946!important;margin-top:6px!important}
 </style>
-<script src="catalog-data.js"></script>
+<script src="almalika-data-v2.js"></script>
 
 <style id="almalika-mobile-separate-template-v1">
 /* نسخة الجوال المنفصلة: تعديلات الشكل فقط. البيانات تأتي من catalog-data.js */
@@ -6570,7 +6570,7 @@ function openProduct(n){const p=products.find(x=>Number(x.number)===Number(n)); 
 function closeModal(){modal.classList.remove('show')}modal.addEventListener('click',e=>{if(e.target===modal)closeModal()})
 function setHash(){
   const h = `#${current}/${encodeURIComponent(internal||allLabel(current))}`;
-  const url = '/catalog-mobile.html' + h;
+  const url = '/mobile-v2.html' + h;
   if(window.__almalikaLoadingHash){
     history.replaceState({almalika:true},'',url);
     return;
@@ -6594,8 +6594,8 @@ function normalizeSectionToken(x){
 function initFromHash(){
   window.__almalikaLoadingHash=true;
   try{
-    if(location.pathname !== '/catalog-mobile.html'){
-      history.replaceState({almalika:true},'', '/catalog-mobile.html' + (location.hash || '#home/الجميع'));
+    if(location.pathname !== '/mobile-v2.html'){
+      history.replaceState({almalika:true},'', '/mobile-v2.html' + (location.hash || '#home/الجميع'));
     }
     const h=(location.hash||'#home/الجميع').replace('#','');
     const parts=h.split('/').map(normalizeArabic).filter(Boolean);
@@ -6611,7 +6611,7 @@ function initFromHash(){
 window.addEventListener('hashchange', initFromHash);
 window.addEventListener('popstate', initFromHash);
 if(!history.state || !history.state.almalika){
-  history.replaceState({almalika:true},'', '/catalog-mobile.html' + (location.hash || '#home/الجميع'));
+  history.replaceState({almalika:true},'', '/mobile-v2.html' + (location.hash || '#home/الجميع'));
 }
 
 initFromHash();
@@ -11645,7 +11645,7 @@ function openOfferImage(n){
         if(!box) box = document.body;
         box.querySelectorAll('.card,.product-card,.productCard,[data-product],[data-id]').forEach(function(card){ if(isBad(card)) card.remove(); });
       });
-      if(/catalog-mobile.html|#home|الجميع/.test(location.href) && /مختارات\s*VIP\s*عامة/.test(document.body.textContent||'')){
+      if(/mobile-v2.html|#home|الجميع/.test(location.href) && /مختارات\s*VIP\s*عامة/.test(document.body.textContent||'')){
         document.querySelectorAll('.card,.product-card,.productCard,[data-product],[data-id]').forEach(function(card){
           const nearTitle = card.closest('section,.section,.panel,.wrap,.container,main,body');
           if(isBad(card) && nearTitle && /مختارات\s*VIP\s*عامة|مختارات\s*خاصة|VIP/.test(nearTitle.textContent||'')) card.remove();
@@ -12725,7 +12725,18 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 
 <script id="almalika-route-guard-catalog-mobile-html">
 (function(){
-  var expected = "/catalog-mobile.html";
+  var expected = "/mobile-v2.html";
+  try {
+    if (location.pathname !== expected) {
+      history.replaceState({almalika:true}, "", expected + (location.hash || "#home/الجميع"));
+    }
+  } catch(e) {}
+})();
+</script>
+
+<script id="almalika-route-guard-mobile-v2-html">
+(function(){
+  var expected = "/mobile-v2.html";
   try {
     if (location.pathname !== expected) {
       history.replaceState({almalika:true}, "", expected + (location.hash || "#home/الجميع"));
