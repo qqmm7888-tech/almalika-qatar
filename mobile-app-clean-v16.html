@@ -4970,5 +4970,201 @@ window.addCurrent=function(){
 </script>
 <!-- ===== END ALMALIKA CLEAN V15 MATCH DESKTOP DATA PROCEDURES ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V16 MOBILE SIZE FIX ===== -->
+<style id="almalika-clean-v16-mobile-size-fix">
+/* V16: إصلاح مقاس نافذة التفاصيل على الجوال بدون تغيير البيانات أو الإجراءات */
+#detailSheet,
+.detailSheet,
+.modal,
+.overlay{
+  overflow-x:hidden!important;
+}
+
+#detailPanel,
+.detailPanel,
+.modal .panel.v15-panel,
+.v15-panel{
+  box-sizing:border-box!important;
+}
+
+/* على شاشة الجوال/المعاينة الضيقة: لا يوجد قص من اليمين أو اليسار */
+@media (max-width: 760px){
+  .modal .panel.v15-panel,
+  .v15-panel,
+  #detailPanel,
+  .detailPanel{
+    width:calc(100vw - 18px)!important;
+    max-width:430px!important;
+    min-width:0!important;
+    margin:8px auto 0!important;
+    padding:10px!important;
+    border-radius:22px!important;
+    left:auto!important;
+    right:auto!important;
+    transform:none!important;
+    overflow-x:hidden!important;
+  }
+
+  .v15-layout{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+
+  .v15-main,
+  .v15-box,
+  .v15-box.pink,
+  .themeBox,
+  .balloonColorBox,
+  .snackChoiceBox,
+  .addonCardsBox,
+  .addonCardsDetails,
+  .decorTotalBigBox{
+    width:100%!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+
+  .v15-side{
+    width:100%!important;
+    max-width:100%!important;
+    box-sizing:border-box!important;
+    position:static!important;
+    max-height:none!important;
+    overflow:visible!important;
+    margin-top:12px!important;
+  }
+
+  .v15-side-main,
+  .v15-main-img{
+    max-width:100%!important;
+    height:auto!important;
+  }
+
+  .priceChoiceGrid{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:8px!important;
+    overflow:visible!important;
+    padding-bottom:0!important;
+  }
+
+  .priceChoice{
+    min-width:0!important;
+    width:100%!important;
+    min-height:86px!important;
+    padding:7px 5px!important;
+    font-size:11px!important;
+    box-sizing:border-box!important;
+  }
+
+  .priceChoice b{
+    font-size:16px!important;
+  }
+
+  .priceChoice small{
+    font-size:9px!important;
+  }
+
+  .pkgCountBadge{
+    font-size:10px!important;
+    padding:2px 5px!important;
+    max-width:100%!important;
+    white-space:normal!important;
+  }
+
+  .pkgCountValue{
+    font-size:11px!important;
+    line-height:1.25!important;
+  }
+
+  .bookingSimple,
+  .compactBooking{
+    grid-template-columns:1fr!important;
+    gap:7px!important;
+  }
+
+  .colorSwatches,
+  .colorSwatches.shinyGrid{
+    grid-template-columns:1fr 1fr!important;
+    gap:7px!important;
+  }
+
+  .colorSwatches.shinyGrid .colorSwatch.shiny{
+    min-height:108px!important;
+    padding:8px 5px!important;
+  }
+
+  .colorSwatches.shinyGrid .colorDot.shinyDot{
+    width:68px!important;
+    height:54px!important;
+    flex-basis:68px!important;
+  }
+
+  .miniCheckGrid,
+  .addonMiniGrid,
+  .v15-gallery{
+    grid-template-columns:1fr 1fr!important;
+  }
+
+  .v15-actions{
+    grid-template-columns:1fr!important;
+  }
+
+  .v15-product-title{
+    font-size:21px!important;
+  }
+
+  .v15-title{
+    font-size:18px!important;
+  }
+
+  .v15-summary-row{
+    grid-template-columns:1fr!important;
+  }
+
+  .bottom-actions.v15-bottom{
+    width:calc(100% - 18px)!important;
+    max-width:430px!important;
+    left:50%!important;
+    right:auto!important;
+    transform:translateX(-50%)!important;
+    grid-template-columns:1fr 128px!important;
+    box-sizing:border-box!important;
+    padding:8px!important;
+  }
+
+  .bottom-actions.v15-bottom .primary{
+    font-size:14px!important;
+    min-width:0!important;
+  }
+
+  .bottom-actions.v15-bottom .qty{
+    min-width:0!important;
+  }
+
+  .close{
+    z-index:999999!important;
+  }
+}
+
+/* على الكمبيوتر عند تجربة الجوال: يبقى داخل عرض جوال واضح */
+@media (min-width: 761px){
+  .modal .panel.v15-panel,
+  .v15-panel{
+    width:min(96vw, 760px)!important;
+    max-width:760px!important;
+  }
+  .v15-layout{
+    grid-template-columns:1fr 260px!important;
+    gap:12px!important;
+  }
+}
+</style>
+<!-- ===== END ALMALIKA CLEAN V16 MOBILE SIZE FIX ===== -->
+
 </body>
 </html>
