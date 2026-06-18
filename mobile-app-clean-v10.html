@@ -2529,5 +2529,164 @@ init();
 </script>
 <!-- ===== END ALMALIKA CLEAN V9 HIDE EMPTY IMAGES ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V10 IMAGE FALLBACK FROM OLD FILES ===== -->
+<style id="almalika-clean-v10-image-fallback-style">
+/* V10: لا نخفي الصورة قبل تجربة امتدادات الملفات القديمة */
+.card.img-missing,
+.decorThumb.img-missing,
+.gallery-thumb.img-missing{
+  display:none!important;
+}
+</style>
+
+<script id="almalika-clean-v10-image-fallback-script">
+(function(){
+  function esc10(s){
+    return (window.esc ? window.esc(s) : String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])));
+  }
+
+  window.imgCandidates = function(p){
+    const list = [];
+    const add = (x)=>{
+      if(!x) return;
+      x = String(x).trim();
+      if(x && !list.includes(x)) list.push(x);
+    };
+    const n = p && (p.number || p.id);
+    const original = p && p.image;
+    add(original);
+
+    // جرّب نفس رقم المنتج بكل امتدادات الصور؛ هذا يحل مشكلة jpeg/jpg في العروض والباكجات
+    if(n){
+      ["jpg","jpeg","png","webp","JPG","JPEG","PNG","WEBP"].forEach(ext=>add(`${n}.${ext}`));
+      // لبعض الصور القديمة لو كانت بصيغة رقم-1
+      ["jpg","jpeg","png","webp"].forEach(ext=>add(`${n}-1.${ext}`));
+    }
+
+    // إذا كانت الصورة الأصلية لها اسم، جرب نفس الاسم بامتدادات أخرى
+    if(original && original.includes(".")){
+      const stem = original.replace(/\.[^.]+$/,"");
+      ["jpg","jpeg","png","webp","JPG","JPEG","PNG","WEBP"].forEach(ext=>add(`${stem}.${ext}`));
+    }
+
+    return list;
+  };
+
+  window.tryNextImg = function(imgEl){
+    if(!imgEl) return;
+    let tries = [];
+    try { tries = JSON.parse(imgEl.dataset.tries || "[]"); } catch(e){ tries=[]; }
+    let idx = Number(imgEl.dataset.tryIndex || 0);
+
+    idx += 1;
+    if(idx < tries.length){
+      imgEl.dataset.tryIndex = String(idx);
+      imgEl.src = tries[idx];
+      return;
+    }
+
+    // بعد تجربة كل الامتدادات فقط نخفي الكرت أو الصورة الفارغة
+    const card = imgEl.closest && imgEl.closest(".card");
+    if(card){ card.classList.add("img-missing"); card.remove(); return; }
+
+    const thumb = imgEl.closest && imgEl.closest(".decorThumb,.gallery-thumb");
+    if(thumb){ thumb.classList.add("img-missing"); thumb.remove(); return; }
+
+    imgEl.style.display = "none";
+  };
+
+  window.cardImgHtml = function(p){
+    const tries = imgCandidates(p);
+    if(!tries.length) return "";
+    const first = tries[0];
+    return `<img src="${esc10(first)}" data-tries='${esc10(JSON.stringify(tries))}' data-try-index="0" loading="lazy" onerror="tryNextImg(this)">`;
+  };
+
+  // بديل markImgMissing من V9: لا نحذف مباشرة، نجرب الامتدادات أولاً
+  window.markImgMissing = function(imgEl){
+    tryNextImg(imgEl);
+  };
+
+  window.hideBrokenThumb = function(imgEl){
+    tryNextImg(imgEl);
+  };
+
+  // صور الديكور الإضافية: جرّب jpg/jpeg/png/webp لكل صورة قبل إخفائها
+  const oldGalleryV10 = window.oldGalleryHtml;
+  window.oldGalleryHtml = function(p){
+    if(!oldGalleryV10) return "";
+    let html = oldGalleryV10(p);
+    // عدّل onerror القديم ليستخدم tryNextImg
+    html = html.replaceAll('onerror="hideBrokenThumb(this)"', 'onerror="tryNextImg(this)"');
+    // أضف data-tries للصور التي داخل thumbnails بعد إنشاء DOM لاحقاً عبر حدث load في openDetail
+    return html;
+  };
+
+  // إعادة رسم الكرت من نفس بيانات V8/V9 مع fallback للصور
+  window.card = function(p){
+    if(!p) return "";
+    const price = (typeof priceOf === "function") ? priceOf(p) : (p.priceOneDay||p.baseDecorPrice||p.unitPrice||0);
+    const tag1 = String(p.category || p.type || "منتج").slice(0,20);
+    const tag2 = String(p.durationOneDay || p.age || "حسب الطلب").slice(0,20);
+    const mini = (typeof v8ProductMini === "function") ? v8ProductMini(p) : (p.details || "");
+    const priceLabel = (typeof v8PriceLabel === "function") ? v8PriceLabel(p) : "يبدأ من";
+    const imgHtml = cardImgHtml(p);
+    if(!imgHtml) return "";
+    return `<article class="card">
+      <span class="badge">#${esc10(p.number||p.id)}</span>
+      <div class="pic" onclick="openDetail(${Number(p.id)})">${imgHtml}</div>
+      <div class="card-body">
+        <h3>${esc10(p.name)}</h3>
+        <p class="v8-mini">${esc10(String(mini).replace(/\s+/g," ").slice(0,96))}</p>
+        <div class="meta"><span>${esc10(tag1)}</span><span>${esc10(tag2)}</span></div>
+        <div class="price"><span>${esc10(priceLabel)}</span>${price} ر.ق</div>
+        <div class="card-actions">
+          <button class="details-btn" onclick="openDetail(${Number(p.id)})">تفاصيل</button>
+          <button class="add-btn" onclick="quickAdd(${Number(p.id)})">+</button>
+        </div>
+      </div>
+    </article>`;
+  };
+
+  // في تفاصيل المنتج: الصورة الرئيسية تجرب كل الامتدادات قبل إخفائها
+  const prevOpenV10 = window.openDetail;
+  window.openDetail = function(id){
+    if(prevOpenV10) prevOpenV10(id);
+    setTimeout(function(){
+      const p=(window.PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id));
+      if(!p) return;
+
+      const main = detailPanel && detailPanel.querySelector(".detail-img");
+      if(main){
+        const tries = imgCandidates(p);
+        main.dataset.tries = JSON.stringify(tries);
+        main.dataset.tryIndex = "0";
+        main.onerror = function(){ tryNextImg(this); };
+      }
+
+      // thumbnails: أضف مرشحات امتداد لكل صورة
+      detailPanel.querySelectorAll(".decorThumb img,.gallery-thumb").forEach(function(im){
+        const src = im.getAttribute("src") || "";
+        const stem = src.replace(/\.[^.]+$/,"");
+        const tries = [];
+        function add(x){ if(x && !tries.includes(x)) tries.push(x); }
+        add(src);
+        ["jpg","jpeg","png","webp","JPG","JPEG","PNG","WEBP"].forEach(ext=>add(stem+"."+ext));
+        im.dataset.tries = JSON.stringify(tries);
+        im.dataset.tryIndex = "0";
+        im.onerror = function(){ tryNextImg(this); };
+      });
+    },80);
+  };
+
+  // بعد الرسم شغّل إعادة الرسم حتى تظهر الصور المخفية سابقاً بعد تجربة الامتدادات
+  setTimeout(function(){
+    if(typeof renderProducts === "function") renderProducts();
+  },150);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V10 IMAGE FALLBACK FROM OLD FILES ===== -->
+
 </body>
 </html>
