@@ -16461,3 +16461,178 @@ body.alm-mobile-ready{visibility:visible!important;opacity:1!important;}
 }
 </style>
 
+
+
+<!-- ===== ALMALIKA APP TEST V3 WIDTH HEADER FIX - CSS ONLY ===== -->
+<style id="almalika-app-test-v3-width-header-fix">
+/*
+  V3 تجربة فقط: ضبط عرض شاشة الجوال والهيدر.
+  CSS فقط — لا بيانات، لا صور، لا تفاصيل، لا اختيارات، لا سلة.
+  المقاس المعتمد للمعاينة على الكمبيوتر: 430px.
+*/
+
+/* الكمبيوتر فقط: معاينة جوال ثابتة */
+@media (min-width:900px){
+  html{
+    background:#111!important;
+    overflow-x:hidden!important;
+  }
+
+  body{
+    width:430px!important;
+    max-width:430px!important;
+    min-width:430px!important;
+    margin:0 auto!important;
+    overflow-x:hidden!important;
+    background:#171417!important;
+  }
+}
+
+/* الجوال الحقيقي + الكمبيوتر */
+@media (max-width:899px), (min-width:900px){
+  body *{
+    box-sizing:border-box!important;
+  }
+
+  .wrap,
+  .container,
+  main,
+  .main,
+  .section,
+  .header,
+  header,
+  .topbar,
+  .headTop,
+  .nav,
+  .searchRow,
+  .hero,
+  .mainCats,
+  .chips,
+  .stats,
+  .products,
+  .footer{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+
+  /* الهيدر لا يطلع خارج الشاشة */
+  .header,
+  header,
+  .topbar{
+    overflow:hidden!important;
+    background:#171417!important;
+  }
+
+  .headTop{
+    display:block!important;
+    padding:10px 12px 6px!important;
+    overflow:hidden!important;
+  }
+
+  .logo{
+    width:100%!important;
+    max-width:100%!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    text-align:right!important;
+    margin:0 0 8px!important;
+    white-space:nowrap!important;
+  }
+
+  /* أزرار واتساب والسلة */
+  .headBtns{
+    width:100%!important;
+    max-width:100%!important;
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    gap:8px!important;
+    justify-content:flex-start!important;
+    padding:4px 0 8px!important;
+    margin:0!important;
+  }
+
+  .headBtns::-webkit-scrollbar{display:none!important;}
+
+  .headBtns .btn,
+  .headBtns button,
+  .headBtns a{
+    flex:0 0 auto!important;
+    min-width:max-content!important;
+    white-space:nowrap!important;
+  }
+
+  /* القائمة العلوية: سحب أفقي من اليمين بدون قص */
+  .nav{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    padding:8px 12px 12px!important;
+    margin:0!important;
+    direction:rtl!important;
+    scroll-snap-type:x proximity!important;
+  }
+
+  .nav::-webkit-scrollbar{display:none!important;}
+
+  .nav button{
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:max-content!important;
+    max-width:none!important;
+    white-space:nowrap!important;
+    scroll-snap-align:start!important;
+  }
+
+  /* البحث والبنر داخل عرض الجوال */
+  .searchRow{
+    padding:8px 12px 12px!important;
+    overflow:hidden!important;
+  }
+
+  .search,
+  .searchRow input,
+  .searchRow select{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+
+  .hero{
+    padding:10px 12px!important;
+    overflow:hidden!important;
+  }
+
+  .hero img,
+  .homeHeroImage,
+  .hero picture img,
+  .hero .banner img{
+    max-width:100%!important;
+    display:block!important;
+  }
+
+  /* الكروت لا تخرج من الإطار */
+  .products{
+    padding-left:12px!important;
+    padding-right:12px!important;
+    overflow:hidden!important;
+  }
+
+  .product{
+    max-width:100%!important;
+    min-width:0!important;
+  }
+
+  .cartBar,
+  .fixedWhats{
+    max-width:402px!important;
+  }
+}
+</style>
+
