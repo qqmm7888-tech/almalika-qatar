@@ -2688,5 +2688,467 @@ init();
 </script>
 <!-- ===== END ALMALIKA CLEAN V10 IMAGE FALLBACK FROM OLD FILES ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V11 MATCH OLD DATA DISPLAY ===== -->
+<style id="almalika-clean-v11-old-data-display-style">
+/* V11: مطابقة عرض البيانات السابقة داخل القالب الحالي */
+.card-actions.v11-actions{
+  display:grid!important;
+  grid-template-columns:42px 1fr!important;
+  gap:8px!important;
+  margin-top:8px!important;
+}
+.card-actions.v11-actions .add-btn{
+  grid-row:1/5!important;
+  width:42px!important;
+  height:42px!important;
+  min-width:42px!important;
+  border-radius:50%!important;
+  font-size:25px!important;
+}
+.card-actions.v11-actions .v11-card-btn{
+  width:100%!important;
+  border:0!important;
+  border-radius:14px!important;
+  min-height:34px!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:1000!important;
+  cursor:pointer!important;
+}
+.v11-details{background:linear-gradient(135deg,#f52f86,#9b123d)}
+.v11-quick{background:#9a2b63}
+.v11-share{background:#c6538b}
+.v11-wa{background:#20c76a}
+.v11-summary-box{
+  background:#fffaf1;
+  border:1px solid #e8c04d;
+  border-radius:18px;
+  padding:12px;
+  margin:10px 0;
+  color:#331522;
+}
+.v11-summary-box h3{
+  margin:0 0 8px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v11-summary-box ul{
+  margin:0;
+  padding:0 18px 0 0;
+  color:#5a4550;
+  font-size:12px;
+  line-height:1.9;
+  font-weight:850;
+}
+.v11-chip-row{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin:6px 0 10px;
+  justify-content:center;
+}
+.v11-chip-row span{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:999px;
+  padding:5px 9px;
+  color:#7b1230;
+  font-size:11px;
+  font-weight:1000;
+}
+.v11-price-box{
+  background:#fff;
+  border:1px solid #e8c04d;
+  border-radius:20px;
+  padding:12px;
+  margin:10px 0;
+}
+.v11-price-box h3{
+  margin:0 0 10px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+  text-align:center!important;
+}
+.v11-booking-box{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:20px;
+  padding:12px;
+  margin:10px 0;
+}
+.v11-booking-box h3{
+  margin:0 0 10px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v11-contact-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.v11-contact-actions a,.v11-contact-actions button{
+  border:0;
+  border-radius:14px;
+  padding:12px 8px;
+  color:#fff!important;
+  text-decoration:none;
+  font-size:13px;
+  font-weight:1000;
+  text-align:center;
+}
+.v11-call{background:#7b1230}
+.v11-wa-main{background:#20c76a}
+.v11-cart{background:#111}
+.v11-close{background:#444}
+.v11-phone-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:8px;
+}
+.v11-phone-grid a{
+  color:#7b1230!important;
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:12px;
+  padding:8px;
+  text-align:center;
+  text-decoration:none;
+  font-weight:1000;
+  font-size:12px;
+}
+.v11-data-full{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  margin:10px 0;
+}
+.v11-data-full h3{
+  margin:0 0 10px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v11-data-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.v11-data-cell{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:15px;
+  padding:9px;
+  font-size:12px;
+  line-height:1.6;
+  font-weight:850;
+  color:#331522;
+}
+.v11-data-cell.full{grid-column:1/-1}
+.v11-data-cell b{
+  display:block;
+  color:#7b1230;
+  margin-bottom:4px;
+}
+.v11-option-section{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  margin:10px 0;
+}
+.v11-option-section h3{
+  margin:0 0 10px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v11-select{
+  width:100%;
+  height:46px;
+  border:1px solid #f0c9dc;
+  background:#fff7fb;
+  color:#331522;
+  border-radius:14px;
+  padding:0 10px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+.detail-img{
+  object-fit:contain!important;
+  background:#fffaf1!important;
+}
+@media(max-width:390px){
+  .v11-data-grid{grid-template-columns:1fr}
+  .v11-contact-actions{grid-template-columns:1fr}
+}
+</style>
+
+<script id="almalika-clean-v11-old-data-display-script">
+(function(){
+  const DEFAULT_PHONES = ["33317720","33317721","33317716","33317705"];
+  const DEFAULT_WA = "97433317720";
+  function esc11(s){
+    return (window.esc ? window.esc(s) : String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])));
+  }
+  function val11(v){
+    if(v==null || v==="") return "";
+    if(Array.isArray(v)){
+      return v.map(x=>{
+        if(!x) return "";
+        if(typeof x==="object"){
+          if(x.kids || x.children || x.price || x.note){
+            return `${x.kids||x.children||""} طفل${x.price?": "+x.price+" ر.ق":""}${x.note?" - "+x.note:""}`;
+          }
+          return Object.entries(x).map(([k,val])=>`${k}: ${val}`).join(" - ");
+        }
+        return String(x);
+      }).filter(Boolean).join("<br>");
+    }
+    if(typeof v==="object"){
+      return Object.entries(v).map(([k,val])=>`${k}: ${val}`).join("<br>");
+    }
+    return String(v);
+  }
+  function short11(s,n){
+    s=String(s||"").replace(/\s+/g," ").trim();
+    return s.length>n?s.slice(0,n-1)+"…":s;
+  }
+  function price11(p){
+    return (typeof priceOf==="function") ? priceOf(p) : Number(p.priceOneDay||p.baseDecorPrice||p.unitPrice||p.piecePrice||0);
+  }
+  function section11(p){
+    return (typeof sectionOf==="function") ? sectionOf(p) : "all";
+  }
+  function phoneList11(p){
+    const raw = String(p.phone||"").match(/\d{8}/g);
+    const arr = raw && raw.length ? raw : DEFAULT_PHONES;
+    return [...new Set(arr)];
+  }
+
+  window.v11SummaryHtml = function(p){
+    const sec=section11(p);
+    let title="مقدمة عن المنتج";
+    let lines=[];
+    if(sec==="bouncies"){
+      lines=[
+        "من منتجات النطاطيات والزحلاقيات المناسبة لحفلات الأطفال والمناسبات.",
+        "يتم التركيب والتشغيل من فريق الملكة حسب الموعد والموقع.",
+        "العمر المناسب والمقاس حسب بيانات المنتج والصورة المعروضة.",
+        "مناسبة للحدائق، البيوت، المدارس، الروضات، والفعاليات الخاصة."
+      ];
+    }else if(sec==="snacks"){
+      lines=[
+        "خدمة سناك وعربات مناسبة لحفلات الأطفال والمدارس والفعاليات.",
+        "مدة الخدمة والباقات حسب عدد الأطفال موضحة في الاختيارات.",
+        "يتم تحديد الموظفة أو العربة حسب نوع المنتج والباقه المختارة.",
+        "يتم تأكيد الكهرباء والموقع والتفاصيل عبر الواتساب."
+      ];
+    }else if(sec==="events"){
+      lines=[
+        "ديكور وتجهيز حفلات مع خيارات الثيم والألوان حسب طلب الزبون.",
+        "يرجى اختيار شكل الديكور المناسب وإدخال اسم الطفل أو الثيم المطلوب.",
+        "الألوان والطاولات والملصقات والسناك الإضافي حسب الخيارات المتوفرة.",
+        "يتم تنفيذ الشكل النهائي حسب المتوفر والصورة المختارة والتنسيق مع الإدارة."
+      ];
+    }else if(sec==="offers"){
+      lines=[
+        "عرض أو باقة جاهزة تجمع أكثر من خدمة لتسهيل الحجز.",
+        "يرجى مراجعة محتويات العرض والسعر والمدة قبل الإضافة للسلة.",
+        "العرض حسب التوفر، وقد تختلف التفاصيل حسب التاريخ والمنطقة.",
+        "التأكيد النهائي يكون عبر الواتساب بعد إرسال الطلب."
+      ];
+    }else{
+      lines=[
+        "منتج من كتالوج الملكة للحفلات وتأجير النطاطيات.",
+        "راجع البيانات والاختيارات ثم أضف المنتج للسلة.",
+        "التفاصيل النهائية والتوفر يتم تأكيدها عبر الواتساب."
+      ];
+    }
+    return `<div class="v11-summary-box"><h3>${title}</h3><ul>${lines.map(x=>`<li>${esc11(x)}</li>`).join("")}</ul></div>`;
+  };
+
+  window.v11DataHtml = function(p){
+    const cells=[];
+    const add=(label,val,full=false)=>{
+      val=val11(val);
+      if(!val) return;
+      cells.push(`<div class="v11-data-cell ${full?'full':''}"><b>${esc11(label)}</b>${val}</div>`);
+    };
+    add("رقم المنتج", p.number||p.id);
+    add("القسم", p.category);
+    add("النوع", p.type);
+    add("نوع التأجير", p.rentType);
+    add("المدة", p.durationOneDay);
+    if(p.durationTwoDays && p.durationTwoDays!==p.durationOneDay) add("مدة أخرى", p.durationTwoDays);
+    add("العمر", p.age);
+    add("المقاس", p.measurements || [p.length,p.width,p.height].filter(Boolean).join(" × "));
+    add("تفاصيل المنتج", p.details, true);
+    add("محتويات العرض", p.offerIncludes, true);
+    add("باقات السناك", p.snackPackages, true);
+    add("باقات الديكور", p.decorPackages, true);
+    add("سعر القطعة", p.piecePrice ? `${p.piecePrice} ر.ق` : "");
+    add("سعر الموظفة", p.staffPrice || p.employeePrice ? `${p.staffPrice||p.employeePrice} ر.ق` : "");
+    add("السناك", p.snackType, true);
+    add("مرفق", p.included);
+    add("الشروط", p.packageConditions, true);
+    add("الملاحظات", p.notes, true);
+    add("التوصيل", p.delivery);
+    return `<div class="v11-data-full"><h3>كل بيانات المنتج من النسخة السابقة</h3><div class="v11-data-grid">${cells.join("")}</div></div>`;
+  };
+
+  window.v11ExtraChoicesHtml = function(p){
+    const sec=section11(p);
+    let extra="";
+    if(sec==="events"){
+      extra += `<div class="v11-option-section"><h3>اختيارات الزبون الإضافية</h3>
+        <label>الشخصية / الثيم</label>
+        <select class="v11-select" id="v11Theme">
+          <option>حسب الطلب / ثيم خاص</option><option>أميرات</option><option>سبايدرمان</option><option>فروزن</option><option>يونيكورن</option><option>سيارات</option><option>تخرج</option><option>بيبي</option>
+        </select>
+        <label>ألوان البالونات</label>
+        <select class="v11-select" id="v11Balloons">
+          <option>حسب الطلب</option><option>ذهبي</option><option>وردي</option><option>أزرق</option><option>أحمر</option><option>أسود</option><option>أبيض</option><option>فضي</option><option>بيبي بنك</option><option>بيبي بلو</option><option>بنفسجي</option><option>أخضر</option><option>ذهبي + أبيض</option><option>وردي + ذهبي</option><option>أزرق + فضي</option><option>أخضر + ذهبي</option>
+        </select>
+        <label>الطاولات الإضافية</label>
+        <select class="v11-select" id="v11Tables"><option>بدون طاولات إضافية</option><option>طاولة إضافية واحدة</option><option>طاولتان إضافيتان</option><option>حسب الطلب</option></select>
+        <label>ملصقات الطاولات</label>
+        <select class="v11-select" id="v11Stickers"><option>بدون ملصقات طاولة</option><option>مع ملصقات حسب الثيم</option><option>حسب الطلب</option></select>
+      </div>`;
+    }
+    if(sec==="snacks"){
+      extra += `<div class="v11-option-section"><h3>اختيارات السناك</h3>
+        <label>نوع الخدمة</label>
+        <select class="v11-select" id="v11Snack"><option>حسب الباقة</option><option>فشار</option><option>غزل البنات</option><option>بطاطا حلزونية</option><option>ذرة حلوة</option><option>آيس كريم</option><option>سلاش / براد</option></select>
+      </div>`;
+    }
+    return extra;
+  };
+
+  window.v11ContactHtml = function(p){
+    const phones=phoneList11(p);
+    const msg=encodeURIComponent(`استفسار عن المنتج رقم ${p.number||p.id} - ${p.name}`);
+    return `<div class="v11-booking-box"><h3>بيانات الحجز والتواصل</h3>
+      <div class="v11-contact-actions">
+        <a class="v11-wa-main" href="https://wa.me/${DEFAULT_WA}?text=${msg}" target="_blank">💬 استفسار واتساب</a>
+        <a class="v11-call" href="tel:+974${phones[0]}">📞 اتصال مباشر</a>
+        <button class="v11-cart" onclick="addCurrent()">احجز الآن وأضف للسلة</button>
+        <button class="v11-close" onclick="closeSheets()">إغلاق</button>
+      </div>
+      <div class="v11-phone-grid">${phones.map(n=>`<a href="tel:+974${n}">${n}</a>`).join("")}</div>
+      <div class="v11-summary-box" style="margin-bottom:0"><ul><li>أوقات العمل والحجز من 9:00 صباحًا إلى 5:00 مساءً.</li><li>التوفر والسعر النهائي حسب تاريخ الحجز والمنطقة.</li></ul></div>
+    </div>`;
+  };
+
+  window.v11CardActions = function(p){
+    const msg=encodeURIComponent(`استفسار عن المنتج رقم ${p.number||p.id} - ${p.name}`);
+    return `<div class="card-actions v11-actions">
+      <button class="add-btn" onclick="quickAdd(${Number(p.id)})">+</button>
+      <button class="v11-card-btn v11-details" onclick="openDetail(${Number(p.id)})">تفاصيل ✨</button>
+      <button class="v11-card-btn v11-quick" onclick="quickAdd(${Number(p.id)})">التسوق السريع 🛒</button>
+      <button class="v11-card-btn v11-share" onclick="navigator.share?navigator.share({title:'${esc11(p.name)}',text:'${esc11(p.name)}',url:location.href}):navigator.clipboard.writeText(location.href)">تحويل لصديق 🎁</button>
+      <button class="v11-card-btn v11-wa" onclick="window.open('https://wa.me/${DEFAULT_WA}?text=${msg}','_blank')">واتساب 📱</button>
+    </div>`;
+  };
+
+  // كروت أقرب للنسخة السابقة مع الأزرار الناقصة
+  window.card = function(p){
+    if(!p) return "";
+    const price=price11(p);
+    const sec=section11(p);
+    const imgHtml=(typeof cardImgHtml==="function") ? cardImgHtml(p) : `<img src="${esc11(img(p))}" loading="lazy" onerror="tryNextImg?tryNextImg(this):this.style.display='none'">`;
+    if(!imgHtml) return "";
+    const mini=short11(p.details || p.offerIncludes || p.category || "", 94);
+    return `<article class="card">
+      <span class="badge">#${esc11(p.number||p.id)}</span>
+      <div class="pic" onclick="openDetail(${Number(p.id)})">${imgHtml}</div>
+      <div class="card-body">
+        <h3>${esc11(p.name)}</h3>
+        <p class="v8-mini">${esc11(mini)}</p>
+        <div class="meta"><span>${esc11(p.category||p.type||"")}</span><span>${esc11(p.durationOneDay||p.age||"حسب الطلب")}</span></div>
+        <div class="price"><span>${sec==="offers"?"سعر العرض":"يبدأ من"}</span>${price} ر.ق</div>
+        ${v11CardActions(p)}
+      </div>
+    </article>`;
+  };
+
+  // تفاصيل مطابقة للبيانات القديمة داخل القالب الحالي
+  window.openDetail = function(id){
+    const p=(window.PRODUCTS||PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id));
+    if(!p) return;
+    currentProduct=p; qty=1; selectedOption=productOptions(p)[0];
+    const opts=productOptions(p);
+    const chips=[`#${p.number||p.id}`, p.category, p.type].filter(Boolean);
+    const mainImg = (typeof imgCandidates==="function" ? imgCandidates(p)[0] : (p.image||img(p)));
+    detailPanel.innerHTML = `<button class="close" onclick="closeSheets()">×</button>
+      <img class="detail-img" src="${esc11(mainImg)}" onerror="tryNextImg?tryNextImg(this):this.src='order-ad.jpg'">
+      <h1>${esc11(p.name)}</h1>
+      <div class="v11-chip-row">${chips.map(c=>`<span>${esc11(c)}</span>`).join("")}</div>
+      ${typeof oldGalleryHtml==="function" ? oldGalleryHtml(p) : ""}
+      ${v11SummaryHtml(p)}
+      <div class="v11-price-box"><h3>اختيار مدة الحجز والسعر</h3>
+        <div class="options">
+          ${opts.map((o,i)=>`<button class="opt ${i===0?'active':''}" onclick="selectOpt(${i})">${esc11(o.label)}<br><b>${Number(o.price||0)} ر.ق</b>${o.note?`<small class="package-note">${esc11(o.note)}</small>`:""}</button>`).join("")}
+        </div>
+      </div>
+      ${v11ExtraChoicesHtml(p)}
+      ${v11DataHtml(p)}
+      <div class="info-box"><h3>ملاحظات الطلب</h3>
+        <input class="field" id="custChild" placeholder="اسم الطفل / الثيم / اللون إن وجد">
+        <textarea class="field" id="custNote" placeholder="أي ملاحظة إضافية للطلب"></textarea>
+      </div>
+      ${v11ContactHtml(p)}
+      <div class="bottom-actions">
+        <button class="primary" onclick="addCurrent()">أضف 🛒</button>
+        <div class="qty"><button onclick="changeQty(-1)">−</button><span id="qtyText">1</span><button onclick="changeQty(1)">+</button></div>
+      </div>`;
+    // image fallback data
+    setTimeout(()=>{
+      const main=detailPanel.querySelector(".detail-img");
+      if(main && typeof imgCandidates==="function"){
+        main.dataset.tries=JSON.stringify(imgCandidates(p));
+        main.dataset.tryIndex="0";
+        main.onerror=function(){tryNextImg(this)};
+      }
+      detailPanel.querySelectorAll(".decorThumb img,.gallery-thumb").forEach(function(im){
+        const src=im.getAttribute("src")||"";
+        const stem=src.replace(/\.[^.]+$/,"");
+        const tries=[src,stem+".jpg",stem+".jpeg",stem+".png",stem+".webp"];
+        im.dataset.tries=JSON.stringify([...new Set(tries)]);
+        im.dataset.tryIndex="0";
+        im.onerror=function(){tryNextImg(this)};
+      });
+    },50);
+    detailSheet.classList.add("show");
+  };
+
+  // حفظ اختيارات الزبون الجديدة داخل السلة
+  const prevAddCurrent11 = window.addCurrent;
+  window.addCurrent = function(){
+    if(!currentProduct) return;
+    const o=selectedOption||productOptions(currentProduct)[0];
+    const extras=[
+      document.getElementById("v11Theme")?.value ? "الثيم: "+document.getElementById("v11Theme").value : "",
+      document.getElementById("v11Balloons")?.value ? "ألوان البالونات: "+document.getElementById("v11Balloons").value : "",
+      document.getElementById("v11Tables")?.value ? "الطاولات: "+document.getElementById("v11Tables").value : "",
+      document.getElementById("v11Stickers")?.value ? "الملصقات: "+document.getElementById("v11Stickers").value : "",
+      document.getElementById("v11Snack")?.value ? "السناك: "+document.getElementById("v11Snack").value : "",
+      document.getElementById("custChild")?.value || "",
+      document.getElementById("custNote")?.value || ""
+    ].filter(Boolean).join(" - ");
+    cart.push({id:currentProduct.id,number:currentProduct.number,name:currentProduct.name,img:img(currentProduct),option:o.label,price:o.price,qty,note:extras});
+    saveCart(); closeSheets(); openCart();
+  };
+
+  setTimeout(()=>{ if(typeof renderProducts==="function") renderProducts(); },200);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V11 MATCH OLD DATA DISPLAY ===== -->
+
 </body>
 </html>
