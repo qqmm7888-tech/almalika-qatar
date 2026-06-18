@@ -1346,5 +1346,287 @@ init();
 </script>
 <!-- ===== END ALMALIKA CLEAN V4 OLD DATA BRIDGE ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V5 COMPLETE CHOICES CONTACTS AMOUNTS ===== -->
+<style id="almalika-clean-v5-complete-style">
+/* V5: تكملة المبالغ + الواتساب + التلفونات + اختيارات الألوان بدون تغيير البيانات */
+.contact-strip{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:10px 0;
+}
+.contact-btn{
+  min-height:46px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  font-weight:1000;
+  color:#fff!important;
+  text-decoration:none!important;
+}
+.contact-btn.wa{background:#22c55e}
+.contact-btn.call{background:#7b1230}
+.phones-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin:8px 0 0;
+}
+.phones-row a{
+  flex:1 1 calc(50% - 6px);
+  min-height:36px;
+  border-radius:999px;
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  color:#7b1230!important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:1000;
+  font-size:12px;
+}
+.price-summary{
+  background:linear-gradient(135deg,#fff8e5,#fff);
+  border:1px solid #e8c46a;
+  border-radius:18px;
+  padding:12px;
+  margin:10px 0;
+  color:#7b1230;
+  font-weight:1000;
+  line-height:1.7;
+}
+.price-summary h3{
+  margin:0 0 8px!important;
+  color:#7b1230!important;
+  font-size:18px!important;
+}
+.price-lines{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.price-line{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:14px;
+  padding:9px;
+  color:#331522;
+  font-size:12px;
+}
+.price-line b{color:#7b1230;font-size:14px}
+.color-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:8px;
+}
+.color-choice{
+  border:1px solid #f0c9dc;
+  background:#fff;
+  border-radius:14px;
+  padding:7px 5px;
+  min-height:54px;
+  font-size:10px;
+  font-weight:900;
+  color:#7b1230;
+}
+.color-dot{
+  width:24px;height:24px;border-radius:50%;
+  display:block;margin:0 auto 5px;
+  border:1px solid rgba(0,0,0,.12);
+}
+.color-choice.active{
+  border-color:#f52f86;
+  box-shadow:0 0 0 2px rgba(245,47,134,.18);
+}
+.choice-card select,
+.choice-card input,
+.choice-card textarea{
+  font-size:13px!important;
+}
+.old-detail-section h3{
+  font-size:20px!important;
+}
+.bottom-actions{
+  grid-template-columns:120px 1fr!important;
+}
+.primary::before{content:"🛒 ";font-size:14px}
+@media(max-width:380px){
+  .price-lines{grid-template-columns:1fr}
+  .color-grid{grid-template-columns:repeat(3,1fr)}
+  .contact-strip{grid-template-columns:1fr}
+}
+</style>
+
+<script id="almalika-clean-v5-complete-script">
+(function(){
+  const PHONES = ["33317720","33317721","33317716","33317705"];
+  const WA = "97433317720";
+
+  function esc5(s){ return (window.esc ? window.esc(s) : String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))); }
+
+  window.oldBalloonColorsFull = [
+    {name:"حسب الطلب", c:"linear-gradient(135deg,#fff,#f7d7e5)"},
+    {name:"وردي", c:"#ff7bb3"},
+    {name:"أزرق", c:"#4da3ff"},
+    {name:"ذهبي", c:"#d4af37"},
+    {name:"فضي", c:"#cfd4da"},
+    {name:"أبيض", c:"#ffffff"},
+    {name:"أسود", c:"#111111"},
+    {name:"أحمر", c:"#ef233c"},
+    {name:"أخضر", c:"#22c55e"},
+    {name:"بنفسجي", c:"#8b5cf6"},
+    {name:"بيبي بلو", c:"#9bdcff"},
+    {name:"بيبي بنك", c:"#ffc1d9"},
+    {name:"ذهبي + أبيض", c:"linear-gradient(135deg,#d4af37 50%,#fff 50%)"},
+    {name:"وردي + ذهبي", c:"linear-gradient(135deg,#ff7bb3 50%,#d4af37 50%)"},
+    {name:"أزرق + فضي", c:"linear-gradient(135deg,#4da3ff 50%,#cfd4da 50%)"},
+    {name:"أخضر + ذهبي", c:"linear-gradient(135deg,#22c55e 50%,#d4af37 50%)"}
+  ];
+
+  window.selectColorChoice = function(name,btn){
+    const hidden=document.getElementById("oldBalloonChoice");
+    if(hidden) hidden.value=name;
+    document.querySelectorAll(".color-choice").forEach(b=>b.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+  };
+
+  window.priceSummaryHtml = function(p){
+    const lines=[];
+    const add=(label,price,note)=>{
+      if(price==null || price==="") return;
+      if(Number(price)<=0) return;
+      lines.push(`<div class="price-line"><span>${esc5(label)}</span><br><b>${Number(price)} ر.ق</b>${note?`<br><small>${esc5(note)}</small>`:""}</div>`);
+    };
+
+    add("يوم واحد", p.priceOneDay, p.durationOneDay);
+    if(Number(p.priceTwoDays)>0 && Number(p.priceTwoDays)!==Number(p.priceOneDay)) add("يومين", p.priceTwoDays, p.durationTwoDays||p.durationTwoDay);
+    add("السعر الأساسي", p.baseDecorPrice, "ديكور فقط");
+    add("سعر الوحدة", p.unitPrice, "");
+    add("سعر القطعة", p.piecePrice, "");
+    add("موظفة", p.employeePrice||p.staffPrice, "");
+    add("العربة/الخدمة", p.baseTotal, "");
+
+    if(Array.isArray(p.snackPackages)){
+      p.snackPackages.forEach(o=>add(`${o.kids||o.children||""} طفل`, o.price, o.note||"باقة سناك"));
+    }
+
+    if(p.decorPackages && typeof p.decorPackages==="object" && Number(p.baseDecorPrice)>0){
+      Object.entries(p.decorPackages).forEach(([kids,extra])=>{
+        add(`باقة ${kids} طفل`, Number(p.baseDecorPrice)+Number(extra||0), "ديكور + باقة أطفال");
+      });
+    }
+
+    if(p.packagePrices && typeof p.packagePrices==="object"){
+      Object.entries(p.packagePrices).forEach(([k,v])=>add(k,v,"باقة"));
+    }
+
+    if(!lines.length) return "";
+    return `<div class="price-summary"><h3>المبالغ والأسعار</h3><div class="price-lines">${lines.join("")}</div></div>`;
+  };
+
+  window.contactsHtml = function(p){
+    const msg = encodeURIComponent(`استفسار عن ${p.name || "منتج"} رقم ${p.number || p.id || ""}`);
+    return `<div class="old-detail-section"><h3>التواصل والحجز</h3>
+      <div class="contact-strip">
+        <a class="contact-btn wa" href="https://wa.me/${WA}?text=${msg}" target="_blank">💬 واتساب مباشر</a>
+        <a class="contact-btn call" href="tel:+97433317720">📞 اتصال مباشر</a>
+      </div>
+      <div class="phones-row">${PHONES.map(n=>`<a href="tel:+974${n}">${n}</a>`).join("")}</div>
+    </div>`;
+  };
+
+  window.colorGridHtml = function(){
+    return `<div class="color-grid">${oldBalloonColorsFull.map((x,i)=>`<button type="button" class="color-choice ${i===0?'active':''}" onclick="selectColorChoice('${esc5(x.name)}',this)"><span class="color-dot" style="background:${esc5(x.c)}"></span>${esc5(x.name)}</button>`).join("")}</div><input type="hidden" id="oldBalloonChoice" value="حسب الطلب">`;
+  };
+
+  // استبدال اختيارات الزبون الإضافية من V4 بنسخة كاملة مرئية للألوان والهواتف
+  window.oldExtraChoicesHtml = function(p){
+    const isDecor = String(p.category||"").includes("تجهيز الحفلات") || String(p.type||"").includes("ديكور");
+    const isSnack = String(p.category||"").includes("السناك") || String(p.type||"").includes("سناك");
+    if(!isDecor && !isSnack) return "";
+
+    let html = `<div class="old-detail-section"><h3>اختيارات الزبون الإضافية</h3><div class="choice-block">`;
+
+    if(isDecor){
+      html += `<div class="choice-card"><label>الشخصية / الثيم</label><select id="oldThemeChoice">${oldThemeOptions.map(x=>`<option>${esc5(x)}</option>`).join("")}</select></div>`;
+      html += `<div class="choice-card"><label>ألوان البالونات</label>${colorGridHtml()}</div>`;
+      html += `<div class="choice-card"><label>الطاولات الإضافية</label><select id="oldTableChoice">${oldTableOptions.map(x=>`<option>${esc5(x)}</option>`).join("")}</select></div>`;
+      html += `<div class="choice-card"><label>ملصقات الطاولات</label><select id="oldStickerChoice">${oldStickerOptions.map(x=>`<option>${esc5(x)}</option>`).join("")}</select></div>`;
+    }
+
+    if(isSnack){
+      html += `<div class="choice-card"><label>نوع سناك الأطفال</label><select id="oldSnackChoice">${oldSnackOptions.map(x=>`<option>${esc5(x)}</option>`).join("")}</select></div>`;
+    }
+
+    html += `</div></div>`;
+    return html;
+  };
+
+  // إعادة فتح التفاصيل مع إضافة المبالغ والتواصل قبل الاختيارات
+  window.openDetail = function(id){
+    const p=(window.PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id)); 
+    if(!p)return;
+    currentProduct=p; qty=1; selectedOption=productOptions(p)[0];
+    const opts=productOptions(p);
+    const gallery=oldDecorGalleryFiles(p);
+    const first = gallery[0] || p.image || img(p);
+
+    detailPanel.innerHTML = `<button class="close" onclick="closeSheets()">×</button>
+      <img class="detail-img" src="${esc5(first)}" onerror="this.src='${esc5(img(p))}'">
+      ${oldGalleryHtml(p)}
+      <h1>${esc5(p.name)}</h1>
+      <p class="sub">${esc5(p.details||p.category||"")}</p>
+      ${priceSummaryHtml(p)}
+      <div class="info-box"><h3>اختيار السعر / الباقة</h3><div class="options">
+        ${opts.map((o,i)=>`<button class="opt ${i===0?'active':''}" onclick="selectOpt(${i})">${esc5(o.label)}<br>${Number(o.price||0)} ر.ق${o.note?`<small class="package-note">${esc5(o.note)}</small>`:""}</button>`).join("")}
+      </div></div>
+      ${contactsHtml(p)}
+      ${oldExtraChoicesHtml(p)}
+      <div class="old-detail-section"><h3>كل بيانات المنتج من النسخة السابقة</h3><div class="old-grid">${fullOldInfoRows(p) || "<div class='old-box'>لا توجد معلومات إضافية</div>"}</div></div>
+      <div class="info-box"><h3>ملاحظات الطلب</h3>
+        <input class="field" id="custChild" placeholder="اسم الطفل / الثيم / اللون إن وجد">
+        <textarea class="field" id="custNote" placeholder="أي ملاحظة إضافية للطلب"></textarea>
+      </div>
+      <div class="bottom-actions">
+        <div class="qty"><button onclick="changeQty(-1)">−</button><span id="qtyText">1</span><button onclick="changeQty(1)">+</button></div>
+        <button class="primary" onclick="addCurrent()">أضف</button>
+      </div>`;
+    detailSheet.classList.add("show");
+  };
+
+  // تحسين الإضافة للسلة بحيث تأخذ اختيارات الألوان المرئية والهواتف لا تضيع
+  const prevAddCurrentV5 = window.addCurrent;
+  window.addCurrent = function(){
+    if(!currentProduct) return prevAddCurrentV5 ? prevAddCurrentV5() : null;
+    const extra = [];
+    const theme=document.getElementById("oldThemeChoice");
+    const balloon=document.getElementById("oldBalloonChoice");
+    const table=document.getElementById("oldTableChoice");
+    const sticker=document.getElementById("oldStickerChoice");
+    const snack=document.getElementById("oldSnackChoice");
+    const chosenImg=document.getElementById("chosenDecorImg");
+    const chosenLabel=document.getElementById("chosenDecorLabel");
+    if(theme) extra.push("الثيم: "+theme.value);
+    if(balloon) extra.push("ألوان البالونات: "+balloon.value);
+    if(table) extra.push("الطاولات: "+table.value);
+    if(sticker) extra.push("الملصقات: "+sticker.value);
+    if(snack) extra.push("نوع السناك: "+snack.value);
+    if(chosenLabel) extra.push("شكل الديكور: "+chosenLabel.value);
+    if(chosenImg) extra.push("صورة الديكور: "+chosenImg.value);
+
+    const noteEl=document.getElementById("custNote");
+    if(noteEl && extra.length && !noteEl.value.includes("ألوان البالونات:")){
+      noteEl.value = [noteEl.value, extra.join(" | ")].filter(Boolean).join(" | ");
+    }
+    return prevAddCurrentV5 ? prevAddCurrentV5() : null;
+  };
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V5 COMPLETE CHOICES CONTACTS AMOUNTS ===== -->
+
 </body>
 </html>
