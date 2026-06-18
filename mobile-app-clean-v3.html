@@ -772,5 +772,236 @@ detailSheet.addEventListener("click",e=>{if(e.target===detailSheet)closeSheets()
 cartSheet.addEventListener("click",e=>{if(e.target===cartSheet)closeSheets()});
 init();
 </script>
+
+<!-- ===== ALMALIKA CLEAN V3 DETAILS AND GALLERY FIX ===== -->
+<style id="almalika-clean-v3-details-gallery-style">
+/* V3: تحسين التفاصيل والصور الإضافية والباقات — بدون تغيير البيانات */
+.gallery-strip{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:8px 0 2px;
+  margin:0 0 8px;
+}
+.gallery-strip::-webkit-scrollbar{display:none}
+.gallery-thumb{
+  flex:0 0 68px;
+  width:68px;
+  height:68px;
+  border-radius:16px;
+  border:2px solid #f0c9dc;
+  background:#fffaf1;
+  object-fit:cover;
+  cursor:pointer;
+}
+.gallery-thumb.active{
+  border-color:#f52f86;
+  box-shadow:0 0 0 2px rgba(245,47,134,.18);
+}
+.detail-img{
+  height:255px!important;
+  object-fit:contain!important;
+  padding:8px!important;
+}
+.package-note{
+  display:block;
+  color:#806a75;
+  font-size:10px;
+  margin-top:4px;
+  font-weight:800;
+}
+.clean-warning{
+  background:#fff8e5;
+  border:1px dashed #d4af37;
+  color:#7b1230;
+  border-radius:16px;
+  padding:10px;
+  font-weight:900;
+  font-size:12px;
+  line-height:1.7;
+  margin:10px 0;
+}
+.info-grid{
+  grid-template-columns:1fr 1fr!important;
+}
+.info-grid div{
+  line-height:1.7!important;
+  overflow-wrap:anywhere;
+}
+.info-grid div.full{
+  grid-column:1/-1;
+}
+.options{
+  grid-template-columns:1fr 1fr!important;
+}
+.opt{
+  min-height:64px!important;
+  line-height:1.35!important;
+}
+.card{
+  box-shadow:0 10px 24px rgba(123,18,48,.08)!important;
+}
+.card .pic{
+  height:150px!important;
+}
+.card .price{
+  color:#7b1230!important;
+}
+@media(max-width:380px){
+  .options{grid-template-columns:1fr!important}
+  .info-grid{grid-template-columns:1fr!important}
+}
+</style>
+<script id="almalika-clean-v3-details-gallery-script">
+(function(){
+  // حفظ الدوال الأصلية إن وجدت
+  const oldNiceVal = window.niceVal;
+  const oldInfoRows = window.infoRows;
+  const oldProductOptions = window.productOptions;
+  const oldOpenDetail = window.openDetail;
+
+  window.niceVal = function(v){
+    if(v==null || v==="") return "";
+    if(Array.isArray(v)){
+      return v.map(x=>{
+        if(x==null) return "";
+        if(typeof x==="object") {
+          const preferred = [];
+          if(x.kids || x.children) preferred.push((x.kids||x.children)+" طفل");
+          if(x.price) preferred.push(x.price+" ر.ق");
+          if(x.note) preferred.push(x.note);
+          if(preferred.length) return preferred.join(" - ");
+          return Object.entries(x).map(([k,val])=>`${k}: ${val}`).join(" - ");
+        }
+        return String(x);
+      }).filter(Boolean).join("<br>");
+    }
+    if(typeof v==="object"){
+      return Object.entries(v)
+        .filter(([k,val])=>val!==""&&val!=null && !(typeof val==="object" && !Array.isArray(val)))
+        .map(([k,val])=>`${k}: ${val}`)
+        .join("<br>");
+    }
+    return String(v);
+  };
+
+  window.productGallery = function(p){
+    const list = [];
+    if(p && p.image) list.push(p.image);
+    if(p && Array.isArray(p.decorGallery)) {
+      p.decorGallery.forEach(x=>{ if(x && !list.includes(x)) list.push(x); });
+    }
+    // صور محتملة بنفس رقم المنتج: لا تسبب ضرر إذا غير موجودة، لكن لا نعرضها إلا كـ thumbnails بعد تحميلها لاحقًا.
+    return list;
+  };
+
+  window.switchDetailImage = function(src, el){
+    const main = document.querySelector(".detail-img");
+    if(main) main.src = src;
+    document.querySelectorAll(".gallery-thumb").forEach(x=>x.classList.remove("active"));
+    if(el) el.classList.add("active");
+  };
+
+  window.productOptions = function(p){
+    const opts=[];
+    const add=(label,price,note)=>{
+      price=Number(price||0);
+      if(!label) return;
+      const key=label+"|"+price;
+      if(opts.some(o=>o.key===key)) return;
+      opts.push({label,price,note:note||"",key});
+    };
+
+    if(Number(p.baseDecorPrice)>0) add("ديكور فقط", p.baseDecorPrice, "السعر الأساسي");
+    if(p.decorPackages && typeof p.decorPackages==="object" && Number(p.baseDecorPrice)>0){
+      Object.entries(p.decorPackages).forEach(([kids,extra])=>{
+        add(`باقة ${kids} طفل`, Number(p.baseDecorPrice)+Number(extra||0), "ديكور + باقة أطفال");
+      });
+    }
+
+    if(Array.isArray(p.snackPackages)){
+      p.snackPackages.forEach(o=>{
+        if(o && Number(o.price)>0) add(`${o.kids||o.children||""} طفل`, o.price, o.note||"مدة الخدمة 3 ساعات مع موظفة");
+      });
+    }
+
+    if(p.packagePrices && typeof p.packagePrices==="object"){
+      Object.entries(p.packagePrices).forEach(([k,v])=>{ if(Number(v)>0) add(k,v,"باقة"); });
+    }
+
+    // لا نكرر يوم واحد إذا موجود ديكور فقط بنفس السعر
+    if(Number(p.priceOneDay)>0) add(p.durationOneDay||"يوم واحد", p.priceOneDay, "");
+    if(Number(p.priceTwoDays)>0 && Number(p.priceTwoDays)!==Number(p.priceOneDay)) add(p.durationTwoDays||"يومين", p.priceTwoDays, "");
+    if(!opts.length && Number(p.unitPrice)>0) add("سعر الوحدة", p.unitPrice, "");
+    if(!opts.length && Number(p.piecePrice)>0) add("سعر القطعة", p.piecePrice, "");
+    if(!opts.length) add("حسب الطلب",0,"");
+
+    return opts.map(({key,...o})=>o);
+  };
+
+  window.infoRows = function(p){
+    const rows=[];
+    const add=(label,val,full)=>{
+      val=niceVal(val);
+      if(!val) return;
+      rows.push(`<div class="${full?'full':''}"><b>${label}</b><br>${val}</div>`);
+    };
+
+    add("القسم", p.category);
+    add("النوع", p.type);
+    add("العمر", p.age);
+    add("المدة", p.durationOneDay);
+    if(p.durationTwoDays && p.durationTwoDays!==p.durationOneDay) add("المدة الثانية", p.durationTwoDays);
+    add("المقاس", p.measurements || [p.length,p.width,p.height].filter(Boolean).join(" × "));
+    add("ألوان", p.colors, true);
+    add("السناك", p.snackType, true);
+    add("المرفق", p.included);
+    add("محتويات العرض", p.offerIncludes, true);
+    add("ملاحظات", p.notes, true);
+    add("الشروط", p.packageConditions, true);
+
+    // عرض الباقات بشكل منظم في البيانات أيضًا
+    if(Array.isArray(p.snackPackages)) add("باقات السناك", p.snackPackages, true);
+    if(p.decorPackages && typeof p.decorPackages==="object"){
+      const base=Number(p.baseDecorPrice||0);
+      const txt=Object.entries(p.decorPackages).map(([kids,extra])=>`باقة ${kids} طفل: ${base+Number(extra||0)} ر.ق`).join("<br>");
+      add("باقات الديكور", txt, true);
+    }
+    return rows.join("");
+  };
+
+  window.openDetail = function(id){
+    const p=(window.PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id)); 
+    if(!p)return;
+    currentProduct=p; qty=1; selectedOption=productOptions(p)[0];
+    const opts=productOptions(p);
+    const gallery=productGallery(p);
+    const galleryHtml = gallery.length>1 ? `<div class="gallery-strip">${gallery.map((g,i)=>`<img class="gallery-thumb ${i===0?'active':''}" src="${esc(g)}" onclick="switchDetailImage('${esc(g)}',this)" onerror="this.style.display='none'">`).join("")}</div>` : "";
+    const missingNote = gallery.length<=1 ? `<div class="clean-warning">ملاحظة: إذا كان لهذا المنتج صور اختيار إضافية في النسخة القديمة ولم تظهر هنا، فهذا يعني أنها غير موجودة داخل ملف البيانات الحالي ويجب نقل روابطها لاحقًا للبيانات.</div>` : "";
+
+    detailPanel.innerHTML = `<button class="close" onclick="closeSheets()">×</button>
+      <img class="detail-img" src="${esc(gallery[0]||img(p))}" onerror="this.src='order-ad.jpg'">
+      ${galleryHtml}
+      <h1>${esc(p.name)}</h1>
+      <p class="sub">${esc(p.details||p.category||"")}</p>
+      ${missingNote}
+      <div class="info-box"><h3>اختيار السعر / الباقة</h3><div class="options">
+        ${opts.map((o,i)=>`<button class="opt ${i===0?'active':''}" onclick="selectOpt(${i})">${esc(o.label)}<br>${Number(o.price||0)} ر.ق${o.note?`<small class="package-note">${esc(o.note)}</small>`:""}</button>`).join("")}
+      </div></div>
+      <div class="info-box"><h3>بيانات ومعلومات المنتج</h3><div class="info-grid">${infoRows(p) || "<div>لا توجد معلومات إضافية</div>"}</div></div>
+      <div class="info-box"><h3>ملاحظات الطلب</h3>
+        <input class="field" id="custChild" placeholder="اسم الطفل / الثيم / اللون إن وجد">
+        <textarea class="field" id="custNote" placeholder="أي ملاحظة إضافية للطلب"></textarea>
+      </div>
+      <div class="bottom-actions">
+        <button class="primary" onclick="addCurrent()">أضف</button>
+        <div class="qty"><button onclick="changeQty(-1)">−</button><span id="qtyText">1</span><button onclick="changeQty(1)">+</button></div>
+      </div>`;
+    detailSheet.classList.add("show");
+  };
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V3 DETAILS AND GALLERY FIX ===== -->
+
 </body>
 </html>
