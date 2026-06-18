@@ -5166,5 +5166,118 @@ window.addCurrent=function(){
 </style>
 <!-- ===== END ALMALIKA CLEAN V16 MOBILE SIZE FIX ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V17 DECOR 201 202 SNACK PRICE FIX ===== -->
+<style id="almalika-clean-v17-decor-201-202-snack-price-fix">
+/* V17: حذف السعر المختصر + اللامعة فقط 201/202 + قفل السناك عند ديكور فقط */
+.v15-summary-row .v15-summary-cell:nth-child(3){
+  display:none!important;
+}
+.v15-summary-row{
+  grid-template-columns:1fr 1fr!important;
+}
+.snackChoiceBox.v17-locked{
+  opacity:.55!important;
+  filter:grayscale(.3);
+}
+.snackChoiceBox.v17-locked .miniCheck{
+  background:#eee!important;
+  color:#888!important;
+}
+.snackChoiceBox.v17-locked input{
+  pointer-events:none!important;
+}
+.snackChoiceBox .v17-snack-status{
+  margin-top:7px;
+  background:#8c8c8c;
+  color:#fff;
+  border-radius:999px;
+  padding:8px 10px;
+  text-align:center;
+  font-size:12px;
+  font-weight:1000;
+}
+.snackChoiceBox:not(.v17-locked) .v17-snack-status{
+  background:#fffaf1;
+  border:1px dashed #d4af37;
+  color:#7b1230;
+}
+@media(max-width:760px){
+  .v15-summary-row{
+    grid-template-columns:1fr!important;
+  }
+}
+</style>
+
+<script id="almalika-clean-v17-decor-201-202-snack-price-fix-script">
+(function(){
+  function v17Num(p){
+    return Number((p && (p.number || p.id)) || 0);
+  }
+  function v17SelectedLabel(n){
+    const checked=document.querySelector(`input[name="opt_${n}"]:checked`);
+    if(!checked) return "";
+    const card=checked.closest(".priceChoice");
+    return (card ? card.textContent : checked.value || "").replace(/\s+/g," ").trim();
+  }
+  function v17IsDecorOnly(n){
+    const txt=v17SelectedLabel(n);
+    // ديكور فقط / ديكور بدون باقة أطفال / السعر الأساسي
+    return /ديكور/.test(txt) && !/10|20|30|40|50|طفل|أطفال|باقة/.test(txt);
+  }
+  window.v17ApplySnackLock=function(n){
+    const box=document.getElementById("snackBox_"+n);
+    if(!box) return;
+    let status=box.querySelector(".v17-snack-status");
+    if(!status){
+      status=document.createElement("div");
+      status.className="v17-snack-status";
+      box.appendChild(status);
+    }
+    const lock=v17IsDecorOnly(n);
+    box.classList.toggle("v17-locked", lock);
+    box.querySelectorAll("input").forEach(inp=>{
+      inp.disabled=lock;
+      if(lock) inp.checked=false;
+      else if(!inp.dataset.v17Touched){
+        // عند اختيار باقة أطفال، افتح السناك للزبون مع إبقاء الخيارات متاحة للاختيار
+        inp.checked=true;
+      }
+    });
+    status.textContent = lock
+      ? "مغلق عند اختيار ديكور فقط"
+      : "مفتوح: اختر نوع السناك المطلوب للباقة";
+  };
+
+  const oldUpdateDecorTotal17 = window.updateDecorTotal15;
+  window.updateDecorTotal15=function(n){
+    const total = oldUpdateDecorTotal17 ? oldUpdateDecorTotal17(n) : 0;
+    setTimeout(()=>window.v17ApplySnackLock(n), 30);
+    return total;
+  };
+
+  const oldOpenDetail17 = window.openDetail;
+  window.openDetail=function(id){
+    oldOpenDetail17(id);
+    setTimeout(function(){
+      const p=window.currentProduct;
+      const n=v17Num(p);
+      // ألوان اللامعة فقط للمنتجات 201 و 202
+      if(n !== 201 && n !== 202){
+        const shiny=document.querySelector(".shinyBalloonBox");
+        if(shiny) shiny.remove();
+      }
+      // قفل/فتح السناك حسب الباقة المختارة
+      window.v17ApplySnackLock(n);
+      // علمنا عند تغيير اختيار السناك حتى لا نرجعه تلقائياً بعد لمس الزبون
+      document.querySelectorAll(`#snackBox_${n} input`).forEach(inp=>{
+        inp.addEventListener("change",()=>{ inp.dataset.v17Touched="1"; });
+      });
+    }, 120);
+  };
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V17 DECOR 201 202 SNACK_PRICE_FIX ===== -->
+
 </body>
 </html>
