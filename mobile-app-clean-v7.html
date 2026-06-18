@@ -1840,5 +1840,289 @@ init();
 </script>
 <!-- ===== END ALMALIKA CLEAN V6 REMOVE DUPLICATES ORDER DETAILS ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V7 SECTION INFO DATA COMPLETION ===== -->
+<style id="almalika-clean-v7-section-info-style">
+/* V7: إكمال شرح الأقسام والبيانات الناقصة بدون تغيير ملف البيانات */
+.section-guide{
+  margin:0 14px 14px;
+  background:linear-gradient(135deg,#fff,#fff7fb);
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  color:#331522;
+}
+.section-guide h3{
+  margin:0 0 8px;
+  color:#7b1230;
+  font-size:18px;
+  font-weight:1000;
+}
+.section-guide p{
+  margin:0 0 9px;
+  color:#806a75;
+  line-height:1.7;
+  font-size:12px;
+  font-weight:800;
+}
+.guide-list{
+  display:grid;
+  gap:7px;
+}
+.guide-item{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:14px;
+  padding:8px 10px;
+  font-size:12px;
+  line-height:1.6;
+  font-weight:900;
+  color:#331522;
+}
+.card .v7-mini{
+  color:#806a75;
+  font-size:10px;
+  font-weight:800;
+  line-height:1.45;
+  min-height:30px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  margin:0 0 7px;
+}
+.card .price span{
+  display:block;
+  font-size:10px;
+  color:#806a75;
+  font-weight:900;
+  margin-bottom:2px;
+}
+.v7-intro{
+  background:#fff8e5;
+  border:1px dashed #d4af37;
+  color:#7b1230;
+  border-radius:18px;
+  padding:10px;
+  margin:10px 0;
+  font-size:12px;
+  line-height:1.8;
+  font-weight:900;
+}
+.v7-included{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  margin:10px 0;
+}
+.v7-included h3{
+  margin:0 0 10px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v7-bullets{
+  display:grid;
+  gap:8px;
+}
+.v7-bullet{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:15px;
+  padding:9px 10px;
+  color:#331522;
+  font-size:12px;
+  line-height:1.7;
+  font-weight:850;
+}
+.v7-bullet b{
+  color:#7b1230;
+}
+.v7-note{
+  margin-top:8px;
+  color:#806a75;
+  font-size:11px;
+  line-height:1.7;
+  font-weight:800;
+}
+.v6-specs{
+  margin-bottom:10px!important;
+}
+</style>
+
+<script id="almalika-clean-v7-section-info-script">
+(function(){
+  function esc7(s){ 
+    return (window.esc ? window.esc(s) : String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))); 
+  }
+  function textVal(v){
+    if(v==null || v==="") return "";
+    if(Array.isArray(v)){
+      return v.map(x=>{
+        if(!x) return "";
+        if(typeof x==="object"){
+          return Object.entries(x).map(([k,val])=>`${k}: ${val}`).join(" - ");
+        }
+        return String(x);
+      }).filter(Boolean).join("، ");
+    }
+    if(typeof v==="object"){
+      return Object.entries(v).map(([k,val])=>`${k}: ${val}`).join("، ");
+    }
+    return String(v);
+  }
+  function cleanShort(s,n){
+    s=String(s||"").replace(/\s+/g," ").trim();
+    return s.length>n ? s.slice(0,n-1)+"…" : s;
+  }
+
+  window.v7GroupInfo = {
+    all:{
+      title:"مختارات الملكة",
+      desc:"واجهة سريعة تجمع أهم البنود من كل الأقسام حتى يختار الزبون بسرعة ويضيف للسلة.",
+      items:["استخدم البحث باسم المنتج أو الرقم.","اضغط تفاصيل لمشاهدة الصور والاختيارات.","بعد الإضافة للسلة يمكن إرسال الطلب واتساب."]
+    },
+    bouncies:{
+      title:"النطاطيات والزحلاقيات",
+      desc:"هذا القسم مخصص للنطاطيات الجافة والمائية والزحاليق والملاعب الصابونية. يتم عرض العمر، مدة الحجز، والمقاس عند توفره.",
+      items:["راجع العمر والمقاس قبل الحجز.","اختر مدة الحجز المناسبة من التفاصيل.","التركيب والتشغيل حسب نوع المنتج ومكان العميل."]
+    },
+    snacks:{
+      title:"السناك والعربات",
+      desc:"عربات الضيافة مثل الفشار، غزل البنات، البطاطا، الذرة، الآيس كريم والسلاش. تظهر الباقات حسب عدد الأطفال عند توفرها.",
+      items:["حدد عدد الأطفال أو الباقة المناسبة.","يمكن اختيار نوع السناك من التفاصيل.","الأسعار تختلف حسب الباقة ومدة الخدمة."]
+    },
+    events:{
+      title:"تجهيز الحفلات والديكورات",
+      desc:"ديكورات أعياد الميلاد والتخرج والمناسبات، مع صور أشكال الديكور، الثيم، ألوان البالونات، الطاولات والملصقات.",
+      items:["اختر شكل الديكور من الصور.","حدد الثيم وألوان البالونات.","أدخل اسم الطفل أو الملاحظات قبل الإضافة للسلة."]
+    },
+    rentals:{
+      title:"الطاولات والكراسي والشخصيات",
+      desc:"قسم مستلزمات إضافية للحفلات مثل طاولات الأطفال والكراسي والشخصيات حسب المتوفر.",
+      items:["راجع العدد والسعر داخل التفاصيل.","أضف الملاحظات المطلوبة.","يمكن دمجها مع منتجات أخرى في السلة."]
+    },
+    offers:{
+      title:"العروض والبكجات",
+      desc:"باقات جاهزة تجمع أكثر من خدمة أو منتج بسعر واحد حسب ما هو مدخل في البيانات.",
+      items:["راجع محتويات العرض جيدًا.","قد تختلف الشروط حسب العرض.","أضف العرض للسلة ثم أرسل الطلب واتساب."]
+    },
+    other:{
+      title:"بنود وخدمات أخرى",
+      desc:"خدمات أو بنود إضافية غير مصنفة ضمن الأقسام الرئيسية.",
+      items:["راجع وصف البند والسعر.","اكتب أي ملاحظة إضافية للطلب.","التأكيد النهائي يتم عبر الواتساب."]
+    }
+  };
+
+  window.v7SectionOfProduct = function(p){
+    return (typeof sectionOf === "function") ? sectionOf(p) : "all";
+  };
+
+  window.v7ProductExplanation = function(p){
+    const sec = v7SectionOfProduct(p);
+    const parts=[];
+    if(p.details) parts.push(p.details);
+    if(p.offerIncludes) parts.push("يشمل: "+textVal(p.offerIncludes));
+    if(p.snackType) parts.push("السناك: "+textVal(p.snackType));
+    if(p.measurements || p.length || p.width || p.height) parts.push("المقاس: "+(p.measurements || [p.length,p.width,p.height].filter(Boolean).join(" × ")));
+    if(p.age) parts.push("العمر: "+p.age);
+    if(!parts.length){
+      const info=v7GroupInfo[sec]||v7GroupInfo.all;
+      parts.push(info.desc);
+    }
+    return parts.join(" — ");
+  };
+
+  window.v7RenderGuide = function(){
+    const info = v7GroupInfo[current] || v7GroupInfo.all;
+    let old = document.getElementById("v7SectionGuide");
+    if(old) old.remove();
+    const titleBlocks = document.querySelectorAll(".section-title");
+    const anchor = titleBlocks[1] || titleBlocks[0];
+    if(!anchor) return;
+    const box = document.createElement("div");
+    box.id = "v7SectionGuide";
+    box.className = "section-guide";
+    box.innerHTML = `<h3>${esc7(info.title)}</h3><p>${esc7(info.desc)}</p><div class="guide-list">${info.items.map(x=>`<div class="guide-item">✓ ${esc7(x)}</div>`).join("")}</div>`;
+    anchor.insertAdjacentElement("afterend", box);
+  };
+
+  const oldSetGroupV7 = window.setGroup;
+  window.setGroup = function(id){
+    if(oldSetGroupV7) oldSetGroupV7(id);
+    setTimeout(v7RenderGuide,80);
+  };
+
+  const oldInitV7 = window.init;
+  window.init = function(){
+    if(oldInitV7) oldInitV7();
+    setTimeout(v7RenderGuide,80);
+  };
+
+  // كروت منتجات بشرح أوضح
+  window.card = function(p){
+    const mini = cleanShort(v7ProductExplanation(p), 86);
+    const price = (typeof priceOf === "function") ? priceOf(p) : 0;
+    const tag1 = cleanShort(p.category || p.type || "منتج", 18);
+    const tag2 = cleanShort(p.durationOneDay || p.age || "حسب الطلب", 18);
+    return `<article class="card">
+      <span class="badge">#${esc7(p.number||p.id)}</span>
+      <div class="pic" onclick="openDetail(${Number(p.id)})"><img src="${esc7(img(p))}" loading="lazy" onerror="this.src='order-ad.jpg'"></div>
+      <div class="card-body">
+        <h3>${esc7(p.name)}</h3>
+        <p class="v7-mini">${esc7(mini)}</p>
+        <div class="meta"><span>${esc7(tag1)}</span><span>${esc7(tag2)}</span></div>
+        <div class="price"><span>يبدأ من</span>${price} ر.ق</div>
+        <div class="card-actions">
+          <button class="details-btn" onclick="openDetail(${Number(p.id)})">تفاصيل</button>
+          <button class="add-btn" onclick="quickAdd(${Number(p.id)})">+</button>
+        </div>
+      </div>
+    </article>`;
+  };
+
+  window.v7IncludedHtml = function(p){
+    const bullets=[];
+    const sec = v7SectionOfProduct(p);
+    const info = v7GroupInfo[sec] || v7GroupInfo.all;
+
+    if(p.details) bullets.push(`<b>شرح المنتج:</b> ${esc7(p.details)}`);
+    if(p.offerIncludes) bullets.push(`<b>محتويات العرض:</b> ${esc7(textVal(p.offerIncludes))}`);
+    if(p.snackType) bullets.push(`<b>السناك:</b> ${esc7(textVal(p.snackType))}`);
+    if(p.packageConditions) bullets.push(`<b>الشروط:</b> ${esc7(textVal(p.packageConditions))}`);
+    if(p.notes) bullets.push(`<b>ملاحظات:</b> ${esc7(textVal(p.notes))}`);
+    if(!bullets.length) bullets.push(`<b>شرح القسم:</b> ${esc7(info.desc)}`);
+
+    // تعليمات حسب القسم
+    if(sec==="events") bullets.push("<b>مطلوب من الزبون:</b> اختيار شكل الديكور، الثيم، ألوان البالونات، وكتابة اسم الطفل إن وجد.");
+    if(sec==="snacks") bullets.push("<b>مطلوب من الزبون:</b> اختيار الباقة أو عدد الأطفال ونوع السناك إن كان مطلوبًا.");
+    if(sec==="bouncies") bullets.push("<b>مطلوب من الزبون:</b> مراجعة العمر والمقاس ومدة الحجز.");
+    if(sec==="offers") bullets.push("<b>مطلوب من الزبون:</b> مراجعة مكونات العرض قبل الإضافة للسلة.");
+
+    return `<div class="v7-included"><h3>شرح ومعلومات مهمة</h3><div class="v7-bullets">${bullets.map(x=>`<div class="v7-bullet">${x}</div>`).join("")}</div><div class="v7-note">يتم تأكيد التوفر والتفاصيل النهائية عبر الواتساب بعد إرسال الطلب.</div></div>`;
+  };
+
+  // فتح التفاصيل مع إدخال شرح كامل لكل قسم بعد العنوان مباشرة
+  const oldOpenV7 = window.openDetail;
+  window.openDetail = function(id){
+    if(!oldOpenV7) return;
+    oldOpenV7(id);
+    setTimeout(()=>{
+      const p=(window.PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id));
+      if(!p) return;
+      const h1 = detailPanel.querySelector("h1");
+      const existing = detailPanel.querySelector(".v7-included");
+      if(h1 && !existing){
+        h1.insertAdjacentHTML("afterend", v7IncludedHtml(p));
+      }
+    },30);
+  };
+
+  setTimeout(v7RenderGuide,150);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V7 SECTION INFO DATA COMPLETION ===== -->
+
 </body>
 </html>
