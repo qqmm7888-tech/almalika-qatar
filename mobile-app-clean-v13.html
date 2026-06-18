@@ -3568,5 +3568,610 @@ init();
 </script>
 <!-- ===== END ALMALIKA CLEAN V12 FINAL OPTIONS NO BULLETS ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V13 MATCH OLD DETAIL DESIGN ===== -->
+<style id="almalika-clean-v13-match-old-detail-style">
+/* V13: مطابقة تصميم تفاصيل الديكور القديم داخل القالب الجديد */
+.v13-detail{
+  display:grid;
+  gap:12px;
+  padding-bottom:118px;
+}
+.v13-top{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+}
+.v13-main-img{
+  width:100%;
+  max-height:260px;
+  object-fit:contain;
+  background:#fffaf1;
+  border-radius:20px;
+  border:1px solid #f4d7a2;
+}
+.v13-title{
+  color:#2a0713!important;
+  font-size:25px!important;
+  line-height:1.35!important;
+  margin:10px 0 8px!important;
+  text-align:center!important;
+  font-weight:1000!important;
+}
+.v13-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:center;
+  margin-bottom:8px;
+}
+.v13-tags span{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:999px;
+  color:#7b1230;
+  padding:6px 10px;
+  font-size:11px;
+  font-weight:1000;
+}
+.v13-intro{
+  background:#fffaf1;
+  border:1px solid #e8c04d;
+  border-radius:18px;
+  padding:12px;
+  color:#5a4550;
+  text-align:center;
+  font-size:13px;
+  line-height:1.8;
+  font-weight:900;
+}
+.v13-section{
+  background:#fff;
+  border:1px solid #e8c04d;
+  border-radius:22px;
+  padding:12px;
+  margin:0;
+}
+.v13-section.pink{
+  border-color:#f0c9dc;
+}
+.v13-section-title{
+  color:#7b1230;
+  font-size:20px;
+  font-weight:1000;
+  margin:0 0 12px;
+  text-align:center;
+}
+.v13-required{
+  display:inline-block;
+  background:#b80f43;
+  color:#fff;
+  border-radius:999px;
+  padding:3px 9px;
+  font-size:11px;
+  margin-inline-start:6px;
+  vertical-align:middle;
+}
+.v13-price-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.v13-price-card{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:16px;
+  min-height:75px;
+  padding:9px;
+  color:#331522;
+  font-size:12px;
+  font-weight:900;
+  text-align:center;
+  cursor:pointer;
+}
+.v13-price-card.active{
+  border-color:#f52f86;
+  box-shadow:0 0 0 2px rgba(245,47,134,.14);
+}
+.v13-price-card b{
+  display:block;
+  color:#7b1230;
+  font-size:17px;
+  margin-top:4px;
+}
+.v13-price-card small{
+  display:block;
+  color:#806a75;
+  margin-top:4px;
+}
+.v13-field{
+  width:100%;
+  min-height:46px;
+  border:1px solid #f0c9dc;
+  background:#fff7fb;
+  color:#331522;
+  border-radius:14px;
+  padding:0 10px;
+  font-weight:900;
+  margin:6px 0;
+}
+textarea.v13-field{
+  padding:12px;
+  min-height:80px;
+}
+.v13-help{
+  color:#7b1230;
+  background:#fffaf1;
+  border:1px dashed #d4af37;
+  border-radius:14px;
+  padding:9px;
+  font-size:11px;
+  line-height:1.7;
+  font-weight:900;
+  text-align:center;
+  margin:7px 0 8px;
+}
+.v13-colors{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:7px;
+}
+.v13-color{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:14px;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:6px;
+  padding:7px 8px;
+  color:#331522;
+  font-size:12px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.v13-color.active{
+  border-color:#f52f86;
+  box-shadow:0 0 0 2px rgba(245,47,134,.14);
+}
+.v13-dot{
+  width:22px;
+  height:22px;
+  border-radius:50%;
+  border:1px solid rgba(0,0,0,.16);
+  flex:0 0 22px;
+}
+.v13-snack-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.v13-check-card{
+  background:#fff;
+  border:1px solid #e18aa8;
+  border-radius:16px;
+  min-height:62px;
+  padding:9px;
+  color:#806a75;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  text-align:center;
+  font-size:13px;
+  font-weight:1000;
+}
+.v13-check-card input{
+  transform:scale(1.15);
+  accent-color:#b80f43;
+}
+.v13-total{
+  background:linear-gradient(135deg,#fff8e5,#fff7fb);
+  border:2px solid #e2b319;
+  border-radius:20px;
+  padding:14px 10px;
+  text-align:center;
+  color:#7b1230;
+  font-weight:1000;
+  margin-top:10px;
+}
+.v13-total .amount{
+  font-size:34px;
+  line-height:1.1;
+}
+.v13-total small{
+  display:block;
+  color:#5a4550;
+  font-size:12px;
+  margin-top:4px;
+}
+.v13-addon-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.v13-radio-card{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:16px;
+  min-height:72px;
+  padding:8px;
+  text-align:center;
+  color:#331522;
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+.v13-radio-card.active{
+  border-color:#f00;
+  background:#fffaf1;
+}
+.v13-radio-card .circle{
+  width:22px;
+  height:22px;
+  border:2px solid #d4af37;
+  border-radius:50%;
+  display:block;
+  margin:0 auto 5px;
+  background:#fff;
+}
+.v13-radio-card.active .circle{
+  background:#d4af37;
+  box-shadow:inset 0 0 0 5px #fff;
+}
+.v13-radio-card b{
+  display:block;
+  color:#7b1230;
+  font-size:14px;
+  margin-top:4px;
+}
+.v13-contact{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:8px;
+}
+.v13-contact a,.v13-contact button{
+  border:0;
+  border-radius:14px;
+  min-height:44px;
+  color:#fff!important;
+  text-decoration:none;
+  font-weight:1000;
+  font-size:13px;
+  cursor:pointer;
+}
+.v13-wa{background:#22c55e}
+.v13-cart{background:#111}
+.v13-close{background:#333}
+.v13-note{
+  background:#fffaf1;
+  border:1px dashed #d4af37;
+  color:#7b1230;
+  border-radius:14px;
+  padding:9px;
+  text-align:center;
+  font-size:12px;
+  font-weight:900;
+  line-height:1.7;
+  margin-top:8px;
+}
+.v13-gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+  max-height:420px;
+  overflow:auto;
+  padding:4px;
+}
+.v13-thumb{
+  background:#fffaf1;
+  border:1px solid #f0c9dc;
+  border-radius:16px;
+  padding:7px;
+  text-align:center;
+  color:#7b1230;
+  font-size:11px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.v13-thumb.active{
+  border:2px solid #f52f86;
+}
+.v13-thumb img{
+  width:100%;
+  height:96px;
+  object-fit:cover;
+  border-radius:12px;
+  display:block;
+  margin-bottom:5px;
+}
+.v13-modal-wide{
+  width:min(1180px,96vw)!important;
+}
+.v13-layout{
+  display:grid;
+  grid-template-columns:1fr 300px;
+  gap:16px;
+}
+.v13-side{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  align-self:start;
+  position:sticky;
+  top:10px;
+  max-height:86vh;
+  overflow:auto;
+}
+.v13-side h3{
+  color:#7b1230;
+  font-size:20px;
+  text-align:center;
+  margin:8px 0 12px;
+  line-height:1.35;
+}
+.v13-side-main{
+  width:100%;
+  max-height:230px;
+  object-fit:contain;
+  border-radius:16px;
+  background:#fffaf1;
+  border:1px solid #f0c9dc;
+}
+.modal .panel.v13-panel{
+  background:#fff7fb!important;
+  max-height:92vh!important;
+}
+.bottom-actions.v13-bottom{
+  grid-template-columns:1fr 150px!important;
+  gap:10px!important;
+}
+.bottom-actions.v13-bottom .primary{
+  font-size:17px!important;
+}
+@media(max-width:760px){
+  .v13-layout{display:block}
+  .v13-side{position:static;max-height:none;margin-top:12px}
+  .v13-price-grid,.v13-addon-grid{grid-template-columns:1fr 1fr}
+  .v13-colors{grid-template-columns:1fr 1fr}
+  .v13-contact{grid-template-columns:1fr}
+  .v13-title{font-size:22px!important}
+}
+</style>
+
+<script id="almalika-clean-v13-match-old-detail-script">
+(function(){
+  const WA13="97433317720";
+  function esc13(s){
+    return (window.esc ? window.esc(s) : String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])));
+  }
+  function sec13(p){ return (typeof sectionOf==="function") ? sectionOf(p) : "all"; }
+  function isDecor13(p){ return sec13(p)==="events" || String(p.category||"").includes("تجهيز") || String(p.type||"").includes("ديكور"); }
+  function isSnack13(p){ return sec13(p)==="snacks" || String(p.category||"").includes("السناك") || String(p.type||"").includes("سناك"); }
+  function val13(v){
+    if(v==null || v==="") return "";
+    if(typeof v==="object") return JSON.stringify(v);
+    return String(v);
+  }
+
+  window.v13State = { color:"حسب الطلب", tablePrice:0, printPrice:0, snackPrice:0, selectedImg:"", selectedShape:"الصورة الأساسية" };
+
+  window.v13Options=function(p){
+    const opts = productOptions(p) || [];
+    const seen = new Set();
+    return opts.filter(o=>{
+      const key = `${o.label}-${o.price}`;
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  };
+
+  window.v13DecorGallery=function(p){
+    let arr=[];
+    const add=x=>{ if(x && !arr.includes(x)) arr.push(x); };
+    if(p.image) add(p.image);
+    if(Array.isArray(p.decorGallery)) p.decorGallery.forEach(add);
+    const n=p.number||p.id;
+    if(n){
+      for(let i=1;i<=18;i++){
+        ["jpg","jpeg","png","webp"].forEach(ext=>add(`${n}-${i}.${ext}`));
+      }
+    }
+    return arr;
+  };
+
+  window.v13PickPrice=function(i){
+    const opts=v13Options(currentProduct);
+    selectedOption=opts[i]||opts[0];
+    document.querySelectorAll(".v13-price-card").forEach((b,idx)=>b.classList.toggle("active",idx===i));
+    v13UpdateTotal();
+  };
+
+  window.v13PickColor=function(name,btn){
+    v13State.color=name;
+    document.querySelectorAll(".v13-color").forEach(b=>b.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+  };
+
+  window.v13PickAddon=function(type, price, btn){
+    if(type==="table") v13State.tablePrice=Number(price||0);
+    if(type==="print") v13State.printPrice=Number(price||0);
+    document.querySelectorAll(`.v13-radio-card[data-type="${type}"]`).forEach(x=>x.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+    v13UpdateTotal();
+  };
+
+  window.v13PickSnack=function(chk){
+    const selected=[...document.querySelectorAll(".v13-snack:checked")].length;
+    v13State.snackPrice = selected>0 ? Number(currentProduct?.complexPrice||300) : 0;
+    v13UpdateTotal();
+  };
+
+  window.v13UpdateTotal=function(){
+    const base=Number((selectedOption&&selectedOption.price)||0);
+    const total=base+Number(v13State.tablePrice||0)+Number(v13State.printPrice||0)+Number(v13State.snackPrice||0);
+    const el=document.getElementById("v13TotalAmount");
+    const sub=document.getElementById("v13TotalSub");
+    if(el) el.textContent=total+" ر.ق";
+    if(sub){
+      const parts=[`الباقة: ${base} ر.ق`];
+      if(v13State.tablePrice) parts.push(`طاولات: ${v13State.tablePrice} ر.ق`);
+      if(v13State.printPrice) parts.push(`ملصقات: ${v13State.printPrice} ر.ق`);
+      if(v13State.snackPrice) parts.push(`سناك: ${v13State.snackPrice} ر.ق`);
+      sub.textContent=parts.join(" — ");
+    }
+    return total;
+  };
+
+  window.v13SetMainImage=function(src,label,btn){
+    v13State.selectedImg=src; v13State.selectedShape=label||"شكل مختار";
+    const main=document.getElementById("v13MainImg");
+    const side=document.getElementById("v13SideMain");
+    if(main) main.src=src;
+    if(side) side.src=src;
+    document.querySelectorAll(".v13-thumb").forEach(x=>x.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+  };
+
+  function colorsHtml(){
+    const colors=[
+      ["وردي","#ff7bb3"],["أبيض","#fff"],["ذهبي","#d4af37"],["خمري","#7b1230"],
+      ["أزرق","#1689df"],["سماوي","#7dd3fc"],["أصفر","#ffd400"],["أسود","#111"],
+      ["بنفسجي","#8b48b9"],["أحمر","#e3342f"],["أخضر","#2ca66f"],["برتقالي","#ff8200"],
+      ["بيبي وردي","#ffd2e4"],["بيبي أزرق","#b8ecff"],["بيبي أصفر","#fff5aa"],["بيبي موف","#dec8ff"]
+    ];
+    return `<div class="v13-colors">${colors.map((c,i)=>`<button type="button" class="v13-color ${i===0?'active':''}" onclick="v13PickColor('${esc13(c[0])}',this)"><span>${esc13(c[0])}</span><i class="v13-dot" style="background:${esc13(c[1])}"></i></button>`).join("")}</div>
+      <div class="v13-help">ألوان البالونات متنوعة، يمكن اختيار لون واحد أو أكثر، وفي حال اختيار أكثر من لون يتم التنسيق مع الإدارة.</div>`;
+  }
+
+  function snackHtml(p){
+    const snacks = String(p.snackType||"فشار - حلويات مشكلة - شيبس - مارشيملو - مياه صغيرة للأطفال - عصير صغير للأطفال")
+      .split(/[-،,\/]+/).map(x=>x.trim()).filter(Boolean);
+    return `<div class="v13-section pink"><h3 class="v13-section-title">السناك المقدم للأطفال <span class="v13-required">مطلوب</span></h3>
+      <div class="v13-snack-grid">${snacks.map(s=>`<label class="v13-check-card"><input class="v13-snack" type="checkbox" checked onchange="v13PickSnack(this)"> ${esc13(s)}</label>`).join("")}</div>
+      <div class="v13-note">مغلق عند اختيار ديكور فقط. عند اختيار باقة الأطفال يتم احتساب السناك حسب الباقة.</div>
+    </div>`;
+  }
+
+  function addonsHtml(p){
+    const table=Number(p.roundTablePrice||50);
+    const print=Number(p.piecePrice||15);
+    return `<div class="v13-section"><h3 class="v13-section-title">اختيار الطاولات والملصقات إذا وجدت</h3>
+      <h4 class="v13-section-title" style="font-size:16px;margin-top:0">طاولات أسطوانية إضافية</h4>
+      <div class="v13-addon-grid">
+        <button class="v13-radio-card active" data-type="table" onclick="v13PickAddon('table',0,this)"><span class="circle"></span>بدون طاولات إضافية<b>0 ر.ق</b></button>
+        <button class="v13-radio-card" data-type="table" onclick="v13PickAddon('table',${table},this)"><span class="circle"></span>طاولة أسطوانية عدد 1<b>${table} ر.ق</b></button>
+        <button class="v13-radio-card" data-type="table" onclick="v13PickAddon('table',${table*2},this)"><span class="circle"></span>طاولتان أسطوانيتان عدد 2<b>${table*2} ر.ق</b></button>
+        <button class="v13-radio-card" data-type="table" onclick="v13PickAddon('table',${table*3},this)"><span class="circle"></span>3 طاولات أسطوانية عدد 3<b>${table*3} ر.ق</b></button>
+      </div>
+      <h4 class="v13-section-title" style="font-size:16px;margin:14px 0 8px">ملصقات الطاولات</h4>
+      <div class="v13-addon-grid">
+        <button class="v13-radio-card active" data-type="print" onclick="v13PickAddon('print',0,this)"><span class="circle"></span>بدون ملصقات<b>0 ر.ق</b></button>
+        <button class="v13-radio-card" data-type="print" onclick="v13PickAddon('print',${print*5},this)"><span class="circle"></span>ملصق طاولة عدد 1<b>${print*5} ر.ق</b></button>
+        <button class="v13-radio-card" data-type="print" onclick="v13PickAddon('print',${print*10},this)"><span class="circle"></span>ملصقات طاولة عدد 2<b>${print*10} ر.ق</b></button>
+        <button class="v13-radio-card" data-type="print" onclick="v13PickAddon('print',${print*15},this)"><span class="circle"></span>ملصقات طاولة عدد 3<b>${print*15} ر.ق</b></button>
+      </div>
+      <div class="v13-note">اختياري: إذا لا يحتاج طاولات أو ملصقات اترك الاختيار على “بدون”.</div>
+    </div>`;
+  }
+
+  function priceHtml(p){
+    const opts=v13Options(p);
+    return `<div class="v13-section"><h3 class="v13-section-title">اختيار باقة الديكور <span class="v13-required">مطلوب</span></h3>
+      <div class="v13-price-grid">${opts.map((o,i)=>`<button class="v13-price-card ${i===0?'active':''}" onclick="v13PickPrice(${i})">${esc13(o.label)}<b>${Number(o.price||0)} ر.ق</b>${o.note?`<small>${esc13(o.note)}</small>`:""}</button>`).join("")}</div>
+    </div>`;
+  }
+
+  function bookingHtml(p){
+    const msg=encodeURIComponent(`استفسار عن المنتج رقم ${p.number||p.id} - ${p.name}`);
+    return `<div class="v13-section pink"><h3 class="v13-section-title">بيانات الحجز</h3>
+      <div class="v13-note">⏰ صباحاً / ظهراً / عصراً — من 9 صباحاً إلى 5 مساءً — لا يقبل تاريخ سابق</div>
+      <div class="v13-contact">
+        <button class="v13-close" onclick="closeSheets()">إغلاق</button>
+        <button class="v13-cart" onclick="addCurrent()">احجز الآن وأضف للسلة</button>
+        <a class="v13-wa" href="https://wa.me/${WA13}?text=${msg}" target="_blank">استفسار واتساب</a>
+      </div>
+    </div>`;
+  }
+
+  function galleryHtml(p){
+    const imgs=v13DecorGallery(p);
+    if(!imgs.length) return "";
+    return `<aside class="v13-side"><img id="v13SideMain" class="v13-side-main" src="${esc13(imgs[0])}" onerror="tryNextImg?tryNextImg(this):this.style.display='none'">
+      <h3>اختر شكل الديكور المناسب للزبون 🖼️</h3>
+      <div class="v13-gallery">${imgs.map((src,i)=>`<button class="v13-thumb ${i===0?'active':''}" onclick="v13SetMainImage('${esc13(src)}','${i===0?'الصورة الأساسية':'شكل '+i}',this)"><img src="${esc13(src)}" onerror="this.closest('.v13-thumb').remove()"><span>${i===0?'الصورة الأساسية':'شكل '+i}</span></button>`).join("")}</div>
+    </aside>`;
+  }
+
+  window.openDetail=function(id){
+    const p=(window.PRODUCTS||PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id));
+    if(!p) return;
+    currentProduct=p; qty=1; selectedOption=v13Options(p)[0] || productOptions(p)[0];
+    v13State = { color:"وردي", tablePrice:0, printPrice:0, snackPrice:0, selectedImg:p.image||img(p), selectedShape:"الصورة الأساسية" };
+    const mainImg=(typeof imgCandidates==="function" ? imgCandidates(p)[0] : (p.image||img(p)));
+    const isDecor=isDecor13(p);
+
+    detailPanel.classList.add("v13-panel");
+    detailPanel.innerHTML=`<button class="close" onclick="closeSheets()">×</button>
+      <div class="v13-layout">
+        <main class="v13-detail">
+          <div class="v13-top">
+            <img id="v13MainImg" class="v13-main-img" src="${esc13(mainImg)}" onerror="tryNextImg?tryNextImg(this):this.style.display='none'">
+            <h1 class="v13-title">${esc13(p.name)}</h1>
+            <div class="v13-tags"><span>#${esc13(p.number||p.id)}</span><span>${esc13(p.category||"")}</span><span>${esc13(p.type||"")}</span></div>
+            <div class="v13-intro">${esc13(p.details||"")}</div>
+          </div>
+          ${priceHtml(p)}
+          ${isDecor ? `<div class="v13-section"><h3 class="v13-section-title">بيانات حجز الديكور</h3>
+            <h4 class="v13-section-title" style="font-size:16px;margin-top:0">الشخصية / الثيم <span class="v13-required">مطلوب</span></h4>
+            <div class="v13-help">اختر الشخصية من القائمة، ويتم تحميل الصورة الحقيقية تلقائياً من ويكيبيديا عند توفرها، ثم اكتب اسم الطفل على البنر.</div>
+            <select id="v13Theme" class="v13-field"><option>حسب الطلب / ثيم خاص</option><option>أميرات</option><option>سبايدرمان</option><option>فروزن</option><option>يونيكورن</option><option>سيارات</option><option>تخرج</option><option>بيبي</option></select>
+            <input id="custChild" class="v13-field" placeholder="اسم الطفل / الطفلة على البنر *">
+            <textarea id="custNote" class="v13-field" placeholder="ملاحظات الثيم: العمر أو الاسم بالإنجليزي أو شخصية أخرى"></textarea>
+          </div>
+          <div class="v13-section"><h3 class="v13-section-title">اختيار ألوان البالونات 🎈</h3>${colorsHtml()}</div>
+          ${snackHtml(p)}
+          <div class="v13-total"><div>الإجمالي الحالي للديكور</div><div id="v13TotalAmount" class="amount">${Number(selectedOption?.price||0)} ر.ق</div><small id="v13TotalSub">الباقة: ${Number(selectedOption?.price||0)} ر.ق</small></div>
+          ${addonsHtml(p)}` : ""}
+          ${bookingHtml(p)}
+        </main>
+        ${isDecor ? galleryHtml(p) : ""}
+      </div>
+      <div class="bottom-actions v13-bottom">
+        <button class="primary" onclick="addCurrent()">أضف للسلة 🛒</button>
+        <div class="qty"><button onclick="changeQty(-1)">−</button><span id="qtyText">1</span><button onclick="changeQty(1)">+</button></div>
+      </div>`;
+    detailPanel.classList.add("v13-modal-wide");
+    detailSheet.classList.add("show");
+    setTimeout(v13UpdateTotal,60);
+  };
+
+  window.addCurrent=function(){
+    if(!currentProduct) return;
+    const total=v13UpdateTotal();
+    const o=selectedOption||v13Options(currentProduct)[0]||productOptions(currentProduct)[0];
+    const extras=[];
+    const val=id=>document.getElementById(id)?.value||"";
+    if(v13State.selectedShape) extras.push("شكل الديكور: "+v13State.selectedShape);
+    if(val("v13Theme")) extras.push("الثيم: "+val("v13Theme"));
+    if(v13State.color) extras.push("ألوان البالونات: "+v13State.color);
+    if(v13State.tablePrice) extras.push("طاولات إضافية: "+v13State.tablePrice+" ر.ق");
+    if(v13State.printPrice) extras.push("ملصقات الطاولات: "+v13State.printPrice+" ر.ق");
+    if(v13State.snackPrice) extras.push("سناك الأطفال: "+v13State.snackPrice+" ر.ق");
+    document.querySelectorAll(".v13-snack:checked").forEach(c=>extras.push("سناك: "+c.parentElement.textContent.trim()));
+    if(val("custChild")) extras.push("اسم/ثيم: "+val("custChild"));
+    if(val("custNote")) extras.push("ملاحظة: "+val("custNote"));
+    cart.push({id:currentProduct.id,number:currentProduct.number,name:currentProduct.name,img:v13State.selectedImg||img(currentProduct),option:o.label,price:total,qty,note:extras.join(" - ")});
+    saveCart(); closeSheets(); openCart();
+  };
+
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V13 MATCH OLD DETAIL DESIGN ===== -->
+
 </body>
 </html>
