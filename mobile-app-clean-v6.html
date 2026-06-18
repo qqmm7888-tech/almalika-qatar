@@ -1628,5 +1628,217 @@ init();
 </script>
 <!-- ===== END ALMALIKA CLEAN V5 COMPLETE CHOICES CONTACTS AMOUNTS ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V6 REMOVE DUPLICATES ORDER DETAILS ===== -->
+<style id="almalika-clean-v6-remove-duplicates-style">
+/* V6: إزالة التكرار وترتيب التفاصيل والتواصل */
+.v6-specs{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  margin:10px 0;
+}
+.v6-specs h3{
+  margin:0 0 10px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v6-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.v6-cell{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:16px;
+  padding:10px;
+  color:#331522;
+  font-size:12px;
+  line-height:1.7;
+  font-weight:800;
+}
+.v6-cell.full{grid-column:1/-1}
+.v6-cell b{
+  display:block;
+  color:#7b1230;
+  margin-bottom:4px;
+  font-size:12px;
+}
+.v6-contact{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  margin:10px 0 76px;
+}
+.v6-contact h3{
+  margin:0 0 10px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v6-contact-note{
+  margin:8px 0 0;
+  color:#806a75;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.6;
+  text-align:center;
+}
+.v6-price-title{
+  margin:0 0 10px;
+  color:#7b1230;
+  font-size:20px;
+  font-weight:1000;
+  text-align:right;
+}
+.info-box.price-only{
+  background:#fff!important;
+  border:1px solid #f0c9dc!important;
+}
+.info-box.price-only .options{
+  grid-template-columns:1fr 1fr!important;
+}
+.info-box.price-only .opt{
+  min-height:70px!important;
+  background:#fff7fb!important;
+}
+.old-detail-section.compact{
+  margin:10px 0!important;
+}
+.old-detail-section.compact h3{
+  font-size:20px!important;
+  margin-bottom:8px!important;
+}
+.detail-img{
+  max-height:245px!important;
+}
+.modal .panel,
+.panel{
+  padding-bottom:115px!important;
+}
+.close{
+  z-index:50!important;
+}
+@media(max-width:380px){
+  .v6-grid{grid-template-columns:1fr}
+  .info-box.price-only .options{grid-template-columns:1fr!important}
+}
+</style>
+
+<script id="almalika-clean-v6-remove-duplicates-script">
+(function(){
+  const V6_PHONES = ["33317720","33317721","33317716","33317705"];
+  const V6_WA = "97433317720";
+
+  function esc6(s){ 
+    return (window.esc ? window.esc(s) : String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))); 
+  }
+
+  function nice6(v){
+    if(v==null || v==="") return "";
+    if(Array.isArray(v)){
+      return v.map(x=>{
+        if(!x) return "";
+        if(typeof x==="object"){
+          if(x.kids || x.children || x.price || x.note){
+            return `${x.kids||x.children||""} طفل${x.price?": "+x.price+" ر.ق":""}${x.note?" - "+x.note:""}`;
+          }
+          return Object.entries(x).map(([k,val])=>`${k}: ${val}`).join(" - ");
+        }
+        return String(x);
+      }).filter(Boolean).join("<br>");
+    }
+    if(typeof v==="object"){
+      return Object.entries(v).map(([k,val])=>`${k}: ${val}`).join("<br>");
+    }
+    return String(v);
+  }
+
+  window.v6SpecsHtml = function(p){
+    const rows=[];
+    const add=(label,val,full=false)=>{
+      val=nice6(val);
+      if(!val) return;
+      rows.push(`<div class="v6-cell ${full?'full':''}"><b>${esc6(label)}</b>${val}</div>`);
+    };
+
+    add("رقم المنتج", p.number || p.id);
+    add("القسم", p.category);
+    add("النوع", p.type);
+    add("العمر", p.age);
+    add("نوع التأجير", p.rentType);
+    add("المدة", p.durationOneDay);
+    if(p.durationTwoDays && p.durationTwoDays!==p.durationOneDay) add("مدة إضافية", p.durationTwoDays);
+    add("المقاس", p.measurements || [p.length,p.width,p.height].filter(Boolean).join(" × "));
+    add("تفاصيل المنتج", p.details, true);
+    add("محتويات العرض", p.offerIncludes, true);
+    add("الشروط", p.packageConditions, true);
+    add("ملاحظات", p.notes, true);
+
+    if(!rows.length) return "";
+    return `<div class="v6-specs"><h3>مواصفات المنتج</h3><div class="v6-grid">${rows.join("")}</div></div>`;
+  };
+
+  window.v6ContactsHtml = function(p){
+    const msg = encodeURIComponent(`استفسار عن ${p.name || "منتج"} رقم ${p.number || p.id || ""}`);
+    return `<div class="v6-contact"><h3>التواصل والحجز</h3>
+      <div class="contact-strip">
+        <a class="contact-btn wa" href="https://wa.me/${V6_WA}?text=${msg}" target="_blank">💬 واتساب مباشر</a>
+        <a class="contact-btn call" href="tel:+97433317720">📞 اتصال مباشر</a>
+      </div>
+      <div class="phones-row">${V6_PHONES.map(n=>`<a href="tel:+974${n}">${n}</a>`).join("")}</div>
+      <div class="v6-contact-note">بعد اختيار الباقة والبيانات، اضغط أضف ثم أرسل الطلب من السلة.</div>
+    </div>`;
+  };
+
+  // ترتيب النافذة: صور -> عنوان -> سعر/باقة -> اختيارات -> مواصفات مختصرة -> ملاحظات -> تواصل
+  window.openDetail = function(id){
+    const p=(window.PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id)); 
+    if(!p)return;
+    currentProduct=p; 
+    qty=1; 
+    selectedOption=productOptions(p)[0];
+
+    const opts=productOptions(p);
+    const gallery=(typeof oldDecorGalleryFiles==="function") ? oldDecorGalleryFiles(p) : (p.image?[p.image]:[]);
+    const first = gallery[0] || p.image || img(p);
+
+    detailPanel.innerHTML = `<button class="close" onclick="closeSheets()">×</button>
+      <img class="detail-img" src="${esc6(first)}" onerror="this.src='${esc6(img(p))}'">
+      ${(typeof oldGalleryHtml==="function") ? oldGalleryHtml(p) : ""}
+      <h1>${esc6(p.name)}</h1>
+      <p class="sub">${esc6(p.details||p.category||"")}</p>
+
+      <div class="info-box price-only">
+        <div class="v6-price-title">اختيار السعر / الباقة</div>
+        <div class="options">
+          ${opts.map((o,i)=>`<button class="opt ${i===0?'active':''}" onclick="selectOpt(${i})">${esc6(o.label)}<br>${Number(o.price||0)} ر.ق${o.note?`<small class="package-note">${esc6(o.note)}</small>`:""}</button>`).join("")}
+        </div>
+      </div>
+
+      ${(typeof oldExtraChoicesHtml==="function") ? oldExtraChoicesHtml(p).replace('class="old-detail-section"', 'class="old-detail-section compact"') : ""}
+      ${v6SpecsHtml(p)}
+
+      <div class="info-box"><h3>ملاحظات الطلب</h3>
+        <input class="field" id="custChild" placeholder="اسم الطفل / الثيم / اللون إن وجد">
+        <textarea class="field" id="custNote" placeholder="أي ملاحظة إضافية للطلب"></textarea>
+      </div>
+
+      ${v6ContactsHtml(p)}
+
+      <div class="bottom-actions">
+        <div class="qty"><button onclick="changeQty(-1)">−</button><span id="qtyText">1</span><button onclick="changeQty(1)">+</button></div>
+        <button class="primary" onclick="addCurrent()">أضف</button>
+      </div>`;
+    detailSheet.classList.add("show");
+  };
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V6 REMOVE DUPLICATES ORDER DETAILS ===== -->
+
 </body>
 </html>
