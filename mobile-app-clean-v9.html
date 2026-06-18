@@ -2124,5 +2124,410 @@ init();
 </script>
 <!-- ===== END ALMALIKA CLEAN V7 SECTION INFO DATA COMPLETION ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V8 CARDS SECTIONS MISSING DATA FIX ===== -->
+<style id="almalika-clean-v8-cards-sections-style">
+/* V8: كروت أوضح + شرح أقسام أقوى + عدم استبدال الصور المفقودة ببنر */
+.missing-img{
+  width:100%;
+  height:100%;
+  min-height:120px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#fff7fb,#fff8e5);
+  border:1px dashed #d4af37;
+  color:#7b1230;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-size:12px;
+  font-weight:1000;
+  line-height:1.6;
+  padding:10px;
+}
+.card .pic{
+  background:#fffaf1!important;
+}
+.card .price{
+  min-height:38px;
+}
+.card .price span{
+  display:block;
+  font-size:10px;
+  color:#806a75;
+  font-weight:900;
+  margin-bottom:2px;
+}
+.v8-section-guide{
+  margin:0 14px 14px;
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  color:#331522;
+  box-shadow:0 8px 22px rgba(123,18,48,.06);
+}
+.v8-section-guide h3{
+  margin:0 0 7px;
+  color:#7b1230;
+  font-size:19px;
+  font-weight:1000;
+}
+.v8-section-guide p{
+  margin:0 0 10px;
+  color:#806a75;
+  line-height:1.8;
+  font-size:12px;
+  font-weight:850;
+}
+.v8-guide-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:7px;
+}
+.v8-guide-row{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:14px;
+  padding:8px 10px;
+  color:#331522;
+  font-size:12px;
+  line-height:1.7;
+  font-weight:900;
+}
+.v8-guide-row b{
+  color:#7b1230;
+}
+.v8-mini{
+  color:#806a75;
+  font-size:10.5px;
+  font-weight:850;
+  line-height:1.55;
+  min-height:34px;
+  margin:0 0 7px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.v8-missing-note{
+  background:#fff8e5;
+  border:1px dashed #d4af37;
+  color:#7b1230;
+  border-radius:16px;
+  padding:9px;
+  margin:8px 0;
+  font-size:11px;
+  font-weight:900;
+  line-height:1.7;
+}
+.v8-detail-help{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  margin:10px 0;
+}
+.v8-detail-help h3{
+  margin:0 0 8px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v8-detail-help ul{
+  margin:0;
+  padding:0 18px 0 0;
+  color:#331522;
+  line-height:1.9;
+  font-size:12px;
+  font-weight:850;
+}
+.v8-detail-help li{margin-bottom:5px}
+</style>
+
+<script id="almalika-clean-v8-cards-sections-script">
+(function(){
+  function esc8(s){
+    return (window.esc ? window.esc(s) : String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])));
+  }
+  function txt8(v){
+    if(v==null || v==="") return "";
+    if(Array.isArray(v)){
+      return v.map(x=>{
+        if(!x) return "";
+        if(typeof x==="object"){
+          if(x.kids || x.children || x.price || x.note){
+            return `${x.kids||x.children||""} طفل${x.price?": "+x.price+" ر.ق":""}${x.note?" - "+x.note:""}`;
+          }
+          return Object.entries(x).map(([k,val])=>`${k}: ${val}`).join(" - ");
+        }
+        return String(x);
+      }).filter(Boolean).join("، ");
+    }
+    if(typeof v==="object") return Object.entries(v).map(([k,val])=>`${k}: ${val}`).join("، ");
+    return String(v);
+  }
+  function short8(s,n){
+    s=String(s||"").replace(/\s+/g," ").trim();
+    return s.length>n?s.slice(0,n-1)+"…":s;
+  }
+
+  window.markImgMissing = function(imgEl){
+    const box = imgEl && imgEl.parentElement;
+    if(!box) return;
+    const src = imgEl.getAttribute("src") || "";
+    box.innerHTML = `<div class="missing-img">الصورة غير مرفوعة<br><small>${esc8(src)}</small></div>`;
+  };
+
+  window.v8GroupInfo = {
+    all:{
+      title:"مختارات الملكة",
+      desc:"قسم سريع لعرض كل المنتجات. مناسب للزبون الذي يريد تصفح كامل الكتالوج قبل اختيار القسم.",
+      include:"منتجات من جميع الأقسام حسب البيانات المتوفرة.",
+      customer:"يبحث بالاسم أو الرقم، ثم يضغط تفاصيل ويضيف للسلة.",
+      note:"الأسعار والتوفر تؤكد عبر الواتساب."
+    },
+    bouncies:{
+      title:"النطاطيات والزحلاقيات",
+      desc:"نطاطيات وزحاليق وملاعب صابونية وفوم للأطفال. هنا أهم شيء للزبون هو العمر، المقاس، ومدة الحجز.",
+      include:"اسم المنتج، العمر المناسب، المقاس إن وجد، مدة يوم/يومين، والسعر.",
+      customer:"يختار المنتج حسب مساحة المكان وعمر الأطفال ثم يحدد مدة الحجز.",
+      note:"يفضل مراجعة المقاس قبل الحجز خصوصًا للمنازل والمجالس."
+    },
+    snacks:{
+      title:"السناك والعربات",
+      desc:"عربات وماكينات الضيافة مثل فشار، غزل البنات، بطاطا، ذرة، بانكيك، وافل، نافورة شوكولاتة وغيرها.",
+      include:"مدة الخدمة، باقات حسب عدد الأطفال، سعر الوحدة عند وجوده، ووجود موظفة إن كان مدخلًا.",
+      customer:"يختار عدد الأطفال أو الباقة، ويكتب أي ملاحظة عن النكهات أو طريقة الخدمة.",
+      note:"بعض السناك يحتاج كهرباء ومكان مناسب للتشغيل."
+    },
+    events:{
+      title:"تجهيز الحفلات والديكورات",
+      desc:"ديكورات عيد ميلاد وتخرج ومناسبات، مع اختيار شكل الديكور، الثيم، ألوان البالونات، الطاولات والملصقات.",
+      include:"صور الأشكال، وصف الديكور، المقاس، باقات الأطفال، السناك المرفق إن وجد.",
+      customer:"يختار شكل الديكور والصورة، ثم يحدد الثيم واللون واسم الطفل.",
+      note:"هذه أكثر صفحة تحتاج اختيارات واضحة قبل إرسال الطلب."
+    },
+    rentals:{
+      title:"الطاولات والكراسي والشخصيات",
+      desc:"مستلزمات إضافية للحفلات مثل الطاولات والكراسي وبعض البنود المساندة.",
+      include:"اسم البند، السعر، العدد أو الوصف إن وجد.",
+      customer:"يضيفها مع الطلب الأساسي أو يكتب العدد المطلوب في الملاحظات.",
+      note:"بعض البنود لا تؤجر منفردة حسب سياسة الشركة."
+    },
+    offers:{
+      title:"العروض والبكجات",
+      desc:"باقات جاهزة تجمع أكثر من منتج أو خدمة في طلب واحد لتسهيل الاختيار على الزبون.",
+      include:"محتويات العرض، السعر، عدد الأطفال أو الأشخاص، والشروط أو الملاحظات.",
+      customer:"يراجع مكونات العرض ثم يضيفه للسلة ويرسل الطلب.",
+      note:"العروض حسب التوفر وقد تتغير حسب التاريخ والمنطقة."
+    },
+    other:{
+      title:"بنود وخدمات أخرى",
+      desc:"بنود إضافية لا تدخل تحت الأقسام الرئيسية.",
+      include:"الوصف والسعر وأي شروط خاصة.",
+      customer:"يراجع التفاصيل ويكتب ملاحظاته.",
+      note:"يتم تأكيد الخدمة عبر الواتساب."
+    }
+  };
+
+  window.v8SectionGuideHtml = function(){
+    const info = v8GroupInfo[current] || v8GroupInfo.all;
+    return `<div id="v8SectionGuide" class="v8-section-guide">
+      <h3>${esc8(info.title)}</h3>
+      <p>${esc8(info.desc)}</p>
+      <div class="v8-guide-grid">
+        <div class="v8-guide-row"><b>يعرض:</b> ${esc8(info.include)}</div>
+        <div class="v8-guide-row"><b>المطلوب من الزبون:</b> ${esc8(info.customer)}</div>
+        <div class="v8-guide-row"><b>ملاحظة:</b> ${esc8(info.note)}</div>
+      </div>
+    </div>`;
+  };
+
+  window.v8RenderGuide = function(){
+    document.getElementById("v7SectionGuide")?.remove();
+    document.getElementById("v8SectionGuide")?.remove();
+    const titleBlocks = document.querySelectorAll(".section-title");
+    const anchor = titleBlocks[1] || titleBlocks[0];
+    if(anchor) anchor.insertAdjacentHTML("afterend", v8SectionGuideHtml());
+  };
+
+  const prevSetGroup8 = window.setGroup;
+  window.setGroup = function(id){
+    if(prevSetGroup8) prevSetGroup8(id);
+    setTimeout(v8RenderGuide,80);
+  };
+  const prevInit8 = window.init;
+  window.init = function(){
+    if(prevInit8) prevInit8();
+    setTimeout(v8RenderGuide,80);
+  };
+
+  window.v8ProductMini = function(p){
+    const sec = (typeof sectionOf==="function") ? sectionOf(p) : "all";
+    const parts = [];
+    if(p.details) parts.push(p.details);
+    if(sec==="offers" && p.offerIncludes) parts.push("يشمل: "+txt8(p.offerIncludes));
+    if(sec==="snacks" && p.snackPackages) parts.push("باقات حسب عدد الأطفال");
+    if(sec==="events" && p.measurements) parts.push("المقاس: "+p.measurements);
+    if(sec==="bouncies" && p.age) parts.push("العمر: "+p.age);
+    if(!parts.length) parts.push((v8GroupInfo[sec]||v8GroupInfo.all).desc);
+    return short8(parts.join(" — "),96);
+  };
+
+  window.v8PriceLabel = function(p){
+    const sec = (typeof sectionOf==="function") ? sectionOf(p) : "all";
+    if(sec==="snacks") return "تبدأ الباقة من";
+    if(sec==="events") return "يبدأ الديكور من";
+    if(sec==="offers") return "سعر العرض";
+    if(sec==="bouncies") return "يبدأ من";
+    return "يبدأ من";
+  };
+
+  // إعادة رسم الكرت ببيانات أوضح وصورة غير مضللة عند الفقد
+  window.card = function(p){
+    const price = (typeof priceOf === "function") ? priceOf(p) : 0;
+    const tag1 = short8(p.category || p.type || "منتج", 20);
+    const tag2 = short8(p.durationOneDay || p.age || "حسب الطلب", 20);
+    const imageSrc = p.image || "";
+    const imgHtml = imageSrc 
+      ? `<img src="${esc8(imageSrc)}" loading="lazy" onerror="markImgMissing(this)">`
+      : `<div class="missing-img">الصورة غير موجودة في البيانات</div>`;
+    return `<article class="card">
+      <span class="badge">#${esc8(p.number||p.id)}</span>
+      <div class="pic" onclick="openDetail(${Number(p.id)})">${imgHtml}</div>
+      <div class="card-body">
+        <h3>${esc8(p.name)}</h3>
+        <p class="v8-mini">${esc8(v8ProductMini(p))}</p>
+        <div class="meta"><span>${esc8(tag1)}</span><span>${esc8(tag2)}</span></div>
+        <div class="price"><span>${esc8(v8PriceLabel(p))}</span>${price} ر.ق</div>
+        <div class="card-actions">
+          <button class="details-btn" onclick="openDetail(${Number(p.id)})">تفاصيل</button>
+          <button class="add-btn" onclick="quickAdd(${Number(p.id)})">+</button>
+        </div>
+      </div>
+    </article>`;
+  };
+
+  window.v8DetailHelpHtml = function(p){
+    const sec = (typeof sectionOf==="function") ? sectionOf(p) : "all";
+    const info = v8GroupInfo[sec] || v8GroupInfo.all;
+    const bullets = [
+      `<b>شرح القسم:</b> ${esc8(info.desc)}`,
+      `<b>يعرض هذا المنتج:</b> ${esc8(info.include)}`,
+      `<b>المطلوب من الزبون:</b> ${esc8(info.customer)}`
+    ];
+    if(p.offerIncludes) bullets.push(`<b>محتويات العرض:</b> ${esc8(txt8(p.offerIncludes))}`);
+    if(p.snackPackages) bullets.push(`<b>باقات السناك:</b> ${esc8(txt8(p.snackPackages))}`);
+    if(p.packageConditions) bullets.push(`<b>الشروط:</b> ${esc8(txt8(p.packageConditions))}`);
+    if(p.notes) bullets.push(`<b>ملاحظات:</b> ${esc8(txt8(p.notes))}`);
+    return `<div class="v8-detail-help"><h3>شرح القسم والمنتج</h3><ul>${bullets.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
+  };
+
+  // أضف الشرح المنظم داخل التفاصيل بعد العنوان، مع إزالة صندوق V7 القديم حتى لا يتكرر
+  const prevOpen8 = window.openDetail;
+  window.openDetail = function(id){
+    if(prevOpen8) prevOpen8(id);
+    setTimeout(()=>{
+      const p=(window.PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id));
+      if(!p) return;
+      detailPanel.querySelector(".v7-included")?.remove();
+      const h1 = detailPanel.querySelector("h1");
+      if(h1 && !detailPanel.querySelector(".v8-detail-help")){
+        h1.insertAdjacentHTML("afterend", v8DetailHelpHtml(p));
+      }
+      // لو الصورة الرئيسية مفقودة لا نستبدلها ببنر، بل نظهر ملاحظة
+      const main = detailPanel.querySelector(".detail-img");
+      if(main){
+        main.onerror = function(){
+          const src = main.getAttribute("src") || "";
+          const d = document.createElement("div");
+          d.className = "missing-img";
+          d.style.height = "230px";
+          d.innerHTML = `الصورة غير مرفوعة<br><small>${esc8(src)}</small>`;
+          main.replaceWith(d);
+        };
+      }
+    },50);
+  };
+
+  setTimeout(()=>{
+    v8RenderGuide();
+    if(typeof renderProducts==="function") renderProducts();
+  },150);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V8 CARDS SECTIONS MISSING DATA FIX ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V9 HIDE EMPTY IMAGES ===== -->
+<style id="almalika-clean-v9-hide-empty-images-style">
+/* V9: إلغاء الصور/الكروت الفارغة */
+.card.img-missing,
+.decorThumb.img-missing,
+.gallery-thumb.img-missing{
+  display:none!important;
+}
+.pic .missing-img{
+  display:none!important;
+}
+</style>
+
+<script id="almalika-clean-v9-hide-empty-images-script">
+(function(){
+  // عند فشل صورة المنتج في الكرت: احذف الكرت كامل من العرض
+  window.markImgMissing = function(imgEl){
+    const card = imgEl && imgEl.closest && imgEl.closest('.card');
+    if(card){
+      card.classList.add('img-missing');
+      card.remove();
+      return;
+    }
+    const thumb = imgEl && imgEl.closest && imgEl.closest('.decorThumb,.gallery-thumb');
+    if(thumb){
+      thumb.classList.add('img-missing');
+      thumb.remove();
+      return;
+    }
+    if(imgEl) imgEl.style.display='none';
+  };
+
+  // صور الديكور الفارغة تختفي ولا تبقى خانة فاضية
+  window.hideBrokenThumb = function(imgEl){
+    const btn = imgEl && imgEl.closest && imgEl.closest('.decorThumb,.gallery-thumb');
+    if(btn){
+      btn.classList.add('img-missing');
+      btn.remove();
+    }else if(imgEl){
+      imgEl.style.display='none';
+    }
+  };
+
+  // لا نعرض كرت المنتج أصلًا إذا ما عنده صورة في البيانات
+  const oldCardV9 = window.card;
+  window.card = function(p){
+    if(!p || !p.image){
+      return "";
+    }
+    return oldCardV9 ? oldCardV9(p) : "";
+  };
+
+  // بعد الرسم، نظف أي فراغات
+  const oldRenderProductsV9 = window.renderProducts;
+  window.renderProducts = function(){
+    if(oldRenderProductsV9) oldRenderProductsV9();
+    setTimeout(function(){
+      document.querySelectorAll('.card').forEach(function(card){
+        const img = card.querySelector('.pic img');
+        if(!img || !img.getAttribute('src')){
+          card.remove();
+        }
+      });
+    },80);
+  };
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V9 HIDE EMPTY IMAGES ===== -->
+
 </body>
 </html>
