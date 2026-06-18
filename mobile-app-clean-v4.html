@@ -1,0 +1,1350 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>الملكة | تجربة تطبيق الجوال</title>
+<script src="almalika-data-v2.js"></script>
+<style>
+:root{
+  --bg:#fff7fb;
+  --panel:#ffffff;
+  --card:#ffffff;
+  --card2:#fff1f7;
+  --text:#331522;
+  --muted:#806a75;
+  --brand:#7b1230;
+  --pink:#f52f86;
+  --red:#ef233c;
+  --green:#20c76a;
+  --gold:#d4af37;
+  --line:#f0c9dc;
+}
+*{box-sizing:border-box}
+html{background:#f7eef3;overflow-x:hidden}
+body{
+  margin:0;
+  font-family:Tahoma,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  overflow-x:hidden;
+}
+@media(min-width:760px){
+  body{
+    width:430px;
+    max-width:430px;
+    margin:auto;
+    min-height:100vh;
+    border-left:1px solid #f0c9dc;
+    border-right:1px solid #f0c9dc;
+    box-shadow:0 0 80px rgba(123,18,48,.13);
+  }
+}
+button,input,select,textarea{font-family:inherit}
+button{border:0;cursor:pointer}
+a{text-decoration:none;color:inherit}
+.top{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(20,18,20,.96);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.appbar{
+  padding:12px 14px 8px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.logo{
+  font-size:26px;
+  font-weight:900;
+  color:#fff;
+  text-shadow:0 0 18px rgba(212,175,55,.22);
+}
+.top-actions{display:flex;gap:8px;align-items:center}
+.pill{
+  height:38px;
+  border-radius:999px;
+  padding:0 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.wa-pill{background:var(--green);color:#fff}
+.cart-pill{background:#fff;color:var(--brand)}
+.nav{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:0 14px 10px;
+  scroll-snap-type:x proximity;
+}
+.nav::-webkit-scrollbar,.chips::-webkit-scrollbar,.cat-icons::-webkit-scrollbar{display:none}
+.nav button{
+  flex:0 0 auto;
+  scroll-snap-align:start;
+  border-radius:999px;
+  background:var(--card);
+  color:#fff;
+  border:1px solid var(--line);
+  padding:10px 13px;
+  font-weight:900;
+  font-size:12px;
+}
+.nav button.active{background:var(--red);border-color:transparent}
+.search-wrap{padding:10px 14px 12px}
+.search{
+  height:52px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:0 14px;
+}
+.search span{font-size:22px;color:#8f878e}
+.search input{
+  width:100%;
+  height:100%;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#fff;
+  font-size:14px;
+  font-weight:800;
+}
+.search input::placeholder{color:#8f878e}
+.hero{padding:4px 14px 16px}
+.hero-card{
+  height:160px;
+  background:#241f24;
+  border-radius:24px;
+  overflow:hidden;
+  position:relative;
+  border:1px solid #332d32;
+}
+.hero-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+.hero-card:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.28));
+  pointer-events:none;
+}
+.section{padding:8px 0 18px}
+.section-title{
+  padding:0 14px 12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:10px;
+}
+.section-title h2{margin:0;font-size:25px;line-height:1.2}
+.section-title p{margin:5px 0 0;color:var(--muted);font-size:12px;font-weight:800;line-height:1.5}
+.link-btn{background:#3a3439;color:#fff;border-radius:999px;padding:9px 12px;font-weight:900;font-size:12px}
+.cat-icons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  padding:0 14px 14px;
+}
+.cat-card{
+  min-height:112px;
+  border-radius:22px;
+  background:var(--card);
+  color:#fff;
+  padding:12px 8px;
+  text-align:center;
+  border:1px solid #332d32;
+}
+.cat-card .ico{
+  width:56px;height:56px;margin:0 auto 8px;
+  background:var(--card2);
+  border-radius:18px;
+  display:grid;place-items:center;
+  font-size:27px;
+}
+.cat-card b{font-size:12px;line-height:1.35;display:block}
+.cat-card small{display:block;color:var(--muted);margin-top:6px;font-weight:900}
+.chips{
+  display:flex;gap:8px;overflow-x:auto;
+  padding:0 14px 12px;
+}
+.chip{
+  flex:0 0 auto;
+  border-radius:999px;
+  padding:9px 13px;
+  background:var(--card);
+  color:#fff;
+  border:1px solid var(--line);
+  font-weight:900;
+  font-size:12px;
+}
+.chip.active{background:#fff;color:#111;border-color:#fff}
+.products{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  padding:0 14px 110px;
+}
+.card{
+  background:var(--card);
+  border-radius:24px;
+  overflow:hidden;
+  position:relative;
+  border:1px solid #332d32;
+  min-width:0;
+}
+.badge{
+  position:absolute;
+  top:8px;
+  right:8px;
+  z-index:2;
+  background:#101010;
+  color:#fff;
+  border-radius:999px;
+  padding:5px 8px;
+  font-size:10px;
+  font-weight:900;
+}
+.pic{
+  height:145px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+}
+.pic img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center;
+  display:block;
+}
+.card-body{padding:10px}
+.card h3{
+  margin:0 0 6px;
+  font-size:13px;
+  line-height:1.45;
+  min-height:38px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.meta{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+.meta span{
+  background:#342f34;
+  color:#fff;
+  border-radius:999px;
+  padding:4px 6px;
+  font-size:9px;
+  font-weight:800;
+}
+.price{
+  font-weight:900;
+  font-size:16px;
+  color:#fff;
+  margin:6px 0 8px;
+}
+.card-actions{
+  display:grid;
+  grid-template-columns:1fr 40px;
+  gap:7px;
+}
+.details-btn{
+  height:38px;
+  border-radius:999px;
+  background:var(--red);
+  color:#fff;
+  font-weight:900;
+  font-size:12px;
+}
+.add-btn{
+  height:38px;
+  border-radius:999px;
+  background:#3a363a;
+  color:#fff;
+  font-size:24px;
+  font-weight:900;
+}
+.empty{
+  grid-column:1/-1;
+  padding:24px;
+  text-align:center;
+  color:var(--muted);
+  font-weight:900;
+}
+.cart-bar{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:12px;
+  width:calc(100% - 28px);
+  max-width:402px;
+  height:58px;
+  border-radius:23px;
+  background:var(--red);
+  color:#fff;
+  z-index:80;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:0 16px;
+  box-shadow:0 14px 35px rgba(0,0,0,.38);
+  font-weight:900;
+}
+.cart-bar button{
+  background:transparent;
+  color:#fff;
+  width:100%;
+  height:100%;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  font-size:14px;
+}
+.sheet{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.65);
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+}
+.sheet.show{display:flex}
+.panel{
+  width:100%;
+  max-width:430px;
+  margin:auto auto 0;
+  background:var(--bg);
+  color:#fff;
+  border-radius:30px 30px 0 0;
+  max-height:93vh;
+  overflow:auto;
+  padding:14px 14px 100px;
+}
+.close{
+  position:sticky;
+  top:0;
+  margin-inline-start:auto;
+  width:46px;height:46px;
+  border-radius:50%;
+  background:#333;
+  color:#fff;
+  font-size:28px;
+  z-index:3;
+}
+.detail-img{
+  width:100%;
+  height:285px;
+  object-fit:contain;
+  background:#fff;
+  border-radius:24px;
+  display:block;
+}
+.panel h1{font-size:25px;line-height:1.35;margin:14px 0 8px}
+.panel .sub{color:var(--muted);font-weight:800;line-height:1.7;margin:0 0 12px}
+.info-box{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:13px;
+  margin:10px 0;
+}
+.info-box h3{margin:0 0 10px;font-size:18px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.info-grid div{
+  background:var(--card);
+  border-radius:16px;
+  padding:10px;
+  font-size:12px;
+  line-height:1.5;
+  color:#fff;
+}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.opt{
+  background:var(--card);
+  border:1px solid var(--line);
+  color:#fff;
+  border-radius:18px;
+  padding:11px 8px;
+  min-height:58px;
+  font-weight:900;
+  font-size:12px;
+}
+.opt.active{border-color:var(--red);box-shadow:0 0 0 2px rgba(239,35,60,.25)}
+.field{
+  width:100%;
+  min-height:48px;
+  border:1px solid var(--line);
+  background:var(--card);
+  color:#fff;
+  border-radius:16px;
+  padding:10px 12px;
+  outline:0;
+  font-weight:800;
+  margin-top:8px;
+}
+textarea.field{min-height:82px;resize:vertical}
+.bottom-actions{
+  position:fixed;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:0;
+  width:100%;
+  max-width:430px;
+  background:linear-gradient(180deg,rgba(20,18,20,.1),#141214 20%);
+  padding:14px 14px 16px;
+  display:grid;
+  grid-template-columns:1fr 120px;
+  gap:10px;
+  z-index:120;
+}
+.primary{
+  height:54px;
+  border-radius:22px;
+  background:var(--red);
+  color:#fff;
+  font-weight:900;
+  font-size:16px;
+}
+.qty{
+  height:54px;
+  border-radius:22px;
+  background:#333;
+  color:#fff;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  align-items:center;
+  overflow:hidden;
+}
+.qty button{height:100%;background:transparent;color:#fff;font-size:22px;font-weight:900}
+.qty span{text-align:center;font-weight:900}
+.cart-item{
+  display:grid;
+  grid-template-columns:70px 1fr auto;
+  gap:10px;
+  align-items:center;
+  background:var(--panel);
+  border-radius:20px;
+  padding:9px;
+  margin:8px 0;
+}
+.cart-item img{width:70px;height:70px;object-fit:contain;background:#fff;border-radius:16px}
+.cart-item b{font-size:13px;display:block;line-height:1.4}
+.cart-item small{color:var(--muted);font-weight:800;display:block;margin-top:3px}
+.del{background:#3a3439;color:#fff;border-radius:14px;padding:9px;font-weight:900}
+.total{
+  background:#fff;
+  color:#111;
+  border-radius:20px;
+  padding:14px;
+  display:flex;
+  justify-content:space-between;
+  font-weight:900;
+  margin:10px 0;
+}
+@media(max-width:359px){
+  .products{grid-template-columns:1fr}
+  .cat-icons{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+
+<style id="almalika-clean-v2-light-fixes">
+/* V2 ألوان الملكة + إصلاح عرض البيانات والأسعار */
+body{background:linear-gradient(180deg,#fff7fb,#fffaf1)!important;color:#331522!important}
+.top{background:rgba(255,255,255,.96)!important;border-bottom:1px solid #f0c9dc!important;box-shadow:0 8px 22px rgba(123,18,48,.06)!important}
+.logo{color:#7b1230!important}
+.nav button{background:#fff!important;color:#7b1230!important;border:1px solid #f0c9dc!important}
+.nav button.active{background:linear-gradient(135deg,#f52f86,#7b1230)!important;color:#fff!important}
+.search{background:#fff!important;border:1px solid #f0c9dc!important}
+.search input{color:#331522!important}
+.hero-card,.card,.cat-card,.info-box,.cart-item{background:#fff!important;border:1px solid #f0c9dc!important;color:#331522!important}
+.cat-card .ico,.meta span,.chip,.stat,.info-grid div,.field,.opt,.qty{background:#fff4f8!important;color:#331522!important;border:1px solid #f0c9dc!important}
+.card h3,.section-title h2,.panel h1,.panel h3,.panel label,.price{color:#331522!important}
+.section-title p,.card .desc,.sub,.cart-item small{color:#806a75!important}
+.pic,.detail-img{background:#fffaf1!important}
+.panel{background:#fff7fb!important;color:#331522!important}
+.sheet{background:rgba(20,14,18,.55)!important;backdrop-filter:blur(6px)!important}
+.close{background:#7b1230!important;color:#fff!important}
+.details-btn,.primary,.cart-bar{background:linear-gradient(135deg,#f52f86,#7b1230)!important;color:#fff!important}
+.add-btn{background:#7b1230!important;color:#fff!important}
+.opt.active{border-color:#f52f86!important;box-shadow:0 0 0 2px rgba(245,47,134,.18)!important}
+.total{background:#fff!important;color:#331522!important;border:1px solid #f0c9dc!important}
+.badge{background:#f52f86!important;color:#fff!important}
+@media(min-width:760px){body{background:#fff7fb!important}}
+</style>
+
+</head>
+<body>
+<header class="top">
+  <div class="appbar">
+    <div class="logo">الملكة 👑</div>
+    <div class="top-actions">
+      <a class="pill wa-pill" href="https://wa.me/97433317720">واتساب</a>
+      <button class="pill cart-pill" onclick="openCart()">السلة <span id="topCount">0</span></button>
+    </div>
+  </div>
+  <nav class="nav" id="nav"></nav>
+  <div class="search-wrap">
+    <div class="search"><span>⌕</span><input id="q" placeholder="ابحث عن نطاطية، سناك، ديكور..." oninput="renderProducts()"></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-card"><img src="order-ad.jpg" alt="الملكة" onerror="this.style.display='none'"></div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <div>
+      <h2>الأقسام الرئيسية</h2>
+      <p>اختر القسم ثم أضف منتجاتك للسلة وأرسل الطلب واتساب.</p>
+    </div>
+  </div>
+  <div class="cat-icons" id="catIcons"></div>
+</section>
+
+<section class="section">
+  <div class="section-title">
+    <div>
+      <h2 id="sectionTitle">مختارات VIP</h2>
+      <p id="sectionDesc">منتجات مختارة من جميع الأقسام.</p>
+    </div>
+    <button class="link-btn" onclick="setGroup('all')">عرض الكل</button>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="products" id="products"></div>
+</section>
+
+<div class="cart-bar">
+  <button onclick="openCart()"><span>🛒 سلة الحجز: <b id="cartCount">0</b></span><span><b id="cartTotal">0</b> ر.ق</span></button>
+</div>
+
+<div class="sheet" id="detailSheet"><div class="panel" id="detailPanel"></div></div>
+<div class="sheet" id="cartSheet"><div class="panel" id="cartPanel"></div></div>
+
+<script>
+const PRODUCTS = window.PRODUCTS || [];
+const phone = "97433317720";
+const groups = [
+  {id:"all", title:"الرئيسية", icon:"👑", match:p=>true, desc:"كل منتجات الملكة في مكان واحد."},
+  {id:"bouncies", title:"النطاطيات والزحلاقيات", icon:"🏰", match:p=>sectionOf(p)==="bouncies", desc:"نطاطيات، زحلاقيات، ملاعب صابونية وفوم."},
+  {id:"snacks", title:"السناك والعربات", icon:"🍿", match:p=>sectionOf(p)==="snacks", desc:"عربات فشار، غزل البنات، بطاطا، آيس كريم والمزيد."},
+  {id:"events", title:"تجهيز الحفلات", icon:"🎈", match:p=>sectionOf(p)==="events", desc:"ديكورات، استاندات، بوابات، بالونات وحفلات."},
+  {id:"rentals", title:"الطاولات والكراسي", icon:"🪑", match:p=>sectionOf(p)==="rentals", desc:"طاولات، كراسي وشخصيات كرتونية."},
+  {id:"offers", title:"العروض والبكجات", icon:"🎁", match:p=>sectionOf(p)==="offers", desc:"بكجات وعروض مختارة."},
+  {id:"other", title:"بنود أخرى", icon:"✨", match:p=>sectionOf(p)==="other", desc:"خدمات وبنود إضافية."}
+];
+let current="all", currentCat="", currentProduct=null, selectedOption=null, qty=1;
+let cart = JSON.parse(localStorage.getItem("almalikaCleanCart") || "[]");
+
+function sectionOf(p){
+  const c=p.category||"", t=p.type||"", n=p.name||"", d=p.details||"", num=Number(p.number||p.id||0);
+  const blob=c+" "+t+" "+n+" "+d;
+  if((num>=600 && num<=699) || /^عروض/.test(c) || /^عرض/.test(t) || /^بكج/.test(t) || /^باقة/.test(t)) return "offers";
+  if(c==="السناك والعربات") return "snacks";
+  if(c==="تجهيز الحفلات والمناسبات") return "events";
+  if(c==="الطاولات والكراسي والشخصيات" || /طاول|كرسي|كراسي|شخصية|شخصيات/.test(blob)) return "rentals";
+  if(c==="بنود أخرى") return "other";
+  return "bouncies";
+}
+function priceOf(p){
+  const nums=[];
+  // السعر الأساسي الصحيح حسب نوع المنتج
+  if(Number(p.baseDecorPrice)>0) nums.push(Number(p.baseDecorPrice));
+  if(Array.isArray(p.snackPackages) && p.snackPackages.length){
+    p.snackPackages.forEach(o=>{ if(Number(o.price)>0) nums.push(Number(o.price)); });
+  }
+  if(p.packagePrices && typeof p.packagePrices==="object"){
+    Object.values(p.packagePrices).forEach(v=>{ if(Number(v)>0) nums.push(Number(v)); });
+  }
+  ["priceOneDay","priceTwoDays","baseTotal"].forEach(k=>{
+    if(Number(p[k])>0) nums.push(Number(p[k]));
+  });
+  // سعر الوحدة مثل 5 ر.ق لا يظهر كسعر أساسي إلا إذا ما في أي سعر ثاني
+  if(!nums.length && Number(p.unitPrice)>0) nums.push(Number(p.unitPrice));
+  if(!nums.length && Number(p.piecePrice)>0) nums.push(Number(p.piecePrice));
+  return nums.length ? Math.min(...nums) : 0;
+}
+function img(p){return p.image || "order-ad.jpg"}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function shortText(s,n=42){s=String(s||""); return s.length>n?s.slice(0,n)+"...":s}
+function groupObj(){return groups.find(g=>g.id===current)||groups[0]}
+function groupProducts(){const g=groupObj();return PRODUCTS.filter(p=>g.match(p))}
+function uniqueCats(){return [...new Set(groupProducts().map(p=>p.category).filter(Boolean))].slice(0,20)}
+
+function init(){
+  nav.innerHTML = groups.map(g=>`<button class="${g.id===current?'active':''}" onclick="setGroup('${g.id}')">${g.icon} ${g.title}</button>`).join("");
+  catIcons.innerHTML = groups.filter(g=>g.id!=="all").map(g=>{
+    const count=PRODUCTS.filter(p=>g.match(p)).length;
+    return `<button class="cat-card" onclick="setGroup('${g.id}')"><span class="ico">${g.icon}</span><b>${g.title}</b><small>${count} بند</small></button>`;
+  }).join("");
+  renderChips(); renderProducts(); updateCart();
+}
+function setGroup(id){
+  current=id; currentCat="";
+  const g=groupObj();
+  sectionTitle.textContent = g.id==="all" ? "مختارات VIP" : g.title;
+  sectionDesc.textContent = g.desc;
+  init();
+  setTimeout(()=>document.getElementById("products").scrollIntoView({behavior:"smooth",block:"start"}),50);
+}
+function renderChips(){
+  const cats=uniqueCats();
+  chips.innerHTML = `<button class="chip ${!currentCat?'active':''}" onclick="currentCat='';renderChips();renderProducts()">الكل</button>` +
+    cats.map(c=>`<button class="chip ${c===currentCat?'active':''}" onclick='currentCat=${JSON.stringify(c)};renderChips();renderProducts()'>${esc(c)}</button>`).join("");
+}
+function renderProducts(){
+  const term=(q.value||"").trim().toLowerCase();
+  let list=groupProducts().filter(p=>!currentCat || p.category===currentCat);
+  if(term){
+    list=list.filter(p=>[p.number,p.name,p.category,p.type,p.details,p.age].join(" ").toLowerCase().includes(term));
+  }
+  if(current==="all") list=list.slice(0,40);
+  products.innerHTML = list.length ? list.map(card).join("") : `<div class="empty">لا توجد منتجات مطابقة.</div>`;
+}
+function card(p){
+  return `<article class="card">
+    <span class="badge">#${esc(p.number||p.id)}</span>
+    <div class="pic" onclick="openDetail(${Number(p.id)})"><img src="${esc(img(p))}" loading="lazy" onerror="this.src='order-ad.jpg'"></div>
+    <div class="card-body">
+      <h3>${esc(p.name)}</h3>
+      <div class="meta"><span>${esc(shortText(p.type||p.category,16))}</span><span>${esc(shortText(p.age||p.durationOneDay||"حسب الطلب",18))}</span></div>
+      <div class="price">${priceOf(p)} ر.ق</div>
+      <div class="card-actions">
+        <button class="details-btn" onclick="openDetail(${Number(p.id)})">تفاصيل</button>
+        <button class="add-btn" onclick="quickAdd(${Number(p.id)})">+</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+function productOptions(p){
+  const opts=[];
+  if(Number(p.baseDecorPrice)>0){
+    opts.push({label:"ديكور فقط", price:Number(p.baseDecorPrice), note:"السعر الأساسي"});
+  }
+  if(p.decorPackages && typeof p.decorPackages==="object" && Number(p.baseDecorPrice)>0){
+    Object.entries(p.decorPackages).forEach(([kids,extra])=>{
+      const total=Number(p.baseDecorPrice)+Number(extra||0);
+      opts.push({label:`باقة ${kids} طفل`, price:total, note:"ديكور + باقة أطفال"});
+    });
+  }
+  if(Array.isArray(p.snackPackages)){
+    p.snackPackages.forEach(o=>{
+      if(Number(o.price)>0){
+        opts.push({label:`${o.kids||o.children||""} طفل`, price:Number(o.price), note:o.note||"باقة سناك"});
+      }
+    });
+  }
+  if(p.packagePrices && typeof p.packagePrices==="object"){
+    Object.entries(p.packagePrices).forEach(([k,v])=>{
+      if(Number(v)>0) opts.push({label:k, price:Number(v), note:"باقة"});
+    });
+  }
+  if(Number(p.priceOneDay)>0) opts.push({label:p.durationOneDay||"يوم واحد", price:Number(p.priceOneDay), note:""});
+  if(Number(p.priceTwoDays)>0 && Number(p.priceTwoDays)!==Number(p.priceOneDay)) opts.push({label:p.durationTwoDays||"يومين", price:Number(p.priceTwoDays), note:""});
+  if(!opts.length && Number(p.unitPrice)>0) opts.push({label:"سعر الوحدة", price:Number(p.unitPrice), note:""});
+  if(!opts.length && Number(p.piecePrice)>0) opts.push({label:"سعر القطعة", price:Number(p.piecePrice), note:""});
+  if(!opts.length) opts.push({label:"حسب الطلب", price:0, note:""});
+  // إزالة التكرار بنفس السعر والاسم
+  const seen=new Set();
+  return opts.filter(o=>{const k=o.label+"|"+o.price; if(seen.has(k))return false; seen.add(k); return true;});
+}
+function niceVal(v){
+  if(v==null || v==="") return "";
+  if(Array.isArray(v)){
+    return v.map(x=>{
+      if(typeof x==="object") return Object.entries(x).map(([k,val])=>`${k}: ${val}`).join(" - ");
+      return String(x);
+    }).join("<br>");
+  }
+  if(typeof v==="object"){
+    const parts=Object.entries(v).filter(([k,val])=>val!==""&&val!=null).map(([k,val])=>`${k}: ${val}`);
+    return parts.join("<br>");
+  }
+  return String(v);
+}
+function infoRows(p){
+  const rows=[];
+  const map=[
+    ["القسم","category"],["النوع","type"],["العمر","age"],["المدة","durationOneDay"],["المدة الثانية","durationTwoDays"],
+    ["الطول","length"],["العرض","width"],["الارتفاع","height"],["المقاس","measurements"],
+    ["ألوان","colors"],["محتويات العرض","offerIncludes"],["السناك","snackType"],["المرفق","included"],["الشروط","packageConditions"]
+  ];
+  map.forEach(([label,key])=>{
+    const val=niceVal(p[key]);
+    if(val) rows.push(`<div><b>${label}</b><br>${val}</div>`);
+  });
+  return rows.join("");
+}
+function openDetail(id){
+  const p=PRODUCTS.find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id)); if(!p)return;
+  currentProduct=p; qty=1; selectedOption=productOptions(p)[0];
+  const opts=productOptions(p);
+  detailPanel.innerHTML = `<button class="close" onclick="closeSheets()">×</button>
+    <img class="detail-img" src="${esc(img(p))}" onerror="this.src='order-ad.jpg'">
+    <h1>${esc(p.name)}</h1>
+    <p class="sub">${esc(p.details||p.category||"")}</p>
+    <div class="info-box"><h3>اختيار السعر / الباقة</h3><div class="options">
+      ${opts.map((o,i)=>`<button class="opt ${i===0?'active':''}" onclick="selectOpt(${i})">${esc(o.label)}<br>${o.price} ر.ق</button>`).join("")}
+    </div></div>
+    <div class="info-box"><h3>بيانات ومعلومات المنتج</h3><div class="info-grid">${infoRows(p) || "<div>لا توجد معلومات إضافية</div>"}</div></div>
+    <div class="info-box"><h3>ملاحظات الطلب</h3>
+      <input class="field" id="custChild" placeholder="اسم الطفل / الثيم / اللون إن وجد">
+      <textarea class="field" id="custNote" placeholder="أي ملاحظة إضافية للطلب"></textarea>
+    </div>
+    <div class="bottom-actions">
+      <button class="primary" onclick="addCurrent()">أضف</button>
+      <div class="qty"><button onclick="changeQty(-1)">−</button><span id="qtyText">1</span><button onclick="changeQty(1)">+</button></div>
+    </div>`;
+  detailSheet.classList.add("show");
+}
+function selectOpt(i){
+  const opts=productOptions(currentProduct); selectedOption=opts[i];
+  document.querySelectorAll(".opt").forEach((b,idx)=>b.classList.toggle("active",idx===i));
+}
+function changeQty(n){qty=Math.max(1,qty+n); const el=document.getElementById("qtyText"); if(el)el.textContent=qty}
+function quickAdd(id){
+  const p=PRODUCTS.find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id)); if(!p)return;
+  const o=productOptions(p)[0];
+  cart.push({id:p.id,number:p.number,name:p.name,img:img(p),option:o.label,price:o.price,qty:1,note:""});
+  saveCart();
+}
+function addCurrent(){
+  if(!currentProduct)return;
+  const o=selectedOption||productOptions(currentProduct)[0];
+  const note=[document.getElementById("custChild")?.value,document.getElementById("custNote")?.value].filter(Boolean).join(" - ");
+  cart.push({id:currentProduct.id,number:currentProduct.number,name:currentProduct.name,img:img(currentProduct),option:o.label,price:o.price,qty,note});
+  saveCart(); closeSheets(); openCart();
+}
+function saveCart(){localStorage.setItem("almalikaCleanCart",JSON.stringify(cart));updateCart()}
+function updateCart(){
+  const count=cart.reduce((s,x)=>s+Number(x.qty||1),0);
+  const total=cart.reduce((s,x)=>s+Number(x.price||0)*Number(x.qty||1),0);
+  topCount.textContent=count; cartCount.textContent=count; cartTotal.textContent=total;
+}
+function openCart(){
+  const total=cart.reduce((s,x)=>s+Number(x.price||0)*Number(x.qty||1),0);
+  cartPanel.innerHTML = `<button class="close" onclick="closeSheets()">×</button><h1>سلة الحجز</h1>
+  ${cart.length ? cart.map((x,i)=>`<div class="cart-item"><img src="${esc(x.img)}" onerror="this.src='order-ad.jpg'"><div><b>${esc(x.name)}</b><small>${esc(x.option)} × ${x.qty}</small>${x.note?`<small>${esc(x.note)}</small>`:""}</div><button class="del" onclick="removeItem(${i})">حذف</button></div>`).join("") : `<div class="empty">السلة فارغة.</div>`}
+  <div class="total"><span>الإجمالي</span><b>${total} ر.ق</b></div>
+  <div class="info-box"><h3>بيانات الحجز</h3>
+    <input class="field" id="custName" placeholder="الاسم">
+    <input class="field" id="custPhone" placeholder="رقم الجوال">
+    <input class="field" id="custArea" placeholder="المنطقة">
+    <input class="field" id="custDate" placeholder="تاريخ الحجز">
+    <textarea class="field" id="orderNote" placeholder="ملاحظات إضافية"></textarea>
+  </div>
+  <button class="primary" style="width:100%;margin-top:10px" onclick="sendWhats()">إرسال الطلب واتساب</button>`;
+  cartSheet.classList.add("show");
+}
+function removeItem(i){cart.splice(i,1);saveCart();openCart()}
+function sendWhats(){
+  const lines=["طلب حجز من كتالوج الملكة",""];
+  cart.forEach((x,i)=>lines.push(`${i+1}) #${x.number} ${x.name} - ${x.option} - ${x.price} ر.ق × ${x.qty}${x.note?" - "+x.note:""}`));
+  const total=cart.reduce((s,x)=>s+Number(x.price||0)*Number(x.qty||1),0);
+  lines.push("",`الإجمالي: ${total} ر.ق`,"","بيانات العميل:",`الاسم: ${custName.value||""}`,`الجوال: ${custPhone.value||""}`,`المنطقة: ${custArea.value||""}`,`التاريخ: ${custDate.value||""}`,`ملاحظات: ${orderNote.value||""}`);
+  location.href=`https://wa.me/${phone}?text=`+encodeURIComponent(lines.join("\n"));
+}
+function closeSheets(){detailSheet.classList.remove("show");cartSheet.classList.remove("show")}
+detailSheet.addEventListener("click",e=>{if(e.target===detailSheet)closeSheets()});
+cartSheet.addEventListener("click",e=>{if(e.target===cartSheet)closeSheets()});
+init();
+</script>
+
+<!-- ===== ALMALIKA CLEAN V3 DETAILS AND GALLERY FIX ===== -->
+<style id="almalika-clean-v3-details-gallery-style">
+/* V3: تحسين التفاصيل والصور الإضافية والباقات — بدون تغيير البيانات */
+.gallery-strip{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:8px 0 2px;
+  margin:0 0 8px;
+}
+.gallery-strip::-webkit-scrollbar{display:none}
+.gallery-thumb{
+  flex:0 0 68px;
+  width:68px;
+  height:68px;
+  border-radius:16px;
+  border:2px solid #f0c9dc;
+  background:#fffaf1;
+  object-fit:cover;
+  cursor:pointer;
+}
+.gallery-thumb.active{
+  border-color:#f52f86;
+  box-shadow:0 0 0 2px rgba(245,47,134,.18);
+}
+.detail-img{
+  height:255px!important;
+  object-fit:contain!important;
+  padding:8px!important;
+}
+.package-note{
+  display:block;
+  color:#806a75;
+  font-size:10px;
+  margin-top:4px;
+  font-weight:800;
+}
+.clean-warning{
+  background:#fff8e5;
+  border:1px dashed #d4af37;
+  color:#7b1230;
+  border-radius:16px;
+  padding:10px;
+  font-weight:900;
+  font-size:12px;
+  line-height:1.7;
+  margin:10px 0;
+}
+.info-grid{
+  grid-template-columns:1fr 1fr!important;
+}
+.info-grid div{
+  line-height:1.7!important;
+  overflow-wrap:anywhere;
+}
+.info-grid div.full{
+  grid-column:1/-1;
+}
+.options{
+  grid-template-columns:1fr 1fr!important;
+}
+.opt{
+  min-height:64px!important;
+  line-height:1.35!important;
+}
+.card{
+  box-shadow:0 10px 24px rgba(123,18,48,.08)!important;
+}
+.card .pic{
+  height:150px!important;
+}
+.card .price{
+  color:#7b1230!important;
+}
+@media(max-width:380px){
+  .options{grid-template-columns:1fr!important}
+  .info-grid{grid-template-columns:1fr!important}
+}
+</style>
+<script id="almalika-clean-v3-details-gallery-script">
+(function(){
+  // حفظ الدوال الأصلية إن وجدت
+  const oldNiceVal = window.niceVal;
+  const oldInfoRows = window.infoRows;
+  const oldProductOptions = window.productOptions;
+  const oldOpenDetail = window.openDetail;
+
+  window.niceVal = function(v){
+    if(v==null || v==="") return "";
+    if(Array.isArray(v)){
+      return v.map(x=>{
+        if(x==null) return "";
+        if(typeof x==="object") {
+          const preferred = [];
+          if(x.kids || x.children) preferred.push((x.kids||x.children)+" طفل");
+          if(x.price) preferred.push(x.price+" ر.ق");
+          if(x.note) preferred.push(x.note);
+          if(preferred.length) return preferred.join(" - ");
+          return Object.entries(x).map(([k,val])=>`${k}: ${val}`).join(" - ");
+        }
+        return String(x);
+      }).filter(Boolean).join("<br>");
+    }
+    if(typeof v==="object"){
+      return Object.entries(v)
+        .filter(([k,val])=>val!==""&&val!=null && !(typeof val==="object" && !Array.isArray(val)))
+        .map(([k,val])=>`${k}: ${val}`)
+        .join("<br>");
+    }
+    return String(v);
+  };
+
+  window.productGallery = function(p){
+    const list = [];
+    if(p && p.image) list.push(p.image);
+    if(p && Array.isArray(p.decorGallery)) {
+      p.decorGallery.forEach(x=>{ if(x && !list.includes(x)) list.push(x); });
+    }
+    // صور محتملة بنفس رقم المنتج: لا تسبب ضرر إذا غير موجودة، لكن لا نعرضها إلا كـ thumbnails بعد تحميلها لاحقًا.
+    return list;
+  };
+
+  window.switchDetailImage = function(src, el){
+    const main = document.querySelector(".detail-img");
+    if(main) main.src = src;
+    document.querySelectorAll(".gallery-thumb").forEach(x=>x.classList.remove("active"));
+    if(el) el.classList.add("active");
+  };
+
+  window.productOptions = function(p){
+    const opts=[];
+    const add=(label,price,note)=>{
+      price=Number(price||0);
+      if(!label) return;
+      const key=label+"|"+price;
+      if(opts.some(o=>o.key===key)) return;
+      opts.push({label,price,note:note||"",key});
+    };
+
+    if(Number(p.baseDecorPrice)>0) add("ديكور فقط", p.baseDecorPrice, "السعر الأساسي");
+    if(p.decorPackages && typeof p.decorPackages==="object" && Number(p.baseDecorPrice)>0){
+      Object.entries(p.decorPackages).forEach(([kids,extra])=>{
+        add(`باقة ${kids} طفل`, Number(p.baseDecorPrice)+Number(extra||0), "ديكور + باقة أطفال");
+      });
+    }
+
+    if(Array.isArray(p.snackPackages)){
+      p.snackPackages.forEach(o=>{
+        if(o && Number(o.price)>0) add(`${o.kids||o.children||""} طفل`, o.price, o.note||"مدة الخدمة 3 ساعات مع موظفة");
+      });
+    }
+
+    if(p.packagePrices && typeof p.packagePrices==="object"){
+      Object.entries(p.packagePrices).forEach(([k,v])=>{ if(Number(v)>0) add(k,v,"باقة"); });
+    }
+
+    // لا نكرر يوم واحد إذا موجود ديكور فقط بنفس السعر
+    if(Number(p.priceOneDay)>0) add(p.durationOneDay||"يوم واحد", p.priceOneDay, "");
+    if(Number(p.priceTwoDays)>0 && Number(p.priceTwoDays)!==Number(p.priceOneDay)) add(p.durationTwoDays||"يومين", p.priceTwoDays, "");
+    if(!opts.length && Number(p.unitPrice)>0) add("سعر الوحدة", p.unitPrice, "");
+    if(!opts.length && Number(p.piecePrice)>0) add("سعر القطعة", p.piecePrice, "");
+    if(!opts.length) add("حسب الطلب",0,"");
+
+    return opts.map(({key,...o})=>o);
+  };
+
+  window.infoRows = function(p){
+    const rows=[];
+    const add=(label,val,full)=>{
+      val=niceVal(val);
+      if(!val) return;
+      rows.push(`<div class="${full?'full':''}"><b>${label}</b><br>${val}</div>`);
+    };
+
+    add("القسم", p.category);
+    add("النوع", p.type);
+    add("العمر", p.age);
+    add("المدة", p.durationOneDay);
+    if(p.durationTwoDays && p.durationTwoDays!==p.durationOneDay) add("المدة الثانية", p.durationTwoDays);
+    add("المقاس", p.measurements || [p.length,p.width,p.height].filter(Boolean).join(" × "));
+    add("ألوان", p.colors, true);
+    add("السناك", p.snackType, true);
+    add("المرفق", p.included);
+    add("محتويات العرض", p.offerIncludes, true);
+    add("ملاحظات", p.notes, true);
+    add("الشروط", p.packageConditions, true);
+
+    // عرض الباقات بشكل منظم في البيانات أيضًا
+    if(Array.isArray(p.snackPackages)) add("باقات السناك", p.snackPackages, true);
+    if(p.decorPackages && typeof p.decorPackages==="object"){
+      const base=Number(p.baseDecorPrice||0);
+      const txt=Object.entries(p.decorPackages).map(([kids,extra])=>`باقة ${kids} طفل: ${base+Number(extra||0)} ر.ق`).join("<br>");
+      add("باقات الديكور", txt, true);
+    }
+    return rows.join("");
+  };
+
+  window.openDetail = function(id){
+    const p=(window.PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id)); 
+    if(!p)return;
+    currentProduct=p; qty=1; selectedOption=productOptions(p)[0];
+    const opts=productOptions(p);
+    const gallery=productGallery(p);
+    const galleryHtml = gallery.length>1 ? `<div class="gallery-strip">${gallery.map((g,i)=>`<img class="gallery-thumb ${i===0?'active':''}" src="${esc(g)}" onclick="switchDetailImage('${esc(g)}',this)" onerror="this.style.display='none'">`).join("")}</div>` : "";
+    const missingNote = gallery.length<=1 ? `<div class="clean-warning">ملاحظة: إذا كان لهذا المنتج صور اختيار إضافية في النسخة القديمة ولم تظهر هنا، فهذا يعني أنها غير موجودة داخل ملف البيانات الحالي ويجب نقل روابطها لاحقًا للبيانات.</div>` : "";
+
+    detailPanel.innerHTML = `<button class="close" onclick="closeSheets()">×</button>
+      <img class="detail-img" src="${esc(gallery[0]||img(p))}" onerror="this.src='order-ad.jpg'">
+      ${galleryHtml}
+      <h1>${esc(p.name)}</h1>
+      <p class="sub">${esc(p.details||p.category||"")}</p>
+      ${missingNote}
+      <div class="info-box"><h3>اختيار السعر / الباقة</h3><div class="options">
+        ${opts.map((o,i)=>`<button class="opt ${i===0?'active':''}" onclick="selectOpt(${i})">${esc(o.label)}<br>${Number(o.price||0)} ر.ق${o.note?`<small class="package-note">${esc(o.note)}</small>`:""}</button>`).join("")}
+      </div></div>
+      <div class="info-box"><h3>بيانات ومعلومات المنتج</h3><div class="info-grid">${infoRows(p) || "<div>لا توجد معلومات إضافية</div>"}</div></div>
+      <div class="info-box"><h3>ملاحظات الطلب</h3>
+        <input class="field" id="custChild" placeholder="اسم الطفل / الثيم / اللون إن وجد">
+        <textarea class="field" id="custNote" placeholder="أي ملاحظة إضافية للطلب"></textarea>
+      </div>
+      <div class="bottom-actions">
+        <button class="primary" onclick="addCurrent()">أضف</button>
+        <div class="qty"><button onclick="changeQty(-1)">−</button><span id="qtyText">1</span><button onclick="changeQty(1)">+</button></div>
+      </div>`;
+    detailSheet.classList.add("show");
+  };
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V3 DETAILS AND GALLERY FIX ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V4 OLD DATA BRIDGE ===== -->
+<style id="almalika-clean-v4-old-data-bridge-style">
+/* V4: استكمال نقل طريقة عرض البيانات القديمة إلى القالب النظيف */
+.old-detail-section{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  margin:10px 0;
+}
+.old-detail-section h3{
+  margin:0 0 10px;
+  color:#7b1230;
+  font-size:18px;
+  font-weight:1000;
+}
+.old-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.old-box{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:16px;
+  padding:10px;
+  line-height:1.7;
+  color:#331522;
+  font-size:12px;
+  font-weight:800;
+}
+.old-box.full{grid-column:1/-1}
+.old-box b{display:block;color:#7b1230;margin-bottom:4px;font-size:12px}
+.decorGalleryTitle{
+  font-weight:1000;
+  color:#7b1230;
+  margin:0 0 8px;
+  font-size:15px;
+  text-align:right;
+}
+.decorThumbs{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+  max-height:260px;
+  overflow:auto;
+  padding:2px;
+}
+.decorThumb{
+  border:2px solid #f5d7e3;
+  border-radius:14px;
+  background:#fff;
+  padding:5px;
+  cursor:pointer;
+  display:grid;
+  place-items:center;
+  min-height:78px;
+}
+.decorThumb.active{
+  border-color:#f52f86;
+  box-shadow:0 8px 18px rgba(245,47,134,.12);
+}
+.decorThumb img{
+  width:100%;
+  height:72px;
+  object-fit:contain;
+  border-radius:10px;
+}
+.decorThumb small{
+  display:block;
+  font-size:10px;
+  font-weight:900;
+  color:#7b1230;
+  margin-top:3px;
+  text-align:center;
+}
+.addonHint{
+  margin-top:8px;
+  font-size:11px;
+  color:#806a75;
+  line-height:1.6;
+  font-weight:800;
+}
+.choice-block{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+}
+.choice-card{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:18px;
+  padding:10px;
+}
+.choice-card label{
+  display:block;
+  color:#7b1230;
+  font-weight:1000;
+  margin-bottom:6px;
+}
+.choice-card select,
+.choice-card input,
+.choice-card textarea{
+  width:100%;
+  min-height:46px;
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:14px;
+  padding:9px 10px;
+  color:#331522;
+  outline:0;
+  font-weight:800;
+}
+.old-warning{
+  background:#fff8e5;
+  border:1px dashed #d4af37;
+  color:#7b1230;
+  border-radius:16px;
+  padding:10px;
+  font-weight:900;
+  font-size:12px;
+  line-height:1.7;
+  margin:10px 0;
+}
+@media(max-width:380px){
+  .old-grid{grid-template-columns:1fr}
+  .decorThumbs{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+
+<script id="almalika-clean-v4-old-data-bridge-script">
+(function(){
+  // صور ديكور من منطق النسخة القديمة + محاولة ذكية لصور -1 إلى -20 بدون إظهار الصور غير الموجودة
+  window.oldDecorGalleryFiles = function(p){
+    const n = Number(p.number || p.id || 0);
+    if(n===101) return ['101.jpg','101-1.jpg','101-2.jpg','101-3.jpg','101-4.jpg','101-5.jpg','101-6.jpg','101-7.jpg','101-8.jpg','101-9.jpg','101-11.jpg','101-12.jpg','101-13.jpg','101-14.jpg','101-15.jpg','101-16.jpg','101-17.jpg','101-18.jpg','101-19.jpg'];
+    if(n===102) return ["102.jpg","102-1.jpg","102-2.jpg","102-3.jpg","102-4.jpg","102-7.jpg","102-8.jpg","102-9.jpg","102-10.jpg","102-11.jpg","102-12.jpg","102-13.jpg","102-14.jpg","102-15.jpg","102-16.jpg"];
+    if(n===103) return ["103.jpg","103-1.jpg","103-2.jpg","103-3.jpg","103-4.jpg","103-5.jpg"];
+    if(n===210) return ["210.jpg","210-1.jpg","210-2.jpg","210-3.jpg"];
+
+    const list = [];
+    if(p.image) list.push(p.image);
+    if(Array.isArray(p.decorGallery)) p.decorGallery.forEach(x=>{ if(x && !list.includes(x)) list.push(x); });
+
+    // للديكورات نحاول تحميل صور إضافية بنفس الرقم إن كانت موجودة في المستودع
+    const isDecor = String(p.category||"").includes("تجهيز الحفلات") || String(p.type||"").includes("ديكور");
+    if(isDecor && n){
+      for(let i=1;i<=20;i++){
+        const f = `${n}-${i}.jpg`;
+        if(!list.includes(f)) list.push(f);
+      }
+    }
+    return list.length ? list : [p.image || `${n}.jpg`];
+  };
+
+  window.oldThemeOptions = [
+    "حسب الطلب / ثيم خاص","سبايدرمان","باتمان","سوبرمان","وندر وومان","هالك","آيرون مان",
+    "كابتن أمريكا","الأفنجرز","إلسا - فروزن","آنا - فروزن","أولاف - فروزن","فروزن",
+    "ميكي ماوس","ميني ماوس","ماريو","سونك","باربي","أميرات","يونيكورن","ديناصور",
+    "سيارات","فورملا / فيراري","كرة قدم","تخرج","بيبي شارك","كوكوميلون","حسب طلب العميل"
+  ];
+
+  window.oldBalloonColors = [
+    "حسب الطلب","وردي","أزرق","ذهبي","فضي","أبيض","أسود","أحمر","أخضر","بنفسجي",
+    "بيبي بلو","بيبي بنك","ذهبي + أبيض","وردي + ذهبي","أزرق + فضي","أخضر + ذهبي"
+  ];
+
+  window.oldTableOptions = [
+    "بدون طاولات إضافية","طاولة مستطيلة صغيرة","طاولة مستطيلة متوسطة","طاولة مستطيلة كبيرة"
+  ];
+
+  window.oldStickerOptions = [
+    "بدون ملصقات طاولة","ملصق طاولة صغير","ملصقات طاولة عدد 2","ملصقات طاولة عدد 3"
+  ];
+
+  window.oldSnackOptions = [
+    "فشار","حلويات مشكلة","شيبس","مارشيملو","مياه","عصير","فشار + حلويات","فشار + شيبس","حسب الاتفاق"
+  ];
+
+  window.hideBrokenThumb = function(imgEl){
+    const btn = imgEl.closest('.decorThumb');
+    if(btn) btn.style.display='none';
+  };
+
+  window.pickOldGallery = function(src, btn){
+    const main = document.querySelector(".detail-img");
+    if(main) main.src = src;
+    document.querySelectorAll(".decorThumb").forEach(b=>b.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+    const hidden = document.getElementById("chosenDecorImg");
+    if(hidden) hidden.value = src;
+    const label = document.getElementById("chosenDecorLabel");
+    if(label && btn) label.value = btn.getAttribute("data-label") || "الصورة المختارة";
+  };
+
+  function esc2(s){ return (window.esc ? window.esc(s) : String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))); }
+  function val(v){
+    if(v==null || v==="") return "";
+    if(Array.isArray(v)){
+      return v.map(x=>{
+        if(typeof x==="object" && x){
+          if(x.kids || x.children || x.price || x.note){
+            return `${x.kids||x.children||""} طفل${x.price?": "+x.price+" ر.ق":""}${x.note?" - "+x.note:""}`;
+          }
+          return Object.entries(x).map(([k,y])=>`${k}: ${y}`).join(" - ");
+        }
+        return String(x);
+      }).filter(Boolean).join("<br>");
+    }
+    if(typeof v==="object"){
+      return Object.entries(v).map(([k,y])=>`${k}: ${y}`).join("<br>");
+    }
+    return String(v);
+  }
+
+  window.fullOldInfoRows = function(p){
+    const rows = [];
+    const add=(label,v,full=false)=>{
+      v=val(v);
+      if(!v) return;
+      rows.push(`<div class="old-box ${full?'full':''}"><b>${label}</b>${v}</div>`);
+    };
+    add("رقم المنتج", p.number || p.id);
+    add("القسم", p.category);
+    add("النوع", p.type);
+    add("نوع التأجير", p.rentType);
+    add("العمر", p.age);
+    add("مدة يوم", p.durationOneDay);
+    add("مدة يومين", p.durationTwoDays || p.durationTwoDay);
+    add("المقاس", p.measurements || [p.length,p.width,p.height].filter(Boolean).join(" × "));
+    add("الألوان", p.colors, true);
+    add("تفاصيل المنتج", p.details, true);
+    add("السناك", p.snackType, true);
+    add("المرفق", p.included);
+    add("ملاحظات", p.notes, true);
+    add("محتويات العرض", p.offerIncludes, true);
+    add("التوصيل", p.delivery);
+    add("الشروط", p.packageConditions, true);
+    add("باقات السناك", p.snackPackages, true);
+    if(p.decorPackages && typeof p.decorPackages==="object"){
+      const base = Number(p.baseDecorPrice||0);
+      add("باقات الديكور", Object.entries(p.decorPackages).map(([kids,extra])=>`باقة ${kids} طفل: ${base+Number(extra||0)} ر.ق`).join("<br>"), true);
+    }
+    return rows.join("");
+  };
+
+  window.oldExtraChoicesHtml = function(p){
+    const isDecor = String(p.category||"").includes("تجهيز الحفلات") || String(p.type||"").includes("ديكور");
+    const isSnack = String(p.category||"").includes("السناك") || String(p.type||"").includes("سناك");
+    if(!isDecor && !isSnack) return "";
+
+    let html = `<div class="old-detail-section"><h3>اختيارات الزبون الإضافية</h3><div class="choice-block">`;
+
+    if(isDecor){
+      html += `<div class="choice-card"><label>الشخصية / الثيم</label><select id="oldThemeChoice">${oldThemeOptions.map(x=>`<option>${esc2(x)}</option>`).join("")}</select></div>`;
+      html += `<div class="choice-card"><label>ألوان البالونات</label><select id="oldBalloonChoice">${oldBalloonColors.map(x=>`<option>${esc2(x)}</option>`).join("")}</select></div>`;
+      html += `<div class="choice-card"><label>الطاولات الإضافية</label><select id="oldTableChoice">${oldTableOptions.map(x=>`<option>${esc2(x)}</option>`).join("")}</select></div>`;
+      html += `<div class="choice-card"><label>ملصقات الطاولات</label><select id="oldStickerChoice">${oldStickerOptions.map(x=>`<option>${esc2(x)}</option>`).join("")}</select></div>`;
+    }
+
+    if(isSnack){
+      html += `<div class="choice-card"><label>نوع سناك الأطفال</label><select id="oldSnackChoice">${oldSnackOptions.map(x=>`<option>${esc2(x)}</option>`).join("")}</select></div>`;
+    }
+
+    html += `</div></div>`;
+    return html;
+  };
+
+  window.oldGalleryHtml = function(p){
+    const isDecor = String(p.category||"").includes("تجهيز الحفلات") || String(p.type||"").includes("ديكور");
+    if(!isDecor) return "";
+    const files = oldDecorGalleryFiles(p);
+    return `<div class="old-detail-section"><div class="decorGalleryTitle">اختر شكل الديكور المناسب للزبون</div>
+      <div class="decorThumbs">
+        ${files.map((f,i)=>`<button type="button" class="decorThumb ${i===0?'active':''}" data-label="${i===0?'الصورة الأساسية':'شكل '+i}" onclick="pickOldGallery('${esc2(f)}',this)"><img src="${esc2(f)}" onerror="hideBrokenThumb(this)"><small>${i===0?'الصورة الأساسية':'شكل '+i}</small></button>`).join("")}
+      </div>
+      <input type="hidden" id="chosenDecorImg" value="${esc2(files[0]||p.image||"")}">
+      <input type="hidden" id="chosenDecorLabel" value="الصورة الأساسية">
+      <div class="addonHint">اختيار الصورة يساعد الإدارة تعرف شكل الديكور المطلوب بالضبط.</div>
+    </div>`;
+  };
+
+  // استبدال فتح التفاصيل في القالب النظيف بتفاصيل أكثر اكتمالاً من منطق النسخ السابقة
+  window.openDetail = function(id){
+    const p=(window.PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id)); 
+    if(!p)return;
+    currentProduct=p; qty=1; selectedOption=productOptions(p)[0];
+    const opts=productOptions(p);
+    const gallery=oldDecorGalleryFiles(p);
+    const first = gallery[0] || p.image || img(p);
+
+    detailPanel.innerHTML = `<button class="close" onclick="closeSheets()">×</button>
+      <img class="detail-img" src="${esc2(first)}" onerror="this.src='${esc2(img(p))}'">
+      ${oldGalleryHtml(p)}
+      <h1>${esc2(p.name)}</h1>
+      <p class="sub">${esc2(p.details||p.category||"")}</p>
+      <div class="info-box"><h3>اختيار السعر / الباقة</h3><div class="options">
+        ${opts.map((o,i)=>`<button class="opt ${i===0?'active':''}" onclick="selectOpt(${i})">${esc2(o.label)}<br>${Number(o.price||0)} ر.ق${o.note?`<small class="package-note">${esc2(o.note)}</small>`:""}</button>`).join("")}
+      </div></div>
+      ${oldExtraChoicesHtml(p)}
+      <div class="old-detail-section"><h3>كل بيانات المنتج من النسخة السابقة</h3><div class="old-grid">${fullOldInfoRows(p) || "<div class='old-box'>لا توجد معلومات إضافية</div>"}</div></div>
+      <div class="info-box"><h3>ملاحظات الطلب</h3>
+        <input class="field" id="custChild" placeholder="اسم الطفل / الثيم / اللون إن وجد">
+        <textarea class="field" id="custNote" placeholder="أي ملاحظة إضافية للطلب"></textarea>
+      </div>
+      <div class="bottom-actions">
+        <button class="primary" onclick="addCurrent()">أضف</button>
+        <div class="qty"><button onclick="changeQty(-1)">−</button><span id="qtyText">1</span><button onclick="changeQty(1)">+</button></div>
+      </div>`;
+    detailSheet.classList.add("show");
+  };
+
+  // إضافة الاختيارات الجديدة إلى ملاحظات السلة عند الإضافة
+  const oldAddCurrent = window.addCurrent;
+  window.addCurrent = function(){
+    if(!currentProduct) return oldAddCurrent ? oldAddCurrent() : null;
+    const extra = [];
+    const theme=document.getElementById("oldThemeChoice");
+    const balloon=document.getElementById("oldBalloonChoice");
+    const table=document.getElementById("oldTableChoice");
+    const sticker=document.getElementById("oldStickerChoice");
+    const snack=document.getElementById("oldSnackChoice");
+    const chosenImg=document.getElementById("chosenDecorImg");
+    const chosenLabel=document.getElementById("chosenDecorLabel");
+    if(theme) extra.push("الثيم: "+theme.value);
+    if(balloon) extra.push("ألوان البالونات: "+balloon.value);
+    if(table) extra.push("الطاولات: "+table.value);
+    if(sticker) extra.push("الملصقات: "+sticker.value);
+    if(snack) extra.push("نوع السناك: "+snack.value);
+    if(chosenLabel) extra.push("شكل الديكور: "+chosenLabel.value);
+    if(chosenImg) extra.push("صورة الديكور: "+chosenImg.value);
+
+    const noteEl=document.getElementById("custNote");
+    if(noteEl && extra.length){
+      noteEl.value = [noteEl.value, extra.join(" | ")].filter(Boolean).join(" | ");
+    }
+    return oldAddCurrent ? oldAddCurrent() : null;
+  };
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V4 OLD DATA BRIDGE ===== -->
+
+</body>
+</html>
