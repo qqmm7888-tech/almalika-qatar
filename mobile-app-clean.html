@@ -7,21 +7,21 @@
 <script src="almalika-data-v2.js"></script>
 <style>
 :root{
-  --bg:#141214;
-  --panel:#201d20;
-  --card:#282428;
-  --card2:#302b30;
-  --text:#ffffff;
-  --muted:#b9b0b7;
+  --bg:#fff7fb;
+  --panel:#ffffff;
+  --card:#ffffff;
+  --card2:#fff1f7;
+  --text:#331522;
+  --muted:#806a75;
   --brand:#7b1230;
   --pink:#f52f86;
   --red:#ef233c;
   --green:#20c76a;
   --gold:#d4af37;
-  --line:#3d363c;
+  --line:#f0c9dc;
 }
 *{box-sizing:border-box}
-html{background:#0e0d0e;overflow-x:hidden}
+html{background:#f7eef3;overflow-x:hidden}
 body{
   margin:0;
   font-family:Tahoma,Arial,sans-serif;
@@ -35,9 +35,9 @@ body{
     max-width:430px;
     margin:auto;
     min-height:100vh;
-    border-left:1px solid #2b252b;
-    border-right:1px solid #2b252b;
-    box-shadow:0 0 80px rgba(0,0,0,.45);
+    border-left:1px solid #f0c9dc;
+    border-right:1px solid #f0c9dc;
+    box-shadow:0 0 80px rgba(123,18,48,.13);
   }
 }
 button,input,select,textarea{font-family:inherit}
@@ -468,6 +468,32 @@ textarea.field{min-height:82px;resize:vertical}
   .cat-icons{grid-template-columns:repeat(2,1fr)}
 }
 </style>
+
+<style id="almalika-clean-v2-light-fixes">
+/* V2 ألوان الملكة + إصلاح عرض البيانات والأسعار */
+body{background:linear-gradient(180deg,#fff7fb,#fffaf1)!important;color:#331522!important}
+.top{background:rgba(255,255,255,.96)!important;border-bottom:1px solid #f0c9dc!important;box-shadow:0 8px 22px rgba(123,18,48,.06)!important}
+.logo{color:#7b1230!important}
+.nav button{background:#fff!important;color:#7b1230!important;border:1px solid #f0c9dc!important}
+.nav button.active{background:linear-gradient(135deg,#f52f86,#7b1230)!important;color:#fff!important}
+.search{background:#fff!important;border:1px solid #f0c9dc!important}
+.search input{color:#331522!important}
+.hero-card,.card,.cat-card,.info-box,.cart-item{background:#fff!important;border:1px solid #f0c9dc!important;color:#331522!important}
+.cat-card .ico,.meta span,.chip,.stat,.info-grid div,.field,.opt,.qty{background:#fff4f8!important;color:#331522!important;border:1px solid #f0c9dc!important}
+.card h3,.section-title h2,.panel h1,.panel h3,.panel label,.price{color:#331522!important}
+.section-title p,.card .desc,.sub,.cart-item small{color:#806a75!important}
+.pic,.detail-img{background:#fffaf1!important}
+.panel{background:#fff7fb!important;color:#331522!important}
+.sheet{background:rgba(20,14,18,.55)!important;backdrop-filter:blur(6px)!important}
+.close{background:#7b1230!important;color:#fff!important}
+.details-btn,.primary,.cart-bar{background:linear-gradient(135deg,#f52f86,#7b1230)!important;color:#fff!important}
+.add-btn{background:#7b1230!important;color:#fff!important}
+.opt.active{border-color:#f52f86!important;box-shadow:0 0 0 2px rgba(245,47,134,.18)!important}
+.total{background:#fff!important;color:#331522!important;border:1px solid #f0c9dc!important}
+.badge{background:#f52f86!important;color:#fff!important}
+@media(min-width:760px){body{background:#fff7fb!important}}
+</style>
+
 </head>
 <body>
 <header class="top">
@@ -543,12 +569,22 @@ function sectionOf(p){
   return "bouncies";
 }
 function priceOf(p){
-  const vals=[];
-  ["priceOneDay","priceTwoDays","unitPrice","baseDecorPrice","baseTotal","employeePrice","staffPrice","cartEmployeePrice","cartStaffPrice","piecePrice"].forEach(k=>{
-    if(Number(p[k])>0) vals.push(Number(p[k]));
+  const nums=[];
+  // السعر الأساسي الصحيح حسب نوع المنتج
+  if(Number(p.baseDecorPrice)>0) nums.push(Number(p.baseDecorPrice));
+  if(Array.isArray(p.snackPackages) && p.snackPackages.length){
+    p.snackPackages.forEach(o=>{ if(Number(o.price)>0) nums.push(Number(o.price)); });
+  }
+  if(p.packagePrices && typeof p.packagePrices==="object"){
+    Object.values(p.packagePrices).forEach(v=>{ if(Number(v)>0) nums.push(Number(v)); });
+  }
+  ["priceOneDay","priceTwoDays","baseTotal"].forEach(k=>{
+    if(Number(p[k])>0) nums.push(Number(p[k]));
   });
-  if(p.packagePrices) Object.values(p.packagePrices).forEach(v=>{if(Number(v)>0) vals.push(Number(v))});
-  return vals.length ? Math.min(...vals) : 0;
+  // سعر الوحدة مثل 5 ر.ق لا يظهر كسعر أساسي إلا إذا ما في أي سعر ثاني
+  if(!nums.length && Number(p.unitPrice)>0) nums.push(Number(p.unitPrice));
+  if(!nums.length && Number(p.piecePrice)>0) nums.push(Number(p.piecePrice));
+  return nums.length ? Math.min(...nums) : 0;
 }
 function img(p){return p.image || "order-ad.jpg"}
 function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
@@ -605,35 +641,61 @@ function card(p){
 
 function productOptions(p){
   const opts=[];
-  if(Number(p.priceOneDay)>0) opts.push({label:p.durationOneDay||"يوم واحد", price:Number(p.priceOneDay), note:""});
-  if(Number(p.priceTwoDays)>0 && Number(p.priceTwoDays)!==Number(p.priceOneDay)) opts.push({label:p.durationTwoDays||p.durationTwoDay||"يومين", price:Number(p.priceTwoDays), note:""});
-  if(Number(p.unitPrice)>0) opts.push({label:"سعر الوحدة", price:Number(p.unitPrice), note:""});
-  if(Number(p.baseDecorPrice)>0) opts.push({label:"ديكور فقط", price:Number(p.baseDecorPrice), note:""});
-  if(p.decorPackages && Number(p.baseDecorPrice)>0){
+  if(Number(p.baseDecorPrice)>0){
+    opts.push({label:"ديكور فقط", price:Number(p.baseDecorPrice), note:"السعر الأساسي"});
+  }
+  if(p.decorPackages && typeof p.decorPackages==="object" && Number(p.baseDecorPrice)>0){
     Object.entries(p.decorPackages).forEach(([kids,extra])=>{
-      opts.push({label:`باقة ${kids} طفل`, price:Number(p.baseDecorPrice)+Number(extra||0), note:"ديكور + باقة أطفال"});
+      const total=Number(p.baseDecorPrice)+Number(extra||0);
+      opts.push({label:`باقة ${kids} طفل`, price:total, note:"ديكور + باقة أطفال"});
     });
   }
-  if(p.packagePrices){
+  if(Array.isArray(p.snackPackages)){
+    p.snackPackages.forEach(o=>{
+      if(Number(o.price)>0){
+        opts.push({label:`${o.kids||o.children||""} طفل`, price:Number(o.price), note:o.note||"باقة سناك"});
+      }
+    });
+  }
+  if(p.packagePrices && typeof p.packagePrices==="object"){
     Object.entries(p.packagePrices).forEach(([k,v])=>{
       if(Number(v)>0) opts.push({label:k, price:Number(v), note:"باقة"});
     });
   }
-  if(p.snackPackages){
-    Object.entries(p.snackPackages).forEach(([k,v])=>{
-      if(Number(v)>0) opts.push({label:k, price:Number(v), note:"سناك"});
-    });
+  if(Number(p.priceOneDay)>0) opts.push({label:p.durationOneDay||"يوم واحد", price:Number(p.priceOneDay), note:""});
+  if(Number(p.priceTwoDays)>0 && Number(p.priceTwoDays)!==Number(p.priceOneDay)) opts.push({label:p.durationTwoDays||"يومين", price:Number(p.priceTwoDays), note:""});
+  if(!opts.length && Number(p.unitPrice)>0) opts.push({label:"سعر الوحدة", price:Number(p.unitPrice), note:""});
+  if(!opts.length && Number(p.piecePrice)>0) opts.push({label:"سعر القطعة", price:Number(p.piecePrice), note:""});
+  if(!opts.length) opts.push({label:"حسب الطلب", price:0, note:""});
+  // إزالة التكرار بنفس السعر والاسم
+  const seen=new Set();
+  return opts.filter(o=>{const k=o.label+"|"+o.price; if(seen.has(k))return false; seen.add(k); return true;});
+}
+function niceVal(v){
+  if(v==null || v==="") return "";
+  if(Array.isArray(v)){
+    return v.map(x=>{
+      if(typeof x==="object") return Object.entries(x).map(([k,val])=>`${k}: ${val}`).join(" - ");
+      return String(x);
+    }).join("<br>");
   }
-  if(!opts.length) opts.push({label:"حسب الطلب", price:priceOf(p), note:""});
-  return opts;
+  if(typeof v==="object"){
+    const parts=Object.entries(v).filter(([k,val])=>val!==""&&val!=null).map(([k,val])=>`${k}: ${val}`);
+    return parts.join("<br>");
+  }
+  return String(v);
 }
 function infoRows(p){
   const rows=[];
   const map=[
-    ["القسم","category"],["النوع","type"],["العمر","age"],["المدة","durationOneDay"],["الطول","length"],["العرض","width"],["الارتفاع","height"],
-    ["التوصيل","delivery"],["الملاحظات","notes"],["المقاس","measurements"],["الألوان","colors"],["محتويات العرض","offerIncludes"],["الشروط","packageConditions"]
+    ["القسم","category"],["النوع","type"],["العمر","age"],["المدة","durationOneDay"],["المدة الثانية","durationTwoDays"],
+    ["الطول","length"],["العرض","width"],["الارتفاع","height"],["المقاس","measurements"],
+    ["ألوان","colors"],["محتويات العرض","offerIncludes"],["السناك","snackType"],["المرفق","included"],["الشروط","packageConditions"]
   ];
-  map.forEach(([label,key])=>{if(p[key]) rows.push(`<div><b>${label}</b><br>${esc(p[key])}</div>`)});
+  map.forEach(([label,key])=>{
+    const val=niceVal(p[key]);
+    if(val) rows.push(`<div><b>${label}</b><br>${val}</div>`);
+  });
   return rows.join("");
 }
 function openDetail(id){
