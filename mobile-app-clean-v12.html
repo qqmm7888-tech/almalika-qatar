@@ -3150,5 +3150,423 @@ init();
 </script>
 <!-- ===== END ALMALIKA CLEAN V11 MATCH OLD DATA DISPLAY ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V12 FINAL OPTIONS NO BULLETS ===== -->
+<style id="almalika-clean-v12-final-options-style">
+/* V12: إزالة التعداد + إظهار ألوان البالونات + إضافات الطاولات والطباعة والسناك بأسعار */
+.v12-summary{
+  background:#fffaf1;
+  border:1px solid #e8c04d;
+  border-radius:18px;
+  padding:12px;
+  margin:10px 0;
+  color:#331522;
+}
+.v12-summary h3{
+  margin:0 0 8px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v12-summary p{
+  margin:0 0 8px!important;
+  color:#5a4550!important;
+  font-size:12px!important;
+  line-height:1.8!important;
+  font-weight:850!important;
+}
+.v12-summary p:last-child{margin-bottom:0!important}
+.v12-option-section{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  margin:10px 0;
+}
+.v12-option-section h3{
+  margin:0 0 10px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v12-field-label{
+  display:block;
+  color:#7b1230;
+  font-size:13px;
+  font-weight:1000;
+  margin:9px 0 6px;
+}
+.v12-select{
+  width:100%;
+  height:46px;
+  border:1px solid #f0c9dc;
+  background:#fff7fb;
+  color:#331522;
+  border-radius:14px;
+  padding:0 10px;
+  font-weight:900;
+  margin-bottom:8px;
+}
+.v12-colors{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin:6px 0 10px;
+}
+.v12-color{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:14px;
+  min-height:58px;
+  padding:6px 4px;
+  color:#7b1230;
+  font-size:10px;
+  font-weight:1000;
+  cursor:pointer;
+}
+.v12-color.active{
+  border-color:#f52f86;
+  box-shadow:0 0 0 2px rgba(245,47,134,.18);
+}
+.v12-dot{
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  display:block;
+  margin:0 auto 5px;
+  border:1px solid rgba(0,0,0,.13);
+}
+.v12-addons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.v12-addon{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:15px;
+  padding:9px;
+  color:#331522;
+  font-size:12px;
+  line-height:1.55;
+  font-weight:850;
+}
+.v12-addon b{
+  display:block;
+  color:#7b1230;
+  font-size:13px;
+  margin-bottom:3px;
+}
+.v12-total{
+  background:linear-gradient(135deg,#fff8e5,#fff);
+  border:1px solid #e8c04d;
+  border-radius:16px;
+  padding:10px;
+  margin-top:10px;
+  color:#7b1230;
+  font-weight:1000;
+  text-align:center;
+}
+.v12-data{
+  background:#fff;
+  border:1px solid #f0c9dc;
+  border-radius:22px;
+  padding:12px;
+  margin:10px 0;
+}
+.v12-data h3{
+  margin:0 0 10px!important;
+  color:#7b1230!important;
+  font-size:20px!important;
+  font-weight:1000!important;
+}
+.v12-data-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.v12-data-cell{
+  background:#fff7fb;
+  border:1px solid #f0c9dc;
+  border-radius:15px;
+  padding:9px;
+  font-size:12px;
+  line-height:1.6;
+  font-weight:850;
+  color:#331522;
+}
+.v12-data-cell.full{grid-column:1/-1}
+.v12-data-cell b{
+  display:block;
+  color:#7b1230;
+  margin-bottom:4px;
+}
+.v11-summary-box,.v8-detail-help,.v7-included{display:none!important}
+.v11-booking-box ul{list-style:none!important;padding:0!important;margin:0!important}
+.v11-booking-box li{list-style:none!important}
+.detailPanel ul, .detailPanel li{list-style:none!important}
+@media(max-width:390px){
+  .v12-addons,.v12-data-grid{grid-template-columns:1fr}
+  .v12-colors{grid-template-columns:repeat(3,1fr)}
+}
+</style>
+
+<script id="almalika-clean-v12-final-options-script">
+(function(){
+  const WA12="97433317720";
+  const PHONES12=["33317720","33317721","33317716","33317705"];
+
+  function esc12(s){
+    return (window.esc ? window.esc(s) : String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m])));
+  }
+  function val12(v){
+    if(v==null || v==="") return "";
+    if(Array.isArray(v)){
+      return v.map(x=>{
+        if(!x) return "";
+        if(typeof x==="object"){
+          if(x.kids || x.children || x.price || x.note){
+            return `${x.kids||x.children||""} طفل${x.price?": "+x.price+" ر.ق":""}${x.note?" - "+x.note:""}`;
+          }
+          return Object.entries(x).map(([k,val])=>`${k}: ${val}`).join(" - ");
+        }
+        return String(x);
+      }).filter(Boolean).join("<br>");
+    }
+    if(typeof v==="object") return Object.entries(v).map(([k,val])=>`${k}: ${val}`).join("<br>");
+    return String(v);
+  }
+  function sec12(p){ return (typeof sectionOf==="function") ? sectionOf(p) : "all"; }
+
+  window.colors12=[
+    ["حسب الطلب","linear-gradient(135deg,#fff,#fde4ef)"],
+    ["ذهبي","#d4af37"],["وردي","#ff6faf"],["أزرق","#4da3ff"],
+    ["أحمر","#ef233c"],["أسود","#111"],["أبيض","#fff"],["فضي","#cfd4da"],
+    ["بيبي بنك","#ffc1d9"],["بيبي بلو","#9bdcff"],["بنفسجي","#8b5cf6"],["أخضر","#22c55e"],
+    ["ذهبي + أبيض","linear-gradient(135deg,#d4af37 50%,#fff 50%)"],
+    ["وردي + ذهبي","linear-gradient(135deg,#ff6faf 50%,#d4af37 50%)"],
+    ["أزرق + فضي","linear-gradient(135deg,#4da3ff 50%,#cfd4da 50%)"],
+    ["أخضر + ذهبي","linear-gradient(135deg,#22c55e 50%,#d4af37 50%)"]
+  ];
+
+  window.v12PickColor=function(name,btn){
+    const h=document.getElementById("v12BalloonColor");
+    if(h) h.value=name;
+    document.querySelectorAll(".v12-color").forEach(x=>x.classList.remove("active"));
+    if(btn) btn.classList.add("active");
+  };
+
+  window.v12ColorGrid=function(){
+    return `<div class="v12-colors">${colors12.map((c,i)=>`<button type="button" class="v12-color ${i===0?'active':''}" onclick="v12PickColor('${esc12(c[0])}',this)"><span class="v12-dot" style="background:${esc12(c[1])}"></span>${esc12(c[0])}</button>`).join("")}</div><input type="hidden" id="v12BalloonColor" value="حسب الطلب">`;
+  };
+
+  window.v12Summary=function(p){
+    const s=sec12(p);
+    let text="";
+    if(s==="events"){
+      text="اختر شكل الديكور ثم حدد الثيم وألوان البالونات والطاولات والطباعة. السعر الأساسي يظهر في الباقة، والإضافات تظهر بقيمتها حتى يكون الطلب واضحًا قبل الإرسال.";
+    }else if(s==="snacks"){
+      text="اختر باقة السناك حسب عدد الأطفال. تظهر قيمة القطعة والموظفة والعربة عند توفرها في البيانات، ويمكن تحديد نوع السناك المطلوب.";
+    }else if(s==="offers"){
+      text="هذا عرض أو باقة جاهزة. راجع محتويات العرض والسعر والمدة، ثم أضفه للسلة وأرسل الطلب للتأكيد.";
+    }else if(s==="bouncies"){
+      text="اختر مدة الحجز والسعر المناسب، وراجع العمر والمقاس والتفاصيل قبل الإضافة للسلة.";
+    }else{
+      text="راجع تفاصيل المنتج والسعر والاختيارات، ثم أضف للسلة وأرسل الطلب للواتساب.";
+    }
+    return `<div class="v12-summary"><h3>مقدمة عن المنتج</h3><p>${esc12(text)}</p><p>التوفر والسعر النهائي يتم تأكيدهما عبر الواتساب حسب تاريخ الحجز والمنطقة.</p></div>`;
+  };
+
+  window.v12Addons=function(p){
+    const isDecor=sec12(p)==="events";
+    const isSnack=sec12(p)==="snacks";
+    if(!isDecor && !isSnack) return "";
+
+    const tablePrice=Number(p.roundTablePrice||50);
+    const printPrice=Number(p.piecePrice||15);
+    const snackPrice=Number(p.complexPrice||300);
+    const staff=Number(p.cartStaffPrice||p.staffPrice||p.employeePrice||0);
+    const unit=Number(p.unitPrice||p.piecePrice||0);
+    const baseTotal=Number(p.baseTotal||0);
+
+    let html=`<div class="v12-option-section"><h3>اختيارات الزبون الإضافية</h3>`;
+
+    if(isDecor){
+      html += `<label class="v12-field-label">الشخصية / الثيم</label>
+        <select class="v12-select" id="v12Theme">
+          <option value="">حسب الطلب / ثيم خاص</option><option>أميرات</option><option>سبايدرمان</option><option>فروزن</option><option>يونيكورن</option><option>سيارات</option><option>تخرج</option><option>بيبي</option>
+        </select>
+        <label class="v12-field-label">ألوان البالونات</label>${v12ColorGrid()}
+        <div class="v12-addons">
+          <div class="v12-addon"><b>طاولة إضافية</b>${tablePrice} ر.ق للطاولة</div>
+          <div class="v12-addon"><b>طباعة/ملصق طاولة</b>${printPrice} ر.ق للملصق</div>
+          <div class="v12-addon"><b>إضافة سناك أطفال</b>${snackPrice} ر.ق حسب المتوفر</div>
+          <div class="v12-addon"><b>السناك المتاح</b>${esc12(p.snackType||"فشار - حلويات - شيبس - مارشيملو")}</div>
+        </div>
+        <label class="v12-field-label">عدد الطاولات الإضافية</label>
+        <select class="v12-select v12-priced" id="v12Tables" data-label="طاولات إضافية" onchange="v12UpdateAddons()">
+          <option value="0" data-price="0">بدون طاولات إضافية</option>
+          <option value="1" data-price="${tablePrice}">طاولة واحدة + ${tablePrice} ر.ق</option>
+          <option value="2" data-price="${tablePrice*2}">طاولتان + ${tablePrice*2} ر.ق</option>
+          <option value="3" data-price="${tablePrice*3}">3 طاولات + ${tablePrice*3} ر.ق</option>
+        </select>
+        <label class="v12-field-label">طباعة / ملصقات الطاولات</label>
+        <select class="v12-select v12-priced" id="v12Prints" data-label="طباعة/ملصقات الطاولات" onchange="v12UpdateAddons()">
+          <option value="0" data-price="0">بدون طباعة أو ملصقات</option>
+          <option value="1" data-price="${printPrice}">ملصق واحد + ${printPrice} ر.ق</option>
+          <option value="2" data-price="${printPrice*2}">ملصقان + ${printPrice*2} ر.ق</option>
+          <option value="3" data-price="${printPrice*3}">3 ملصقات + ${printPrice*3} ر.ق</option>
+        </select>
+        <label class="v12-field-label">خيارات السناك</label>
+        <select class="v12-select v12-priced" id="v12Snack" data-label="سناك إضافي" onchange="v12UpdateAddons()">
+          <option value="0" data-price="0">بدون سناك إضافي</option>
+          <option value="فشار" data-price="${snackPrice}">فشار + ${snackPrice} ر.ق</option>
+          <option value="حلويات مشكلة" data-price="${snackPrice}">حلويات مشكلة + ${snackPrice} ر.ق</option>
+          <option value="شيبس" data-price="${snackPrice}">شيبس + ${snackPrice} ر.ق</option>
+          <option value="مارشيملو" data-price="${snackPrice}">مارشيملو + ${snackPrice} ر.ق</option>
+          <option value="فشار + حلويات + شيبس + مارشيملو" data-price="${snackPrice}">باقة سناك أطفال + ${snackPrice} ر.ق</option>
+        </select>`;
+    }
+
+    if(isSnack){
+      html += `<div class="v12-addons">
+          <div class="v12-addon"><b>سعر القطعة</b>${unit||"حسب الطلب"} ${unit?"ر.ق":""}</div>
+          <div class="v12-addon"><b>قيمة الموظفة</b>${staff||"حسب الطلب"} ${staff?"ر.ق":""}</div>
+          <div class="v12-addon"><b>قيمة العربة/الخدمة</b>${baseTotal||"حسب الباقة"} ${baseTotal?"ر.ق":""}</div>
+          <div class="v12-addon"><b>مدة الخدمة</b>${esc12(p.durationOneDay||"3 ساعات")}</div>
+        </div>
+        <label class="v12-field-label">نوع السناك المطلوب</label>
+        <select class="v12-select" id="v12SnackType">
+          <option>حسب الباقة</option><option>فشار</option><option>غزل البنات</option><option>بطاطا حلزونية</option><option>ذرة حلوة</option><option>آيس كريم</option><option>سلاش / براد</option><option>وافل</option><option>بانكيك</option><option>نافورة شوكولاتة</option>
+        </select>`;
+    }
+
+    html += `<div class="v12-total" id="v12AddonTotal">قيمة الإضافات: 0 ر.ق</div></div>`;
+    return html;
+  };
+
+  window.v12UpdateAddons=function(){
+    let total=0;
+    document.querySelectorAll(".v12-priced").forEach(sel=>{
+      const op=sel.options[sel.selectedIndex];
+      total += Number(op?.dataset?.price||0);
+    });
+    const el=document.getElementById("v12AddonTotal");
+    if(el) el.textContent=`قيمة الإضافات: ${total} ر.ق`;
+    return total;
+  };
+
+  window.v12Data=function(p){
+    const cells=[];
+    const add=(label,val,full=false)=>{
+      val=val12(val);
+      if(!val) return;
+      cells.push(`<div class="v12-data-cell ${full?'full':''}"><b>${esc12(label)}</b>${val}</div>`);
+    };
+    add("رقم المنتج",p.number||p.id);
+    add("القسم",p.category);
+    add("النوع",p.type);
+    add("نوع التأجير",p.rentType);
+    add("المدة",p.durationOneDay);
+    if(p.durationTwoDays && p.durationTwoDays!==p.durationOneDay) add("مدة أخرى",p.durationTwoDays);
+    add("العمر",p.age);
+    add("المقاس",p.measurements || [p.length,p.width,p.height].filter(Boolean).join(" × "));
+    add("تفاصيل المنتج",p.details,true);
+    add("محتويات العرض",p.offerIncludes,true);
+    add("الشروط",p.packageConditions,true);
+    add("ملاحظات",p.notes,true);
+    return `<div class="v12-data"><h3>بيانات المنتج</h3><div class="v12-data-grid">${cells.join("")}</div></div>`;
+  };
+
+  window.v12Contact=function(p){
+    const msg=encodeURIComponent(`استفسار عن المنتج رقم ${p.number||p.id} - ${p.name}`);
+    return `<div class="v11-booking-box"><h3>بيانات الحجز والتواصل</h3>
+      <div class="v11-contact-actions">
+        <a class="v11-wa-main" href="https://wa.me/${WA12}?text=${msg}" target="_blank">💬 استفسار واتساب</a>
+        <a class="v11-call" href="tel:+97433317720">📞 اتصال مباشر</a>
+        <button class="v11-cart" onclick="addCurrent()">احجز الآن وأضف للسلة</button>
+        <button class="v11-close" onclick="closeSheets()">إغلاق</button>
+      </div>
+      <div class="v11-phone-grid">${PHONES12.map(n=>`<a href="tel:+974${n}">${n}</a>`).join("")}</div>
+      <div class="v12-summary" style="margin-bottom:0"><p>أوقات العمل والحجز من 9:00 صباحًا إلى 5:00 مساءً.</p><p>التوفر والسعر النهائي حسب تاريخ الحجز والمنطقة.</p></div>
+    </div>`;
+  };
+
+  window.openDetail=function(id){
+    const p=(window.PRODUCTS||PRODUCTS||[]).find(x=>Number(x.id)===Number(id)||Number(x.number)===Number(id));
+    if(!p) return;
+    currentProduct=p; qty=1; selectedOption=productOptions(p)[0];
+    const opts=productOptions(p);
+    const chips=[`#${p.number||p.id}`,p.category,p.type].filter(Boolean);
+    const mainImg=(typeof imgCandidates==="function" ? imgCandidates(p)[0] : (p.image||img(p)));
+
+    detailPanel.innerHTML=`<button class="close" onclick="closeSheets()">×</button>
+      <img class="detail-img" src="${esc12(mainImg)}" onerror="tryNextImg?tryNextImg(this):this.style.display='none'">
+      <h1>${esc12(p.name)}</h1>
+      <div class="v11-chip-row">${chips.map(c=>`<span>${esc12(c)}</span>`).join("")}</div>
+      ${typeof oldGalleryHtml==="function" ? oldGalleryHtml(p) : ""}
+      ${v12Summary(p)}
+      <div class="v11-price-box"><h3>اختيار مدة الحجز والسعر</h3>
+        <div class="options">${opts.map((o,i)=>`<button class="opt ${i===0?'active':''}" onclick="selectOpt(${i})">${esc12(o.label)}<br><b>${Number(o.price||0)} ر.ق</b>${o.note?`<small class="package-note">${esc12(o.note)}</small>`:""}</button>`).join("")}</div>
+      </div>
+      ${v12Addons(p)}
+      ${v12Data(p)}
+      <div class="info-box"><h3>ملاحظات الطلب</h3>
+        <input class="field" id="custChild" placeholder="اسم الطفل / الثيم / اللون إن وجد">
+        <textarea class="field" id="custNote" placeholder="أي ملاحظة إضافية للطلب"></textarea>
+      </div>
+      ${v12Contact(p)}
+      <div class="bottom-actions">
+        <button class="primary" onclick="addCurrent()">أضف 🛒</button>
+        <div class="qty"><button onclick="changeQty(-1)">−</button><span id="qtyText">1</span><button onclick="changeQty(1)">+</button></div>
+      </div>`;
+
+    setTimeout(()=>{
+      const main=detailPanel.querySelector(".detail-img");
+      if(main && typeof imgCandidates==="function"){
+        main.dataset.tries=JSON.stringify(imgCandidates(p));
+        main.dataset.tryIndex="0";
+        main.onerror=function(){tryNextImg(this)};
+      }
+      detailPanel.querySelectorAll(".decorThumb img,.gallery-thumb").forEach(function(im){
+        const src=im.getAttribute("src")||"";
+        const stem=src.replace(/\.[^.]+$/,"");
+        const tries=[src,stem+".jpg",stem+".jpeg",stem+".png",stem+".webp"];
+        im.dataset.tries=JSON.stringify([...new Set(tries)]);
+        im.dataset.tryIndex="0";
+        im.onerror=function(){tryNextImg(this)};
+      });
+    },50);
+    detailSheet.classList.add("show");
+  };
+
+  window.addCurrent=function(){
+    if(!currentProduct) return;
+    const o=selectedOption||productOptions(currentProduct)[0];
+    const addPrice=v12UpdateAddons();
+    const extras=[];
+    const push=(label,id)=>{
+      const el=document.getElementById(id);
+      if(el && el.value && !/^0$/.test(el.value) && !/بدون|حسب الباقة/.test(el.value)) extras.push(`${label}: ${el.options?el.options[el.selectedIndex].text:el.value}`);
+    };
+    push("الثيم","v12Theme");
+    const color=document.getElementById("v12BalloonColor")?.value;
+    if(color) extras.push("ألوان البالونات: "+color);
+    push("الطاولات","v12Tables");
+    push("طباعة الطاولات","v12Prints");
+    push("السناك","v12Snack");
+    push("نوع السناك","v12SnackType");
+    if(document.getElementById("custChild")?.value) extras.push(document.getElementById("custChild").value);
+    if(document.getElementById("custNote")?.value) extras.push(document.getElementById("custNote").value);
+    if(addPrice>0) extras.push("إجمالي الإضافات: "+addPrice+" ر.ق");
+
+    cart.push({id:currentProduct.id,number:currentProduct.number,name:currentProduct.name,img:img(currentProduct),option:o.label,price:Number(o.price||0)+addPrice,qty,note:extras.join(" - ")});
+    saveCart(); closeSheets(); openCart();
+  };
+
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V12 FINAL OPTIONS NO BULLETS ===== -->
+
 </body>
 </html>
