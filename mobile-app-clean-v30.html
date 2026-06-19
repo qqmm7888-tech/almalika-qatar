@@ -6282,5 +6282,191 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 </script>
 <!-- ===== END ALMALIKA CLEAN V29 FORCE GALLERY VERY TOP ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V30 GALLERY UNDER MAIN IMAGE ===== -->
+<style id="almalika-clean-v30-gallery-under-main-image">
+/* V30: كل أشكال الديكور تكون تحت الصورة الرئيسية مباشرة */
+.v30-inline-gallery{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:10px 0 6px!important;
+  padding:10px!important;
+  background:#fffaf1!important;
+  border:1.5px solid #f0c9dc!important;
+  border-radius:18px!important;
+  overflow:visible!important;
+}
+.v30-inline-gallery h3{
+  color:#6A1B2E!important;
+  text-align:center!important;
+  font-size:18px!important;
+  line-height:1.35!important;
+  font-weight:1000!important;
+  margin:4px 0 10px!important;
+}
+.v30-inline-gallery .v15-gallery{
+  display:grid!important;
+  grid-template-columns:repeat(4,1fr)!important;
+  gap:8px!important;
+  width:100%!important;
+  max-width:100%!important;
+  overflow:visible!important;
+}
+.v30-inline-gallery .v15-thumb{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  height:auto!important;
+  display:block!important;
+  padding:6px!important;
+  background:#fff!important;
+  border:1.5px solid #f0c9dc!important;
+  border-radius:13px!important;
+  text-align:center!important;
+  color:#6A1B2E!important;
+  font-size:11px!important;
+  font-weight:1000!important;
+}
+.v30-inline-gallery .v15-thumb.active{
+  border:2px solid #e91e63!important;
+  box-shadow:0 0 0 2px rgba(233,30,99,.13)!important;
+}
+.v30-inline-gallery .v15-thumb img{
+  width:100%!important;
+  height:72px!important;
+  object-fit:cover!important;
+  border-radius:9px!important;
+  display:block!important;
+  margin-bottom:5px!important;
+}
+
+/* اخفاء أي عمود/معرض جانبي أو مكرر بعد نقل الصور تحت الصورة الرئيسية */
+.v30-remove-gallery{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+}
+
+/* إخفاء أزرار الإجراء الداخلية، وإبقاء زر الإضافة السفلي فقط */
+.v30-hide-inner-actions{
+  display:none!important;
+}
+
+@media(max-width:760px){
+  .v30-inline-gallery .v15-gallery{
+    grid-template-columns:repeat(2,1fr)!important;
+  }
+  .v30-inline-gallery .v15-thumb img{
+    height:82px!important;
+  }
+}
+</style>
+
+<script id="almalika-clean-v30-gallery-under-main-image-script">
+(function(){
+  function isDecorV30(){
+    const p = window.currentProduct;
+    if(!p) return false;
+    const sec = (typeof sectionOf === "function") ? sectionOf(p) : "";
+    const txt = [sec, p.category, p.type, p.name].join(" ");
+    return /events|تجهيز الحفلات|ديكور|حفلات|مناسبات/i.test(txt);
+  }
+
+  function findSourceGalleryV30(panel){
+    return panel.querySelector(".v15-layout > .v15-side .v15-gallery") ||
+           panel.querySelector(".v29-gallery-very-top .v15-gallery") ||
+           panel.querySelector(".v28-gallery-top .v15-gallery") ||
+           panel.querySelector(".v23-mobile-gallery .v15-gallery") ||
+           panel.querySelector(".v15-side .v15-gallery") ||
+           panel.querySelector(".v15-gallery");
+  }
+
+  function buildInlineGalleryV30(panel){
+    if(!isDecorV30()) return;
+
+    const topBox = panel.querySelector(".v15-main > .v15-box.pink") || panel.querySelector(".v15-main > .v15-box");
+    const mainImg = panel.querySelector("#v15MainImg");
+    const sourceGallery = findSourceGalleryV30(panel);
+
+    if(!topBox || !mainImg || !sourceGallery) return;
+
+    // احذف أي معرض مرفوع سابقاً لتجنب التكرار
+    panel.querySelectorAll(".v30-inline-gallery").forEach(x => x.remove());
+
+    const wrap = document.createElement("div");
+    wrap.className = "v30-inline-gallery";
+    wrap.innerHTML = `<h3>اختر شكل الديكور المناسب للزبون 🖼️</h3>`;
+
+    const clonedGallery = sourceGallery.cloneNode(true);
+    wrap.appendChild(clonedGallery);
+
+    // ضع كل الأشكال تحت الصورة الرئيسية مباشرة
+    mainImg.insertAdjacentElement("afterend", wrap);
+
+    // تفعيل اختيار الصورة
+    wrap.querySelectorAll(".v15-thumb").forEach(btn=>{
+      btn.addEventListener("click", function(ev){
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        const imgEl = this.querySelector("img");
+        if(!imgEl) return;
+        const src = imgEl.getAttribute("src") || imgEl.src;
+
+        const main = panel.querySelector("#v15MainImg");
+        if(main) main.src = src;
+
+        const p = window.currentProduct || {};
+        const n = Number((p.number || p.id) || 0);
+        const hidden = document.getElementById("decorImage_" + n);
+        const label = document.getElementById("decorImageLabel_" + n);
+        if(hidden) hidden.value = src;
+        if(label) label.value = this.dataset.decorLabel || this.textContent.trim() || "شكل الديكور";
+
+        panel.querySelectorAll(".v15-thumb").forEach(x=>x.classList.remove("active"));
+        this.classList.add("active");
+      }, true);
+    });
+
+    // بعد نقل الصور للأعلى، أخفِ كل النسخ الجانبية/السفلية
+    panel.querySelectorAll(".v15-layout > .v15-side, .v29-gallery-very-top, .v28-gallery-top, .v23-mobile-gallery, aside.v15-side").forEach(el=>{
+      if(!el.closest(".v30-inline-gallery")){
+        el.classList.add("v30-remove-gallery");
+      }
+    });
+
+    // إخفاء أزرار الإجراء الداخلية فقط
+    panel.querySelectorAll(".v15-actions").forEach(el=>{
+      const box = el.closest(".v15-box") || el;
+      box.classList.add("v30-hide-inner-actions");
+    });
+  }
+
+  function runV30(){
+    const panel = window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.v15-panel,.panel");
+    if(panel) buildInlineGalleryV30(panel);
+  }
+
+  const oldOpenV30 = window.openDetail;
+  if(typeof oldOpenV30 === "function"){
+    window.openDetail = function(id){
+      oldOpenV30(id);
+      [90,220,450,750,1100,1700,2500].forEach(ms=>setTimeout(runV30, ms));
+    };
+  }
+
+  document.addEventListener("click", function(){
+    [120,350].forEach(ms=>setTimeout(runV30, ms));
+  }, true);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V30 GALLERY UNDER MAIN IMAGE ===== -->
+
 </body>
 </html>
