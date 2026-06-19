@@ -6045,5 +6045,98 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 </script>
 <!-- ===== END ALMALIKA CLEAN V25 REMOVE DUPLICATE EVENT GALLERY ACTIONS ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V26 REMOVE LOWER DUPLICATE GALLERY HARD ===== -->
+<style id="almalika-clean-v26-remove-lower-duplicate-gallery-hard">
+/* V26: حذف معرض الديكور المكرر الموجود أسفل تفاصيل الديكور */
+.v25-hide-event-duplicate,
+.v26-hide-lower-gallery{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  max-height:0!important;
+  overflow:hidden!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+}
+</style>
+
+<script id="almalika-clean-v26-remove-lower-duplicate-gallery-hard-script">
+(function(){
+  function isEventProductV26(p){
+    if(!p) return false;
+    const sec = (typeof sectionOf === "function") ? sectionOf(p) : "";
+    const txt = [sec, p.category, p.type, p.name].join(" ");
+    return /events|تجهيز الحفلات|ديكور|حفلات|مناسبات/i.test(txt);
+  }
+
+  function hideNodeV26(el){
+    if(!el) return;
+    el.classList.add("v26-hide-lower-gallery");
+    el.style.display = "none";
+    el.style.visibility = "hidden";
+    el.style.height = "0";
+    el.style.maxHeight = "0";
+    el.style.overflow = "hidden";
+    el.style.margin = "0";
+    el.style.padding = "0";
+    el.style.border = "0";
+  }
+
+  function cleanLowerDuplicateGalleryV26(){
+    const p = window.currentProduct;
+    if(!isEventProductV26(p)) return;
+
+    const panel = window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.v15-panel,.panel");
+    if(!panel) return;
+
+    // احذف أي معرض معروف بالأسماء السابقة
+    panel.querySelectorAll(".v23-mobile-gallery, .v15-side, .v15-layout > aside, aside.v15-side").forEach(hideNodeV26);
+
+    // احذف أي بلوك يحتوي العنوان المكرر "اختر شكل الديكور المناسب للزبون"
+    [...panel.querySelectorAll("div,aside,section")].forEach(el=>{
+      const txt = (el.textContent || "").replace(/\s+/g," ").trim();
+      if(txt.includes("اختر شكل الديكور المناسب للزبون")){
+        // اختر أكبر صندوق قريب للعنوان وليس كل اللوحة
+        const box = el.closest(".v23-mobile-gallery,.v15-side,.v15-box,.v13-section,aside,section,div");
+        hideNodeV26(box || el);
+      }
+    });
+
+    // احذف أي مجموعة صور مصغرة مكررة بالأسفل بعد أزرار التواصل/الإضافة
+    [...panel.querySelectorAll("img")].forEach(img=>{
+      const parentText = (img.closest("div,aside,section")?.textContent || "").replace(/\s+/g," ");
+      const container = img.closest(".v15-gallery,.v23-mobile-gallery,.v15-side,.gallery,aside,section,div");
+      if(container && parentText.includes("شكل") && parentText.includes("الصورة")){
+        const top = container.closest(".v23-mobile-gallery,.v15-side,.v15-box,.v13-section,aside,section,div") || container;
+        if((top.textContent||"").includes("اختر شكل الديكور")) hideNodeV26(top);
+      }
+    });
+
+    // إبقاء زر الإضافة السفلي فقط: حذف صندوق الأزرار الداخلي المكرر
+    panel.querySelectorAll(".v15-actions").forEach(el=>{
+      hideNodeV26(el.closest(".v15-box") || el);
+    });
+  }
+
+  const oldOpenV26 = window.openDetail;
+  if(typeof oldOpenV26 === "function"){
+    window.openDetail = function(id){
+      oldOpenV26(id);
+      setTimeout(cleanLowerDuplicateGalleryV26, 100);
+      setTimeout(cleanLowerDuplicateGalleryV26, 350);
+      setTimeout(cleanLowerDuplicateGalleryV26, 800);
+      setTimeout(cleanLowerDuplicateGalleryV26, 1400);
+    };
+  }
+
+  document.addEventListener("click", function(){
+    setTimeout(cleanLowerDuplicateGalleryV26, 120);
+  }, true);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V26 REMOVE LOWER DUPLICATE GALLERY HARD ===== -->
+
 </body>
 </html>
