@@ -5987,123 +5987,63 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 <!-- ===== END ALMALIKA CLEAN V22 ALL SECTIONS SIZE FIX ===== -->
 
 
-<!-- ===== ALMALIKA CLEAN V23 SHOW GALLERY ON REAL MOBILE ===== -->
-<style id="almalika-clean-v23-show-gallery-real-mobile">
-/* V23: إظهار اختيار شكل الديكور داخل شاشة الجوال الحقيقية */
-.v23-mobile-gallery{
-  display:none;
-  width:100%;
-  max-width:100%;
-  background:#fffaf1;
-  border:1.5px solid #f0c9dc;
-  border-radius:20px;
-  padding:10px;
-  margin:10px 0;
-  overflow:hidden;
-}
-.v23-mobile-gallery h3{
-  color:#6A1B2E;
-  text-align:center;
-  font-size:20px;
-  line-height:1.35;
-  font-weight:1000;
-  margin:8px 0 10px;
-}
-.v23-mobile-gallery .v15-side-main{
-  width:100%!important;
-  max-height:230px!important;
-  object-fit:contain!important;
-  background:#fff!important;
-  border:1px solid #f0c9dc!important;
-  border-radius:16px!important;
-}
-.v23-mobile-gallery .v15-gallery{
-  display:grid!important;
-  grid-template-columns:1fr 1fr!important;
-  gap:8px!important;
-  max-height:none!important;
-  overflow:visible!important;
-}
-.v23-mobile-gallery .v15-thumb{
-  width:100%!important;
-  min-width:0!important;
-}
-.v23-mobile-gallery .v15-thumb img{
-  width:100%!important;
-  height:92px!important;
-  object-fit:cover!important;
-  border-radius:10px!important;
-}
 
-/* على الجوال الحقيقي نخفي العمود الجانبي القديم ونظهر المعرض داخل التفاصيل */
-@media(max-width:760px){
-  .v23-mobile-gallery{
-    display:block!important;
-  }
-  .v15-layout > .v15-side{
-    display:none!important;
-  }
-}
 
-/* على الكمبيوتر لو عرض الجوال داخل إطار ضيق، يظهر المعرض أيضاً داخل المحتوى */
-@media(min-width:761px){
-  .v23-mobile-gallery{
-    display:block!important;
-  }
+
+<!-- ===== ALMALIKA CLEAN V25 REMOVE DUPLICATE EVENT GALLERY ACTIONS ===== -->
+<style id="almalika-clean-v25-remove-duplicate-event-gallery-actions">
+/* V25: حذف الجزء المكرر من تفاصيل الحفلات/الديكورات */
+.v25-hide-event-duplicate{
+  display:none!important;
 }
 </style>
 
-<script id="almalika-clean-v23-show-gallery-real-mobile-script">
+<script id="almalika-clean-v25-remove-duplicate-event-gallery-actions-script">
 (function(){
-  function insertGalleryInsideMobileV23(){
-    const panel = window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.v15-panel");
-    if(!panel) return;
-
-    const side = panel.querySelector(".v15-layout > .v15-side");
-    if(!side) return;
-
-    // لا تكرر المعرض
-    if(panel.querySelector(".v23-mobile-gallery")) return;
-
-    const topBox = panel.querySelector(".v15-main > .v15-box.pink") || panel.querySelector(".v15-main > .v15-box");
-    if(!topBox) return;
-
-    const mobileGallery = side.cloneNode(true);
-    mobileGallery.classList.remove("v15-side");
-    mobileGallery.classList.add("v23-mobile-gallery");
-
-    // تأكد أن الصور داخل النسخة الداخلية تستخدم نفس دالة الاختيار الأصلية
-    mobileGallery.querySelectorAll(".v15-thumb").forEach(btn=>{
-      btn.addEventListener("click", function(){
-        const img = this.querySelector("img");
-        if(!img) return;
-        const main = document.getElementById("v15MainImg");
-        const sideMain = document.getElementById("v15SideMain");
-        if(main) main.src = img.getAttribute("src");
-        if(sideMain) sideMain.src = img.getAttribute("src");
-        panel.querySelectorAll(".v15-thumb").forEach(x=>x.classList.remove("active"));
-        this.classList.add("active");
-      }, true);
-    });
-
-    topBox.insertAdjacentElement("afterend", mobileGallery);
+  function isEventProductV25(p){
+    if(!p) return false;
+    const sec = (typeof sectionOf === "function") ? sectionOf(p) : "";
+    const txt = [sec, p.category, p.type, p.name].join(" ");
+    return /events|تجهيز الحفلات|ديكور|حفلات|مناسبات/i.test(txt);
   }
 
-  const oldOpenDetailV23 = window.openDetail;
-  if(typeof oldOpenDetailV23 === "function"){
+  function cleanEventDuplicateV25(){
+    const p = window.currentProduct;
+    if(!isEventProductV25(p)) return;
+
+    const panel = window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.v15-panel,.panel");
+    if(!panel) return;
+
+    // حذف أي نسخة مكررة من معرض اختيار شكل الديكور داخل الأسفل أو الجنب
+    panel.querySelectorAll(".v23-mobile-gallery, .v15-layout > .v15-side").forEach(el => {
+      el.classList.add("v25-hide-event-duplicate");
+      el.style.display = "none";
+    });
+
+    // حذف أزرار الإجراء المكررة داخل جسم التفاصيل، مع إبقاء زر الإضافة السفلي فقط
+    panel.querySelectorAll(".v15-actions").forEach(el => {
+      const box = el.closest(".v15-box") || el;
+      box.classList.add("v25-hide-event-duplicate");
+      box.style.display = "none";
+    });
+  }
+
+  const oldOpenV25 = window.openDetail;
+  if(typeof oldOpenV25 === "function"){
     window.openDetail = function(id){
-      oldOpenDetailV23(id);
-      setTimeout(insertGalleryInsideMobileV23, 180);
-      setTimeout(insertGalleryInsideMobileV23, 500);
+      oldOpenV25(id);
+      setTimeout(cleanEventDuplicateV25, 120);
+      setTimeout(cleanEventDuplicateV25, 450);
+      setTimeout(cleanEventDuplicateV25, 900);
     };
   }
 
   document.addEventListener("DOMContentLoaded", function(){
-    setTimeout(insertGalleryInsideMobileV23, 700);
+    setTimeout(cleanEventDuplicateV25, 600);
   });
 })();
 </script>
-<!-- ===== END ALMALIKA CLEAN V23 SHOW GALLERY ON REAL MOBILE ===== -->
+<!-- ===== END ALMALIKA CLEAN V25 REMOVE DUPLICATE EVENT GALLERY ACTIONS ===== -->
 
 </body>
 </html>
