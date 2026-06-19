@@ -5279,5 +5279,82 @@ window.addCurrent=function(){
 </script>
 <!-- ===== END ALMALIKA CLEAN V17 DECOR 201 202 SNACK_PRICE_FIX ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V18 DECOR ONLY SNACK LOCK FIX ===== -->
+<script id="almalika-clean-v18-decor-only-snack-lock-fix">
+(function(){
+  function selectedDecorText18(n){
+    const checked = document.querySelector(`input[name="opt_${n}"]:checked`);
+    if(!checked) return "";
+    const card = checked.closest(".priceChoice");
+    return (card ? card.textContent : checked.value || "").replace(/\s+/g," ").trim();
+  }
+
+  function isDecorOnly18(n){
+    const txt = selectedDecorText18(n);
+    // مهم: حتى لو الكرت فيه عبارة "عدد الأطفال" من العنوان، طالما مكتوب "ديكور فقط" يتم قفل السناك
+    if(/ديكور\s*فقط/.test(txt)) return true;
+    if(/السعر\s*الأساسي/.test(txt) && /ديكور/.test(txt)) return true;
+    return false;
+  }
+
+  // استبدال قفل السناك السابق بقفل أدق
+  window.v17ApplySnackLock = function(n){
+    const box = document.getElementById("snackBox_" + n);
+    if(!box) return;
+
+    let status = box.querySelector(".v17-snack-status");
+    if(!status){
+      status = document.createElement("div");
+      status.className = "v17-snack-status";
+      box.appendChild(status);
+    }
+
+    const lock = isDecorOnly18(n);
+    box.classList.toggle("v17-locked", lock);
+
+    box.querySelectorAll("input").forEach(inp => {
+      inp.disabled = lock;
+      if(lock){
+        inp.checked = false;
+      }else{
+        // عند اختيار أي باقة أطفال، افتح السناك وخليه محدد للزبون يختار/يلغي
+        if(!inp.dataset.v18Touched) inp.checked = true;
+      }
+    });
+
+    status.textContent = lock
+      ? "مغلق عند اختيار ديكور فقط"
+      : "مفتوح: اختر نوع السناك المطلوب للباقة";
+  };
+
+  // تأكيد التنفيذ بعد أي تغيير في باقة السعر
+  document.addEventListener("change", function(e){
+    const name = e.target && e.target.getAttribute("name") || "";
+    const m = name.match(/^opt_(\d+)/);
+    if(m){
+      setTimeout(function(){
+        if(typeof updateDecorTotal15 === "function") updateDecorTotal15(m[1]);
+        window.v17ApplySnackLock(m[1]);
+      }, 30);
+    }
+    if(e.target && e.target.closest && e.target.closest(".snackChoiceBox")){
+      e.target.dataset.v18Touched = "1";
+    }
+  }, true);
+
+  const oldOpen18 = window.openDetail;
+  window.openDetail = function(id){
+    oldOpen18(id);
+    setTimeout(function(){
+      const p = window.currentProduct;
+      const n = Number((p && (p.number || p.id)) || id);
+      window.v17ApplySnackLock(n);
+    }, 180);
+  };
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V18 DECOR ONLY SNACK LOCK FIX ===== -->
+
 </body>
 </html>
