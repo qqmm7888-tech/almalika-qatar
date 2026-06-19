@@ -4759,11 +4759,13 @@ window.enforceShinyBalloonLimit=function(n, changedEl){
 };
 
 window.balloonColorHtml15=function(n){
-  const shinySection = `<div class="shinyBalloonBox">
+  const num = Number(n||0);
+  const allowShiny = (num === 201 || num === 202);
+  const shinySection = allowShiny ? `<div class="shinyBalloonBox">
     <div class="shinyBalloonTitle">✨ الألوان اللامعة</div>
     <div class="colorSwatches shinyGrid">${(window.shinyBalloonColorsV15||[]).map(([name,img])=>`<label class="colorSwatch shiny"><input type="checkbox" class="shinyBalloonInput" name="balloon_${n}" value="${esc15(name)}" onchange="enforceShinyBalloonLimit(${n},this)"><span class="colorDot shinyDot" style="background-image:url('${img}');"></span><span class="shinyName">${esc15(name)}</span></label>`).join('')}</div>
     <div class="shinyHint">الألوان اللامعة: يمكن اختيار لون واحد أو لونين فقط كحد أقصى.</div>
-  </div>`;
+  </div>` : ``;
   return `<div class="balloonColorBox">
     ${shinySection}
     <div class="choiceBoxTitle">🎈 اختيار ألوان البالونات <span class="v15-required">مطلوب</span></div>
