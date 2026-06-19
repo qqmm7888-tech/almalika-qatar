@@ -5422,7 +5422,7 @@ window.addCurrent=function(){
 <script id="almalika-clean-v19-unavailable-bouncies-script">
 (function(){
   // الأرقام التي سبق تثبيتها كغير متاحة/عطلانة
-  const unavailableBounciesV19 = new Set([1,19,20,22,34,35,37]);
+  const unavailableBounciesV19 = new Set([1,19,20,22,35,37]);
 
   function productNumV19(p){
     return Number((p && (p.number || p.id)) || 0);
@@ -5539,6 +5539,109 @@ window.addCurrent=function(){
 })();
 </script>
 <!-- ===== END ALMALIKA CLEAN V19 UNAVAILABLE BOUNCIES ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V20 REMOVE ONE_DAY EVENTS OPTION ===== -->
+<script id="almalika-clean-v20-remove-oneday-events-option">
+(function(){
+  function sectionV20(p){
+    return (typeof sectionOf === "function") ? sectionOf(p) : "";
+  }
+  function isEventsV20(p){
+    const txt = [sectionV20(p), p && p.category, p && p.type, p && p.name].join(" ");
+    return /events|تجهيز الحفلات|ديكور|حفلات|مناسبات/i.test(txt);
+  }
+  function isOneDayOptionV20(o){
+    const txt = [o && o.id, o && o.label, o && o.note].join(" ");
+    return /يوم\s*واحد|one\s*day/i.test(txt);
+  }
+
+  const oldV15OptionListV20 = window.v15OptionList;
+  if(typeof oldV15OptionListV20 === "function"){
+    window.v15OptionList = function(p){
+      const opts = oldV15OptionListV20(p) || [];
+      if(isEventsV20(p)){
+        return opts.filter(o => !isOneDayOptionV20(o));
+      }
+      return opts;
+    };
+  }
+
+  // احتياط: بعد فتح التفاصيل احذف أي كرت مكتوب عليه يوم واحد داخل تجهيز الحفلات
+  const oldOpenDetailV20 = window.openDetail;
+  if(typeof oldOpenDetailV20 === "function"){
+    window.openDetail = function(id){
+      oldOpenDetailV20(id);
+      setTimeout(function(){
+        const p = window.currentProduct;
+        if(!p || !isEventsV20(p)) return;
+        document.querySelectorAll(".priceChoice").forEach(card=>{
+          if(/يوم\s*واحد/i.test((card.textContent || "").replace(/\s+/g," "))){
+            card.remove();
+          }
+        });
+        const first = document.querySelector(".priceChoice input");
+        if(first && !document.querySelector(".priceChoice input:checked")){
+          first.checked = true;
+          first.closest(".priceChoice")?.classList.add("active");
+        }
+        const n = Number((p.number || p.id) || id);
+        if(typeof updateDecorTotal15 === "function") updateDecorTotal15(n);
+      }, 120);
+    };
+  }
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V20 REMOVE ONE_DAY EVENTS_OPTION ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V21 REACTIVATE BOUNCY 34 ===== -->
+<script id="almalika-clean-v21-reactivate-bouncy-34">
+(function(){
+  // نطاطية 34 تم صيانتها: إزالة أي قفل/غير متاح عنها
+  const oldUnavailableV21 = window.isUnavailableProductV19;
+  window.isUnavailableProductV19 = function(p){
+    const n = Number((p && (p.number || p.id)) || 0);
+    if(n === 34) return false;
+    return oldUnavailableV21 ? oldUnavailableV21(p) : false;
+  };
+
+  function reactivate34(){
+    document.querySelectorAll("[data-id], [data-product-id], .card, .product-card, .product").forEach(card=>{
+      const text = card.textContent || "";
+      let id = Number(card.dataset.id || card.dataset.productId || 0);
+      if(!id){
+        const m = text.match(/#\s*34\b/);
+        if(m) id = 34;
+      }
+      if(id !== 34) return;
+
+      card.classList.remove("productUnavailableV19");
+      card.querySelectorAll(".unavailableBadgeV19,.unavailableRibbonV19,.unavailableMsgV19").forEach(x=>x.remove());
+
+      card.querySelectorAll(".unavailableBtnV19").forEach(el=>{
+        el.classList.remove("unavailableBtnV19");
+        if((el.textContent || "").trim() === "غير متاح"){
+          // استرجاع النص حسب نوع الزر قدر الإمكان
+          if(el.className.includes("quick")) el.textContent = "التسوق السريع";
+          else if(el.className.includes("share")) el.textContent = "تحويل لصديق";
+          else if(el.className.includes("wa")) el.textContent = "واتساب";
+          else el.textContent = "أضف";
+        }
+        el.style.pointerEvents = "";
+        el.style.cursor = "";
+        el.style.opacity = "";
+      });
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", reactivate34);
+  setTimeout(reactivate34, 400);
+  setTimeout(reactivate34, 1200);
+  setInterval(reactivate34, 2500);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V21 REACTIVATE BOUNCY 34 ===== -->
 
 </body>
 </html>
