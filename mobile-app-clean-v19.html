@@ -5356,5 +5356,189 @@ window.addCurrent=function(){
 </script>
 <!-- ===== END ALMALIKA CLEAN V18 DECOR ONLY SNACK LOCK FIX ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V19 UNAVAILABLE BOUNCIES ===== -->
+<style id="almalika-clean-v19-unavailable-bouncies-style">
+/* V19: إقفال النطاطيات غير المتاحة كما سبق */
+.unavailableBadgeV19{
+  position:absolute!important;
+  top:10px!important;
+  right:10px!important;
+  z-index:50!important;
+  background:#b80f43!important;
+  color:#fff!important;
+  border-radius:999px!important;
+  padding:8px 12px!important;
+  font-weight:1000!important;
+  font-size:13px!important;
+  box-shadow:0 8px 18px rgba(184,15,67,.25)!important;
+}
+.unavailableRibbonV19{
+  position:absolute!important;
+  left:-18px!important;
+  bottom:18px!important;
+  z-index:60!important;
+  width:78%!important;
+  text-align:center!important;
+  transform:rotate(-8deg)!important;
+  background:linear-gradient(135deg,#b80f43,#df315f)!important;
+  color:#fff!important;
+  border:4px solid rgba(255,255,255,.9)!important;
+  border-radius:14px!important;
+  padding:10px 8px!important;
+  font-weight:1000!important;
+  font-size:22px!important;
+  box-shadow:0 10px 22px rgba(0,0,0,.20)!important;
+}
+.unavailableMsgV19{
+  border:1.5px dashed #e55b7d!important;
+  background:#fff3f6!important;
+  color:#8a0f2e!important;
+  border-radius:14px!important;
+  padding:10px!important;
+  text-align:center!important;
+  font-size:13px!important;
+  line-height:1.7!important;
+  font-weight:1000!important;
+  margin:8px 0!important;
+}
+.productUnavailableV19 .add,
+.productUnavailableV19 .quick,
+.productUnavailableV19 .share,
+.productUnavailableV19 .wa,
+.productUnavailableV19 button:not(.details):not([data-action="details"]),
+.productUnavailableV19 a[href*="wa.me"]{
+  opacity:.72!important;
+}
+.productUnavailableV19 .unavailableBtnV19,
+.unavailableBtnV19{
+  background:#d38aaa!important;
+  color:#fff!important;
+  pointer-events:none!important;
+  cursor:not-allowed!important;
+}
+</style>
+
+<script id="almalika-clean-v19-unavailable-bouncies-script">
+(function(){
+  // الأرقام التي سبق تثبيتها كغير متاحة/عطلانة
+  const unavailableBounciesV19 = new Set([1,19,20,22,34,35,37]);
+
+  function productNumV19(p){
+    return Number((p && (p.number || p.id)) || 0);
+  }
+
+  function isBouncyV19(p){
+    const s = (typeof sectionOf === "function") ? sectionOf(p) : "";
+    const txt = [s, p && p.category, p && p.type, p && p.name].join(" ");
+    return /bounc|نطاط|زحلا|ملعب|صابوني/i.test(txt);
+  }
+
+  window.isUnavailableProductV19 = function(p){
+    return isBouncyV19(p) && unavailableBounciesV19.has(productNumV19(p));
+  };
+
+  function addBadgesToCardsV19(){
+    if(!window.PRODUCTS && typeof PRODUCTS === "undefined") return;
+    const allProducts = window.PRODUCTS || PRODUCTS || [];
+    document.querySelectorAll("[data-id], [data-product-id], .card, .product-card, .product").forEach(card=>{
+      const text = card.textContent || "";
+      let id = Number(card.dataset.id || card.dataset.productId || 0);
+      if(!id){
+        const m = text.match(/#\s*(\d+)/);
+        if(m) id = Number(m[1]);
+      }
+      const p = allProducts.find(x => Number(x.id)===id || Number(x.number)===id);
+      if(!p || !isUnavailableProductV19(p)) return;
+
+      card.classList.add("productUnavailableV19");
+      if(getComputedStyle(card).position === "static") card.style.position = "relative";
+
+      if(!card.querySelector(".unavailableBadgeV19")){
+        const b = document.createElement("div");
+        b.className = "unavailableBadgeV19";
+        b.textContent = "غير متاح";
+        card.appendChild(b);
+      }
+
+      // تعطيل أزرار الإضافة/السريع/التحويل/واتساب بدون تعطيل زر التفاصيل
+      [...card.querySelectorAll("button,a")].forEach(el=>{
+        const t = (el.textContent || "").trim();
+        if(/تفاصيل|عرض|اكتشف/i.test(t)) return;
+        if(/أضف|السريع|تحويل|واتساب|سلة|حجز/i.test(t) || (el.getAttribute("href")||"").includes("wa.me")){
+          el.classList.add("unavailableBtnV19");
+          if(el.tagName === "A") el.removeAttribute("href");
+          el.onclick = function(ev){ ev.preventDefault(); return false; };
+          el.textContent = "غير متاح";
+        }
+      });
+    });
+  }
+
+  const oldOpenV19 = window.openDetail;
+  if(typeof oldOpenV19 === "function"){
+    window.openDetail = function(id){
+      const allProducts = window.PRODUCTS || PRODUCTS || [];
+      const p = allProducts.find(x => Number(x.id)===Number(id) || Number(x.number)===Number(id));
+      oldOpenV19(id);
+      setTimeout(function(){
+        if(!p || !isUnavailableProductV19(p)) return;
+        const panel = window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.panel");
+        if(!panel) return;
+
+        // ختم على الصورة داخل التفاصيل
+        const topBox = panel.querySelector(".v15-box,.v13-top,.detail-img")?.closest(".v15-box,.v13-top") || panel;
+        if(topBox && !topBox.querySelector(".unavailableRibbonV19")){
+          if(getComputedStyle(topBox).position === "static") topBox.style.position = "relative";
+          const r = document.createElement("div");
+          r.className = "unavailableRibbonV19";
+          r.textContent = "غير متاح";
+          topBox.appendChild(r);
+        }
+
+        // رسالة واضحة
+        const priceBox = panel.querySelector(".v15-box:not(.pink), .v13-section, .v11-price-box") || panel;
+        if(priceBox && !panel.querySelector(".unavailableMsgV19")){
+          const msg = document.createElement("div");
+          msg.className = "unavailableMsgV19";
+          msg.textContent = "هذا المنتج غير متاح حالياً لأنه خارج الخدمة.";
+          priceBox.insertAdjacentElement("beforebegin", msg);
+        }
+
+        // تعطيل الإضافة والحجز والواتساب داخل التفاصيل
+        panel.querySelectorAll("button,a").forEach(el=>{
+          const t = (el.textContent || "").trim();
+          if(/إغلاق|×/.test(t)) return;
+          if(/أضف|احجز|واتساب|استفسار|سلة/i.test(t) || (el.getAttribute("href")||"").includes("wa.me")){
+            el.classList.add("unavailableBtnV19");
+            if(el.tagName === "A") el.removeAttribute("href");
+            el.onclick = function(ev){ ev.preventDefault(); return false; };
+            el.textContent = "غير متاح";
+          }
+        });
+      }, 160);
+    };
+  }
+
+  // منع الإضافة احتياطياً
+  const oldAddV19 = window.addCurrent;
+  if(typeof oldAddV19 === "function"){
+    window.addCurrent = function(){
+      if(window.currentProduct && isUnavailableProductV19(window.currentProduct)){
+        alert("هذا المنتج غير متاح حالياً لأنه خارج الخدمة.");
+        return;
+      }
+      return oldAddV19.apply(this, arguments);
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", addBadgesToCardsV19);
+  setTimeout(addBadgesToCardsV19, 500);
+  setTimeout(addBadgesToCardsV19, 1500);
+  setInterval(addBadgesToCardsV19, 2500);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V19 UNAVAILABLE BOUNCIES ===== -->
+
 </body>
 </html>
