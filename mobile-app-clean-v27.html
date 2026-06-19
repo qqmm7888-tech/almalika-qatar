@@ -6138,5 +6138,116 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 </script>
 <!-- ===== END ALMALIKA CLEAN V26 REMOVE LOWER DUPLICATE GALLERY HARD ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V27 REMOVE DUPLICATE GALLERY BY TEXT ===== -->
+<style id="almalika-clean-v27-remove-duplicate-gallery-by-text">
+/* V27: حذف نهائي للمعرض المكرر أسفل تفاصيل الديكورات */
+.v27-removed-gallery{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  max-height:0!important;
+  min-height:0!important;
+  overflow:hidden!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+</style>
+
+<script id="almalika-clean-v27-remove-duplicate-gallery-by-text-script">
+(function(){
+  function isDecorDetailsV27(){
+    const p = window.currentProduct;
+    if(!p) return false;
+    const sec = (typeof sectionOf === "function") ? sectionOf(p) : "";
+    const txt = [sec, p.category, p.type, p.name].join(" ");
+    return /events|تجهيز الحفلات|ديكور|حفلات|مناسبات/i.test(txt);
+  }
+
+  function killV27(el){
+    if(!el) return;
+    el.classList.add("v27-removed-gallery");
+    el.style.setProperty("display","none","important");
+    el.style.setProperty("visibility","hidden","important");
+    el.style.setProperty("height","0","important");
+    el.style.setProperty("max-height","0","important");
+    el.style.setProperty("min-height","0","important");
+    el.style.setProperty("overflow","hidden","important");
+    el.style.setProperty("margin","0","important");
+    el.style.setProperty("padding","0","important");
+    el.style.setProperty("border","0","important");
+    el.style.setProperty("opacity","0","important");
+    el.style.setProperty("pointer-events","none","important");
+  }
+
+  function findBlockByTextV27(panel){
+    const candidates = Array.from(panel.querySelectorAll("div,section,aside"));
+    let target = null;
+
+    // ابحث عن أصغر صندوق يحتوي النص المكرر والصور المصغرة
+    for(const el of candidates){
+      const t = (el.textContent || "").replace(/\s+/g," ").trim();
+      if(t.includes("اختر شكل الديكور المناسب للزبون")){
+        const imgs = el.querySelectorAll("img").length;
+        if(imgs >= 2){
+          if(!target || el.innerHTML.length < target.innerHTML.length) target = el;
+        }
+      }
+    }
+    return target;
+  }
+
+  function removeDuplicateGalleryV27(){
+    if(!isDecorDetailsV27()) return;
+
+    const panel = window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.v15-panel,.panel");
+    if(!panel) return;
+
+    // 1) حذف مباشر لأي بلوك عنوانه "اختر شكل الديكور..."
+    const block = findBlockByTextV27(panel);
+    if(block) killV27(block);
+
+    // 2) حذف أي عناصر متعارف عليها من نسخ سابقة
+    panel.querySelectorAll(".v23-mobile-gallery,.v15-side,.v15-gallery").forEach(el=>{
+      const t = (el.textContent || "").replace(/\s+/g," ");
+      const imgs = el.querySelectorAll("img").length;
+      if(t.includes("اختر شكل الديكور") || imgs >= 2) {
+        const box = el.closest(".v23-mobile-gallery,.v15-side,.v15-box,.v13-section,section,aside,div") || el;
+        killV27(box);
+      }
+    });
+
+    // 3) حذف صندوق الأزرار الداخلي المكرر فقط، وإبقاء الشريط السفلي
+    panel.querySelectorAll(".v15-actions").forEach(el=>{
+      const box = el.closest(".v15-box") || el;
+      killV27(box);
+    });
+  }
+
+  const oldOpenV27 = window.openDetail;
+  if(typeof oldOpenV27 === "function"){
+    window.openDetail = function(id){
+      oldOpenV27(id);
+      [80,200,500,900,1500,2500].forEach(ms=>setTimeout(removeDuplicateGalleryV27, ms));
+    };
+  }
+
+  document.addEventListener("click", function(){
+    [80,250,600].forEach(ms=>setTimeout(removeDuplicateGalleryV27, ms));
+  }, true);
+
+  const mo = new MutationObserver(function(){
+    setTimeout(removeDuplicateGalleryV27, 50);
+  });
+  document.addEventListener("DOMContentLoaded", function(){
+    mo.observe(document.body, {childList:true, subtree:true});
+  });
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V27 REMOVE DUPLICATE GALLERY BY TEXT ===== -->
+
 </body>
 </html>
