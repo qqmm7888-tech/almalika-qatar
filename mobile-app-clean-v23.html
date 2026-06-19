@@ -5643,5 +5643,465 @@ window.addCurrent=function(){
 </script>
 <!-- ===== END ALMALIKA CLEAN V21 REACTIVATE BOUNCY 34 ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V22 ALL SECTIONS SIZE FIX ===== -->
+<style id="almalika-clean-v22-all-sections-size-fix">
+/* V22: توحيد القياسات في كل الأقسام بدون تغيير البيانات */
+:root{
+  --m22-w: min(430px, 100vw);
+  --m22-pad: 10px;
+}
+
+/* منع القص الأفقي في كامل نسخة الجوال */
+html, body{
+  overflow-x:hidden!important;
+}
+*{
+  box-sizing:border-box!important;
+}
+img, video, canvas{
+  max-width:100%!important;
+}
+
+/* جسم الصفحة والقسم الرئيسي */
+.app,
+#app,
+main,
+.page,
+.catalog,
+.shop,
+.container,
+.wrap,
+.mobile-shell,
+.mobileApp,
+body > *:not(script):not(style):not(link):not(meta):not(title){
+  max-width:var(--m22-w)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* المنتجات والكروت في كل الأقسام */
+.grid,
+.products,
+.productsGrid,
+.product-grid,
+.cards,
+.cardGrid,
+#products,
+#productGrid{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+}
+
+.card,
+.product,
+.product-card,
+.item-card,
+.vip-card{
+  max-width:100%!important;
+  min-width:0!important;
+  overflow:hidden!important;
+}
+
+/* نافذة التفاصيل: تكون في منتصف الشاشة وليست مائلة يمين/يسار */
+#detailSheet,
+.detailSheet,
+.modal,
+.overlay{
+  width:100vw!important;
+  max-width:100vw!important;
+  overflow-x:hidden!important;
+  padding:0!important;
+}
+
+#detailPanel,
+.detailPanel,
+.modal .panel,
+.modal .panel.v15-panel,
+.v15-panel,
+.sheet-panel,
+.product-panel,
+.details-panel{
+  width:calc(100vw - 18px)!important;
+  max-width:430px!important;
+  min-width:0!important;
+  margin:8px auto 0!important;
+  padding:10px!important;
+  border-radius:22px!important;
+  left:auto!important;
+  right:auto!important;
+  transform:none!important;
+  overflow-x:hidden!important;
+}
+
+/* كل بلوكات التفاصيل تأخذ عرض النافذة فقط */
+.v15-layout,
+.v15-main,
+.v15-side,
+.v15-box,
+.v15-box.pink,
+.v13-section,
+.v13-top,
+.themeBox,
+.balloonColorBox,
+.snackChoiceBox,
+.addonCardsBox,
+.addonCardsDetails,
+.decorTotalBigBox,
+.bookingSimple,
+.compactBooking,
+.v15-summary-row,
+.priceChoiceGrid,
+.colorSwatches,
+.miniCheckGrid,
+.addonMiniGrid,
+.v15-gallery,
+.v15-actions{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  overflow:hidden!important;
+}
+
+/* إلغاء العمود الجانبي في التفاصيل على الجوال/معاينة الجوال */
+.v15-layout{
+  display:block!important;
+}
+.v15-side{
+  position:static!important;
+  max-height:none!important;
+  overflow:visible!important;
+  margin-top:12px!important;
+  padding:10px!important;
+}
+
+/* الصور */
+.v15-main-img,
+.v15-side-main,
+.v13-main-img,
+.product-img,
+.card img{
+  width:100%!important;
+  max-width:100%!important;
+  object-fit:contain!important;
+}
+.v15-main-img,
+.v13-main-img{
+  max-height:260px!important;
+}
+
+/* كروت الأسعار: 2 في الصف في كل الأقسام مع منع الخروج */
+.priceChoiceGrid{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  overflow:visible!important;
+  padding:0!important;
+}
+.priceChoice{
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  min-height:88px!important;
+  padding:7px 5px!important;
+  font-size:11px!important;
+  overflow:hidden!important;
+}
+.priceChoice b{
+  font-size:16px!important;
+}
+.priceChoice small{
+  font-size:9px!important;
+  line-height:1.25!important;
+}
+.pkgCountBadge{
+  max-width:100%!important;
+  white-space:normal!important;
+  font-size:10px!important;
+  padding:2px 6px!important;
+}
+.pkgCountValue{
+  font-size:11px!important;
+  line-height:1.25!important;
+}
+
+/* حقول الحجز: تحت بعض لمنع خروج الكلام */
+.bookingSimple,
+.compactBooking{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:7px!important;
+}
+.bookingSimple input,
+.bookingSimple select,
+.bookingSimple textarea,
+.v15-field,
+.themeBox input,
+.themeBox select,
+.themeBox textarea{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  height:auto!important;
+  min-height:44px!important;
+  font-size:13px!important;
+}
+
+/* ألوان ولامعة وسناك وطاولات */
+.colorSwatches,
+.colorSwatches.shinyGrid,
+.miniCheckGrid,
+.addonMiniGrid,
+.v15-gallery{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:7px!important;
+  overflow:visible!important;
+}
+.colorSwatch,
+.miniCheck,
+.addonMiniCard,
+.v15-thumb{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  font-size:12px!important;
+}
+.colorSwatches.shinyGrid .colorSwatch.shiny{
+  min-height:106px!important;
+  padding:8px 5px!important;
+}
+.colorSwatches.shinyGrid .colorDot.shinyDot{
+  width:68px!important;
+  height:54px!important;
+  flex-basis:68px!important;
+}
+.v15-thumb img{
+  height:82px!important;
+  object-fit:cover!important;
+}
+
+/* العناوين */
+.v15-product-title{
+  font-size:21px!important;
+  line-height:1.35!important;
+}
+.v15-title{
+  font-size:18px!important;
+  line-height:1.35!important;
+}
+.v15-desc{
+  font-size:12px!important;
+}
+
+/* ملخص المنتج: بدون كسر العرض */
+.v15-summary-row{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:7px!important;
+}
+.v15-summary-cell{
+  width:100%!important;
+  max-width:100%!important;
+  overflow-wrap:anywhere!important;
+}
+
+/* أزرار الإجراء */
+.v15-actions{
+  grid-template-columns:1fr!important;
+  gap:7px!important;
+}
+.v15-actions button,
+.v15-actions a{
+  width:100%!important;
+}
+
+/* زر الإضافة السفلي: داخل عرض الجوال فقط */
+.bottom-actions,
+.bottom-actions.v15-bottom{
+  position:fixed!important;
+  width:calc(100vw - 18px)!important;
+  max-width:430px!important;
+  left:50%!important;
+  right:auto!important;
+  bottom:8px!important;
+  transform:translateX(-50%)!important;
+  grid-template-columns:1fr 128px!important;
+  gap:8px!important;
+  padding:8px!important;
+  box-sizing:border-box!important;
+  z-index:999999!important;
+}
+.bottom-actions .primary,
+.bottom-actions.v15-bottom .primary{
+  min-width:0!important;
+  width:100%!important;
+  font-size:14px!important;
+  white-space:nowrap!important;
+}
+.bottom-actions .qty,
+.bottom-actions.v15-bottom .qty{
+  min-width:0!important;
+  width:100%!important;
+}
+
+/* زر الإغلاق ثابت فوق بدون ما يغطي الاختيارات */
+.close{
+  z-index:1000000!important;
+}
+
+/* عند الشاشات الصغيرة جداً: كل شيء عمود واحد */
+@media(max-width:380px){
+  .priceChoiceGrid,
+  .colorSwatches,
+  .colorSwatches.shinyGrid,
+  .miniCheckGrid,
+  .addonMiniGrid,
+  .v15-gallery{
+    grid-template-columns:1fr!important;
+  }
+  .bottom-actions,
+  .bottom-actions.v15-bottom{
+    grid-template-columns:1fr 112px!important;
+  }
+}
+
+/* عند الكمبيوتر فقط: نظهر الجوال في المنتصف بنفس المقاس بدون تمديد */
+@media(min-width:761px){
+  body{
+    overflow-x:hidden!important;
+  }
+  #detailPanel,
+  .detailPanel,
+  .modal .panel,
+  .modal .panel.v15-panel,
+  .v15-panel{
+    width:430px!important;
+    max-width:430px!important;
+  }
+}
+</style>
+<!-- ===== END ALMALIKA CLEAN V22 ALL SECTIONS SIZE FIX ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V23 SHOW GALLERY ON REAL MOBILE ===== -->
+<style id="almalika-clean-v23-show-gallery-real-mobile">
+/* V23: إظهار اختيار شكل الديكور داخل شاشة الجوال الحقيقية */
+.v23-mobile-gallery{
+  display:none;
+  width:100%;
+  max-width:100%;
+  background:#fffaf1;
+  border:1.5px solid #f0c9dc;
+  border-radius:20px;
+  padding:10px;
+  margin:10px 0;
+  overflow:hidden;
+}
+.v23-mobile-gallery h3{
+  color:#6A1B2E;
+  text-align:center;
+  font-size:20px;
+  line-height:1.35;
+  font-weight:1000;
+  margin:8px 0 10px;
+}
+.v23-mobile-gallery .v15-side-main{
+  width:100%!important;
+  max-height:230px!important;
+  object-fit:contain!important;
+  background:#fff!important;
+  border:1px solid #f0c9dc!important;
+  border-radius:16px!important;
+}
+.v23-mobile-gallery .v15-gallery{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:8px!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.v23-mobile-gallery .v15-thumb{
+  width:100%!important;
+  min-width:0!important;
+}
+.v23-mobile-gallery .v15-thumb img{
+  width:100%!important;
+  height:92px!important;
+  object-fit:cover!important;
+  border-radius:10px!important;
+}
+
+/* على الجوال الحقيقي نخفي العمود الجانبي القديم ونظهر المعرض داخل التفاصيل */
+@media(max-width:760px){
+  .v23-mobile-gallery{
+    display:block!important;
+  }
+  .v15-layout > .v15-side{
+    display:none!important;
+  }
+}
+
+/* على الكمبيوتر لو عرض الجوال داخل إطار ضيق، يظهر المعرض أيضاً داخل المحتوى */
+@media(min-width:761px){
+  .v23-mobile-gallery{
+    display:block!important;
+  }
+}
+</style>
+
+<script id="almalika-clean-v23-show-gallery-real-mobile-script">
+(function(){
+  function insertGalleryInsideMobileV23(){
+    const panel = window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.v15-panel");
+    if(!panel) return;
+
+    const side = panel.querySelector(".v15-layout > .v15-side");
+    if(!side) return;
+
+    // لا تكرر المعرض
+    if(panel.querySelector(".v23-mobile-gallery")) return;
+
+    const topBox = panel.querySelector(".v15-main > .v15-box.pink") || panel.querySelector(".v15-main > .v15-box");
+    if(!topBox) return;
+
+    const mobileGallery = side.cloneNode(true);
+    mobileGallery.classList.remove("v15-side");
+    mobileGallery.classList.add("v23-mobile-gallery");
+
+    // تأكد أن الصور داخل النسخة الداخلية تستخدم نفس دالة الاختيار الأصلية
+    mobileGallery.querySelectorAll(".v15-thumb").forEach(btn=>{
+      btn.addEventListener("click", function(){
+        const img = this.querySelector("img");
+        if(!img) return;
+        const main = document.getElementById("v15MainImg");
+        const sideMain = document.getElementById("v15SideMain");
+        if(main) main.src = img.getAttribute("src");
+        if(sideMain) sideMain.src = img.getAttribute("src");
+        panel.querySelectorAll(".v15-thumb").forEach(x=>x.classList.remove("active"));
+        this.classList.add("active");
+      }, true);
+    });
+
+    topBox.insertAdjacentElement("afterend", mobileGallery);
+  }
+
+  const oldOpenDetailV23 = window.openDetail;
+  if(typeof oldOpenDetailV23 === "function"){
+    window.openDetail = function(id){
+      oldOpenDetailV23(id);
+      setTimeout(insertGalleryInsideMobileV23, 180);
+      setTimeout(insertGalleryInsideMobileV23, 500);
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    setTimeout(insertGalleryInsideMobileV23, 700);
+  });
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V23 SHOW GALLERY ON REAL MOBILE ===== -->
+
 </body>
 </html>
