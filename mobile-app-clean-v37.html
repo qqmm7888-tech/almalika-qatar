@@ -6020,10 +6020,12 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 
 
 
-<!-- ===== ALMALIKA CLEAN V36 MOVE ACTUAL LOWER GALLERY BEFORE PACKAGE ===== -->
-<style id="almalika-clean-v36-move-actual-lower-gallery">
-/* V36: نقل المعرض الموجود فعلاً أسفل النافذة إلى فوق الباقات */
-.decorGalleryFixedTopV36{
+
+
+
+<!-- ===== ALMALIKA CLEAN V37 HARD DOM REORDER GALLERY ===== -->
+<style id="almalika-clean-v37-hard-dom-reorder-gallery">
+.decorGalleryV37Top{
   display:block!important;
   visibility:visible!important;
   width:100%!important;
@@ -6040,21 +6042,23 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
   opacity:1!important;
   pointer-events:auto!important;
 }
-.decorGalleryFixedTopV36 *{
+.decorGalleryV37Top *{
   visibility:visible!important;
+  opacity:1!important;
+  pointer-events:auto!important;
 }
-.decorGalleryFixedTopV36 h3,
-.decorGalleryFixedTopV36 .decorGalleryTitle{
+.decorGalleryV37Top h3,
+.decorGalleryV37Top .decorGalleryTitle{
   text-align:center!important;
   color:#6A1B2E!important;
   font-size:18px!important;
-  line-height:1.35!important;
   font-weight:1000!important;
+  line-height:1.35!important;
   margin:6px 0 10px!important;
 }
-.decorGalleryFixedTopV36 .v15-gallery,
-.decorGalleryFixedTopV36 .decorThumbs,
-.decorGalleryFixedTopV36 [class*="gallery"]{
+.decorGalleryV37Top .v15-gallery,
+.decorGalleryV37Top .decorThumbs,
+.decorGalleryV37Top [class*="gallery"]{
   display:grid!important;
   grid-template-columns:repeat(2,1fr)!important;
   gap:8px!important;
@@ -6063,26 +6067,13 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
   max-height:none!important;
   overflow:visible!important;
 }
-.decorGalleryFixedTopV36 .v15-thumb,
-.decorGalleryFixedTopV36 .decorThumb,
-.decorGalleryFixedTopV36 button{
-  display:block!important;
-  visibility:visible!important;
-  width:100%!important;
-  min-width:0!important;
-  max-width:100%!important;
-  height:auto!important;
-  padding:6px!important;
-  opacity:1!important;
-  pointer-events:auto!important;
-}
-.decorGalleryFixedTopV36 img{
+.decorGalleryV37Top img{
   width:100%!important;
   height:88px!important;
   object-fit:cover!important;
   border-radius:9px!important;
 }
-.decorGalleryHideDuplicateV36{
+.decorGalleryV37Hidden{
   display:none!important;
   visibility:hidden!important;
   height:0!important;
@@ -6097,9 +6088,9 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 }
 </style>
 
-<script id="almalika-clean-v36-move-actual-lower-gallery-script">
+<script id="almalika-clean-v37-hard-dom-reorder-gallery-script">
 (function(){
-  function decorProductV36(){
+  function isDecorV37(){
     var p = window.currentProduct;
     if(!p) return false;
     var sec = (typeof sectionOf === "function") ? sectionOf(p) : "";
@@ -6107,103 +6098,115 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
     return /events|تجهيز الحفلات|ديكور|حفلات|مناسبات/i.test(txt);
   }
 
-  function panelV36(){
+  function panelV37(){
     return window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.v15-panel,.panel");
   }
 
-  function hasGalleryTitleV36(el){
-    return ((el.textContent || "").replace(/\s+/g," ")).indexOf("اختر شكل الديكور المناسب للزبون") >= 0;
+  function normV37(el){
+    return (el && el.textContent || "").replace(/\s+/g," ").trim();
   }
 
-  function findActualGalleryV36(panel){
-    var nodes = Array.from(panel.querySelectorAll("div,section,aside"));
-    var matches = nodes.filter(function(el){
-      return hasGalleryTitleV36(el) && el.querySelectorAll("img").length >= 2;
-    });
-    if(!matches.length) return null;
-
-    // نختار أصغر صندوق منطقي يحتوي العنوان والصور، ثم نفضّل الذي يظهر أسفل الأزرار لأنه هو الفعلي في الصورة
-    matches.sort(function(a,b){
-      var ay = a.getBoundingClientRect ? a.getBoundingClientRect().top : 0;
-      var by = b.getBoundingClientRect ? b.getBoundingClientRect().top : 0;
-      var ai = a.innerHTML.length;
-      var bi = b.innerHTML.length;
-      // الصندوق الأصغر أولاً إذا الفرق كبير
-      if(Math.abs(ai-bi) > 500) return ai-bi;
-      return by-ay;
-    });
-    return matches[0];
+  function isGalleryV37(el){
+    if(!el) return false;
+    var txt = normV37(el);
+    return txt.indexOf("اختر شكل الديكور المناسب للزبون") >= 0 && el.querySelectorAll("img").length >= 2;
   }
 
-  function findPackageAnchorV36(panel){
-    var nodes = Array.from(panel.querySelectorAll("div,section"));
-    var match = nodes.find(function(el){
-      var txt = (el.textContent || "").replace(/\s+/g," ");
-      return txt.indexOf("اختيار باقة الديكور") >= 0 ||
-             txt.indexOf("اختيار مدة الحجز والسعر") >= 0 ||
-             txt.indexOf("اختيار السعر / الباقة") >= 0;
+  function smallestGalleryV37(panel){
+    var all = Array.from(panel.querySelectorAll("div,section,aside")).filter(isGalleryV37);
+    if(!all.length) return null;
+
+    // خذ الصندوق الأصغر الذي يحتوي العنوان + الصور، لأنه هو البلوك نفسه وليس المودال كله
+    all.sort(function(a,b){
+      return a.innerHTML.length - b.innerHTML.length;
     });
-    return match;
+    return all[0];
   }
 
-  function moveV36(){
-    if(!decorProductV36()) return;
+  function firstProductImageBoxV37(panel){
+    var img = panel.querySelector("#v15MainImg") || panel.querySelector(".v15-main-img") || panel.querySelector(".v13-main-img");
+    if(!img) {
+      // fallback: أول صورة كبيرة قبل العنوان
+      var imgs = Array.from(panel.querySelectorAll("img"));
+      img = imgs.find(function(x){
+        var r = x.getBoundingClientRect();
+        return r.width > 120 && r.height > 80;
+      });
+    }
+    if(!img) return null;
 
-    var panel = panelV36();
+    // أقرب صندوق يحتوي الصورة فقط/الصورة مع العنوان، وليس المودال كله
+    var box = img.closest(".v15-box,.v13-top,.productTop,.detailTop,.detail-card,section,div");
+    while(box && box !== panel){
+      var t = normV37(box);
+      if(t.indexOf("اختيار باقة") >= 0 || t.indexOf("بيانات حجز") >= 0 || t.indexOf("اختيارات الزبون") >= 0){
+        box = img.parentElement;
+        break;
+      }
+      if(box.querySelectorAll("img").length <= 2) break;
+      box = box.parentElement;
+    }
+    return box || img;
+  }
+
+  function moveGalleryV37(){
+    if(!isDecorV37()) return;
+    var panel = panelV37();
     if(!panel) return;
 
-    var gallery = findActualGalleryV36(panel);
-    var anchor = findPackageAnchorV36(panel);
-    if(!gallery || !anchor) return;
+    var gallery = smallestGalleryV37(panel);
+    var imageBox = firstProductImageBoxV37(panel);
+    if(!gallery || !imageBox || gallery === imageBox) return;
 
-    gallery.classList.remove("decorGalleryHideDuplicateV36");
-    gallery.classList.add("decorGalleryFixedTopV36");
+    // لا تنقل إذا المعرض يحتوي الصورة الرئيسية نفسها بشكل خاطئ
+    gallery.classList.remove("decorGalleryV37Hidden");
+    gallery.classList.add("decorGalleryV37Top");
     gallery.style.cssText = "";
 
-    // النقل المطلوب: قبل اختيار الباقة مباشرة، يعني تحت الصورة والشرح الرئيسي وفوق الباقات
-    if(anchor.previousElementSibling !== gallery){
-      anchor.parentNode.insertBefore(gallery, anchor);
+    // انقل المعرض مباشرة بعد الصورة الرئيسية / الصندوق الأول
+    if(imageBox.nextElementSibling !== gallery){
+      imageBox.parentNode.insertBefore(gallery, imageBox.nextSibling);
     }
 
-    // إخفاء أي نسخة ثانية
-    Array.from(panel.querySelectorAll("div,section,aside")).forEach(function(el){
-      if(el !== gallery && hasGalleryTitleV36(el) && el.querySelectorAll("img").length >= 2){
-        el.classList.add("decorGalleryHideDuplicateV36");
+    // اخفِ أي نسخة ثانية للمعرض
+    Array.from(panel.querySelectorAll("div,section,aside")).filter(isGalleryV37).forEach(function(el){
+      if(el !== gallery){
+        el.classList.add("decorGalleryV37Hidden");
       }
     });
 
-    // إخفاء الأزرار الداخلية فقط إن وجدت، وليس الشريط السفلي
+    // احذف الأزرار الداخلية فقط إن وجدت
     panel.querySelectorAll(".v15-actions").forEach(function(el){
       var box = el.closest(".v15-box") || el;
-      box.classList.add("decorGalleryHideDuplicateV36");
+      box.classList.add("decorGalleryV37Hidden");
     });
   }
 
-  var oldOpenV36 = window.openDetail;
-  if(typeof oldOpenV36 === "function"){
+  var oldOpenV37 = window.openDetail;
+  if(typeof oldOpenV37 === "function"){
     window.openDetail = function(id){
-      oldOpenV36(id);
-      [50,120,250,500,900,1400,2200,3500,5000].forEach(function(ms){
-        setTimeout(moveV36, ms);
+      oldOpenV37(id);
+      [50,120,250,500,900,1400,2200,3500,5000,7000].forEach(function(ms){
+        setTimeout(moveGalleryV37, ms);
       });
     };
   }
 
   document.addEventListener("click", function(){
-    [80,200,500,1000,1800].forEach(function(ms){
-      setTimeout(moveV36, ms);
+    [80,180,350,700,1200,2200].forEach(function(ms){
+      setTimeout(moveGalleryV37, ms);
     });
   }, true);
 
   var obs = new MutationObserver(function(){
-    if(decorProductV36()) setTimeout(moveV36, 80);
+    if(isDecorV37()) setTimeout(moveGalleryV37, 80);
   });
   document.addEventListener("DOMContentLoaded", function(){
-    if(document.body) obs.observe(document.body, {childList:true, subtree:true});
+    if(document.body) obs.observe(document.body, {childList:true, subtree:true, attributes:true});
   });
 })();
 </script>
-<!-- ===== END ALMALIKA CLEAN V36 MOVE ACTUAL LOWER GALLERY BEFORE_PACKAGE ===== -->
+<!-- ===== END ALMALIKA CLEAN V37 HARD DOM REORDER GALLERY ===== -->
 
 </body>
 </html>
