@@ -4760,7 +4760,7 @@ window.enforceShinyBalloonLimit=function(n, changedEl){
 
 window.balloonColorHtml15=function(n){
   const num = Number(n||0);
-  const allowShiny = (num === 201 || num === 202);
+  const allowShiny = [201,202,401,402].includes(num);
   const shinySection = allowShiny ? `<div class="shinyBalloonBox">
     <div class="shinyBalloonTitle">✨ الألوان اللامعة</div>
     <div class="colorSwatches shinyGrid">${(window.shinyBalloonColorsV15||[]).map(([name,img])=>`<label class="colorSwatch shiny"><input type="checkbox" class="shinyBalloonInput" name="balloon_${n}" value="${esc15(name)}" onchange="enforceShinyBalloonLimit(${n},this)"><span class="colorDot shinyDot" style="background-image:url('${img}');"></span><span class="shinyName">${esc15(name)}</span></label>`).join('')}</div>
