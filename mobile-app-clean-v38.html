@@ -4918,12 +4918,12 @@ window.openDetail=function(id){
           </div>
           <div class="v15-desc">${esc15(p.details||'')}</div>
         </div>
+        ${decor ? v15GalleryHtml(p) : ''}
         ${priceChoiceHtml15(p)}
         ${decor ? decorBookingHtml15(p) : ''}
         ${!decor ? (typeof v12Data==='function'?v12Data(p):'') : ''}
         ${v15ActionsHtml(p)}
       </main>
-      ${decor ? v15GalleryHtml(p) : ''}
     </div>
     <div class="bottom-actions v15-bottom">
       <button class="primary" onclick="addCurrent()">أضف للسلة 🛒</button>
@@ -6023,190 +6023,50 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 
 
 
-<!-- ===== ALMALIKA CLEAN V37 HARD DOM REORDER GALLERY ===== -->
-<style id="almalika-clean-v37-hard-dom-reorder-gallery">
-.decorGalleryV37Top{
-  display:block!important;
-  visibility:visible!important;
+
+
+
+<!-- ===== ALMALIKA CLEAN V38 SOURCE GALLERY UNDER MAIN IMAGE ===== -->
+<style id="almalika-clean-v38-source-gallery-under-main-image">
+/* V38: تعديل المصدر الأصلي — المعرض داخل main بعد الصورة مباشرة */
+.v15-main > .v15-side{
+  position:static!important;
   width:100%!important;
   max-width:100%!important;
-  margin:10px 0 12px!important;
+  max-height:none!important;
+  overflow:visible!important;
+  margin:0 0 12px!important;
   padding:10px!important;
   background:#fffaf1!important;
   border:1.5px solid #f0c9dc!important;
   border-radius:18px!important;
-  overflow:visible!important;
-  height:auto!important;
-  max-height:none!important;
-  min-height:0!important;
-  opacity:1!important;
-  pointer-events:auto!important;
 }
-.decorGalleryV37Top *{
-  visibility:visible!important;
-  opacity:1!important;
-  pointer-events:auto!important;
+.v15-main > .v15-side .v15-side-main{
+  display:none!important;
 }
-.decorGalleryV37Top h3,
-.decorGalleryV37Top .decorGalleryTitle{
-  text-align:center!important;
-  color:#6A1B2E!important;
+.v15-main > .v15-side h3{
+  margin:4px 0 10px!important;
   font-size:18px!important;
-  font-weight:1000!important;
-  line-height:1.35!important;
-  margin:6px 0 10px!important;
 }
-.decorGalleryV37Top .v15-gallery,
-.decorGalleryV37Top .decorThumbs,
-.decorGalleryV37Top [class*="gallery"]{
+.v15-main > .v15-side .v15-gallery{
   display:grid!important;
   grid-template-columns:repeat(2,1fr)!important;
   gap:8px!important;
-  width:100%!important;
-  max-width:100%!important;
   max-height:none!important;
   overflow:visible!important;
 }
-.decorGalleryV37Top img{
+.v15-main > .v15-side .v15-thumb{
+  width:100%!important;
+  min-width:0!important;
+}
+.v15-main > .v15-side .v15-thumb img{
   width:100%!important;
   height:88px!important;
   object-fit:cover!important;
   border-radius:9px!important;
 }
-.decorGalleryV37Hidden{
-  display:none!important;
-  visibility:hidden!important;
-  height:0!important;
-  max-height:0!important;
-  min-height:0!important;
-  overflow:hidden!important;
-  margin:0!important;
-  padding:0!important;
-  border:0!important;
-  opacity:0!important;
-  pointer-events:none!important;
-}
 </style>
-
-<script id="almalika-clean-v37-hard-dom-reorder-gallery-script">
-(function(){
-  function isDecorV37(){
-    var p = window.currentProduct;
-    if(!p) return false;
-    var sec = (typeof sectionOf === "function") ? sectionOf(p) : "";
-    var txt = [sec, p.category, p.type, p.name].join(" ");
-    return /events|تجهيز الحفلات|ديكور|حفلات|مناسبات/i.test(txt);
-  }
-
-  function panelV37(){
-    return window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.v15-panel,.panel");
-  }
-
-  function normV37(el){
-    return (el && el.textContent || "").replace(/\s+/g," ").trim();
-  }
-
-  function isGalleryV37(el){
-    if(!el) return false;
-    var txt = normV37(el);
-    return txt.indexOf("اختر شكل الديكور المناسب للزبون") >= 0 && el.querySelectorAll("img").length >= 2;
-  }
-
-  function smallestGalleryV37(panel){
-    var all = Array.from(panel.querySelectorAll("div,section,aside")).filter(isGalleryV37);
-    if(!all.length) return null;
-
-    // خذ الصندوق الأصغر الذي يحتوي العنوان + الصور، لأنه هو البلوك نفسه وليس المودال كله
-    all.sort(function(a,b){
-      return a.innerHTML.length - b.innerHTML.length;
-    });
-    return all[0];
-  }
-
-  function firstProductImageBoxV37(panel){
-    var img = panel.querySelector("#v15MainImg") || panel.querySelector(".v15-main-img") || panel.querySelector(".v13-main-img");
-    if(!img) {
-      // fallback: أول صورة كبيرة قبل العنوان
-      var imgs = Array.from(panel.querySelectorAll("img"));
-      img = imgs.find(function(x){
-        var r = x.getBoundingClientRect();
-        return r.width > 120 && r.height > 80;
-      });
-    }
-    if(!img) return null;
-
-    // أقرب صندوق يحتوي الصورة فقط/الصورة مع العنوان، وليس المودال كله
-    var box = img.closest(".v15-box,.v13-top,.productTop,.detailTop,.detail-card,section,div");
-    while(box && box !== panel){
-      var t = normV37(box);
-      if(t.indexOf("اختيار باقة") >= 0 || t.indexOf("بيانات حجز") >= 0 || t.indexOf("اختيارات الزبون") >= 0){
-        box = img.parentElement;
-        break;
-      }
-      if(box.querySelectorAll("img").length <= 2) break;
-      box = box.parentElement;
-    }
-    return box || img;
-  }
-
-  function moveGalleryV37(){
-    if(!isDecorV37()) return;
-    var panel = panelV37();
-    if(!panel) return;
-
-    var gallery = smallestGalleryV37(panel);
-    var imageBox = firstProductImageBoxV37(panel);
-    if(!gallery || !imageBox || gallery === imageBox) return;
-
-    // لا تنقل إذا المعرض يحتوي الصورة الرئيسية نفسها بشكل خاطئ
-    gallery.classList.remove("decorGalleryV37Hidden");
-    gallery.classList.add("decorGalleryV37Top");
-    gallery.style.cssText = "";
-
-    // انقل المعرض مباشرة بعد الصورة الرئيسية / الصندوق الأول
-    if(imageBox.nextElementSibling !== gallery){
-      imageBox.parentNode.insertBefore(gallery, imageBox.nextSibling);
-    }
-
-    // اخفِ أي نسخة ثانية للمعرض
-    Array.from(panel.querySelectorAll("div,section,aside")).filter(isGalleryV37).forEach(function(el){
-      if(el !== gallery){
-        el.classList.add("decorGalleryV37Hidden");
-      }
-    });
-
-    // احذف الأزرار الداخلية فقط إن وجدت
-    panel.querySelectorAll(".v15-actions").forEach(function(el){
-      var box = el.closest(".v15-box") || el;
-      box.classList.add("decorGalleryV37Hidden");
-    });
-  }
-
-  var oldOpenV37 = window.openDetail;
-  if(typeof oldOpenV37 === "function"){
-    window.openDetail = function(id){
-      oldOpenV37(id);
-      [50,120,250,500,900,1400,2200,3500,5000,7000].forEach(function(ms){
-        setTimeout(moveGalleryV37, ms);
-      });
-    };
-  }
-
-  document.addEventListener("click", function(){
-    [80,180,350,700,1200,2200].forEach(function(ms){
-      setTimeout(moveGalleryV37, ms);
-    });
-  }, true);
-
-  var obs = new MutationObserver(function(){
-    if(isDecorV37()) setTimeout(moveGalleryV37, 80);
-  });
-  document.addEventListener("DOMContentLoaded", function(){
-    if(document.body) obs.observe(document.body, {childList:true, subtree:true, attributes:true});
-  });
-})();
-</script>
-<!-- ===== END ALMALIKA CLEAN V37 HARD DOM REORDER GALLERY ===== -->
+<!-- ===== END ALMALIKA CLEAN V38 SOURCE GALLERY UNDER MAIN_IMAGE ===== -->
 
 </body>
 </html>
