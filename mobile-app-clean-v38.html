@@ -4760,7 +4760,7 @@ window.enforceShinyBalloonLimit=function(n, changedEl){
 
 window.balloonColorHtml15=function(n){
   const num = Number(n||0);
-  const allowShiny = [201,202].includes(num);
+  const allowShiny = (num === 201 || num === 202);
   const shinySection = allowShiny ? `<div class="shinyBalloonBox">
     <div class="shinyBalloonTitle">✨ الألوان اللامعة</div>
     <div class="colorSwatches shinyGrid">${(window.shinyBalloonColorsV15||[]).map(([name,img])=>`<label class="colorSwatch shiny"><input type="checkbox" class="shinyBalloonInput" name="balloon_${n}" value="${esc15(name)}" onchange="enforceShinyBalloonLimit(${n},this)"><span class="colorDot shinyDot" style="background-image:url('${img}');"></span><span class="shinyName">${esc15(name)}</span></label>`).join('')}</div>
@@ -6067,36 +6067,6 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 }
 </style>
 <!-- ===== END ALMALIKA CLEAN V38 SOURCE GALLERY UNDER MAIN_IMAGE ===== -->
-
-
-<!-- ===== ALMALIKA CLEAN V40 FORCE SHINY 201 202 ONLY ===== -->
-<script id="almalika-clean-v40-force-shiny-201-202-only">
-(function(){
-  const oldBalloonColorHtmlV40 = window.balloonColorHtml15;
-
-  window.balloonColorHtml15 = function(n){
-    const p = window.currentProduct || {};
-    const realNum = Number(p.number || p.id || n || 0);
-
-    // الصحيح: صور الألوان اللامعة فقط للديكور رقم 201 و 202
-    const allowShiny = (realNum === 201 || realNum === 202);
-
-    const shinySection = allowShiny ? `<div class="shinyBalloonBox">
-      <div class="shinyBalloonTitle">✨ الألوان اللامعة</div>
-      <div class="colorSwatches shinyGrid">${(window.shinyBalloonColorsV15||[]).map(([name,img])=>`<label class="colorSwatch shiny"><input type="checkbox" class="shinyBalloonInput" name="balloon_${realNum}" value="${esc15(name)}" onchange="enforceShinyBalloonLimit(${realNum},this)"><span class="colorDot shinyDot" style="background-image:url('${img}');"></span><span class="shinyName">${esc15(name)}</span></label>`).join('')}</div>
-      <div class="shinyHint">الألوان اللامعة: يمكن اختيار لون واحد أو لونين فقط كحد أقصى.</div>
-    </div>` : ``;
-
-    return `<div class="balloonColorBox">
-      ${shinySection}
-      <div class="choiceBoxTitle">🎈 اختيار ألوان البالونات <span class="v15-required">مطلوب</span></div>
-      <div class="colorSwatches">${(window.balloonColorsV15||[]).map(([name,color])=>`<label class="colorSwatch"><input type="checkbox" name="balloon_${realNum}" value="${esc15(name)}"><span class="colorDot" style="background:${color}"></span>${esc15(name)}</label>`).join('')}</div>
-      <div class="addonHint">ألوان البالونات العادية مفتوحة: يمكن اختيار أكثر من لون بدون حد.</div>
-    </div>`;
-  };
-})();
-</script>
-<!-- ===== END ALMALIKA CLEAN V40 FORCE SHINY 201 202 ONLY ===== -->
 
 </body>
 </html>
