@@ -4759,9 +4759,8 @@ window.enforceShinyBalloonLimit=function(n, changedEl){
 };
 
 window.balloonColorHtml15=function(n,p){
-  const rawNum = (p && (p.number ?? p.no ?? p.code ?? p.productNumber ?? p.id)) ?? n;
-  const num = Number(String(rawNum ?? '').replace(/[^\d]/g,''));
-  const allowShiny = (num === 201 || num === 202);
+  const txt = [n, p&&p.id, p&&p.number, p&&p.no, p&&p.code, p&&p.name, p&&p.title].filter(Boolean).join(" ");
+  const allowShiny = /(^|[^\d])(201|202)([^\d]|$)/.test(txt) || /استناد مربع كبير لامع|استناد دائري مرفوع/i.test(txt);
 
   const shinySection = allowShiny ? `<div class="shinyBalloonBox">
     <div class="shinyBalloonTitle">✨ الألوان اللامعة <span class="v15-required">مطلوب</span></div>
@@ -5267,11 +5266,6 @@ window.addCurrent=function(){
     setTimeout(function(){
       const p=window.currentProduct;
       const n=v17Num(p);
-      // ألوان اللامعة فقط للمنتجات 201 و 202
-      if(n !== 201 && n !== 202){
-        const shiny=document.querySelector(".shinyBalloonBox");
-        if(shiny) shiny.remove();
-      }
       // قفل/فتح السناك حسب الباقة المختارة
       window.v17ApplySnackLock(n);
       // علمنا عند تغيير اختيار السناك حتى لا نرجعه تلقائياً بعد لمس الزبون
@@ -6072,9 +6066,9 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 <!-- ===== END ALMALIKA CLEAN V38 SOURCE GALLERY UNDER MAIN_IMAGE ===== -->
 
 
-<!-- ===== ALMALIKA CLEAN V45 SHINY OPTIONS FROM V38 ===== -->
-<!-- V45 مبني على V38: تثبيت خيارات الألوان اللامعة للديكور 201 و202 فقط فوق اختيار ألوان البالونات، بدون باتش مراقبة أو إعادة رسم. -->
-<!-- ===== END ALMALIKA CLEAN V45 SHINY OPTIONS FROM V38 ===== -->
+<!-- ===== ALMALIKA CLEAN V46 FINAL SHINY 201 202 BY TITLE ===== -->
+<!-- V46 من V38: تفعيل الألوان اللامعة للديكور 201 و202 عبر قراءة الرقم/العنوان من المنتج نفسه وتمرير p إلى balloonColorHtml15، مع منع حذفها من سكربت V17. -->
+<!-- ===== END ALMALIKA CLEAN V46 FINAL SHINY 201 202 BY TITLE ===== -->
 
 </body>
 </html>
