@@ -6166,5 +6166,73 @@ body.v48-device-only .addonCardsBox {
 <!-- V52 مبني على V51: تحديث بيانات السناك والعربات 400 إلى 422 حسب الجدول المرسل. -->
 <!-- ===== END ALMALIKA CLEAN V52 UPDATE SNACK 400 422 ===== -->
 
+
+<!-- ===== ALMALIKA CLEAN V53 CARD CLICK FIX ===== -->
+<style id="almalika-clean-v53-card-click-fix">
+.card, .product-card, article.card{
+  cursor:pointer!important;
+}
+.card .details-btn,
+.card .add-btn{
+  position:relative!important;
+  z-index:30!important;
+  pointer-events:auto!important;
+}
+.pic, .card-body, .card-actions{
+  pointer-events:auto!important;
+}
+</style>
+
+<script id="almalika-clean-v53-card-click-fix-script">
+(function(){
+  function getCardProductIdV53(el){
+    const card = el && el.closest && el.closest('article.card,.card,.product-card');
+    if(!card) return null;
+
+    // من onclick القديم
+    const onclicks = Array.from(card.querySelectorAll('[onclick]')).map(x=>x.getAttribute('onclick')||'').join(' ');
+    let m = onclicks.match(/openDetail\((\d+)\)/) || onclicks.match(/quickAdd\((\d+)\)/);
+    if(m) return Number(m[1]);
+
+    // من الرقم الظاهر على الكرت
+    const badge = card.querySelector('.badge');
+    if(badge){
+      const num = Number((badge.textContent||'').replace(/[^\d]/g,''));
+      if(num){
+        const p = (window.PRODUCTS||[]).find(x=>Number(x.id)===num || Number(x.number)===num);
+        if(p) return Number(p.id || p.number);
+      }
+    }
+
+    return null;
+  }
+
+  document.addEventListener('click', function(e){
+    const detailBtn = e.target.closest && e.target.closest('.details-btn');
+    const addBtn = e.target.closest && e.target.closest('.add-btn');
+
+    if(addBtn){
+      const id = getCardProductIdV53(addBtn);
+      if(id && typeof window.quickAdd === 'function'){
+        e.preventDefault();
+        e.stopPropagation();
+        window.quickAdd(id);
+      }
+      return;
+    }
+
+    if(detailBtn || (e.target.closest && e.target.closest('article.card,.card,.product-card'))){
+      const id = getCardProductIdV53(e.target);
+      if(id && typeof window.openDetail === 'function'){
+        e.preventDefault();
+        e.stopPropagation();
+        window.openDetail(id);
+      }
+    }
+  }, true);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V53 CARD CLICK FIX ===== -->
+
 </body>
 </html>
