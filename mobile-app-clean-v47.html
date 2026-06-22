@@ -209,18 +209,7 @@ a{text-decoration:none;color:inherit}
   border:1px solid #332d32;
   min-width:0;
 }
-.badge{
-  position:absolute;
-  top:8px;
-  right:8px;
-  z-index:2;
-  background:#101010;
-  color:#fff;
-  border-radius:999px;
-  padding:5px 8px;
-  font-size:10px;
-  font-weight:900;
-}
+.badge{position:absolute;top:8px;right:8px;z-index:20;background:#d81f32!important;color:#fff!important;border-radius:50%!important;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;line-height:1;box-shadow:0 4px 12px rgba(0,0,0,.18);padding:0;min-width:56px;}
 .pic{
   height:145px;
   background:#fff;
@@ -490,7 +479,7 @@ body{background:linear-gradient(180deg,#fff7fb,#fffaf1)!important;color:#331522!
 .add-btn{background:#7b1230!important;color:#fff!important}
 .opt.active{border-color:#f52f86!important;box-shadow:0 0 0 2px rgba(245,47,134,.18)!important}
 .total{background:#fff!important;color:#331522!important;border:1px solid #f0c9dc!important}
-.badge{background:#f52f86!important;color:#fff!important}
+.badge{background:#d81f32!important;color:#fff!important;border-radius:50%!important;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;padding:0;min-width:56px;line-height:1}
 @media(min-width:760px){body{background:#fff7fb!important}}
 </style>
 
@@ -625,7 +614,7 @@ function renderProducts(){
 }
 function card(p){
   return `<article class="card">
-    <span class="badge">#${esc(p.number||p.id)}</span>
+    <span class="badge">${esc(p.number||p.id)}</span>
     <div class="pic" onclick="openDetail(${Number(p.id)})"><img src="${esc(img(p))}" loading="lazy" onerror="this.src='order-ad.jpg'"></div>
     <div class="card-body">
       <h3>${esc(p.name)}</h3>
@@ -2067,7 +2056,7 @@ init();
     const tag1 = cleanShort(p.category || p.type || "منتج", 18);
     const tag2 = cleanShort(p.durationOneDay || p.age || "حسب الطلب", 18);
     return `<article class="card">
-      <span class="badge">#${esc7(p.number||p.id)}</span>
+      <span class="badge">${esc7(p.number||p.id)}</span>
       <div class="pic" onclick="openDetail(${Number(p.id)})"><img src="${esc7(img(p))}" loading="lazy" onerror="this.src='order-ad.jpg'"></div>
       <div class="card-body">
         <h3>${esc7(p.name)}</h3>
@@ -2394,7 +2383,7 @@ init();
       ? `<img src="${esc8(imageSrc)}" loading="lazy" onerror="markImgMissing(this)">`
       : `<div class="missing-img">الصورة غير موجودة في البيانات</div>`;
     return `<article class="card">
-      <span class="badge">#${esc8(p.number||p.id)}</span>
+      <span class="badge">${esc8(p.number||p.id)}</span>
       <div class="pic" onclick="openDetail(${Number(p.id)})">${imgHtml}</div>
       <div class="card-body">
         <h3>${esc8(p.name)}</h3>
@@ -2634,7 +2623,7 @@ init();
     const imgHtml = cardImgHtml(p);
     if(!imgHtml) return "";
     return `<article class="card">
-      <span class="badge">#${esc10(p.number||p.id)}</span>
+      <span class="badge">${esc10(p.number||p.id)}</span>
       <div class="pic" onclick="openDetail(${Number(p.id)})">${imgHtml}</div>
       <div class="card-body">
         <h3>${esc10(p.name)}</h3>
@@ -3065,7 +3054,7 @@ init();
     if(!imgHtml) return "";
     const mini=short11(p.details || p.offerIncludes || p.category || "", 94);
     return `<article class="card">
-      <span class="badge">#${esc11(p.number||p.id)}</span>
+      <span class="badge">${esc11(p.number||p.id)}</span>
       <div class="pic" onclick="openDetail(${Number(p.id)})">${imgHtml}</div>
       <div class="card-body">
         <h3>${esc11(p.name)}</h3>
@@ -6069,6 +6058,11 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 <!-- ===== ALMALIKA CLEAN V46 FINAL SHINY 201 202 BY TITLE ===== -->
 <!-- V46 من V38: تفعيل الألوان اللامعة للديكور 201 و202 عبر قراءة الرقم/العنوان من المنتج نفسه وتمرير p إلى balloonColorHtml15، مع منع حذفها من سكربت V17. -->
 <!-- ===== END ALMALIKA CLEAN V46 FINAL SHINY 201 202 BY TITLE ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V47 NUMBER BADGE STYLE ===== -->
+<!-- تم حذف علامة # من badges وتحويلها إلى دائرة حمراء كبيرة بخط أوضح. -->
+<!-- ===== END ALMALIKA CLEAN V47 NUMBER BADGE STYLE ===== -->
 
 </body>
 </html>
