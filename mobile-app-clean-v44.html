@@ -4758,14 +4758,18 @@ window.enforceShinyBalloonLimit=function(n, changedEl){
   return true;
 };
 
-window.balloonColorHtml15=function(n){
-  const num = Number(n||0);
+window.balloonColorHtml15=function(n,p){
+  const rawNum = (p && (p.number ?? p.no ?? p.code ?? p.id)) ?? n;
+  const numText = String(rawNum ?? "");
+  const num = Number(numText.replace(/[^\d]/g,""));
   const allowShiny = (num === 201 || num === 202);
+
   const shinySection = allowShiny ? `<div class="shinyBalloonBox">
-    <div class="shinyBalloonTitle">✨ الألوان اللامعة</div>
+    <div class="shinyBalloonTitle">✨ الألوان اللامعة <span class="v15-required">مطلوب</span></div>
     <div class="colorSwatches shinyGrid">${(window.shinyBalloonColorsV15||[]).map(([name,img])=>`<label class="colorSwatch shiny"><input type="checkbox" class="shinyBalloonInput" name="balloon_${n}" value="${esc15(name)}" onchange="enforceShinyBalloonLimit(${n},this)"><span class="colorDot shinyDot" style="background-image:url('${img}');"></span><span class="shinyName">${esc15(name)}</span></label>`).join('')}</div>
     <div class="shinyHint">الألوان اللامعة: يمكن اختيار لون واحد أو لونين فقط كحد أقصى.</div>
   </div>` : ``;
+
   return `<div class="balloonColorBox">
     ${shinySection}
     <div class="choiceBoxTitle">🎈 اختيار ألوان البالونات <span class="v15-required">مطلوب</span></div>
@@ -4863,7 +4867,7 @@ window.decorBookingHtml15=function(p){
       <input class="v15-field" id="child_${n}" placeholder="اسم الطفل / الطفلة على البنر *">
       <textarea class="v15-field" id="themeNote_${n}" placeholder="ملاحظات الثيم: العمر أو الاسم بالإنجليزي أو شخصية أخرى"></textarea>
     </div>
-    ${balloonColorHtml15(n)}
+    ${balloonColorHtml15(n,p)}
     ${snackItemsHtml15(n)}
     ${decorBigTotalHtml15(n)}
     ${decorAddonsCardsHtml15(n)}
@@ -6069,129 +6073,9 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 <!-- ===== END ALMALIKA CLEAN V38 SOURCE GALLERY UNDER MAIN_IMAGE ===== -->
 
 
-<!-- ===== ALMALIKA CLEAN V43 FORCE SHINY ABOVE BALLOONS 201 202 ===== -->
-<style id="almalika-clean-v43-force-shiny-above-balloons-201-202">
-.v43ShinyBox{
-  display:block!important;
-  margin:10px 0 10px!important;
-  padding:10px!important;
-  border:1.5px solid #e0ad22!important;
-  border-radius:18px!important;
-  background:#fffaf1!important;
-}
-.v43ShinyTitle{
-  color:#8b1238!important;
-  font-size:18px!important;
-  font-weight:1000!important;
-  text-align:right!important;
-  margin:0 0 10px!important;
-}
-.v43ShinyGrid{
-  display:grid!important;
-  grid-template-columns:repeat(4,1fr)!important;
-  gap:8px!important;
-}
-.v43ShinyItem{
-  border:1.5px solid #f1c1d4!important;
-  border-radius:13px!important;
-  padding:8px 6px!important;
-  background:#fff!important;
-  text-align:center!important;
-  font-weight:900!important;
-  color:#5a1028!important;
-  cursor:pointer!important;
-}
-.v43ShinyItem input{
-  display:none!important;
-}
-.v43ShinyDot{
-  width:58px!important;
-  height:58px!important;
-  border-radius:12px!important;
-  display:block!important;
-  margin:0 auto 6px!important;
-  background-size:cover!important;
-  background-position:center!important;
-  box-shadow:0 4px 12px rgba(0,0,0,.12)!important;
-}
-.v43ShinyItem:has(input:checked){
-  border-color:#e91e63!important;
-  box-shadow:0 0 0 2px rgba(233,30,99,.15)!important;
-}
-.v43ShinyHint{
-  margin-top:8px!important;
-  padding:8px!important;
-  border:1px dashed #e0ad22!important;
-  border-radius:12px!important;
-  color:#8b1238!important;
-  font-size:12px!important;
-  font-weight:900!important;
-  text-align:center!important;
-}
-@media(max-width:560px){
-  .v43ShinyGrid{grid-template-columns:repeat(2,1fr)!important;}
-}
-</style>
-
-<script id="almalika-clean-v43-force-shiny-above-balloons-201-202-script">
-(function(){
-  function productNumberV43(){
-    const p = window.currentProduct || {};
-    return Number(p.number || p.no || p.code || p.id || 0);
-  }
-
-  function isAllowedShinyV43(){
-    const n = productNumberV43();
-    return n === 201 || n === 202;
-  }
-
-  function makeShinyBoxV43(n){
-    const colors = window.shinyBalloonColorsV15 || [];
-    if(!colors.length) return "";
-    return `<div class="v43ShinyBox" id="v43ShinyBox_${n}">
-      <div class="v43ShinyTitle">✨ الألوان اللامعة <span class="v15-required">مطلوب</span></div>
-      <div class="v43ShinyGrid">
-        ${colors.map(([name,img])=>`<label class="v43ShinyItem">
-          <input type="checkbox" class="shinyBalloonInput" name="balloon_${n}" value="${esc15(name)}" onchange="enforceShinyBalloonLimit(${n},this)">
-          <span class="v43ShinyDot" style="background-image:url('${img}')"></span>
-          <span>${esc15(name)}</span>
-        </label>`).join("")}
-      </div>
-      <div class="v43ShinyHint">الألوان اللامعة: يمكن اختيار لون واحد أو لونين فقط كحد أقصى.</div>
-    </div>`;
-  }
-
-  function insertShinyAboveBalloonsV43(){
-    if(!isAllowedShinyV43()) return;
-
-    const n = productNumberV43();
-    if(!n) return;
-
-    const panel = window.detailPanel || document.querySelector("#detailPanel,.detailPanel,.v15-panel,.panel");
-    if(!panel) return;
-
-    const balloonBox = panel.querySelector(".balloonColorBox");
-    if(!balloonBox) return;
-
-    panel.querySelectorAll(".v43ShinyBox").forEach(x=>x.remove());
-
-    balloonBox.insertAdjacentHTML("afterbegin", makeShinyBoxV43(n));
-  }
-
-  const oldOpenDetailV43 = window.openDetail;
-  if(typeof oldOpenDetailV43 === "function"){
-    window.openDetail = function(id){
-      oldOpenDetailV43(id);
-      [80,200,500,900,1400].forEach(ms=>setTimeout(insertShinyAboveBalloonsV43, ms));
-    };
-  }
-
-  document.addEventListener("click", function(){
-    [100,350,800].forEach(ms=>setTimeout(insertShinyAboveBalloonsV43, ms));
-  }, true);
-})();
-</script>
-<!-- ===== END ALMALIKA CLEAN V43 FORCE SHINY ABOVE BALLOONS 201 202 ===== -->
+<!-- ===== ALMALIKA CLEAN V44 SHINY FIX REAL PRODUCT NUMBER ===== -->
+<!-- V44: إصلاح مباشر داخل دالة balloonColorHtml15 لقراءة رقم المنتج الحقيقي من p.number/p.id وإظهار اللامع فقط 201 و202 فوق البالونات -->
+<!-- ===== END ALMALIKA CLEAN V44 SHINY FIX REAL PRODUCT NUMBER ===== -->
 
 </body>
 </html>
