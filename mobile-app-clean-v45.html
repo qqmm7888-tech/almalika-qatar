@@ -4759,9 +4759,8 @@ window.enforceShinyBalloonLimit=function(n, changedEl){
 };
 
 window.balloonColorHtml15=function(n,p){
-  const rawNum = (p && (p.number ?? p.no ?? p.code ?? p.id)) ?? n;
-  const numText = String(rawNum ?? "");
-  const num = Number(numText.replace(/[^\d]/g,""));
+  const rawNum = (p && (p.number ?? p.no ?? p.code ?? p.productNumber ?? p.id)) ?? n;
+  const num = Number(String(rawNum ?? '').replace(/[^\d]/g,''));
   const allowShiny = (num === 201 || num === 202);
 
   const shinySection = allowShiny ? `<div class="shinyBalloonBox">
@@ -6073,9 +6072,9 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 <!-- ===== END ALMALIKA CLEAN V38 SOURCE GALLERY UNDER MAIN_IMAGE ===== -->
 
 
-<!-- ===== ALMALIKA CLEAN V44 SHINY FIX REAL PRODUCT NUMBER ===== -->
-<!-- V44: إصلاح مباشر داخل دالة balloonColorHtml15 لقراءة رقم المنتج الحقيقي من p.number/p.id وإظهار اللامع فقط 201 و202 فوق البالونات -->
-<!-- ===== END ALMALIKA CLEAN V44 SHINY FIX REAL PRODUCT NUMBER ===== -->
+<!-- ===== ALMALIKA CLEAN V45 SHINY OPTIONS FROM V38 ===== -->
+<!-- V45 مبني على V38: تثبيت خيارات الألوان اللامعة للديكور 201 و202 فقط فوق اختيار ألوان البالونات، بدون باتش مراقبة أو إعادة رسم. -->
+<!-- ===== END ALMALIKA CLEAN V45 SHINY OPTIONS FROM V38 ===== -->
 
 </body>
 </html>
