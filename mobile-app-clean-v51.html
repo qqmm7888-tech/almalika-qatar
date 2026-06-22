@@ -635,6 +635,11 @@ function card(p){
 }
 
 function productOptions(p){
+  const realNum = Number(String((p&& (p.number||p.id)) || '').replace(/[^\d]/g,''));
+  if([210,211,250,300,301].includes(realNum)){
+    const price = Number(p.baseDecorPrice || p.priceOneDay || p.unitPrice || p.piecePrice || 0);
+    return [{label:'ديكور فقط', price:price, note:'السعر الأساسي'}];
+  }
   const opts=[];
   if(Number(p.baseDecorPrice)>0){
     opts.push({label:"ديكور فقط", price:Number(p.baseDecorPrice), note:"السعر الأساسي"});
@@ -4847,32 +4852,42 @@ window.priceChoiceHtml15=function(p){
 window.decorBookingHtml15=function(p){
   const n=p.number||p.id;
   const realNum = Number(String(n||'').replace(/[^\d]/g,''));
+
+  // 300 و301: تأجير جهاز فقط — لا ألوان، لا سناك، لا ثيم، لا طاولات
   if(realNum === 300 || realNum === 301){
-    return `<div class="v15-box pink">
-      <h3 class="v15-title">بيانات التأجير</h3>
-      <div class="addonHint">هذا البند تأجير الجهاز فقط، ولا يحتاج اختيارات زبون أو ألوان بالونات أو سناك أو ثيم.</div>
-      <textarea class="v15-field" id="note_${n}" placeholder="ملاحظات مختصرة: مكان التركيب أو تفاصيل مهمة فقط"></textarea>
+    return `<div class="v15-box pink specialDeviceOnlyV51">
+      <h3 class="v15-title">بيانات الحجز</h3>
+      <textarea class="v15-field" id="note_${n}" placeholder="ملاحظات أو نوع التشغيل المطلوب"></textarea>
+      <div class="addonHint">هذا البند بدون سناك وبدون اسم طفل وبدون طاولات وبدون بالونات.</div>
     </div>`;
   }
-  return `<div class="v15-box pink"><h3 class="v15-title">بيانات حجز الديكور</h3>
-    <div class="bookingSimple compactBooking">
-      <input type="date" id="date_${n}" min="${todayISO15()}">
-      <select id="period_${n}"><option value="">اختار وقت التركيب 9 صباحاً إلى 5 مساءً</option><option>صباحاً</option><option>ظهراً</option><option>عصراً</option></select>
-      <select id="occasion_${n}"><option value="">نوع المناسبة</option><option>عيد ميلاد</option><option>تخرج</option><option>استقبال مولود</option><option>فعالية مدرسية</option><option>خطوبة / مناسبة خاصة</option><option>أخرى</option></select>
-      <select id="place_${n}"><option value="">مكان التنفيذ</option><option>منزل</option><option>قاعة</option><option>مدرسة / روضة</option><option>خارجي</option></select>
-    </div>
-    <div class="themeBox">
-      <div class="choiceBoxTitle">🎭 الشخصية / الثيم <span class="v15-required">مطلوب</span></div>
-      <div class="addonHint">اختر الشخصية من القائمة، ثم اكتب اسم الطفل على البنر.</div>
-      <select class="v15-field" id="theme_${n}"><option>حسب الطلب / ثيم خاص</option><option>أميرات</option><option>سبايدرمان</option><option>فروزن</option><option>يونيكورن</option><option>سيارات</option><option>تخرج</option><option>بيبي</option></select>
-      <input class="v15-field" id="child_${n}" placeholder="اسم الطفل / الطفلة على البنر *">
-      <textarea class="v15-field" id="themeNote_${n}" placeholder="ملاحظات الثيم: العمر أو الاسم بالإنجليزي أو شخصية أخرى"></textarea>
-    </div>
+
+  // 210 و211 و250: اختيار ألوان بالونات فقط — بدون سناك وبدون اسم طفل وبدون طاولات
+  if(realNum === 210 || realNum === 211 || realNum === 250){
+    return `<div class="v15-box pink balloonOnlyItemV51">
+      <h3 class="v15-title">بيانات الحجز</h3>
+      <input class="v15-field" id="eventLocation_${n}" placeholder="${realNum===211 ? 'ملاحظات القوس أو المقاس' : '1'}">
+      ${balloonColorHtml15(n,p)}
+      <div class="addonHint strongHintV51">هذا البند فيه اختيار ألوان البالونات فقط — بدون سناك وبدون اسم طفل وبدون طاولات.</div>
+      <textarea class="v15-field" id="note_${n}" placeholder="ملاحظات مختصرة: اللون أو مكان التركيب أو تفاصيل مهمة"></textarea>
+    </div>`;
+  }
+
+  return `<div class="v15-box pink">
+    <h3 class="v15-title">بيانات حجز الديكور</h3>
+    <input class="v15-field" id="eventDate_${n}" type="date" placeholder="تاريخ التركيب">
+    <select class="v15-field" id="eventTime_${n}">
+      <option>اختيار وقت التركيب و صباحا / ظهرا / عصرا</option>
+      <option>صباحاً</option><option>ظهراً</option><option>عصراً</option>
+    </select>
+    <select class="v15-field" id="eventLocation_${n}">
+      <option>نوع المناسبة</option>
+      <option>عيد ميلاد</option><option>تخرج</option><option>خطوبة</option><option>مدرسة/روضة</option><option>شركة/فعالية</option>
+    </select>
+    ${themeHtml15(n)}
     ${balloonColorHtml15(n,p)}
-    ${snackItemsHtml15(n)}
-    ${decorBigTotalHtml15(n)}
-    ${decorAddonsCardsHtml15(n)}
-    <div class="workingHoursHint">⏰ صباحاً / ظهراً / عصراً — من 9 صباحاً إلى 5 مساءً — لا يقبل تاريخ سابق</div>
+    ${snackItemsHtml15(n,p)}
+    ${addonCardsHtml15(n)}
     <textarea class="v15-field" id="note_${n}" placeholder="ملاحظات مختصرة: مكان التركيب أو تفاصيل مهمة فقط"></textarea>
   </div>`;
 };
@@ -6118,6 +6133,33 @@ body.v48-device-only .addonCardsBox {
 <!-- ===== ALMALIKA CLEAN V50 EMBEDDED DATA FIX ===== -->
 <!-- V50 مبني على V49: تم دمج بيانات almalika-data-v3.js داخل نفس ملف HTML حتى لا تظهر الأقسام 0 عند عدم رفع ملف البيانات الخارجي. -->
 <!-- ===== END ALMALIKA CLEAN V50 EMBEDDED DATA FIX ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V51 SPECIAL DECOR ITEMS 210 211 250 300 301 ===== -->
+<style id="almalika-clean-v51-special-decor-items">
+.specialDeviceOnlyV51 .balloonColorBox,
+.specialDeviceOnlyV51 .themeBox,
+.specialDeviceOnlyV51 .snackChoiceBox,
+.specialDeviceOnlyV51 .addonCardsDetails,
+.specialDeviceOnlyV51 .addonCardsBox{
+  display:none!important;
+}
+.balloonOnlyItemV51 .themeBox,
+.balloonOnlyItemV51 .snackChoiceBox,
+.balloonOnlyItemV51 .addonCardsDetails,
+.balloonOnlyItemV51 .addonCardsBox{
+  display:none!important;
+}
+.strongHintV51{
+  border:1px dashed #f52f86!important;
+  background:#fff7fb!important;
+  color:#9b1242!important;
+  font-weight:1000!important;
+  text-align:center!important;
+  font-size:14px!important;
+}
+</style>
+<!-- ===== END ALMALIKA CLEAN V51 SPECIAL DECOR ITEMS 210 211 250 300 301 ===== -->
 
 </body>
 </html>
