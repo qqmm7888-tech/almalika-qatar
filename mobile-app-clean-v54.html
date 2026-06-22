@@ -6184,123 +6184,77 @@ body.v48-device-only .addonCardsBox {
 <!-- ===== END ALMALIKA CLEAN V52 UPDATE SNACK 400 422 ===== -->
 
 
-
-
-
-<!-- ===== ALMALIKA CLEAN V54 REMOVE 3 HOURS OFFER SNACKS ===== -->
-<!-- V54 مبني على V53: حذف خيار 3 ساعات من عروض السناك والعربات 400-422، وتعديل السعر الخارجي ليبدأ من أول باقة أطفال. -->
-<!-- ===== END ALMALIKA CLEAN V54 REMOVE 3 HOURS OFFER SNACKS ===== -->
-
-
-<!-- ===== ALMALIKA CLEAN V55 STRONG BUTTON CLICK FIX ===== -->
-<style id="almalika-clean-v55-strong-button-click-fix">
-.card, article.card, .product-card{
-  position:relative!important;
-  pointer-events:auto!important;
-}
-.card *{
-  pointer-events:auto!important;
+<!-- ===== ALMALIKA CLEAN V53 CARD CLICK FIX ===== -->
+<style id="almalika-clean-v53-card-click-fix">
+.card, .product-card, article.card{
+  cursor:pointer!important;
 }
 .card .details-btn,
-.card .add-btn,
-.card-actions button{
+.card .add-btn{
   position:relative!important;
-  z-index:999!important;
+  z-index:30!important;
   pointer-events:auto!important;
-  touch-action:manipulation!important;
+}
+.pic, .card-body, .card-actions{
+  pointer-events:auto!important;
 }
 </style>
 
-<script id="almalika-clean-v55-strong-button-click-fix-script">
+<script id="almalika-clean-v53-card-click-fix-script">
 (function(){
-  function allProductsV55(){
-    return window.PRODUCTS || window.products || [];
-  }
-
-  function findProductFromCardV55(el){
-    const card = el && el.closest && el.closest("article.card,.card,.product-card");
+  function getCardProductIdV53(el){
+    const card = el && el.closest && el.closest('article.card,.card,.product-card');
     if(!card) return null;
 
-    // الرقم الأحمر الموجود فوق الصورة
-    const badge = card.querySelector(".badge");
-    const badgeNum = badge ? Number((badge.textContent || "").replace(/[^\d]/g,"")) : 0;
-    if(badgeNum){
-      const p = allProductsV55().find(x => Number(x.number) === badgeNum || Number(x.id) === badgeNum);
-      if(p) return p;
-    }
+    // من onclick القديم
+    const onclicks = Array.from(card.querySelectorAll('[onclick]')).map(x=>x.getAttribute('onclick')||'').join(' ');
+    let m = onclicks.match(/openDetail\((\d+)\)/) || onclicks.match(/quickAdd\((\d+)\)/);
+    if(m) return Number(m[1]);
 
-    // قراءة أي onclick قديم إن وجد
-    const html = card.innerHTML || "";
-    const m = html.match(/(?:openDetail|quickAdd)\((\d+)\)/);
-    if(m){
-      const id = Number(m[1]);
-      const p = allProductsV55().find(x => Number(x.id) === id || Number(x.number) === id);
-      if(p) return p;
+    // من الرقم الظاهر على الكرت
+    const badge = card.querySelector('.badge');
+    if(badge){
+      const num = Number((badge.textContent||'').replace(/[^\d]/g,''));
+      if(num){
+        const p = (window.PRODUCTS||[]).find(x=>Number(x.id)===num || Number(x.number)===num);
+        if(p) return Number(p.id || p.number);
+      }
     }
 
     return null;
   }
 
-  function openProductV55(p){
-    if(!p) return;
-    const id = Number(p.id || p.number);
-    if(typeof window.openDetail === "function"){
-      window.openDetail(id);
+  document.addEventListener('click', function(e){
+    const detailBtn = e.target.closest && e.target.closest('.details-btn');
+    const addBtn = e.target.closest && e.target.closest('.add-btn');
+
+    if(addBtn){
+      const id = getCardProductIdV53(addBtn);
+      if(id && typeof window.quickAdd === 'function'){
+        e.preventDefault();
+        e.stopPropagation();
+        window.quickAdd(id);
+      }
       return;
     }
-    if(typeof openDetail === "function"){
-      openDetail(id);
-    }
-  }
 
-  function addProductV55(p){
-    if(!p) return;
-    const id = Number(p.id || p.number);
-    if(typeof window.quickAdd === "function"){
-      window.quickAdd(id);
-      return;
-    }
-    if(typeof quickAdd === "function"){
-      quickAdd(id);
-      return;
-    }
-    openProductV55(p);
-  }
-
-  document.addEventListener("click", function(e){
-    const card = e.target.closest && e.target.closest("article.card,.card,.product-card");
-    if(!card) return;
-
-    const p = findProductFromCardV55(card);
-    if(!p) return;
-
-    const isAdd = !!(e.target.closest && e.target.closest(".add-btn"));
-    const isDetails = !!(e.target.closest && e.target.closest(".details-btn"));
-    const isImageOrBody = !!(e.target.closest && e.target.closest(".pic,.card-body,h3,img"));
-
-    if(isAdd || isDetails || isImageOrBody){
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation();
-      if(isAdd) addProductV55(p);
-      else openProductV55(p);
+    if(detailBtn || (e.target.closest && e.target.closest('article.card,.card,.product-card'))){
+      const id = getCardProductIdV53(e.target);
+      if(id && typeof window.openDetail === 'function'){
+        e.preventDefault();
+        e.stopPropagation();
+        window.openDetail(id);
+      }
     }
   }, true);
-
-  document.addEventListener("touchend", function(e){
-    const btn = e.target.closest && e.target.closest(".details-btn,.add-btn");
-    if(!btn) return;
-    const card = btn.closest("article.card,.card,.product-card");
-    const p = findProductFromCardV55(card);
-    if(!p) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if(btn.classList.contains("add-btn")) addProductV55(p);
-    else openProductV55(p);
-  }, {capture:true, passive:false});
 })();
 </script>
-<!-- ===== END ALMALIKA CLEAN V55 STRONG BUTTON CLICK FIX ===== -->
+<!-- ===== END ALMALIKA CLEAN V53 CARD CLICK FIX ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V54 REMOVE 3 HOURS OFFER SNACKS ===== -->
+<!-- V54 مبني على V53: حذف خيار 3 ساعات من عروض السناك والعربات 400-422، وتعديل السعر الخارجي ليبدأ من أول باقة أطفال. -->
+<!-- ===== END ALMALIKA CLEAN V54 REMOVE 3 HOURS OFFER SNACKS ===== -->
 
 </body>
 </html>
