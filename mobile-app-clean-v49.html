@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <title>الملكة | تجربة تطبيق الجوال</title>
-<script src="almalika-data-v2.js"></script>
+<script src="almalika-data-v3.js"></script>
 <style>
 :root{
   --bg:#fff7fb;
@@ -4840,6 +4840,14 @@ window.priceChoiceHtml15=function(p){
 
 window.decorBookingHtml15=function(p){
   const n=p.number||p.id;
+  const realNum = Number(String(n||'').replace(/[^\d]/g,''));
+  if(realNum === 300 || realNum === 301){
+    return `<div class="v15-box pink">
+      <h3 class="v15-title">بيانات التأجير</h3>
+      <div class="addonHint">هذا البند تأجير الجهاز فقط، ولا يحتاج اختيارات زبون أو ألوان بالونات أو سناك أو ثيم.</div>
+      <textarea class="v15-field" id="note_${n}" placeholder="ملاحظات مختصرة: مكان التركيب أو تفاصيل مهمة فقط"></textarea>
+    </div>`;
+  }
   return `<div class="v15-box pink"><h3 class="v15-title">بيانات حجز الديكور</h3>
     <div class="bookingSimple compactBooking">
       <input type="date" id="date_${n}" min="${todayISO15()}">
@@ -6063,6 +6071,42 @@ body > *:not(script):not(style):not(link):not(meta):not(title){
 <!-- ===== ALMALIKA CLEAN V47 NUMBER BADGE STYLE ===== -->
 <!-- تم حذف علامة # من badges وتحويلها إلى دائرة حمراء كبيرة بخط أوضح. -->
 <!-- ===== END ALMALIKA CLEAN V47 NUMBER BADGE STYLE ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V48 ITEMS 300 301 DEVICE ONLY ===== -->
+<style id="almalika-clean-v48-items-300-301-device-only">
+body.v48-device-only .themeBox,
+body.v48-device-only .balloonColorBox,
+body.v48-device-only .snackChoiceBox,
+body.v48-device-only .addonCardsDetails,
+body.v48-device-only .addonCardsBox {
+  display:none!important;
+}
+</style>
+<script id="almalika-clean-v48-items-300-301-device-only-script">
+(function(){
+  function checkDeviceOnlyV48(){
+    const p = window.currentProduct || {};
+    const n = Number(String((p.number || p.id || '')).replace(/[^\d]/g,''));
+    document.body.classList.toggle('v48-device-only', n === 300 || n === 301);
+  }
+  const oldOpenV48 = window.openDetail;
+  if(typeof oldOpenV48 === 'function'){
+    window.openDetail = function(id){
+      oldOpenV48(id);
+      setTimeout(checkDeviceOnlyV48,80);
+      setTimeout(checkDeviceOnlyV48,300);
+    };
+  }
+  document.addEventListener('click',()=>setTimeout(checkDeviceOnlyV48,120),true);
+})();
+</script>
+<!-- ===== END ALMALIKA CLEAN V48 ITEMS 300 301 DEVICE ONLY ===== -->
+
+
+<!-- ===== ALMALIKA CLEAN V49 DATA UPDATE 200-301 ===== -->
+<!-- V49 مبني على V48 ويستخدم almalika-data-v3.js المحدث ببيانات البنود 200 إلى 212 و250 و300 و301 حسب الجدول المرسل. -->
+<!-- ===== END ALMALIKA CLEAN V49 DATA UPDATE 200-301 ===== -->
 
 </body>
 </html>
