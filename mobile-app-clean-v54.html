@@ -6260,192 +6260,180 @@ body.v48-device-only .addonCardsBox {
 
 <!-- ===== ALMALIKA CLEAN V55 COMMANDS + IMAGE CLICK FIX ===== -->
 <style id="almalika-clean-v55-command-image-fix-style">
-/* V55: إصلاح استجابة أوامر كرت المنتج بدون تغيير التصميم أو البيانات */
-.card .pic,
-.product-card .pic,
-article.card .pic,
-.card img,
-.product-card img,
-article.card img{
-  cursor:pointer!important;
-}
-.card button,
-.product-card button,
-article.card button,
-.card a,
-.product-card a,
-article.card a{
+/* V55: إصلاح استجابة أزرار الكرت وفتح التفاصيل عند الضغط على الصورة */
+article.card, .card, .product-card{
   position:relative!important;
-  z-index:80!important;
+}
+article.card .pic,
+article.card .pic img,
+article.card button,
+article.card a,
+.card .pic,
+.card .pic img,
+.card button,
+.card a{
   pointer-events:auto!important;
   touch-action:manipulation!important;
 }
+article.card .pic,
+.card .pic{
+  cursor:pointer!important;
+  position:relative!important;
+  z-index:5!important;
+}
+article.card .card-actions,
+.card .card-actions{
+  position:relative!important;
+  z-index:20!important;
+}
+article.card .v11-card-btn,
+article.card .details-btn,
+article.card .add-btn,
+.card .v11-card-btn,
+.card .details-btn,
+.card .add-btn{
+  position:relative!important;
+  z-index:30!important;
+  pointer-events:auto!important;
+}
 </style>
-
 <script id="almalika-clean-v55-command-image-fix-script">
 (function(){
-  'use strict';
+  const WA55 = '97433317720';
 
-  function allProductsV55(){
-    return window.PRODUCTS || (typeof PRODUCTS !== 'undefined' ? PRODUCTS : []) || [];
+  function products55(){ return window.PRODUCTS || (typeof PRODUCTS !== 'undefined' ? PRODUCTS : []) || []; }
+
+  function findProduct55(id){
+    const n = Number(String(id||'').replace(/[^0-9]/g,''));
+    if(!n) return null;
+    return products55().find(p => Number(p.id) === n || Number(p.number) === n) || null;
   }
 
-  function normalizeNumV55(v){
-    const n = Number(String(v || '').replace(/[^0-9]/g,''));
-    return Number.isFinite(n) && n > 0 ? n : 0;
-  }
+  function cardId55(el){
+    const card = el && el.closest && el.closest('article.card,.card,.product-card');
+    if(!card) return null;
 
-  function cardOfV55(el){
-    return el && el.closest && el.closest('article.card,.card,.product-card,.product');
-  }
+    const direct = card.dataset && (card.dataset.id || card.dataset.productId || card.dataset.pid);
+    if(direct && findProduct55(direct)) return Number(direct);
 
-  function idFromOnclickV55(card){
     const onclicks = Array.from(card.querySelectorAll('[onclick]'))
       .map(x => x.getAttribute('onclick') || '')
       .join(' ');
-    const m = onclicks.match(/(?:openDetail|quickAdd)\((\d+)\)/);
-    return m ? Number(m[1]) : 0;
-  }
+    let m = onclicks.match(/openDetail\((\d+)\)/) || onclicks.match(/quickAdd\((\d+)\)/);
+    if(m && findProduct55(m[1])) return Number(m[1]);
 
-  function idFromCardV55(card){
-    if(!card) return 0;
-
-    const direct = normalizeNumV55(card.dataset && (card.dataset.id || card.dataset.productId || card.dataset.product));
-    if(direct) return direct;
-
-    const fromClick = idFromOnclickV55(card);
-    if(fromClick) return fromClick;
-
-    const badge = card.querySelector('.badge,[class*="badge"],[class*="Badge"]');
-    const badgeNum = normalizeNumV55(badge && badge.textContent);
-    if(badgeNum){
-      const p = allProductsV55().find(x => Number(x.id) === badgeNum || Number(x.number) === badgeNum);
-      if(p) return Number(p.id || p.number || badgeNum);
-      return badgeNum;
+    const badge = card.querySelector('.badge');
+    if(badge){
+      const num = Number((badge.textContent || '').replace(/[^0-9]/g,''));
+      const p = findProduct55(num);
+      if(p) return Number(p.id || p.number);
     }
-
-    return 0;
+    return null;
   }
 
-  function productV55(id){
-    const n = Number(id);
-    return allProductsV55().find(x => Number(x.id) === n || Number(x.number) === n) || null;
+  function stop55(e){
+    e.preventDefault();
+    e.stopPropagation();
+    if(e.stopImmediatePropagation) e.stopImmediatePropagation();
   }
 
-  function productTitleV55(id){
-    const p = productV55(id);
-    return p ? ('الملكة - ' + (p.name || '') + ' رقم ' + (p.number || p.id || id)) : 'الملكة';
+  function open55(id){
+    const p = findProduct55(id);
+    if(!p || typeof window.openDetail !== 'function') return;
+    window.openDetail(Number(p.id || p.number));
   }
 
-  function isUnavailableControlV55(el){
-    return !!(el && el.closest && el.closest('.unavailableBtnV19')) || /غير\s*متاح/.test((el && el.textContent) || '');
-  }
-
-  function openDetailV55(id){
-    if(id && typeof window.openDetail === 'function'){
-      window.openDetail(id);
-      return true;
+  function quick55(id){
+    const p = findProduct55(id);
+    if(!p) return;
+    if(typeof window.quickAdd === 'function'){
+      window.quickAdd(Number(p.id || p.number));
+    }else{
+      window.currentProduct = p;
+      if(typeof window.addCurrent === 'function') window.addCurrent();
     }
-    return false;
   }
 
-  function quickAddV55(id){
-    if(id && typeof window.quickAdd === 'function'){
-      window.quickAdd(id);
-      return true;
-    }
-    openDetailV55(id);
-    return true;
-  }
-
-  function shareV55(id){
-    const title = productTitleV55(id);
-    const url = location.href.split('#')[0];
-    const text = title + ' - ' + url;
+  function share55(p){
+    const text = `الملكة للحفلات - المنتج رقم ${p.number || p.id}: ${p.name}`;
     if(navigator.share){
-      navigator.share({title:title, text:text, url:url}).catch(function(){});
-    }else if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(text).then(function(){ alert('تم نسخ رابط المنتج'); }).catch(function(){ alert(text); });
+      navigator.share({title:p.name, text, url:location.href}).catch(()=>{});
+    }else if(navigator.clipboard){
+      navigator.clipboard.writeText(text + '\n' + location.href).then(()=>alert('تم نسخ بيانات المنتج للتحويل لصديق'));
     }else{
       alert(text);
     }
   }
 
-  function whatsappV55(id){
-    const p = productV55(id);
-    const wa = window.DEFAULT_WA || window.WA15 || '97433317720';
-    const msg = encodeURIComponent('استفسار عن المنتج رقم ' + ((p && (p.number || p.id)) || id) + ' - ' + ((p && p.name) || ''));
-    window.open('https://wa.me/' + wa + '?text=' + msg, '_blank');
+  function whatsapp55(p){
+    const msg = encodeURIComponent(`استفسار عن المنتج رقم ${p.number || p.id} - ${p.name}`);
+    window.open(`https://wa.me/${WA55}?text=${msg}`, '_blank');
   }
 
-  function classifyV55(target){
-    const btn = target.closest && target.closest('button,a,.details-btn,.add-btn,.v11-card-btn');
-    if(!btn) return '';
-    const txt = (btn.textContent || '').replace(/\s+/g,' ').trim();
-    const cls = btn.className || '';
-    const href = btn.getAttribute && (btn.getAttribute('href') || '');
-
-    if(/details-btn|v11-details/i.test(cls) || /تفاصيل/.test(txt)) return 'detail';
-    if(/add-btn/i.test(cls) || /^\+$/.test(txt) || /أضف|احجز|سلة/.test(txt)) return 'add';
-    if(/v11-quick|quick/i.test(cls) || /التسوق\s*السريع/.test(txt)) return 'quick';
-    if(/v11-share|share/i.test(cls) || /تحويل\s*لصديق/.test(txt)) return 'share';
-    if(/v11-wa|\bwa\b/i.test(cls) || /واتساب/i.test(txt) || /wa\.me/.test(href)) return 'wa';
-    return '';
-  }
-
-  // مهم: على window capture حتى يسبق سكربت V53 القديم الموجود على document capture
+  // مهم: على window capture حتى يسبق مستمع V53 القديم الذي كان يفتح التفاصيل بدل الأوامر.
   window.addEventListener('click', function(e){
-    const target = e.target;
-    if(!target || !target.closest) return;
-    const card = cardOfV55(target);
+    const card = e.target.closest && e.target.closest('article.card,.card,.product-card');
     if(!card) return;
+    const id = cardId55(e.target);
+    const p = findProduct55(id);
+    if(!p) return;
 
-    const id = idFromCardV55(card);
-    if(!id) return;
+    const btn = e.target.closest('button,a');
+    const txt = (btn ? btn.textContent : '').replace(/\s+/g,' ').trim();
 
-    const action = classifyV55(target);
-    const clickedImage = !!target.closest('.pic');
+    // زر + أو التسوق السريع
+    if(btn && (btn.classList.contains('add-btn') || btn.classList.contains('v11-quick') || /\+|التسوق السريع|أضف/i.test(txt))){
+      stop55(e);
+      quick55(id);
+      return;
+    }
 
-    if(action || clickedImage){
-      e.preventDefault();
-      e.stopPropagation();
-      if(e.stopImmediatePropagation) e.stopImmediatePropagation();
+    // تحويل لصديق
+    if(btn && (btn.classList.contains('v11-share') || /تحويل لصديق|مشاركة|شارك/i.test(txt))){
+      stop55(e);
+      share55(p);
+      return;
+    }
 
-      if(isUnavailableControlV55(target) && action !== 'detail' && clickedImage !== true){
-        alert('هذا المنتج غير متاح حالياً.');
-        return false;
-      }
+    // واتساب
+    if(btn && (btn.classList.contains('v11-wa') || /واتساب/i.test(txt))){
+      stop55(e);
+      whatsapp55(p);
+      return;
+    }
 
-      if(action === 'detail' || clickedImage){ openDetailV55(id); return false; }
-      if(action === 'add' || action === 'quick'){ quickAddV55(id); return false; }
-      if(action === 'share'){ shareV55(id); return false; }
-      if(action === 'wa'){ whatsappV55(id); return false; }
+    // تفاصيل أو الضغط على الصورة/الكرت
+    if((btn && (btn.classList.contains('details-btn') || btn.classList.contains('v11-details') || /تفاصيل/i.test(txt))) || e.target.closest('.pic')){
+      stop55(e);
+      open55(id);
+      return;
     }
   }, true);
 
-  function stampCardsV55(){
-    document.querySelectorAll('article.card,.card,.product-card,.product').forEach(function(card){
-      const id = idFromCardV55(card);
-      if(id && !card.dataset.id) card.dataset.id = String(id);
-      const pic = card.querySelector('.pic');
-      if(pic && id && !pic.dataset.v55Ready){
-        pic.dataset.v55Ready = '1';
-        pic.setAttribute('role','button');
-        pic.setAttribute('tabindex','0');
-        pic.addEventListener('keydown', function(ev){
-          if(ev.key === 'Enter' || ev.key === ' '){
-            ev.preventDefault();
-            openDetailV55(id);
-          }
-        });
+  // بعد كل رسم: ثبت رقم المنتج على الكرت حتى لا يعتمد الكود على قراءة النص فقط.
+  function tagCards55(){
+    document.querySelectorAll('article.card,.card,.product-card').forEach(card=>{
+      if(card.dataset && (card.dataset.id || card.dataset.pid)) return;
+      const id = cardId55(card);
+      if(id){
+        card.dataset.id = String(id);
+        card.dataset.pid = String(id);
       }
     });
   }
 
-  document.addEventListener('DOMContentLoaded', stampCardsV55);
-  setTimeout(stampCardsV55, 300);
-  setTimeout(stampCardsV55, 1200);
-  setInterval(stampCardsV55, 2500);
+  const oldRender55 = window.renderProducts;
+  if(typeof oldRender55 === 'function'){
+    window.renderProducts = function(){
+      const r = oldRender55.apply(this, arguments);
+      setTimeout(tagCards55, 40);
+      setTimeout(tagCards55, 180);
+      return r;
+    };
+  }
+  document.addEventListener('DOMContentLoaded', tagCards55);
+  setTimeout(tagCards55, 300);
+  setTimeout(tagCards55, 1200);
 })();
 </script>
 <!-- ===== END ALMALIKA CLEAN V55 COMMANDS + IMAGE CLICK FIX ===== -->
