@@ -6184,10 +6184,9 @@ body.v48-device-only .addonCardsBox {
 <!-- ===== END ALMALIKA CLEAN V52 UPDATE SNACK 400 422 ===== -->
 
 
-<!-- ===== ALMALIKA CLEAN V53 CARD CLICK FIX DISABLED BY V57 ===== -->
-<!-- تم تعطيل سكربت V53 لأنه كان يمسك ضغط الكرت قبل الأزرار ويسبب تعارض الأوامر. -->
-<!-- ===== END ALMALIKA CLEAN V53 CARD CLICK FIX DISABLED BY V57 ===== -->
-
+<!-- ===== ALMALIKA CLEAN V53 CARD CLICK FIX DISABLED BY V58 ===== -->
+<!-- تم تعطيل سكربت V53 لأنه كان يسبب تعارض ضغط الأزرار داخل كروت المنتجات. -->
+<!-- ===== END ALMALIKA CLEAN V53 CARD CLICK FIX DISABLED BY V58 ===== -->
 
 
 <!-- ===== ALMALIKA CLEAN V54 REMOVE 3 HOURS OFFER SNACKS ===== -->
@@ -6196,182 +6195,249 @@ body.v48-device-only .addonCardsBox {
 
 
 
-<!-- ===== ALMALIKA CLEAN V57 REAL COMMANDS + SHEET LAYER FIX ===== -->
-<style id="almalika-clean-v57-real-commands-sheet-layer-style">
-/* V57: إصلاح نهائي للأوامر والطبقات بدون تغيير شكل الكروت أو البيانات */
-#detailSheet,
-#cartSheet,
-.sheet.show{
-  z-index:2147483000!important;
+<!-- ===== ALMALIKA CLEAN V58 FINAL LAUNCH AUDIT FIX ===== -->
+<style id="almalika-clean-v58-final-launch-audit-style">
+/* V58: إصلاح إطلاق نهائي - أوامر الكروت + طبقات النوافذ + منع التداخل */
+#detailSheet.sheet.show,
+#cartSheet.sheet.show{
   position:fixed!important;
   inset:0!important;
   display:flex!important;
+  align-items:flex-end!important;
+  justify-content:center!important;
+  z-index:999999!important;
+  width:100vw!important;
+  height:100dvh!important;
+  overflow:hidden!important;
+  background:rgba(20,14,18,.62)!important;
+  backdrop-filter:blur(6px)!important;
+  -webkit-backdrop-filter:blur(6px)!important;
 }
-#detailSheet:not(.show),
-#cartSheet:not(.show),
-.sheet:not(.show){
-  display:none!important;
-}
-#detailPanel,
-#cartPanel,
-.sheet.show .panel{
+#detailSheet.sheet:not(.show),
+#cartSheet.sheet:not(.show){display:none!important;}
+#detailSheet.show #detailPanel,
+#cartSheet.show #cartPanel,
+.sheet.show > .panel{
   position:relative!important;
-  z-index:2147483001!important;
-  background:var(--bg,#fff7fb)!important;
+  z-index:1000000!important;
+  width:calc(100vw - 18px)!important;
+  max-width:430px!important;
+  min-width:0!important;
+  max-height:92dvh!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  margin:0 auto!important;
+  padding:10px 10px 110px!important;
+  border-radius:24px 24px 0 0!important;
+  box-sizing:border-box!important;
+  background:#fff7fb!important;
+  color:#331522!important;
 }
-body.v57-sheet-open .card,
-body.v57-sheet-open article.card,
-body.v57-sheet-open .product-card,
-body.v57-sheet-open .card button,
-body.v57-sheet-open .product-card button,
-body.v57-sheet-open article.card button{
+body.alm-v58-sheet-open .cart-bar{z-index:70!important;pointer-events:none!important;opacity:.25!important;}
+body.alm-v58-sheet-open .card,
+body.alm-v58-sheet-open article.card,
+body.alm-v58-sheet-open .product-card,
+body.alm-v58-sheet-open .card *,
+body.alm-v58-sheet-open article.card *,
+body.alm-v58-sheet-open .product-card *{
   z-index:auto!important;
 }
 .card .pic,
-.product-card .pic,
 article.card .pic,
-.card img,
-.product-card img,
-article.card img{
-  cursor:pointer!important;
-}
+.product-card .pic{cursor:pointer!important;touch-action:manipulation!important;}
 .card button,
-.product-card button,
 article.card button,
+.product-card button,
 .card a,
-.product-card a,
-article.card a{
-  touch-action:manipulation!important;
-  pointer-events:auto!important;
+article.card a,
+.product-card a{touch-action:manipulation!important;pointer-events:auto!important;}
+.v58-toast{
+  position:fixed!important;left:50%!important;bottom:84px!important;transform:translateX(-50%)!important;
+  z-index:1000001!important;background:#7b1230!important;color:#fff!important;border-radius:999px!important;
+  padding:10px 16px!important;font-weight:900!important;font-size:13px!important;box-shadow:0 10px 24px rgba(0,0,0,.25)!important;
+  max-width:calc(100vw - 32px)!important;text-align:center!important;direction:rtl!important;
 }
 </style>
-<script id="almalika-clean-v57-real-commands-sheet-layer-script">
+<script id="almalika-clean-v58-final-launch-audit-script">
 (function(){
   'use strict';
-  window.ALMALIKA_V57_READY = true;
+  window.ALMALIKA_V58_READY = true;
 
-  function products(){ return window.PRODUCTS || (typeof PRODUCTS !== 'undefined' ? PRODUCTS : []) || []; }
-  function num(v){ var n=Number(String(v||'').replace(/[^0-9]/g,'')); return Number.isFinite(n)&&n>0?n:0; }
-  function cardOf(el){ return el && el.closest && el.closest('article.card,.card,.product-card'); }
-  function idFromTextBadge(card){
-    var badge = card && card.querySelector && card.querySelector('.badge,[class*="badge"],[class*="Badge"]');
-    var b = num(badge && badge.textContent);
-    if(!b) return 0;
-    var p = products().find(function(x){ return Number(x.id)===b || Number(x.number)===b; });
-    return p ? Number(p.id || p.number || b) : b;
+  function allProducts(){
+    try { return window.PRODUCTS || (typeof PRODUCTS !== 'undefined' ? PRODUCTS : []) || []; }
+    catch(e){ return []; }
   }
+  function toNum(v){
+    var n = Number(String(v == null ? '' : v).replace(/[^0-9]/g,''));
+    return Number.isFinite(n) && n > 0 ? n : 0;
+  }
+  function findProduct(id){
+    var n = Number(id);
+    return allProducts().find(function(p){ return Number(p.id) === n || Number(p.number) === n; }) || null;
+  }
+  function cardOf(el){ return el && el.closest ? el.closest('article.card,.card,.product-card') : null; }
   function idFromOnclick(card){
     if(!card || !card.querySelectorAll) return 0;
-    var s = Array.from(card.querySelectorAll('[onclick]')).map(function(x){ return x.getAttribute('onclick')||''; }).join(' ');
-    var m = s.match(/(?:openDetail|quickAdd|safeDetailV\d+|safeQuickV\d+)\((\d+)/);
+    var s = Array.from(card.querySelectorAll('[onclick]')).map(function(x){ return x.getAttribute('onclick') || ''; }).join(' ');
+    var m = s.match(/(?:openDetail|quickAdd|safeDetailV\d+|safeQuickV\d+)\s*\(\s*(\d+)/i);
     return m ? Number(m[1]) : 0;
+  }
+  function idFromBadge(card){
+    if(!card || !card.querySelector) return 0;
+    var badge = card.querySelector('.badge,[class*="badge"],[class*="Badge"]');
+    var b = toNum(badge && badge.textContent);
+    if(!b) return 0;
+    var p = findProduct(b);
+    return p ? Number(p.id || p.number || b) : b;
   }
   function idFromCard(card){
     if(!card) return 0;
-    var d = card.getAttribute('data-product-id') || card.getAttribute('data-id') || card.getAttribute('data-product');
-    return num(d) || idFromOnclick(card) || idFromTextBadge(card);
+    return toNum(card.getAttribute('data-product-id') || card.getAttribute('data-id') || card.getAttribute('data-product')) || idFromOnclick(card) || idFromBadge(card);
   }
-  function prod(id){ var n=Number(id); return products().find(function(x){ return Number(x.id)===n || Number(x.number)===n; }) || null; }
-  function afterSheet(){
-    setTimeout(function(){
-      var detail = document.getElementById('detailSheet');
-      var cart = document.getElementById('cartSheet');
-      var open = !!((detail && detail.classList.contains('show')) || (cart && cart.classList.contains('show')));
-      document.body.classList.toggle('v57-sheet-open', open);
-      [detail,cart].forEach(function(s){ if(s && s.classList.contains('show')){ s.style.zIndex='2147483000'; } });
-    },0);
-    setTimeout(function(){
-      var detail = document.getElementById('detailSheet');
-      var cart = document.getElementById('cartSheet');
-      var open = !!((detail && detail.classList.contains('show')) || (cart && cart.classList.contains('show')));
-      document.body.classList.toggle('v57-sheet-open', open);
-    },120);
+  function isUnavailable(id){
+    var p = findProduct(id);
+    try { return !!(p && typeof window.isUnavailableProductV19 === 'function' && window.isUnavailableProductV19(p)); }
+    catch(e){ return false; }
   }
-  function openD(id){
-    if(!id) return false;
-    if(typeof window.openDetail === 'function'){
-      window.openDetail(id);
-      afterSheet();
-      return true;
-    }
-    return false;
+  function toast(msg){
+    var old = document.querySelector('.v58-toast');
+    if(old) old.remove();
+    var el = document.createElement('div');
+    el.className = 'v58-toast';
+    el.textContent = msg;
+    document.body.appendChild(el);
+    setTimeout(function(){ if(el && el.parentNode) el.remove(); }, 1800);
   }
-  function quick(id){
-    if(!id) return false;
-    if(typeof window.quickAdd === 'function'){
-      window.quickAdd(id);
-      afterSheet();
-      return true;
-    }
-    return openD(id);
+  function syncSheetState(){
+    var d = document.getElementById('detailSheet');
+    var c = document.getElementById('cartSheet');
+    var open = !!((d && d.classList.contains('show')) || (c && c.classList.contains('show')));
+    if(document.body) document.body.classList.toggle('alm-v58-sheet-open', open);
+    [d,c].forEach(function(s){
+      if(s && s.classList.contains('show')){
+        s.style.zIndex = '999999';
+        s.style.position = 'fixed';
+        s.style.inset = '0';
+      }
+    });
   }
-  function share(id){
-    var p=prod(id)||{};
-    var title='الملكة - '+(p.name||'منتج')+' رقم '+(p.number||p.id||id);
-    var url=location.href.split('#')[0];
-    var text=title+'\n'+url;
-    if(navigator.share){ navigator.share({title:title,text:text,url:url}).catch(function(){}); return true; }
-    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(function(){ alert('تم نسخ رابط المنتج'); }).catch(function(){ alert(text); }); return true; }
-    alert(text); return true;
-  }
-  function wa(id){
-    var p=prod(id)||{};
-    var phone = window.DEFAULT_WA || window.WA15 || '97433317720';
-    var msg = encodeURIComponent('استفسار عن المنتج رقم '+(p.number||p.id||id)+' - '+(p.name||''));
-    window.open('https://wa.me/'+phone+'?text='+msg,'_blank');
+  function afterAction(){ setTimeout(syncSheetState, 0); setTimeout(syncSheetState, 120); setTimeout(stampCards, 180); }
+  function openDetails(id){
+    if(!id || typeof window.openDetail !== 'function') return false;
+    window.openDetail(id);
+    afterAction();
     return true;
   }
-  function actionOf(t){
-    var btn=t && t.closest && t.closest('button,a,.details-btn,.add-btn,.v11-card-btn');
+  function addQuick(id){
+    if(!id) return false;
+    if(isUnavailable(id)){ toast('هذا المنتج غير متاح حالياً'); return true; }
+    if(typeof window.quickAdd === 'function'){
+      window.quickAdd(id);
+      toast('تمت الإضافة للسلة');
+      afterAction();
+      return true;
+    }
+    return openDetails(id);
+  }
+  function shareProduct(id){
+    if(isUnavailable(id)){ toast('هذا المنتج غير متاح حالياً'); return true; }
+    var p = findProduct(id) || {};
+    var title = 'الملكة - ' + (p.name || 'منتج') + ' رقم ' + (p.number || p.id || id);
+    var text = title + '\n' + location.href.split('#')[0];
+    if(navigator.share){ navigator.share({title:title, text:text, url:location.href.split('#')[0]}).catch(function(){}); return true; }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ toast('تم نسخ رابط المنتج'); }).catch(function(){ alert(text); });
+      return true;
+    }
+    alert(text); return true;
+  }
+  function whatsApp(id){
+    if(isUnavailable(id)){ toast('هذا المنتج غير متاح حالياً'); return true; }
+    var p = findProduct(id) || {};
+    var phone = window.DEFAULT_WA || window.WA15 || window.phone || '97433317720';
+    phone = String(phone).replace(/[^0-9]/g,'') || '97433317720';
+    var msg = encodeURIComponent('استفسار عن المنتج رقم ' + (p.number || p.id || id) + ' - ' + (p.name || ''));
+    window.open('https://wa.me/' + phone + '?text=' + msg, '_blank');
+    return true;
+  }
+  function actionOf(target){
+    var btn = target && target.closest ? target.closest('button,a,.details-btn,.add-btn,.v11-card-btn') : null;
     if(!btn) return '';
-    var txt=(btn.textContent||'').replace(/\s+/g,' ').trim();
-    var cls=String(btn.className||'');
-    var href=btn.getAttribute ? (btn.getAttribute('href')||'') : '';
-    if(/تفاصيل/.test(txt) || /details?/i.test(cls)) return 'detail';
+    var txt = (btn.textContent || '').replace(/\s+/g,' ').trim();
+    var cls = String(btn.className || '');
+    var href = btn.getAttribute ? (btn.getAttribute('href') || '') : '';
+    if(/تفاصيل|عرض|اكتشف/.test(txt) || /details?/i.test(cls)) return 'detail';
     if(/^\+$/.test(txt) || /add-btn/i.test(cls)) return 'add';
-    if(/التسوق\s*السريع/.test(txt) || /quick/i.test(cls)) return 'quick';
-    if(/تحويل\s*لصديق/.test(txt) || /share/i.test(cls)) return 'share';
+    if(/التسوق\s*السريع|سريع/.test(txt) || /quick/i.test(cls)) return 'quick';
+    if(/تحويل\s*لصديق|صديق|مشاركة/.test(txt) || /share/i.test(cls)) return 'share';
     if(/واتساب/.test(txt) || /wa\.me/.test(href) || /\bwa\b/i.test(cls)) return 'wa';
     return '';
   }
-  function handle(ev){
-    var t=ev.target;
+  function handleCardCommand(ev){
+    var t = ev.target;
     if(!t || !t.closest) return;
-    if(t.closest('#detailSheet,#cartSheet')) return; // لا نمسك أزرار داخل النوافذ
-    var card=cardOf(t);
+    if(t.closest('#detailSheet,#cartSheet')) return; // نترك أزرار نافذة التفاصيل والسلة تعمل كما هي
+    var card = cardOf(t);
     if(!card) return;
-    var id=idFromCard(card);
+    var id = idFromCard(card);
     if(!id) return;
-    var act=actionOf(t);
-    var pic=!!t.closest('.pic');
-    if(!act && !pic) return;
-    ev.preventDefault(); ev.stopPropagation(); if(ev.stopImmediatePropagation) ev.stopImmediatePropagation();
-    if(act==='detail' || pic) return openD(id);
-    if(act==='add' || act==='quick') return quick(id);
-    if(act==='share') return share(id);
-    if(act==='wa') return wa(id);
+    var action = actionOf(t);
+    var isPic = !!t.closest('.pic');
+    if(!action && !isPic) return;
+    ev.preventDefault();
+    ev.stopPropagation();
+    if(ev.stopImmediatePropagation) ev.stopImmediatePropagation();
+    if(action === 'detail' || isPic) return openDetails(id);
+    if(action === 'add' || action === 'quick') return addQuick(id);
+    if(action === 'share') return shareProduct(id);
+    if(action === 'wa') return whatsApp(id);
   }
-  document.addEventListener('click', handle, true);
-  document.addEventListener('touchend', function(ev){}, {passive:true});
-
-  function stamp(){
-    document.querySelectorAll('article.card,.card,.product-card').forEach(function(c){
-      var id=idFromCard(c);
-      if(id){ c.setAttribute('data-product-id', String(id)); c.setAttribute('data-id', String(id)); }
-      var pic=c.querySelector && c.querySelector('.pic');
-      if(pic && id){ pic.setAttribute('data-product-id', String(id)); pic.setAttribute('role','button'); pic.setAttribute('tabindex','0'); }
+  function stampCards(){
+    document.querySelectorAll('article.card,.card,.product-card').forEach(function(card){
+      if(card.closest && card.closest('#detailSheet,#cartSheet')) return;
+      var id = idFromCard(card);
+      if(!id) return;
+      card.setAttribute('data-product-id', String(id));
+      card.setAttribute('data-id', String(id));
+      var pic = card.querySelector('.pic');
+      if(pic){ pic.setAttribute('role','button'); pic.setAttribute('tabindex','0'); pic.setAttribute('data-product-id', String(id)); }
     });
+    syncSheetState();
   }
+  document.addEventListener('click', handleCardCommand, true);
+  document.addEventListener('keydown', function(ev){
+    if(ev.key !== 'Enter' && ev.key !== ' ') return;
+    var t = ev.target;
+    if(!t || !t.closest || !t.closest('.pic')) return;
+    var card = cardOf(t);
+    if(!card) return;
+    var id = idFromCard(card);
+    if(!id) return;
+    ev.preventDefault(); ev.stopPropagation();
+    openDetails(id);
+  }, true);
   var oldRender = window.renderProducts;
   if(typeof oldRender === 'function'){
-    window.renderProducts = function(){ var r=oldRender.apply(this, arguments); setTimeout(stamp,0); setTimeout(stamp,80); return r; };
+    window.renderProducts = function(){
+      var r = oldRender.apply(this, arguments);
+      setTimeout(stampCards, 0);
+      setTimeout(stampCards, 80);
+      setTimeout(stampCards, 220);
+      return r;
+    };
   }
-  document.addEventListener('DOMContentLoaded', function(){ stamp(); afterSheet(); });
-  setTimeout(stamp,100); setTimeout(stamp,600); setInterval(stamp,2500);
-  document.addEventListener('click', function(){ setTimeout(afterSheet,30); }, false);
+  var oldClose = window.closeSheets;
+  if(typeof oldClose === 'function'){
+    window.closeSheets = function(){ var r = oldClose.apply(this, arguments); afterAction(); return r; };
+  }
+  document.addEventListener('DOMContentLoaded', function(){ stampCards(); syncSheetState(); });
+  setTimeout(stampCards, 100);
+  setTimeout(stampCards, 600);
+  setTimeout(stampCards, 1400);
+  setInterval(stampCards, 3000);
 })();
 </script>
-<!-- ===== END ALMALIKA CLEAN V57 REAL COMMANDS + SHEET LAYER FIX ===== -->
+<!-- ===== END ALMALIKA CLEAN V58 FINAL LAUNCH AUDIT FIX ===== -->
 
 </body>
 </html>
