@@ -14464,6 +14464,125 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 })();
 </script>
 
+
+
+<!-- ===== V428 REMOVE SMALL DESKTOP SIZE - FULL WIDTH ONLY ===== -->
+<style id="almalika-v428-remove-small-desktop-size">
+/* إلغاء المقاس الصغير على الكمبيوتر: الموقع يأخذ عرض الشاشة الكامل ولا يبقى داخل صندوق صغير */
+@media (min-width: 769px){
+  :root{
+    --site-max: 100vw !important;
+    --page-edge: 0px !important;
+  }
+  html,
+  body,
+  #app{
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding-left:0 !important;
+    padding-right:0 !important;
+    overflow-x:hidden !important;
+  }
+  .wrap,
+  .header .wrap,
+  section.wrap,
+  .footer .wrap,
+  #app > .wrap,
+  #app > section.wrap,
+  .section.wrap{
+    width:100% !important;
+    max-width:none !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+  }
+  .header .wrap,
+  #app > section.wrap,
+  #app > .wrap,
+  .section.wrap{
+    padding-left:14px !important;
+    padding-right:14px !important;
+  }
+  .hero,
+  #app .hero,
+  .homeHeroFrame,
+  #app .homeHeroFrame,
+  #almHomePromoSlider,
+  #app #almHomePromoSlider,
+  .panel,
+  .title,
+  .stats,
+  .searchRow,
+  .mainCats,
+  .chips,
+  .products{
+    width:100% !important;
+    max-width:none !important;
+    margin-left:0 !important;
+    margin-right:0 !important;
+  }
+  .hero,
+  #app .hero{
+    padding-left:0 !important;
+    padding-right:0 !important;
+  }
+  .homeHeroFrame,
+  #app .homeHeroFrame{
+    display:block !important;
+    border-radius:24px !important;
+  }
+  .homeHeroImage,
+  .homeHeroFrame img,
+  #app .homeHeroImage,
+  #app .homeHeroFrame img{
+    display:block !important;
+    width:100% !important;
+    max-width:none !important;
+    height:auto !important;
+  }
+  .products{
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr)) !important;
+  }
+  .mainCats{
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr)) !important;
+  }
+  body.almV402ProductsMode #app .almFrozenProductArea{
+    left:0 !important;
+    right:0 !important;
+    transform:none !important;
+    width:100% !important;
+    max-width:none !important;
+  }
+}
+</style>
+<script id="almalika-v428-remove-small-desktop-size-script">
+(function(){
+  function fixDesktopWidth(){
+    if(window.innerWidth < 769) return;
+    document.documentElement.style.width='100%';
+    document.documentElement.style.maxWidth='100%';
+    document.body.style.width='100%';
+    document.body.style.maxWidth='100%';
+    document.body.style.margin='0';
+    var selectors=['.wrap','.header .wrap','section.wrap','.footer .wrap','#app > .wrap','#app > section.wrap','.hero','.homeHeroFrame','#almHomePromoSlider','.products','.mainCats'];
+    selectors.forEach(function(sel){
+      document.querySelectorAll(sel).forEach(function(el){
+        el.style.setProperty('max-width','none','important');
+        el.style.setProperty('width','100%','important');
+        el.style.setProperty('margin-left','0','important');
+        el.style.setProperty('margin-right','0','important');
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded',fixDesktopWidth);
+  window.addEventListener('load',fixDesktopWidth);
+  window.addEventListener('resize',fixDesktopWidth);
+  setTimeout(fixDesktopWidth,300);
+  setTimeout(fixDesktopWidth,1200);
+})();
+</script>
+<!-- ===== END V428 REMOVE SMALL DESKTOP SIZE ===== -->
+
 </body>
 </html>
 
