@@ -6025,6 +6025,55 @@ body{
   }
 </style>
 
+
+<!-- ===== ALMALIKA SAFE PATCH V425: mobile desktop frame + install option ===== -->
+<meta name="theme-color" content="#b33971">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="الملكة">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style id="almalika-v425-mobile-desktop-frame">
+/* يجعل عرض الموقع على الكمبيوتر مثل شاشة الجوال، بدون تغيير بيانات المنتجات أو الحفظ */
+@media (min-width: 768px){
+  html{background:#eef1f5!important;min-height:100%!important;}
+  body{
+    width:100%!important;max-width:430px!important;min-height:100vh!important;
+    margin:0 auto!important;overflow-x:hidden!important;
+    background:var(--bg,#fff8fb)!important;
+    box-shadow:0 0 0 1px rgba(0,0,0,.06),0 22px 70px rgba(44,20,35,.22)!important;
+  }
+  body:before{max-width:430px!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;}
+  .fixedWhats,.cartBar{
+    width:calc(min(430px,100vw) - 28px)!important;max-width:402px!important;min-width:0!important;
+    left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  }
+  .modal{
+    width:min(430px,100vw)!important;left:50%!important;right:auto!important;
+    transform:translateX(-50%)!important;padding:10px!important;
+  }
+  .modalBox{width:100%!important;max-width:408px!important;grid-template-columns:1fr!important;border-radius:22px!important;}
+  .modalPic{min-height:260px!important;padding:14px!important;}
+  .modalPic img{max-height:285px!important;}
+  .modalInfo{padding:16px!important;}
+  .modalInfo h2{font-size:22px!important;}
+  .infoGrid,.modalActions,.modalActions.three,.cartForm{grid-template-columns:1fr!important;}
+  .cartItem{grid-template-columns:76px minmax(0,1fr) 58px!important;gap:10px!important;padding:12px!important;}
+  .cartItem img{width:76px!important;height:70px!important;}
+}
+#almalikaInstallAppBtn{
+  position:fixed;left:12px;bottom:84px;z-index:2147482500;
+  border:0;border-radius:999px;padding:11px 14px;background:linear-gradient(135deg,#b33971,#ef4f95);
+  color:#fff;font-family:Tahoma,Arial,sans-serif;font-weight:900;font-size:13px;
+  box-shadow:0 12px 28px rgba(90,20,55,.25);cursor:pointer;display:none;align-items:center;gap:6px;
+}
+#almalikaInstallAppBtn.show{display:flex;}
+#almalikaInstallHelp{position:fixed;inset:0;z-index:2147482600;background:rgba(28,15,28,.62);display:none;align-items:center;justify-content:center;padding:16px;direction:rtl;font-family:Tahoma,Arial,sans-serif;}
+#almalikaInstallHelp.show{display:flex;}
+#almalikaInstallHelp .box{width:min(390px,94vw);background:#fff;border-radius:24px;padding:18px;border:1px solid #f2c3d8;box-shadow:0 24px 70px rgba(0,0,0,.28);color:#5f2145;line-height:1.9;}
+#almalikaInstallHelp h3{margin:0 0 8px;font-size:20px;color:#6A1B2E;}
+#almalikaInstallHelp button{border:0;border-radius:14px;padding:11px 15px;font-weight:900;cursor:pointer;}
+#almalikaInstallHelp .closeHelp{background:#111;color:#fff;width:100%;margin-top:12px;}
+</style>
 </head>
 <body>
 
@@ -18917,3 +18966,61 @@ body.almV402ProductsMode #app .products{
   setInterval(ensure,1800);
 })();
 </script>
+
+<!-- ===== ALMALIKA SAFE PATCH V425: install-app button, no product/data changes ===== -->
+<script id="almalika-v425-install-app">
+(function(){
+  if(window.__almalikaV425InstallLoaded) return;
+  window.__almalikaV425InstallLoaded = true;
+  var deferredPrompt = null;
+  function makeIcon(){
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#b33971"/><circle cx="256" cy="256" r="184" fill="#fff8fb" opacity=".95"/><path d="M149 235h214l-28 128H177l-28-128zm33-54 45 34 29-70 29 70 45-34 18 43H164l18-43z" fill="#d9a441"/><text x="256" y="405" text-anchor="middle" font-family="Arial,Tahoma" font-size="52" font-weight="900" fill="#6A1B2E">الملكة</text></svg>';
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+  function ensureManifest(){
+    try{
+      if(document.querySelector('link[rel="manifest"][data-almalika-v425]')) return;
+      var manifest = {
+        name:'الملكة للحفلات - قطر',short_name:'الملكة',description:'كتالوج الحجز السريع للملكة للحفلات في قطر',
+        start_url: location.pathname + location.search, scope:'./', display:'standalone', orientation:'portrait',
+        dir:'rtl', lang:'ar-QA', background_color:'#fff8fb', theme_color:'#b33971',
+        icons:[{src:makeIcon(),sizes:'192x192',type:'image/svg+xml',purpose:'any maskable'},{src:makeIcon(),sizes:'512x512',type:'image/svg+xml',purpose:'any maskable'}]
+      };
+      var blob = new Blob([JSON.stringify(manifest)],{type:'application/manifest+json'});
+      var link = document.createElement('link'); link.rel='manifest'; link.href=URL.createObjectURL(blob); link.setAttribute('data-almalika-v425','1');
+      document.head.appendChild(link);
+      var apple = document.createElement('link'); apple.rel='apple-touch-icon'; apple.href=makeIcon(); apple.setAttribute('data-almalika-v425','1'); document.head.appendChild(apple);
+    }catch(e){}
+  }
+  function showHelp(){
+    var help = document.getElementById('almalikaInstallHelp');
+    if(!help){
+      help = document.createElement('div'); help.id='almalikaInstallHelp';
+      help.innerHTML = '<div class="box"><h3>تثبيت تطبيق الملكة على الجوال</h3><p><b>أندرويد / Chrome:</b><br>افتح القائمة ⋮ ثم اختر: تثبيت التطبيق أو إضافة إلى الشاشة الرئيسية.</p><p><b>iPhone / Safari:</b><br>اضغط زر المشاركة ثم اختر: إضافة إلى الشاشة الرئيسية.</p><button class="closeHelp" type="button">إغلاق</button></div>';
+      document.body.appendChild(help);
+      help.querySelector('.closeHelp').onclick=function(){help.classList.remove('show');};
+      help.addEventListener('click',function(e){ if(e.target===help) help.classList.remove('show'); });
+    }
+    help.classList.add('show');
+  }
+  function ensureButton(){
+    if(document.getElementById('almalikaInstallAppBtn')) return;
+    var btn = document.createElement('button');
+    btn.id = 'almalikaInstallAppBtn'; btn.type = 'button'; btn.innerHTML = '📲 تثبيت التطبيق';
+    btn.onclick = function(){
+      if(deferredPrompt){
+        var p = deferredPrompt; deferredPrompt = null;
+        p.prompt();
+        p.userChoice.finally(function(){ btn.classList.add('show'); });
+      }else{ showHelp(); }
+    };
+    document.body.appendChild(btn);
+    setTimeout(function(){btn.classList.add('show');},700);
+  }
+  window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); deferredPrompt = e; ensureButton(); });
+  window.addEventListener('appinstalled',function(){ var b=document.getElementById('almalikaInstallAppBtn'); if(b) b.style.display='none'; });
+  document.addEventListener('DOMContentLoaded',function(){ ensureManifest(); ensureButton(); });
+  window.addEventListener('load',function(){ ensureManifest(); ensureButton(); });
+})();
+</script>
+
