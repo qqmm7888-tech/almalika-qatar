@@ -13799,6 +13799,157 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 })();
 </script>
 
+
+
+<!-- ===== V434 FIX: تثبيت مقاس الكمبيوتر ومنع الرجوع للمقاس الصغير ===== -->
+<style id="almalika-v434-force-desktop-full-width">
+@media (min-width: 769px){
+  html,body{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    overflow-x:hidden!important;
+  }
+  body.almAppEntered{
+    background:inherit!important;
+  }
+  #app,main,.page,.content{
+    width:100%!important;
+    max-width:none!important;
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+  #almTopFixedGroup,.header{
+    width:100%!important;
+    max-width:none!important;
+    left:0!important;
+    right:0!important;
+    margin:0!important;
+  }
+  .wrap,
+  .header .wrap,
+  #app>.wrap,
+  #app>.wrap.section,
+  section.wrap,
+  .section.wrap{
+    width:calc(100% - 28px)!important;
+    max-width:none!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+  #app .hero,
+  section.hero,
+  .hero{
+    width:100vw!important;
+    max-width:none!important;
+    margin-left:calc(50% - 50vw)!important;
+    margin-right:calc(50% - 50vw)!important;
+    padding:14px 0 10px!important;
+    border-radius:0!important;
+    overflow:visible!important;
+  }
+  #app .homeHeroFrame,
+  .homeHeroFrame{
+    width:100vw!important;
+    max-width:none!important;
+    margin:0 auto 18px!important;
+    border-radius:0!important;
+    overflow:hidden!important;
+  }
+  #app .homeHeroImage,
+  .homeHeroImage{
+    display:block!important;
+    width:100vw!important;
+    max-width:none!important;
+    height:auto!important;
+    object-fit:contain!important;
+  }
+  #app .products,
+  #app .products.alm-responsive-products,
+  #app .products.view-wide,
+  #app .products.view-cards,
+  #app .products.view-compact,
+  #app .products.view-mini{
+    width:100%!important;
+    max-width:none!important;
+    display:grid!important;
+    gap:18px!important;
+  }
+}
+@media (min-width: 1400px){
+  #app .products,
+  #app .products.alm-responsive-products,
+  #app .products.view-wide,
+  #app .products.view-cards,
+  #app .products.view-compact,
+  #app .products.view-mini{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+  }
+}
+@media (min-width: 1000px) and (max-width:1399px){
+  #app .products,
+  #app .products.alm-responsive-products,
+  #app .products.view-wide,
+  #app .products.view-cards,
+  #app .products.view-compact,
+  #app .products.view-mini{
+    grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  }
+}
+@media (min-width: 769px) and (max-width:999px){
+  #app .products,
+  #app .products.alm-responsive-products,
+  #app .products.view-wide,
+  #app .products.view-cards,
+  #app .products.view-compact,
+  #app .products.view-mini{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  }
+}
+</style>
+<script id="almalika-v434-force-desktop-full-width-script">
+(function(){
+  function isDesktop(){return window.innerWidth>768;}
+  function fix(){
+    if(!isDesktop())return;
+    try{
+      document.body.classList.remove('almAppEntered');
+      var intro=document.getElementById('almMobileIntro'); if(intro) intro.remove();
+      document.querySelectorAll('#app .hero,.hero').forEach(function(el){
+        el.style.setProperty('width','100vw','important');
+        el.style.setProperty('max-width','none','important');
+        el.style.setProperty('margin-left','calc(50% - 50vw)','important');
+        el.style.setProperty('margin-right','calc(50% - 50vw)','important');
+        el.style.setProperty('border-radius','0','important');
+      });
+      document.querySelectorAll('#app .homeHeroFrame,.homeHeroFrame').forEach(function(el){
+        el.style.setProperty('width','100vw','important');
+        el.style.setProperty('max-width','none','important');
+        el.style.setProperty('margin','0 auto 18px','important');
+        el.style.setProperty('border-radius','0','important');
+      });
+      document.querySelectorAll('#app .homeHeroImage,.homeHeroImage').forEach(function(el){
+        el.style.setProperty('width','100vw','important');
+        el.style.setProperty('max-width','none','important');
+        el.style.setProperty('height','auto','important');
+      });
+      document.querySelectorAll('.wrap,.header .wrap,#app>.wrap,#app>.wrap.section,section.wrap,.section.wrap').forEach(function(el){
+        el.style.setProperty('width','calc(100% - 28px)','important');
+        el.style.setProperty('max-width','none','important');
+        el.style.setProperty('margin-left','auto','important');
+        el.style.setProperty('margin-right','auto','important');
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){fix();setTimeout(fix,80);setTimeout(fix,350);setTimeout(fix,900);setTimeout(fix,1800);});
+  window.addEventListener('load',function(){fix();setTimeout(fix,400);setTimeout(fix,1400);});
+  window.addEventListener('resize',function(){setTimeout(fix,80);});
+  window.addEventListener('hashchange',function(){setTimeout(fix,120);setTimeout(fix,700);});
+  document.addEventListener('click',function(){setTimeout(fix,120);setTimeout(fix,650);},true);
+  var runs=0,t=setInterval(function(){fix();runs++;if(runs>20)clearInterval(t);},500);
+})();
+</script>
+
 </body>
 </html>
 
