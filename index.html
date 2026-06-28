@@ -17736,82 +17736,164 @@ body.almV402ProductsMode #app .products{
 
 
 
-
-<!-- ===== V436 FINAL: reference-style homepage header with dropdown menus ===== -->
-<style id="almalika-v436-final-dropdown-menu-style">
-#almTopFixedGroup{background:#fff!important;box-shadow:0 8px 24px rgba(54,17,35,.08)!important;border-bottom:1px solid rgba(122,23,52,.08)!important;overflow:visible!important;}
-#almTopFixedGroup .header{background:#fff!important;box-shadow:none!important;border-bottom:0!important;backdrop-filter:none!important;overflow:visible!important;}
-#almTopFixedGroup .headTop{width:min(100% - 38px,1320px)!important;min-height:72px!important;display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;align-items:center!important;gap:18px!important;padding:8px 0!important;margin-inline:auto!important;overflow:visible!important;}
-#almTopFixedGroup .logo{order:3!important;display:flex!important;align-items:center!important;gap:8px!important;color:#7a1734!important;font-size:29px!important;font-weight:1000!important;white-space:nowrap!important;cursor:pointer!important;text-shadow:0 4px 12px rgba(255,47,134,.12)!important;}
-#almTopFixedGroup .logo::after{content:'👑';font-size:18px!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.10));}
-#nav.almDesktopNav{order:2!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;overflow:visible!important;flex-wrap:nowrap!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;direction:rtl!important;scrollbar-width:none!important;}
-#nav.almDesktopNav::-webkit-scrollbar{display:none!important;}
-#nav.almDesktopNav .almNavLink,#nav.almDesktopNav .almDropToggle{appearance:none!important;border:0!important;background:transparent!important;color:#141015!important;min-height:48px!important;height:48px!important;padding:0 15px!important;border-radius:0!important;box-shadow:none!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:8px!important;font-size:16px!important;line-height:1!important;font-weight:900!important;white-space:nowrap!important;cursor:pointer!important;position:relative!important;transition:color .18s ease,background .18s ease!important;width:auto!important;min-width:auto!important;}
-#nav.almDesktopNav .almNavLink:hover,#nav.almDesktopNav .almDropToggle:hover,#nav.almDesktopNav .almNavLink.active,#nav.almDesktopNav .almMegaItem.active>.almDropToggle{color:#ff2f86!important;background:transparent!important;}
-#nav.almDesktopNav .almNavLink.active::after,#nav.almDesktopNav .almMegaItem.active>.almDropToggle::after,#nav.almDesktopNav .almNavLink:hover::after,#nav.almDesktopNav .almMegaItem:hover>.almDropToggle::after{content:''!important;position:absolute!important;left:14px!important;right:14px!important;bottom:2px!important;height:3px!important;border-radius:10px!important;background:linear-gradient(90deg,#ff2f86,#d4af37)!important;}
-#nav.almDesktopNav .almArrow{font-size:11px!important;margin-top:2px!important;opacity:.75!important;}
-#nav.almDesktopNav .almMegaItem{position:relative!important;display:flex!important;align-items:center!important;overflow:visible!important;}
-#nav.almDesktopNav .almMegaMenu{position:absolute!important;top:100%!important;right:0!important;min-width:275px!important;background:#fff!important;border:1px solid rgba(122,23,52,.12)!important;box-shadow:0 18px 44px rgba(0,0,0,.14)!important;border-radius:0 0 18px 18px!important;padding:10px 0!important;z-index:2147483640!important;display:none!important;direction:rtl!important;text-align:right!important;overflow:visible!important;}
-#nav.almDesktopNav .almMegaItem:hover>.almMegaMenu,#nav.almDesktopNav .almMegaItem.open>.almMegaMenu,#nav.almDesktopNav .almMegaItem:focus-within>.almMegaMenu{display:block!important;}
-#nav.almDesktopNav .almMegaMenu::before{content:''!important;position:absolute!important;top:-10px!important;right:22px!important;width:18px!important;height:18px!important;background:#fff!important;transform:rotate(45deg)!important;border-top:1px solid rgba(122,23,52,.10)!important;border-left:1px solid rgba(122,23,52,.10)!important;}
-#nav.almDesktopNav .almMegaMenu button{width:100%!important;border:0!important;background:#fff!important;color:#171015!important;min-height:42px!important;height:42px!important;padding:0 19px!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;text-align:right!important;gap:10px!important;font-size:15px!important;font-weight:850!important;border-radius:0!important;box-shadow:none!important;cursor:pointer!important;white-space:nowrap!important;line-height:1.2!important;}
-#nav.almDesktopNav .almMegaMenu button:hover{color:#ff2f86!important;background:linear-gradient(90deg,#fff5fb,#fff)!important;}
-#nav.almDesktopNav .almMiniIcon{width:25px!important;height:25px!important;border-radius:50%!important;display:inline-grid!important;place-items:center!important;background:#fff4fb!important;font-size:14px!important;flex:0 0 auto!important;}
-#almTopFixedGroup .headBtns{order:1!important;position:static!important;display:flex!important;gap:8px!important;align-items:center!important;width:auto!important;}
-#almTopFixedGroup .headBtns .btn{height:43px!important;min-height:43px!important;border-radius:10px!important;padding:0 15px!important;font-size:13px!important;font-weight:1000!important;white-space:nowrap!important;box-shadow:none!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;}
-#almTopFixedGroup .headBtns .green{background:#18b85b!important;color:#fff!important;}
-#almTopFixedGroup .headBtns .red{background:#ff2f86!important;color:#fff!important;}
-#almTopFixedGroup .headBtns .cartMini{background:#fff!important;color:#111!important;border:1px solid rgba(122,23,52,.16)!important;}
-#almTopFixedGroup .searchRow{width:min(100% - 38px,1320px)!important;margin:0 auto 10px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 160px 150px!important;gap:10px!important;padding:0!important;align-items:center!important;}
-#almTopFixedGroup .search,#almTopFixedGroup .searchRow select{border-radius:10px!important;min-height:41px!important;height:41px!important;border:1px solid rgba(122,23,52,.13)!important;box-shadow:none!important;}
-body:not(.almAppEntered) #app>.hero{padding-top:18px!important;}
-body:not(.almAppEntered) .homeHeroFrame{max-width:1320px!important;margin-inline:auto!important;border-radius:18px!important;}
-body:not(.almAppEntered) .homeHeroImage{border-radius:18px!important;}
-body:not(.almAppEntered) .mainCats{max-width:1320px!important;margin-inline:auto!important;}
-body:not(.almAppEntered) .hero{overflow:visible!important;}
-@media(max-width:900px){#almTopFixedGroup .headTop{grid-template-columns:1fr!important;gap:8px!important;min-height:auto!important;width:calc(100% - 22px)!important;padding:8px 0!important;}#almTopFixedGroup .logo{order:1!important;justify-content:center!important;font-size:26px!important;}#nav.almDesktopNav{order:2!important;justify-content:flex-start!important;overflow-x:auto!important;width:100%!important;padding:4px 0!important;}#nav.almDesktopNav .almNavLink,#nav.almDesktopNav .almDropToggle{min-height:42px!important;height:42px!important;padding:0 12px!important;font-size:13px!important;border-radius:999px!important;background:#fff!important;border:1px solid rgba(122,23,52,.12)!important;}#nav.almDesktopNav .almMegaMenu{position:fixed!important;right:12px!important;left:12px!important;top:118px!important;min-width:0!important;border-radius:18px!important;max-height:56vh!important;overflow:auto!important;}#almTopFixedGroup .headBtns{order:3!important;justify-content:center!important;}#almTopFixedGroup .searchRow{width:calc(100% - 22px)!important;grid-template-columns:1fr!important;margin-bottom:8px!important;}body.almAppEntered .nav.almDesktopNav{display:flex!important;flex-direction:row!important;align-items:center!important;background:#fff!important;overflow-x:auto!important;padding:8px 4px!important;gap:8px!important;}body.almAppEntered .nav.almDesktopNav .almNavLink,body.almAppEntered .nav.almDesktopNav .almDropToggle{min-width:auto!important;width:auto!important;height:42px!important;flex-direction:row!important;font-size:13px!important;white-space:nowrap!important;padding:0 12px!important;border-radius:999px!important;background:#fff!important;border:1px solid rgba(122,23,52,.12)!important;}body.almAppEntered .nav.almDesktopNav .almMegaMenu button{height:42px!important;flex-direction:row!important;font-size:14px!important;justify-content:flex-start!important;}}
+<!-- ===== V437: clean stable desktop size + fixed dropdown header ===== -->
+<style id="almalika-v437-clean-dropdown-size-style">
+/* وضع الكمبيوتر: يلغي أي تحويل خاطئ لمقاس الجوال داخل المتصفح أو DevTools */
+html.almDesktopMode body{padding-bottom:0!important;overflow-x:hidden!important;background:#fffafc!important;}
+html.almDesktopMode body.almAppEntered{background:#fffafc!important;padding-bottom:0!important;}
+html.almDesktopMode #almMobileIntro{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;}
+html.almDesktopMode #almTopFixedGroup{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;z-index:2147483000!important;background:#fff!important;border-bottom:1px solid rgba(122,23,52,.10)!important;box-shadow:0 8px 24px rgba(54,17,35,.08)!important;overflow:visible!important;transform:none!important;}
+html.almDesktopMode #almTopFixedGroup .header{position:relative!important;background:#fff!important;border:0!important;box-shadow:none!important;overflow:visible!important;backdrop-filter:none!important;}
+html.almDesktopMode #almTopFixedGroup .headTop{width:calc(100% - 32px)!important;max-width:none!important;margin:0 auto!important;min-height:74px!important;padding:9px 0!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;flex-wrap:nowrap!important;overflow:visible!important;direction:rtl!important;}
+html.almDesktopMode #almTopFixedGroup .logo{order:1!important;flex:0 0 auto!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;margin:0!important;padding:0 6px!important;min-width:auto!important;width:auto!important;color:#7a1734!important;font-size:31px!important;line-height:1!important;font-weight:1000!important;white-space:nowrap!important;text-shadow:none!important;position:relative!important;z-index:3!important;}
+html.almDesktopMode #almTopFixedGroup .logo::after{content:'👑';font-size:19px!important;line-height:1!important;}
+html.almDesktopMode #nav.almV437Nav{order:2!important;flex:1 1 auto!important;min-width:0!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:0!important;padding:0!important;margin:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;overflow:visible!important;direction:rtl!important;scrollbar-width:none!important;position:relative!important;z-index:5!important;}
+html.almDesktopMode #nav.almV437Nav::-webkit-scrollbar{display:none!important;}
+html.almDesktopMode #nav.almV437Nav .almNavItem{position:relative!important;display:flex!important;align-items:center!important;flex:0 0 auto!important;overflow:visible!important;}
+html.almDesktopMode #nav.almV437Nav .almNavTop{appearance:none!important;border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;height:54px!important;min-height:54px!important;min-width:auto!important;width:auto!important;padding:0 16px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;color:#171015!important;font-size:16px!important;font-weight:950!important;line-height:1!important;white-space:nowrap!important;cursor:pointer!important;position:relative!important;}
+html.almDesktopMode #nav.almV437Nav .almNavTop:hover,html.almDesktopMode #nav.almV437Nav .almNavItem.active>.almNavTop{color:#ff2f86!important;background:transparent!important;}
+html.almDesktopMode #nav.almV437Nav .almNavTop:hover::after,html.almDesktopMode #nav.almV437Nav .almNavItem.active>.almNavTop::after{content:''!important;position:absolute!important;right:14px!important;left:14px!important;bottom:4px!important;height:3px!important;border-radius:999px!important;background:linear-gradient(90deg,#ff2f86,#d4af37)!important;}
+html.almDesktopMode #nav.almV437Nav .almArrow{font-size:10px!important;opacity:.72!important;margin-top:1px!important;color:inherit!important;}
+html.almDesktopMode #nav.almV437Nav .almMenu{position:absolute!important;top:100%!important;right:0!important;min-width:250px!important;max-width:min(360px,92vw)!important;background:#fff!important;border:1px solid rgba(122,23,52,.12)!important;border-radius:0 0 16px 16px!important;padding:8px 0!important;box-shadow:0 18px 42px rgba(0,0,0,.16)!important;display:none!important;z-index:2147483200!important;direction:rtl!important;text-align:right!important;overflow:hidden!important;}
+html.almDesktopMode #nav.almV437Nav .almNavItem:hover>.almMenu,html.almDesktopMode #nav.almV437Nav .almNavItem.open>.almMenu{display:block!important;}
+html.almDesktopMode #nav.almV437Nav .almMenu button{appearance:none!important;width:100%!important;height:42px!important;min-height:42px!important;border:0!important;background:#fff!important;box-shadow:none!important;border-radius:0!important;padding:0 18px!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:10px!important;text-align:right!important;color:#171015!important;font-size:14px!important;font-weight:850!important;line-height:1.25!important;white-space:nowrap!important;cursor:pointer!important;}
+html.almDesktopMode #nav.almV437Nav .almMenu button:hover{background:linear-gradient(90deg,#fff5fb,#fff)!important;color:#ff2f86!important;}
+html.almDesktopMode #nav.almV437Nav .almMiniIcon{width:24px!important;height:24px!important;display:inline-grid!important;place-items:center!important;flex:0 0 24px!important;border-radius:999px!important;background:#fff4fb!important;font-size:13px!important;}
+html.almDesktopMode #almTopFixedGroup .headBtns{order:3!important;flex:0 0 auto!important;position:static!important;display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;width:auto!important;margin:0!important;padding:0!important;z-index:4!important;}
+html.almDesktopMode #almTopFixedGroup .headBtns .btn{height:44px!important;min-height:44px!important;width:auto!important;min-width:auto!important;border-radius:12px!important;padding:0 16px!important;font-size:13px!important;font-weight:1000!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;white-space:nowrap!important;box-shadow:none!important;line-height:1!important;}
+html.almDesktopMode #almTopFixedGroup .headBtns .green{background:#18b85b!important;color:#fff!important;}
+html.almDesktopMode #almTopFixedGroup .headBtns .red{background:#ff2f86!important;color:#fff!important;}
+html.almDesktopMode #almTopFixedGroup .headBtns .cartMini{background:#fff!important;color:#111!important;border:1px solid rgba(122,23,52,.14)!important;}
+html.almDesktopMode #almTopFixedGroup .searchRow{width:calc(100% - 32px)!important;max-width:none!important;margin:0 auto 10px!important;padding:0!important;display:grid!important;grid-template-columns:minmax(280px,1fr) 190px 170px!important;gap:10px!important;align-items:center!important;overflow:visible!important;}
+html.almDesktopMode #almTopFixedGroup .search,html.almDesktopMode #almTopFixedGroup .searchRow select{height:42px!important;min-height:42px!important;border-radius:12px!important;border:1px solid rgba(122,23,52,.14)!important;background:#fff!important;box-shadow:none!important;font-size:13px!important;}
+html.almDesktopMode #almTopFixedGroup .eventDateBox{width:calc(100% - 32px)!important;max-width:none!important;margin:0 auto 10px!important;}
+html.almDesktopMode #app>.hero,html.almDesktopMode main#app>.hero{width:100%!important;max-width:none!important;margin:0!important;padding:18px 0 12px!important;border-radius:0!important;overflow:visible!important;}
+html.almDesktopMode .homeHeroFrame{width:calc(100% - 32px)!important;max-width:none!important;margin:0 auto!important;border-radius:18px!important;overflow:hidden!important;}
+html.almDesktopMode .homeHeroImage{display:block!important;width:100%!important;max-width:none!important;height:auto!important;border-radius:18px!important;object-fit:contain!important;}
+html.almDesktopMode #app>.wrap.section,html.almDesktopMode .wrap.section,html.almDesktopMode .section.wrap{width:calc(100% - 32px)!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important;}
+html.almDesktopMode .products{width:100%!important;max-width:none!important;display:grid!important;grid-template-columns:repeat(auto-fit,minmax(285px,1fr))!important;gap:18px!important;}
+html.almDesktopMode .chips{position:relative!important;z-index:2!important;}
+html.almDesktopMode .panel,html.almDesktopMode .title{position:relative!important;z-index:1!important;}
+html.almDesktopMode .cartBar{z-index:2147482000!important;}
+@media (max-width:1180px){
+  html.almDesktopMode #almTopFixedGroup .headTop{flex-wrap:wrap!important;gap:8px 10px!important;min-height:auto!important;}
+  html.almDesktopMode #almTopFixedGroup .logo{order:1!important;font-size:28px!important;}
+  html.almDesktopMode #almTopFixedGroup .headBtns{order:2!important;margin-inline-start:auto!important;}
+  html.almDesktopMode #nav.almV437Nav{order:3!important;flex:0 0 100%!important;width:100%!important;justify-content:flex-start!important;overflow-x:auto!important;overflow-y:visible!important;padding:4px 0!important;}
+  html.almDesktopMode #nav.almV437Nav .almNavTop{height:44px!important;min-height:44px!important;font-size:14px!important;padding:0 13px!important;border:1px solid rgba(122,23,52,.10)!important;border-radius:999px!important;background:#fff!important;}
+  html.almDesktopMode #nav.almV437Nav .almMenu{position:fixed!important;right:16px!important;left:16px!important;top:var(--almMenuTop, 126px)!important;min-width:0!important;max-width:none!important;border-radius:16px!important;max-height:52vh!important;overflow:auto!important;}
+}
+@media (max-width:720px){
+  html.almDesktopMode #almTopFixedGroup .headTop{width:calc(100% - 18px)!important;}
+  html.almDesktopMode #almTopFixedGroup .logo{flex:0 0 100%!important;justify-content:center!important;font-size:24px!important;}
+  html.almDesktopMode #almTopFixedGroup .headBtns{order:2!important;width:100%!important;justify-content:center!important;}
+  html.almDesktopMode #almTopFixedGroup .headBtns .btn{height:38px!important;min-height:38px!important;padding:0 12px!important;font-size:12px!important;}
+  html.almDesktopMode #nav.almV437Nav{order:3!important;}
+  html.almDesktopMode #almTopFixedGroup .searchRow{width:calc(100% - 18px)!important;grid-template-columns:1fr!important;gap:7px!important;}
+  html.almDesktopMode #almTopFixedGroup .searchRow select{display:block!important;}
+  html.almDesktopMode #almTopFixedGroup .eventDateBox{width:calc(100% - 18px)!important;}
+  html.almDesktopMode .homeHeroFrame,html.almDesktopMode #app>.wrap.section,html.almDesktopMode .wrap.section,html.almDesktopMode .section.wrap{width:calc(100% - 18px)!important;}
+  html.almDesktopMode .products{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;}
+}
 </style>
-<script id="almalika-v436-final-dropdown-menu-js">
+<script id="almalika-v437-clean-dropdown-size-js">
 (function(){
-  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  function safeStr(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
-  function getCurrent(){try{return (typeof current!=='undefined'?current:window.current)||'home'}catch(e){return 'home'}}
-  function getInternals(sec,fallback){try{if(typeof internalSections!=='undefined' && internalSections[sec]) return internalSections[sec];}catch(e){} return fallback;}
-  function go(sec,sub){try{if(typeof showSection==='function') showSection(sec); if(sub && typeof setInternal==='function') setTimeout(function(){setInternal(sub)},45); setTimeout(build,80);}catch(e){}}
-  window.almV436Go=go;
-  function item(sec,sub,icon,label){return '<button type="button" onclick="almV436Go(\''+safeStr(sec)+'\',\''+safeStr(sub||'')+'\')"><span class="almMiniIcon">'+icon+'</span><span>'+esc(label||sub||sec)+'</span></button>';}
-  function dropdown(key,label,active,items){return '<div class="almMegaItem '+(active?'active':'')+'" data-nav-key="'+key+'"><button class="almDropToggle" type="button"><span>'+label+'</span><span class="almArrow">▾</span></button><div class="almMegaMenu">'+items.join('')+'</div></div>';}
-  function build(){
-    var nav=document.getElementById('nav'); if(!nav) return;
-    var c=getCurrent();
-    var bouncies=getInternals('bouncies',['الجميع','النطاطيات والزحلاقيات المائية','نطاطيات جافة للأطفال','زحاليق كبيرة وصغيرة','ملاعب صابونية وفوم','أحواض ومسابح أطفال']);
-    var snacks=getInternals('snacks',['الجميع','عربة الفشار','عربة غزل البنات','عربة البطاطا الحلزونية','عربة السلاش','عربة الايسكريم']);
-    var events=getInternals('events',['حفلات الخطوبة والزواج']);
-    var offers=getInternals('offers',['الجميع','عروض الحفلات والمناسبات','عروض النطاطيات','عروض السناك والعربات']);
-    var rentals=getInternals('rentals',['الجميع','الطاولات والكراسي','الشخصيات الكرتونية']);
-    var productsMenu=[item('bouncies','الجميع','🏰','النطاطيات والزحلاقيات'),item('snacks','الجميع','🍿','السناك والعربات'),item('events',events[0]||'الجميع','🎀','تجهيز الحفلات'),item('rentals','الجميع','🪑','الطاولات والكراسي والشخصيات'),item('offers','الجميع','🎁','العروض والبكجات'),item('other','الجميع','✨','بنود أخرى')];
-    var bounceMenu=bouncies.map(function(x,i){return item('bouncies',x,i?'🏷️':'🏰',x);});
-    var snackMenu=snacks.map(function(x,i){return item('snacks',x,i?'🍭':'🍿',x);});
-    var partyMenu=events.map(function(x){return item('events',x,'🎀',x);}).concat(rentals.map(function(x){return item('rentals',x,'🪑',x);}));
-    var offerMenu=offers.map(function(x,i){return item('offers',x,i?'🔥':'🎁',x);});
-    nav.className='nav almDesktopNav';
-    nav.innerHTML=''
-      +'<button class="almNavLink '+(c==='home'?'active':'')+'" type="button" onclick="showHome&&showHome();setTimeout(function(){almV436BuildNav&&almV436BuildNav()},80)">الرئيسية</button>'
-      +dropdown('products','المنتجات',['bouncies','snacks','events','rentals','offers','other'].indexOf(c)>-1,productsMenu)
-      +dropdown('bouncies','النطاطيات والزحلاقيات',c==='bouncies',bounceMenu)
-      +dropdown('snacks','السناك والعربات',c==='snacks',snackMenu)
-      +dropdown('events','تجهيز الحفلات',c==='events'||c==='rentals',partyMenu)
-      +dropdown('offers','العروض',c==='offers',offerMenu)
-      +'<button class="almNavLink" type="button" onclick="generalWa&&generalWa()">تواصل معنا</button>';
-    nav.querySelectorAll('.almDropToggle').forEach(function(btn){btn.onclick=function(ev){ev.preventDefault();ev.stopPropagation();var box=btn.closest('.almMegaItem');nav.querySelectorAll('.almMegaItem.open').forEach(function(x){if(x!==box)x.classList.remove('open')});if(box)box.classList.toggle('open');};});
+  function isRealPhone(){
+    var ua=String(navigator.userAgent||'');
+    var phone=/Android|iPhone|iPod|Mobile/i.test(ua);
+    var touch=(('ontouchstart' in window)||((navigator.maxTouchPoints||0)>0));
+    return !!(phone && touch);
   }
-  window.almV436BuildNav=build;
-  window.renderNav=function(){build();};
-  ['showSection','showHome','render','renderHome'].forEach(function(name){var fn=window[name];if(typeof fn==='function' && !fn.__v436FinalWrapped){var wrapped=function(){var r=fn.apply(this,arguments);setTimeout(build,25);return r;};wrapped.__v436FinalWrapped=true;window[name]=wrapped;}});
-  document.addEventListener('click',function(e){if(!e.target.closest || !e.target.closest('#nav')) document.querySelectorAll('#nav .almMegaItem.open').forEach(function(x){x.classList.remove('open')});},true);
-  document.addEventListener('DOMContentLoaded',function(){setTimeout(build,30);setTimeout(build,320);setTimeout(build,900);});
-  window.addEventListener('load',function(){setTimeout(build,80);setTimeout(build,500);});
-  window.addEventListener('resize',function(){setTimeout(build,100);});
-  setTimeout(build,50);setTimeout(build,500);setTimeout(build,1500);
+  function applyMode(){
+    try{
+      var root=document.documentElement;
+      if(isRealPhone()){
+        root.classList.remove('almDesktopMode');root.classList.add('almPhoneMode');
+      }else{
+        root.classList.add('almDesktopMode');root.classList.remove('almPhoneMode');
+        document.body.classList.remove('almAppEntered');
+        var intro=document.getElementById('almMobileIntro'); if(intro) intro.remove();
+      }
+    }catch(e){}
+  }
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function jsq(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+  function currentSection(){try{return (typeof current!=='undefined'?current:window.current)||'home';}catch(e){return 'home';}}
+  function allFor(sec){try{return typeof allLabel==='function'?allLabel(sec):'الجميع';}catch(e){return 'الجميع';}}
+  function internalList(sec,fallback){try{if(typeof internalSections!=='undefined' && internalSections[sec] && internalSections[sec].length)return internalSections[sec];}catch(e){}return fallback||['الجميع'];}
+  function go(sec,sub){
+    try{
+      closeMenus();
+      if(sec==='home'){ if(typeof showHome==='function') showHome(); return; }
+      if(typeof showSection==='function') showSection(sec);
+      if(sub){setTimeout(function(){try{if(typeof setInternal==='function') setInternal(sub);}catch(e){}},60);}
+      setTimeout(function(){buildNav();fixHeaderHeight();},120);
+    }catch(e){}
+  }
+  window.almV437Go=go;
+  function btn(sec,sub,icon,label){return '<button type="button" onclick="almV437Go(\''+jsq(sec)+'\',\''+jsq(sub||'')+'\')"><span class="almMiniIcon">'+icon+'</span><span>'+esc(label||sub||sec)+'</span></button>';}
+  function topButton(sec,label,active){return '<div class="almNavItem '+(active?'active':'')+'"><button class="almNavTop" type="button" onclick="almV437Go(\''+jsq(sec)+'\',\'\')"><span>'+esc(label)+'</span></button></div>';}
+  function drop(key,label,active,items){return '<div class="almNavItem almDrop '+(active?'active':'')+'" data-key="'+esc(key)+'"><button class="almNavTop" type="button"><span>'+esc(label)+'</span><span class="almArrow">▾</span></button><div class="almMenu">'+items.join('')+'</div></div>';}
+  function buildNav(){
+    try{
+      applyMode();
+      var nav=document.getElementById('nav'); if(!nav)return;
+      var c=currentSection();
+      var b=internalList('bouncies',['الجميع','النطاطيات والزحلاقيات المائية','نطاطيات جافة للأطفال','زحاليق كبيرة وصغيرة','ملاعب صابونية وفوم','أحواض ومسابح أطفال']);
+      var s=internalList('snacks',['الجميع','عربة الفشار','عربة غزل البنات','عربة البطاطا الحلزونية','عربة السلاش','عربة الايسكريم']);
+      var e=internalList('events',['الجميع','حفلات ميلاد ومناسبات خاصة','حفلات تخرج ومدارس','بوابات وستاندات وبالونات']);
+      var r=internalList('rentals',['الجميع','الطاولات والكراسي','الشخصيات الكرتونية']);
+      var o=internalList('offers',['الجميع','عروض الحفلات والمناسبات','عروض النطاطيات','عروض السناك والعربات']);
+      var main=[btn('bouncies',allFor('bouncies'),'🏰','النطاطيات والزحلاقيات'),btn('snacks',allFor('snacks'),'🍿','السناك والعربات'),btn('events',e[0]||allFor('events'),'🎀','تجهيز الحفلات'),btn('rentals',r[0]||allFor('rentals'),'🪑','الطاولات والكراسي والشخصيات'),btn('offers',allFor('offers'),'🎁','العروض والبكجات'),btn('other',allFor('other'),'✨','بنود أخرى')];
+      nav.className='nav almV437Nav';
+      nav.innerHTML=
+        topButton('home','الرئيسية',c==='home')+
+        drop('products','المنتجات',['bouncies','snacks','events','rentals','offers','other'].indexOf(c)>-1,main)+
+        drop('bouncies','النطاطيات والزحلاقيات',c==='bouncies',b.map(function(x,i){return btn('bouncies',x,i?'🏷️':'🏰',x);}))+ 
+        drop('snacks','السناك والعربات',c==='snacks',s.map(function(x,i){return btn('snacks',x,i?'🍭':'🍿',x);}))+ 
+        drop('events','تجهيز الحفلات',(c==='events'||c==='rentals'),e.map(function(x){return btn('events',x,'🎀',x);}).concat(r.map(function(x){return btn('rentals',x,'🪑',x);})))+
+        drop('offers','العروض',c==='offers',o.map(function(x,i){return btn('offers',x,i?'🔥':'🎁',x);}));
+      nav.querySelectorAll('.almDrop>.almNavTop').forEach(function(t){
+        t.onclick=function(ev){ev.preventDefault();ev.stopPropagation();var item=t.closest('.almDrop');if(!item)return;nav.querySelectorAll('.almDrop.open').forEach(function(x){if(x!==item)x.classList.remove('open')});item.classList.toggle('open');positionMenu(item);};
+      });
+      fixHeaderHeight();
+    }catch(e){}
+  }
+  window.almV437BuildNav=buildNav;
+  window.renderNav=buildNav;
+  function closeMenus(){try{document.querySelectorAll('#nav .almDrop.open').forEach(function(x){x.classList.remove('open')});}catch(e){}}
+  function positionMenu(item){
+    try{
+      var top=0;var btn=item.querySelector('.almNavTop');
+      if(btn){var r=btn.getBoundingClientRect();top=Math.ceil(r.bottom+8);}
+      document.documentElement.style.setProperty('--almMenuTop',top+'px');
+    }catch(e){}
+  }
+  function fixHeaderHeight(){
+    try{
+      var group=document.getElementById('almTopFixedGroup');
+      if(group){var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0);if(h){document.documentElement.style.setProperty('--almFixedTopHeight',h+'px');document.body.style.paddingTop=h+'px';document.body.style.scrollPaddingTop=h+'px';}}
+    }catch(e){}
+  }
+  function cleanInlineSizing(){
+    try{
+      ['#app>.hero','main#app>.hero','.homeHeroFrame','.homeHeroImage','#app>.wrap.section','.wrap.section','.section.wrap','.products'].forEach(function(sel){document.querySelectorAll(sel).forEach(function(el){['width','maxWidth','marginLeft','marginRight','borderRadius'].forEach(function(p){el.style.removeProperty(p.replace(/[A-Z]/g,function(m){return '-'+m.toLowerCase();}));});});});
+    }catch(e){}
+  }
+  ['showSection','showHome','render','renderHome','setInternal'].forEach(function(name){
+    var fn=window[name];
+    if(typeof fn==='function' && !fn.__almV437Wrapped){
+      var w=function(){var out=fn.apply(this,arguments);setTimeout(function(){applyMode();cleanInlineSizing();buildNav();fixHeaderHeight();},35);setTimeout(fixHeaderHeight,220);return out;};
+      w.__almV437Wrapped=true;window[name]=w;
+    }
+  });
+  document.addEventListener('click',function(e){if(!e.target.closest||!e.target.closest('#nav'))closeMenus();},true);
+  function boot(){applyMode();cleanInlineSizing();buildNav();fixHeaderHeight();setTimeout(fixHeaderHeight,250);}
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(boot,20);setTimeout(boot,220);setTimeout(boot,900);});
+  window.addEventListener('load',function(){setTimeout(boot,80);setTimeout(fixHeaderHeight,500);});
+  window.addEventListener('resize',function(){setTimeout(boot,80);setTimeout(fixHeaderHeight,300);});
+  window.addEventListener('hashchange',function(){setTimeout(boot,80);});
+  setInterval(function(){applyMode();fixHeaderHeight();},1500);
+  setTimeout(boot,30);setTimeout(boot,500);setTimeout(boot,1500);
 })();
 </script>
