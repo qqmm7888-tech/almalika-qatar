@@ -17735,3 +17735,83 @@ body.almV402ProductsMode #app .products{
 </script>
 
 
+
+
+<!-- ===== V436 FINAL: reference-style homepage header with dropdown menus ===== -->
+<style id="almalika-v436-final-dropdown-menu-style">
+#almTopFixedGroup{background:#fff!important;box-shadow:0 8px 24px rgba(54,17,35,.08)!important;border-bottom:1px solid rgba(122,23,52,.08)!important;overflow:visible!important;}
+#almTopFixedGroup .header{background:#fff!important;box-shadow:none!important;border-bottom:0!important;backdrop-filter:none!important;overflow:visible!important;}
+#almTopFixedGroup .headTop{width:min(100% - 38px,1320px)!important;min-height:72px!important;display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;align-items:center!important;gap:18px!important;padding:8px 0!important;margin-inline:auto!important;overflow:visible!important;}
+#almTopFixedGroup .logo{order:3!important;display:flex!important;align-items:center!important;gap:8px!important;color:#7a1734!important;font-size:29px!important;font-weight:1000!important;white-space:nowrap!important;cursor:pointer!important;text-shadow:0 4px 12px rgba(255,47,134,.12)!important;}
+#almTopFixedGroup .logo::after{content:'👑';font-size:18px!important;filter:drop-shadow(0 2px 2px rgba(0,0,0,.10));}
+#nav.almDesktopNav{order:2!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;overflow:visible!important;flex-wrap:nowrap!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;direction:rtl!important;scrollbar-width:none!important;}
+#nav.almDesktopNav::-webkit-scrollbar{display:none!important;}
+#nav.almDesktopNav .almNavLink,#nav.almDesktopNav .almDropToggle{appearance:none!important;border:0!important;background:transparent!important;color:#141015!important;min-height:48px!important;height:48px!important;padding:0 15px!important;border-radius:0!important;box-shadow:none!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:8px!important;font-size:16px!important;line-height:1!important;font-weight:900!important;white-space:nowrap!important;cursor:pointer!important;position:relative!important;transition:color .18s ease,background .18s ease!important;width:auto!important;min-width:auto!important;}
+#nav.almDesktopNav .almNavLink:hover,#nav.almDesktopNav .almDropToggle:hover,#nav.almDesktopNav .almNavLink.active,#nav.almDesktopNav .almMegaItem.active>.almDropToggle{color:#ff2f86!important;background:transparent!important;}
+#nav.almDesktopNav .almNavLink.active::after,#nav.almDesktopNav .almMegaItem.active>.almDropToggle::after,#nav.almDesktopNav .almNavLink:hover::after,#nav.almDesktopNav .almMegaItem:hover>.almDropToggle::after{content:''!important;position:absolute!important;left:14px!important;right:14px!important;bottom:2px!important;height:3px!important;border-radius:10px!important;background:linear-gradient(90deg,#ff2f86,#d4af37)!important;}
+#nav.almDesktopNav .almArrow{font-size:11px!important;margin-top:2px!important;opacity:.75!important;}
+#nav.almDesktopNav .almMegaItem{position:relative!important;display:flex!important;align-items:center!important;overflow:visible!important;}
+#nav.almDesktopNav .almMegaMenu{position:absolute!important;top:100%!important;right:0!important;min-width:275px!important;background:#fff!important;border:1px solid rgba(122,23,52,.12)!important;box-shadow:0 18px 44px rgba(0,0,0,.14)!important;border-radius:0 0 18px 18px!important;padding:10px 0!important;z-index:2147483640!important;display:none!important;direction:rtl!important;text-align:right!important;overflow:visible!important;}
+#nav.almDesktopNav .almMegaItem:hover>.almMegaMenu,#nav.almDesktopNav .almMegaItem.open>.almMegaMenu,#nav.almDesktopNav .almMegaItem:focus-within>.almMegaMenu{display:block!important;}
+#nav.almDesktopNav .almMegaMenu::before{content:''!important;position:absolute!important;top:-10px!important;right:22px!important;width:18px!important;height:18px!important;background:#fff!important;transform:rotate(45deg)!important;border-top:1px solid rgba(122,23,52,.10)!important;border-left:1px solid rgba(122,23,52,.10)!important;}
+#nav.almDesktopNav .almMegaMenu button{width:100%!important;border:0!important;background:#fff!important;color:#171015!important;min-height:42px!important;height:42px!important;padding:0 19px!important;display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;text-align:right!important;gap:10px!important;font-size:15px!important;font-weight:850!important;border-radius:0!important;box-shadow:none!important;cursor:pointer!important;white-space:nowrap!important;line-height:1.2!important;}
+#nav.almDesktopNav .almMegaMenu button:hover{color:#ff2f86!important;background:linear-gradient(90deg,#fff5fb,#fff)!important;}
+#nav.almDesktopNav .almMiniIcon{width:25px!important;height:25px!important;border-radius:50%!important;display:inline-grid!important;place-items:center!important;background:#fff4fb!important;font-size:14px!important;flex:0 0 auto!important;}
+#almTopFixedGroup .headBtns{order:1!important;position:static!important;display:flex!important;gap:8px!important;align-items:center!important;width:auto!important;}
+#almTopFixedGroup .headBtns .btn{height:43px!important;min-height:43px!important;border-radius:10px!important;padding:0 15px!important;font-size:13px!important;font-weight:1000!important;white-space:nowrap!important;box-shadow:none!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;}
+#almTopFixedGroup .headBtns .green{background:#18b85b!important;color:#fff!important;}
+#almTopFixedGroup .headBtns .red{background:#ff2f86!important;color:#fff!important;}
+#almTopFixedGroup .headBtns .cartMini{background:#fff!important;color:#111!important;border:1px solid rgba(122,23,52,.16)!important;}
+#almTopFixedGroup .searchRow{width:min(100% - 38px,1320px)!important;margin:0 auto 10px!important;display:grid!important;grid-template-columns:minmax(0,1fr) 160px 150px!important;gap:10px!important;padding:0!important;align-items:center!important;}
+#almTopFixedGroup .search,#almTopFixedGroup .searchRow select{border-radius:10px!important;min-height:41px!important;height:41px!important;border:1px solid rgba(122,23,52,.13)!important;box-shadow:none!important;}
+body:not(.almAppEntered) #app>.hero{padding-top:18px!important;}
+body:not(.almAppEntered) .homeHeroFrame{max-width:1320px!important;margin-inline:auto!important;border-radius:18px!important;}
+body:not(.almAppEntered) .homeHeroImage{border-radius:18px!important;}
+body:not(.almAppEntered) .mainCats{max-width:1320px!important;margin-inline:auto!important;}
+body:not(.almAppEntered) .hero{overflow:visible!important;}
+@media(max-width:900px){#almTopFixedGroup .headTop{grid-template-columns:1fr!important;gap:8px!important;min-height:auto!important;width:calc(100% - 22px)!important;padding:8px 0!important;}#almTopFixedGroup .logo{order:1!important;justify-content:center!important;font-size:26px!important;}#nav.almDesktopNav{order:2!important;justify-content:flex-start!important;overflow-x:auto!important;width:100%!important;padding:4px 0!important;}#nav.almDesktopNav .almNavLink,#nav.almDesktopNav .almDropToggle{min-height:42px!important;height:42px!important;padding:0 12px!important;font-size:13px!important;border-radius:999px!important;background:#fff!important;border:1px solid rgba(122,23,52,.12)!important;}#nav.almDesktopNav .almMegaMenu{position:fixed!important;right:12px!important;left:12px!important;top:118px!important;min-width:0!important;border-radius:18px!important;max-height:56vh!important;overflow:auto!important;}#almTopFixedGroup .headBtns{order:3!important;justify-content:center!important;}#almTopFixedGroup .searchRow{width:calc(100% - 22px)!important;grid-template-columns:1fr!important;margin-bottom:8px!important;}body.almAppEntered .nav.almDesktopNav{display:flex!important;flex-direction:row!important;align-items:center!important;background:#fff!important;overflow-x:auto!important;padding:8px 4px!important;gap:8px!important;}body.almAppEntered .nav.almDesktopNav .almNavLink,body.almAppEntered .nav.almDesktopNav .almDropToggle{min-width:auto!important;width:auto!important;height:42px!important;flex-direction:row!important;font-size:13px!important;white-space:nowrap!important;padding:0 12px!important;border-radius:999px!important;background:#fff!important;border:1px solid rgba(122,23,52,.12)!important;}body.almAppEntered .nav.almDesktopNav .almMegaMenu button{height:42px!important;flex-direction:row!important;font-size:14px!important;justify-content:flex-start!important;}}
+</style>
+<script id="almalika-v436-final-dropdown-menu-js">
+(function(){
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function safeStr(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+  function getCurrent(){try{return (typeof current!=='undefined'?current:window.current)||'home'}catch(e){return 'home'}}
+  function getInternals(sec,fallback){try{if(typeof internalSections!=='undefined' && internalSections[sec]) return internalSections[sec];}catch(e){} return fallback;}
+  function go(sec,sub){try{if(typeof showSection==='function') showSection(sec); if(sub && typeof setInternal==='function') setTimeout(function(){setInternal(sub)},45); setTimeout(build,80);}catch(e){}}
+  window.almV436Go=go;
+  function item(sec,sub,icon,label){return '<button type="button" onclick="almV436Go(\''+safeStr(sec)+'\',\''+safeStr(sub||'')+'\')"><span class="almMiniIcon">'+icon+'</span><span>'+esc(label||sub||sec)+'</span></button>';}
+  function dropdown(key,label,active,items){return '<div class="almMegaItem '+(active?'active':'')+'" data-nav-key="'+key+'"><button class="almDropToggle" type="button"><span>'+label+'</span><span class="almArrow">▾</span></button><div class="almMegaMenu">'+items.join('')+'</div></div>';}
+  function build(){
+    var nav=document.getElementById('nav'); if(!nav) return;
+    var c=getCurrent();
+    var bouncies=getInternals('bouncies',['الجميع','النطاطيات والزحلاقيات المائية','نطاطيات جافة للأطفال','زحاليق كبيرة وصغيرة','ملاعب صابونية وفوم','أحواض ومسابح أطفال']);
+    var snacks=getInternals('snacks',['الجميع','عربة الفشار','عربة غزل البنات','عربة البطاطا الحلزونية','عربة السلاش','عربة الايسكريم']);
+    var events=getInternals('events',['حفلات الخطوبة والزواج']);
+    var offers=getInternals('offers',['الجميع','عروض الحفلات والمناسبات','عروض النطاطيات','عروض السناك والعربات']);
+    var rentals=getInternals('rentals',['الجميع','الطاولات والكراسي','الشخصيات الكرتونية']);
+    var productsMenu=[item('bouncies','الجميع','🏰','النطاطيات والزحلاقيات'),item('snacks','الجميع','🍿','السناك والعربات'),item('events',events[0]||'الجميع','🎀','تجهيز الحفلات'),item('rentals','الجميع','🪑','الطاولات والكراسي والشخصيات'),item('offers','الجميع','🎁','العروض والبكجات'),item('other','الجميع','✨','بنود أخرى')];
+    var bounceMenu=bouncies.map(function(x,i){return item('bouncies',x,i?'🏷️':'🏰',x);});
+    var snackMenu=snacks.map(function(x,i){return item('snacks',x,i?'🍭':'🍿',x);});
+    var partyMenu=events.map(function(x){return item('events',x,'🎀',x);}).concat(rentals.map(function(x){return item('rentals',x,'🪑',x);}));
+    var offerMenu=offers.map(function(x,i){return item('offers',x,i?'🔥':'🎁',x);});
+    nav.className='nav almDesktopNav';
+    nav.innerHTML=''
+      +'<button class="almNavLink '+(c==='home'?'active':'')+'" type="button" onclick="showHome&&showHome();setTimeout(function(){almV436BuildNav&&almV436BuildNav()},80)">الرئيسية</button>'
+      +dropdown('products','المنتجات',['bouncies','snacks','events','rentals','offers','other'].indexOf(c)>-1,productsMenu)
+      +dropdown('bouncies','النطاطيات والزحلاقيات',c==='bouncies',bounceMenu)
+      +dropdown('snacks','السناك والعربات',c==='snacks',snackMenu)
+      +dropdown('events','تجهيز الحفلات',c==='events'||c==='rentals',partyMenu)
+      +dropdown('offers','العروض',c==='offers',offerMenu)
+      +'<button class="almNavLink" type="button" onclick="generalWa&&generalWa()">تواصل معنا</button>';
+    nav.querySelectorAll('.almDropToggle').forEach(function(btn){btn.onclick=function(ev){ev.preventDefault();ev.stopPropagation();var box=btn.closest('.almMegaItem');nav.querySelectorAll('.almMegaItem.open').forEach(function(x){if(x!==box)x.classList.remove('open')});if(box)box.classList.toggle('open');};});
+  }
+  window.almV436BuildNav=build;
+  window.renderNav=function(){build();};
+  ['showSection','showHome','render','renderHome'].forEach(function(name){var fn=window[name];if(typeof fn==='function' && !fn.__v436FinalWrapped){var wrapped=function(){var r=fn.apply(this,arguments);setTimeout(build,25);return r;};wrapped.__v436FinalWrapped=true;window[name]=wrapped;}});
+  document.addEventListener('click',function(e){if(!e.target.closest || !e.target.closest('#nav')) document.querySelectorAll('#nav .almMegaItem.open').forEach(function(x){x.classList.remove('open')});},true);
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(build,30);setTimeout(build,320);setTimeout(build,900);});
+  window.addEventListener('load',function(){setTimeout(build,80);setTimeout(build,500);});
+  window.addEventListener('resize',function(){setTimeout(build,100);});
+  setTimeout(build,50);setTimeout(build,500);setTimeout(build,1500);
+})();
+</script>
