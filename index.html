@@ -5671,7 +5671,7 @@ function forcedUnavailableCatalog(num){
 function hideProductImageRange412422(p){return false;}
 function card(p){const inCart=cart.some(x=>Number(x.number)===Number(p.number)); const forced=forcedUnavailableCatalog(p.number); const booked=forced || bookingInfoForCatalog(p.number,getCatalogEventDate(),getCatalogEventEndDate()); const disabled=booked?'disabled':''; return `
 <div class="product ${hideProductImageRange412422(p)?'noProductImage412to422':''} ${booked?'bookedProduct':''}">
-<div class="num">#${p.number}</div>
+<div class="num">${p.number}</div>
 <div class="body">
 <h3>${esc(p.name)}${booked?`<div class="bookedCatalogWord">${booked.status}</div>`:''}</h3>
 <p class="desc">${esc(desc(p))}</p>
@@ -16292,5 +16292,88 @@ section.wrap,
   window.addEventListener('hashchange',function(){setTimeout(function(){try{ if(typeof renderNav==='function') renderNav(); }catch(e){} v350CleanPageMenus();},80);});
   setTimeout(function(){try{ if(typeof renderNav==='function') renderNav(); }catch(e){} v350CleanPageMenus();},0);
   setTimeout(v350CleanPageMenus,500);
+})();
+</script>
+
+
+<style id="almalika-v351-small-left-product-numbers">
+/* v351: تصغير رقم المنتج وإزالة # ووضعه أعلى يسار الكرت */
+.product{position:relative!important;}
+.product .num,
+.products.view-wide .product .num,
+.products.view-cards .product .num,
+.products.view-compact .product .num,
+.products.view-mini .product .num,
+.products.view-list .product .num{
+  position:absolute!important;
+  top:8px!important;
+  left:8px!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:30px!important;
+  height:24px!important;
+  min-height:24px!important;
+  max-height:24px!important;
+  padding:0 8px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  border-radius:999px!important;
+  background:linear-gradient(135deg,#ff2f86,#d91b62)!important;
+  color:#fff!important;
+  border:2px solid #fff!important;
+  box-shadow:0 7px 15px rgba(217,27,98,.24)!important;
+  font-size:11px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:0!important;
+  z-index:20!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+  transform:none!important;
+}
+@media(max-width:720px){
+  .product .num,
+  .products.view-wide .product .num,
+  .products.view-cards .product .num,
+  .products.view-compact .product .num,
+  .products.view-mini .product .num,
+  .products.view-list .product .num{
+    top:7px!important;
+    left:7px!important;
+    min-width:28px!important;
+    height:23px!important;
+    min-height:23px!important;
+    max-height:23px!important;
+    padding:0 7px!important;
+    font-size:10.5px!important;
+  }
+}
+</style>
+<script id="almalika-v351-strip-product-number-hash">
+(function(){
+  function cleanNums(){
+    try{
+      document.querySelectorAll('.product .num').forEach(function(el){
+        el.textContent = String(el.textContent||'').replace(/^\s*#/,'').trim();
+      });
+    }catch(e){}
+  }
+  var oldRender = window.render;
+  if(typeof oldRender === 'function'){
+    window.render = render = function(){
+      var r = oldRender.apply(this, arguments);
+      setTimeout(cleanNums,0);
+      setTimeout(cleanNums,80);
+      return r;
+    };
+  }
+  document.addEventListener('DOMContentLoaded', function(){setTimeout(cleanNums,0); setTimeout(cleanNums,150);});
+  window.addEventListener('load', function(){setTimeout(cleanNums,0); setTimeout(cleanNums,250);});
+  setInterval(cleanNums, 700);
 })();
 </script>
