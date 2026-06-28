@@ -5903,6 +5903,44 @@ body{
   }
 </style>
 
+
+
+<style id="almalika-v432-readable-product-numbers">
+/* v432: تكبير أرقام المنتجات بشكل واضح بدون مبالغة */
+#app .product .num,
+.product .num,
+.products.view-cards .product .num,
+.products.view-compact .product .num,
+.products.view-mini .product .num{
+  min-width:32px!important;
+  min-height:22px!important;
+  padding:7px 11px!important;
+  font-size:13px!important;
+  line-height:1!important;
+  font-weight:1000!important;
+  letter-spacing:.2px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:999px!important;
+  border:2px solid #fff!important;
+  box-shadow:0 8px 18px rgba(226,31,103,.28)!important;
+  z-index:6!important;
+}
+@media(max-width:700px){
+  #app .product .num,
+  .product .num,
+  .products.view-cards .product .num,
+  .products.view-compact .product .num,
+  .products.view-mini .product .num{
+    min-width:30px!important;
+    min-height:21px!important;
+    padding:6px 10px!important;
+    font-size:12px!important;
+  }
+}
+</style>
+
 </head>
 <body>
 
