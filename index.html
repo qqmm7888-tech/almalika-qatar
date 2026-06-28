@@ -16560,3 +16560,298 @@ section.wrap,
   setInterval(cleanNums, 700);
 })();
 </script>
+
+<!-- ===== V353 FROM V349/V352: fixed one-line dropdown header + unified nav icons ===== -->
+<style id="almalika-v353-fixed-header-single-row-icons">
+/* إصلاح نهائي لرأس الصفحة: سطر واحد، بدون صندوق كبير، وأيقونات موحدة */
+.header{overflow:visible!important;z-index:99999!important}
+.header .wrap{overflow:visible!important}
+.headTop{
+  display:flex!important;
+  flex-direction:row!important;
+  direction:rtl!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:12px!important;
+  padding:10px 0!important;
+  min-height:72px!important;
+  overflow:visible!important;
+}
+.logo{
+  order:1!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:145px!important;
+  max-width:185px!important;
+  justify-self:auto!important;
+  font-size:38px!important;
+  line-height:1!important;
+  margin:0!important;
+  white-space:nowrap!important;
+  text-align:right!important;
+  color:#b31333!important;
+  z-index:20!important;
+}
+#nav.almV350DropdownNav,
+.header #nav.almV350DropdownNav,
+.header .nav{
+  order:2!important;
+  flex:1 1 auto!important;
+  min-width:0!important;
+  width:auto!important;
+  max-width:none!important;
+  height:auto!important;
+  min-height:50px!important;
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  overflow:visible!important;
+  scrollbar-width:none!important;
+  z-index:999999!important;
+}
+#nav.almV350DropdownNav::-webkit-scrollbar{display:none!important}
+#nav.almV350DropdownNav .navHomeBtn,
+#nav.almV350DropdownNav .navDrop,
+#nav.almV350DropdownNav .navDrop>summary{
+  flex:0 0 auto!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:none!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+}
+#nav.almV350DropdownNav .navHomeBtn,
+#nav.almV350DropdownNav .navDrop>summary{
+  min-height:48px!important;
+  height:48px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  padding:8px 12px!important;
+  border-radius:22px!important;
+  border:1px solid #f4bfd8!important;
+  background:linear-gradient(180deg,#fff,#fff8fb)!important;
+  color:#5b2547!important;
+  font-size:14px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+  box-shadow:0 6px 16px rgba(179,57,113,.08)!important;
+  list-style:none!important;
+  cursor:pointer!important;
+}
+#nav.almV350DropdownNav .navDrop>summary::-webkit-details-marker{display:none!important}
+#nav.almV350DropdownNav .navHomeBtn>span,
+#nav.almV350DropdownNav .navDrop>summary>span{
+  width:30px!important;
+  height:30px!important;
+  min-width:30px!important;
+  max-width:30px!important;
+  min-height:30px!important;
+  max-height:30px!important;
+  flex:0 0 30px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:50%!important;
+  background:linear-gradient(135deg,#fff,#fff4dc)!important;
+  border:1px solid rgba(244,191,216,.75)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.85),0 4px 9px rgba(122,23,52,.08)!important;
+  font-size:17px!important;
+  line-height:1!important;
+  overflow:hidden!important;
+}
+#nav.almV350DropdownNav .navHomeBtn>b,
+#nav.almV350DropdownNav .navDrop>summary>b{
+  display:inline-block!important;
+  min-width:0!important;
+  max-width:none!important;
+  font-size:14px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+#nav.almV350DropdownNav .navDrop>summary::after{
+  content:'⌄'!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:14px!important;
+  height:14px!important;
+  margin:0!important;
+  opacity:.75!important;
+  font-size:11px!important;
+  line-height:1!important;
+  color:inherit!important;
+}
+#nav.almV350DropdownNav .navHomeBtn.active,
+#nav.almV350DropdownNav .navDrop.active>summary,
+#nav.almV350DropdownNav .navDrop[open]>summary,
+#nav.almV350DropdownNav .navDrop:hover>summary{
+  background:linear-gradient(135deg,#ff5fa2,#ef2d78)!important;
+  color:#fff!important;
+  border-color:transparent!important;
+  box-shadow:0 9px 22px rgba(239,45,120,.25)!important;
+}
+#nav.almV350DropdownNav .navHomeBtn.active>span,
+#nav.almV350DropdownNav .navDrop.active>summary>span,
+#nav.almV350DropdownNav .navDrop[open]>summary>span,
+#nav.almV350DropdownNav .navDrop:hover>summary>span{
+  background:rgba(255,255,255,.22)!important;
+  border-color:rgba(255,255,255,.34)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)!important;
+}
+#nav.almV350DropdownNav .navDrop{position:relative!important;display:inline-block!important;z-index:1000000!important}
+#nav.almV350DropdownNav .navMenu{
+  display:none!important;
+  position:absolute!important;
+  top:calc(100% + 8px)!important;
+  right:0!important;
+  left:auto!important;
+  min-width:230px!important;
+  max-width:min(330px,92vw)!important;
+  max-height:65vh!important;
+  overflow:auto!important;
+  background:#fff!important;
+  border:1px solid #f3bdd5!important;
+  border-radius:16px!important;
+  padding:8px!important;
+  box-shadow:0 22px 55px rgba(70,22,46,.20)!important;
+  z-index:9999999!important;
+}
+#nav.almV350DropdownNav .navDrop[open] .navMenu,
+#nav.almV350DropdownNav .navDrop:hover .navMenu{display:block!important}
+#nav.almV350DropdownNav .navMenu button{
+  width:100%!important;
+  min-height:38px!important;
+  padding:9px 11px!important;
+  border-radius:11px!important;
+  text-align:right!important;
+  justify-content:flex-start!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  color:#3e2634!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  white-space:normal!important;
+}
+#nav.almV350DropdownNav .navMenu button:hover,
+#nav.almV350DropdownNav .navMenu button.active{background:linear-gradient(135deg,#fff4f9,#fff7df)!important;color:#b31333!important}
+.headBtns{
+  order:3!important;
+  flex:0 0 auto!important;
+  justify-self:auto!important;
+  display:flex!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+  width:auto!important;
+  min-width:300px!important;
+  max-width:360px!important;
+  z-index:30!important;
+}
+.headBtns .btn{
+  min-height:44px!important;
+  height:44px!important;
+  padding:9px 14px!important;
+  border-radius:14px!important;
+  font-size:13px!important;
+  font-weight:900!important;
+  white-space:nowrap!important;
+}
+.searchRow{position:relative!important;z-index:5!important}
+/* إزالة أي قوائم داخلية تظهر تحت العنوان في كل الصفحات */
+.mainCats,.chips,.viewToolbar,#catSelect{display:none!important;visibility:hidden!important;height:0!important;max-height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important}
+/* تثبيت مقاسات الكروت والصور بعد الانتقال بين الأقسام */
+.products,.products.view-cards,.products.view-wide,.products.view-compact,.products.view-mini,.products.view-list{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(270px,1fr))!important;gap:16px!important;align-items:stretch!important}
+.product,.products.view-cards .product,.products.view-wide .product,.products.view-compact .product,.products.view-mini .product,.products.view-list .product{height:410px!important;min-height:410px!important;max-height:410px!important;display:flex!important;flex-direction:column!important;overflow:hidden!important;border-radius:22px!important}
+.product .pic{height:188px!important;min-height:188px!important;max-height:188px!important;width:100%!important;display:grid!important;place-items:center!important;order:0!important;border:0!important;border-bottom:1px solid #f0dce7!important;padding:0!important;overflow:hidden!important;background:linear-gradient(135deg,#fff,#fff9ea)!important}
+.product .pic img{width:100%!important;height:100%!important;max-height:188px!important;object-fit:contain!important;padding:10px!important;display:block!important}
+.product .body{flex:1 1 auto!important;min-height:0!important;padding:14px!important;display:flex!important;flex-direction:column!important;gap:7px!important;overflow:hidden!important}
+.product .body h3{font-size:17px!important;line-height:1.35!important;min-height:46px!important;max-height:46px!important;overflow:hidden!important;margin:0!important}
+.product .desc{font-size:12px!important;line-height:1.55!important;min-height:38px!important;max-height:38px!important;overflow:hidden!important;margin:0!important}
+.product .tags{min-height:50px!important;max-height:50px!important;overflow:hidden!important}
+.product .bottom{margin-top:auto!important;display:grid!important;grid-template-columns:78px 1fr!important;gap:8px!important;align-items:end!important}
+.product .actions{display:grid!important;grid-template-columns:1fr!important;gap:6px!important}.product .actions button{min-height:36px!important;font-size:12px!important;border-radius:11px!important;padding:8px 10px!important}
+.product .price{min-height:76px!important;border-radius:13px!important;padding:8px 5px!important}.product .price strong{font-size:17px!important}
+@media(max-width:1500px){
+  .headTop{gap:8px!important}.logo{font-size:34px!important;min-width:128px!important;max-width:160px!important}.headBtns{min-width:270px!important;max-width:320px!important;gap:6px!important}.headBtns .btn{padding:8px 11px!important;font-size:12px!important}
+  #nav.almV350DropdownNav{gap:5px!important}
+  #nav.almV350DropdownNav .navHomeBtn,#nav.almV350DropdownNav .navDrop>summary{height:44px!important;min-height:44px!important;padding:7px 9px!important;font-size:12px!important;border-radius:18px!important;gap:6px!important}
+  #nav.almV350DropdownNav .navHomeBtn>span,#nav.almV350DropdownNav .navDrop>summary>span{width:26px!important;height:26px!important;min-width:26px!important;max-width:26px!important;min-height:26px!important;max-height:26px!important;flex-basis:26px!important;font-size:15px!important}
+  #nav.almV350DropdownNav .navHomeBtn>b,#nav.almV350DropdownNav .navDrop>summary>b{font-size:12.5px!important}
+}
+@media(max-width:1150px){
+  .headTop{flex-wrap:wrap!important;justify-content:center!important}.logo{order:1!important;text-align:center!important}.headBtns{order:2!important;min-width:0!important;max-width:none!important}.nav,#nav.almV350DropdownNav{order:3!important;flex-basis:100%!important;overflow-x:auto!important;overflow-y:visible!important;justify-content:flex-start!important;padding-bottom:4px!important}.products,.products.view-cards,.products.view-wide,.products.view-compact,.products.view-mini,.products.view-list{grid-template-columns:repeat(auto-fill,minmax(255px,1fr))!important}
+}
+@media(max-width:720px){
+  .products,.products.view-cards,.products.view-wide,.products.view-compact,.products.view-mini,.products.view-list{grid-template-columns:1fr!important}.product{height:390px!important;min-height:390px!important;max-height:390px!important}.product .pic{height:168px!important;min-height:168px!important;max-height:168px!important}.product .pic img{max-height:168px!important}.headBtns{width:100%!important;justify-content:center!important}.logo{font-size:30px!important}
+}
+</style>
+<script id="almalika-v353-fixed-header-single-row-icons-js">
+(function(){
+  function esc2(v){try{if(typeof esc==='function')return esc(v)}catch(e){} return String(v==null?'':v).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
+  var icons={home:'🏠',bouncies:'🏰',snacks:'🍿',events:'🎀',rentals:'🪑',offers:'🎁',other:'✨'};
+  var labels={home:'الرئيسية',bouncies:'النطاطيات والزحلاقيات',snacks:'السناك والعربات',events:'تجهيز الحفلات',rentals:'الطاولات والكراسي والشخصيات',offers:'العروض والبكجات',other:'بنود أخرى'};
+  function renameBirthday(){
+    try{
+      if(window.internalSections && Array.isArray(window.internalSections.events)){
+        window.internalSections.events = window.internalSections.events.map(function(x){return /حفلات\s*الخطوبة\s*والزواج/.test(String(x))?'حفلات أعياد الميلاد':x});
+      }
+      if(typeof internalSections!=='undefined' && internalSections.events){
+        internalSections.events = internalSections.events.map(function(x){return /حفلات\s*الخطوبة\s*والزواج/.test(String(x))?'حفلات أعياد الميلاد':x});
+      }
+      document.querySelectorAll('button,option,h1,h2,h3,p,span,b').forEach(function(el){
+        if(el.childNodes.length===1 && el.textContent && /حفلات\s*الخطوبة\s*والزواج/.test(el.textContent)) el.textContent=el.textContent.replace(/حفلات\s*الخطوبة\s*والزواج/g,'حفلات أعياد الميلاد');
+      });
+    }catch(e){}
+  }
+  function allLbl(sec){try{if(typeof allLabel==='function')return allLabel(sec)}catch(e){} return 'الجميع'}
+  function subList(sec){
+    var list=[];try{list=(internalSections&&internalSections[sec])?internalSections[sec].slice():[]}catch(e){}
+    if(!list.length)list=[allLbl(sec)];
+    return list.map(function(x){return /حفلات\s*الخطوبة\s*والزواج/.test(String(x))?'حفلات أعياد الميلاد':x}).filter(function(x,i,a){return x && a.indexOf(x)===i});
+  }
+  window.almV353Go=function(sec,sub){
+    try{
+      current=sec; internal=sub||allLbl(sec);
+      if(sec==='home'){ if(typeof renderHome==='function')renderHome(); }
+      else{ if(typeof fillInternal==='function')fillInternal(); if(typeof render==='function')render(); }
+      if(typeof setHash==='function')setHash();
+    }catch(e){try{if(sec==='home'&&typeof showHome==='function')showHome(); else if(typeof showSection==='function')showSection(sec)}catch(_e){}}
+    setTimeout(function(){try{document.querySelectorAll('#nav details[open]').forEach(function(d){d.removeAttribute('open')}); if(typeof v350CleanPageMenus==='function')v350CleanPageMenus(); renameBirthday();}catch(e){}},0);
+  };
+  function navHtml(){
+    var secs=[];try{secs=sections.slice()}catch(e){secs=[['home','الرئيسية','🏠']]}
+    var cur='home';try{cur=current}catch(e){}
+    var inter='';try{inter=internal}catch(e){}
+    return secs.map(function(s){
+      var sec=s[0]; var label=labels[sec]||s[1]||sec; var ico=icons[sec]||s[2]||'';
+      if(sec==='home') return '<button type="button" class="navHomeBtn '+(cur==='home'?'active':'')+'" onclick="almV353Go(\'home\')"><span>'+esc2(ico)+'</span><b>'+esc2(label)+'</b></button>';
+      var list=subList(sec);
+      var buttons=list.map(function(sub,idx){var active=(cur===sec&&(inter===sub||(!inter&&idx===0)))?' active':'';return '<button type="button" class="'+active+'" onclick=\'almV353Go('+JSON.stringify(sec)+','+JSON.stringify(sub)+')\'>'+esc2(sub)+'</button>'}).join('');
+      return '<details class="navDrop '+(cur===sec?'active':'')+'"><summary><span>'+esc2(ico)+'</span><b>'+esc2(label)+'</b></summary><div class="navMenu">'+buttons+'</div></details>';
+    }).join('');
+  }
+  window.renderNav = renderNav = function(){var n=document.getElementById('nav'); if(!n)return; n.className='nav almV350DropdownNav'; n.innerHTML=navHtml();};
+  function clean(){try{renameBirthday(); document.querySelectorAll('.mainCats,.chips,.viewToolbar').forEach(function(el){el.remove()}); var c=document.getElementById('catSelect'); if(c){c.style.setProperty('display','none','important'); c.setAttribute('aria-hidden','true')}}catch(e){}}
+  var oldRender=window.render; if(typeof oldRender==='function'){window.render=render=function(){var r=oldRender.apply(this,arguments); try{renderNav()}catch(e){} setTimeout(clean,0); setTimeout(clean,80); return r;};}
+  var oldHome=window.renderHome; if(typeof oldHome==='function'){window.renderHome=renderHome=function(){var r=oldHome.apply(this,arguments); try{renderNav()}catch(e){} setTimeout(clean,0); setTimeout(clean,80); return r;};}
+  document.addEventListener('click',function(e){var d=e.target.closest&&e.target.closest('#nav details'); if(!d){document.querySelectorAll('#nav details[open]').forEach(function(x){x.removeAttribute('open')});return} document.querySelectorAll('#nav details[open]').forEach(function(x){if(x!==d)x.removeAttribute('open')});},true);
+  document.addEventListener('DOMContentLoaded',function(){try{renderNav()}catch(e){} clean(); setTimeout(clean,120);});
+  window.addEventListener('load',function(){try{renderNav()}catch(e){} clean(); setTimeout(clean,250);});
+  setTimeout(function(){try{renderNav()}catch(e){} clean();},0);
+  setInterval(function(){try{renameBirthday()}catch(e){}},900);
+})();
+</script>
