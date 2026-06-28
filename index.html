@@ -5437,128 +5437,6 @@ body .cartItem .qtyBox b{
 #v342WaChoice .v342Ad span{display:block!important;font-size:14px!important;color:#7a2946!important;margin-top:6px!important}
 </style>
 
-<style id="v361-hard-top-ticker-style">
-/* V361: شريط أخبار العروض أعلى الصفحة فعلياً */
-#v361TopTickerWrap{
-  position:sticky!important;
-  top:0!important;
-  z-index:999999!important;
-  width:100%!important;
-  direction:rtl!important;
-  background:#fff!important;
-  border-bottom:2px solid #9d0014!important;
-  box-shadow:0 4px 14px rgba(0,0,0,.18)!important;
-}
-.v361Ticker{
-  display:flex!important;
-  align-items:center!important;
-  min-height:44px!important;
-  width:100%!important;
-  overflow:hidden!important;
-  background:linear-gradient(180deg,#ffffff 0%,#f4f4f4 100%)!important;
-  font-family:inherit!important;
-}
-.v361TickerLabel{
-  flex:0 0 auto!important;
-  min-width:155px!important;
-  height:44px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  gap:7px!important;
-  padding:0 16px!important;
-  background:linear-gradient(180deg,#d71920 0%,#970014 100%)!important;
-  color:#fff!important;
-  font-weight:1000!important;
-  font-size:15px!important;
-  border:0!important;
-  cursor:pointer!important;
-  box-shadow:inset -1px 0 0 rgba(255,255,255,.25)!important;
-}
-.v361TickerLabel .dot{
-  width:9px!important;
-  height:9px!important;
-  border-radius:50%!important;
-  background:#fff!important;
-  display:inline-block!important;
-  animation:v361Blink 1s infinite!important;
-}
-.v361TickerWindow{
-  flex:1!important;
-  min-width:0!important;
-  overflow:hidden!important;
-  position:relative!important;
-}
-.v361TickerWindow:before,.v361TickerWindow:after{
-  content:""!important;
-  position:absolute!important;
-  top:0!important;
-  bottom:0!important;
-  width:44px!important;
-  z-index:2!important;
-  pointer-events:none!important;
-}
-.v361TickerWindow:before{right:0!important;background:linear-gradient(to left,#fff,rgba(255,255,255,0))!important;}
-.v361TickerWindow:after{left:0!important;background:linear-gradient(to right,#fff,rgba(255,255,255,0))!important;}
-.v361TickerTrack{
-  display:flex!important;
-  align-items:center!important;
-  gap:11px!important;
-  width:max-content!important;
-  padding:6px 14px!important;
-  animation:v361TickerMove 18s linear infinite!important;
-  will-change:transform!important;
-}
-.v361Ticker:hover .v361TickerTrack{animation-play-state:paused!important;}
-.v361TickerItem{
-  flex:0 0 auto!important;
-  display:flex!important;
-  align-items:center!important;
-  gap:8px!important;
-  background:transparent!important;
-  border:0!important;
-  cursor:pointer!important;
-  white-space:nowrap!important;
-  padding:5px 10px!important;
-  border-radius:999px!important;
-  color:#111!important;
-  font:inherit!important;
-}
-.v361TickerItem:hover{background:#fff0f0!important;}
-.v361TickerTag{
-  background:#111!important;
-  color:#fff!important;
-  border:1px solid #d6b15b!important;
-  font-size:10px!important;
-  font-weight:1000!important;
-  border-radius:999px!important;
-  padding:3px 8px!important;
-}
-.v361TickerText{
-  color:#111!important;
-  font-size:14px!important;
-  font-weight:900!important;
-}
-.v361TickerSep{
-  color:#c40018!important;
-  font-size:20px!important;
-  font-weight:1000!important;
-}
-@keyframes v361TickerMove{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes v361Blink{0%,55%{opacity:1}56%,100%{opacity:.35}}
-@media(max-width:700px){
-  .v361Ticker{min-height:38px!important;}
-  .v361TickerLabel{height:38px!important;min-width:96px!important;font-size:12px!important;padding:0 8px!important;}
-  .v361TickerTrack{animation-duration:13s!important;padding:5px 10px!important;}
-  .v361TickerText{font-size:12px!important;}
-  .v361TickerTag{font-size:9px!important;padding:3px 6px!important;}
-}
-</style>
-
-
-
-
-
 <style id="v366-fixed-header-and-working-ticker-style">
 /* v366: حل نهائي — الشريط يعمل فوراً والهيدر ثابت أعلى الصفحة */
 #v361TopTickerWrap,#almTopStickyGroup{display:none!important}
@@ -6193,16 +6071,7 @@ body.v397ImageViewerOpen{overflow:hidden!important;}
 
 
 <div id="almTopFixedGroup">
-  <div id="almWorkingTicker" aria-label="آخر العروض">
-    <div class="almWorkingTickerLabel"><span class="almWorkingTickerDot"></span><b>آخر العروض</b></div>
-    <div class="almWorkingTickerWindow">
-      <div class="almWorkingTickerTrack">
-        <span>🔥 عرض الصيف 1950 ر.ق — 30 طفل: نطاطية كبيرة بركة + نطاطية صغيرة بركة + آيس كريم + جهاز صابون  •  🔥 فرحة الصيف 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 + عربة وجبة ناجتس مع بطاطا 20 + 2 طاولة و10 كراسي  •  🔥 عرض المتعة 1700 ر.ق — حوض بركة مع جهاز فوم صابون + آيس كريم وفشار  •  🔥 حفلة متكاملة 2950 ر.ق — نطاطية + ديكور بالون + بطاطا حلزوني + ليزر + هدايا  •  🔥 عيد ميلاد سعيد 2680 ر.ق — ديكور بالون + طاولات وكراسي + نطاطية صغيرة + فشار وغزل ومسابقات  •  🔥 ديكور فخم لامع 1200 ر.ق — خلفية لامعة + كلمة مضيئة + بالون فاخر + 3 طاولات + ليزر  •  🔥 عرض الفخامة 1750 ر.ق — ديكور فخم + ماكينة آيس كريم 20 طفل  •  🔥 بكج ميلاد VIP 2450 ر.ق — خلفية راقية + LED Happy Birthday + ستيج مضيء + آيس كريم + بطاطا حلزوني  •  🔥 بكج التخرج الملكي 2990 ر.ق — ديكور تخرج + ستيج مضيء + ليزر + آيس كريم + بطاطا حلزوني + كراسي  •  🔥 Class of 2026 — 1850 ر.ق — ديكور فاخر + ذرة حلوة + بطاطا حلزوني + طاولة أطفال + بالونات هيليوم  •  🔥 ديكورات تخرج تبدأ من 700 ر.ق — تصاميم مميزة وتركيب احترافي وخامات عالية  •  🔥 ديكورات مميزة لجميع المناسبات تبدأ من 800 ر.ق</span>
-        <span>🔥 عرض الصيف 1950 ر.ق — 30 طفل: نطاطية كبيرة بركة + نطاطية صغيرة بركة + آيس كريم + جهاز صابون  •  🔥 فرحة الصيف 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 + عربة وجبة ناجتس مع بطاطا 20 + 2 طاولة و10 كراسي  •  🔥 عرض المتعة 1700 ر.ق — حوض بركة مع جهاز فوم صابون + آيس كريم وفشار  •  🔥 حفلة متكاملة 2950 ر.ق — نطاطية + ديكور بالون + بطاطا حلزوني + ليزر + هدايا  •  🔥 عيد ميلاد سعيد 2680 ر.ق — ديكور بالون + طاولات وكراسي + نطاطية صغيرة + فشار وغزل ومسابقات  •  🔥 ديكور فخم لامع 1200 ر.ق — خلفية لامعة + كلمة مضيئة + بالون فاخر + 3 طاولات + ليزر  •  🔥 عرض الفخامة 1750 ر.ق — ديكور فخم + ماكينة آيس كريم 20 طفل  •  🔥 بكج ميلاد VIP 2450 ر.ق — خلفية راقية + LED Happy Birthday + ستيج مضيء + آيس كريم + بطاطا حلزوني  •  🔥 بكج التخرج الملكي 2990 ر.ق — ديكور تخرج + ستيج مضيء + ليزر + آيس كريم + بطاطا حلزوني + كراسي  •  🔥 Class of 2026 — 1850 ر.ق — ديكور فاخر + ذرة حلوة + بطاطا حلزوني + طاولة أطفال + بالونات هيليوم  •  🔥 ديكورات تخرج تبدأ من 700 ر.ق — تصاميم مميزة وتركيب احترافي وخامات عالية  •  🔥 ديكورات مميزة لجميع المناسبات تبدأ من 800 ر.ق</span>
-      </div>
-    </div>
-  </div>
-<header class="header">
+  <header class="header">
   <div class="wrap headTop">
     <div class="logo" onclick="showHome()">الملكة</div>
     <nav class="nav" id="nav"></nav>
@@ -8517,7 +8386,7 @@ ${FIXED_BOOKING_POLICY}
     if(!document.getElementById('globalWorkHoursNote')){
       const note=document.createElement('div');
       note.id='globalWorkHoursNote';
-      note.textContent='⏰ أوقات التركيب والعمل والحجز من 9 صباحاً إلى 5 مساءً';
+      note.textContent='';
       note.style.cssText='margin-top:6px;color:#9a1238;font-weight:900;text-align:center;font-size:13px';
       sel.insertAdjacentElement('afterend',note);
     }
@@ -13498,47 +13367,6 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 
 
 
-<style id="v363-hardcoded-ticker-data-style">
-/* v363: بيانات الشريط ثابتة داخل HTML حتى تظهر بدون انتظار كود المنتجات */
-#v361TopTickerWrap{display:block!important;position:relative!important;z-index:999!important;width:100%!important;margin:0!important;padding:0!important;}
-#v361TickerTrack{display:flex!important;align-items:center!important;width:max-content!important;gap:10px!important;animation:v361TickerMove 9s linear infinite!important;animation-play-state:running!important;will-change:transform!important;}
-.v361Ticker:hover #v361TickerTrack{animation-play-state:running!important;}
-.v361TickerItem{display:inline-flex!important;align-items:center!important;gap:8px!important;white-space:nowrap!important;padding:4px 10px!important;pointer-events:none!important;}
-.v361TickerTag{background:#111!important;color:#fff!important;border:1px solid #d7b15e!important;border-radius:999px!important;padding:3px 8px!important;font-size:10px!important;font-weight:1000!important;}
-.v361TickerText{color:#111!important;font-size:14px!important;font-weight:900!important;}
-.v361TickerSep{color:#b80016!important;font-size:20px!important;font-weight:1000!important;}
-.v361TickerItem{display:none!important;}
-@media(max-width:900px){#v361TickerTrack{animation-duration:7s!important}.v361TickerText{font-size:12.5px!important}}
-</style>
-<script id="v363-hardcoded-ticker-data-script">
-(function(){
-  var tickerData = "<span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#600 — SUMMER SPECIAL - عروض الصيف — يبدأ من 700 ر.ق — حفلة فوم مع جهاز صابون + زحلاقية...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#601 — صيف معنا — يبدأ من 700 ر.ق — ملعب صابوني + جهاز صابون + خدمة...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#602 — نطاطية كبيرة مع فوم — يبدأ من 800 ر.ق — نطاطية كبيرة + فوم</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#603 — صيف معنا — يبدأ من 700 ر.ق — ملعب صابوني أو حوض سباحة + جهاز...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#604 — زحلاقية بيبي شرك المائية — يبدأ من 700 ر.ق — زحلاقية مائية + جهاز صابون قوي</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#605 — عرض الصيف — يبدأ من 980 ر.ق — ملعب صابوني ضخم + كرة سلة هوائي...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#606 — زحلاقية يونيكورن المائية — يبدأ من 850 ر.ق — زحلاقية مائية يونيكورن مع منطقة لعب مائية</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#607 — نطاطية كبيرة مع بركة — يبدأ من 1050 ر.ق — نطاطية كبيرة مع بركة مائية</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#608 — فرصة ما تتعوض — يبدأ من 1800 ر.ق — نطاطية كبيرة بركة + نطاطية صغيرة بركة...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#609 — صيف الملكة - باقة 30... — يبدأ من 1950 ر.ق — نطاطية كبيرة بركة + نطاطية صغيرة بركة...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#610 — صيف الملكة - فرحة الصيف — يبدأ من 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#611 — عرض المتعة — يبدأ من 1700 ر.ق — حوض بركة مع جهاز فوم صابون +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#612 — حفلة متكاملة - عرض شامل... — يبدأ من 2950 ر.ق — نطاطية + ديكور مع بالون + بطاطا...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#613 — عيد ميلاد سعيد - عرض... — يبدأ من 2680 ر.ق — ديكور مع بالون + طاولات وكراسي 20...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#614 — ديكور فخم لامع — يبدأ من 1200 ر.ق — خلفية فاخرة + بالون فاخر + 3...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#615 — عرض الفخامة - ديكور +... — يبدأ من 1750 ر.ق — ديكور فخم + ماكينة آيس كريم 20...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#616 — بكج ميلاد VIP — يبدأ من 2450 ر.ق — خلفية راقية مع بالون + Happy Birthday...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#617 — بكج التخرج الملكي — يبدأ من 2990 ر.ق — خلفية مع بالونات + ستيج مضيء 3×3...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#618 — بكج تخرج Class of 2026 — يبدأ من 1850 ر.ق — ديكور تخرج فاخر 2026 + عربة ذرة...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#619 — ديكورات تخرج حسب الشكل — يبدأ من 700 ر.ق — تصميم حسب الطلب + تركيب احترافي +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#620 — صيف معنا - خدمة 30... — يبدأ من 1700 ر.ق — بركة سباحة + ماكينة آيس كريم +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#621 — جمعتكم معنا - الباقة الذهبية — يبدأ من 1800 ر.ق — فشار 20 + غزل البنات 20 +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#622 — ديكورات مميزة لجميع المناسبات — يبدأ من 800 ر.ق — تصاميم عصرية وألوان جذابة + تنفيذ احترافي...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#623 — حفلة متكاملة للأطفال — يبدأ من 3550 ر.ق — نطاطية وزحلاقية ديناصور 2 + ديكور مع...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#600 — SUMMER SPECIAL - عروض الصيف — يبدأ من 700 ر.ق — حفلة فوم مع جهاز صابون + زحلاقية...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#601 — صيف معنا — يبدأ من 700 ر.ق — ملعب صابوني + جهاز صابون + خدمة...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#602 — نطاطية كبيرة مع فوم — يبدأ من 800 ر.ق — نطاطية كبيرة + فوم</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#603 — صيف معنا — يبدأ من 700 ر.ق — ملعب صابوني أو حوض سباحة + جهاز...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#604 — زحلاقية بيبي شرك المائية — يبدأ من 700 ر.ق — زحلاقية مائية + جهاز صابون قوي</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#605 — عرض الصيف — يبدأ من 980 ر.ق — ملعب صابوني ضخم + كرة سلة هوائي...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#606 — زحلاقية يونيكورن المائية — يبدأ من 850 ر.ق — زحلاقية مائية يونيكورن مع منطقة لعب مائية</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#607 — نطاطية كبيرة مع بركة — يبدأ من 1050 ر.ق — نطاطية كبيرة مع بركة مائية</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#608 — فرصة ما تتعوض — يبدأ من 1800 ر.ق — نطاطية كبيرة بركة + نطاطية صغيرة بركة...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#609 — صيف الملكة - باقة 30... — يبدأ من 1950 ر.ق — نطاطية كبيرة بركة + نطاطية صغيرة بركة...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#610 — صيف الملكة - فرحة الصيف — يبدأ من 2200 ر.ق — نطاطية كبيرة + آيس كريم 20 +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#611 — عرض المتعة — يبدأ من 1700 ر.ق — حوض بركة مع جهاز فوم صابون +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#612 — حفلة متكاملة - عرض شامل... — يبدأ من 2950 ر.ق — نطاطية + ديكور مع بالون + بطاطا...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#613 — عيد ميلاد سعيد - عرض... — يبدأ من 2680 ر.ق — ديكور مع بالون + طاولات وكراسي 20...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#614 — ديكور فخم لامع — يبدأ من 1200 ر.ق — خلفية فاخرة + بالون فاخر + 3...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#615 — عرض الفخامة - ديكور +... — يبدأ من 1750 ر.ق — ديكور فخم + ماكينة آيس كريم 20...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#616 — بكج ميلاد VIP — يبدأ من 2450 ر.ق — خلفية راقية مع بالون + Happy Birthday...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#617 — بكج التخرج الملكي — يبدأ من 2990 ر.ق — خلفية مع بالونات + ستيج مضيء 3×3...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#618 — بكج تخرج Class of 2026 — يبدأ من 1850 ر.ق — ديكور تخرج فاخر 2026 + عربة ذرة...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#619 — ديكورات تخرج حسب الشكل — يبدأ من 700 ر.ق — تصميم حسب الطلب + تركيب احترافي +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#620 — صيف معنا - خدمة 30... — يبدأ من 1700 ر.ق — بركة سباحة + ماكينة آيس كريم +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#621 — جمعتكم معنا - الباقة الذهبية — يبدأ من 1800 ر.ق — فشار 20 + غزل البنات 20 +...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#622 — ديكورات مميزة لجميع المناسبات — يبدأ من 800 ر.ق — تصاميم عصرية وألوان جذابة + تنفيذ احترافي...</span></span><span class=\"v361TickerSep\">•</span><span class=\"v361TickerItem\"><span class=\"v361TickerTag\">عرض</span><span class=\"v361TickerText\">#623 — حفلة متكاملة للأطفال — يبدأ من 3550 ر.ق — نطاطية وزحلاقية ديناصور 2 + ديكور مع...</span></span><span class=\"v361TickerSep\">•</span>";
-  function applyTickerData(){
-    try{
-      var wrap=document.getElementById('v361TopTickerWrap');
-      if(wrap && document.body && document.body.firstElementChild!==wrap) document.body.insertBefore(wrap, document.body.firstElementChild);
-      var track=document.getElementById('v361TickerTrack');
-      if(!track) return;
-      if(track.innerHTML.indexOf('v361TickerItem')===-1) track.innerHTML=tickerData;
-      track.style.animation='v361TickerMove '+(innerWidth<900?'7s':'9s')+' linear infinite';
-      track.style.animationPlayState='running';
-    }catch(e){}
-  }
-  document.addEventListener('DOMContentLoaded',function(){applyTickerData();setTimeout(applyTickerData,100);setTimeout(applyTickerData,500);});
-  window.addEventListener('load',function(){applyTickerData();setTimeout(applyTickerData,300);});
-  document.addEventListener('click',function(){setTimeout(applyTickerData,80);},true);
-  setInterval(applyTickerData,1200);
-})();
-</script>
-
-
-
-
-
-
-
-
-
 <script id="v366-fixed-header-and-working-ticker-script">
 (function(){
   function v366FixTop(){
@@ -13572,169 +13400,6 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   setInterval(v366FixTop,1500);
 })();
 </script>
-
-
-<style id="v368-slow-readable-ticker-style">
-/* v368: تخفيف سرعة شريط العروض ليكون مقروء للزبون */
-.almWorkingTickerTrack,
-.v359TickerTrack,
-.v361TickerTrack,
-.v360TickerTrack{
-  animation-duration:70s!important;
-  animation-play-state:running!important;
-  animation-timing-function:linear!important;
-}
-#almWorkingTicker:hover .almWorkingTickerTrack,
-.v359TickerBar:hover .v359TickerTrack,
-.v361Ticker:hover .v361TickerTrack,
-.v360Ticker:hover .v360TickerTrack{
-  animation-play-state:running!important;
-}
-.almTickerMarquee{
-  scroll-behavior:auto!important;
-}
-@media(max-width:900px){
-  .almWorkingTickerTrack,
-  .v359TickerTrack,
-  .v361TickerTrack,
-  .v360TickerTrack{
-    animation-duration:60s!important;
-  }
-}
-</style>
-<script id="v368-slow-readable-ticker-script">
-(function(){
-  function slowTicker(){
-    try{
-      document.querySelectorAll('.almWorkingTickerTrack,.v359TickerTrack,.v361TickerTrack,.v360TickerTrack').forEach(function(el){
-        el.style.animationDuration = (window.innerWidth < 900 ? '60s' : '70s');
-        el.style.animationTimingFunction = 'linear';
-        el.style.animationPlayState = 'running';
-      });
-      document.querySelectorAll('marquee.almTickerMarquee').forEach(function(mq){
-        mq.setAttribute('scrollamount','3');
-        mq.setAttribute('scrolldelay','25');
-        try{mq.start();}catch(e){}
-      });
-    }catch(e){}
-  }
-  document.addEventListener('DOMContentLoaded',function(){
-    slowTicker();
-    setTimeout(slowTicker,100);
-    setTimeout(slowTicker,500);
-  });
-  window.addEventListener('load',slowTicker);
-  window.addEventListener('resize',slowTicker);
-  setInterval(slowTicker,2000);
-})();
-</script>
-
-
-<style id="v369-extra-slow-readable-ticker-style">
-/* v369: تخفيف إضافي لسرعة شريط العروض */
-.almWorkingTickerTrack,
-.v359TickerTrack,
-.v361TickerTrack,
-.v360TickerTrack{
-  animation-duration:110s!important;
-  animation-play-state:running!important;
-  animation-timing-function:linear!important;
-}
-#almWorkingTicker:hover .almWorkingTickerTrack,
-.v359TickerBar:hover .v359TickerTrack,
-.v361Ticker:hover .v361TickerTrack,
-.v360Ticker:hover .v360TickerTrack{
-  animation-play-state:running!important;
-}
-@media(max-width:900px){
-  .almWorkingTickerTrack,
-  .v359TickerTrack,
-  .v361TickerTrack,
-  .v360TickerTrack{
-    animation-duration:95s!important;
-  }
-}
-</style>
-<script id="v369-extra-slow-readable-ticker-script">
-(function(){
-  function extraSlowTicker(){
-    try{
-      document.querySelectorAll('.almWorkingTickerTrack,.v359TickerTrack,.v361TickerTrack,.v360TickerTrack').forEach(function(el){
-        el.style.animationDuration = (window.innerWidth < 900 ? '95s' : '110s');
-        el.style.animationTimingFunction = 'linear';
-        el.style.animationPlayState = 'running';
-      });
-      document.querySelectorAll('marquee.almTickerMarquee').forEach(function(mq){
-        mq.setAttribute('scrollamount','2');
-        mq.setAttribute('scrolldelay','35');
-        try{mq.start();}catch(e){}
-      });
-    }catch(e){}
-  }
-  document.addEventListener('DOMContentLoaded',function(){
-    extraSlowTicker();
-    setTimeout(extraSlowTicker,100);
-    setTimeout(extraSlowTicker,500);
-  });
-  window.addEventListener('load',extraSlowTicker);
-  window.addEventListener('resize',extraSlowTicker);
-  setInterval(extraSlowTicker,2000);
-})();
-</script>
-
-
-<style id="v370-very-slow-readable-ticker-style">
-/* v370: أبطأ أكثر لشريط العروض حتى يقرأه الزبون بسهولة */
-.almWorkingTickerTrack,
-.v359TickerTrack,
-.v361TickerTrack,
-.v360TickerTrack{
-  animation-duration:160s!important;
-  animation-play-state:running!important;
-  animation-timing-function:linear!important;
-}
-#almWorkingTicker:hover .almWorkingTickerTrack,
-.v359TickerBar:hover .v359TickerTrack,
-.v361Ticker:hover .v361TickerTrack,
-.v360Ticker:hover .v360TickerTrack{
-  animation-play-state:running!important;
-}
-@media(max-width:900px){
-  .almWorkingTickerTrack,
-  .v359TickerTrack,
-  .v361TickerTrack,
-  .v360TickerTrack{
-    animation-duration:140s!important;
-  }
-}
-</style>
-<script id="v370-very-slow-readable-ticker-script">
-(function(){
-  function verySlowTicker(){
-    try{
-      document.querySelectorAll('.almWorkingTickerTrack,.v359TickerTrack,.v361TickerTrack,.v360TickerTrack').forEach(function(el){
-        el.style.animationDuration = (window.innerWidth < 900 ? '140s' : '160s');
-        el.style.animationTimingFunction = 'linear';
-        el.style.animationPlayState = 'running';
-      });
-      document.querySelectorAll('marquee.almTickerMarquee').forEach(function(mq){
-        mq.setAttribute('scrollamount','1');
-        mq.setAttribute('scrolldelay','45');
-        try{mq.start();}catch(e){}
-      });
-    }catch(e){}
-  }
-  document.addEventListener('DOMContentLoaded',function(){
-    verySlowTicker();
-    setTimeout(verySlowTicker,100);
-    setTimeout(verySlowTicker,500);
-  });
-  window.addEventListener('load',verySlowTicker);
-  window.addEventListener('resize',verySlowTicker);
-  setInterval(verySlowTicker,2000);
-})();
-</script>
-
 
 
 <!-- ===== V395 GLOBAL IMAGE ZOOM FIX: الصور المكبرة فوق كل النوافذ بدون قص ===== -->
@@ -13967,59 +13632,6 @@ body.v395ImageZoomOpen{overflow:hidden!important;}
 try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
 </script>
 
-
-
-<!-- ===== V408: إبطاء شريط آخر العروض بشكل واضح جداً ===== -->
-<style id="almalika-v408-moving-offers-ticker-slower">
-  #almWorkingTicker,
-  #almWorkingTicker .almWorkingTickerWindow{
-    overflow:hidden!important;
-  }
-  .almWorkingTickerTrack{
-    display:flex!important;
-    align-items:center!important;
-    width:max-content!important;
-    min-width:max-content!important;
-    white-space:nowrap!important;
-    will-change:transform!important;
-    animation:almV408TickerMove 140s linear infinite!important;
-    transform:none;
-  }
-  #almWorkingTicker:hover .almWorkingTickerTrack{
-    animation-play-state:running!important;
-  }
-  @keyframes almV408TickerMove{
-    0%{transform:translateX(0)}
-    100%{transform:translateX(50%)}
-  }
-  @media(max-width:700px){
-    .almWorkingTickerTrack{animation-duration:120s!important;}
-  }
-</style>
-<script id="almalika-v408-moving-offers-ticker-slower-script">
-(function(){
-  function keepTickerMovingSlow(){
-    var seconds = window.innerWidth < 700 ? 120 : 140;
-    document.querySelectorAll('.almWorkingTickerTrack').forEach(function(el){
-      el.style.setProperty('animation','almV408TickerMove '+seconds+'s linear infinite','important');
-      el.style.setProperty('animation-duration',seconds+'s','important');
-      el.style.setProperty('animation-timing-function','linear','important');
-      el.style.setProperty('animation-play-state','running','important');
-      el.style.setProperty('will-change','transform','important');
-      if(el.style.transform==='none') el.style.removeProperty('transform');
-    });
-    document.querySelectorAll('marquee.almTickerMarquee').forEach(function(mq){
-      mq.setAttribute('scrollamount','1');
-      mq.setAttribute('scrolldelay','80');
-      try{mq.start();}catch(e){}
-    });
-  }
-  document.addEventListener('DOMContentLoaded',keepTickerMovingSlow);
-  window.addEventListener('load',keepTickerMovingSlow);
-  window.addEventListener('resize',keepTickerMovingSlow);
-  setInterval(keepTickerMovingSlow,600);
-})();
-</script>
 
 
 
@@ -14435,23 +14047,7 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
       return arr.map(function(p){ return '<span class="almPulseTickerItem"><b>#'+Number(p.number||0)+'</b> '+escHtml(p.name||'عرض')+' — يبدأ من '+escHtml(minPriceFor(p))+'</span>'; });
     }catch(e){return [];}
   }
-  function ensurePulseTicker(){
-    var group=document.getElementById('almTopFixedGroup');
-    if(!group) return;
-    var anchor=group.querySelector('#almWorkingTicker,.almWorkingTickerWrap,.v361TopTickerWrap,#v361TopTickerWrap');
-    if(!anchor) return;
-    var bar=document.getElementById('almPulseTickerBar');
-    if(!bar){
-      bar=document.createElement('div'); bar.id='almPulseTickerBar';
-      var next=anchor.nextSibling;
-      if(next) group.insertBefore(bar,next); else group.appendChild(bar);
-    }
-    var items=offerSummaries();
-    bar.innerHTML='<div class="almPulseTickerLabel">آخر العروض</div><div class="almPulseTickerContent"><div class="almPulseTickerTrack">'+(items.length?items.join('<span class="almPulseTickerSep">•</span>'):'<span class="almPulseTickerItem">لا توجد عروض مضافة حالياً</span>')+'</div></div>';
-    setTimeout(function(){
-      var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0); if(h){ document.documentElement.style.setProperty('--almFixedTopHeight',h+'px'); document.body.style.paddingTop=h+'px'; }
-    },20);
-  }
+  function ensurePulseTicker(){ document.querySelectorAll('#almPulseTickerBar,#almWorkingTicker,#v361TopTickerWrap,.v361TopTickerWrap').forEach(function(el){el.remove();}); }
   function run(){ ensurePulseTicker(); ensureHomePromo(); }
   document.addEventListener('DOMContentLoaded',function(){ setTimeout(run,80); setTimeout(run,350); setTimeout(run,1000); });
   window.addEventListener('load',function(){ setTimeout(run,120); setTimeout(run,500); });
@@ -14461,6 +14057,25 @@ try{ localStorage.removeItem('almalikaViewMode'); }catch(e){}
   var mo=new MutationObserver(function(){ run(); });
   document.addEventListener('DOMContentLoaded',function(){ var app=document.getElementById('app'); if(app) mo.observe(app,{childList:true,subtree:false}); });
   setInterval(function(){ ensurePulseTicker(); if(document.querySelector('#app .hero')) ensureHomePromo(); },2000);
+})();
+</script>
+
+
+<script id="almalika-v430-remove-top-bars-cleanup">
+(function(){
+  function fix(){
+    try{
+      document.querySelectorAll('#almWorkingTicker,#almWelcome15Bar,#almPulseTickerBar,#v361TopTickerWrap,.v361TopTickerWrap').forEach(function(el){el.remove();});
+      var group=document.getElementById('almTopFixedGroup');
+      if(group){
+        var h=Math.ceil(group.getBoundingClientRect().height||group.offsetHeight||0);
+        if(h){document.documentElement.style.setProperty('--almFixedTopHeight',h+'px');document.body.style.paddingTop=h+'px';}
+      }
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(fix,20);setTimeout(fix,300);setTimeout(fix,900);});
+  window.addEventListener('load',fix);
+  window.addEventListener('resize',fix);
 })();
 </script>
 
@@ -18352,57 +17967,6 @@ body.almV402ProductsMode #app .products{
 <style id="almalika-v419-welcome15-and-rich-slider-style">
 /* v419: لا نلمس الشريط الأسود نهائياً — نضيف الشريط الأزرق فقط تحته */
 #almPulseTickerBar{display:none!important}
-#almWelcome15Bar{
-  direction:rtl!important;width:100%!important;height:52px!important;min-height:52px!important;
-  display:flex!important;align-items:center!important;justify-content:center!important;gap:22px!important;
-  box-sizing:border-box!important;padding:0 18px!important;overflow:hidden!important;position:relative!important;
-  color:#fff!important;border-top:2px solid #73c8ff!important;border-bottom:2px solid #ec1b72!important;
-  background:
-    radial-gradient(circle at 20% 20%,rgba(255,255,255,.22),transparent 22%),
-    repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 4px),
-    linear-gradient(180deg,#1fb4ff 0%,#008dea 46%,#006ac9 100%)!important;
-  box-shadow:0 5px 18px rgba(0,112,205,.22)!important;
-  animation:almBlueWelcomePulse 5.8s ease-in-out infinite!important;
-}
-#almWelcome15Bar::before,#almWelcome15Bar::after{
-  content:''!important;position:absolute!important;top:50%!important;width:210px!important;height:2px!important;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.7),transparent)!important;opacity:.75!important;
-}
-#almWelcome15Bar::before{right:70px!important}#almWelcome15Bar::after{left:70px!important}
-#almWelcome15Bar .welcomePill{
-  position:relative!important;z-index:2!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;
-  height:28px!important;padding:0 13px!important;border-radius:999px!important;border:1px solid rgba(255,255,255,.58)!important;
-  background:rgba(0,76,150,.18)!important;color:#fff!important;font-size:13px!important;font-weight:1000!important;white-space:nowrap!important;
-  box-shadow:inset 0 0 15px rgba(255,255,255,.08)!important;
-}
-#almWelcome15Bar .welcomeMain{
-  position:relative!important;z-index:2!important;display:flex!important;align-items:center!important;gap:14px!important;white-space:nowrap!important;
-  font-weight:1000!important;text-shadow:0 2px 5px rgba(0,48,99,.35)!important;
-}
-#almWelcome15Bar .welcomeMain .small{font-size:16px!important;opacity:.98!important}
-#almWelcome15Bar .welcomeMain .big{font-size:34px!important;line-height:1!important;letter-spacing:-1px!important}
-#almWelcome15Bar .welcomeMain .code{font-size:22px!important;direction:ltr!important;font-weight:1000!important}
-#almWelcome15Bar .welcomeBtn{
-  position:relative!important;z-index:2!important;border:0!important;border-radius:999px!important;background:#fff!important;color:#0069bd!important;
-  height:34px!important;padding:0 20px!important;font-size:14px!important;font-weight:1000!important;cursor:pointer!important;
-  box-shadow:0 8px 20px rgba(0,51,115,.18)!important;
-}
-#almWelcome15Bar .welcomeBtn:hover{transform:translateY(-1px)!important;box-shadow:0 10px 26px rgba(0,51,115,.25)!important}
-@keyframes almBlueWelcomePulse{
-  0%,100%{filter:saturate(1) brightness(1);box-shadow:0 5px 18px rgba(0,112,205,.22)}
-  50%{filter:saturate(1.18) brightness(1.08);box-shadow:0 7px 30px rgba(28,168,255,.36)}
-}
-@media(max-width:700px){
-  #almWelcome15Bar{height:44px!important;min-height:44px!important;gap:8px!important;padding:0 8px!important}
-  #almWelcome15Bar::before,#almWelcome15Bar::after{display:none!important}
-  #almWelcome15Bar .welcomePill{height:24px!important;font-size:10px!important;padding:0 8px!important}
-  #almWelcome15Bar .welcomeMain{gap:7px!important}
-  #almWelcome15Bar .welcomeMain .small{font-size:11px!important}
-  #almWelcome15Bar .welcomeMain .big{font-size:22px!important}
-  #almWelcome15Bar .welcomeMain .code{font-size:14px!important}
-  #almWelcome15Bar .welcomeBtn{height:28px!important;font-size:11px!important;padding:0 10px!important}
-}
-
 /* v419: السلايدر الرئيسي يصبح أكثر ثراءً وتناسقاً */
 #almHomePromoSlider .almPromoSlider{border-radius:30px!important;overflow:hidden!important;background:#fff!important}
 #almHomePromoSlider .almPromoViewport{min-height:500px!important}
@@ -18437,7 +18001,7 @@ body.almV402ProductsMode #app .products{
 </style>
 <script id="almalika-v419-welcome15-and-rich-slider-script">
 (function(){
-  var CODE='WELCOME15';
+  var CODE='';
   var DISCOUNT_RATE=0.15;
   function qs(sel,root){return (root||document).querySelector(sel)}
   function qsa(sel,root){return Array.prototype.slice.call((root||document).querySelectorAll(sel))}
@@ -18450,31 +18014,8 @@ body.almV402ProductsMode #app .products{
   function productSubtotal(){try{return typeof cartSubtotal==='function'?Number(cartSubtotal()||0):((window.cart||[]).reduce(function(s,x){return s+(Number(x.selectedPrice|| (typeof price==='function'?price(x):x.priceOneDay)||0)*(x.qty||1));},0))}catch(e){return 0}}
   function welcomeDiscount(){return isActive()?Math.round(productSubtotal()*DISCOUNT_RATE):0}
   window.almWelcome15DiscountAmount=welcomeDiscount;
-  window.activateWelcome15=function(){
-    var current='';
-    try{current=normPhone(qs('#custPhone')&&qs('#custPhone').value)}catch(e){}
-    var phone=prompt('اكتب رقم الجوال لتفعيل كود '+CODE+(current?'\nالرقم الحالي: '+current:''), current||'');
-    phone=normPhone(phone);
-    if(!phone || phone.length<8){alert('يرجى كتابة رقم جوال صحيح من 8 أرقام.');return;}
-    var used=usedPhones();
-    if(used.indexOf(phone)!==-1){
-      alert('هذا الرقم استخدم كود '+CODE+' من قبل. الميزة الترحيبية مرة واحدة لكل رقم جوال.');
-      return;
-    }
-    used.push(phone); setUsedPhones(used); setActiveWelcome({phone:phone,code:CODE,rate:DISCOUNT_RATE,activatedAt:new Date().toISOString()});
-    alert('تم تفعيل كود '+CODE+' لهذا الرقم. سيتم خصم 15% داخل السلة.');
-    if(typeof updateCartUI==='function') updateCartUI();
-    if(qs('.cartModal')) setTimeout(function(){ if(typeof openCart==='function') openCart(); },60);
-  };
-  function ensureBlueBar(){
-    var ticker=qs('#almWorkingTicker'); if(!ticker || !ticker.parentNode) return;
-    qsa('#almPulseTickerBar').forEach(function(el){el.style.display='none';});
-    var bar=qs('#almWelcome15Bar');
-    if(!bar){bar=document.createElement('div'); bar.id='almWelcome15Bar';}
-    bar.innerHTML='<span class="welcomePill">أول طلب فقط</span><span class="welcomeMain"><span class="small">مزايا ترحيبية لأول طلب</span><span class="big">وفر 15%</span><span class="small">الكود:</span><span class="code">WELCOME15</span><span class="small">للتطبيق فقط</span></span><button class="welcomeBtn" type="button" onclick="activateWelcome15()">تفعيل الكود</button>';
-    if(ticker.nextSibling!==bar) ticker.parentNode.insertBefore(bar,ticker.nextSibling);
-    refreshTopHeight();
-  }
+  window.activateWelcome15=function(){return false;};
+  function ensureBlueBar(){ var bar=qs('#almWelcome15Bar'); if(bar) bar.remove(); refreshTopHeight(); }
   function refreshTopHeight(){
     setTimeout(function(){
       var group=qs('#almTopFixedGroup');
@@ -18505,7 +18046,7 @@ body.almV402ProductsMode #app .products{
     row.innerHTML='<span>كود '+CODE+' مفعل — خصم 15%</span><b>- <span id="welcomeDiscountView">'+d+'</span> ر.ق</b>';
     if(totalFinal) summary.insertBefore(row,totalFinal); else summary.appendChild(row);
     var note=document.createElement('div'); note.className='welcomeCartNote';
-    var a=activeWelcome(); note.textContent='تم ربط كود WELCOME15 برقم الجوال: '+(a&&a.phone?a.phone:'')+' — مرة واحدة لكل رقم.';
+    var a=activeWelcome(); note.textContent='';
     summary.appendChild(note);
     var t=qs('#cartTotalView'); if(t && typeof cartTotal==='function') t.textContent=cartTotal();
   }
@@ -18726,26 +18267,8 @@ body.almV402ProductsMode #app .products{
     show(root,Number(root.dataset.index||0));
     restart(root);
   }
-  function cleanBlueBar(){
-    var bar=qs('#almWelcome15Bar');
-    if(bar){
-      bar.innerHTML='<span class="welcomePill">أول طلب فقط</span><span class="welcomeMain"><span class="small">مزايا ترحيبية لأول طلب</span><span class="big">وفر 15%</span><span class="small">الكود:</span><span class="code">WELCOME15</span><span class="small">للتطبيق فقط</span></span><button class="welcomeBtn" type="button" onclick="activateWelcome15&&activateWelcome15()">تفعيل الكود</button>';
-    }
-    qsa('#almPulseTickerBar,#v361TopTickerWrap,.v361TopTickerWrap').forEach(function(x){x.style.display='none';});
-  }
-  function cleanBlackTicker(){
-    /* لا نغيّر شكل الشريط الأسود، فقط نزيل أي نسخة قديمة مكررة ونبقي المعروض الحالي من المنتجات */
-    var track=qs('#almWorkingTicker .almWorkingTickerTrack');
-    if(!track)return;
-    try{
-      var arr=((window.products|| (typeof products!=='undefined'?products:[]))||[]).filter(function(p){return typeof sectionOf==='function' && sectionOf(p)==='offers';}).slice(0,14);
-      if(arr.length){
-        var txt=arr.map(function(p){return '🔥 '+(p.name||'عرض')+' — يبدأ من '+minPrice(p);}).join('  •  ');
-        track.innerHTML='<span>'+escHtml(txt)+'</span><span>'+escHtml(txt)+'</span>';
-      }
-      track.style.animationPlayState='running';
-    }catch(e){}
-  }
+  function cleanBlueBar(){ var bar=qs('#almWelcome15Bar'); if(bar) bar.remove(); qsa('#almPulseTickerBar,#v361TopTickerWrap,.v361TopTickerWrap').forEach(function(x){x.remove();}); }
+  function cleanBlackTicker(){ qsa('#almWorkingTicker,#almPulseTickerBar,#v361TopTickerWrap,.v361TopTickerWrap').forEach(function(x){x.remove();}); }
   function refreshTopHeight(){
     setTimeout(function(){
       var group=qs('#almTopFixedGroup');
