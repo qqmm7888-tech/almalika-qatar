@@ -17684,3 +17684,87 @@ body.almV402ProductsMode #app .products{
 </script>
 
 
+
+
+<!-- ===== V433 FIX: توحيد حجم عرض الكمبيوتر وإلغاء تضارب المقاسات ===== -->
+<style id="almalika-v433-desktop-size-fix">
+/* حل مشكلة ظهور الموقع بمقاسين مختلفين على الكمبيوتر */
+@media (min-width: 901px){
+  html,body{
+    width:100%!important;
+    max-width:none!important;
+    overflow-x:hidden!important;
+  }
+  #app,
+  main,
+  .page,
+  .content{
+    width:100%!important;
+    max-width:none!important;
+  }
+  .wrap,
+  .header .wrap,
+  #app > .wrap,
+  #app > .wrap.section{
+    width:min(100% - 36px,1500px)!important;
+    max-width:1500px!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+  #app .hero,
+  .hero{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:14px 0 10px!important;
+    border-radius:0!important;
+    overflow:visible!important;
+  }
+  #app .homeHeroFrame,
+  .homeHeroFrame{
+    width:min(100% - 36px,1500px)!important;
+    max-width:1500px!important;
+    margin:12px auto 18px!important;
+    border-radius:26px!important;
+    overflow:hidden!important;
+  }
+  #app .homeHeroImage,
+  .homeHeroImage{
+    display:block!important;
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
+    object-fit:contain!important;
+  }
+  #app .products,
+  #app .products.alm-responsive-products,
+  #app .products.view-wide,
+  #app .products.view-cards,
+  #app .products.view-compact,
+  #app .products.view-mini,
+  #app .products.view-list{
+    width:100%!important;
+    max-width:100%!important;
+  }
+}
+@media (min-width: 1200px){
+  #app .products.alm-responsive-products,
+  #app .products.view-wide,
+  #app .products.view-cards,
+  #app .products.view-compact,
+  #app .products.view-mini{
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    gap:18px!important;
+  }
+}
+@media (min-width: 901px) and (max-width:1199px){
+  #app .products.alm-responsive-products,
+  #app .products.view-wide,
+  #app .products.view-cards,
+  #app .products.view-compact,
+  #app .products.view-mini{
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:16px!important;
+  }
+}
+</style>
