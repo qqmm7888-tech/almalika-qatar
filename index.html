@@ -12214,6 +12214,89 @@ function openOfferImage(n){
 }
 </style>
 
+
+
+<!-- ===== V307 FIX: Snack images no blank / fast alias + clear placeholder ===== -->
+<style id="almalika-v307-snack-image-fix">
+.product .pic.snackPlaceholder{background:linear-gradient(135deg,#fff8e7,#fff3f8,#fff)!important;position:relative!important}
+.product .pic.snackPlaceholder::after{
+  content:attr(data-placeholder-title);
+  position:absolute;inset:12px;display:flex;align-items:center;justify-content:center;text-align:center;
+  border:1px dashed #e7c36c;border-radius:18px;background:rgba(255,255,255,.76);
+  color:#7a1734;font-weight:900;font-size:14px;line-height:1.6;padding:12px;white-space:pre-line;
+}
+.product .pic.snackPlaceholder img{opacity:0!important;visibility:hidden!important}
+</style>
+<script id="almalika-v307-snack-image-fix">
+(function(){
+  const snackAlias={
+    414:'401.jpg', 415:'403.jpg', 416:'404.jpg', 417:'406.jpg',
+    418:'407.jpg', 419:'408.jpg', 420:'408.jpg', 421:'409.jpg', 422:'410.jpg'
+  };
+  const snackMissingText={
+    412:'صورة عربة البانكيك\nغير مرفوعة',
+    413:'صورة عربة الوافل\nغير مرفوعة'
+  };
+  function numFromCard(card){
+    try{
+      let n=(card.querySelector('.num')?.textContent||'').replace(/[^0-9]/g,'');
+      if(n) return Number(n);
+      let btn=card.querySelector('[onclick*="openProduct"],[onclick*="quickShop"]');
+      let m=btn && (btn.getAttribute('onclick')||'').match(/\((\d+)/);
+      return m?Number(m[1]):0;
+    }catch(e){return 0}
+  }
+  function setImgFast(img,src,n){
+    if(!img||!src) return;
+    img.loading='eager'; img.decoding='async'; img.fetchPriority='high';
+    img.onerror=function(){
+      const box=img.closest('.pic');
+      if(box){
+        box.classList.add('snackPlaceholder');
+        box.setAttribute('data-placeholder-title', snackMissingText[n] || 'الصورة غير مرفوعة');
+      }
+    };
+    if(img.getAttribute('src')!==src) img.src=src;
+  }
+  function applySnackImages(root){
+    try{
+      (root||document).querySelectorAll('.product').forEach(function(card){
+        const n=numFromCard(card); if(!n) return;
+        const img=card.querySelector('.pic img'); if(!img) return;
+        const box=img.closest('.pic'); if(box){box.classList.remove('snackPlaceholder');box.removeAttribute('data-placeholder-title')}
+        if(snackAlias[n]) setImgFast(img,snackAlias[n],n);
+        else if(snackMissingText[n]){
+          setImgFast(img,'__missing_snack_'+n+'.jpg',n);
+          setTimeout(function(){ try{ img.onerror&&img.onerror(); }catch(e){} },80);
+        }
+      });
+    }catch(e){}
+  }
+  try{
+    if(Array.isArray(window.products)){
+      window.products.forEach(function(p){
+        const n=Number(p.number||p.id||0);
+        if(snackAlias[n]) p.image=snackAlias[n];
+      });
+    }
+  }catch(e){}
+  const oldRender=window.render;
+  if(typeof oldRender==='function'){
+    window.render=function(){const r=oldRender.apply(this,arguments);setTimeout(()=>applySnackImages(document),0);setTimeout(()=>applySnackImages(document),120);return r;};
+  }
+  const oldRenderHome=window.renderHome;
+  if(typeof oldRenderHome==='function'){
+    window.renderHome=function(){const r=oldRenderHome.apply(this,arguments);setTimeout(()=>applySnackImages(document),0);setTimeout(()=>applySnackImages(document),120);return r;};
+  }
+  const oldOpenProduct=window.openProduct;
+  if(typeof oldOpenProduct==='function'){
+    window.openProduct=function(){const r=oldOpenProduct.apply(this,arguments);setTimeout(()=>applySnackImages(document),0);return r;};
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(()=>applySnackImages(document),50)});
+  window.addEventListener('load',function(){setTimeout(()=>applySnackImages(document),100)});
+  window.addEventListener('hashchange',function(){setTimeout(()=>applySnackImages(document),80)});
+})();
+</script>
 </body>
 </html>
 
