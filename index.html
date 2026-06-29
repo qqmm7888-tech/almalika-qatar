@@ -5687,7 +5687,9 @@ ${booked?`<div class="availabilityMini">${booked.note}</div>`:''}
 <small>يبدأ من</small>
 <strong>${price(p)} ر.ق</strong>
 </div>
-
+<div class="actions quickActions">
+<button class="details" ${forced?'disabled':''} onclick="openProduct(${p.number})">${forced?'غير متاح':(sectionOf(p)==='offers'?'فتح تفاصيل العرض':'تفاصيل')}</button>
+</div>
 </div>
 </div>
 ${hideProductImageRange412422(p)?'':`<div class="pic ${sectionOf(p)==='offers'?'offerZoomPic':''}" title="${sectionOf(p)==='offers'?'اضغط لتكبير صورة العرض':'اضغط لفتح التفاصيل'}" onclick="${sectionOf(p)==='offers'?'openOfferImage('+p.number+')':'openProduct('+p.number+')'}">${booked?`<div class="bookedImageStamp">${forced?'غير متاح':'محجوز'}</div>`:``}<img src="${esc(productImageUrl(p))}" alt="${esc(p.name)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,'${p.number}')"></div>`}</div>`}
@@ -5716,6 +5718,10 @@ function snackPackSummary(p){
   }catch(e){}
   return '20 / 30 / 40 / 50 طفل';
 }
+function isCharLikeForCard(p){
+  const n=(p.name||'')+' '+(p.type||'');
+  return /شخصية|شخصيات|سبايدر|ميني|باتمان|وودي|إلسا|جيري|مهرج/.test(n);
+}
 function cardFactPairs(p){
   const k=kindOf(p), facts=[];
   if(k==='bouncy'){
@@ -5728,12 +5734,12 @@ function cardFactPairs(p){
     facts.push(['التجهيز', 'مع موظفة حسب الباقة']);
   }else if(k==='event'){
     facts.push(['المقاس', p.decorSize||p.length||'حسب التصميم']);
-    facts.push(['التجهيز', ((p.details||'').includes('بدون سناك')?'بدون سناك':'حسب الطلب'));
+    facts.push(['التجهيز', ((p.details||'').includes('بدون سناك')?'بدون سناك':'حسب الطلب')]);
     facts.push(['المناسبة', 'ميلاد وتخرج ومناسبات']);
   }else if(k==='rental'){
     facts.push(['الخدمة', p.durationOneDay||'حسب الحجز']);
     facts.push(['النوع', shortType(p)||'تأجير']);
-    facts.push(['الملاحظة', isRentalCharacter(p)?'مع حفلة أو سناك':'لا يؤجر منفرداً']);
+    facts.push(['ملاحظة', isCharLikeForCard(p)?'مع حفلة أو سناك':'لا يؤجر منفرداً']);
   }else{
     facts.push(['الخدمة', p.durationOneDay||'حسب الحجز']);
     facts.push(['النوع', shortType(p)||'بند إضافي']);
@@ -5742,7 +5748,7 @@ function cardFactPairs(p){
   return facts.filter(x=>x[1]).slice(0,3);
 }
 function cardExtraInfo(p){
-  return `<div class="miniFacts">${cardFactPairs(p).map(([k,v])=>`<div class="miniFact"><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join('')}</div>`;
+  return `<div class="miniFacts">${cardFactPairs(p).map(function(pair){return `<div class="miniFact"><span>${esc(pair[0])}</span><b>${esc(pair[1])}</b></div>`}).join('')}</div>`;
 }
 function detailIntro(p){const k=kindOf(p); if(k==='snack')return 'خدمة سناك للحفلات والمناسبات مع باقات 20 / 30 / 40 / 50 شخص ومدة خدمة 3 ساعات تقريباً.'; if(k==='event')return 'ديكور وتجهيز حفلة من قسم تجهيز الحفلات مع خيارات حسب الشمول والتفاصيل المطلوبة.'; if(k==='rental')return 'تأجير طاولات وكراسي أو شخصيات كرتونية حسب المناسبة والكمية المطلوبة.'; if(k==='other')return 'بند إضافي للحفلات والمناسبات، يتم تنسيقه حسب نوع الفعالية ومكان التنفيذ.'; return 'نطاطية آمنة وممتعة للأطفال مع تركيب وتشغيل من فريق الملكة.'}
 function isRentalCharacter(p){return kindOf(p)==='rental' && ((p.type||'').includes('شخصيات') || (p.name||'').includes('شخصية') || (p.name||'').includes('سبايدر') || (p.name||'').includes('ميني') || (p.name||'').includes('باتمان') || (p.name||'').includes('وودي') || (p.name||'').includes('إلسا') || (p.name||'').includes('جيري') || (p.name||'').includes('مهرج'))}
@@ -12639,8 +12645,29 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 </script>
 
 
-<style id="almalika-v355-fix-product-image-crop">
-/* v355: منع قص الصور داخل كروت المنتجات مع الإبقاء على إصلاح البيانات السفلية */
+<style id="almalika-v359-safe-restore-products-details">
+/* v359: إصلاح الرجوع الآمن من v351، بدون حذف منتجات، مع ملء الفراغات بتفاصيل مختصرة وزر تفاصيل فقط */
+.products,
+.products.view-wide,
+.products.view-cards,
+.products.view-compact,
+.products.view-mini,
+.products.view-list{
+  align-items:start!important;
+}
+.product,
+.products.view-wide .product,
+.products.view-cards .product,
+.products.view-compact .product,
+.products.view-mini .product,
+.products.view-list .product{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+}
 .product .pic,
 .products.view-wide .product .pic,
 .products.view-cards .product .pic,
@@ -12648,28 +12675,10 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 .products.view-mini .product .pic,
 .products.view-list .product .pic{
   flex:0 0 auto!important;
-  height:auto!important;
-  max-height:none!important;
-  aspect-ratio:auto!important;
-  overflow:hidden!important;
-}
-/* العرض الأساسي */
-.product .pic,
-.products.view-wide .product .pic{
-  min-height:220px!important;
-}
-/* أوضاع عرض البطاقات */
-.products.view-cards .product .pic{
-  min-height:210px!important;
-}
-.products.view-compact .product .pic{
+  height:190px!important;
   min-height:190px!important;
-}
-.products.view-mini .product .pic{
-  min-height:170px!important;
-}
-.products.view-list .product .pic{
-  min-height:220px!important;
+  max-height:190px!important;
+  overflow:hidden!important;
 }
 .product .pic img,
 .products.view-wide .product .pic img,
@@ -12679,38 +12688,31 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 .products.view-list .product .pic img{
   width:100%!important;
   height:100%!important;
-  max-width:100%!important;
   max-height:none!important;
   object-fit:contain!important;
-  object-position:center center!important;
-  padding:10px!important;
+  object-position:center!important;
+  padding:9px!important;
   display:block!important;
-  margin:auto!important;
 }
-/* حفاظ إضافي على عدم قص الصور الطويلة */
-.products.view-cards .product .pic img,
-.products.view-compact .product .pic img,
-.products.view-mini .product .pic img{
+.product .body,
+.products.view-wide .product .body,
+.products.view-cards .product .body,
+.products.view-compact .product .body,
+.products.view-mini .product .body,
+.products.view-list .product .body{
+  flex:0 0 auto!important;
   min-height:0!important;
+  padding:14px 14px 15px!important;
+  gap:8px!important;
+  overflow:visible!important;
 }
-@media (max-width:720px){
-  .product .pic,
-  .products.view-wide .product .pic,
-  .products.view-cards .product .pic,
-  .products.view-compact .product .pic,
-  .products.view-mini .product .pic,
-  .products.view-list .product .pic{
-    min-height:180px!important;
-  }
-  .products.view-mini .product .pic{
-    min-height:160px!important;
-  }
-}
-</style>
-
-
-<style id="almalika-v357-details-only-button">
-/* v357: إبقاء زر التفاصيل فقط داخل كروت المنتجات */
+.product .body h3{min-height:42px!important;font-size:18px!important;line-height:1.35!important;margin:0!important}
+.product .desc{min-height:auto!important;font-size:12px!important;line-height:1.55!important;margin:0!important}
+.product .tags{min-height:auto!important;gap:6px!important;margin-top:2px!important}
+.product .miniFacts{display:grid!important;grid-template-columns:1fr!important;gap:6px!important;margin:4px 0 2px!important}
+.product .miniFact{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;background:#fffaf0!important;border:1px solid #f3dfb0!important;border-radius:12px!important;padding:7px 10px!important;min-height:33px!important}
+.product .miniFact span{color:#8b6f2a!important;font-size:10.5px!important;font-weight:800!important;white-space:nowrap!important}
+.product .miniFact b{color:#6A1B2E!important;font-size:10.5px!important;font-weight:900!important;line-height:1.35!important;text-align:left!important;flex:1!important}
 .product .bottom,
 .products.view-wide .product .bottom,
 .products.view-cards .product .bottom,
@@ -12718,110 +12720,18 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 .products.view-mini .product .bottom,
 .products.view-list .product .bottom{
   display:grid!important;
-  grid-template-columns:84px 1fr!important;
-  gap:12px!important;
-  align-items:end!important;
-  margin-top:auto!important;
-}
-.product .price,
-.products.view-wide .product .price,
-.products.view-cards .product .price,
-.products.view-compact .product .price,
-.products.view-mini .product .price,
-.products.view-list .product .price{
-  width:100%!important;
-  max-width:100%!important;
-  margin:0!important;
-}
-.product .actions.quickActions,
-.products.view-wide .product .actions.quickActions,
-.products.view-cards .product .actions.quickActions,
-.products.view-compact .product .actions.quickActions,
-.products.view-mini .product .actions.quickActions,
-.products.view-list .product .actions.quickActions{
-  display:grid!important;
   grid-template-columns:1fr!important;
-  gap:7px!important;
-  width:100%!important;
+  gap:8px!important;
+  margin-top:8px!important;
+  padding-top:0!important;
 }
+.product .price{width:100%!important;min-height:42px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;margin:0!important}
+.product .actions.quickActions{display:grid!important;grid-template-columns:1fr!important;width:100%!important;gap:0!important;margin:0!important}
+.product .actions.quickActions .details{display:block!important;width:100%!important;min-height:38px!important;border-radius:13px!important;font-size:13px!important;padding:9px 12px!important;background:linear-gradient(135deg,#ff2f80,#d31a61)!important;color:#fff!important;font-weight:900!important}
 .product .actions.quickActions .quickShop,
 .product .actions.quickActions .shareFriend,
-.product .actions.quickActions .wa{
-  display:none!important;
-}
-.product .actions.quickActions .details{
-  display:block!important;
-  width:100%!important;
-}
-@media(max-width:720px){
-  .product .bottom,
-  .products.view-wide .product .bottom,
-  .products.view-cards .product .bottom,
-  .products.view-compact .product .bottom,
-  .products.view-mini .product .bottom,
-  .products.view-list .product .bottom{
-    grid-template-columns:1fr!important;
-    gap:10px!important;
-  }
-}
-</style>
-<script id="almalika-v357-keep-details-button-only-js">
-(function(){
-  function keepDetailsOnly(){
-    document.querySelectorAll('.product .actions.quickActions').forEach(function(box){
-      var detailsBtn = box.querySelector('.details');
-      if(!detailsBtn){ box.remove(); return; }
-      Array.from(box.children).forEach(function(btn){
-        if(btn !== detailsBtn) btn.remove();
-      });
-    });
-  }
-  document.addEventListener('DOMContentLoaded', keepDetailsOnly);
-  window.addEventListener('load', keepDetailsOnly);
-  document.addEventListener('click', function(){ setTimeout(keepDetailsOnly, 30); }, true);
-  setInterval(keepDetailsOnly, 800);
-})();
-</script>
-
-
-<style id="almalika-v358-fill-spaces-simple-details">
-/* v358: تقليل الفراغات في كروت الجميع وإضافة معلومات مختصرة ومهمة */
-.product .miniFacts,
-.products.view-wide .product .miniFacts,
-.products.view-cards .product .miniFacts,
-.products.view-compact .product .miniFacts,
-.products.view-mini .product .miniFacts,
-.products.view-list .product .miniFacts{
-  display:grid!important;
-  grid-template-columns:1fr!important;
-  gap:6px!important;
-  margin-top:4px!important;
-}
-.product .miniFact,
-.products.view-wide .product .miniFact,
-.products.view-cards .product .miniFact,
-.products.view-compact .product .miniFact,
-.products.view-mini .product .miniFact,
-.products.view-list .product .miniFact{
-  display:flex!important;
-  align-items:center!important;
-  justify-content:space-between!important;
-  gap:10px!important;
-  background:#fffaf0!important;
-  border:1px solid #f3dfb0!important;
-  border-radius:12px!important;
-  padding:7px 10px!important;
-  min-height:34px!important;
-}
-.product .miniFact span{color:#8b6f2a!important;font-size:11px!important;font-weight:800!important;white-space:nowrap!important}
-.product .miniFact b{color:#6A1B2E!important;font-size:11px!important;font-weight:900!important;line-height:1.35!important;text-align:left!important;flex:1!important}
-.product .body{gap:8px!important}
-.product .desc{min-height:auto!important}
-.product .body h3{min-height:46px!important}
-@media(max-width:720px){
-  .product .miniFact{padding:6px 9px!important;min-height:32px!important}
-  .product .miniFact span,.product .miniFact b{font-size:10.5px!important}
-}
+.product .actions.quickActions .wa{display:none!important}
+@media(max-width:720px){.product .pic{height:176px!important;min-height:176px!important;max-height:176px!important}.product .body h3{font-size:16px!important}.product .miniFact{padding:6px 9px!important}.product .miniFact span,.product .miniFact b{font-size:10px!important}}
 </style>
 
 </body>
@@ -16600,121 +16510,3 @@ section.wrap,
   setInterval(cleanNums, 700);
 })();
 </script>
-
-<style id="almalika-v354-fix-clipped-product-bottom">
-/* v354: إصلاح قص البيانات أسفل كروت المنتجات مع الحفاظ على نفس البيانات والترتيب */
-.products,
-.products.view-wide,
-.products.view-cards,
-.products.view-compact,
-.products.view-mini,
-.products.view-list{
-  align-items:stretch!important;
-}
-.product,
-.products.view-wide .product,
-.products.view-cards .product,
-.products.view-compact .product,
-.products.view-mini .product,
-.products.view-list .product{
-  height:auto!important;
-  min-height:520px!important;
-  max-height:none!important;
-  overflow:hidden!important;
-  display:flex!important;
-  flex-direction:column!important;
-}
-.product .pic,
-.products.view-wide .product .pic,
-.products.view-cards .product .pic,
-.products.view-compact .product .pic,
-.products.view-mini .product .pic,
-.products.view-list .product .pic{
-  flex:0 0 188px!important;
-  height:188px!important;
-  min-height:188px!important;
-  max-height:188px!important;
-}
-.product .body,
-.products.view-wide .product .body,
-.products.view-cards .product .body,
-.products.view-compact .product .body,
-.products.view-mini .product .body,
-.products.view-list .product .body{
-  flex:1 1 auto!important;
-  min-height:0!important;
-  overflow:visible!important;
-  padding-bottom:16px!important;
-}
-.product .body h3{
-  max-height:none!important;
-}
-.product .desc{
-  max-height:none!important;
-}
-.product .tags{
-  max-height:none!important;
-  overflow:visible!important;
-}
-.product .availabilityMini,
-.bookedCatalogWord{
-  max-height:none!important;
-  overflow:visible!important;
-}
-.product .bottom,
-.products.view-wide .product .bottom,
-.products.view-cards .product .bottom,
-.products.view-compact .product .bottom,
-.products.view-mini .product .bottom,
-.products.view-list .product .bottom{
-  flex:0 0 auto!important;
-  margin-top:auto!important;
-  padding-top:6px!important;
-  padding-bottom:2px!important;
-}
-.product .price{
-  min-height:45px!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-.product .price small,
-.product .price strong{
-  overflow:visible!important;
-  max-height:none!important;
-}
-@media(max-width:1150px){
-  .product,
-  .products.view-wide .product,
-  .products.view-cards .product,
-  .products.view-compact .product,
-  .products.view-mini .product,
-  .products.view-list .product{
-    min-height:505px!important;
-  }
-}
-@media(max-width:720px){
-  .product,
-  .products.view-wide .product,
-  .products.view-cards .product,
-  .products.view-compact .product,
-  .products.view-mini .product,
-  .products.view-list .product{
-    height:auto!important;
-    min-height:490px!important;
-    max-height:none!important;
-  }
-  .product .pic,
-  .products.view-wide .product .pic,
-  .products.view-cards .product .pic,
-  .products.view-compact .product .pic,
-  .products.view-mini .product .pic,
-  .products.view-list .product .pic{
-    flex-basis:176px!important;
-    height:176px!important;
-    min-height:176px!important;
-    max-height:176px!important;
-  }
-}
-</style>
