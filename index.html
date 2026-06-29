@@ -5434,6 +5434,31 @@ body .cartItem .qtyBox b{
 </style>
 </head>
 <body>
+<script id="almalika-v370-boot-stable-top">document.documentElement.classList.add('almV370Pending');</script>
+<style id="almalika-v370-stable-top-loading">
+html.almV370Pending .headTop,
+html.almV370Pending .searchRow,
+html.almV370Pending #app > .wrap.section:first-child{
+  visibility:hidden!important;
+  opacity:0!important;
+}
+.headTop{min-height:58px!important}
+.searchRow{min-height:48px!important}
+#nav.almV361DropdownNav{min-height:44px!important}
+#app > .wrap.section:first-child{min-height:335px!important}
+#app > .wrap.section:first-child .title{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:12px!important;align-items:start!important}
+#app > .wrap.section:first-child .title .stats{display:flex!important;flex-wrap:wrap!important;gap:8px!important;align-items:center!important}
+#app > .wrap.section:first-child .title .stat{white-space:nowrap!important}
+.mainCats{align-items:stretch!important}
+.mainCats .cat,.mainCats .cat.richCat{transition:none!important;animation:none!important}
+@media(max-width:860px){
+  #app > .wrap.section:first-child{min-height:420px!important}
+  #app > .wrap.section:first-child .title{grid-template-columns:1fr!important}
+}
+@media(max-width:560px){
+  #app > .wrap.section:first-child{min-height:720px!important}
+}
+</style>
 <div class="siteMagic" aria-hidden="true">
   <span class="trail t1"></span>
   <span class="trail t2"></span>
@@ -12987,6 +13012,79 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanSlots,0);setTimeout(cleanSlots,200);});
   window.addEventListener('load',function(){setTimeout(cleanSlots,0);setTimeout(cleanSlots,250);});
   document.addEventListener('click',function(){setTimeout(cleanSlots,80);},true);
+})();
+</script>
+
+
+
+<style id="almalika-v370-stable-home-top-final">
+html.almV370Ready .headTop,
+html.almV370Ready .searchRow,
+html.almV370Ready #app > .wrap.section:first-child{
+  visibility:visible!important;
+  opacity:1!important;
+  transition:opacity .12s ease!important;
+}
+</style>
+<script id="almalika-v370-stable-top-loading-js">
+(function(){
+  function ensureTopStable(){
+    try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
+    try{ if(typeof v361CleanPage==='function') v361CleanPage(); }catch(e){}
+    try{
+      var first=document.querySelector('#app > .wrap.section:first-child');
+      if(first){
+        var mainCats=first.querySelector('.mainCats');
+        if(mainCats){
+          mainCats.style.setProperty('display','grid','important');
+          mainCats.style.setProperty('visibility','visible','important');
+          mainCats.style.setProperty('opacity','1','important');
+          mainCats.style.setProperty('height','auto','important');
+          mainCats.style.setProperty('max-height','none','important');
+          mainCats.style.setProperty('overflow','visible','important');
+        }
+      }
+    }catch(e){}
+  }
+  function revealStableTop(){
+    document.documentElement.classList.remove('almV370Pending');
+    document.documentElement.classList.add('almV370Ready');
+  }
+  function stabilizeAndReveal(delay){
+    document.documentElement.classList.add('almV370Pending');
+    window.setTimeout(function(){
+      ensureTopStable();
+      requestAnimationFrame(function(){
+        ensureTopStable();
+        requestAnimationFrame(function(){
+          ensureTopStable();
+          revealStableTop();
+        });
+      });
+    }, delay||0);
+  }
+  document.addEventListener('DOMContentLoaded', function(){ stabilizeAndReveal(40); });
+  window.addEventListener('load', function(){ stabilizeAndReveal(80); });
+  window.addEventListener('pageshow', function(){ stabilizeAndReveal(20); });
+  window.addEventListener('hashchange', function(){ stabilizeAndReveal(20); });
+  var oldShowHome=window.showHome;
+  if(typeof oldShowHome==='function'){
+    window.showHome = showHome = function(){
+      document.documentElement.classList.add('almV370Pending');
+      var out = oldShowHome.apply(this, arguments);
+      stabilizeAndReveal(20);
+      return out;
+    };
+  }
+  var oldRenderHome=window.renderHome;
+  if(typeof oldRenderHome==='function'){
+    window.renderHome = renderHome = function(){
+      document.documentElement.classList.add('almV370Pending');
+      var out = oldRenderHome.apply(this, arguments);
+      stabilizeAndReveal(20);
+      return out;
+    };
+  }
 })();
 </script>
 
