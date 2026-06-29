@@ -13081,6 +13081,175 @@ body{overflow-x:hidden!important}
 })();
 </script>
 
+
+
+<style id="almalika-v376-unify-all-image-sizes">
+/* v376: توحيد مقاس صور المنتجات وإلغاء اختلاف المقاسات بين الرئيسية والأقسام */
+.viewToolbar,
+.displayModeBar,
+.productViewBar{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  max-height:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+}
+.products,
+.products.view-wide,
+.products.view-cards,
+.products.view-compact,
+.products.view-mini,
+.products.view-list{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fill,minmax(255px,1fr))!important;
+  gap:16px!important;
+  align-items:stretch!important;
+}
+.product,
+.products.view-wide .product,
+.products.view-cards .product,
+.products.view-compact .product,
+.products.view-mini .product,
+.products.view-list .product{
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:hidden!important;
+  border-radius:22px!important;
+}
+.product .pic,
+.products.view-wide .product .pic,
+.products.view-cards .product .pic,
+.products.view-compact .product .pic,
+.products.view-mini .product .pic,
+.products.view-list .product .pic{
+  order:0!important;
+  width:100%!important;
+  height:205px!important;
+  min-height:205px!important;
+  max-height:205px!important;
+  aspect-ratio:auto!important;
+  padding:10px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important;
+  border:0!important;
+  border-bottom:1px solid #f1dce7!important;
+  background:linear-gradient(135deg,#fff,#fffaf0,#fff7fb)!important;
+}
+.product .pic img,
+.products.view-wide .product .pic img,
+.products.view-cards .product .pic img,
+.products.view-compact .product .pic img,
+.products.view-mini .product .pic img,
+.products.view-list .product .pic img{
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  padding:0!important;
+  margin:0 auto!important;
+  display:block!important;
+  transform:none!important;
+}
+.product:hover .pic img,
+.product .pic:hover img{
+  transform:none!important;
+}
+.mainCats .cat .icon,
+.mainCats .cat.richCat .richIcon,
+.mainCats .cat.v329DecorCat .v329CardBubble{
+  width:64px!important;
+  height:64px!important;
+  min-width:64px!important;
+  min-height:64px!important;
+  max-width:64px!important;
+  max-height:64px!important;
+}
+.mainCats .cat .icon svg,
+.mainCats .cat.richCat .richIcon svg,
+.mainCats .cat.v329DecorCat .v329CardBubble svg{
+  width:30px!important;
+  height:30px!important;
+}
+@media(max-width:1100px){
+  .products,
+  .products.view-wide,
+  .products.view-cards,
+  .products.view-compact,
+  .products.view-mini,
+  .products.view-list{
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important;
+  }
+  .product .pic,
+  .products.view-wide .product .pic,
+  .products.view-cards .product .pic,
+  .products.view-compact .product .pic,
+  .products.view-mini .product .pic,
+  .products.view-list .product .pic{
+    height:195px!important;
+    min-height:195px!important;
+    max-height:195px!important;
+  }
+}
+@media(max-width:640px){
+  .products,
+  .products.view-wide,
+  .products.view-cards,
+  .products.view-compact,
+  .products.view-mini,
+  .products.view-list{
+    grid-template-columns:1fr!important;
+  }
+  .product .pic,
+  .products.view-wide .product .pic,
+  .products.view-cards .product .pic,
+  .products.view-compact .product .pic,
+  .products.view-mini .product .pic,
+  .products.view-list .product .pic{
+    height:190px!important;
+    min-height:190px!important;
+    max-height:190px!important;
+  }
+}
+</style>
+<script id="almalika-v376-force-single-image-view-js">
+(function(){
+  function fixImageSizes(){
+    try{
+      document.querySelectorAll('.viewToolbar,.displayModeBar,.productViewBar').forEach(function(el){el.remove();});
+      document.querySelectorAll('.products').forEach(function(g){
+        ['view-wide','view-compact','view-mini','view-list'].forEach(function(c){g.classList.remove(c);});
+        g.classList.add('view-cards');
+      });
+      document.querySelectorAll('.product .pic').forEach(function(pic){
+        pic.style.setProperty('height','205px','important');
+        pic.style.setProperty('min-height','205px','important');
+        pic.style.setProperty('max-height','205px','important');
+      });
+      document.querySelectorAll('.product .pic img').forEach(function(img){
+        img.style.setProperty('width','100%','important');
+        img.style.setProperty('height','100%','important');
+        img.style.setProperty('object-fit','contain','important');
+        img.style.setProperty('transform','none','important');
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(fixImageSizes,0);setTimeout(fixImageSizes,150);});
+  window.addEventListener('load',function(){setTimeout(fixImageSizes,0);setTimeout(fixImageSizes,250);});
+  document.addEventListener('click',function(){setTimeout(fixImageSizes,40);},true);
+})();
+</script>
+
 </body>
 </html>
 
