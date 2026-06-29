@@ -5585,30 +5585,59 @@ function vipOfferProducts(){
     .sort((a,b)=>Number(a.number)-Number(b.number))
     .filter(p=>{const k=Number(p.number); if(seen.has(k))return false; seen.add(k); return true;});
 }
-function renderHome(){
-  const counts={
-    bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,
-    snacks:products.filter(p=>sectionOf(p)==='snacks').length,
-    events:products.filter(p=>sectionOf(p)==='events').length,
-    rentals:products.filter(p=>sectionOf(p)==='rentals').length,
-    other:products.filter(p=>sectionOf(p)==='other').length
-  };
-  app.innerHTML=`
-  <section class="wrap section homeMainClean" id="homeMainClean">
-    <div class="homeMainHead">
-      <div>
-        <h2>الأقسام الرئيسية</h2>
-        <p>اختر القسم المطلوب بسرعة بدون تكرار أو عناصر إضافية.</p>
-      </div>
-    </div>
-    <div class="mainCats">${sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('')}</div>
-  </section>
-  <section class="wrap section vipHomeClean">
-    <div class="title vipHomeTitle"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام.</p></div></div>
-    <div class="products view-cards">${vipGeneralProducts().map(card).join('')}</div>
-  </section>
-  ${siteTermsSafetyHtml('bottom')}`;
+function renderHome(){const counts={bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,snacks:products.filter(p=>sectionOf(p)==='snacks').length,events:products.filter(p=>sectionOf(p)==='events').length,rentals:products.filter(p=>sectionOf(p)==='rentals').length,other:products.filter(p=>sectionOf(p)==='other').length}; app.innerHTML=`<section class="wrap section"><div class="title"><div><h2>الأقسام الرئيسية</h2><p>تقسيم واضح مع واجهة VIP مريحة وسريعة في التصفح.</p></div><div class="stats"><span class="stat">الإجمالي: ${products.length} بند</span><span class="stat">النطاطيات: ${counts.bouncies}</span><span class="stat">السناك: ${counts.snacks}</span><span class="stat">تجهيز الحفلات: ${counts.events}</span><span class="stat">الطاولات والكراسي والشخصيات: ${counts.rentals}</span><span class="stat">بنود أخرى: ${counts.other}</span></div></div><div class="mainCats">${sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام: نطاطيات، سناك، تجهيز حفلات، طاولات وشخصيات، وبنود أخرى.</p></div></div>${viewToolbar()}<div class="products view-${viewMode}">${vipGeneralProducts().map(card).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات خاصة للعروض فقط</h2><p>نماذج مختارة من المنتجات التي تحتوي على باقات أو عروض فقط.</p></div><button class="btn red" onclick="showSection('offers')">عرض كل العروض</button></div><div class="products view-${viewMode}">${vipOfferProducts().length?vipOfferProducts().map(card).join(''):'<div class="empty">لا توجد عروض مضافة حالياً</div>'}</div></section>${siteTermsSafetyHtml('bottom')}`}
+
+function getCatalogEventDate(){return document.getElementById('catalogEventDate')?.value||''}
+function getCatalogEventEndDate(){return document.getElementById('catalogEventEndDate')?.value||getCatalogEventDate()}
+function dateRangesOverlapCatalog(aStart,aEnd,bStart,bEnd){
+  if(!aStart || !bStart)return false;
+  aEnd=aEnd||aStart; bEnd=bEnd||bStart;
+  return String(aStart)<=String(bEnd) && String(bStart)<=String(aEnd);
 }
+function getAdminOrders(){try{return JSON.parse(localStorage.getItem('almalikaAdminOrders')||'[]')}catch(e){return []}}
+function tempHoldExpiredForCatalog(o){
+  const st = String(o.status||'') + ' ' + String(o.paymentStatus||'');
+  const confirmed = st.includes('مؤكد') || st.includes('تم دفع العربون') || st.includes('قيد التنفيذ');
+  if(confirmed)return false;
+  const t = new Date(o.createdAt||Date.now()).getTime();
+  if(!t || isNaN(t))return false;
+  return (Date.now()-t) > 24*60*60*1000;
+}
+function orderRangeTextCatalog(o){
+  const s=o.eventDateArabic || arabicDateText(o.eventDate||'');
+  const e=o.eventEndDate || '';
+  if(!e || e===o.eventDate)return s;
+  return `${s} إلى ${arabicDateText(e)}`;
+}
+function bookingInfoForCatalog(num,dateStr,endDateStr){
+  if(!dateStr)return null;
+  endDateStr=endDateStr||dateStr;
+  const orders = getAdminOrders();
+  const matches = orders.filter(o=>{
+    if(!o || !dateRangesOverlapCatalog(dateStr,endDateStr,o.eventDate,o.eventEndDate||o.eventDate))return false;
+    const st = String(o.status||'');
+    if(st.includes('ملغي') || st.includes('مؤرشف') || st.includes('منتهي') || st.includes('فك الحجز'))return false;
+    if(tempHoldExpiredForCatalog(o))return false;
+    return (o.items||[]).some(i=>Number(i.number)===Number(num));
+  });
+  if(!matches.length)return null;
+  const confirmed = matches.find(o=>{
+    const st = String(o.status||'') + ' ' + String(o.paymentStatus||'');
+    return st.includes('مؤكد') || st.includes('تم دفع العربون') || st.includes('تم تأكيد الحجز') || st.includes('قيد التنفيذ');
+  });
+  const picked = confirmed || matches[0];
+  return {
+    status: confirmed ? 'محجوزة' : 'محجوزة مؤقتًا',
+    note: confirmed ? `هذا المنتج محجوز خلال الفترة: ${orderRangeTextCatalog(picked)}` : `هذا المنتج محجوز مؤقتًا خلال الفترة: ${orderRangeTextCatalog(picked)}`,
+    orderId: picked.orderId || ''
+  };
+}
+function bookingAlertForCatalog(num){
+  const b = bookingInfoForCatalog(num, getCatalogEventDate(), getCatalogEventEndDate());
+  if(!b)return '';
+  return `${b.status}\n${b.note}${b.orderId?'\nرقم الطلب: '+b.orderId:''}`;
+}
+
 function render(){if(current==='home'){renderHome();return} renderNav(); fillInternal(); const arr=relevantProducts(); const name=(sections.find(s=>s[0]===current)||[])[1]||'الكتالوج'; app.innerHTML=`<section class="wrap section"><div class="panel"><div><h1>${icon(current)} ${name}</h1><p>عدد البنود المعروضة: ${arr.length} — اضغط على الصورة أو التفاصيل لفتح بيانات المنتج.</p></div></div><div class="chips">${(internalSections[current]||['الجميع']).map(x=>`<button class="chip ${x===internal?'active':''}" onclick="setInternal('${esc(x)}')">${x}</button>`).join('')}</div>${viewToolbar()}<div class="products view-${viewMode}">${arr.length?arr.map(card).join(''):'<div class="empty">لا توجد منتجات مطابقة للبحث أو الفلتر الحالي</div>'}</div></section>`}
 
 function tagIcon(p){
@@ -12963,258 +12992,92 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 
 
 
-<style id="almalika-v373-home-scale-header-visible">
-/* v373: ضبط مقاس الرئيسية ومنع اختفاء رأس الصفحة تحت شريط المتصفح */
-html,body{
-  width:100%!important;
-  max-width:100%!important;
-  overflow-x:hidden!important;
-  margin:0!important;
-  padding-top:0!important;
-  scroll-padding-top:120px!important;
-}
-body{
-  background-size:auto!important;
-}
-.header{
-  position:sticky!important;
-  top:0!important;
-  inset-block-start:0!important;
-  z-index:99999!important;
-  transform:none!important;
-  translate:none!important;
-  margin-top:0!important;
-  padding-top:0!important;
-  min-height:0!important;
-  height:auto!important;
-  max-height:none!important;
-  overflow:visible!important;
-  background:rgba(255,255,255,.98)!important;
-  border-bottom:1px solid #f1d8e5!important;
-}
-.header .wrap{
-  width:min(100% - 24px,1760px)!important;
-  max-width:1760px!important;
-  margin-inline:auto!important;
-  padding:0!important;
-  overflow:visible!important;
-}
-.header .headTop{
-  display:grid!important;
-  grid-template-columns:auto minmax(0,1fr) auto!important;
-  grid-template-areas:"logo nav buttons"!important;
-  align-items:center!important;
-  gap:10px!important;
-  padding:7px 0 6px!important;
-  min-height:54px!important;
-  height:auto!important;
-  max-height:none!important;
-  margin:0!important;
-  overflow:visible!important;
-  transform:none!important;
-  direction:rtl!important;
-}
-.header .logo{
-  grid-area:logo!important;
-  font-size:30px!important;
-  line-height:1!important;
-  margin:0!important;
-  padding:0 4px!important;
-  white-space:nowrap!important;
-  align-self:center!important;
-  transform:none!important;
-}
-.header .logo:before{font-size:18px!important}
-.header #nav,
-.header .nav{
-  grid-area:nav!important;
-  display:flex!important;
-  flex-wrap:wrap!important;
-  justify-content:center!important;
-  align-items:center!important;
-  gap:6px!important;
-  min-height:40px!important;
-  height:auto!important;
-  max-height:none!important;
-  padding:0!important;
-  margin:0!important;
-  overflow:visible!important;
-  background:transparent!important;
-  border-radius:0!important;
-  transform:none!important;
-}
-.header #nav.almV361DropdownNav .navHomeBtn,
-.header #nav.almV361DropdownNav .navDrop>summary,
-.header .nav button{
-  min-height:36px!important;
-  height:36px!important;
-  padding:7px 12px!important;
-  border-radius:13px!important;
-  font-size:12.5px!important;
-  line-height:1!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  white-space:nowrap!important;
-}
-.header #nav.almV361DropdownNav .navDrop{
-  margin:0!important;
-  padding:0!important;
-  position:relative!important;
-}
-.header .headBtns{
-  grid-area:buttons!important;
-  display:flex!important;
-  flex-wrap:nowrap!important;
-  gap:6px!important;
-  align-items:center!important;
-  justify-content:flex-end!important;
-  min-height:38px!important;
-  margin:0!important;
-  padding:0!important;
-  overflow:visible!important;
-  transform:none!important;
-}
-.header .headBtns .btn{
-  min-height:36px!important;
-  height:36px!important;
-  padding:7px 12px!important;
-  border-radius:13px!important;
-  font-size:12px!important;
-  line-height:1!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-}
-.header .searchRow{
-  display:grid!important;
-  grid-template-columns:minmax(0,1fr) 120px!important;
-  gap:8px!important;
-  min-height:42px!important;
-  height:auto!important;
-  padding:0 0 8px!important;
-  margin:0!important;
-  overflow:visible!important;
-  transform:none!important;
-}
-.header .search,
-.header .search input,
-.header .searchRow select{
-  height:38px!important;
-  min-height:38px!important;
-  font-size:12px!important;
-}
-.header #catSelect{display:none!important}
-/* لا تخفي أي شيء من أعلى الصفحة أثناء التحميل */
-html[class*='Pending'] .headTop,
-html[class*='Pending'] .searchRow,
-html[class*='Pending'] #app>.wrap.section:first-child{
-  visibility:visible!important;
-  opacity:1!important;
-}
-/* ضبط مقاس الرئيسية حتى لا تكون مكبرة */
-.wrap,
-section.wrap,
-.footer .wrap{
-  width:min(100% - 24px,1760px)!important;
-  max-width:1760px!important;
-  margin-inline:auto!important;
-}
-.wrap.section{
-  padding-top:14px!important;
-  padding-bottom:14px!important;
-}
-#app>.wrap.section:first-child{
-  margin-top:0!important;
-  padding-top:12px!important;
-  min-height:0!important;
-}
-#app>.wrap.section:first-child .title{
-  margin-bottom:10px!important;
-}
-#app>.wrap.section:first-child .title h2{
-  font-size:22px!important;
-}
-#app>.wrap.section:first-child .title p{
-  font-size:12px!important;
-}
-.mainCats{
-  grid-template-columns:repeat(6,minmax(0,1fr))!important;
-  gap:10px!important;
-}
-.mainCats .cat,
-.mainCats .cat.richCat{
-  min-height:132px!important;
-  padding:11px 10px!important;
-  border-radius:20px!important;
-}
-.mainCats .cat.richCat .richIcon,
-.mainCats .cat .icon{
-  width:54px!important;
-  height:54px!important;
-  min-width:54px!important;
-  min-height:54px!important;
-  border-radius:17px!important;
-  margin-bottom:3px!important;
-}
-.mainCats .cat h3,
-.mainCats .cat.richCat h3{
-  font-size:14px!important;
-  line-height:1.3!important;
-}
-.mainCats .cat p,
-.mainCats .cat.richCat p{
-  font-size:10.5px!important;
-}
-.mainCats .cat b,
-.mainCats .cat.richCat b{
-  min-height:30px!important;
-  padding:6px 12px!important;
-  font-size:11px!important;
-}
-@media(max-width:1200px){
-  .mainCats{grid-template-columns:repeat(3,minmax(0,1fr))!important}
-}
-@media(max-width:760px){
-  .header .headTop{grid-template-columns:1fr!important;grid-template-areas:"logo" "nav" "buttons"!important;gap:6px!important;min-height:0!important}
-  .header .logo,.header #nav,.header .headBtns{justify-self:center!important}
-  .header #nav{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;width:100%!important}
-  .header .searchRow{grid-template-columns:1fr!important}
-  .mainCats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-}
-@media(max-width:520px){
-  .mainCats{grid-template-columns:1fr!important}
-}
+<style id="almalika-v375-clean-home-layout">
+/* v375: تنظيف الصفحة الرئيسية من الأقسام والنصوص المكررة، بدون حذف المنتجات أو البيانات */
+body{overflow-x:hidden!important}
+.header{top:0!important}
+.headTop{min-height:56px!important;padding:8px 0!important}
+.searchRow{min-height:42px!important;padding:0 0 8px!important}
+#app .homeCleanSection{padding-top:18px!important;padding-bottom:20px!important}
+#app .homeCleanTitle{display:flex!important;align-items:flex-end!important;justify-content:space-between!important;gap:12px!important;margin-bottom:14px!important}
+#app .homeCleanTitle h2{margin:0!important;font-size:24px!important;line-height:1.25!important;color:#2b1d27!important}
+#app .homeCleanTitle p{margin:5px 0 0!important;font-size:12px!important;color:#756774!important;font-weight:800!important}
+#app .mainCats{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:12px!important;padding:0!important;margin:0!important;overflow:visible!important;visibility:visible!important;opacity:1!important;height:auto!important;min-height:0!important;max-height:none!important}
+#app .mainCats .cat.richCat{min-height:132px!important;padding:12px 10px!important;border-radius:20px!important;gap:5px!important;justify-content:center!important;box-shadow:0 8px 20px rgba(106,27,46,.06)!important}
+#app .mainCats .cat.richCat .richIcon{width:52px!important;height:52px!important;border-radius:16px!important;margin:0 auto 3px!important}
+#app .mainCats .cat.richCat .richIcon svg{width:25px!important;height:25px!important}
+#app .mainCats .cat.richCat h3{font-size:14px!important;line-height:1.35!important;margin:0!important;color:#4d2242!important}
+#app .mainCats .cat.richCat p{font-size:10.5px!important;line-height:1.2!important;margin:0!important;color:#71576c!important}
+#app .mainCats .cat.richCat b{font-size:11px!important;padding:6px 12px!important;min-height:31px!important;margin-top:5px!important}
+#app .homeVipSection{padding-top:12px!important}
+#app .homeVipSection .products{margin-top:0!important}
+#app .homeVipSection .title{margin-bottom:12px!important}
+#app .homeVipSection .title h2{font-size:22px!important}
+#app .homeVipSection .title p{font-size:12px!important}
+#app .homeStats,
+#app .homeOffersDuplicate,
+#app .homeTermsDuplicate{display:none!important}
+@media(max-width:1450px){#app .mainCats{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:850px){#app .mainCats{grid-template-columns:repeat(2,minmax(0,1fr))!important}#app .homeCleanTitle{display:block!important}}
+@media(max-width:560px){#app .mainCats{grid-template-columns:1fr!important}#app .mainCats .cat.richCat{min-height:118px!important}}
 </style>
-<script id="almalika-v373-header-size-lock-js">
+<script id="almalika-v375-clean-home-render">
 (function(){
-  function lockTop(){
+  function homeCounts(){
+    return {
+      bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,
+      snacks:products.filter(p=>sectionOf(p)==='snacks').length,
+      events:products.filter(p=>sectionOf(p)==='events').length,
+      rentals:products.filter(p=>sectionOf(p)==='rentals').length,
+      offers:products.filter(p=>sectionOf(p)==='offers').length,
+      other:products.filter(p=>sectionOf(p)==='other').length
+    };
+  }
+  function cleanHomeDom(){
     try{
-      document.documentElement.classList.remove('almV370Pending','almV371TopBoot');
-      document.documentElement.classList.add('almV373Ready');
-      var header=document.querySelector('.header');
-      if(header){
-        header.style.setProperty('position','sticky','important');
-        header.style.setProperty('top','0','important');
-        header.style.setProperty('transform','none','important');
-        header.style.setProperty('margin-top','0','important');
-        header.style.setProperty('overflow','visible','important');
-        header.style.setProperty('z-index','99999','important');
-      }
-      document.querySelectorAll('.headTop,.searchRow,#nav,.nav,.headBtns').forEach(function(el){
-        el.style.setProperty('visibility','visible','important');
-        el.style.setProperty('opacity','1','important');
-        el.style.setProperty('transform','none','important');
-        el.style.setProperty('overflow','visible','important');
+      document.querySelectorAll('.homeHeroFrame,.homeHeroImage,#almHomePromoSlider,.almPromoSlider').forEach(el=>el.remove());
+      document.querySelectorAll('.viewToolbar,.chips,#catSelect').forEach(el=>{
+        if(el.id==='catSelect'){el.style.setProperty('display','none','important');}
+        else el.remove();
       });
-      document.body.style.setProperty('padding-top','0','important');
-      document.documentElement.style.setProperty('scroll-padding-top','120px','important');
+      const appEl=document.getElementById('app');
+      if(!appEl) return;
+      appEl.querySelectorAll('.mainCats').forEach((el,i)=>{ if(i>0){ const s=el.closest('section'); if(s) s.remove(); else el.remove(); }});
+      appEl.querySelectorAll('section').forEach(sec=>{
+        const t=(sec.textContent||'').replace(/\s+/g,' ').trim();
+        if(/خدمات الملكة للحفلات|طريقة الحجز|الأمن والسلامة|شركة الملكة للحفلات - قطر|مختارات خاصة للعروض فقط|عرض كل العروض/.test(t)){sec.remove();}
+      });
     }catch(e){}
   }
-  document.addEventListener('DOMContentLoaded',function(){lockTop();setTimeout(lockTop,80);setTimeout(lockTop,250);});
-  window.addEventListener('load',function(){lockTop();setTimeout(lockTop,150);});
-  window.addEventListener('pageshow',function(){lockTop();setTimeout(lockTop,100);});
-  window.addEventListener('hashchange',function(){setTimeout(lockTop,50);});
+  window.renderHome = renderHome = function(){
+    const counts=homeCounts();
+    const catsHtml=sections.filter(s=>s[0]!=='home' && s[0]!=='offers').map(s=>uiCatButton(s,counts)).join('');
+    const vip=vipGeneralProducts();
+    app.innerHTML=`
+      <section class="wrap section homeCleanSection">
+        <div class="homeCleanTitle">
+          <div><h2>الأقسام الرئيسية</h2><p>اختر القسم المطلوب بسرعة بدون تكرار أو قوائم داخلية زائدة.</p></div>
+        </div>
+        <div class="mainCats">${catsHtml}</div>
+      </section>
+      <section class="wrap section homeVipSection">
+        <div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام.</p></div></div>
+        <div class="products view-cards">${vip.length?vip.map(card).join(''):'<div class="empty">لا توجد منتجات حالياً</div>'}</div>
+      </section>`;
+    cleanHomeDom();
+    if(typeof updateCartUI==='function') updateCartUI();
+  };
+  window.showHome = showHome = function(){
+    current='home';
+    internal=allLabel('bouncies');
+    try{renderNav();}catch(e){}
+    try{catSelect.innerHTML='<option>الأقسام</option>'; catSelect.style.setProperty('display','none','important');}catch(e){}
+    renderHome();
+    try{setHash();}catch(e){}
+  };
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanHomeDom,0);setTimeout(cleanHomeDom,120);});
+  window.addEventListener('load',function(){setTimeout(cleanHomeDom,0);setTimeout(cleanHomeDom,180);});
+  window.addEventListener('hashchange',function(){if(current==='home') setTimeout(renderHome,30);});
 })();
 </script>
 
@@ -16708,76 +16571,5 @@ a[target="_blank"]{ }
   window.addEventListener('load',function(){setTimeout(window.almV363AuditFix,0);setTimeout(window.almV363AuditFix,250);});
   window.addEventListener('hashchange',function(){setTimeout(window.almV363AuditFix,80);});
   try{new MutationObserver(function(){clearTimeout(window.__v363AuditT);window.__v363AuditT=setTimeout(window.almV363AuditFix,60);}).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
-})();
-</script>
-
-
-<!-- ===== V374: تنظيف الصفحة الرئيسية وإلغاء تكرار النصوص والمناطق المتضاربة ===== -->
-<style id="almalika-v374-clean-home-duplicates-header">
-/* إلغاء مشكلة اختباء رأس الصفحة تحت المتصفح */
-html,body{margin-top:0!important;padding-top:0!important;overflow-x:hidden!important;scroll-padding-top:0!important}
-.header{position:relative!important;top:auto!important;z-index:1000!important;transform:none!important;margin-top:0!important;overflow:visible!important}
-.header .wrap,.headTop{overflow:visible!important;min-height:0!important;height:auto!important;max-height:none!important}
-.headTop{padding:8px 0!important;gap:8px!important;align-items:center!important}
-.logo{font-size:30px!important;line-height:1.1!important}
-.headBtns .btn{min-height:38px!important;padding:8px 12px!important;font-size:12px!important;border-radius:13px!important}
-#nav.almV361DropdownNav{min-height:0!important;gap:6px!important;align-items:center!important;justify-content:center!important}
-#nav.almV361DropdownNav .navHomeBtn,#nav.almV361DropdownNav .navDrop>summary{min-height:38px!important;padding:8px 12px!important;font-size:12px!important;border-radius:13px!important}
-.searchRow{min-height:0!important;height:auto!important;padding:6px 0 8px!important;gap:8px!important;grid-template-columns:minmax(0,1fr) 110px!important}
-.search,.searchRow select{height:38px!important;min-height:38px!important;font-size:12px!important;border-radius:12px!important}
-/* تنظيف الصفحة الرئيسية من التكرارات */
-.homeMainClean{padding-top:10px!important;padding-bottom:12px!important;margin-top:0!important}
-.homeMainClean .homeMainHead{display:flex!important;justify-content:flex-end!important;align-items:center!important;margin:0 0 10px!important;text-align:right!important}
-.homeMainClean .homeMainHead h2{margin:0 0 3px!important;font-size:22px!important;line-height:1.25!important;color:#2d1727!important}
-.homeMainClean .homeMainHead p{margin:0!important;font-size:12px!important;line-height:1.45!important;color:#7c6b75!important;font-weight:800!important}
-.homeMainClean .stats,.homeMainClean .stat,.stats,.stat{display:none!important;visibility:hidden!important;height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
-.homeMainClean .mainCats{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:10px!important;padding:0!important;margin:0!important;overflow:visible!important;height:auto!important;max-height:none!important}
-.homeMainClean .mainCats .cat,.homeMainClean .mainCats .cat.richCat,.homeMainClean .mainCats .cat.v329DecorCat{min-height:118px!important;height:auto!important;padding:10px 8px!important;border-radius:18px!important;gap:4px!important;justify-content:center!important;box-shadow:0 7px 18px rgba(106,27,46,.06)!important;transition:none!important;animation:none!important}
-.homeMainClean .mainCats .cat .richIcon,.homeMainClean .mainCats .cat.richCat .richIcon,.homeMainClean .mainCats .cat .icon,.homeMainClean .mainCats .cat.v329DecorCat .v329CardBubble{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;border-radius:15px!important;margin:0 auto 4px!important}
-.homeMainClean .mainCats .cat svg,.homeMainClean .mainCats .cat .richIcon svg{width:24px!important;height:24px!important}
-.homeMainClean .mainCats .cat h3,.homeMainClean .mainCats .cat.richCat h3{font-size:14px!important;line-height:1.3!important;margin:0!important;min-height:0!important;color:#5d2451!important}
-.homeMainClean .mainCats .cat p,.homeMainClean .mainCats .cat.richCat p{font-size:10.5px!important;line-height:1.2!important;margin:0!important;font-weight:900!important;color:#78576e!important}
-.homeMainClean .mainCats .cat b,.homeMainClean .mainCats .cat.richCat b,.homeMainClean .mainCats .cat .v329Explore{font-size:11px!important;line-height:1!important;min-height:28px!important;padding:6px 12px!important;margin-top:5px!important;border-radius:999px!important}
-.vipHomeClean{padding-top:12px!important}
-.vipHomeTitle{margin-bottom:10px!important}
-.vipHomeTitle h2{font-size:22px!important;margin:0!important}.vipHomeTitle p{font-size:12px!important;margin:4px 0 0!important}
-/* منع أي سكربت قديم من إظهار أدوات أو نصوص مكررة */
-.viewToolbar,.displayModeBar,.productViewBar,.chips,#catSelect{display:none!important;visibility:hidden!important;height:0!important;max-height:0!important;padding:0!important;margin:0!important;overflow:hidden!important}
-@media(max-width:1400px){.homeMainClean .mainCats{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
-@media(max-width:760px){.headTop{grid-template-columns:1fr!important;text-align:center!important}.logo{justify-self:center!important}.headBtns{justify-self:center!important}#nav.almV361DropdownNav{grid-template-columns:repeat(2,minmax(0,1fr))!important}.homeMainClean .mainCats{grid-template-columns:repeat(2,minmax(0,1fr))!important}.homeMainClean .mainCats .cat{min-height:110px!important}}
-@media(max-width:480px){.homeMainClean .mainCats{grid-template-columns:1fr!important}.homeMainClean .mainCats .cat{min-height:102px!important}}
-</style>
-<script id="almalika-v374-clean-home-duplicates-js">
-(function(){
-  function cleanHome(){
-    try{
-      document.querySelectorAll('.stats,.stat,.viewToolbar,.displayModeBar,.productViewBar,.chips,#catSelect').forEach(function(el){el.remove();});
-      document.querySelectorAll('section').forEach(function(sec){
-        var t=(sec.textContent||'').replace(/\s+/g,' ');
-        if(/مختارات خاصة للعروض فقط/.test(t)) sec.remove();
-      });
-      var seen={};
-      document.querySelectorAll('.mainCats').forEach(function(el,i){
-        var sec=el.closest('section');
-        var key=(sec&&sec.className||'')+'|'+(el.textContent||'').replace(/\s+/g,' ').trim().slice(0,80);
-        if(seen[key]){ if(sec) sec.remove(); else el.remove(); }
-        else seen[key]=1;
-      });
-      document.querySelectorAll('.header,.headTop,.searchRow,#nav').forEach(function(el){
-        el.style.setProperty('visibility','visible','important');
-        el.style.setProperty('opacity','1','important');
-        el.style.setProperty('height','auto','important');
-        el.style.setProperty('max-height','none','important');
-        el.style.setProperty('overflow','visible','important');
-      });
-    }catch(e){}
-  }
-  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanHome,0);setTimeout(cleanHome,80);});
-  window.addEventListener('load',function(){setTimeout(cleanHome,0);setTimeout(cleanHome,120);});
-  window.addEventListener('hashchange',function(){setTimeout(cleanHome,40);});
-  var oldRenderHome=window.renderHome;
-  if(typeof oldRenderHome==='function'){
-    window.renderHome=renderHome=function(){var r=oldRenderHome.apply(this,arguments);setTimeout(cleanHome,0);setTimeout(cleanHome,80);return r;};
-  }
 })();
 </script>
