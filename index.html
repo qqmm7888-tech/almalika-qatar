@@ -12667,28 +12667,19 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 </style>
 
 
-<style id="almalika-v356-remove-product-card-buttons">
-/* v356: حذف أزرار كروت المنتجات فقط (تفاصيل / التسوق السريع / تحويل لصديق / واتساب)
-   مع بقاء فتح التفاصيل بالضغط على صورة المنتج وبقاء السلة والواتساب العلوي كما هي. */
-.product .actions.quickActions,
-.product .actions.quickActions button{
-  display:none!important;
-  visibility:hidden!important;
-  height:0!important;
-  min-height:0!important;
-  padding:0!important;
-  margin:0!important;
-  overflow:hidden!important;
-}
+<style id="almalika-v357-details-only-button">
+/* v357: إبقاء زر التفاصيل فقط داخل كروت المنتجات */
 .product .bottom,
 .products.view-wide .product .bottom,
 .products.view-cards .product .bottom,
 .products.view-compact .product .bottom,
 .products.view-mini .product .bottom,
 .products.view-list .product .bottom{
-  display:block!important;
+  display:grid!important;
+  grid-template-columns:84px 1fr!important;
+  gap:12px!important;
+  align-items:end!important;
   margin-top:auto!important;
-  padding-top:8px!important;
 }
 .product .price,
 .products.view-wide .product .price,
@@ -12700,16 +12691,53 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   max-width:100%!important;
   margin:0!important;
 }
-</style>
-<script id="almalika-v356-remove-product-card-buttons-js">
-(function(){
-  function cleanCardButtons(){
-    document.querySelectorAll('.product .actions.quickActions').forEach(function(el){ el.remove(); });
+.product .actions.quickActions,
+.products.view-wide .product .actions.quickActions,
+.products.view-cards .product .actions.quickActions,
+.products.view-compact .product .actions.quickActions,
+.products.view-mini .product .actions.quickActions,
+.products.view-list .product .actions.quickActions{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:7px!important;
+  width:100%!important;
+}
+.product .actions.quickActions .quickShop,
+.product .actions.quickActions .shareFriend,
+.product .actions.quickActions .wa{
+  display:none!important;
+}
+.product .actions.quickActions .details{
+  display:block!important;
+  width:100%!important;
+}
+@media(max-width:720px){
+  .product .bottom,
+  .products.view-wide .product .bottom,
+  .products.view-cards .product .bottom,
+  .products.view-compact .product .bottom,
+  .products.view-mini .product .bottom,
+  .products.view-list .product .bottom{
+    grid-template-columns:1fr!important;
+    gap:10px!important;
   }
-  document.addEventListener('DOMContentLoaded', cleanCardButtons);
-  window.addEventListener('load', cleanCardButtons);
-  document.addEventListener('click', function(){ setTimeout(cleanCardButtons, 30); }, true);
-  setInterval(cleanCardButtons, 800);
+}
+</style>
+<script id="almalika-v357-keep-details-button-only-js">
+(function(){
+  function keepDetailsOnly(){
+    document.querySelectorAll('.product .actions.quickActions').forEach(function(box){
+      var detailsBtn = box.querySelector('.details');
+      if(!detailsBtn){ box.remove(); return; }
+      Array.from(box.children).forEach(function(btn){
+        if(btn !== detailsBtn) btn.remove();
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded', keepDetailsOnly);
+  window.addEventListener('load', keepDetailsOnly);
+  document.addEventListener('click', function(){ setTimeout(keepDetailsOnly, 30); }, true);
+  setInterval(keepDetailsOnly, 800);
 })();
 </script>
 
