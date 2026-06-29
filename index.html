@@ -13021,6 +13021,117 @@ body{overflow-x:hidden!important}
 @media(max-width:850px){#app .mainCats{grid-template-columns:repeat(2,minmax(0,1fr))!important}#app .homeCleanTitle{display:block!important}}
 @media(max-width:560px){#app .mainCats{grid-template-columns:1fr!important}#app .mainCats .cat.richCat{min-height:118px!important}}
 </style>
+
+
+<style id="almalika-v380-home-commercial-ads-style">
+/* v380: إعلانات تجارية أنيقة بين الأقسام الرئيسية ومختارات VIP */
+#app .homeAdsSection{
+  padding-top:4px!important;
+  padding-bottom:12px!important;
+}
+#app .homeAdsGrid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin:0!important;
+}
+#app .homeAdCard{
+  position:relative!important;
+  overflow:hidden!important;
+  min-height:112px!important;
+  border-radius:22px!important;
+  border:1px solid rgba(239,79,149,.20)!important;
+  background:linear-gradient(135deg,#fff,#fff5fa 48%,#fff7db)!important;
+  box-shadow:0 10px 26px rgba(106,27,46,.07)!important;
+  padding:14px 15px 14px 128px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  gap:6px!important;
+  isolation:isolate!important;
+}
+#app .homeAdCard::before{
+  content:"";
+  position:absolute;
+  inset:-40% auto auto -35px;
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(239,79,149,.15),transparent 68%);
+  z-index:-1;
+}
+#app .homeAdIcon{
+  position:absolute!important;
+  left:15px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  width:92px!important;
+  height:76px!important;
+  border-radius:22px!important;
+  display:grid!important;
+  place-items:center!important;
+  background:rgba(255,255,255,.75)!important;
+  border:1px solid rgba(255,255,255,.85)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.65),0 8px 18px rgba(0,0,0,.045)!important;
+  font-size:34px!important;
+}
+#app .homeAdBadge{
+  width:max-content!important;
+  max-width:100%!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  padding:4px 9px!important;
+  border-radius:999px!important;
+  background:#fff!important;
+  color:#b33971!important;
+  border:1px solid #f3c7db!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+}
+#app .homeAdCard h3{
+  margin:0!important;
+  color:#4d2242!important;
+  font-size:17px!important;
+  line-height:1.35!important;
+  font-weight:1000!important;
+}
+#app .homeAdCard p{
+  margin:0!important;
+  color:#755b6c!important;
+  font-size:12px!important;
+  line-height:1.55!important;
+  font-weight:800!important;
+}
+#app .homeAdCard button{
+  width:max-content!important;
+  min-width:104px!important;
+  min-height:34px!important;
+  border-radius:999px!important;
+  padding:7px 14px!important;
+  margin-top:3px!important;
+  background:linear-gradient(135deg,#ff4f9a,#e92578)!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  box-shadow:0 8px 18px rgba(233,37,120,.18)!important;
+}
+#app .homeAdCard.adGold{background:linear-gradient(135deg,#fff,#fff8dc 54%,#fff0f8)!important}
+#app .homeAdCard.adMint{background:linear-gradient(135deg,#fff,#eefdf8 52%,#fff7df)!important}
+#app .homeAdCard.adPink{background:linear-gradient(135deg,#fff,#fff1f8 52%,#fff7e4)!important}
+@media(max-width:1150px){
+  #app .homeAdsGrid{grid-template-columns:1fr!important}
+  #app .homeAdCard{min-height:104px!important;padding-left:118px!important}
+  #app .homeAdIcon{width:82px!important;height:68px!important}
+}
+@media(max-width:560px){
+  #app .homeAdCard{padding:12px!important;text-align:center!important;align-items:center!important}
+  #app .homeAdIcon{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:66px!important;height:58px!important;font-size:28px!important;margin-bottom:2px!important}
+  #app .homeAdCard button{margin-inline:auto!important}
+}
+</style>
+
 <script id="almalika-v375-clean-home-render">
 (function(){
   function homeCounts(){
@@ -13059,6 +13170,31 @@ body{overflow-x:hidden!important}
           <div><h2>الأقسام الرئيسية</h2><p>اختر القسم المطلوب بسرعة بدون تكرار أو قوائم داخلية زائدة.</p></div>
         </div>
         <div class="mainCats">${catsHtml}</div>
+      </section>
+      <section class="wrap section homeAdsSection" id="homeCommercialAds">
+        <div class="homeAdsGrid">
+          <article class="homeAdCard adGold">
+            <div class="homeAdIcon">🎉</div>
+            <span class="homeAdBadge">الأكثر طلباً</span>
+            <h3>نطاطيات وزحاليق تناسب كل المناسبات</h3>
+            <p>خيارات ممتعة للأطفال مع تركيب مرتب للحفلات والحدائق والمدارس.</p>
+            <button onclick="showSection('bouncies')">اكتشف القسم</button>
+          </article>
+          <article class="homeAdCard adPink">
+            <div class="homeAdIcon">👑</div>
+            <span class="homeAdBadge">خدمة متكاملة</span>
+            <h3>جهّز حفلتك من مكان واحد</h3>
+            <p>ديكورات، طاولات، كراسي، شخصيات وباقات جاهزة حسب المناسبة.</p>
+            <button onclick="showSection('events')">شاهد الباقات</button>
+          </article>
+          <article class="homeAdCard adMint">
+            <div class="homeAdIcon">🍿</div>
+            <span class="homeAdBadge">إضافة للحفل</span>
+            <h3>عربات سناك تضيف متعة للحفل</h3>
+            <p>فشار، غزل البنات، سلاش، آيس كريم وخيارات مناسبة للأطفال والضيوف.</p>
+            <button onclick="showSection('snacks')">اطلب الآن</button>
+          </article>
+        </div>
       </section>
       <section class="wrap section homeVipSection">
         <div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام.</p></div></div>
