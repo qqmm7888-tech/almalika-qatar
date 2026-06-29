@@ -12734,6 +12734,132 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 @media(max-width:720px){.product .pic{height:176px!important;min-height:176px!important;max-height:176px!important}.product .body h3{font-size:16px!important}.product .miniFact{padding:6px 9px!important}.product .miniFact span,.product .miniFact b{font-size:10px!important}}
 </style>
 
+
+<style id="almalika-v360-stable-home-and-product-cards">
+/* v360: تثبيت ظهور أقسام الرئيسية ومنع قص الصور داخل البطاقات */
+.mainCats{
+  display:grid!important;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr))!important;
+  gap:14px!important;
+  overflow:visible!important;
+  padding:6px 0 0!important;
+}
+@media(max-width:900px){
+  .mainCats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+}
+@media(max-width:560px){
+  .mainCats{grid-template-columns:1fr!important}
+}
+.products,
+.products.view-wide,
+.products.view-cards,
+.products.view-compact,
+.products.view-mini,
+.products.view-list{
+  align-items:start!important;
+}
+.product,
+.products.view-wide .product,
+.products.view-cards .product,
+.products.view-compact .product,
+.products.view-mini .product,
+.products.view-list .product{
+  height:auto!important;
+  min-height:unset!important;
+  max-height:none!important;
+  overflow:hidden!important;
+}
+.product .pic,
+.products.view-wide .product .pic,
+.products.view-cards .product .pic,
+.products.view-compact .product .pic,
+.products.view-mini .product .pic,
+.products.view-list .product .pic{
+  height:210px!important;
+  min-height:210px!important;
+  max-height:none!important;
+  overflow:hidden!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:10px!important;
+}
+.product .pic img,
+.products.view-wide .product .pic img,
+.products.view-cards .product .pic img,
+.products.view-compact .product .pic img,
+.products.view-mini .product .pic img,
+.products.view-list .product .pic img{
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  padding:0!important;
+  margin:0 auto!important;
+}
+.product .body,
+.products.view-wide .product .body,
+.products.view-cards .product .body,
+.products.view-compact .product .body,
+.products.view-mini .product .body,
+.products.view-list .product .body{
+  overflow:visible!important;
+  gap:8px!important;
+}
+.product .body h3{
+  min-height:auto!important;
+  max-height:none!important;
+}
+.product .desc,
+.product .tags,
+.product .availabilityMini,
+.product .miniFacts,
+.bookedCatalogWord{
+  min-height:auto!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.product .bottom,
+.products.view-wide .product .bottom,
+.products.view-cards .product .bottom,
+.products.view-compact .product .bottom,
+.products.view-mini .product .bottom,
+.products.view-list .product .bottom{
+  margin-top:10px!important;
+}
+@media(max-width:720px){
+  .product .pic,
+  .products.view-wide .product .pic,
+  .products.view-cards .product .pic,
+  .products.view-compact .product .pic,
+  .products.view-mini .product .pic,
+  .products.view-list .product .pic{
+    height:190px!important;
+    min-height:190px!important;
+  }
+}
+</style>
+<script id="almalika-v360-stabilize-home-and-cleanup-js">
+(function(){
+  function stableCleanMenus(){
+    try{
+      document.querySelectorAll('.chips,.viewToolbar').forEach(function(el){ el.remove(); });
+      var cat=document.getElementById('catSelect');
+      if(cat){ cat.style.setProperty('display','none','important'); cat.setAttribute('aria-hidden','true'); }
+      document.querySelectorAll('.products').forEach(function(g){
+        ['view-wide','view-cards','view-compact','view-mini','view-list'].forEach(function(c){g.classList.remove(c)});
+        g.classList.add('view-cards');
+      });
+    }catch(e){}
+  }
+  window.v350CleanPageMenus = stableCleanMenus;
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(stableCleanMenus,0); setTimeout(stableCleanMenus,120); });
+  window.addEventListener('load', function(){ setTimeout(stableCleanMenus,0); setTimeout(stableCleanMenus,200); });
+})();
+</script>
+
 </body>
 </html>
 
