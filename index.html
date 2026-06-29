@@ -16377,3 +16377,121 @@ section.wrap,
   setInterval(cleanNums, 700);
 })();
 </script>
+
+<style id="almalika-v354-fix-clipped-product-bottom">
+/* v354: إصلاح قص البيانات أسفل كروت المنتجات مع الحفاظ على نفس البيانات والترتيب */
+.products,
+.products.view-wide,
+.products.view-cards,
+.products.view-compact,
+.products.view-mini,
+.products.view-list{
+  align-items:stretch!important;
+}
+.product,
+.products.view-wide .product,
+.products.view-cards .product,
+.products.view-compact .product,
+.products.view-mini .product,
+.products.view-list .product{
+  height:auto!important;
+  min-height:520px!important;
+  max-height:none!important;
+  overflow:hidden!important;
+  display:flex!important;
+  flex-direction:column!important;
+}
+.product .pic,
+.products.view-wide .product .pic,
+.products.view-cards .product .pic,
+.products.view-compact .product .pic,
+.products.view-mini .product .pic,
+.products.view-list .product .pic{
+  flex:0 0 188px!important;
+  height:188px!important;
+  min-height:188px!important;
+  max-height:188px!important;
+}
+.product .body,
+.products.view-wide .product .body,
+.products.view-cards .product .body,
+.products.view-compact .product .body,
+.products.view-mini .product .body,
+.products.view-list .product .body{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+  padding-bottom:16px!important;
+}
+.product .body h3{
+  max-height:none!important;
+}
+.product .desc{
+  max-height:none!important;
+}
+.product .tags{
+  max-height:none!important;
+  overflow:visible!important;
+}
+.product .availabilityMini,
+.bookedCatalogWord{
+  max-height:none!important;
+  overflow:visible!important;
+}
+.product .bottom,
+.products.view-wide .product .bottom,
+.products.view-cards .product .bottom,
+.products.view-compact .product .bottom,
+.products.view-mini .product .bottom,
+.products.view-list .product .bottom{
+  flex:0 0 auto!important;
+  margin-top:auto!important;
+  padding-top:6px!important;
+  padding-bottom:2px!important;
+}
+.product .price{
+  min-height:45px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.product .price small,
+.product .price strong{
+  overflow:visible!important;
+  max-height:none!important;
+}
+@media(max-width:1150px){
+  .product,
+  .products.view-wide .product,
+  .products.view-cards .product,
+  .products.view-compact .product,
+  .products.view-mini .product,
+  .products.view-list .product{
+    min-height:505px!important;
+  }
+}
+@media(max-width:720px){
+  .product,
+  .products.view-wide .product,
+  .products.view-cards .product,
+  .products.view-compact .product,
+  .products.view-mini .product,
+  .products.view-list .product{
+    height:auto!important;
+    min-height:490px!important;
+    max-height:none!important;
+  }
+  .product .pic,
+  .products.view-wide .product .pic,
+  .products.view-cards .product .pic,
+  .products.view-compact .product .pic,
+  .products.view-mini .product .pic,
+  .products.view-list .product .pic{
+    flex-basis:176px!important;
+    height:176px!important;
+    min-height:176px!important;
+    max-height:176px!important;
+  }
+}
+</style>
