@@ -5456,7 +5456,8 @@ body .cartItem .qtyBox b{
     <select id="catSelect" onchange="setInternal(this.value)"></select>
     <select id="sortSelect" onchange="render()"><option value="number">بالرقم</option><option value="priceAsc">الأقل سعراً</option><option value="priceDesc">الأعلى سعراً</option></select>
   </div>
-    <div class="eventDateBox"><div class="eventDateLabel">فترة الحجز</div><div class="eventDateInputs"><input id="catalogEventDate" type="date" onchange="render()" title="تاريخ بداية الحجز"><input id="catalogEventEndDate" type="date" onchange="render()" title="تاريخ نهاية الحجز اختياري"></div><small>اختر تاريخ البداية أولاً. تاريخ النهاية اختياري ويجب أن يكون نفس تاريخ البداية أو بعده.</small></div>
+  <div class="wrap topBookingWrap" aria-hidden="true" style="display:none!important">
+    <div class="eventDateBox" style="display:none!important"><div class="eventDateLabel">فترة الحجز</div><div class="eventDateInputs"><input id="catalogEventDate" type="date" onchange="render()" title="تاريخ بداية الحجز"><input id="catalogEventEndDate" type="date" onchange="render()" title="تاريخ نهاية الحجز اختياري"></div><small>اختر تاريخ البداية أولاً. تاريخ النهاية اختياري ويجب أن يكون نفس تاريخ البداية أو بعده.</small></div>
   </div>
 </header>
 <main id="app"></main>
@@ -13432,6 +13433,89 @@ body{overflow-x:hidden!important}
   };
   try{
     if(typeof render==='function') setTimeout(render,0);
+  }catch(e){}
+})();
+</script>
+
+
+<style id="almalika-v381-single-home-safe-style">
+/* v381 من v380: تثبيت صفحة رئيسية واحدة فقط وإلغاء العناصر المكررة بدون لمس البيانات */
+.topBookingWrap,.eventDateBox{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+#app .v336FooterBar,#app #v336FooterBar,#app #v331FooterBar{display:none!important;visibility:hidden!important;height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+#app .homeCleanSection,#app .homeAdsSection,#app .homeVipSection{display:block!important;visibility:visible!important;opacity:1!important}
+#app .homeCleanSection{padding-top:18px!important;padding-bottom:18px!important}
+#app .homeAdsSection{padding-top:0!important;padding-bottom:14px!important}
+#app .homeVipSection{padding-top:12px!important}
+#app .mainCats{display:grid!important;visibility:visible!important;opacity:1!important;height:auto!important;max-height:none!important;overflow:visible!important}
+#app .products{visibility:visible!important;opacity:1!important}
+#app .product .pic img{visibility:visible!important;opacity:1!important;display:block!important;object-fit:contain!important}
+</style>
+<script id="almalika-v381-single-home-safe-js">
+(function(){
+  function countHome381(){
+    return {
+      bouncies:products.filter(function(p){return sectionOf(p)==='bouncies'}).length,
+      snacks:products.filter(function(p){return sectionOf(p)==='snacks'}).length,
+      events:products.filter(function(p){return sectionOf(p)==='events'}).length,
+      rentals:products.filter(function(p){return sectionOf(p)==='rentals'}).length,
+      offers:products.filter(function(p){return sectionOf(p)==='offers'}).length,
+      other:products.filter(function(p){return sectionOf(p)==='other'}).length
+    };
+  }
+  function removeHomeDuplicates381(){
+    try{
+      document.querySelectorAll('.topBookingWrap,.eventDateBox').forEach(function(el){el.style.setProperty('display','none','important');});
+      var appEl=document.getElementById('app');
+      if(!appEl) return;
+      appEl.querySelectorAll('#v336FooterBar,.v336FooterBar,#v331FooterBar,.v331FooterBar').forEach(function(el){el.remove();});
+      appEl.querySelectorAll('section').forEach(function(sec){
+        var t=(sec.textContent||'').replace(/\s+/g,' ').trim();
+        if(/خدمات الملكة للحفلات|طريقة الحجز|الأمن والسلامة|شركة الملكة للحفلات - قطر|مختارات خاصة للعروض فقط|عرض كل العروض/.test(t)) sec.remove();
+      });
+      appEl.querySelectorAll('.homeHeroFrame,.homeHeroImage,#almHomePromoSlider,.almPromoSlider,.viewToolbar,.chips').forEach(function(el){el.remove();});
+      appEl.querySelectorAll('.mainCats').forEach(function(el,i){ if(i>0){ var s=el.closest('section'); if(s) s.remove(); else el.remove(); }});
+      appEl.querySelectorAll('#homeCommercialAds').forEach(function(el,i){ if(i>0){ var s=el.closest('section'); if(s) s.remove(); else el.remove(); }});
+      var cat=document.getElementById('catSelect'); if(cat) cat.style.setProperty('display','none','important');
+      document.querySelectorAll('.product .pic img').forEach(function(img,i){
+        img.style.setProperty('visibility','visible','important');
+        img.style.setProperty('opacity','1','important');
+        if(i<18){img.setAttribute('loading','eager'); img.setAttribute('fetchpriority','high');}
+        img.setAttribute('decoding','async');
+      });
+    }catch(e){}
+  }
+  function ads381(){
+    return '<section class="wrap section homeAdsSection" id="homeCommercialAds">'+
+      '<div class="homeAdsGrid">'+
+        '<article class="homeAdCard adGold"><div class="homeAdIcon">🎉</div><span class="homeAdBadge">الأكثر طلباً</span><h3>نطاطيات وزحاليق تناسب كل المناسبات</h3><p>خيارات ممتعة للأطفال مع تركيب مرتب للحفلات والحدائق والمدارس.</p><button onclick="showSection(\'bouncies\')">اكتشف القسم</button></article>'+
+        '<article class="homeAdCard adPink"><div class="homeAdIcon">👑</div><span class="homeAdBadge">خدمة متكاملة</span><h3>جهّز حفلتك من مكان واحد</h3><p>ديكورات، طاولات، كراسي، شخصيات وباقات جاهزة حسب المناسبة.</p><button onclick="showSection(\'events\')">شاهد الباقات</button></article>'+
+        '<article class="homeAdCard adMint"><div class="homeAdIcon">🍿</div><span class="homeAdBadge">إضافة للحفل</span><h3>عربات سناك تضيف متعة للحفل</h3><p>فشار، غزل البنات، سلاش، آيس كريم وخيارات مناسبة للأطفال والضيوف.</p><button onclick="showSection(\'snacks\')">اطلب الآن</button></article>'+
+      '</div></section>';
+  }
+  window.renderHome = renderHome = function(){
+    var counts=countHome381();
+    var catsHtml=sections.filter(function(s){return s[0]!=='home'}).map(function(s){return uiCatButton(s,counts)}).join('');
+    var vip=vipGeneralProducts();
+    app.innerHTML = '<section class="wrap section homeCleanSection">'+
+      '<div class="homeCleanTitle"><div><h2>الأقسام الرئيسية</h2><p>اختر القسم المطلوب بسرعة بدون تكرار أو قوائم داخلية زائدة.</p></div></div>'+
+      '<div class="mainCats">'+catsHtml+'</div></section>'+ ads381() +
+      '<section class="wrap section homeVipSection"><div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام.</p></div></div><div class="products view-cards">'+(vip.length?vip.map(card).join(''):'<div class="empty">لا توجد منتجات حالياً</div>')+'</div></section>';
+    try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
+    setTimeout(removeHomeDuplicates381,0); setTimeout(removeHomeDuplicates381,90); setTimeout(removeHomeDuplicates381,250);
+  };
+  window.showHome = showHome = function(){
+    current='home'; internal=allLabel('bouncies');
+    try{renderNav();}catch(e){}
+    try{catSelect.innerHTML='<option>الأقسام</option>'; catSelect.style.setProperty('display','none','important');}catch(e){}
+    renderHome();
+    try{setHash();}catch(e){}
+  };
+  window.almV381SingleHomeClean=removeHomeDuplicates381;
+  document.addEventListener('DOMContentLoaded',function(){ if(current==='home') setTimeout(showHome,20); setTimeout(removeHomeDuplicates381,120); setTimeout(removeHomeDuplicates381,420); });
+  window.addEventListener('load',function(){ if(current==='home') setTimeout(showHome,30); setTimeout(removeHomeDuplicates381,150); setTimeout(removeHomeDuplicates381,500); });
+  window.addEventListener('hashchange',function(){ setTimeout(function(){ if(current==='home'||/home/.test(location.hash)) showHome(); else removeHomeDuplicates381(); },60); });
+  try{
+    new MutationObserver(function(){ clearTimeout(window.__almV381CleanT); window.__almV381CleanT=setTimeout(function(){ if(current==='home') removeHomeDuplicates381(); },80); }).observe(document.body,{childList:true,subtree:true});
   }catch(e){}
 })();
 </script>
