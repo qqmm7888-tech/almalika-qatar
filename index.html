@@ -5585,59 +5585,30 @@ function vipOfferProducts(){
     .sort((a,b)=>Number(a.number)-Number(b.number))
     .filter(p=>{const k=Number(p.number); if(seen.has(k))return false; seen.add(k); return true;});
 }
-function renderHome(){const counts={bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,snacks:products.filter(p=>sectionOf(p)==='snacks').length,events:products.filter(p=>sectionOf(p)==='events').length,rentals:products.filter(p=>sectionOf(p)==='rentals').length,other:products.filter(p=>sectionOf(p)==='other').length}; app.innerHTML=`<section class="wrap section"><div class="title"><div><h2>الأقسام الرئيسية</h2><p>تقسيم واضح مع واجهة VIP مريحة وسريعة في التصفح.</p></div><div class="stats"><span class="stat">الإجمالي: ${products.length} بند</span><span class="stat">النطاطيات: ${counts.bouncies}</span><span class="stat">السناك: ${counts.snacks}</span><span class="stat">تجهيز الحفلات: ${counts.events}</span><span class="stat">الطاولات والكراسي والشخصيات: ${counts.rentals}</span><span class="stat">بنود أخرى: ${counts.other}</span></div></div><div class="mainCats">${sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام: نطاطيات، سناك، تجهيز حفلات، طاولات وشخصيات، وبنود أخرى.</p></div></div>${viewToolbar()}<div class="products view-${viewMode}">${vipGeneralProducts().map(card).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات خاصة للعروض فقط</h2><p>نماذج مختارة من المنتجات التي تحتوي على باقات أو عروض فقط.</p></div><button class="btn red" onclick="showSection('offers')">عرض كل العروض</button></div><div class="products view-${viewMode}">${vipOfferProducts().length?vipOfferProducts().map(card).join(''):'<div class="empty">لا توجد عروض مضافة حالياً</div>'}</div></section>${siteTermsSafetyHtml('bottom')}`}
-
-function getCatalogEventDate(){return document.getElementById('catalogEventDate')?.value||''}
-function getCatalogEventEndDate(){return document.getElementById('catalogEventEndDate')?.value||getCatalogEventDate()}
-function dateRangesOverlapCatalog(aStart,aEnd,bStart,bEnd){
-  if(!aStart || !bStart)return false;
-  aEnd=aEnd||aStart; bEnd=bEnd||bStart;
-  return String(aStart)<=String(bEnd) && String(bStart)<=String(aEnd);
-}
-function getAdminOrders(){try{return JSON.parse(localStorage.getItem('almalikaAdminOrders')||'[]')}catch(e){return []}}
-function tempHoldExpiredForCatalog(o){
-  const st = String(o.status||'') + ' ' + String(o.paymentStatus||'');
-  const confirmed = st.includes('مؤكد') || st.includes('تم دفع العربون') || st.includes('قيد التنفيذ');
-  if(confirmed)return false;
-  const t = new Date(o.createdAt||Date.now()).getTime();
-  if(!t || isNaN(t))return false;
-  return (Date.now()-t) > 24*60*60*1000;
-}
-function orderRangeTextCatalog(o){
-  const s=o.eventDateArabic || arabicDateText(o.eventDate||'');
-  const e=o.eventEndDate || '';
-  if(!e || e===o.eventDate)return s;
-  return `${s} إلى ${arabicDateText(e)}`;
-}
-function bookingInfoForCatalog(num,dateStr,endDateStr){
-  if(!dateStr)return null;
-  endDateStr=endDateStr||dateStr;
-  const orders = getAdminOrders();
-  const matches = orders.filter(o=>{
-    if(!o || !dateRangesOverlapCatalog(dateStr,endDateStr,o.eventDate,o.eventEndDate||o.eventDate))return false;
-    const st = String(o.status||'');
-    if(st.includes('ملغي') || st.includes('مؤرشف') || st.includes('منتهي') || st.includes('فك الحجز'))return false;
-    if(tempHoldExpiredForCatalog(o))return false;
-    return (o.items||[]).some(i=>Number(i.number)===Number(num));
-  });
-  if(!matches.length)return null;
-  const confirmed = matches.find(o=>{
-    const st = String(o.status||'') + ' ' + String(o.paymentStatus||'');
-    return st.includes('مؤكد') || st.includes('تم دفع العربون') || st.includes('تم تأكيد الحجز') || st.includes('قيد التنفيذ');
-  });
-  const picked = confirmed || matches[0];
-  return {
-    status: confirmed ? 'محجوزة' : 'محجوزة مؤقتًا',
-    note: confirmed ? `هذا المنتج محجوز خلال الفترة: ${orderRangeTextCatalog(picked)}` : `هذا المنتج محجوز مؤقتًا خلال الفترة: ${orderRangeTextCatalog(picked)}`,
-    orderId: picked.orderId || ''
+function renderHome(){
+  const counts={
+    bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,
+    snacks:products.filter(p=>sectionOf(p)==='snacks').length,
+    events:products.filter(p=>sectionOf(p)==='events').length,
+    rentals:products.filter(p=>sectionOf(p)==='rentals').length,
+    other:products.filter(p=>sectionOf(p)==='other').length
   };
+  app.innerHTML=`
+  <section class="wrap section homeMainClean" id="homeMainClean">
+    <div class="homeMainHead">
+      <div>
+        <h2>الأقسام الرئيسية</h2>
+        <p>اختر القسم المطلوب بسرعة بدون تكرار أو عناصر إضافية.</p>
+      </div>
+    </div>
+    <div class="mainCats">${sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('')}</div>
+  </section>
+  <section class="wrap section vipHomeClean">
+    <div class="title vipHomeTitle"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام.</p></div></div>
+    <div class="products view-cards">${vipGeneralProducts().map(card).join('')}</div>
+  </section>
+  ${siteTermsSafetyHtml('bottom')}`;
 }
-function bookingAlertForCatalog(num){
-  const b = bookingInfoForCatalog(num, getCatalogEventDate(), getCatalogEventEndDate());
-  if(!b)return '';
-  return `${b.status}\n${b.note}${b.orderId?'\nرقم الطلب: '+b.orderId:''}`;
-}
-
 function render(){if(current==='home'){renderHome();return} renderNav(); fillInternal(); const arr=relevantProducts(); const name=(sections.find(s=>s[0]===current)||[])[1]||'الكتالوج'; app.innerHTML=`<section class="wrap section"><div class="panel"><div><h1>${icon(current)} ${name}</h1><p>عدد البنود المعروضة: ${arr.length} — اضغط على الصورة أو التفاصيل لفتح بيانات المنتج.</p></div></div><div class="chips">${(internalSections[current]||['الجميع']).map(x=>`<button class="chip ${x===internal?'active':''}" onclick="setInternal('${esc(x)}')">${x}</button>`).join('')}</div>${viewToolbar()}<div class="products view-${viewMode}">${arr.length?arr.map(card).join(''):'<div class="empty">لا توجد منتجات مطابقة للبحث أو الفلتر الحالي</div>'}</div></section>`}
 
 function tagIcon(p){
@@ -16737,5 +16708,76 @@ a[target="_blank"]{ }
   window.addEventListener('load',function(){setTimeout(window.almV363AuditFix,0);setTimeout(window.almV363AuditFix,250);});
   window.addEventListener('hashchange',function(){setTimeout(window.almV363AuditFix,80);});
   try{new MutationObserver(function(){clearTimeout(window.__v363AuditT);window.__v363AuditT=setTimeout(window.almV363AuditFix,60);}).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
+
+
+<!-- ===== V374: تنظيف الصفحة الرئيسية وإلغاء تكرار النصوص والمناطق المتضاربة ===== -->
+<style id="almalika-v374-clean-home-duplicates-header">
+/* إلغاء مشكلة اختباء رأس الصفحة تحت المتصفح */
+html,body{margin-top:0!important;padding-top:0!important;overflow-x:hidden!important;scroll-padding-top:0!important}
+.header{position:relative!important;top:auto!important;z-index:1000!important;transform:none!important;margin-top:0!important;overflow:visible!important}
+.header .wrap,.headTop{overflow:visible!important;min-height:0!important;height:auto!important;max-height:none!important}
+.headTop{padding:8px 0!important;gap:8px!important;align-items:center!important}
+.logo{font-size:30px!important;line-height:1.1!important}
+.headBtns .btn{min-height:38px!important;padding:8px 12px!important;font-size:12px!important;border-radius:13px!important}
+#nav.almV361DropdownNav{min-height:0!important;gap:6px!important;align-items:center!important;justify-content:center!important}
+#nav.almV361DropdownNav .navHomeBtn,#nav.almV361DropdownNav .navDrop>summary{min-height:38px!important;padding:8px 12px!important;font-size:12px!important;border-radius:13px!important}
+.searchRow{min-height:0!important;height:auto!important;padding:6px 0 8px!important;gap:8px!important;grid-template-columns:minmax(0,1fr) 110px!important}
+.search,.searchRow select{height:38px!important;min-height:38px!important;font-size:12px!important;border-radius:12px!important}
+/* تنظيف الصفحة الرئيسية من التكرارات */
+.homeMainClean{padding-top:10px!important;padding-bottom:12px!important;margin-top:0!important}
+.homeMainClean .homeMainHead{display:flex!important;justify-content:flex-end!important;align-items:center!important;margin:0 0 10px!important;text-align:right!important}
+.homeMainClean .homeMainHead h2{margin:0 0 3px!important;font-size:22px!important;line-height:1.25!important;color:#2d1727!important}
+.homeMainClean .homeMainHead p{margin:0!important;font-size:12px!important;line-height:1.45!important;color:#7c6b75!important;font-weight:800!important}
+.homeMainClean .stats,.homeMainClean .stat,.stats,.stat{display:none!important;visibility:hidden!important;height:0!important;margin:0!important;padding:0!important;overflow:hidden!important}
+.homeMainClean .mainCats{display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:10px!important;padding:0!important;margin:0!important;overflow:visible!important;height:auto!important;max-height:none!important}
+.homeMainClean .mainCats .cat,.homeMainClean .mainCats .cat.richCat,.homeMainClean .mainCats .cat.v329DecorCat{min-height:118px!important;height:auto!important;padding:10px 8px!important;border-radius:18px!important;gap:4px!important;justify-content:center!important;box-shadow:0 7px 18px rgba(106,27,46,.06)!important;transition:none!important;animation:none!important}
+.homeMainClean .mainCats .cat .richIcon,.homeMainClean .mainCats .cat.richCat .richIcon,.homeMainClean .mainCats .cat .icon,.homeMainClean .mainCats .cat.v329DecorCat .v329CardBubble{width:48px!important;height:48px!important;min-width:48px!important;min-height:48px!important;border-radius:15px!important;margin:0 auto 4px!important}
+.homeMainClean .mainCats .cat svg,.homeMainClean .mainCats .cat .richIcon svg{width:24px!important;height:24px!important}
+.homeMainClean .mainCats .cat h3,.homeMainClean .mainCats .cat.richCat h3{font-size:14px!important;line-height:1.3!important;margin:0!important;min-height:0!important;color:#5d2451!important}
+.homeMainClean .mainCats .cat p,.homeMainClean .mainCats .cat.richCat p{font-size:10.5px!important;line-height:1.2!important;margin:0!important;font-weight:900!important;color:#78576e!important}
+.homeMainClean .mainCats .cat b,.homeMainClean .mainCats .cat.richCat b,.homeMainClean .mainCats .cat .v329Explore{font-size:11px!important;line-height:1!important;min-height:28px!important;padding:6px 12px!important;margin-top:5px!important;border-radius:999px!important}
+.vipHomeClean{padding-top:12px!important}
+.vipHomeTitle{margin-bottom:10px!important}
+.vipHomeTitle h2{font-size:22px!important;margin:0!important}.vipHomeTitle p{font-size:12px!important;margin:4px 0 0!important}
+/* منع أي سكربت قديم من إظهار أدوات أو نصوص مكررة */
+.viewToolbar,.displayModeBar,.productViewBar,.chips,#catSelect{display:none!important;visibility:hidden!important;height:0!important;max-height:0!important;padding:0!important;margin:0!important;overflow:hidden!important}
+@media(max-width:1400px){.homeMainClean .mainCats{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:760px){.headTop{grid-template-columns:1fr!important;text-align:center!important}.logo{justify-self:center!important}.headBtns{justify-self:center!important}#nav.almV361DropdownNav{grid-template-columns:repeat(2,minmax(0,1fr))!important}.homeMainClean .mainCats{grid-template-columns:repeat(2,minmax(0,1fr))!important}.homeMainClean .mainCats .cat{min-height:110px!important}}
+@media(max-width:480px){.homeMainClean .mainCats{grid-template-columns:1fr!important}.homeMainClean .mainCats .cat{min-height:102px!important}}
+</style>
+<script id="almalika-v374-clean-home-duplicates-js">
+(function(){
+  function cleanHome(){
+    try{
+      document.querySelectorAll('.stats,.stat,.viewToolbar,.displayModeBar,.productViewBar,.chips,#catSelect').forEach(function(el){el.remove();});
+      document.querySelectorAll('section').forEach(function(sec){
+        var t=(sec.textContent||'').replace(/\s+/g,' ');
+        if(/مختارات خاصة للعروض فقط/.test(t)) sec.remove();
+      });
+      var seen={};
+      document.querySelectorAll('.mainCats').forEach(function(el,i){
+        var sec=el.closest('section');
+        var key=(sec&&sec.className||'')+'|'+(el.textContent||'').replace(/\s+/g,' ').trim().slice(0,80);
+        if(seen[key]){ if(sec) sec.remove(); else el.remove(); }
+        else seen[key]=1;
+      });
+      document.querySelectorAll('.header,.headTop,.searchRow,#nav').forEach(function(el){
+        el.style.setProperty('visibility','visible','important');
+        el.style.setProperty('opacity','1','important');
+        el.style.setProperty('height','auto','important');
+        el.style.setProperty('max-height','none','important');
+        el.style.setProperty('overflow','visible','important');
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanHome,0);setTimeout(cleanHome,80);});
+  window.addEventListener('load',function(){setTimeout(cleanHome,0);setTimeout(cleanHome,120);});
+  window.addEventListener('hashchange',function(){setTimeout(cleanHome,40);});
+  var oldRenderHome=window.renderHome;
+  if(typeof oldRenderHome==='function'){
+    window.renderHome=renderHome=function(){var r=oldRenderHome.apply(this,arguments);setTimeout(cleanHome,0);setTimeout(cleanHome,80);return r;};
+  }
 })();
 </script>
