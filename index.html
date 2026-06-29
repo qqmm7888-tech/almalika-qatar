@@ -12984,6 +12984,147 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 }
 </style>
 
+
+<style id="almalika-v368-remove-empty-space-product-cards">
+/* v368: إلغاء الفراغ الكبير داخل كروت المنتجات */
+.products,
+.products.view-cards,
+.products.view-wide,
+.products.view-compact,
+.products.view-mini,
+.products.view-list{
+  align-items:start!important;
+  grid-auto-rows:auto!important;
+}
+.product,
+.products.view-wide .product,
+.products.view-cards .product,
+.products.view-compact .product,
+.products.view-mini .product,
+.products.view-list .product{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+}
+.product .body,
+.products.view-wide .product .body,
+.products.view-cards .product .body,
+.products.view-compact .product .body,
+.products.view-mini .product .body,
+.products.view-list .product .body{
+  flex:0 0 auto!important;
+  min-height:0!important;
+  overflow:visible!important;
+  gap:7px!important;
+}
+.product .body h3{
+  height:auto!important;
+  min-height:40px!important;
+  max-height:48px!important;
+  flex:0 0 auto!important;
+}
+.product .desc{
+  height:auto!important;
+  min-height:30px!important;
+  max-height:36px!important;
+  flex:0 0 auto!important;
+}
+.product .tags{
+  height:auto!important;
+  min-height:30px!important;
+  max-height:62px!important;
+  flex:0 0 auto!important;
+}
+.product .miniFacts{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  flex:0 0 auto!important;
+  gap:5px!important;
+}
+.product .miniFact{
+  height:auto!important;
+  min-height:27px!important;
+  max-height:32px!important;
+  flex:0 0 auto!important;
+}
+.product .availabilitySlot,
+.product .availabilityMini.emptyStatus,
+.product:not(.bookedProduct) .availabilityMini{
+  display:none!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+.product.bookedProduct .availabilityMini:not(.emptyStatus){
+  display:flex!important;
+  height:auto!important;
+  min-height:38px!important;
+  max-height:none!important;
+  flex:0 0 auto!important;
+  visibility:visible!important;
+  opacity:1!important;
+  margin:6px 0 0!important;
+  padding:8px 9px!important;
+}
+.product .bottom,
+.products.view-wide .product .bottom,
+.products.view-cards .product .bottom,
+.products.view-compact .product .bottom,
+.products.view-mini .product .bottom,
+.products.view-list .product .bottom{
+  margin-top:9px!important;
+  flex:0 0 auto!important;
+  height:auto!important;
+  min-height:46px!important;
+  max-height:none!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 86px!important;
+  gap:8px!important;
+  align-items:stretch!important;
+}
+.product .price,
+.product .actions.quickActions,
+.product .actions.quickActions .details{
+  height:auto!important;
+  min-height:46px!important;
+  max-height:none!important;
+}
+.product .pic,
+.products.view-wide .product .pic,
+.products.view-cards .product .pic,
+.products.view-compact .product .pic,
+.products.view-mini .product .pic,
+.products.view-list .product .pic{
+  flex:0 0 176px!important;
+  height:176px!important;
+  min-height:176px!important;
+  max-height:176px!important;
+}
+@media(max-width:640px){
+  .product .pic{flex-basis:185px!important;height:185px!important;min-height:185px!important;max-height:185px!important}
+  .product .bottom{grid-template-columns:1fr!important}
+}
+</style>
+<script id="almalika-v368-remove-empty-status-slots-js">
+(function(){
+  function removeEmptySlots(){
+    try{
+      document.querySelectorAll('.product .availabilitySlot.emptyStatus, .product .availabilityMini.emptyStatus').forEach(function(el){el.remove();});
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(removeEmptySlots,0);setTimeout(removeEmptySlots,160);});
+  window.addEventListener('load',function(){setTimeout(removeEmptySlots,0);setTimeout(removeEmptySlots,240);});
+  document.addEventListener('click',function(){setTimeout(removeEmptySlots,80);},true);
+})();
+</script>
+
 </body>
 </html>
 
