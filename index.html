@@ -5434,14 +5434,8 @@ body .cartItem .qtyBox b{
 </style>
 </head>
 <body>
-<script id="almalika-v370-boot-stable-top">document.documentElement.classList.add('almV370Pending');</script>
-<style id="almalika-v370-stable-top-loading">
-html.almV370Pending .headTop,
-html.almV370Pending .searchRow,
-html.almV370Pending #app > .wrap.section:first-child{
-  visibility:hidden!important;
-  opacity:0!important;
-}
+<script id="almalika-v371-boot-stable-top">document.documentElement.classList.add('almV371TopBoot');</script>
+<style id="almalika-v371-stable-top-base">
 .headTop{min-height:58px!important}
 .searchRow{min-height:48px!important}
 #nav.almV361DropdownNav{min-height:44px!important}
@@ -5451,6 +5445,9 @@ html.almV370Pending #app > .wrap.section:first-child{
 #app > .wrap.section:first-child .title .stat{white-space:nowrap!important}
 .mainCats{align-items:stretch!important}
 .mainCats .cat,.mainCats .cat.richCat{transition:none!important;animation:none!important}
+html.almV371TopBoot .headTop,
+html.almV371TopBoot .searchRow,
+html.almV371TopBoot #app > .wrap.section:first-child{visibility:visible!important;opacity:1!important}
 @media(max-width:860px){
   #app > .wrap.section:first-child{min-height:420px!important}
   #app > .wrap.section:first-child .title{grid-template-columns:1fr!important}
@@ -13017,23 +13014,27 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 
 
 
-<style id="almalika-v370-stable-home-top-final">
-html.almV370Ready .headTop,
-html.almV370Ready .searchRow,
-html.almV370Ready #app > .wrap.section:first-child{
+<style id="almalika-v371-stable-home-top-final">
+html.almV371TopReady .headTop,
+html.almV371TopReady .searchRow,
+html.almV371TopReady #app > .wrap.section:first-child{
   visibility:visible!important;
   opacity:1!important;
-  transition:opacity .12s ease!important;
 }
 </style>
-<script id="almalika-v370-stable-top-loading-js">
+<script id="almalika-v371-stable-top-js">
 (function(){
-  function ensureTopStable(){
+  function repairTopRegion(){
     try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
     try{ if(typeof v361CleanPage==='function') v361CleanPage(); }catch(e){}
     try{
       var first=document.querySelector('#app > .wrap.section:first-child');
       if(first){
+        first.style.setProperty('display','block','important');
+        first.style.setProperty('visibility','visible','important');
+        first.style.setProperty('opacity','1','important');
+        first.style.setProperty('height','auto','important');
+        first.style.setProperty('overflow','visible','important');
         var mainCats=first.querySelector('.mainCats');
         if(mainCats){
           mainCats.style.setProperty('display','grid','important');
@@ -13044,44 +13045,34 @@ html.almV370Ready #app > .wrap.section:first-child{
           mainCats.style.setProperty('overflow','visible','important');
         }
       }
-    }catch(e){}
-  }
-  function revealStableTop(){
-    document.documentElement.classList.remove('almV370Pending');
-    document.documentElement.classList.add('almV370Ready');
-  }
-  function stabilizeAndReveal(delay){
-    document.documentElement.classList.add('almV370Pending');
-    window.setTimeout(function(){
-      ensureTopStable();
-      requestAnimationFrame(function(){
-        ensureTopStable();
-        requestAnimationFrame(function(){
-          ensureTopStable();
-          revealStableTop();
-        });
+      document.querySelectorAll('.headTop,.searchRow').forEach(function(el){
+        el.style.setProperty('visibility','visible','important');
+        el.style.setProperty('opacity','1','important');
+        el.style.setProperty('height','auto','important');
+        el.style.setProperty('overflow','visible','important');
       });
-    }, delay||0);
+    }catch(e){}
+    document.documentElement.classList.remove('almV371TopBoot');
+    document.documentElement.classList.add('almV371TopReady');
   }
-  document.addEventListener('DOMContentLoaded', function(){ stabilizeAndReveal(40); });
-  window.addEventListener('load', function(){ stabilizeAndReveal(80); });
-  window.addEventListener('pageshow', function(){ stabilizeAndReveal(20); });
-  window.addEventListener('hashchange', function(){ stabilizeAndReveal(20); });
+  function runTopRepair(delay){ window.setTimeout(repairTopRegion, delay||0); }
+  document.addEventListener('DOMContentLoaded', function(){ runTopRepair(0); runTopRepair(40); runTopRepair(140); });
+  window.addEventListener('load', function(){ runTopRepair(0); runTopRepair(100); });
+  window.addEventListener('pageshow', function(){ runTopRepair(0); runTopRepair(60); });
+  window.addEventListener('hashchange', function(){ runTopRepair(20); });
   var oldShowHome=window.showHome;
   if(typeof oldShowHome==='function'){
     window.showHome = showHome = function(){
-      document.documentElement.classList.add('almV370Pending');
       var out = oldShowHome.apply(this, arguments);
-      stabilizeAndReveal(20);
+      runTopRepair(10); runTopRepair(90);
       return out;
     };
   }
   var oldRenderHome=window.renderHome;
   if(typeof oldRenderHome==='function'){
     window.renderHome = renderHome = function(){
-      document.documentElement.classList.add('almV370Pending');
       var out = oldRenderHome.apply(this, arguments);
-      stabilizeAndReveal(20);
+      runTopRepair(10); runTopRepair(90);
       return out;
     };
   }
