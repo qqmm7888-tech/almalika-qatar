@@ -5680,6 +5680,7 @@ function card(p){const inCart=cart.some(x=>Number(x.number)===Number(p.number));
 <span class="tag">⏱ ${esc(duration(p))}</span>
 <span class="tag">👶 ${esc(shortAge(p))}</span>
 </div>
+${cardExtraInfo(p)}
 ${booked?`<div class="availabilityMini">${booked.note}</div>`:''}
 <div class="bottom">
 <div class="price">
@@ -5702,6 +5703,47 @@ function kindOf(p){const n=Number(p.number), c=p.category||''; if(c.includes('ا
 function firstPrice(p){return Number(p.priceOneDay||p.priceTwoDays||0)}
 function optList(p){const k=kindOf(p), one=Number(p.priceOneDay||0), two=Number(p.priceTwoDays||one||0); if(k==='bouncy')return[{id:'1',label:p.durationOneDay||'يوم واحد',price:one,note:'تركيب وتشغيل'},{id:'2',label:p.durationTwoDays||'يومين',price:two,note:'أفضل للحفلات الطويلة'}]; if(k==='snack'){if(p.packagePrices){return Object.keys(p.packagePrices).map(x=>Number(x)).sort((a,b)=>a-b).map(x=>{const key=String(x);const cond=(p.packageConditions&&p.packageConditions[key])?String(p.packageConditions[key]):'';return{id:key,label:x+' طفل',price:Number(p.packagePrices[key]||0),note:cond?'يشترط عربة + موظفة إضافية':'موظفة • 3 ساعات',fullNote:cond}})} let mid=two>one?Math.round((one+two)/2/10)*10:one; let small=snackPackage20Price(p); return[{id:'20',label:'20 شخص',price:small,note:'موظفة • 3 ساعات'},{id:'30',label:'30 شخص',price:one,note:p.durationOneDay||'موظفة • 3 ساعات'},{id:'40',label:'40 شخص',price:mid,note:'موظفة • 3 ساعات'},{id:'50',label:'50 شخص',price:two,note:p.durationTwoDays||'موظفة • 3 ساعات'}]} if(k==='event'){if(isDecorEvent(p)){const base=Number(p.baseDecorPrice||one||700); const packs=p.decorPackages||{}; const opts=[{id:'decor-only',label:'ديكور فقط',price:base,note:`السعر الأساسي ${base} ر.ق`}]; Object.keys(packs).map(x=>Number(x)).filter(x=>x!==100&&x!==150&&x!==200).sort((a,b)=>a-b).forEach(x=>opts.push({id:'kids-'+x,label:x+' طفل',price:base+Number(packs[String(x)]||0),note:'ديكور + تجهيز باقة الأطفال'})); return opts;} return[{id:'event',label:(p.details||'حسب الباقة').includes('سناك')?'شامل سناك حسب الباقة':'بدون سناك / تجهيز فقط',price:one,note:p.details||'حسب تفاصيل الحفلة'}]} if(k==='rental'){return[{id:'rental',label:p.durationOneDay||'حسب الحجز',price:one,note:p.details||'حسب الكمية والتوفر'}]} return[{id:'fixed',label:p.durationOneDay||'يوم واحد',price:one,note:p.details||'حسب المناسبة'}]}
 function selectedOpt(p){const v=document.querySelector(`input[name="opt_${p.number}"]:checked`)?.value; return optList(p).find(o=>o.id==v)||optList(p)[0]}
+function compactDimsText(p){
+  const dims=[p.length,p.width,p.height].filter(Boolean).map(v=>String(v).trim()).filter(Boolean);
+  return dims.length ? (dims.join(' × ')+' م') : (p.decorSize||'');
+}
+function snackPackSummary(p){
+  try{
+    if(p.packagePrices){
+      const keys=Object.keys(p.packagePrices).map(x=>Number(x)).filter(x=>!isNaN(x)&&![100,150,200].includes(x)).sort((a,b)=>a-b);
+      if(keys.length) return keys.join(' / ')+' طفل';
+    }
+  }catch(e){}
+  return '20 / 30 / 40 / 50 طفل';
+}
+function cardFactPairs(p){
+  const k=kindOf(p), facts=[];
+  if(k==='bouncy'){
+    facts.push(['المقاس', compactDimsText(p)||'حسب المنتج']);
+    facts.push(['التجهيز', 'تركيب وتشغيل']);
+    facts.push(['المناسبة', 'حفلات وحدائق ومدارس']);
+  }else if(k==='snack'){
+    facts.push(['الخدمة', p.durationOneDay||'3 ساعات']);
+    facts.push(['الباقات', snackPackSummary(p)]);
+    facts.push(['التجهيز', 'مع موظفة حسب الباقة']);
+  }else if(k==='event'){
+    facts.push(['المقاس', p.decorSize||p.length||'حسب التصميم']);
+    facts.push(['التجهيز', ((p.details||'').includes('بدون سناك')?'بدون سناك':'حسب الطلب'));
+    facts.push(['المناسبة', 'ميلاد وتخرج ومناسبات']);
+  }else if(k==='rental'){
+    facts.push(['الخدمة', p.durationOneDay||'حسب الحجز']);
+    facts.push(['النوع', shortType(p)||'تأجير']);
+    facts.push(['الملاحظة', isRentalCharacter(p)?'مع حفلة أو سناك':'لا يؤجر منفرداً']);
+  }else{
+    facts.push(['الخدمة', p.durationOneDay||'حسب الحجز']);
+    facts.push(['النوع', shortType(p)||'بند إضافي']);
+    facts.push(['التنسيق', 'حسب المناسبة']);
+  }
+  return facts.filter(x=>x[1]).slice(0,3);
+}
+function cardExtraInfo(p){
+  return `<div class="miniFacts">${cardFactPairs(p).map(([k,v])=>`<div class="miniFact"><span>${esc(k)}</span><b>${esc(v)}</b></div>`).join('')}</div>`;
+}
 function detailIntro(p){const k=kindOf(p); if(k==='snack')return 'خدمة سناك للحفلات والمناسبات مع باقات 20 / 30 / 40 / 50 شخص ومدة خدمة 3 ساعات تقريباً.'; if(k==='event')return 'ديكور وتجهيز حفلة من قسم تجهيز الحفلات مع خيارات حسب الشمول والتفاصيل المطلوبة.'; if(k==='rental')return 'تأجير طاولات وكراسي أو شخصيات كرتونية حسب المناسبة والكمية المطلوبة.'; if(k==='other')return 'بند إضافي للحفلات والمناسبات، يتم تنسيقه حسب نوع الفعالية ومكان التنفيذ.'; return 'نطاطية آمنة وممتعة للأطفال مع تركيب وتشغيل من فريق الملكة.'}
 function isRentalCharacter(p){return kindOf(p)==='rental' && ((p.type||'').includes('شخصيات') || (p.name||'').includes('شخصية') || (p.name||'').includes('سبايدر') || (p.name||'').includes('ميني') || (p.name||'').includes('باتمان') || (p.name||'').includes('وودي') || (p.name||'').includes('إلسا') || (p.name||'').includes('جيري') || (p.name||'').includes('مهرج'))}
 function rentalNoteText(p){return isRentalCharacter(p)?'غير مسموح تأجير الشخصية الكرتونية بمفردها، ولكن تكون مع حفلة أو عربات سناك وأقل شيء عدد 2 من العربات.':'غير مسموح تأجير الكراسي بمفردها، ولكن تكون مع عربات سناك وأقل شيء عدد 2 من العربات.'}
@@ -12740,6 +12782,47 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   setInterval(keepDetailsOnly, 800);
 })();
 </script>
+
+
+<style id="almalika-v358-fill-spaces-simple-details">
+/* v358: تقليل الفراغات في كروت الجميع وإضافة معلومات مختصرة ومهمة */
+.product .miniFacts,
+.products.view-wide .product .miniFacts,
+.products.view-cards .product .miniFacts,
+.products.view-compact .product .miniFacts,
+.products.view-mini .product .miniFacts,
+.products.view-list .product .miniFacts{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:6px!important;
+  margin-top:4px!important;
+}
+.product .miniFact,
+.products.view-wide .product .miniFact,
+.products.view-cards .product .miniFact,
+.products.view-compact .product .miniFact,
+.products.view-mini .product .miniFact,
+.products.view-list .product .miniFact{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:10px!important;
+  background:#fffaf0!important;
+  border:1px solid #f3dfb0!important;
+  border-radius:12px!important;
+  padding:7px 10px!important;
+  min-height:34px!important;
+}
+.product .miniFact span{color:#8b6f2a!important;font-size:11px!important;font-weight:800!important;white-space:nowrap!important}
+.product .miniFact b{color:#6A1B2E!important;font-size:11px!important;font-weight:900!important;line-height:1.35!important;text-align:left!important;flex:1!important}
+.product .body{gap:8px!important}
+.product .desc{min-height:auto!important}
+.product .body h3{min-height:46px!important}
+@media(max-width:720px){
+  .product .miniFact{padding:6px 9px!important;min-height:32px!important}
+  .product .miniFact span,.product .miniFact b{font-size:10.5px!important}
+}
+</style>
 
 </body>
 </html>
