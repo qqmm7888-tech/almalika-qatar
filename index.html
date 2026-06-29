@@ -16003,3 +16003,123 @@ section.wrap,
   setInterval(cleanNums, 700);
 })();
 </script>
+
+
+<style id="almalika-v363-comprehensive-home-audit-hardening">
+/* v363: فحص شامل للرئيسية - تثبيت الظهور، منع التكرار، منع قص الصور، وإزالة أدوات العرض الزائدة */
+.homeHeroFrame,.homeHeroImage,#almHomePromoSlider,.almPromoSlider,.hero .homeHeroFrame,.hero .homeHeroImage{
+  display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important;
+}
+.chips,.viewToolbar,#catSelect,.displayModeBar,.productViewBar{
+  display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important;
+}
+.mainCats{
+  display:grid!important;visibility:visible!important;opacity:1!important;height:auto!important;max-height:none!important;overflow:visible!important;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr))!important;gap:14px!important;padding:8px 0 6px!important;
+}
+.mainCats .cat{display:flex!important;visibility:visible!important;opacity:1!important;min-height:188px!important;overflow:hidden!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;gap:8px!important}
+.mainCats .cat h3{font-size:19px!important;line-height:1.35!important;margin:0!important}.mainCats .cat p{font-size:12px!important;line-height:1.4!important;margin:0!important}.mainCats .cat b,.mainCats .cat .v329Explore{margin-top:6px!important}
+.products,.products.view-wide,.products.view-cards,.products.view-compact,.products.view-mini,.products.view-list{
+  display:grid!important;grid-template-columns:repeat(auto-fill,minmax(275px,1fr))!important;gap:16px!important;align-items:start!important;
+}
+.product,.products.view-wide .product,.products.view-cards .product,.products.view-compact .product,.products.view-mini .product,.products.view-list .product{
+  display:flex!important;flex-direction:column!important;width:100%!important;height:auto!important;min-height:0!important;max-height:none!important;overflow:hidden!important;border-radius:22px!important;
+}
+.product .pic,.products.view-wide .product .pic,.products.view-cards .product .pic,.products.view-compact .product .pic,.products.view-mini .product .pic,.products.view-list .product .pic{
+  order:1!important;width:100%!important;height:210px!important;min-height:210px!important;max-height:none!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:hidden!important;padding:10px!important;border-right:0!important;border-bottom:1px solid #f1dce7!important;background:linear-gradient(135deg,#fff,#fffaf0,#fff7fb)!important;
+}
+.product .pic img,.products.view-wide .product .pic img,.products.view-cards .product .pic img,.products.view-compact .product .pic img,.products.view-mini .product .pic img,.products.view-list .product .pic img{
+  display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center center!important;margin:auto!important;padding:0!important;
+}
+.product .body,.products.view-wide .product .body,.products.view-cards .product .body,.products.view-compact .product .body,.products.view-mini .product .body,.products.view-list .product .body{
+  order:2!important;display:flex!important;flex-direction:column!important;gap:8px!important;padding:13px 14px 12px!important;overflow:visible!important;min-height:0!important;flex:1 1 auto!important;
+}
+.product .body h3{min-height:auto!important;max-height:none!important;overflow:visible!important;display:block!important;font-size:16px!important;line-height:1.4!important}.product .desc{min-height:auto!important;max-height:none!important;overflow:visible!important;display:block!important;font-size:11px!important;line-height:1.55!important}.product .tags,.product .miniFacts,.product .availabilityMini,.bookedCatalogWord{min-height:auto!important;max-height:none!important;overflow:visible!important}.product .bottom{margin-top:auto!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;align-items:end!important}.product .price{width:100%!important;margin:0!important}.product .actions.quickActions{display:grid!important;grid-template-columns:1fr!important;gap:0!important;width:100%!important}.product .actions.quickActions .quickShop,.product .actions.quickActions .shareFriend,.product .actions.quickActions .wa{display:none!important}.product .actions.quickActions .details{display:block!important;width:100%!important}.product .num{left:8px!important;right:auto!important;top:8px!important;z-index:20!important}
+a[target="_blank"]{ }
+@media(max-width:900px){.products,.products.view-wide,.products.view-cards,.products.view-compact,.products.view-mini,.products.view-list{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))!important}.mainCats{grid-template-columns:repeat(2,minmax(0,1fr))!important}.product .pic{height:190px!important;min-height:190px!important}}
+@media(max-width:560px){.mainCats{grid-template-columns:1fr!important}.products,.products.view-wide,.products.view-cards,.products.view-compact,.products.view-mini,.products.view-list{grid-template-columns:1fr!important}.product .bottom{grid-template-columns:1fr!important}.product .pic{height:180px!important;min-height:180px!important}}
+</style>
+<script id="almalika-v363-comprehensive-home-audit-hardening-js">
+(function(){
+  function txt(el){return (el&&el.textContent||'').replace(/\s+/g,' ').trim();}
+  function numFromCard(card){return ((card.querySelector('.num')||{}).textContent||'').replace(/[^0-9]/g,'');}
+  function cleanupHiddenHomeImages(){
+    try{
+      document.querySelectorAll('.homeHeroFrame,.homeHeroImage,#almHomePromoSlider,.almPromoSlider').forEach(function(el){el.remove();});
+      document.querySelectorAll('section.hero').forEach(function(sec){
+        if(sec.querySelector('.homeHeroImage,.homeHeroFrame') || /الملكة للحفلات/.test(txt(sec)) && sec.querySelector('img[src^="data:image"]')) sec.remove();
+      });
+    }catch(e){}
+  }
+  function dedupeHomeBlocks(){
+    try{
+      var mainCats=[].slice.call(document.querySelectorAll('.mainCats'));
+      mainCats.forEach(function(el,i){
+        if(i>0){ var sec=el.closest('section'); if(sec) sec.remove(); else el.remove(); }
+        else{
+          el.style.setProperty('display','grid','important'); el.style.setProperty('visibility','visible','important'); el.style.setProperty('opacity','1','important'); el.style.setProperty('height','auto','important'); el.style.setProperty('max-height','none','important'); el.style.setProperty('overflow','visible','important');
+        }
+      });
+      document.querySelectorAll('.mainCats .cat').forEach(function(card){card.style.setProperty('display','flex','important');card.style.setProperty('visibility','visible','important');card.style.setProperty('opacity','1','important');});
+      var seen={};
+      document.querySelectorAll('.mainCats .cat').forEach(function(c){
+        var key=(c.getAttribute('onclick')||'')+'|'+txt(c.querySelector('h3')||c);
+        if(seen[key]) c.remove(); else seen[key]=1;
+      });
+    }catch(e){}
+  }
+  function cleanMenusAndDuplications(){
+    try{
+      document.querySelectorAll('.chips,.viewToolbar,#catSelect,.displayModeBar,.productViewBar').forEach(function(el){el.remove();});
+      document.querySelectorAll('.products').forEach(function(grid){
+        ['view-wide','view-cards','view-compact','view-mini','view-list'].forEach(function(c){grid.classList.remove(c);});
+        grid.classList.add('view-cards');
+        var seen={};
+        Array.prototype.slice.call(grid.querySelectorAll('.product')).forEach(function(card){
+          var key=numFromCard(card)+'|'+txt(card.querySelector('h3'));
+          if(key && seen[key]) card.remove(); else seen[key]=1;
+        });
+      });
+    }catch(e){}
+  }
+  function ensureDetailsOnly(){
+    try{
+      document.querySelectorAll('.product').forEach(function(card){
+        var n=numFromCard(card); if(!n) return;
+        var bottom=card.querySelector('.bottom'); if(!bottom) return;
+        var actions=bottom.querySelector('.actions.quickActions');
+        if(!actions){actions=document.createElement('div');actions.className='actions quickActions';bottom.appendChild(actions);}
+        var details=actions.querySelector('.details');
+        if(!details){details=document.createElement('button');details.className='details';details.type='button';details.textContent='تفاصيل ✨';actions.appendChild(details);} else {details.textContent='تفاصيل ✨'; details.removeAttribute('disabled');}
+        details.setAttribute('onclick','openProduct('+n+')');
+        Array.prototype.slice.call(actions.children).forEach(function(ch){if(ch!==details) ch.remove();});
+      });
+    }catch(e){}
+  }
+  function securityHarden(){
+    try{
+      document.querySelectorAll('a[target="_blank"]').forEach(function(a){a.setAttribute('rel','noopener noreferrer');});
+      document.querySelectorAll('a[href^="javascript:"]').forEach(function(a){
+        if(!a.getAttribute('onclick')) a.removeAttribute('href');
+      });
+      document.querySelectorAll('img').forEach(function(img){
+        if(!img.getAttribute('loading')) img.setAttribute('loading','lazy');
+        img.setAttribute('decoding','async');
+      });
+    }catch(e){}
+  }
+  window.almV363AuditFix=function(){cleanupHiddenHomeImages();dedupeHomeBlocks();cleanMenusAndDuplications();ensureDetailsOnly();securityHarden();};
+  var oldRender=window.render;
+  if(typeof oldRender==='function'){
+    window.render=render=function(){var out=oldRender.apply(this,arguments);setTimeout(window.almV363AuditFix,0);setTimeout(window.almV363AuditFix,120);return out;};
+  }
+  var oldHome=window.renderHome;
+  if(typeof oldHome==='function'){
+    window.renderHome=renderHome=function(){var out=oldHome.apply(this,arguments);setTimeout(window.almV363AuditFix,0);setTimeout(window.almV363AuditFix,120);return out;};
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(window.almV363AuditFix,0);setTimeout(window.almV363AuditFix,160);});
+  window.addEventListener('load',function(){setTimeout(window.almV363AuditFix,0);setTimeout(window.almV363AuditFix,250);});
+  window.addEventListener('hashchange',function(){setTimeout(window.almV363AuditFix,80);});
+  try{new MutationObserver(function(){clearTimeout(window.__v363AuditT);window.__v363AuditT=setTimeout(window.almV363AuditFix,60);}).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
