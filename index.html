@@ -12631,6 +12631,130 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 })();
 </script>
 
+
+<style id="almalika-v364-compact-home-layout">
+/* v364: تصغير مربعات الأقسام الرئيسية وتحسين تماسك الصفحة الرئيسية */
+.wrap.section{padding-top:16px!important;padding-bottom:16px!important}
+.title{margin-bottom:12px!important;align-items:flex-end!important}
+.title h2{font-size:20px!important;line-height:1.25!important;margin:0 0 4px!important}
+.title p{font-size:12px!important;line-height:1.5!important;margin:0!important}
+.stats{gap:7px!important;row-gap:6px!important}
+.stat{font-size:12px!important;padding:7px 10px!important;border-radius:999px!important}
+.mainCats{
+  display:grid!important;
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;
+  gap:12px!important;
+  align-items:stretch!important;
+  padding-top:4px!important;
+}
+.mainCats .cat,
+.mainCats .cat.richCat,
+.mainCats .cat.v329DecorCat{
+  min-height:152px!important;
+  height:auto!important;
+  padding:14px 12px!important;
+  border-radius:22px!important;
+  gap:6px!important;
+  box-shadow:0 8px 20px rgba(0,0,0,.04)!important;
+}
+.mainCats .cat .icon,
+.mainCats .cat.richCat .richIcon,
+.mainCats .cat.v329DecorCat .v329CardBubble{
+  width:62px!important;
+  height:62px!important;
+  min-width:62px!important;
+  min-height:62px!important;
+  border-radius:18px!important;
+  margin:0 auto 4px!important;
+}
+.mainCats .cat .icon svg,
+.mainCats .cat.richCat .richIcon svg,
+.mainCats .cat.v329DecorCat .v329CardBubble svg{width:28px!important;height:28px!important}
+.mainCats .cat h3,
+.mainCats .cat.richCat h3,
+.mainCats .cat.v329DecorCat h3{
+  font-size:15px!important;
+  line-height:1.35!important;
+  margin:0!important;
+}
+.mainCats .cat p,
+.mainCats .cat.richCat p,
+.mainCats .cat.v329DecorCat p{
+  font-size:11px!important;
+  line-height:1.35!important;
+  margin:0!important;
+}
+.mainCats .cat b,
+.mainCats .cat .v329Explore,
+.mainCats .cat.richCat b{
+  margin-top:auto!important;
+  font-size:12px!important;
+  padding:7px 14px!important;
+  min-height:36px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+.products,
+.products.view-wide,
+.products.view-cards,
+.products.view-compact,
+.products.view-mini,
+.products.view-list{gap:14px!important;align-items:start!important}
+.product,
+.products.view-wide .product,
+.products.view-cards .product,
+.products.view-compact .product,
+.products.view-mini .product,
+.products.view-list .product{
+  border-radius:22px!important;
+}
+.product .pic{height:200px!important;min-height:200px!important}
+.product .body{padding:12px!important;gap:8px!important}
+.product .body h3{font-size:16px!important;line-height:1.35!important}
+.product .desc{font-size:11.5px!important;line-height:1.5!important}
+.product .tag{font-size:11px!important;padding:5px 8px!important}
+.product .miniFact{padding:6px 9px!important;min-height:32px!important}
+.product .miniFact span,.product .miniFact b{font-size:10.5px!important}
+.product .price{padding:8px 10px!important}
+.product .price strong{font-size:13px!important}
+.product .price b{font-size:17px!important}
+.product .actions.quickActions .details{min-height:38px!important;font-size:13px!important}
+@media(max-width:1400px){
+  .mainCats{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:900px){
+  .mainCats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  .mainCats .cat,.mainCats .cat.richCat,.mainCats .cat.v329DecorCat{min-height:144px!important}
+  .product .pic{height:190px!important;min-height:190px!important}
+}
+@media(max-width:560px){
+  .mainCats{grid-template-columns:1fr!important}
+  .mainCats .cat,.mainCats .cat.richCat,.mainCats .cat.v329DecorCat{min-height:136px!important;padding:12px 10px!important}
+  .mainCats .cat h3,.mainCats .cat.richCat h3,.mainCats .cat.v329DecorCat h3{font-size:14px!important}
+  .product .pic{height:180px!important;min-height:180px!important}
+}
+</style>
+<script id="almalika-v364-home-layout-cleanup-js">
+(function(){
+  function tuneHome(){
+    try{
+      document.querySelectorAll('.mainCats .cat').forEach(function(card){
+        card.style.setProperty('display','flex','important');
+        card.style.setProperty('visibility','visible','important');
+        card.style.setProperty('opacity','1','important');
+      });
+      document.querySelectorAll('.products').forEach(function(g){
+        ['view-wide','view-compact','view-mini','view-list'].forEach(function(c){g.classList.remove(c)});
+        g.classList.add('view-cards');
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(tuneHome,0);setTimeout(tuneHome,180);});
+  window.addEventListener('load',function(){setTimeout(tuneHome,0);setTimeout(tuneHome,220);});
+})();
+</script>
+
 </body>
 </html>
 
