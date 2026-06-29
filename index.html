@@ -5660,7 +5660,7 @@ function shortType(p){
 }
 function shortAge(p){return p.age||p.durationOneDay||p.durationTwoDays||'حسب الطلب'}
 function forcedUnavailableCatalog(num){
-  const unavailable = [1,19,20,22,34,35,37];
+  const unavailable = [1,19,20,22,35,37];
   return unavailable.includes(Number(num)) ? {status:'غير متاح', note:'هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.'} : null;
 }
 
@@ -13287,6 +13287,18 @@ body{overflow-x:hidden!important}
 })();
 </script>
 
+
+<script id="almalika-v378-make-product-34-available">
+(function(){
+  window.forcedUnavailableCatalog = function(num){
+    const unavailable = [1,19,20,22,35,37];
+    return unavailable.includes(Number(num)) ? {status:'غير متاح', note:'هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.'} : null;
+  };
+  try{
+    if(typeof render==='function') setTimeout(render,0);
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
 
