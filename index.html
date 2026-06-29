@@ -5686,12 +5686,7 @@ ${booked?`<div class="availabilityMini">${booked.note}</div>`:''}
 <small>يبدأ من</small>
 <strong>${price(p)} ر.ق</strong>
 </div>
-<div class="actions quickActions">
-<button class="details" ${forced?'disabled':''} onclick="openProduct(${p.number})">${forced?'غير متاح':'تفاصيل'}</button>
-<button class="quickShop" ${disabled} onclick="quickShop(${p.number})">${forced?'غير متاح':(booked?'محجوزة':'التسوق السريع')}</button>
-<button class="shareFriend" ${forced?'disabled':''} onclick="shareToFriend(${p.number})">${forced?'غير متاح':'تحويل لصديق'}</button>
-<button class="wa" ${disabled} onclick="quickWa(${p.number})">${forced?'غير متاح':'واتساب'}</button>
-</div>
+
 </div>
 </div>
 ${hideProductImageRange412422(p)?'':`<div class="pic ${sectionOf(p)==='offers'?'offerZoomPic':''}" title="${sectionOf(p)==='offers'?'اضغط لتكبير صورة العرض':'اضغط لفتح التفاصيل'}" onclick="${sectionOf(p)==='offers'?'openOfferImage('+p.number+')':'openProduct('+p.number+')'}">${booked?`<div class="bookedImageStamp">${forced?'غير متاح':'محجوز'}</div>`:``}<img src="${esc(productImageUrl(p))}" alt="${esc(p.name)}" onerror="window.tryProductImageFallback&&window.tryProductImageFallback(this,'${p.number}')"></div>`}</div>`}
@@ -12670,6 +12665,53 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
   }
 }
 </style>
+
+
+<style id="almalika-v356-remove-product-card-buttons">
+/* v356: حذف أزرار كروت المنتجات فقط (تفاصيل / التسوق السريع / تحويل لصديق / واتساب)
+   مع بقاء فتح التفاصيل بالضغط على صورة المنتج وبقاء السلة والواتساب العلوي كما هي. */
+.product .actions.quickActions,
+.product .actions.quickActions button{
+  display:none!important;
+  visibility:hidden!important;
+  height:0!important;
+  min-height:0!important;
+  padding:0!important;
+  margin:0!important;
+  overflow:hidden!important;
+}
+.product .bottom,
+.products.view-wide .product .bottom,
+.products.view-cards .product .bottom,
+.products.view-compact .product .bottom,
+.products.view-mini .product .bottom,
+.products.view-list .product .bottom{
+  display:block!important;
+  margin-top:auto!important;
+  padding-top:8px!important;
+}
+.product .price,
+.products.view-wide .product .price,
+.products.view-cards .product .price,
+.products.view-compact .product .price,
+.products.view-mini .product .price,
+.products.view-list .product .price{
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+}
+</style>
+<script id="almalika-v356-remove-product-card-buttons-js">
+(function(){
+  function cleanCardButtons(){
+    document.querySelectorAll('.product .actions.quickActions').forEach(function(el){ el.remove(); });
+  }
+  document.addEventListener('DOMContentLoaded', cleanCardButtons);
+  window.addEventListener('load', cleanCardButtons);
+  document.addEventListener('click', function(){ setTimeout(cleanCardButtons, 30); }, true);
+  setInterval(cleanCardButtons, 800);
+})();
+</script>
 
 </body>
 </html>
