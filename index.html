@@ -12601,6 +12601,76 @@ document.addEventListener('DOMContentLoaded',function(){data();run(document);});
 })();
 </script>
 
+
+<style id="almalika-v355-fix-product-image-crop">
+/* v355: منع قص الصور داخل كروت المنتجات مع الإبقاء على إصلاح البيانات السفلية */
+.product .pic,
+.products.view-wide .product .pic,
+.products.view-cards .product .pic,
+.products.view-compact .product .pic,
+.products.view-mini .product .pic,
+.products.view-list .product .pic{
+  flex:0 0 auto!important;
+  height:auto!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  overflow:hidden!important;
+}
+/* العرض الأساسي */
+.product .pic,
+.products.view-wide .product .pic{
+  min-height:220px!important;
+}
+/* أوضاع عرض البطاقات */
+.products.view-cards .product .pic{
+  min-height:210px!important;
+}
+.products.view-compact .product .pic{
+  min-height:190px!important;
+}
+.products.view-mini .product .pic{
+  min-height:170px!important;
+}
+.products.view-list .product .pic{
+  min-height:220px!important;
+}
+.product .pic img,
+.products.view-wide .product .pic img,
+.products.view-cards .product .pic img,
+.products.view-compact .product .pic img,
+.products.view-mini .product .pic img,
+.products.view-list .product .pic img{
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  padding:10px!important;
+  display:block!important;
+  margin:auto!important;
+}
+/* حفاظ إضافي على عدم قص الصور الطويلة */
+.products.view-cards .product .pic img,
+.products.view-compact .product .pic img,
+.products.view-mini .product .pic img{
+  min-height:0!important;
+}
+@media (max-width:720px){
+  .product .pic,
+  .products.view-wide .product .pic,
+  .products.view-cards .product .pic,
+  .products.view-compact .product .pic,
+  .products.view-mini .product .pic,
+  .products.view-list .product .pic{
+    min-height:180px!important;
+  }
+  .products.view-mini .product .pic{
+    min-height:160px!important;
+  }
+}
+</style>
+
 </body>
 </html>
 
