@@ -5677,7 +5677,7 @@ function card(p){const inCart=cart.some(x=>Number(x.number)===Number(p.number));
 <span class="tag">👶 ${esc(shortAge(p))}</span>
 </div>
 ${cardExtraInfo(p)}
-${booked?`<div class="availabilityMini">${booked.note}</div>`:''}
+
 <div class="bottom">
 <div class="price">
 <small>يبدأ من</small>
@@ -16789,5 +16789,123 @@ a[target="_blank"]{ }
   window.addEventListener('load',function(){setTimeout(window.almV363AuditFix,0);setTimeout(window.almV363AuditFix,250);});
   window.addEventListener('hashchange',function(){setTimeout(window.almV363AuditFix,80);});
   try{new MutationObserver(function(){clearTimeout(window.__v363AuditT);window.__v363AuditT=setTimeout(window.almV363AuditFix,60);}).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
+
+
+<style id="almalika-v379-remove-unavailable-note-and-compact-cards">
+/* v379: حذف نص تنبيه غير متاح فقط مع بقاء إجراء غير متاح، وإلغاء أي فراغ محجوز داخل الكرت */
+.product .availabilityMini,
+.product.bookedProduct .availabilityMini,
+.product.bookedProduct .availabilityMini:not(.emptyStatus),
+.products .availabilityMini{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  height:0!important;
+  min-height:0!important;
+  max-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  overflow:hidden!important;
+}
+.products,
+.products.view-cards,
+.products.view-wide,
+.products.view-compact,
+.products.view-mini,
+.products.view-list{
+  align-items:start!important;
+}
+.product,
+.products.view-wide .product,
+.products.view-cards .product,
+.products.view-compact .product,
+.products.view-mini .product,
+.products.view-list .product{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  align-self:start!important;
+}
+.product .body,
+.products.view-wide .product .body,
+.products.view-cards .product .body,
+.products.view-compact .product .body,
+.products.view-mini .product .body,
+.products.view-list .product .body{
+  flex:0 0 auto!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow:visible!important;
+}
+.product .body h3{
+  min-height:38px!important;
+  height:auto!important;
+  max-height:none!important;
+}
+.product .desc{
+  min-height:28px!important;
+  height:auto!important;
+  max-height:none!important;
+}
+.product .tags,
+.product .miniFacts{
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+}
+.product .miniFact{
+  min-height:28px!important;
+  height:auto!important;
+  max-height:none!important;
+}
+.product .bottom,
+.products.view-wide .product .bottom,
+.products.view-cards .product .bottom,
+.products.view-compact .product .bottom,
+.products.view-mini .product .bottom,
+.products.view-list .product .bottom{
+  margin-top:8px!important;
+  flex:0 0 auto!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 88px!important;
+  gap:8px!important;
+  align-items:stretch!important;
+}
+.product .price,
+.product .actions.quickActions,
+.product .actions.quickActions .details{
+  height:auto!important;
+  min-height:44px!important;
+  max-height:none!important;
+}
+.product .actions.quickActions .details{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+@media(max-width:640px){
+  .product .bottom{grid-template-columns:1fr!important}
+  .product .price,.product .actions.quickActions,.product .actions.quickActions .details{min-height:42px!important}
+}
+</style>
+<script id="almalika-v379-remove-unavailable-note-js">
+(function(){
+  function cleanUnavailableNote(){
+    try{ document.querySelectorAll('.product .availabilityMini').forEach(function(el){ el.remove(); }); }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanUnavailableNote,0);setTimeout(cleanUnavailableNote,120);});
+  window.addEventListener('load',function(){setTimeout(cleanUnavailableNote,0);setTimeout(cleanUnavailableNote,180);});
+  document.addEventListener('click',function(){setTimeout(cleanUnavailableNote,40);},true);
+  var oldRender=window.render;
+  if(typeof oldRender==='function'){
+    window.render=render=function(){var out=oldRender.apply(this,arguments);setTimeout(cleanUnavailableNote,0);setTimeout(cleanUnavailableNote,80);return out;};
+  }
 })();
 </script>
