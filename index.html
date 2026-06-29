@@ -13051,7 +13051,7 @@ body{overflow-x:hidden!important}
   }
   window.renderHome = renderHome = function(){
     const counts=homeCounts();
-    const catsHtml=sections.filter(s=>s[0]!=='home' && s[0]!=='offers').map(s=>uiCatButton(s,counts)).join('');
+    const catsHtml=sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('');
     const vip=vipGeneralProducts();
     app.innerHTML=`
       <section class="wrap section homeCleanSection">
@@ -13247,6 +13247,43 @@ body{overflow-x:hidden!important}
   document.addEventListener('DOMContentLoaded',function(){setTimeout(fixImageSizes,0);setTimeout(fixImageSizes,150);});
   window.addEventListener('load',function(){setTimeout(fixImageSizes,0);setTimeout(fixImageSizes,250);});
   document.addEventListener('click',function(){setTimeout(fixImageSizes,40);},true);
+})();
+</script>
+
+
+<style id="almalika-v377-offers-card-and-button-fix">
+/* v377: رجوع كرت العروض والبكجات داخل الأقسام الرئيسية مع بقاء قسم العروض المكرر محذوف */
+#app .mainCats{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+@media(max-width:1450px){#app .mainCats{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:850px){#app .mainCats{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:560px){#app .mainCats{grid-template-columns:1fr!important}}
+</style>
+<script id="almalika-v377-offers-button-route-fix">
+(function(){
+  function fixOffersRoute(){
+    try{
+      document.querySelectorAll('.headBtns .btn.red').forEach(function(btn){
+        if(/العروض/.test(btn.textContent||'')){
+          btn.onclick=function(e){
+            if(e) e.preventDefault();
+            current='offers';
+            internal=allLabel('offers');
+            try{renderNav();}catch(_){ }
+            try{fillInternal();}catch(_){ }
+            try{render();}catch(_){ }
+            try{setHash();}catch(_){ }
+            return false;
+          };
+        }
+      });
+    }catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(fixOffersRoute,0);setTimeout(fixOffersRoute,150);});
+  window.addEventListener('load',function(){setTimeout(fixOffersRoute,0);setTimeout(fixOffersRoute,250);});
+  var oldRenderNav=window.renderNav;
+  if(typeof oldRenderNav==='function'){
+    window.renderNav=renderNav=function(){var out=oldRenderNav.apply(this,arguments);setTimeout(fixOffersRoute,0);return out;};
+  }
 })();
 </script>
 
