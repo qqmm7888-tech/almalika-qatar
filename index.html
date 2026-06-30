@@ -5445,6 +5445,14 @@ body .cartItem .qtyBox b{
   <span class="spark s5">✦</span>
 </div>
 
+<style id="almalika-v388-single-final-render-style">
+/* v388: إلغاء الصفحات/القوالب المؤقتة والاكتفاء برسم نهائي واحد */
+.almV388Boot{min-height:calc(100vh - 150px);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;text-align:center;color:#6A1B2E;font-family:Tahoma,Arial,sans-serif}
+.almV388Boot b{font-size:34px;line-height:1;font-weight:1000;color:#B01649}
+.almV388Boot span{font-size:13px;font-weight:800;color:#8a4762}
+html.almV388Ready .almV388Boot{display:none!important}
+</style>
+
 <header class="header">
   <div class="wrap headTop">
     <div class="logo" onclick="showHome()">الملكة</div>
@@ -5459,7 +5467,7 @@ body .cartItem .qtyBox b{
     <div class="eventDateBox"><div class="eventDateLabel">فترة الحجز</div><div class="eventDateInputs"><input id="catalogEventDate" type="date" onchange="render()" title="تاريخ بداية الحجز"><input id="catalogEventEndDate" type="date" onchange="render()" title="تاريخ نهاية الحجز اختياري"></div><small>اختر تاريخ البداية أولاً. تاريخ النهاية اختياري ويجب أن يكون نفس تاريخ البداية أو بعده.</small></div>
   </div>
 </header>
-<main id="app"></main>
+<main id="app"><div class="almV388Boot"><b>الملكة</b><span>جاري تجهيز الكتالوج...</span></div></main>
 <button class="cartBar" onclick="openCart()">🛒 سلة الحجز: <span id="cartCount">0</span> بند — <span id="cartTotalMini">0</span> ر.ق</button>
 <div class="modal" id="modal"></div>
 <footer class="footer"><h2>شركة الملكة للحفلات - قطر</h2><div>نطاطيات • زحلاقيات • سناك • تجهيز حفلات</div></footer>
@@ -6525,16 +6533,8 @@ if(!history.state || !history.state.almalika){
   history.replaceState({almalika:true},'', '/home' + (location.hash || '#home/الجميع'));
 }
 
-// v389: منع رسم القالب القديم قبل اكتمال كل الأكواد.
-// تم تأجيل التشغيل الأول حتى يتم تحميل تعريف renderHome النهائي فقط.
-(function(){
-  window.__almV389InitialRenderDeferred = true;
-  setTimeout(function(){
-    try{ initFromHash(); }catch(e){}
-    try{ updateCartUI(); }catch(e){}
-    try{ document.documentElement.classList.add('almV389Ready'); }catch(e){}
-  },0);
-})();
+initFromHash();
+updateCartUI();
 
 document.addEventListener('DOMContentLoaded',()=>applyDateRestrictions(document));
 setTimeout(()=>applyDateRestrictions(document),300);
@@ -13225,6 +13225,40 @@ body{overflow-x:hidden!important}
 })();
 </script>
 
+<script id="almalika-v388-single-final-render-init">
+(function(){
+  function finalPaintV388(){
+    try{
+      if(window.__almV388Painted) return;
+      window.__almV388Painted = true;
+      try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
+      try{
+        var h=(location.hash||'#home/الجميع').replace('#','');
+        var first=(h.split('/')[0]||'home');
+        var sec=(typeof normalizeSectionToken==='function')?normalizeSectionToken(first):'home';
+        if(!sec || sec==='home'){
+          current='home';
+          if(typeof renderHome==='function') renderHome();
+        }else{
+          if(typeof initFromHash==='function') initFromHash();
+          else if(typeof showSection==='function') showSection(sec);
+        }
+      }catch(e){
+        current='home';
+        if(typeof renderHome==='function') renderHome();
+      }
+      try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
+      document.documentElement.classList.add('almV388Ready');
+    }catch(e){
+      try{document.documentElement.classList.add('almV388Ready');}catch(_e){}
+    }
+  }
+  finalPaintV388();
+  setTimeout(finalPaintV388,30);
+  window.addEventListener('load',function(){setTimeout(finalPaintV388,0);},{once:true});
+})();
+</script>
+
 
 
 <style id="almalika-v376-unify-all-image-sizes">
@@ -17051,26 +17085,5 @@ a[target="_blank"]{ }
   if(typeof oldRender==='function'){
     window.render=render=function(){var out=oldRender.apply(this,arguments);setTimeout(cleanUnavailableNote,0);setTimeout(cleanUnavailableNote,80);return out;};
   }
-})();
-</script>
-
-
-<script id="almalika-v389-delete-duplicate-home-template-finalizer">
-(function(){
-  function finalHomeOnce(){
-    try{
-      var h=String(location.hash||'#home/الجميع');
-      if(!h || /#home|#الرئيسية/.test(h)){
-        if(typeof renderHome==='function' && ((typeof current==='undefined') || current==='home')){
-          current='home';
-          try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
-          renderHome();
-          try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
-        }
-      }
-    }catch(e){}
-  }
-  setTimeout(finalHomeOnce,20);
-  window.addEventListener('load',function(){setTimeout(finalHomeOnce,20);},{once:true});
 })();
 </script>
