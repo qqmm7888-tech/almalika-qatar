@@ -5432,6 +5432,9 @@ body .cartItem .qtyBox b{
 #v342WaChoice .v342Ad small{display:none!important}
 #v342WaChoice .v342Ad span{display:block!important;font-size:14px!important;color:#7a2946!important;margin-top:6px!important}
 </style>
+
+<style id="almalika-v386-boot-hide-early">html.almV386Booting #app{opacity:0!important;visibility:hidden!important;}html.almV386Ready #app{opacity:1!important;visibility:visible!important;transition:none!important;}</style>
+<script>try{document.documentElement.classList.add('almV386Booting')}catch(e){}</script>
 </head>
 <body>
 <div class="siteMagic" aria-hidden="true">
@@ -6525,7 +6528,8 @@ if(!history.state || !history.state.almalika){
   history.replaceState({almalika:true},'', '/home' + (location.hash || '#home/الجميع'));
 }
 
-initFromHash();
+window.__almV386DeferredInitFromHash = initFromHash;
+/* v386: تم تأجيل أول رسم للصفحة حتى تكتمل كل أكواد v380 حتى لا تظهر صفحتان/مقاسان عند الفتح */
 updateCartUI();
 
 document.addEventListener('DOMContentLoaded',()=>applyDateRestrictions(document));
@@ -13431,7 +13435,8 @@ body{overflow-x:hidden!important}
     return unavailable.includes(Number(num)) ? {status:'غير متاح', note:'هذا المنتج غير متاح حالياً لأنه خارج عن الخدمة.'} : null;
   };
   try{
-    if(typeof render==='function') setTimeout(render,0);
+    /* v386: منع إعادة رسم مبكرة تسبب ظهور قالب أول ثم قالب ثاني */
+    window.__almV386SkipEarlyRender = true;
   }catch(e){}
 })();
 </script>
@@ -17043,5 +17048,43 @@ a[target="_blank"]{ }
   if(typeof oldRender==='function'){
     window.render=render=function(){var out=oldRender.apply(this,arguments);setTimeout(cleanUnavailableNote,0);setTimeout(cleanUnavailableNote,80);return out;};
   }
+})();
+</script>
+
+
+<style id="almalika-v386-single-home-render-guard">
+/* v386: منع ظهور قالب أول ثم قالب ثاني عند الفتح */
+html.almV386Booting #app{opacity:0!important;visibility:hidden!important;}
+html.almV386Ready #app{opacity:1!important;visibility:visible!important;transition:none!important;}
+</style>
+<script id="almalika-v386-single-home-render-guard-js">
+(function(){
+  try{document.documentElement.classList.add('almV386Booting');}catch(e){}
+  function safeInitV386(){
+    try{
+      if(window.__almV386Done) return;
+      window.__almV386Done = true;
+      if(typeof window.__almV386DeferredInitFromHash === 'function'){
+        window.__almV386DeferredInitFromHash();
+      }else if(typeof initFromHash === 'function'){
+        initFromHash();
+      }else if(typeof render === 'function'){
+        render();
+      }
+      try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
+      try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
+      setTimeout(function(){
+        try{
+          document.documentElement.classList.remove('almV386Booting');
+          document.documentElement.classList.add('almV386Ready');
+        }catch(e){}
+      }, 30);
+    }catch(e){
+      try{document.documentElement.classList.remove('almV386Booting');document.documentElement.classList.add('almV386Ready');}catch(_e){}
+    }
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){setTimeout(safeInitV386,0);}, {once:true});
+  else setTimeout(safeInitV386,0);
+  window.addEventListener('load', function(){setTimeout(safeInitV386,0);}, {once:true});
 })();
 </script>
