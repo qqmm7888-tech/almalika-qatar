@@ -1,6 +1,12 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
+<style id="almalika-v390-stop-home-flash-early">
+/* إخفاء منطقة المحتوى فقط لحظياً حتى يتم رسم قالب واحد نهائي بدون ظهور القالب المكرر */
+html:not(.almV390Ready) #app{visibility:hidden!important;opacity:0!important;}
+html.almV390Ready #app{visibility:visible!important;opacity:1!important;}
+</style>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>الملكة للحفلات | كتالوج الحجز السريع</title>
@@ -6525,16 +6531,8 @@ if(!history.state || !history.state.almalika){
   history.replaceState({almalika:true},'', '/home' + (location.hash || '#home/الجميع'));
 }
 
-// v389: منع رسم القالب القديم قبل اكتمال كل الأكواد.
-// تم تأجيل التشغيل الأول حتى يتم تحميل تعريف renderHome النهائي فقط.
-(function(){
-  window.__almV389InitialRenderDeferred = true;
-  setTimeout(function(){
-    try{ initFromHash(); }catch(e){}
-    try{ updateCartUI(); }catch(e){}
-    try{ document.documentElement.classList.add('almV389Ready'); }catch(e){}
-  },0);
-})();
+initFromHash();
+updateCartUI();
 
 document.addEventListener('DOMContentLoaded',()=>applyDateRestrictions(document));
 setTimeout(()=>applyDateRestrictions(document),300);
@@ -17055,22 +17053,113 @@ a[target="_blank"]{ }
 </script>
 
 
-<script id="almalika-v389-delete-duplicate-home-template-finalizer">
+<style id="almalika-v390-single-home-template-style">
+/* v390: قالب رئيسية واحد فقط + منع ظهور القوالب المؤقتة أو القديمة */
+body.almV390Home #app .homeHeroFrame,
+body.almV390Home #app .homeHeroImage,
+body.almV390Home #app #almHomePromoSlider,
+body.almV390Home #app .almPromoSlider,
+body.almV390Home #app .hero{display:none!important}
+body.almV390Home #app .homeCleanSection,
+body.almV390Home #app .homeAdsSection,
+body.almV390Home #app .homeVipSection{display:block!important;visibility:visible!important;opacity:1!important}
+body.almV390Home #app .homeAdsSection{margin-top:0!important}
+body.almV390Home #app .homeAdsGrid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:18px!important}
+body.almV390Home #app .homeAdCard{display:grid!important;grid-template-columns:92px minmax(0,1fr)!important;grid-template-rows:auto auto auto!important;gap:7px 16px!important;align-items:center!important;min-height:114px!important;padding:18px!important;border-radius:20px!important;border:1px solid #f3c8dc!important;background:#fff!important;box-shadow:0 16px 35px rgba(179,57,113,.08)!important;position:relative!important;overflow:hidden!important;text-align:right!important}
+body.almV390Home #app .homeAdIcon{grid-row:1/4!important;width:76px!important;height:76px!important;border-radius:18px!important;background:#fff!important;display:flex!important;align-items:center!important;justify-content:center!important;font-size:34px!important;box-shadow:0 8px 18px rgba(0,0,0,.05)!important}
+body.almV390Home #app .homeAdBadge{width:max-content!important;padding:4px 9px!important;border-radius:999px!important;background:#fff!important;color:#b33971!important;border:1px solid #f3c7db!important;font-size:10.5px!important;font-weight:900!important}
+body.almV390Home #app .homeAdCard h3{margin:0!important;color:#4d2242!important;font-size:17px!important;line-height:1.35!important;font-weight:1000!important}
+body.almV390Home #app .homeAdCard p{margin:0!important;color:#755b6c!important;font-size:12px!important;line-height:1.55!important;font-weight:800!important}
+body.almV390Home #app .homeAdCard button{width:max-content!important;min-width:104px!important;min-height:34px!important;border-radius:999px!important;padding:7px 14px!important;background:linear-gradient(135deg,#ff4f9a,#e92578)!important;color:#fff!important;font-size:12px!important;font-weight:900!important}
+body.almV390Home #app .homeAdCard.adGold{background:linear-gradient(135deg,#fff,#fff8dc 54%,#fff0f8)!important}
+body.almV390Home #app .homeAdCard.adMint{background:linear-gradient(135deg,#fff,#eefdf8 52%,#fff7df)!important}
+body.almV390Home #app .homeAdCard.adPink{background:linear-gradient(135deg,#fff,#fff1f8 52%,#fff7e4)!important}
+@media(max-width:1150px){body.almV390Home #app .homeAdsGrid{grid-template-columns:1fr!important}}
+@media(max-width:560px){body.almV390Home #app .homeAdCard{grid-template-columns:1fr!important;text-align:center!important}body.almV390Home #app .homeAdIcon{grid-row:auto!important;margin:auto!important}}
+</style>
+<script id="almalika-v390-force-single-home-template-js">
 (function(){
-  function finalHomeOnce(){
+  var rendering=false;
+  function isHome(){
     try{
-      var h=String(location.hash||'#home/الجميع');
-      if(!h || /#home|#الرئيسية/.test(h)){
-        if(typeof renderHome==='function' && ((typeof current==='undefined') || current==='home')){
-          current='home';
-          try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
-          renderHome();
-          try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
-        }
-      }
+      var h=String(location.hash||'');
+      return !h || h==='#' || /#home|#الرئيسية/.test(h) || (typeof current!=='undefined' && current==='home');
+    }catch(e){return true;}
+  }
+  function counts(){
+    return {
+      bouncies:products.filter(function(p){return sectionOf(p)==='bouncies'}).length,
+      snacks:products.filter(function(p){return sectionOf(p)==='snacks'}).length,
+      events:products.filter(function(p){return sectionOf(p)==='events'}).length,
+      rentals:products.filter(function(p){return sectionOf(p)==='rentals'}).length,
+      offers:products.filter(function(p){return sectionOf(p)==='offers'}).length,
+      other:products.filter(function(p){return sectionOf(p)==='other'}).length
+    };
+  }
+  function cleanAfterHome(){
+    try{
+      document.body.classList.add('almV390Home');
+      document.querySelectorAll('#app .homeHeroFrame,#app .homeHeroImage,#app #almHomePromoSlider,#app .almPromoSlider,#app section.hero').forEach(function(el){el.remove();});
+      document.querySelectorAll('#app .viewToolbar,#app .displayModeBar,#app .productViewBar,#app .chips').forEach(function(el){el.remove();});
+      var cat=document.getElementById('catSelect'); if(cat) cat.style.setProperty('display','none','important');
+      document.querySelectorAll('#app .homeCleanSection').forEach(function(el,i){if(i>0)el.remove();});
+      document.querySelectorAll('#app .homeAdsSection').forEach(function(el,i){if(i>0)el.remove();});
+      document.querySelectorAll('#app .homeVipSection').forEach(function(el,i){if(i>0)el.remove();});
+      document.querySelectorAll('#app section').forEach(function(sec){
+        var t=(sec.textContent||'').replace(/\s+/g,' ');
+        if(/مختارات خاصة للعروض فقط|عرض كل العروض|خدمات الملكة للحفلات|شركة الملكة للحفلات - قطر/.test(t)) sec.remove();
+      });
     }catch(e){}
   }
-  setTimeout(finalHomeOnce,20);
-  window.addEventListener('load',function(){setTimeout(finalHomeOnce,20);},{once:true});
+  function finalHome(){
+    if(rendering) return;
+    rendering=true;
+    try{
+      current='home';
+      internal=allLabel('bouncies');
+      try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
+      var cat=document.getElementById('catSelect');
+      if(cat){ cat.innerHTML='<option>الأقسام</option>'; cat.style.setProperty('display','none','important'); }
+      var c=counts();
+      var catsHtml=sections.filter(function(s){return s[0]!=='home'}).map(function(s){return uiCatButton(s,c)}).join('');
+      var vip=(typeof vipGeneralProducts==='function'?vipGeneralProducts():[]);
+      app.innerHTML=''+
+      '<section class="wrap section homeCleanSection">'+
+        '<div class="homeCleanTitle"><div><h2>الأقسام الرئيسية</h2><p>اختر القسم المطلوب بسرعة بدون تكرار أو قوائم داخلية زائدة.</p></div></div>'+
+        '<div class="mainCats">'+catsHtml+'</div>'+
+      '</section>'+
+      '<section class="wrap section homeAdsSection" id="homeCommercialAds">'+
+        '<div class="homeAdsGrid">'+
+          '<article class="homeAdCard adGold"><div class="homeAdIcon">🎉</div><span class="homeAdBadge">الأكثر طلباً</span><h3>نطاطيات وزحاليق تناسب كل المناسبات</h3><p>خيارات ممتعة للأطفال مع تركيب مرتب للحفلات والحدائق والمدارس.</p><button onclick="showSection(\'bouncies\')">اكتشف القسم</button></article>'+
+          '<article class="homeAdCard adPink"><div class="homeAdIcon">👑</div><span class="homeAdBadge">خدمة متكاملة</span><h3>جهّز حفلتك من مكان واحد</h3><p>ديكورات، طاولات، كراسي، شخصيات وباقات جاهزة حسب المناسبة.</p><button onclick="showSection(\'events\')">شاهد الباقات</button></article>'+
+          '<article class="homeAdCard adMint"><div class="homeAdIcon">🍿</div><span class="homeAdBadge">إضافة للحفل</span><h3>عربات سناك تضيف متعة للحفل</h3><p>فشار، غزل البنات، سلاش، آيس كريم وخيارات مناسبة للأطفال والضيوف.</p><button onclick="showSection(\'snacks\')">اطلب الآن</button></article>'+
+        '</div>'+
+      '</section>'+
+      '<section class="wrap section homeVipSection">'+
+        '<div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام.</p></div></div>'+
+        '<div class="products view-cards">'+(vip.length?vip.map(card).join(''):'<div class="empty">لا توجد منتجات حالياً</div>')+'</div>'+
+      '</section>';
+      cleanAfterHome();
+      try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
+      try{document.documentElement.classList.add('almV390Ready');}catch(e){}
+    }catch(e){
+      try{document.documentElement.classList.add('almV390Ready');}catch(_e){}
+    }
+    rendering=false;
+  }
+  var oldRender=window.render;
+  window.renderHome=renderHome=finalHome;
+  window.showHome=showHome=function(){ finalHome(); try{setHash();}catch(e){} };
+  window.render=render=function(){
+    if(isHome()) return finalHome();
+    try{document.body.classList.remove('almV390Home');document.documentElement.classList.add('almV390Ready');}catch(e){}
+    return oldRender.apply(this,arguments);
+  };
+  window.almV363AuditFix=function(){ if(isHome()) cleanAfterHome(); };
+  function boot(){ if(isHome()) finalHome(); else {try{document.documentElement.classList.add('almV390Ready');}catch(e){}} }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+  window.addEventListener('load',function(){setTimeout(boot,0);setTimeout(boot,120);});
+  window.addEventListener('hashchange',function(){setTimeout(boot,0);setTimeout(boot,80);});
+  setTimeout(boot,0); setTimeout(boot,80); setTimeout(boot,220);
 })();
 </script>
