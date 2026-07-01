@@ -5436,12 +5436,6 @@ body .cartItem .qtyBox b{
 <style id="almalika-v395-delete-duplicate-black-footer">
 footer.footer, .footer{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;border:0!important}
 </style>
-
-<style id="almalika-v398-delete-duplicate-home-page-style">
-/* حذف صفحة الأقسام/VIP المكررة من الرئيسية نهائياً */
-#app .homeCleanSection,#app .homeVipSection,.almV387BootSplash{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;overflow:hidden!important;padding:0!important;margin:0!important;border:0!important;}
-html.almV386Booting #app{opacity:1!important;visibility:visible!important;}
-</style>
 </head>
 <body>
 <script id="almalika-v395-remove-duplicate-footer-now">
@@ -5481,7 +5475,7 @@ html.almV386Booting #app{opacity:1!important;visibility:visible!important;}
     <div class="eventDateBox"><div class="eventDateLabel">فترة الحجز</div><div class="eventDateInputs"><input id="catalogEventDate" type="date" onchange="render()" title="تاريخ بداية الحجز"><input id="catalogEventEndDate" type="date" onchange="render()" title="تاريخ نهاية الحجز اختياري"></div><small>اختر تاريخ البداية أولاً. تاريخ النهاية اختياري ويجب أن يكون نفس تاريخ البداية أو بعده.</small></div>
   </div>
 </header>
-<main id="app"><section class="almV387BootSplash" dir="rtl"><div class="almV387BootCard"><b>الملكة 👑</b><span>جاري تجهيز الصفحة...</span></div></section></main>
+<main id="app"></main>
 <button class="cartBar" onclick="openCart()">🛒 سلة الحجز: <span id="cartCount">0</span> بند — <span id="cartTotalMini">0</span> ر.ق</button>
 <div class="modal" id="modal"></div>
 
@@ -5607,7 +5601,7 @@ function vipOfferProducts(){
     .sort((a,b)=>Number(a.number)-Number(b.number))
     .filter(p=>{const k=Number(p.number); if(seen.has(k))return false; seen.add(k); return true;});
 }
-function renderHome(){try{if(window.__almFinalHomeRenderer)return window.__almFinalHomeRenderer();}catch(e){} try{app.innerHTML='';}catch(e){}}
+function renderHome(){const counts={bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,snacks:products.filter(p=>sectionOf(p)==='snacks').length,events:products.filter(p=>sectionOf(p)==='events').length,rentals:products.filter(p=>sectionOf(p)==='rentals').length,other:products.filter(p=>sectionOf(p)==='other').length}; app.innerHTML=`<section class="wrap section"><div class="title"><div><h2>الأقسام الرئيسية</h2><p>تقسيم واضح مع واجهة VIP مريحة وسريعة في التصفح.</p></div><div class="stats"><span class="stat">الإجمالي: ${products.length} بند</span><span class="stat">النطاطيات: ${counts.bouncies}</span><span class="stat">السناك: ${counts.snacks}</span><span class="stat">تجهيز الحفلات: ${counts.events}</span><span class="stat">الطاولات والكراسي والشخصيات: ${counts.rentals}</span><span class="stat">بنود أخرى: ${counts.other}</span></div></div><div class="mainCats">${sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام: نطاطيات، سناك، تجهيز حفلات، طاولات وشخصيات، وبنود أخرى.</p></div></div>${viewToolbar()}<div class="products view-${viewMode}">${vipGeneralProducts().map(card).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات خاصة للعروض فقط</h2><p>نماذج مختارة من المنتجات التي تحتوي على باقات أو عروض فقط.</p></div><button class="btn red" onclick="showSection('offers')">عرض كل العروض</button></div><div class="products view-${viewMode}">${vipOfferProducts().length?vipOfferProducts().map(card).join(''):'<div class="empty">لا توجد عروض مضافة حالياً</div>'}</div></section>${siteTermsSafetyHtml('bottom')}`}
 
 function getCatalogEventDate(){return document.getElementById('catalogEventDate')?.value||''}
 function getCatalogEventEndDate(){return document.getElementById('catalogEventEndDate')?.value||getCatalogEventDate()}
@@ -13046,7 +13040,199 @@ body{overflow-x:hidden!important}
 </style>
 
 
+<style id="almalika-v380-home-commercial-ads-style">
+/* v380: إعلانات تجارية أنيقة بين الأقسام الرئيسية ومختارات VIP */
+#app .homeAdsSection{
+  padding-top:4px!important;
+  padding-bottom:12px!important;
+}
+#app .homeAdsGrid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:12px!important;
+  margin:0!important;
+}
+#app .homeAdCard{
+  position:relative!important;
+  overflow:hidden!important;
+  min-height:112px!important;
+  border-radius:22px!important;
+  border:1px solid rgba(239,79,149,.20)!important;
+  background:linear-gradient(135deg,#fff,#fff5fa 48%,#fff7db)!important;
+  box-shadow:0 10px 26px rgba(106,27,46,.07)!important;
+  padding:14px 15px 14px 128px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  gap:6px!important;
+  isolation:isolate!important;
+}
+#app .homeAdCard::before{
+  content:"";
+  position:absolute;
+  inset:-40% auto auto -35px;
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(239,79,149,.15),transparent 68%);
+  z-index:-1;
+}
+#app .homeAdIcon{
+  position:absolute!important;
+  left:15px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  width:92px!important;
+  height:76px!important;
+  border-radius:22px!important;
+  display:grid!important;
+  place-items:center!important;
+  background:rgba(255,255,255,.75)!important;
+  border:1px solid rgba(255,255,255,.85)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.65),0 8px 18px rgba(0,0,0,.045)!important;
+  font-size:34px!important;
+}
+#app .homeAdBadge{
+  width:max-content!important;
+  max-width:100%!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:5px!important;
+  padding:4px 9px!important;
+  border-radius:999px!important;
+  background:#fff!important;
+  color:#b33971!important;
+  border:1px solid #f3c7db!important;
+  font-size:10.5px!important;
+  font-weight:900!important;
+  line-height:1.2!important;
+}
+#app .homeAdCard h3{
+  margin:0!important;
+  color:#4d2242!important;
+  font-size:17px!important;
+  line-height:1.35!important;
+  font-weight:1000!important;
+}
+#app .homeAdCard p{
+  margin:0!important;
+  color:#755b6c!important;
+  font-size:12px!important;
+  line-height:1.55!important;
+  font-weight:800!important;
+}
+#app .homeAdCard button{
+  width:max-content!important;
+  min-width:104px!important;
+  min-height:34px!important;
+  border-radius:999px!important;
+  padding:7px 14px!important;
+  margin-top:3px!important;
+  background:linear-gradient(135deg,#ff4f9a,#e92578)!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  box-shadow:0 8px 18px rgba(233,37,120,.18)!important;
+}
+#app .homeAdCard.adGold{background:linear-gradient(135deg,#fff,#fff8dc 54%,#fff0f8)!important}
+#app .homeAdCard.adMint{background:linear-gradient(135deg,#fff,#eefdf8 52%,#fff7df)!important}
+#app .homeAdCard.adPink{background:linear-gradient(135deg,#fff,#fff1f8 52%,#fff7e4)!important}
+@media(max-width:1150px){
+  #app .homeAdsGrid{grid-template-columns:1fr!important}
+  #app .homeAdCard{min-height:104px!important;padding-left:118px!important}
+  #app .homeAdIcon{width:82px!important;height:68px!important}
+}
+@media(max-width:560px){
+  #app .homeAdCard{padding:12px!important;text-align:center!important;align-items:center!important}
+  #app .homeAdIcon{position:relative!important;left:auto!important;top:auto!important;transform:none!important;width:66px!important;height:58px!important;font-size:28px!important;margin-bottom:2px!important}
+  #app .homeAdCard button{margin-inline:auto!important}
+}
+</style>
 
+<script id="almalika-v375-clean-home-render">
+(function(){
+  function homeCounts(){
+    return {
+      bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,
+      snacks:products.filter(p=>sectionOf(p)==='snacks').length,
+      events:products.filter(p=>sectionOf(p)==='events').length,
+      rentals:products.filter(p=>sectionOf(p)==='rentals').length,
+      offers:products.filter(p=>sectionOf(p)==='offers').length,
+      other:products.filter(p=>sectionOf(p)==='other').length
+    };
+  }
+  function cleanHomeDom(){
+    try{
+      document.querySelectorAll('.homeHeroFrame,.homeHeroImage,#almHomePromoSlider,.almPromoSlider').forEach(el=>el.remove());
+      document.querySelectorAll('.viewToolbar,.chips,#catSelect').forEach(el=>{
+        if(el.id==='catSelect'){el.style.setProperty('display','none','important');}
+        else el.remove();
+      });
+      const appEl=document.getElementById('app');
+      if(!appEl) return;
+      appEl.querySelectorAll('.mainCats').forEach((el,i)=>{ if(i>0){ const s=el.closest('section'); if(s) s.remove(); else el.remove(); }});
+      appEl.querySelectorAll('section').forEach(sec=>{
+        const t=(sec.textContent||'').replace(/\s+/g,' ').trim();
+        if(/خدمات الملكة للحفلات|طريقة الحجز|الأمن والسلامة|شركة الملكة للحفلات - قطر|مختارات خاصة للعروض فقط|عرض كل العروض/.test(t)){sec.remove();}
+      });
+    }catch(e){}
+  }
+  window.renderHome = renderHome = function(){
+    const counts=homeCounts();
+    const catsHtml=sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('');
+    const vip=vipGeneralProducts();
+    app.innerHTML=`
+      <section class="wrap section homeCleanSection">
+        <div class="homeCleanTitle">
+          <div><h2>الأقسام الرئيسية</h2><p>اختر القسم المطلوب بسرعة بدون تكرار أو قوائم داخلية زائدة.</p></div>
+        </div>
+        <div class="mainCats">${catsHtml}</div>
+      </section>
+      <section class="wrap section homeAdsSection" id="homeCommercialAds">
+        <div class="homeAdsGrid">
+          <article class="homeAdCard adGold">
+            <div class="homeAdIcon">🎉</div>
+            <span class="homeAdBadge">الأكثر طلباً</span>
+            <h3>نطاطيات وزحاليق تناسب كل المناسبات</h3>
+            <p>خيارات ممتعة للأطفال مع تركيب مرتب للحفلات والحدائق والمدارس.</p>
+            <button onclick="showSection('bouncies')">اكتشف القسم</button>
+          </article>
+          <article class="homeAdCard adPink">
+            <div class="homeAdIcon">👑</div>
+            <span class="homeAdBadge">خدمة متكاملة</span>
+            <h3>جهّز حفلتك من مكان واحد</h3>
+            <p>ديكورات، طاولات، كراسي، شخصيات وباقات جاهزة حسب المناسبة.</p>
+            <button onclick="showSection('events')">شاهد الباقات</button>
+          </article>
+          <article class="homeAdCard adMint">
+            <div class="homeAdIcon">🍿</div>
+            <span class="homeAdBadge">إضافة للحفل</span>
+            <h3>عربات سناك تضيف متعة للحفل</h3>
+            <p>فشار، غزل البنات، سلاش، آيس كريم وخيارات مناسبة للأطفال والضيوف.</p>
+            <button onclick="showSection('snacks')">اطلب الآن</button>
+          </article>
+        </div>
+      </section>
+      <section class="wrap section homeVipSection">
+        <div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام.</p></div></div>
+        <div class="products view-cards">${vip.length?vip.map(card).join(''):'<div class="empty">لا توجد منتجات حالياً</div>'}</div>
+      </section>`;
+    cleanHomeDom();
+    if(typeof updateCartUI==='function') updateCartUI();
+  };
+  window.showHome = showHome = function(){
+    current='home';
+    internal=allLabel('bouncies');
+    try{renderNav();}catch(e){}
+    try{catSelect.innerHTML='<option>الأقسام</option>'; catSelect.style.setProperty('display','none','important');}catch(e){}
+    renderHome();
+    try{setHash();}catch(e){}
+  };
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanHomeDom,0);setTimeout(cleanHomeDom,120);});
+  window.addEventListener('load',function(){setTimeout(cleanHomeDom,0);setTimeout(cleanHomeDom,180);});
+  window.addEventListener('hashchange',function(){if(current==='home') setTimeout(renderHome,30);});
+})();
+</script>
 
 
 
@@ -13267,71 +13453,6 @@ body{overflow-x:hidden!important}
   }catch(e){}
 })();
 </script>
-
-<style id="almalika-v399-remove-v336-services-style">
-#v336FooterBar,.v336FooterBar,#v336InfoModal,.v336ModalOverlay{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;height:0!important;min-height:0!important;max-height:0!important;overflow:hidden!important;padding:0!important;margin:0!important;border:0!important;}
-</style>
-<script id="almalika-v399-remove-v336-services-js">
-(function(){
-  function cleanV336(){
-    document.querySelectorAll('#v336FooterBar,.v336FooterBar,#v336InfoModal,.v336ModalOverlay').forEach(function(el){try{el.remove();}catch(e){el.style.display='none';}});
-  }
-  document.addEventListener('DOMContentLoaded',cleanV336);
-  window.addEventListener('load',cleanV336);
-  document.addEventListener('click',function(){setTimeout(cleanV336,20);},true);
-  setInterval(cleanV336,500);
-})();
-</script>
-
-<style id="almalika-v400-delete-page-1-ads-hard">
-/* v400: حذف الصفحة رقم 1 / إعلانات الرئيسية نهائياً */
-#app #homeCommercialAds,
-#app .homeAdsSection,
-#app .homeAdsGrid,
-#app .homeAdCard,
-#app .homeCleanSection,
-#app .homeVipSection,
-.almV387BootSplash{
-  display:none!important;visibility:hidden!important;opacity:0!important;
-  height:0!important;min-height:0!important;max-height:0!important;
-  padding:0!important;margin:0!important;border:0!important;overflow:hidden!important;
-}
-html.almV386Booting #app{opacity:1!important;visibility:visible!important;}
-</style>
-<script id="almalika-v400-delete-page-1-ads-hard-js">
-(function(){
-  function cleanPage1(){
-    try{
-      document.documentElement.classList.remove('almV386Booting');
-      document.documentElement.classList.add('almV386Ready');
-      document.querySelectorAll('#homeCommercialAds,.homeAdsSection,.homeAdsGrid,.homeAdCard,.homeCleanSection,.homeVipSection,.almV387BootSplash').forEach(function(el){try{el.remove();}catch(e){el.style.display='none';}});
-      document.querySelectorAll('footer.footer,.footer,#v336FooterBar,.v336FooterBar,#v336InfoModal,.v336ModalOverlay').forEach(function(el){try{el.remove();}catch(e){el.style.display='none';}});
-    }catch(e){}
-  }
-  function blankHomeNoDuplicate(){
-    try{ if(!window.app) window.app=document.getElementById('app'); if(app){ app.innerHTML=''; } }catch(e){}
-    cleanPage1();
-    try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
-  }
-  // نلغي رندر صفحة الإعلانات فقط، بدون لمس كروت المنتجات داخل الأقسام.
-  window.__almFinalHomeRenderer = blankHomeNoDuplicate;
-  if(typeof window.renderHome==='function'){ window.renderHome = renderHome = blankHomeNoDuplicate; }
-  if(typeof window.showHome==='function'){
-    window.showHome = showHome = function(){
-      try{ current='home'; }catch(e){}
-      try{ renderNav(); }catch(e){}
-      try{ if(typeof catSelect!=='undefined' && catSelect){catSelect.style.setProperty('display','none','important');} }catch(e){}
-      blankHomeNoDuplicate();
-      try{ setHash(); }catch(e){}
-    };
-  }
-  document.addEventListener('DOMContentLoaded',function(){cleanPage1(); setTimeout(cleanPage1,0); setTimeout(cleanPage1,80); setTimeout(cleanPage1,250);});
-  window.addEventListener('load',function(){cleanPage1(); setTimeout(cleanPage1,80); setTimeout(cleanPage1,300);});
-  window.addEventListener('hashchange',function(){setTimeout(cleanPage1,0);});
-  document.addEventListener('click',function(){setTimeout(cleanPage1,30);},true);
-})();
-</script>
-
 </body>
 </html>
 
@@ -15416,6 +15537,57 @@ section.wrap,
 </script>
 
 
+<!-- ===== V336 CLEAN: footer info only + contact only in تواصل معنا, no dual service ===== -->
+<style id="almalika-v336-clean-footer-style">
+:root{--v336-pink:#ff4f9a;--v336-pink2:#ff7fbc;--v336-dark:#5f2145;--v336-border:#f4c7dd;--v336-green:#20c76a;--v336-soft:#fff7fb;--v336-cream:#fffaf6;}
+.v336FooterBar{margin:34px auto 18px;width:min(1240px,calc(100% - 28px));background:linear-gradient(135deg,#fffafc,#fff7ef);border:1px solid var(--v336-border);border-radius:28px;padding:18px;box-shadow:0 12px 34px rgba(173,72,127,.10);direction:rtl}
+.v336FooterTitle{text-align:center;color:var(--v336-dark);font-weight:1000;font-size:24px;margin:4px 0 4px}.v336FooterSub{text-align:center;color:#7f5b70;font-weight:800;margin:0 0 14px;font-size:13px}
+.v336FooterGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.v336FooterBtn{border:1px solid var(--v336-border);background:#fff;border-radius:22px;padding:14px 10px;min-height:104px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;box-shadow:0 7px 18px rgba(0,0,0,.035);transition:.18s ease;color:#5b2550;font-weight:1000;text-align:center}.v336FooterBtn:hover{transform:translateY(-3px);box-shadow:0 14px 26px rgba(173,72,127,.13)}
+.v336FooterIcon{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,#ffe4ef,#fff8fb);box-shadow:inset 0 0 0 1px #fff,0 6px 14px rgba(0,0,0,.06)}.v336FooterBtn:nth-child(2) .v336FooterIcon{background:linear-gradient(135deg,#e8ddff,#fff8ff)}.v336FooterBtn:nth-child(3) .v336FooterIcon{background:linear-gradient(135deg,#dbf6ff,#f7fdff)}.v336FooterBtn:nth-child(4) .v336FooterIcon{background:linear-gradient(135deg,#fff0bf,#fffaf0)}.v336FooterBtn:nth-child(5) .v336FooterIcon{background:linear-gradient(135deg,#dff8ec,#f4fff9)}
+.v336ModalOverlay{position:fixed;inset:0;background:rgba(34,20,32,.58);backdrop-filter:blur(5px);z-index:99999;display:none;align-items:center;justify-content:center;padding:18px}.v336ModalOverlay.show{display:flex}.v336ModalBox{width:min(720px,96vw);max-height:92vh;overflow:auto;background:#fffdf8;border-radius:30px;border:1px solid #f2c5d9;box-shadow:0 26px 60px rgba(0,0,0,.25);direction:rtl;padding:22px;position:relative}.v336ModalClose{position:absolute;left:16px;top:14px;width:42px;height:42px;border-radius:50%;border:0;background:linear-gradient(135deg,#ff4f9a,#e91e73);color:#fff;font-size:26px;font-weight:900;cursor:pointer}.v336ModalBox h2{margin:0 0 8px;color:#5f2145;font-size:28px}.v336ModalBox .lead{margin:0 0 16px;color:#7b6072;font-weight:850;line-height:1.8}.v336InfoList{line-height:2.1;color:#5f2145;font-weight:850;background:#fff7fb;border:1px dashed #f1bfd6;border-radius:18px;padding:15px 18px;margin-top:12px}.v336InfoList ul{margin:8px 0 0 0;padding:0 20px 0 0}.v336InfoList li{margin:6px 0}.v336ContactGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}.v336ContactCard{border:1px solid #f0cade;border-radius:22px;background:linear-gradient(180deg,#fff,#fff7fb);padding:14px;text-align:center;box-shadow:0 8px 18px rgba(0,0,0,.035)}.v336ContactCard b{display:block;color:#5f2145;font-size:19px;margin-bottom:5px}.v336ContactCard span{display:block;color:#846273;font-weight:850;margin-bottom:10px}.v336ContactBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}.v336ContactBtns a{border-radius:999px;padding:10px 12px;text-decoration:none;font-weight:1000;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px}.v336Wa{background:linear-gradient(135deg,#22c767,#16b55c)}.v336Call{background:linear-gradient(135deg,#ff5fa2,#e91e73)}
+#v331ContactModal,#v331QuickContactFixed,.v331QuickContactFixed,.v331ContactPanel{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;height:0!important;overflow:hidden!important}
+@media(max-width:800px){.v336FooterGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.v336ContactGrid{grid-template-columns:1fr}.v336FooterBtn{min-height:92px}}@media(max-width:500px){.v336FooterGrid{grid-template-columns:1fr}}
+</style>
+<script id="almalika-v336-clean-footer-js">
+(function(){
+  const ADMIN_CONTACTS=[{name:'الإدارة 1',phone:'33317720',wa:'97433317720',desc:'للحجز وتأكيد الطلبات'},{name:'الإدارة 2',phone:'33317705',wa:'97433317705',desc:'للمتابعة والاستفسارات'}];
+  const INFO={
+    terms:{title:'الشروط',icon:'📋',items:['تأكيد الحجز يكون بعد تحديد التاريخ والوقت والموقع والمنتج المطلوب.','يفضل تقديم الطلب قبل موعد المناسبة بثلاثة أيام على الأقل لضمان توفر الخدمة.','يتم تجهيز الطلب حسب تفاصيل السلة والصور والاختيارات التي يحددها العميل.','في حال الإلغاء بعد تثبيت الطلب تطبق سياسة الشركة حسب حالة الطلب ووقت الإلغاء.']},
+    safety:{title:'الأمن والسلامة',icon:'🛡️',items:['سلامة الأطفال أولوية أساسية في جميع خدمات الملكة.','يجب وجود شخص بالغ للإشراف على الأطفال أثناء استخدام الألعاب.','يلزم تجهيز مساحة آمنة وخالية من العوائق قبل وصول فريق التركيب.','في حال الرياح أو الأمطار يتم التنسيق بما يحافظ على سلامة الجميع.']},
+    about:{title:'من نحن',icon:'👑',items:['شركة الملكة للحفلات في قطر متخصصة في النطاطيات والزحلاقيات والسناك وتجهيز المناسبات.','نهتم بالنظافة والترتيب وجودة الشكل وسرعة تجهيز الطلب.','هدفنا تقديم تجربة مريحة للعميل وفرحة آمنة للأطفال.','نحرص على تطوير الخدمات والصور والخيارات لتناسب جميع المناسبات.']},
+    booking:{title:'طريقة الحجز',icon:'💖',items:['اختر المنتج أو الباقة المناسبة من الكتالوج.','حدد التاريخ والوقت وأضف التفاصيل المطلوبة داخل السلة.','راجع الطلب قبل الإرسال للتأكد من الأسماء والألوان والملاحظات.','بعد الإرسال يتم مراجعة التوفر وتأكيد الطلب من الإدارة.']}
+  };
+  function enc(s){return encodeURIComponent(String(s||''));}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function waUrl(c,msg){return 'https://wa.me/'+c.wa+'?text='+enc(msg||'السلام عليكم، أريد التواصل مع إدارة شركة الملكة للحفلات.');}
+  function telUrl(c){return 'tel:'+c.phone;}
+  function ensureModal(){let m=document.getElementById('v336InfoModal');if(m)return m;m=document.createElement('div');m.id='v336InfoModal';m.className='v336ModalOverlay';m.innerHTML='<div class="v336ModalBox"><button class="v336ModalClose" onclick="document.getElementById(\'v336InfoModal\').classList.remove(\'show\')">×</button><div id="v336ModalContent"></div></div>';document.body.appendChild(m);m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')});return m;}
+  function show(html){const m=ensureModal();document.getElementById('v336ModalContent').innerHTML=html;m.classList.add('show');setTimeout(cleanOld,20);}
+  function infoHtml(type){const x=INFO[type]||INFO.terms;return '<h2>'+x.icon+' '+x.title+'</h2><p class="lead">هذه الصفحة للمعلومات فقط، بدون أزرار اتصال أو واتساب.</p><div class="v336InfoList"><ul>'+x.items.map(i=>'<li>'+esc(i)+'</li>').join('')+'</ul></div>';}
+  function contactHtml(msg){msg=msg||'السلام عليكم، أريد التواصل مع إدارة شركة الملكة للحفلات.';return '<h2>📞 تواصل مع الإدارة</h2><p class="lead">للحجز أو الاستفسار، يرجى التواصل مع الإدارة على أحد الرقمين التاليين فقط.</p><div class="v336ContactGrid">'+ADMIN_CONTACTS.map(c=>'<div class="v336ContactCard"><b>'+esc(c.name)+'</b><span>'+esc(c.phone+' — '+c.desc)+'</span><div class="v336ContactBtns"><a class="v336Wa" target="_blank" href="'+waUrl(c,msg)+'">واتساب</a><a class="v336Call" href="'+telUrl(c)+'">اتصال</a></div></div>').join('')+'</div>';}
+  function productMsg(n){try{const p=(typeof products!=='undefined'?products:[]).find(x=>Number(x.number)===Number(n));if(!p)return 'السلام عليكم، أريد الاستفسار عن كتالوج شركة الملكة للحفلات.';return 'السلام عليكم، أريد الاستفسار عن المنتج:\n#'+p.number+' - '+p.name+'\nالقسم: '+(p.category||'')+'\nالسعر يبدأ من: '+(typeof price==='function'?price(p):Number(p.priceOneDay||0))+' ر.ق';}catch(e){return 'السلام عليكم، أريد الاستفسار عن كتالوج شركة الملكة للحفلات.'}}
+  function cartMsg(){try{return (typeof cartMessage==='function')?cartMessage().replace(/33317721|33317716/g,'33317705'):'السلام عليكم، أريد إرسال طلب السلة.'}catch(e){return 'السلام عليكم، أريد إرسال طلب السلة.'}}
+  window.v331OpenInfo=function(type){ if(type==='contact') show(contactHtml()); else show(infoHtml(type)); };
+  window.generalWa=function(){show(contactHtml());};
+  window.v331ShowContactModal=function(){show(contactHtml());};
+  window.v331OpenBothWhatsApp=function(){show(contactHtml());};
+  window.quickWa=function(n){show(contactHtml(productMsg(n)));};
+  window.productInquiryWa=function(n){show(contactHtml(productMsg(n)));};
+  window.sendCartWa=async function(){try{if(typeof cart!=='undefined'&&!cart.length){alert('السلة فارغة');return} if(typeof validateCustomerData==='function'&&!validateCustomerData(true))return; if(typeof saveOrderToAdmin==='function') await saveOrderToAdmin();}catch(e){} show(contactHtml(cartMsg()));};
+  function footerHtml(){return '<section class="v336FooterBar" id="v336FooterBar"><div class="v336FooterTitle">خدمات الملكة للحفلات 👑</div><p class="v336FooterSub">معلومات واضحة عن خدماتنا وسياساتنا، والتواصل يكون فقط من خلال تواصل معنا.</p><div class="v336FooterGrid"><button class="v336FooterBtn" onclick="v331OpenInfo(\'terms\')"><span class="v336FooterIcon">📋</span><span>الشروط</span></button><button class="v336FooterBtn" onclick="v331OpenInfo(\'safety\')"><span class="v336FooterIcon">🛡️</span><span>الأمن والسلامة</span></button><button class="v336FooterBtn" onclick="v331OpenInfo(\'about\')"><span class="v336FooterIcon">👑</span><span>من نحن</span></button><button class="v336FooterBtn" onclick="v331OpenInfo(\'contact\')"><span class="v336FooterIcon">📞</span><span>تواصل معنا</span></button><button class="v336FooterBtn" onclick="v331OpenInfo(\'booking\')"><span class="v336FooterIcon">💖</span><span>طريقة الحجز</span></button></div></section>';}
+  function cleanOld(){
+    document.querySelectorAll('#v331ContactModal,#v331QuickContactFixed,.v331QuickContactFixed,.v331ContactPanel').forEach(el=>{try{el.remove()}catch(e){el.style.display='none'}});
+    document.querySelectorAll('button,a,div').forEach(el=>{const t=(el.textContent||'').replace(/\s+/g,' ');if(/إرسال واتساب للاثنين|واتساب للاثنين|اتصل 33317720/.test(t)){let target=el.closest('.v331ContactBtns,.v331MiniContact,.v331ContactPanel,.v331ModalBox,div')||el;try{target.remove()}catch(e){target.style.display='none'}}});
+  }
+  function injectFooter(){const app=document.getElementById('app');if(!app)return;document.querySelectorAll('#v331FooterBar').forEach(el=>el.remove());if(!document.getElementById('v336FooterBar')) app.insertAdjacentHTML('beforeend',footerHtml());cleanOld();}
+  const oldRender=window.render;window.render=function(){if(typeof oldRender==='function')oldRender.apply(this,arguments);setTimeout(injectFooter,50);setTimeout(cleanOld,100);};
+  const oldRenderHome=window.renderHome;window.renderHome=function(){if(typeof oldRenderHome==='function')oldRenderHome.apply(this,arguments);setTimeout(injectFooter,50);setTimeout(cleanOld,100);};
+  document.addEventListener('DOMContentLoaded',()=>{setTimeout(injectFooter,80);setTimeout(cleanOld,200)});
+  document.addEventListener('click',()=>{setTimeout(cleanOld,20);setTimeout(cleanOld,200)},true);
+  if(false && window.MutationObserver){setTimeout(()=>{new MutationObserver(()=>cleanOld()).observe(document.body,{childList:true,subtree:true});},300)}
+  setTimeout(injectFooter,300);setTimeout(cleanOld,1000);
+})();
+</script>
 
 <!-- ===== V337: تحديد واضح للون البالونات المختار ===== -->
 <style id="almalika-v337-balloon-selected-style">
@@ -16892,4 +17064,182 @@ a[target="_blank"]{ }
 })();
 </script>
 
+
+<style id="almalika-v386-single-home-render-guard">
+/* v386: منع ظهور قالب أول ثم قالب ثاني عند الفتح */
+html.almV386Booting #app{opacity:0!important;visibility:hidden!important;}
+html.almV386Ready #app{opacity:1!important;visibility:visible!important;transition:none!important;}
+</style>
+<script id="almalika-v386-single-home-render-guard-js">
+(function(){
+  try{document.documentElement.classList.add('almV386Booting');}catch(e){}
+  function safeInitV386(){
+    try{
+      if(window.__almV386Done) return;
+      window.__almV386Done = true;
+      if(typeof window.__almV386DeferredInitFromHash === 'function'){
+        window.__almV386DeferredInitFromHash();
+      }else if(typeof initFromHash === 'function'){
+        initFromHash();
+      }else if(typeof render === 'function'){
+        render();
+      }
+      try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
+      try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
+      setTimeout(function(){
+        try{
+          document.documentElement.classList.remove('almV386Booting');
+          document.documentElement.classList.add('almV386Ready');
+        }catch(e){}
+      }, 30);
+    }catch(e){
+      try{document.documentElement.classList.remove('almV386Booting');document.documentElement.classList.add('almV386Ready');}catch(_e){}
+    }
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){setTimeout(safeInitV386,0);}, {once:true});
+  else setTimeout(safeInitV386,0);
+  window.addEventListener('load', function(){setTimeout(safeInitV386,0);}, {once:true});
+})();
+</script>
+
+<style id="almalika-v387-no-blank-fast-init-style">
+/* v387: منع الشاشة الفاضية أثناء أول تحميل، بدون إرجاع قالب ثاني */
+html.almV386Booting #app,
+html.almV386Booting body #app{
+  opacity:1!important;
+  visibility:visible!important;
+}
+.almV387BootSplash{
+  min-height:calc(100vh - 120px)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:28px!important;
+}
+.almV387BootCard{
+  min-width:240px!important;
+  border:1px solid #f3bdd5!important;
+  border-radius:26px!important;
+  background:rgba(255,255,255,.86)!important;
+  box-shadow:0 18px 50px rgba(106,27,46,.10)!important;
+  padding:24px 30px!important;
+  text-align:center!important;
+  color:#6a1b2e!important;
+  font-family:Tahoma,Arial,sans-serif!important;
+}
+.almV387BootCard b{display:block!important;font-size:28px!important;line-height:1.2!important;margin-bottom:8px!important;color:#b01649!important;}
+.almV387BootCard span{display:block!important;font-size:14px!important;font-weight:800!important;color:#8a4762!important;}
+html.almV386Ready .almV387BootSplash{display:none!important;}
+</style>
+<script id="almalika-v387-no-blank-fast-init-js">
+(function(){
+  function isEmptyHome(){
+    try{
+      var app=document.getElementById('app');
+      return !app || !!app.querySelector('.almV387BootSplash') || !app.children.length;
+    }catch(e){return true;}
+  }
+  function finishReady(){
+    try{
+      document.documentElement.classList.remove('almV386Booting');
+      document.documentElement.classList.add('almV386Ready');
+    }catch(e){}
+  }
+  function forceFirstPaint(){
+    try{
+      if(!isEmptyHome()) { finishReady(); return; }
+      if(window.__almV386Done !== true){
+        window.__almV386Done = true;
+        if(typeof window.__almV386DeferredInitFromHash === 'function') window.__almV386DeferredInitFromHash();
+        else if(typeof initFromHash === 'function') initFromHash();
+        else if(typeof renderHome === 'function') renderHome();
+        else if(typeof render === 'function') render();
+        try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
+        try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
+      }
+      setTimeout(finishReady,20);
+    }catch(e){ finishReady(); }
+  }
+  /* تشغيل فوري عند نهاية الملف بدل انتظار حدث DOMContentLoaded، حتى لا تظهر شاشة فاضية */
+  setTimeout(forceFirstPaint,0);
+  setTimeout(forceFirstPaint,60);
+  setTimeout(forceFirstPaint,180);
+  window.addEventListener('load',function(){setTimeout(forceFirstPaint,0);},{once:true});
+})();
+</script>
+
+<!-- ===== V401 FINAL: single homepage only, appended after every old script ===== -->
+<style id="almalika-v401-final-after-all-style">
+.almV387BootSplash,
+#homeCommercialAds,.homeAdsSection,.homeAdsGrid,.homeAdCard,
+.homeCleanSection,.homeVipSection,
+#v336FooterBar,.v336FooterBar,#v336InfoModal,.v336ModalOverlay,
+footer.footer,.footer{
+  display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important;
+  height:0!important;min-height:0!important;max-height:0!important;margin:0!important;padding:0!important;border:0!important;overflow:hidden!important;
+}
+html.almV386Booting #app{opacity:1!important;visibility:visible!important;}
+#app .v401HomeOnly{padding-top:28px!important;padding-bottom:42px!important;}
+#app .v401HomeOnly .title{margin-bottom:16px!important;}
+#app .v401HomeOnly .title h2{font-size:30px!important;line-height:1.25!important;}
+#app .v401HomeOnly .title p{font-size:14px!important;line-height:1.7!important;}
+#app .v401HomeOnly .products{margin-top:0!important;}
+</style>
+<script id="almalika-v401-final-after-all-js">
+(function(){
+  function hardCleanOldHomePages(){
+    try{
+      document.documentElement.classList.remove('almV386Booting');
+      document.documentElement.classList.add('almV386Ready');
+      document.querySelectorAll('.almV387BootSplash,#homeCommercialAds,.homeAdsSection,.homeAdsGrid,.homeAdCard,.homeCleanSection,.homeVipSection,#v336FooterBar,.v336FooterBar,#v336InfoModal,.v336ModalOverlay,footer.footer,.footer').forEach(function(el){
+        try{el.remove();}catch(e){el.style.setProperty('display','none','important');}
+      });
+    }catch(e){}
+  }
+  function pickHomeProducts(){
+    try{
+      if(typeof vipGeneralProducts==='function'){
+        var a=vipGeneralProducts();
+        if(Array.isArray(a) && a.length) return a;
+      }
+    }catch(e){}
+    try{return (Array.isArray(products)?products:[]).slice(0,12);}catch(e){return [];}
+  }
+  function renderSingleHome(){
+    try{
+      window.app = window.app || document.getElementById('app');
+      if(!app) return;
+      var arr=pickHomeProducts();
+      app.innerHTML='<section class="wrap section v401HomeOnly">'
+        + '<div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام: نطاطيات، سناك، تجهيز حفلات، طاولات وشخصيات، وبنود أخرى.</p></div></div>'
+        + '<div class="products view-cards">'+(arr.length?arr.map(card).join(''):'<div class="empty">لا توجد منتجات للعرض حالياً</div>')+'</div>'
+        + '</section>';
+      hardCleanOldHomePages();
+      try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
+      try{ if(typeof window.almV363AuditFix==='function') setTimeout(window.almV363AuditFix,0); }catch(e){}
+    }catch(e){ console.error('v401 renderSingleHome',e); }
+  }
+  window.__almV386Done=true;
+  window.__almFinalHomeRenderer=renderSingleHome;
+  window.renderHome=renderHome=renderSingleHome;
+  window.showHome=showHome=function(){
+    try{current='home';}catch(e){}
+    try{renderNav();}catch(e){}
+    try{ if(typeof catSelect!=='undefined' && catSelect){catSelect.innerHTML=''; catSelect.style.setProperty('display','none','important');} }catch(e){}
+    renderSingleHome();
+    try{setHash();}catch(e){}
+  };
+  var oldRender=window.render;
+  window.render=render=function(){
+    try{ if((typeof current!=='undefined'?current:window.current)==='home'){renderSingleHome(); return;} }catch(e){}
+    if(typeof oldRender==='function') return oldRender.apply(this,arguments);
+  };
+  hardCleanOldHomePages();
+  try{ if((typeof current!=='undefined'?current:window.current)==='home') renderSingleHome(); }catch(e){}
+  document.addEventListener('DOMContentLoaded',function(){hardCleanOldHomePages(); try{if((typeof current!=='undefined'?current:window.current)==='home') renderSingleHome();}catch(e){}});
+  window.addEventListener('load',function(){hardCleanOldHomePages(); try{if((typeof current!=='undefined'?current:window.current)==='home') renderSingleHome();}catch(e){}});
+  window.addEventListener('hashchange',function(){setTimeout(function(){try{if((typeof current!=='undefined'?current:window.current)==='home') renderSingleHome(); else hardCleanOldHomePages();}catch(e){}},20);});
+  try{new MutationObserver(function(){clearTimeout(window.__v401FinalT);window.__v401FinalT=setTimeout(function(){try{if((typeof current!=='undefined'?current:window.current)==='home') hardCleanOldHomePages();}catch(e){}},50);}).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
 
