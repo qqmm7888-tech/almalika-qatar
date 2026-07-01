@@ -5433,13 +5433,59 @@ body .cartItem .qtyBox b{
 #v342WaChoice .v342Ad span{display:block!important;font-size:14px!important;color:#7a2946!important;margin-top:6px!important}
 </style>
 
+<style id="almalika-v386-boot-hide-early">html.almV386Booting #app{opacity:0!important;visibility:hidden!important;}html.almV386Ready #app{opacity:1!important;visibility:visible!important;transition:none!important;}</style>
 <script>try{document.documentElement.classList.add('almV386Booting')}catch(e){}</script>
 
 <style id="almalika-v395-delete-duplicate-black-footer">
 footer.footer, .footer{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;border:0!important}
 </style>
+
+<style id="almalika-v396-no-duplicate-first-page">
+/* v396: حذف ظهور الصفحة/القالب المؤقت قبل الصفحة الرئيسية */
+html.almV386Booting body > *:not(#almV396Loader){
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+html.almV386Booting body{
+  overflow:hidden!important;
+}
+#almV396Loader{
+  display:none;
+}
+html.almV386Booting #almV396Loader{
+  visibility:visible!important;
+  pointer-events:auto!important;
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483647!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:
+    radial-gradient(circle at 78% 16%, rgba(212,175,55,.14), transparent 24%),
+    linear-gradient(180deg,#fff 0%,#fff8fb 100%)!important;
+  font-family:Tahoma,Arial,sans-serif!important;
+  color:#6A1B2E!important;
+}
+#almV396Loader .box{
+  min-width:250px!important;
+  border:1px solid #f2c7d8!important;
+  border-radius:28px!important;
+  background:rgba(255,255,255,.92)!important;
+  box-shadow:0 18px 48px rgba(106,27,46,.12)!important;
+  padding:24px 30px!important;
+  text-align:center!important;
+}
+#almV396Loader b{display:block!important;font-size:34px!important;line-height:1.15!important;color:#b01649!important;margin-bottom:8px!important;}
+#almV396Loader span{display:block!important;font-size:14px!important;font-weight:800!important;color:#8a4762!important;}
+html.almV386Ready #almV396Loader{display:none!important;visibility:hidden!important;}
+/* منع أي فوتر/شريط أسود قديم لو حاول كود قديم يرسمه */
+footer.footer,.footer,#v331FooterBar,#v336FooterBar,.termsSafety.bottomTerms{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;border:0!important;}
+</style>
 </head>
 <body>
+<div id="almV396Loader" aria-hidden="true"><div class="box"><b>الملكة 👑</b><span>جاري فتح الصفحة...</span></div></div>
+
 <script id="almalika-v395-remove-duplicate-footer-now">
 (function(){
   function rm(){
@@ -5477,7 +5523,7 @@ footer.footer, .footer{display:none!important;height:0!important;min-height:0!im
     <div class="eventDateBox"><div class="eventDateLabel">فترة الحجز</div><div class="eventDateInputs"><input id="catalogEventDate" type="date" onchange="render()" title="تاريخ بداية الحجز"><input id="catalogEventEndDate" type="date" onchange="render()" title="تاريخ نهاية الحجز اختياري"></div><small>اختر تاريخ البداية أولاً. تاريخ النهاية اختياري ويجب أن يكون نفس تاريخ البداية أو بعده.</small></div>
   </div>
 </header>
-<main id="app"><section class="almV387BootSplash" dir="rtl"><div class="almV387BootCard"><b>الملكة 👑</b><span>جاري تجهيز الصفحة...</span></div></section></main>
+<main id="app"></main>
 <button class="cartBar" onclick="openCart()">🛒 سلة الحجز: <span id="cartCount">0</span> بند — <span id="cartTotalMini">0</span> ر.ق</button>
 <div class="modal" id="modal"></div>
 
@@ -5603,7 +5649,7 @@ function vipOfferProducts(){
     .sort((a,b)=>Number(a.number)-Number(b.number))
     .filter(p=>{const k=Number(p.number); if(seen.has(k))return false; seen.add(k); return true;});
 }
-function renderHome(){const counts={bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,snacks:products.filter(p=>sectionOf(p)==='snacks').length,events:products.filter(p=>sectionOf(p)==='events').length,rentals:products.filter(p=>sectionOf(p)==='rentals').length,other:products.filter(p=>sectionOf(p)==='other').length}; app.innerHTML=`<section class="wrap section"><div class="title"><div><h2>الأقسام الرئيسية</h2><p>تقسيم واضح مع واجهة VIP مريحة وسريعة في التصفح.</p></div><div class="stats"><span class="stat">الإجمالي: ${products.length} بند</span><span class="stat">النطاطيات: ${counts.bouncies}</span><span class="stat">السناك: ${counts.snacks}</span><span class="stat">تجهيز الحفلات: ${counts.events}</span><span class="stat">الطاولات والكراسي والشخصيات: ${counts.rentals}</span><span class="stat">بنود أخرى: ${counts.other}</span></div></div><div class="mainCats">${sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام: نطاطيات، سناك، تجهيز حفلات، طاولات وشخصيات، وبنود أخرى.</p></div></div>${viewToolbar()}<div class="products view-${viewMode}">${vipGeneralProducts().map(card).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات خاصة للعروض فقط</h2><p>نماذج مختارة من المنتجات التي تحتوي على باقات أو عروض فقط.</p></div><button class="btn red" onclick="showSection('offers')">عرض كل العروض</button></div><div class="products view-${viewMode}">${vipOfferProducts().length?vipOfferProducts().map(card).join(''):'<div class="empty">لا توجد عروض مضافة حالياً</div>'}</div></section>${siteTermsSafetyHtml('bottom')}`}
+function renderHome(){const counts={bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,snacks:products.filter(p=>sectionOf(p)==='snacks').length,events:products.filter(p=>sectionOf(p)==='events').length,rentals:products.filter(p=>sectionOf(p)==='rentals').length,other:products.filter(p=>sectionOf(p)==='other').length}; app.innerHTML=`<section class="wrap section"><div class="title"><div><h2>الأقسام الرئيسية</h2><p>تقسيم واضح مع واجهة VIP مريحة وسريعة في التصفح.</p></div><div class="stats"><span class="stat">الإجمالي: ${products.length} بند</span><span class="stat">النطاطيات: ${counts.bouncies}</span><span class="stat">السناك: ${counts.snacks}</span><span class="stat">تجهيز الحفلات: ${counts.events}</span><span class="stat">الطاولات والكراسي والشخصيات: ${counts.rentals}</span><span class="stat">بنود أخرى: ${counts.other}</span></div></div></section><section class="wrap section"><div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام: نطاطيات، سناك، تجهيز حفلات، طاولات وشخصيات، وبنود أخرى.</p></div></div>${viewToolbar()}<div class="products view-${viewMode}">${vipGeneralProducts().map(card).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات خاصة للعروض فقط</h2><p>نماذج مختارة من المنتجات التي تحتوي على باقات أو عروض فقط.</p></div><button class="btn red" onclick="showSection('offers')">عرض كل العروض</button></div><div class="products view-${viewMode}">${vipOfferProducts().length?vipOfferProducts().map(card).join(''):'<div class="empty">لا توجد عروض مضافة حالياً</div>'}</div></section>${siteTermsSafetyHtml('bottom')}`}
 
 function getCatalogEventDate(){return document.getElementById('catalogEventDate')?.value||''}
 function getCatalogEventEndDate(){return document.getElementById('catalogEventEndDate')?.value||getCatalogEventDate()}
@@ -13188,7 +13234,7 @@ body{overflow-x:hidden!important}
         <div class="homeCleanTitle">
           <div><h2>الأقسام الرئيسية</h2><p>اختر القسم المطلوب بسرعة بدون تكرار أو قوائم داخلية زائدة.</p></div>
         </div>
-        <div class="mainCats">${catsHtml}</div>
+        
       </section>
       <section class="wrap section homeAdsSection" id="homeCommercialAds">
         <div class="homeAdsGrid">
@@ -13456,41 +13502,44 @@ body{overflow-x:hidden!important}
 })();
 </script>
 
-<style id="almalika-v397-remove-duplicate-loader-clean">
-html.almV386Booting #app,
-html.almV386Ready #app,
-#app{opacity:1!important;visibility:visible!important;}
-.almV387BootSplash{display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;overflow:hidden!important;pointer-events:none!important;}
-</style>
-<script id="almalika-v397-final-single-init-no-loader">
+<script id="almalika-v396-final-cleanup-js">
 (function(){
-  function startFinal(){
+  function removeDuplicateBlocks(){
     try{
-      document.documentElement.classList.remove('almV386Booting');
-      document.documentElement.classList.add('almV386Ready');
-      document.querySelectorAll('.almV387BootSplash').forEach(function(el){el.remove();});
-      if(window.__almV397Started) return;
-      window.__almV397Started = true;
-      if(typeof initFromHash === 'function') initFromHash();
-      else if(typeof renderHome === 'function') renderHome();
-      else if(typeof render === 'function') render();
-      try{ if(typeof renderNav === 'function') renderNav(); }catch(e){}
-      try{ if(typeof updateCartUI === 'function') updateCartUI(); }catch(e){}
-      setTimeout(function(){
-        document.querySelectorAll('.almV387BootSplash').forEach(function(el){el.remove();});
+      document.querySelectorAll('footer.footer,.footer,#v331FooterBar,#v336FooterBar,.termsSafety.bottomTerms').forEach(function(el){el.remove();});
+      document.querySelectorAll('body *').forEach(function(el){
+        if(!el || el.id==='almV396Loader' || el.closest('#modal,#v349WaChoice,#v342WaChoice')) return;
+        var t=(el.textContent||'').replace(/\s+/g,' ').trim();
+        if(t==='شركة الملكة للحفلات - قطر نطاطيات • زحلاقيات • سناك • تجهيز حفلات' ||
+           t==='شركة الملكة للحفلات - قطر نطاطيات • زحلاقيات • سناك • تجهيز حفلات'.replace(/ • /g,' ')){
+          el.remove();
+        }
+      });
+    }catch(e){}
+  }
+  function markReadyWhenPainted(){
+    try{
+      var app=document.getElementById('app');
+      if(app && app.children.length && !app.querySelector('.almV387BootSplash')){
         document.documentElement.classList.remove('almV386Booting');
         document.documentElement.classList.add('almV386Ready');
-      },0);
-    }catch(e){
-      try{document.documentElement.classList.remove('almV386Booting');document.documentElement.classList.add('almV386Ready');}catch(_e){}
-    }
+        removeDuplicateBlocks();
+      }
+    }catch(e){}
   }
-  startFinal();
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startFinal, {once:true});
-  window.addEventListener('load', startFinal, {once:true});
+  removeDuplicateBlocks();
+  markReadyWhenPainted();
+  var n=0, timer=setInterval(function(){
+    removeDuplicateBlocks();
+    markReadyWhenPainted();
+    if(++n>40) clearInterval(timer);
+  },50);
+  try{
+    new MutationObserver(function(){removeDuplicateBlocks();markReadyWhenPainted();}).observe(document.body,{childList:true,subtree:true});
+  }catch(e){}
+  window.addEventListener('load',function(){setTimeout(function(){removeDuplicateBlocks();markReadyWhenPainted();},0);setTimeout(markReadyWhenPainted,250);},{once:true});
 })();
 </script>
-
 </body>
 </html>
 
@@ -17103,4 +17152,105 @@ a[target="_blank"]{ }
 </script>
 
 
+<style id="almalika-v386-single-home-render-guard">
+/* v386: منع ظهور قالب أول ثم قالب ثاني عند الفتح */
+html.almV386Booting #app{opacity:0!important;visibility:hidden!important;}
+html.almV386Ready #app{opacity:1!important;visibility:visible!important;transition:none!important;}
+</style>
+<script id="almalika-v386-single-home-render-guard-js">
+(function(){
+  try{document.documentElement.classList.add('almV386Booting');}catch(e){}
+  function safeInitV386(){
+    try{
+      if(window.__almV386Done) return;
+      window.__almV386Done = true;
+      if(typeof window.__almV386DeferredInitFromHash === 'function'){
+        window.__almV386DeferredInitFromHash();
+      }else if(typeof initFromHash === 'function'){
+        initFromHash();
+      }else if(typeof render === 'function'){
+        render();
+      }
+      try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
+      try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
+      setTimeout(function(){
+        try{
+          document.documentElement.classList.remove('almV386Booting');
+          document.documentElement.classList.add('almV386Ready');
+        }catch(e){}
+      }, 30);
+    }catch(e){
+      try{document.documentElement.classList.remove('almV386Booting');document.documentElement.classList.add('almV386Ready');}catch(_e){}
+    }
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){setTimeout(safeInitV386,0);}, {once:true});
+  else setTimeout(safeInitV386,0);
+  window.addEventListener('load', function(){setTimeout(safeInitV386,0);}, {once:true});
+})();
+</script>
 
+<style id="almalika-v387-no-blank-fast-init-style">
+/* v387: منع الشاشة الفاضية أثناء أول تحميل، بدون إرجاع قالب ثاني */
+html.almV386Booting #app,
+html.almV386Booting body #app{
+  opacity:1!important;
+  visibility:visible!important;
+}
+.almV387BootSplash{
+  min-height:calc(100vh - 120px)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:28px!important;
+}
+.almV387BootCard{
+  min-width:240px!important;
+  border:1px solid #f3bdd5!important;
+  border-radius:26px!important;
+  background:rgba(255,255,255,.86)!important;
+  box-shadow:0 18px 50px rgba(106,27,46,.10)!important;
+  padding:24px 30px!important;
+  text-align:center!important;
+  color:#6a1b2e!important;
+  font-family:Tahoma,Arial,sans-serif!important;
+}
+.almV387BootCard b{display:block!important;font-size:28px!important;line-height:1.2!important;margin-bottom:8px!important;color:#b01649!important;}
+.almV387BootCard span{display:block!important;font-size:14px!important;font-weight:800!important;color:#8a4762!important;}
+html.almV386Ready .almV387BootSplash{display:none!important;}
+</style>
+<script id="almalika-v387-no-blank-fast-init-js">
+(function(){
+  function isEmptyHome(){
+    try{
+      var app=document.getElementById('app');
+      return !app || !!app.querySelector('.almV387BootSplash') || !app.children.length;
+    }catch(e){return true;}
+  }
+  function finishReady(){
+    try{
+      document.documentElement.classList.remove('almV386Booting');
+      document.documentElement.classList.add('almV386Ready');
+    }catch(e){}
+  }
+  function forceFirstPaint(){
+    try{
+      if(!isEmptyHome()) { finishReady(); return; }
+      if(window.__almV386Done !== true){
+        window.__almV386Done = true;
+        if(typeof window.__almV386DeferredInitFromHash === 'function') window.__almV386DeferredInitFromHash();
+        else if(typeof initFromHash === 'function') initFromHash();
+        else if(typeof renderHome === 'function') renderHome();
+        else if(typeof render === 'function') render();
+        try{ if(typeof renderNav==='function') renderNav(); }catch(e){}
+        try{ if(typeof updateCartUI==='function') updateCartUI(); }catch(e){}
+      }
+      setTimeout(finishReady,20);
+    }catch(e){ finishReady(); }
+  }
+  /* تشغيل فوري عند نهاية الملف بدل انتظار حدث DOMContentLoaded، حتى لا تظهر شاشة فاضية */
+  setTimeout(forceFirstPaint,0);
+  setTimeout(forceFirstPaint,60);
+  setTimeout(forceFirstPaint,180);
+  window.addEventListener('load',function(){setTimeout(forceFirstPaint,0);},{once:true});
+})();
+</script>
