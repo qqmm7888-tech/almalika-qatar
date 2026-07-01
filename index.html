@@ -5435,8 +5435,24 @@ body .cartItem .qtyBox b{
 
 <style id="almalika-v386-boot-hide-early">html.almV386Booting #app{opacity:0!important;visibility:hidden!important;}html.almV386Ready #app{opacity:1!important;visibility:visible!important;transition:none!important;}</style>
 <script>try{document.documentElement.classList.add('almV386Booting')}catch(e){}</script>
+
+<style id="almalika-v395-delete-duplicate-black-footer">
+footer.footer, .footer{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;border:0!important}
+</style>
 </head>
 <body>
+<script id="almalika-v395-remove-duplicate-footer-now">
+(function(){
+  function rm(){
+    try{document.querySelectorAll('footer.footer, .footer').forEach(function(el){ el.remove(); });}catch(e){}
+  }
+  rm();
+  document.addEventListener('DOMContentLoaded', rm);
+  window.addEventListener('load', rm);
+  setTimeout(rm, 0); setTimeout(rm, 80); setTimeout(rm, 250); setTimeout(rm, 800);
+})();
+</script>
+
 <div class="siteMagic" aria-hidden="true">
   <span class="trail t1"></span>
   <span class="trail t2"></span>
