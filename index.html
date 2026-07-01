@@ -5433,10 +5433,14 @@ body .cartItem .qtyBox b{
 #v342WaChoice .v342Ad span{display:block!important;font-size:14px!important;color:#7a2946!important;margin-top:6px!important}
 </style>
 
-<script>try{document.documentElement.classList.add('almV386Booting')}catch(e){}</script>
-
 <style id="almalika-v395-delete-duplicate-black-footer">
 footer.footer, .footer{display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;border:0!important}
+</style>
+
+<style id="almalika-v398-delete-duplicate-home-page-style">
+/* حذف صفحة الأقسام/VIP المكررة من الرئيسية نهائياً */
+#app .homeCleanSection,#app .homeVipSection,.almV387BootSplash{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;max-height:0!important;overflow:hidden!important;padding:0!important;margin:0!important;border:0!important;}
+html.almV386Booting #app{opacity:1!important;visibility:visible!important;}
 </style>
 </head>
 <body>
@@ -5603,7 +5607,7 @@ function vipOfferProducts(){
     .sort((a,b)=>Number(a.number)-Number(b.number))
     .filter(p=>{const k=Number(p.number); if(seen.has(k))return false; seen.add(k); return true;});
 }
-function renderHome(){const counts={bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,snacks:products.filter(p=>sectionOf(p)==='snacks').length,events:products.filter(p=>sectionOf(p)==='events').length,rentals:products.filter(p=>sectionOf(p)==='rentals').length,other:products.filter(p=>sectionOf(p)==='other').length}; app.innerHTML=`<section class="wrap section"><div class="title"><div><h2>الأقسام الرئيسية</h2><p>تقسيم واضح مع واجهة VIP مريحة وسريعة في التصفح.</p></div><div class="stats"><span class="stat">الإجمالي: ${products.length} بند</span><span class="stat">النطاطيات: ${counts.bouncies}</span><span class="stat">السناك: ${counts.snacks}</span><span class="stat">تجهيز الحفلات: ${counts.events}</span><span class="stat">الطاولات والكراسي والشخصيات: ${counts.rentals}</span><span class="stat">بنود أخرى: ${counts.other}</span></div></div><div class="mainCats">${sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام: نطاطيات، سناك، تجهيز حفلات، طاولات وشخصيات، وبنود أخرى.</p></div></div>${viewToolbar()}<div class="products view-${viewMode}">${vipGeneralProducts().map(card).join('')}</div></section><section class="wrap section"><div class="title"><div><h2>مختارات خاصة للعروض فقط</h2><p>نماذج مختارة من المنتجات التي تحتوي على باقات أو عروض فقط.</p></div><button class="btn red" onclick="showSection('offers')">عرض كل العروض</button></div><div class="products view-${viewMode}">${vipOfferProducts().length?vipOfferProducts().map(card).join(''):'<div class="empty">لا توجد عروض مضافة حالياً</div>'}</div></section>${siteTermsSafetyHtml('bottom')}`}
+function renderHome(){try{if(window.__almFinalHomeRenderer)return window.__almFinalHomeRenderer();}catch(e){} try{app.innerHTML='';}catch(e){}}
 
 function getCatalogEventDate(){return document.getElementById('catalogEventDate')?.value||''}
 function getCatalogEventEndDate(){return document.getElementById('catalogEventEndDate')?.value||getCatalogEventDate()}
@@ -13151,45 +13155,24 @@ body{overflow-x:hidden!important}
 }
 </style>
 
-<script id="almalika-v375-clean-home-render">
+<script id="almalika-v398-delete-duplicate-home-page-js">
 (function(){
-  function homeCounts(){
-    return {
-      bouncies:products.filter(p=>sectionOf(p)==='bouncies').length,
-      snacks:products.filter(p=>sectionOf(p)==='snacks').length,
-      events:products.filter(p=>sectionOf(p)==='events').length,
-      rentals:products.filter(p=>sectionOf(p)==='rentals').length,
-      offers:products.filter(p=>sectionOf(p)==='offers').length,
-      other:products.filter(p=>sectionOf(p)==='other').length
-    };
-  }
-  function cleanHomeDom(){
+  function removeDuplicateHomePage(){
     try{
-      document.querySelectorAll('.homeHeroFrame,.homeHeroImage,#almHomePromoSlider,.almPromoSlider').forEach(el=>el.remove());
-      document.querySelectorAll('.viewToolbar,.chips,#catSelect').forEach(el=>{
-        if(el.id==='catSelect'){el.style.setProperty('display','none','important');}
-        else el.remove();
-      });
-      const appEl=document.getElementById('app');
-      if(!appEl) return;
-      appEl.querySelectorAll('.mainCats').forEach((el,i)=>{ if(i>0){ const s=el.closest('section'); if(s) s.remove(); else el.remove(); }});
-      appEl.querySelectorAll('section').forEach(sec=>{
-        const t=(sec.textContent||'').replace(/\s+/g,' ').trim();
-        if(/خدمات الملكة للحفلات|طريقة الحجز|الأمن والسلامة|شركة الملكة للحفلات - قطر|مختارات خاصة للعروض فقط|عرض كل العروض/.test(t)){sec.remove();}
+      document.documentElement.classList.remove('almV386Booting');
+      document.documentElement.classList.add('almV386Ready');
+      document.querySelectorAll('.homeCleanSection,.homeVipSection,.almV387BootSplash').forEach(function(el){el.remove();});
+      document.querySelectorAll('footer.footer').forEach(function(el){
+        var t=(el.textContent||'').replace(/\s+/g,' ').trim();
+        if(/شركة الملكة للحفلات|نطاطيات.*زحلاقيات.*سناك/.test(t)) el.remove();
       });
     }catch(e){}
   }
-  window.renderHome = renderHome = function(){
-    const counts=homeCounts();
-    const catsHtml=sections.filter(s=>s[0]!=='home').map(s=>uiCatButton(s,counts)).join('');
-    const vip=vipGeneralProducts();
-    app.innerHTML=`
-      <section class="wrap section homeCleanSection">
-        <div class="homeCleanTitle">
-          <div><h2>الأقسام الرئيسية</h2><p>اختر القسم المطلوب بسرعة بدون تكرار أو قوائم داخلية زائدة.</p></div>
-        </div>
-        <div class="mainCats">${catsHtml}</div>
-      </section>
+  function adsOnlyHome(){
+    try{
+      if(!window.app) window.app=document.getElementById('app');
+      if(!app) return;
+      app.innerHTML=`
       <section class="wrap section homeAdsSection" id="homeCommercialAds">
         <div class="homeAdsGrid">
           <article class="homeAdCard adGold">
@@ -13214,25 +13197,24 @@ body{overflow-x:hidden!important}
             <button onclick="showSection('snacks')">اطلب الآن</button>
           </article>
         </div>
-      </section>
-      <section class="wrap section homeVipSection">
-        <div class="title"><div><h2>مختارات VIP عامة</h2><p>مختارات عامة من جميع الأقسام.</p></div></div>
-        <div class="products view-cards">${vip.length?vip.map(card).join(''):'<div class="empty">لا توجد منتجات حالياً</div>'}</div>
       </section>`;
-    cleanHomeDom();
-    if(typeof updateCartUI==='function') updateCartUI();
-  };
+      if(typeof updateCartUI==='function') updateCartUI();
+      removeDuplicateHomePage();
+    }catch(e){console.warn('home render blocked',e)}
+  }
+  window.__almFinalHomeRenderer = adsOnlyHome;
+  window.renderHome = renderHome = adsOnlyHome;
   window.showHome = showHome = function(){
     current='home';
-    internal=allLabel('bouncies');
+    try{internal=allLabel('bouncies');}catch(e){}
     try{renderNav();}catch(e){}
-    try{catSelect.innerHTML='<option>الأقسام</option>'; catSelect.style.setProperty('display','none','important');}catch(e){}
-    renderHome();
+    try{ if(typeof catSelect!=='undefined' && catSelect){catSelect.innerHTML='<option>الأقسام</option>'; catSelect.style.setProperty('display','none','important');}}catch(e){}
+    adsOnlyHome();
     try{setHash();}catch(e){}
   };
-  document.addEventListener('DOMContentLoaded',function(){setTimeout(cleanHomeDom,0);setTimeout(cleanHomeDom,120);});
-  window.addEventListener('load',function(){setTimeout(cleanHomeDom,0);setTimeout(cleanHomeDom,180);});
-  window.addEventListener('hashchange',function(){if(current==='home') setTimeout(renderHome,30);});
+  document.addEventListener('DOMContentLoaded',function(){setTimeout(removeDuplicateHomePage,0);setTimeout(function(){if(location.hash.indexOf('#home')>=0||location.hash===''||location.hash==='#') adsOnlyHome();},20);});
+  window.addEventListener('load',function(){setTimeout(removeDuplicateHomePage,0);setTimeout(removeDuplicateHomePage,120);});
+  window.addEventListener('hashchange',function(){if(location.hash.indexOf('#home')>=0) setTimeout(adsOnlyHome,0);});
 })();
 </script>
 
@@ -13455,42 +13437,6 @@ body{overflow-x:hidden!important}
   }catch(e){}
 })();
 </script>
-
-<style id="almalika-v397-remove-duplicate-loader-clean">
-html.almV386Booting #app,
-html.almV386Ready #app,
-#app{opacity:1!important;visibility:visible!important;}
-.almV387BootSplash{display:none!important;visibility:hidden!important;opacity:0!important;height:0!important;overflow:hidden!important;pointer-events:none!important;}
-</style>
-<script id="almalika-v397-final-single-init-no-loader">
-(function(){
-  function startFinal(){
-    try{
-      document.documentElement.classList.remove('almV386Booting');
-      document.documentElement.classList.add('almV386Ready');
-      document.querySelectorAll('.almV387BootSplash').forEach(function(el){el.remove();});
-      if(window.__almV397Started) return;
-      window.__almV397Started = true;
-      if(typeof initFromHash === 'function') initFromHash();
-      else if(typeof renderHome === 'function') renderHome();
-      else if(typeof render === 'function') render();
-      try{ if(typeof renderNav === 'function') renderNav(); }catch(e){}
-      try{ if(typeof updateCartUI === 'function') updateCartUI(); }catch(e){}
-      setTimeout(function(){
-        document.querySelectorAll('.almV387BootSplash').forEach(function(el){el.remove();});
-        document.documentElement.classList.remove('almV386Booting');
-        document.documentElement.classList.add('almV386Ready');
-      },0);
-    }catch(e){
-      try{document.documentElement.classList.remove('almV386Booting');document.documentElement.classList.add('almV386Ready');}catch(_e){}
-    }
-  }
-  startFinal();
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', startFinal, {once:true});
-  window.addEventListener('load', startFinal, {once:true});
-})();
-</script>
-
 </body>
 </html>
 
@@ -17101,6 +17047,5 @@ a[target="_blank"]{ }
   }
 })();
 </script>
-
 
 
